@@ -26,27 +26,18 @@
     return m[l] || "plaintext";
   }
 
-  function workerFileForLabel(label) {
-    if (label === "json") return "language/json/jsonWorker.js";
-    if (label === "css" || label === "scss" || label === "less") {
-      return "language/css/cssWorker.js";
-    }
-    if (label === "html" || label === "handlebars" || label === "razor") {
-      return "language/html/htmlWorker.js";
-    }
-    if (label === "typescript" || label === "javascript") {
-      return "language/typescript/tsWorker.js";
-    }
-    return "base/worker/workerMain.js";
+  function workerLabelKey(label) {
+    if (label === "typescript" || label === "javascript") return "typescript";
+    if (label === "json") return "json";
+    if (label === "css" || label === "scss" || label === "less") return "css";
+    if (label === "html" || label === "handlebars" || label === "razor") return "html";
+    return "editor";
   }
 
-  function workerBlobUrl(base, workerFile) {
-    const workerUrl = `${base}/${workerFile}`;
-    const code = [
-      `self.MonacoEnvironment = { baseUrl: ${JSON.stringify(base)} };`,
-      `importScripts(${JSON.stringify(workerUrl)});`,
-    ].join("");
-    return URL.createObjectURL(new Blob([code], { type: "text/javascript" }));
+  function workerLoaderUrl(label) {
+    const key = workerLabelKey(label);
+    const base = encodeURIComponent(vsBase);
+    return `/static/monaco-worker-loader.js?label=${encodeURIComponent(key)}&base=${base}`;
   }
 
   function configureMonacoEnv(base) {
@@ -54,11 +45,10 @@
     window.MonacoEnvironment = {
       baseUrl: base,
       getWorkerUrl(_moduleId, label) {
-        return workerBlobUrl(base, workerFileForLabel(label));
+        return workerLoaderUrl(label);
       },
       getWorker(_workerId, label) {
-        const url = workerBlobUrl(base, workerFileForLabel(label));
-        return new Worker(url, { name: label });
+        return new Worker(workerLoaderUrl(label), { name: label || "editor" });
       },
     };
   }
