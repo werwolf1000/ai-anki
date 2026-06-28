@@ -35,7 +35,7 @@
   }
 
   function workerLoaderUrl() {
-    return `/static/monaco-worker-loader.js?v=8&vs=${encodeURIComponent(vsBase)}`;
+    return `/static/monaco-worker-loader.js?v=9&vs=${encodeURIComponent(vsBase)}`;
   }
 
   function monacoBaseUrl(vsPath) {
@@ -238,12 +238,12 @@ declare module 'rxjs' {
     tsDefaults.setCompilerOptions(compilerOptions);
     jsDefaults.setCompilerOptions(compilerOptions);
     tsDefaults.setDiagnosticsOptions({
-      noSemanticValidation: false,
-      noSyntaxValidation: false,
+      noSemanticValidation: true,
+      noSyntaxValidation: true,
     });
     jsDefaults.setDiagnosticsOptions({
-      noSemanticValidation: false,
-      noSyntaxValidation: false,
+      noSemanticValidation: true,
+      noSyntaxValidation: true,
     });
     tsDefaults.setEagerModelSync(true);
     jsDefaults.setEagerModelSync(true);
@@ -321,6 +321,7 @@ declare module 'rxjs' {
           showTypes: true,
         },
         renderLineHighlight: "all",
+        renderValidationDecorations: "off",
         scrollbar: { verticalScrollbarSize: 10, horizontalScrollbarSize: 10 },
       });
 
