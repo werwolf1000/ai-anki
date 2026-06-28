@@ -34,21 +34,17 @@
     return "editor";
   }
 
-  function workerLoaderUrl(label) {
-    const key = workerLabelKey(label);
-    const base = encodeURIComponent(vsBase);
-    return `/static/monaco-worker-loader.js?label=${encodeURIComponent(key)}&base=${base}`;
+  function workerLoaderUrl() {
+    return `/static/monaco-worker-loader.js?v=7&base=${encodeURIComponent(vsBase)}`;
   }
 
   function configureMonacoEnv(base) {
     vsBase = base;
     window.MonacoEnvironment = {
       baseUrl: base,
-      getWorkerUrl(_moduleId, label) {
-        return workerLoaderUrl(label);
-      },
+      // AMD min build: always bootstrap via workerMain.js (classic worker, not module).
       getWorker(_workerId, label) {
-        return new Worker(workerLoaderUrl(label), { name: label || "editor" });
+        return new Worker(workerLoaderUrl(), { name: workerLabelKey(label) });
       },
     };
   }
