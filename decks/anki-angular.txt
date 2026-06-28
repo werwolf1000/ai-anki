@@ -1,0 +1,122 @@
+#deck:Angular
+#tags: angular frontend
+#separator:Tab
+#html:true
+#columns: Front	Back
+Что такое Angular и чем он отличается от AngularJS?	Angular (2+) — полный переписанный фреймворк на TypeScript с компонентной архитектурой, DI, RxJS и CLI. AngularJS (1.x) — устаревший JS-фреймворк с двусторонним binding через scope; это другой продукт.
+Что такое компонент в Angular?	Базовый строительный блок UI: класс (@Component) + шаблон + стили. Управляет отображением и логикой части интерфейса.
+Чем отличается standalone-кomponent от NgModule?	Standalone объявляет <code>imports: [...]</code> прямо в декораторе и не требует NgModule. NgModule группирует declarations/imports/exports — классический подход до Angular 14+.
+Как создать новый Angular-проект?	<code>ng new имя-проекта</code> через Angular CLI. Можно выбрать routing, CSS-препроцессор, SSR и standalone по умолчанию.
+Что делает Angular CLI?	Генерирует проект, компоненты, сервисы, маршруты; собирает (build), запускает dev-сerver, тесты и линт.
+Что такое декоратор @Component и его основные свойства?	<code>selector</code>, <code>template/templateUrl</code>, <code>styles/styleUrls</code>, <code>imports</code>, <code>changeDetection</code>, <code>providers</code> — метаданные компонента.
+Что такое selector компонента?	CSS-подобное имя тега/атрибута, по которому компонент вставляется в шаблон: <code>app-user</code> или <code>[appHighlight]</code>.
+Что такое data binding в Angular?	Связь шаблона и компонента:<br>• интерполяция <code>{{ }}</code><br>• property <code>[prop]</code><br>• event <code>(event)</code><br>• two-way <code>[(ngModel)]</code>
+Что такое интерполяция {{ }}?	Вывод выражения из класса компонента в шаблон. Angular автоматически экранирует HTML.
+Чем [property] отличается от (event)?	<code>[prop]</code> — односторонняя передача данных в элемент/дочерний компонент.<br><code>(event)</code> — подписка на событие DOM или @Output.
+Что такое two-way binding [(ngModel)]?	Комбинация <code>[ngModel]</code> и <code>(ngModelChange)</code>. Требует <code>FormsModule</code> или <code>ReactiveFormsModule</code> + импорт директивы.
+Что такое директива?	Класс, расширяющий поведение DOM. Типы: компоненты, структурные (*ngIf), атрибутные ([ngClass]).
+Что делает *ngIf?	Структурная директива: добавляет/удаляет элемент из DOM по условию. <code>*</code> — синтаксический сахар для <code>&lt;ng-template&gt;</code>.
+Что делает *ngFor?	Рендерит список элементов. Требует <code>track</code> / <code>trackBy</code> для эффективных обновлений.
+Зачем нужен trackBy в ngFor?	Помогает Angular идентифицировать элементы по id, а не по индексу — меньше лишних перерисовок DOM.
+Что делает [ngClass] и [ngStyle]?	Динамически задают CSS-классы и inline-стили на основе выражений в компоненте.
+Что такое pipe?	Преобразует значение в шаблоне: <code>{{ date | date:'short' }}</code>. Есть встроенные и кастомные.
+Чем pure pipe отличается от impure?	Pure пересчитывается только при изменении входных ссылок/примитивов. Impure — при каждой проверке change detection (осторожно с производительностью).
+Что такое сервис (@Injectable)?	Класс с бизнес-логикой, общим состоянием или доступом к API. Обычно singleton через DI.
+Что такое Dependency Injection (DI) в Angular?	Паттерн: зависимости передаются извне через конструктор/<code>inject()</code>, а не создаются внутри класса. Управляется инжектором.
+Что такое injector и provider?	Provider — рецепт создания зависимости (<code>useClass</code>, <code>useValue</code>, <code>useFactory</code>). Injector хранит дерево провайдеров и создаёт экземпляры.
+Чем providedIn: 'root' отличается от providers в @Component?	<code>root</code> — один экземпляр на всё приложение (tree-shakable). <code>providers</code> в компоненте — отдельный инжектор на каждый экземпляр компонента.
+Что такое @Input() и @Output()?	@Input — данные от родителя к ребёнку.<br>@Output + EventEmitter — события от ребёнка к родителю.
+Что такое ViewChild / ContentChild?	ViewChild — доступ к элементу/компоненту в шаблоне компонента.<br>ContentChild — к проецируемому контенту через <code>&lt;ng-content&gt;</code>.
+Что такое ng-content?	Точка проекции контента: родитель передаёт разметку внутрь дочернего компонента (transclusion).
+Что такое жизненный цикл компонента?	Хуки: <code>ngOnChanges</code>, <code>ngOnInit</code>, <code>ngDoCheck</code>, <code>ngAfterViewInit</code>, <code>ngOnDestroy</code> и др. — реакция на создание/изменение/уничтожение.
+Когда использовать ngOnInit?	Для инициализации после первого @Input: загрузка данных, подписки. Конструктор — только для DI.
+Зачем ngOnDestroy?	Очистка: отписка от Observable, clearInterval, removeListener. Предотвращает утечки памяти.
+Что такое Change Detection?	Механизм проверки изменений данных и обновления шаблона. По умолчанию — zone.js + стратегия Default.
+Чем Default отличается от OnPush?	Default проверяет компонент при любом async-событии в zone. OnPush — только при новых @Input, событиях компонента, async pipe или явном markForCheck.
+Когда выбирать ChangeDetectionStrategy.OnPush?	Для производительности, когда данные приходят через immutable @Input или async pipe, и компонент «чистый».
+Что такое Zone.js?	Патчит async API браузера, чтобы Angular знал, когда запускать change detection после setTimeout, HTTP, событий и т.д.
+Что такое Signals (Angular 16+)?	Реактивные примитивы: <code>signal()</code>, <code>computed()</code>, <code>effect()</code>. Fine-grained обновления без лишней CD.
+Как объявить и обновить signal?	<code>count = signal(0)</code><br>Чтение: <code>count()</code><br>Запись: <code>count.set(1)</code> или <code>count.update(v =&gt; v + 1)</code>
+Что такое computed()?	Производный signal, автоматически пересчитывается при изменении зависимостей.
+Что такое Router и зачем он нужен?	Клиентская маршрутизация SPA: сопоставление URL → компонент без перезагрузки страницы.
+Как настроить маршрут в standalone-приложении?	<code>provideRouter(routes)</code> в <code>bootstrapApplication</code>, массив <code>Routes</code> с <code>path</code> и <code>component/loadComponent</code>.
+Чем component от loadComponent в routes?	<code>component</code> — eager load.<br><code>loadComponent</code> — lazy load отдельного standalone-компонента (code splitting).
+Что такое lazy loading модулей/маршрутов?	Загрузка кода фичи только при переходе на маршрут — меньший initial bundle.
+Что такое routerLink и routerOutlet?	<code>routerLink</code> — навигация в шаблоне.<br><code>&lt;router-outlet&gt;</code> — место, куда вставляется компонент маршрута.
+Как передать параметр маршрута?	<code>/user/:id</code> в path, чтение через <code>ActivatedRoute</code> или <code>input()</code> с <code>withComponentInputBinding</code>.
+Что такое guard (CanActivate)?	Проверка перед активацией маршрута: авторизация, права доступа. Возвращает boolean, UrlTree или Observable.
+Чем Reactive Forms отличаются от Template-driven?	Reactive: модель в TS (<code>FormGroup</code>, <code>FormControl</code>), явный контроль, проще тестировать.<br>Template-driven: <code>ngModel</code> в шаблоне, проще для простых форм.
+Что такое FormControl, FormGroup, FormArray?	Control — одно поле.<br>Group — объект полей.<br>Array — динамический список контролов.
+Как валидировать reactive form?	Validators в FormControl: <code>Validators.required</code>, <code>email</code>, кастомные. Статус: <code>valid/invalid/touched/dirty</code>.
+Что такое HttpClient?	Сервис для HTTP-запросов. Возвращает Observable. Настраивается через <code>provideHttpClient()</code>.
+Почему HttpClient возвращает Observable, а не Promise?	Поддержка отмены, операторов RxJS (map, catchError, retry), множественных значений, интеграции с async pipe.
+Что такое RxJS Observable?	Поток значений во времени. Подписка через <code>subscribe()</code> или async pipe в шаблоне.
+Чем Observable отличается от Subject?	Observable — lazy, один поток на подписчика (обычно). Subject — multicast, можно эмитить значения извне (<code>next()</code>).
+Что делает оператор map в RxJS?	Трансформирует каждое значение потока: <code>pipe(map(x =&gt; x * 2))</code>.
+Что делает switchMap?	При новом значении отменяет предыдущий внутренний Observable — типично для поиска/autocomplete.
+Зачем async pipe в шаблоне?	Подписывается на Observable/Promise, показывает значение, автоматически отписывается при destroy — меньше утечек.
+Что такое interceptors (HTTP)?	Цепочка middleware для HTTP: добавление токена, логирование, обработка ошибок через <code>HttpInterceptorFn</code>.
+Что такое NgRx / signals store?	Паттерны управления состоянием. NgRx — Redux-подобный store (actions, reducers, effects). Signals — более лёгкий локальный/глобальный reactive state.
+Что такое SSR и Angular Universal?	Server-Side Rendering: HTML генерируется на сервере для SEO и быстрого FCP. В Angular — <code>@angular/ssr</code>, <code>ng add @angular/ssr</code>.
+Что такое hydration?	«Оживление» SSR-HTML на клиенте: Angular привязывает event listeners без полной перерисовки DOM.
+Как запустить unit-тесты Angular?	<code>ng test</code> — Karma/Jasmine по умолчанию; в новых проектах также Vitest/Jest.
+Что такое TestBed?	Утилита для настройки тестового Angular-модуля/компонента: declarations, providers, imports.
+Что такое pipe vs directive vs component?	Component — UI + шаблон.<br>Directive — поведение/структура без своего «экрана».<br>Pipe — форматирование данных в шаблоне.
+Как работает *ngIf с else?	<code>*ngIf="cond; else elseBlock"</code> + <code>&lt;ng-template #elseBlock&gt;</code>
+Что такое hostBinding и hostListener?	Декораторы для привязки свойств/событий к host-элементу директивы/компонента без лишней разметки.
+Что такое standalone imports в @Component?	Список директив, pipe, других standalone-компонентов, доступных в шаблоне этого компонента.
+Как глобально зарегистрировать pipe/директиву в standalone app?	Импортировать в root-компонент или использовать <code>bootstrapApplication(..., { providers: [...] })</code> — глобальных NgModule больше нет по умолчанию.
+Что такое APP_INITIALIZER?	Token для функций, выполняемых до старта приложения: загрузка конфига, auth check.
+Чем defer (@defer) полезен в Angular 17+?	Ленивый рендер блока шаблона при viewport/idle/условии — оптимизация начальной загрузки.
+Что такое control flow (@if, @for, @switch)?	Новый синтаксис шаблонов Angular 17+ вместо *ngIf/*ngFor — лучше типизация и производительность.
+Как организовать shared UI-библиотеку в монорепо Angular?	<code>ng generate library</code> в Nx или Angular workspace; публикация через path mapping в tsconfig или npm package.
+Типичная ошибка NG0100 (ExpressionChangedAfterItHasBeenCheckedError)?	Значение в шаблоне изменилось после проверки CD в том же цикле. Решения: перенести изменение в ngOnInit/setTimeout, использовать OnPush/signals, или ChangeDetectorRef.detectChanges() осознанно.
+Как защитить маршрут только для авторизованных?	Functional guard <code>canActivate: [authGuard]</code>, проверка токена/сессии, редирект на login.
+Best practice для отписки от Observable?	<code>takeUntilDestroyed()</code>, async pipe, или manual unsubscribe в ngOnDestroy.
+Как подключить ngModel (standalone)?	1) Импорт: <code>import { FormsModule } from '@angular/forms'</code><br>2) В @Component: <code>imports: [FormsModule]</code><br>3) В шаблоне: <code>&lt;input [(ngModel)]="name"&gt;</code>
+Как использовать [(ngModel)] на input?	В компоненте: <code>name = '';</code><br>В шаблоне:<br><code>&lt;input [(ngModel)]="name" name="userName"&gt;</code><br>Атрибут <code>name</code> обязателен внутри &lt;form&gt; для template-driven форм.
+Что означает синтаксис [(ngModel)]?	«Banana in a box» — two-way binding:<br><code>[ngModel]="name"</code> — значение в input<br><code>(ngModelChange)="name = $event"</code> — обновление при вводе<br>Короткая запись обеих привязок.
+ngModel на checkbox и radio?	Checkbox: <code>&lt;input type="checkbox" [(ngModel)]="agreed"&gt;</code> → boolean<br>Radio (один выбор): один <code>[(ngModel)]="gender"</code> + одинаковый <code>name</code> + разные <code>value</code> на каждом radio.
+ngModel на select?	<code>&lt;select [(ngModel)]="city" name="city"&gt;</code><br><code>&lt;option value="msk"&gt;Москва&lt;/option&gt;</code><br>Значение option попадает в <code>city</code>.
+Как добавить валидацию с ngModel?	<code>&lt;input [(ngModel)]="email" name="email" required email #em="ngModel"&gt;</code><br>Ошибка: <code>*ngIf="em.invalid && em.touched"</code><br>Или директива <code>ngModelGroup</code> / обёртка в <code>&lt;form #f="ngForm"&gt;</code>.
+Чем ngModel отличается от formControlName?	<code>ngModel</code> — template-driven: Angular сам создаёт FormControl из шаблона.<br><code>formControlName</code> — reactive: FormControl объявлен в TS (<code>FormGroup</code>). Для новых форм чаще рекомендуют reactive.
+Можно ли ngModel и formControlName вместе?	На одном элементе — <b>нет</b>. На одной форме — можно смешивать, но это плохая практика; выберите один подход.
+Минимальный пример формы с ngModel	<b>TS:</b> <code>title = '';</code><br><b>HTML:</b><br><code>&lt;form #f="ngForm" (ngSubmit)="save()"&gt;</code><br><code>&lt;input [(ngModel)]="title" name="title" required&gt;</code><br><code>&lt;button [disabled]="f.invalid"&gt;OK&lt;/button&gt;</code><br><code>&lt;/form&gt;</code>
+Какие типы директив бывают в Angular?	1) <b>Компоненты</b> — директива с шаблоном.<br>2) <b>Атрибутные</b> — меняют вид/поведение элемента ([ngClass]).<br>3) <b>Структурные</b> — добавляют/убирают DOM (*ngIf, *ngFor).
+Как создать атрибутную директиву (CLI)?	<code>ng generate directive shared/highlight --standalone</code><br>Создаёт класс с <code>@Directive</code>, selector и файл spec.
+Минимальная standalone атрибутная директива	<b>highlight.directive.ts:</b><br><code>@Directive({ selector: '[appHighlight]', standalone: true })</code><br><code>export class HighlightDirective { }</code><br>Использование: <code>&lt;p appHighlight&gt;Текст&lt;/p&gt;</code>
+Как передать @Input в директиву?	<code>@Input() appHighlight = 'yellow';</code><br>Шаблон: <code>&lt;p [appHighlight]="'lightblue'"&gt;</code> или <code>&lt;p appHighlight&gt;</code> (значение по умолчанию).
+Что делает @HostBinding() в директиве?	Привязывает свойство/класс/стиль к <b>host-элементу</b>, на котором висит директива.<br><code>@HostBinding('style.backgroundColor') bg = 'yellow';</code>
+Что делает @HostListener() в директиве?	Подписывается на событие host-элемента.<br><code>@HostListener('mouseenter') onEnter() { ... }</code><br>Можно слушать <code>document:click</code>, <code>window:scroll</code>.
+Полный пример директивы highlight	<code>@Directive({ selector: '[appHighlight]', standalone: true })</code><br><code>export class HighlightDirective {</code><br><code>  @Input() appHighlight = 'yellow';</code><br><code>  @HostBinding('style.backgroundColor') get bg() { return this.appHighlight; }</code><br><code>  @HostListener('mouseenter') enter() { this.appHighlight = 'lightgreen'; }</code><br><code>}</code>
+Как использовать ElementRef в директиве?	<code>constructor(private el: ElementRef&lt;HTMLElement&gt;) {}</code><br><code>this.el.nativeElement.style.fontWeight = 'bold';</code><br>⚠️ Предпочитайте Renderer2/HostBinding — безопаснее для SSR и тестов.
+Что такое Renderer2 и зачем он нужен?	Абстракция над DOM: <code>setStyle</code>, <code>addClass</code>, <code>listen</code>. Работает в браузере и при SSR, проще мокать в тестах.
+Как инжектить Renderer2 и ElementRef?	<code>constructor(private renderer: Renderer2, private el: ElementRef) {}</code><br><code>this.renderer.setStyle(this.el.nativeElement, 'color', 'red');</code>
+Как подключить standalone-директиву к компоненту?	<code>@Component({ imports: [HighlightDirective], ... })</code><br>Директива должна быть в <code>imports</code> того компонента, где используется.
+Как сделать директиву с @Input alias?	<code>@Input('appHighlight') color = 'yellow';</code><br>Selector и input могут совпадать: <code>[appHighlight]="'red'"</code>
+Что такое exportAs у директивы?	Даёт шаблонную ссылку на экземпляр директивы.<br><code>@Directive({ selector: '[appTooltip]', exportAs: 'tooltip' })</code><br><code>&lt;div appTooltip #t="tooltip"&gt;{{ t.text }}&lt;/div&gt;</code>
+Как директива получает доступ к @Input() родителя?	Через DI, если директива объявлена на том же элементе, что и компонент — редко нужно. Обычно передают явные @Input или сервис.
+Структурная директива: из чего состоит?	Шаблон <code>&lt;ng-template&gt;</code> + директива с <code>@Input() set appUnless(condition)</code>, внутри <code>ViewContainerRef</code> + <code>TemplateRef</code>.
+Роль ViewContainerRef в структурной директиве?	«Контейнер» для вставки/удаления embedded view. <code>createEmbeddedView()</code> / <code>clear()</code>.
+Роль TemplateRef в структурной директиве?	Ссылка на <code>&lt;ng-template&gt;</code>, который Angular создаёт из <code>*directive</code>. По ней рендерится контент.
+Упрощённая структурная директива *appUnless	<code>@Input() set appUnless(cond: boolean) {</code><br><code>  cond ? this.vc.clear() : this.vc.createEmbeddedView(this.tpl);</code><br><code>}</code><br><code>constructor(private tpl: TemplateRef&lt;any&gt;, private vc: ViewContainerRef) {}</code>
+Почему *ngIf = ng-template + ngIf?	<code>*ngIf="x"</code> → <code>&lt;ng-template [ngIf]="x"&gt;...&lt;/ng-template&gt;</code><br>Звёздочка — синтаксический сахар Angular.
+Как создать pipe через CLI?	<code>ng generate pipe shared/truncate --standalone</code><br>Файлы: <code>truncate.pipe.ts</code> + spec.
+Минимальный standalone pipe	<code>@Pipe({ name: 'truncate', standalone: true })</code><br><code>export class TruncatePipe implements PipeTransform {</code><br><code>  transform(value: string, limit = 20): string {</code><br><code>    return value?.length &gt; limit ? value.slice(0, limit) + '…' : value ?? '';</code><br><code>  }</code><br><code>}</code>
+Как использовать кастомный pipe в шаблоне?	1) <code>imports: [TruncatePipe]</code> in @Component<br>2) <code>{{ longText | truncate:30 }}</code><br>Число после <code>:</code> — аргумент <code>transform</code>.
+Сколько аргументов может принять pipe?	Неограниченно через variadic: <code>transform(value, arg1, arg2, ...args)</code><br>Шаблон: <code>{{ v | myPipe:a:b:c }}</code>
+Pipe с несколькими параметрами — пример	<code>transform(amount: number, currency = 'RUB', locale = 'ru-RU'): string {</code><br><code>  return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);</code><br><code>}</code><br><code>{{ price | currencyFormat:'USD':'en-US' }}</code>
+Что такое PipeTransform?	Интерфейс с методом <code>transform(value, ...args)</code>. Все pipes его реализуют.
+Pure pipe (по умолчанию) — когда пересчитывается?	Только если изменился входной <b>примитив</b> или <b>ссылка</b> на объект/массив. Мутация массива без новой ссылки — pipe не обновится.
+Как сделать impure pipe?	<code>@Pipe({ name: 'filterActive', pure: false })</code><br>Пересчитывается при каждой change detection. Использовать осторожно — может тормозить UI.
+Когда нужен impure pipe?	Когда вход мутируется in-place (push в тот же массив) или нужны «живые» данные (Date.now). Лучше избегать — предпочитайте immutable данные + pure pipe.
+Как pipe работает с async Observable?	<code>{{ data$ | async }}</code> — встроенный AsyncPipe impure по сути, подписывается и обновляет шаблон при новых значениях.
+Можно ли pipe использовать в @Component class?	Да, через DI: <code>constructor(private truncate: TruncatePipe) {}</code> и <code>providers: [TruncatePipe]</code> — редко нужно, обычно только в шаблоне.
+Как протестировать pipe?	<code>const pipe = new TruncatePipe();</code><br><code>expect(pipe.transform('hello world', 5)).toBe('hello…');</code><br>Pipes легко тестируются без TestBed.
+Цепочка pipes в шаблоне	<code>{{ user.name | lowercase | truncate:10 }}</code><br>Выход одного pipe — вход следующего, слева направо.
+Разница pipe и метода компонента {{ getX() }}?	Pipe pure кэшируется Angular между CD-циклами. Метод вызывается каждый CD → риск тормозов. Для форматирования предпочитайте pipe.
+Как создать pipe, зависящий от локали?	Инжект <code>LOCALE_ID</code> или используйте встроенные <code>DatePipe</code>, <code>CurrencyPipe</code>, <code>DecimalPipe</code> с locale в providers.
+Как зарегистрировать pipe глобально (standalone app)?	Импортировать pipe в корневой AppComponent <code>imports: [...]</code> — только для root шаблона.<br>Для всего приложения — импортировать pipe в каждый компонент или вынести в shared standalone-компонент-обёртку.<br>Альтернатива: <code>importProvidersFrom</code> legacy NgModule с exports.
+Директива vs pipe — когда что?	<b>Pipe</b> — форматирование значения для отображения (дата, обрезка строки).<br><b>Директива</b> — поведение/структура DOM (клик, tooltip, *ngIf-подобное).
+Директива с @Input() и setter для side-effect	<code>@Input() set appScrollTop(px: number) {</code><br><code>  this.el.nativeElement.scrollTop = px;</code><br><code>}</code><br>Setters удобны для реакции на изменение input.
+Как удалить директиву/pipe из DOM при destroy?	Angular сам уничтожает директиву с элементом. Для ручной очистки — <code>ngOnDestroy()</code>: removeListener, unsubscribe.

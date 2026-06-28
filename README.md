@@ -187,12 +187,13 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | PyTorch | `decks/pytorch-basics.json` |
 | Angular (пример) | `decks/angular-sample.json` |
 | **Angular Live-coding** | `decks/angular-live-coding.json` |
+| **Angular (полная)** | `decks/anki-angular.txt` + `decks/angular-code.json` |
 | Agile — основы | `decks/agile-fundamentals.json` |
 | Scrum | `decks/scrum-framework.json` |
 | Kanban | `decks/kanban-method.json` |
 | SAFe | `decks/safe-scaled-agile.json` |
 
-Если есть `~/Documents/anki-angular.txt` и `decks/angular-code.json`, добавляется составная колода **Angular (полная)**.
+Составная колода **Angular (полная)** объединяет `decks/anki-angular.txt` и `decks/angular-code.json`. На десктопе, если есть `~/Documents/anki-angular.txt`, используется он вместо встроенного файла.
 
 Перегенерация колод: скрипты `decks/generate_*.py` (запускать из каталога `decks/`).
 

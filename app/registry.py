@@ -78,20 +78,40 @@ class DeckRegistry:
             if p.exists():
                 self._add_file_entry(p, name=name, skip_if_exists=True)
 
-        php = self.builtin_dir / "php8-plus.json"
-        angular_txt = Path.home() / "Documents" / "anki-angular.txt"
+        self._ensure_angular_full_deck()
+
+    def _angular_txt_path(self) -> Path | None:
+        local = Path.home() / "Documents" / "anki-angular.txt"
+        bundled = self.builtin_dir / "anki-angular.txt"
+        if local.exists():
+            return local
+        if bundled.exists():
+            return bundled
+        return None
+
+    def _ensure_angular_full_deck(self) -> None:
+        angular_txt = self._angular_txt_path()
         angular_code = self.builtin_dir / "angular-code.json"
+        if angular_txt is None or not angular_code.exists():
+            return
+
+        paths = [str(angular_txt.resolve()), str(angular_code.resolve())]
         composite_id = "angular-full"
-        if angular_txt.exists() and angular_code.exists() and composite_id not in known_ids:
-            paths = [str(angular_txt.resolve()), str(angular_code.resolve())]
-            self.entries.append(
-                DeckEntry(
-                    deck_id=composite_id,
-                    name="Angular (полная)",
-                    paths=paths,
-                    added_at=_iso_now(),
-                )
+        existing = self.get(composite_id)
+        if existing:
+            broken = any(not Path(p).expanduser().exists() for p in existing.paths)
+            if broken or existing.paths != paths:
+                existing.paths = paths
+            return
+
+        self.entries.append(
+            DeckEntry(
+                deck_id=composite_id,
+                name="Angular (полная)",
+                paths=paths,
+                added_at=_iso_now(),
             )
+        )
 
     def _add_file_entry(self, path: Path, *, name: str | None = None, skip_if_exists: bool = False) -> DeckEntry | None:
         path = path.resolve()
