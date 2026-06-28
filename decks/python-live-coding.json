@@ -1,0 +1,278 @@
+{
+  "name": "Python Live-coding",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Функция greet",
+      "task": "Напиши функцию greet(name: str) -> str, возвращающую f'Hello, {name}!'.",
+      "reference": "def greet(name: str) -> str:\n    return f'Hello, {name}!'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Сумма списка",
+      "task": "Функция total(numbers: list[int]) -> int — сумма элементов (без sum()).",
+      "reference": "def total(numbers: list[int]) -> int:\n    result = 0\n    for n in numbers:\n        result += n\n    return result",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "List comprehension — квадраты",
+      "task": "Функция squares(n: int) -> list[int] возвращает [0, 1, 4, ... (n-1)^2].",
+      "reference": "def squares(n: int) -> list[int]:\n    return [i * i for i in range(n)]",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Фильтр чётных",
+      "task": "Функция evens(numbers: list[int]) -> list[int] — только чётные числа.",
+      "reference": "def evens(numbers: list[int]) -> list[int]:\n    return [n for n in numbers if n % 2 == 0]",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Dict comprehension",
+      "task": "Функция invert_unique(items: list[str]) -> dict[str, int] — слово -> длина (уникальные ключи).",
+      "reference": "def invert_unique(items: list[str]) -> dict[str, int]:\n    return {word: len(word) for word in items}",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Класс Counter",
+      "task": "Класс Counter с методами increment() -> int и value() -> int (внутренний счётчик).",
+      "reference": "class Counter:\n    def __init__(self) -> None:\n        self._count = 0\n\n    def increment(self) -> int:\n        self._count += 1\n        return self._count\n\n    def value(self) -> int:\n        return self._count",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Dataclass User",
+      "task": "Dataclass User с полями id: int, email: str и методом domain() -> str (часть после @).",
+      "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass User:\n    id: int\n    email: str\n\n    def domain(self) -> str:\n        return self.email.split('@', 1)[1]",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Property full_name",
+      "task": "Класс Person(first: str, last: str) с @property full_name -> str.",
+      "reference": "class Person:\n    def __init__(self, first: str, last: str) -> None:\n        self.first = first\n        self.last = last\n\n    @property\n    def full_name(self) -> str:\n        return f'{self.first} {self.last}'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Контекстный менеджер",
+      "task": "Функция write_lines(path: str, lines: list[str]) записывает строки в файл через with open(..., 'w').",
+      "reference": "def write_lines(path: str, lines: list[str]) -> None:\n    with open(path, 'w', encoding='utf-8') as f:\n        for line in lines:\n            f.write(line + '\\n')",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Чтение JSON",
+      "task": "Функция load_json(path: str) -> dict читает UTF-8 JSON из файла.",
+      "reference": "import json\n\n\ndef load_json(path: str) -> dict:\n    with open(path, encoding='utf-8') as f:\n        return json.load(f)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Декоратор uppercase",
+      "task": "Декоратор @uppercase оборачивает функцию, возвращающую str, и возвращает результат в upper().",
+      "reference": "from functools import wraps\nfrom typing import Callable\n\n\ndef uppercase(fn: Callable[[], str]) -> Callable[[], str]:\n    @wraps(fn)\n    def wrapper() -> str:\n        return fn().upper()\n\n    return wrapper",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Generator range_step",
+      "task": "Генератор range_step(start, stop, step) — как range, но yield.",
+      "reference": "from collections.abc import Iterator\n\n\ndef range_step(start: int, stop: int, step: int = 1) -> Iterator[int]:\n    value = start\n    while value < stop:\n        yield value\n        value += step",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "*args сумма",
+      "task": "Функция add_all(*values: int) -> int — сумма произвольного числа аргументов.",
+      "reference": "def add_all(*values: int) -> int:\n    return sum(values)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "**kwargs merge",
+      "task": "Функция merge_dicts(**kwargs) -> dict возвращает копию kwargs.",
+      "reference": "def merge_dicts(**kwargs) -> dict:\n    return dict(kwargs)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Custom exception",
+      "task": "Класс ValidationError(Exception) с полем field: str; raise при пустой строке validate_non_empty(s, field).",
+      "reference": "class ValidationError(Exception):\n    def __init__(self, field: str, message: str) -> None:\n        super().__init__(message)\n        self.field = field\n\n\ndef validate_non_empty(value: str, field: str) -> str:\n    if not value.strip():\n        raise ValidationError(field, 'must not be empty')\n    return value",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "match HTTP status",
+      "task": "Функция status_label(code: int) -> str через match: 200->'OK', 404->'Not Found', иначе 'Unknown'.",
+      "reference": "def status_label(code: int) -> str:\n    match code:\n        case 200:\n            return 'OK'\n        case 404:\n            return 'Not Found'\n        case _:\n            return 'Unknown'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Enum Status",
+      "task": "Enum Status со значениями ACTIVE='active', ARCHIVED='archived' (str enum).",
+      "reference": "from enum import Enum\n\n\nclass Status(str, Enum):\n    ACTIVE = 'active'\n    ARCHIVED = 'archived'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Pathlib list py",
+      "task": "Функция list_py_files(directory: str) -> list[str] — имена *.py в каталоге через pathlib.",
+      "reference": "from pathlib import Path\n\n\ndef list_py_files(directory: str) -> list[str]:\n    return sorted(p.name for p in Path(directory).glob('*.py'))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "defaultdict группировка",
+      "task": "Функция group_by_first_letter(words: list[str]) -> dict[str, list[str]].",
+      "reference": "from collections import defaultdict\n\n\ndef group_by_first_letter(words: list[str]) -> dict[str, list[str]]:\n    groups: dict[str, list[str]] = defaultdict(list)\n    for word in words:\n        if word:\n            groups[word[0].lower()].append(word)\n    return dict(groups)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Counter частоты",
+      "task": "Функция word_freq(text: str) -> dict[str, int] — частота слов (split по пробелам, lower).",
+      "reference": "from collections import Counter\n\n\ndef word_freq(text: str) -> dict[str, int]:\n    return dict(Counter(word.lower() for word in text.split()))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "zip pairs",
+      "task": "Функция to_pairs(keys: list[str], values: list[int]) -> list[tuple[str, int]] через zip.",
+      "reference": "def to_pairs(keys: list[str], values: list[int]) -> list[tuple[str, int]]:\n    return list(zip(keys, values, strict=True))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "sorted unique",
+      "task": "Функция unique_sorted(items: list[int]) -> list[int] — уникальные отсортированные.",
+      "reference": "def unique_sorted(items: list[int]) -> list[int]:\n    return sorted(set(items))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "partial apply",
+      "task": "Функция make_adder(n: int) возвращает lambda x: x + n.",
+      "reference": "def make_adder(n: int):\n    return lambda x: x + n",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "map/filter pipeline",
+      "task": "Функция positive_squares(numbers: list[int]) -> list[int] — квадраты положительных.",
+      "reference": "def positive_squares(numbers: list[int]) -> list[int]:\n    return [n * n for n in numbers if n > 0]",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Abstract base",
+      "task": "ABC Storage с abstractmethod save(key: str, value: str) -> None; класс MemoryStorage с dict.",
+      "reference": "from abc import ABC, abstractmethod\n\n\nclass Storage(ABC):\n    @abstractmethod\n    def save(self, key: str, value: str) -> None:\n        ...\n\n\nclass MemoryStorage(Storage):\n    def __init__(self) -> None:\n        self._data: dict[str, str] = {}\n\n    def save(self, key: str, value: str) -> None:\n        self._data[key] = value",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Context manager class",
+      "task": "Класс Timer с __enter__/__exit__ и полем elapsed (заглушка: elapsed=0.0).",
+      "reference": "class Timer:\n    def __enter__(self) -> 'Timer':\n        self.elapsed = 0.0\n        return self\n\n    def __exit__(self, exc_type, exc, tb) -> None:\n        return None",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "sqlite fetchone",
+      "task": "Функция fetch_user_name(conn, user_id: int) -> str | None — SELECT name FROM users WHERE id=?.",
+      "reference": "def fetch_user_name(conn, user_id: int) -> str | None:\n    row = conn.execute('SELECT name FROM users WHERE id = ?', (user_id,)).fetchone()\n    return row[0] if row else None",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "TypedDict UserRow",
+      "task": "TypedDict UserRow с id: int, name: str; функция as_row(id, name) -> UserRow.",
+      "reference": "from typing import TypedDict\n\n\nclass UserRow(TypedDict):\n    id: int\n    name: str\n\n\ndef as_row(user_id: int, name: str) -> UserRow:\n    return {'id': user_id, 'name': name}",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "async fetch stub",
+      "task": "async def fetch_status(code: int) -> str — await asyncio.sleep(0); return status_label(code).",
+      "reference": "import asyncio\n\n\nasync def fetch_status(code: int) -> str:\n    await asyncio.sleep(0)\n    return status_label(code)\n\n\ndef status_label(code: int) -> str:\n    return 'OK' if code == 200 else 'Error'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "unittest style assert",
+      "task": "Функция is_palindrome(s: str) -> bool — игнорировать регистр и пробелы.",
+      "reference": "def is_palindrome(text: str) -> bool:\n    cleaned = ''.join(ch.lower() for ch in text if ch.isalnum())\n    return cleaned == cleaned[::-1]",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "parse key=value",
+      "task": "Функция parse_kv(line: str) -> tuple[str, str] для строки 'key=value' (один =).",
+      "reference": "def parse_kv(line: str) -> tuple[str, str]:\n    key, value = line.split('=', 1)\n    return key.strip(), value.strip()",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "CLI argparse stub",
+      "task": "Функция build_parser() -> ArgumentParser с аргументом --limit type=int default=10.",
+      "reference": "import argparse\n\n\ndef build_parser() -> argparse.ArgumentParser:\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--limit', type=int, default=10)\n    return parser",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "NamedTuple Point",
+      "task": "NamedTuple Point(x: int, y: int) и функция distance_origin(p: Point) -> float.",
+      "reference": "from math import hypot\nfrom typing import NamedTuple\n\n\nclass Point(NamedTuple):\n    x: int\n    y: int\n\n\ndef distance_origin(p: Point) -> float:\n    return hypot(p.x, p.y)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Slots class",
+      "task": "Класс Card с __slots__ = ('rank', 'suit') и методом label() -> str.",
+      "reference": "class Card:\n    __slots__ = ('rank', 'suit')\n\n    def __init__(self, rank: str, suit: str) -> None:\n        self.rank = rank\n        self.suit = suit\n\n    def label(self) -> str:\n        return f'{self.rank} of {self.suit}'",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Walrus read lines",
+      "task": "Функция first_long_line(path) -> str | None — первая строка длиннее 10 символов (:=).",
+      "reference": "def first_long_line(path: str) -> str | None:\n    with open(path, encoding='utf-8') as f:\n        while line := f.readline():\n            if len(line.strip()) > 10:\n                return line.strip()\n    return None",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Protocol Printable",
+      "task": "Protocol Printable с def __str__ -> str; функция print_all(items: list[Printable]).",
+      "reference": "from typing import Protocol\n\n\nclass Printable(Protocol):\n    def __str__(self) -> str: ...\n\n\ndef print_all(items: list[Printable]) -> None:\n    for item in items:\n        print(str(item))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Reduce factorial",
+      "task": "Функция factorial(n: int) -> int через цикл (n >= 0).",
+      "reference": "def factorial(n: int) -> int:\n    if n < 0:\n        raise ValueError('n must be non-negative')\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Deque rotate",
+      "task": "Функция rotate_left(items: list[int], k: int) -> list[int] с collections.deque.",
+      "reference": "from collections import deque\n\n\ndef rotate_left(items: list[int], k: int) -> list[int]:\n    d = deque(items)\n    d.rotate(-k)\n    return list(d)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HTTP stub dataclass",
+      "task": "Dataclass HttpResponse(status: int, body: str) и метод is_ok() -> bool (200 <= status < 300).",
+      "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass HttpResponse:\n    status: int\n    body: str\n\n    def is_ok(self) -> bool:\n        return 200 <= self.status < 300",
+      "language": "python"
+    }
+  ]
+}

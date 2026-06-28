@@ -1,0 +1,271 @@
+{
+  "name": "PHP Live-coding",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Функция greet",
+      "task": "Напиши функцию greet(string $name): string, возвращающую \"Hello, {$name}!\".",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction greet(string $name): string\n{\n    return \"Hello, {$name}!\";\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Сумма массива",
+      "task": "Функция total(array $numbers): int — сумма элементов (без array_sum).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction total(array $numbers): int\n{\n    $sum = 0;\n    foreach ($numbers as $n) {\n        $sum += $n;\n    }\n    return $sum;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "array_map — квадраты",
+      "task": "Функция squares(array $numbers): array — квадраты каждого int.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction squares(array $numbers): array\n{\n    return array_map(fn (int $n): int => $n * $n, $numbers);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "array_filter чётные",
+      "task": "Функция evens(array $numbers): array — только чётные числа.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction evens(array $numbers): array\n{\n    return array_values(array_filter($numbers, fn (int $n): bool => $n % 2 === 0));\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Constructor property promotion",
+      "task": "Класс User с promoted properties public int $id и public string $email.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class User\n{\n    public function __construct(\n        public int $id,\n        public string $email,\n    ) {\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Readonly class DTO",
+      "task": "Readonly class Money с полями int $amount и string $currency (PHP 8.2+).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class Money\n{\n    public function __construct(\n        public int $amount,\n        public string $currency,\n    ) {\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "match HTTP status",
+      "task": "Функция statusLabel(int $code): string через match: 200->'OK', 404->'Not Found', default 'Unknown'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction statusLabel(int $code): string\n{\n    return match ($code) {\n        200 => 'OK',\n        404 => 'Not Found',\n        default => 'Unknown',\n    };\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Nullsafe operator",
+      "task": "Функция userCity(?User $user): ?string — вернуть $user?->address?->city.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction userCity(?User $user): ?string\n{\n    return $user?->address?->city;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Backed enum Status",
+      "task": "Enum Status: string с case Active='active', Archived='archived'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Status: string\n{\n    case Active = 'active';\n    case Archived = 'archived';\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Named arguments",
+      "task": "Функция createUser(string $email, int $id = 0): User — вызов с named args id и email в примере комментария.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction createUser(string $email, int $id = 0): User\n{\n    return new User(id: $id, email: $email);\n}\n\n// createUser(id: 1, email: 'a@b.c');",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Interface + implementation",
+      "task": "Interface Logger с log(string $message): void; класс EchoLogger.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Logger\n{\n    public function log(string $message): void;\n}\n\nfinal class EchoLogger implements Logger\n{\n    public function log(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "PDO prepared SELECT",
+      "task": "Функция fetchUserName(PDO $pdo, int $id): ?string — SELECT name FROM users WHERE id = ?.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction fetchUserName(PDO $pdo, int $id): ?string\n{\n    $stmt = $pdo->prepare('SELECT name FROM users WHERE id = ?');\n    $stmt->execute([$id]);\n    $row = $stmt->fetch(PDO::FETCH_ASSOC);\n    return $row['name'] ?? null;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "JSON encode/decode",
+      "task": "Функция toJson(array $data): string через json_encode с JSON_THROW_ON_ERROR.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toJson(array $data): string\n{\n    return json_encode($data, JSON_THROW_ON_ERROR);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Custom exception",
+      "task": "Класс ValidationException extends Exception; validateNonEmpty(string $value, string $field): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class ValidationException extends Exception\n{\n    public function __construct(public readonly string $field, string $message)\n    {\n        parent::__construct($message);\n    }\n}\n\nfunction validateNonEmpty(string $value, string $field): string\n{\n    if (trim($value) === '') {\n        throw new ValidationException($field, 'must not be empty');\n    }\n    return $value;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Arrow function pipeline",
+      "task": "Функция positiveSquares(array $numbers): array — квадраты положительных через array_filter + array_map.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction positiveSquares(array $numbers): array\n{\n    $positive = array_filter($numbers, fn (int $n): bool => $n > 0);\n    return array_map(fn (int $n): int => $n * $n, $positive);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "First-class callable",
+      "task": "Класс Calculator с add(int $a, int $b): int; переменная $fn = $calc->add(...).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Calculator\n{\n    public function add(int $a, int $b): int\n    {\n        return $a + $b;\n    }\n}\n\n$calc = new Calculator();\n$fn = $calc->add(...);",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Trait Timestampable",
+      "task": "Trait Timestampable с protected ?DateTimeImmutable $createdAt и методом touch(): void.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ntrait Timestampable\n{\n    protected ?DateTimeImmutable $createdAt = null;\n\n    public function touch(): void\n    {\n        $this->createdAt = new DateTimeImmutable();\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Attribute Route",
+      "task": "Атрибут #[Route('/api/users')] над методом listUsers().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfinal class UserController\n{\n    #[Route('/api/users')]\n    public function listUsers(): array\n    {\n        return [];\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Union type parseId",
+      "task": "Функция parseId(int|string $value): int — если string, (int)$value.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parseId(int|string $value): int\n{\n    return is_int($value) ? $value : (int) $value;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Generator rangeStep",
+      "task": "Generator function rangeStep(int $start, int $stop, int $step = 1): Generator.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction rangeStep(int $start, int $stop, int $step = 1): Generator\n{\n    for ($value = $start; $value < $stop; $value += $step) {\n        yield $value;\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Closure counter",
+      "task": "Функция makeCounter(): Closure возвращает closure, увеличивающий внутренний счётчик.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction makeCounter(): Closure\n{\n    $count = 0;\n    return function () use (&$count): int {\n        return ++$count;\n    };\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "str_contains helper",
+      "task": "Функция contains(string $haystack, string $needle): bool через str_contains().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction contains(string $haystack, string $needle): bool\n{\n    return str_contains($haystack, $needle);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "DateTime format",
+      "task": "Функция formatToday(string $format = 'Y-m-d'): string через new DateTimeImmutable('today').",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction formatToday(string $format = 'Y-m-d'): string\n{\n    return (new DateTimeImmutable('today'))->format($format);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "SplFileObject read lines",
+      "task": "Функция readLines(string $path): array читает файл построчно через SplFileObject.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction readLines(string $path): array\n{\n    $file = new SplFileObject($path);\n    $lines = [];\n    foreach ($file as $line) {\n        if ($line === false) {\n            continue;\n        }\n        $lines[] = rtrim($line, \"\\r\\n\");\n    }\n    return $lines;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Namespace autoload class",
+      "task": "Namespace App\\Service; final class Greeter с методом hello(string $name): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nnamespace App\\Service;\n\nfinal class Greeter\n{\n    public function hello(string $name): string\n    {\n        return \"Hi, {$name}\";\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Static factory",
+      "task": "Класс Email с private __construct и static fromString(string $raw): self.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Email\n{\n    private function __construct(public readonly string $value)\n    {\n    }\n\n    public static function fromString(string $raw): self\n    {\n        return new self(trim($raw));\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Array combine",
+      "task": "Функция combine(array $keys, array $values): array через array_combine (одинаковая длина).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction combine(array $keys, array $values): array\n{\n    return array_combine($keys, $values);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Spread merge arrays",
+      "task": "Функция mergeArrays(array ...$parts): array через array_merge.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction mergeArrays(array ...$parts): array\n{\n    return array_merge(...$parts);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Enum method label",
+      "task": "Backed enum Priority: int (Low=1, High=2) с методом label(): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Priority: int\n{\n    case Low = 1;\n    case High = 2;\n\n    public function label(): string\n    {\n        return match ($this) {\n            self::Low => 'low',\n            self::High => 'high',\n        };\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Readonly promotion Order",
+      "task": "Readonly class Order с promoted properties string $id и float $total.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class Order\n{\n    public function __construct(\n        public string $id,\n        public float $total,\n    ) {\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Throw expression",
+      "task": "Функция requirePositive(int $n): int с $n > 0 ?: throw new InvalidArgumentException().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction requirePositive(int $n): int\n{\n    return $n > 0 ? $n : throw new InvalidArgumentException('must be positive');\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "htmlspecialchars helper",
+      "task": "Функция e(string $value): string — htmlspecialchars с ENT_QUOTES и UTF-8.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction e(string $value): string\n{\n    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Password hash verify",
+      "task": "Функции hashPassword(string $plain): string и verifyPassword(string $plain, string $hash): bool.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction hashPassword(string $plain): string\n{\n    return password_hash($plain, PASSWORD_DEFAULT);\n}\n\nfunction verifyPassword(string $plain, string $hash): bool\n{\n    return password_verify($plain, $hash);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Simple router",
+      "task": "Класс Router с методами get(string $path, callable $handler): void и dispatch(string $method, string $path).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Router\n{\n    /** @var array<string, callable> */\n    private array $routes = [];\n\n    public function get(string $path, callable $handler): void\n    {\n        $this->routes['GET ' . $path] = $handler;\n    }\n\n    public function dispatch(string $method, string $path): mixed\n    {\n        $key = $method . ' ' . $path;\n        if (!isset($this->routes[$key])) {\n            throw new RuntimeException('Not found');\n        }\n        return ($this->routes[$key])();\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Value object Email validate",
+      "task": "Класс EmailValue с private string $value, конструктор валидирует filter_var FILTER_VALIDATE_EMAIL.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class EmailValue\n{\n    public function __construct(private readonly string $value)\n    {\n        if (filter_var($value, FILTER_VALIDATE_EMAIL) === false) {\n            throw new InvalidArgumentException('Invalid email');\n        }\n    }\n\n    public function toString(): string\n    {\n        return $this->value;\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Fibonacci generator",
+      "task": "Generator function fibonacci(int $count): Generator — первые $count чисел Фибоначчи.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction fibonacci(int $count): Generator\n{\n    $a = 0;\n    $b = 1;\n    for ($i = 0; $i < $count; $i++) {\n        yield $a;\n        [$a, $b] = [$b, $a + $b];\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Palindrome check",
+      "task": "Функция isPalindrome(string $text): bool — игнорировать регистр и не-буквы.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction isPalindrome(string $text): bool\n{\n    $clean = strtolower(preg_replace('/[^a-z0-9]/i', '', $text) ?? '');\n    return $clean === strrev($clean);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HttpClient stub",
+      "task": "Класс HttpResponse с promoted int $status, string $body и методом isSuccessful(): bool.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class HttpResponse\n{\n    public function __construct(\n        public int $status,\n        public string $body,\n    ) {\n    }\n\n    public function isSuccessful(): bool\n    {\n        return $this->status >= 200 && $this->status < 300;\n    }\n}",
+      "language": "php"
+    }
+  ]
+}

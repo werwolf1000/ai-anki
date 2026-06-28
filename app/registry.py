@@ -69,6 +69,8 @@ class DeckRegistry:
             ("PyTorch", self.builtin_dir / "pytorch-basics.json"),
             ("Angular (пример)", self.builtin_dir / "angular-sample.json"),
             ("Angular Live-coding", self.builtin_dir / "angular-live-coding.json"),
+            ("Python Live-coding", self.builtin_dir / "python-live-coding.json"),
+            ("PHP Live-coding", self.builtin_dir / "php-live-coding.json"),
             ("Agile — основы", self.builtin_dir / "agile-fundamentals.json"),
             ("Scrum", self.builtin_dir / "scrum-framework.json"),
             ("Kanban", self.builtin_dir / "kanban-method.json"),

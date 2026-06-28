@@ -187,6 +187,8 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | PyTorch | `decks/pytorch-basics.json` |
 | Angular (пример) | `decks/angular-sample.json` |
 | **Angular Live-coding** | `decks/angular-live-coding.json` |
+| **Python Live-coding** | `decks/python-live-coding.json` |
+| **PHP Live-coding** | `decks/php-live-coding.json` |
 | **Angular (полная)** | `decks/anki-angular.txt` + `decks/angular-code.json` |
 | Agile — основы | `decks/agile-fundamentals.json` |
 | Scrum | `decks/scrum-framework.json` |
