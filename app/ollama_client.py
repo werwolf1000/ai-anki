@@ -6,10 +6,45 @@ from urllib.parse import urlparse
 
 import requests
 
-from app.deck import Card, ChatMessage, ReviewResult
+from app.deck import Card, ChatMessage, ReviewResult, infer_language_from_name
 
-SYSTEM_PROMPT_TEXT = """Ты — терпеливый преподаватель в режиме карточек (как Anki).
-Проверяешь ответ ученика на вопрос по программированию.
+def _topic_context(card: Card, deck_name: str = "") -> str:
+    label = _language_label(card, deck_name)
+    lang = _normalize_language(card, deck_name)
+    if deck_name:
+        if lang in ("php", "python", "py", "typescript", "ts", "javascript", "js"):
+            return f"колоды «{deck_name}» ({label})"
+        return f"колоды «{deck_name}»"
+    if lang in ("php", "python", "py", "typescript", "ts", "javascript", "js"):
+        return label
+    return "программированию"
+
+
+def _language_scope_rule(card: Card, deck_name: str = "") -> str:
+    lang = (card.language or infer_language_from_name(deck_name) or "").strip().lower()
+    conflicts = {
+        "php": "Python, JavaScript или TypeScript/Angular",
+        "python": "PHP, JavaScript или TypeScript/Angular",
+        "py": "PHP, JavaScript или TypeScript/Angular",
+        "typescript": "PHP или Python",
+        "ts": "PHP или Python",
+        "javascript": "PHP или Python",
+        "js": "PHP или Python",
+    }
+    if lang not in conflicts:
+        return ""
+    label = _language_label(card, deck_name)
+    return (
+        f"9. Вопрос про {label}. НЕ интерпретируй ответ как {conflicts[lang]} — "
+        f"оценивай только в контексте {label}.\n"
+    )
+
+
+def _system_prompt_text(card: Card, deck_name: str = "") -> str:
+    topic = _topic_context(card, deck_name)
+    scope = _language_scope_rule(card, deck_name)
+    return f"""Ты — терпеливый преподаватель по теме {topic} в режиме карточек (как Anki).
+Проверяешь ответ ученика на вопрос в контексте {topic}.
 
 Правила:
 1. Ученик может отвечать своими словами — не требуй дословного совпадения с эталоном.
@@ -20,17 +55,24 @@ SYSTEM_PROMPT_TEXT = """Ты — терпеливый преподаватель
 6. Если лимит уточнений исчерпан — follow_up обязательно пустая строка, только hint и feedback.
 7. feedback — 2–4 предложения на русском, дружелюбно и по делу.
 8. Отвечай ТОЛЬКО валидным JSON без markdown:
-
-{
+{{
   "correct": true,
   "score": 85,
   "feedback": "...",
   "hint": "...",
   "follow_up": "...",
   "reference_summary": "краткий эталон 1-2 предложения"
-}
+}}
+{scope}Если hint не нужен — пустая строка. Если follow_up не нужен — пустая строка."""
 
-Если hint не нужен — пустая строка. Если follow_up не нужен — пустая строка."""
+
+def _text_card_prefix(card: Card, deck_name: str = "") -> str:
+    topic = _topic_context(card, deck_name)
+    if deck_name:
+        return f"Тема колоды: {deck_name}\nКонтекст: {topic}\n\n"
+    if topic != "программированию":
+        return f"Контекст: {topic}\n\n"
+    return ""
 
 _LIVE_CODE_JSON = """
 {
@@ -45,11 +87,19 @@ _LIVE_CODE_JSON = """
 _CODE_JSON = _LIVE_CODE_JSON
 
 
-def _normalize_language(card: Card) -> str:
-    return (card.language or "typescript").strip().lower() or "typescript"
+def _effective_language(card: Card, deck_name: str = "") -> str:
+    return (
+        (card.language or "").strip().lower()
+        or infer_language_from_name(deck_name)
+        or "typescript"
+    )
 
 
-def _language_label(card: Card) -> str:
+def _normalize_language(card: Card, deck_name: str = "") -> str:
+    return _effective_language(card, deck_name)
+
+
+def _language_label(card: Card, deck_name: str = "") -> str:
     labels = {
         "typescript": "TypeScript",
         "ts": "TypeScript",
@@ -59,10 +109,11 @@ def _language_label(card: Card) -> str:
         "py": "Python",
         "php": "PHP",
     }
-    return labels.get(_normalize_language(card), _normalize_language(card).capitalize())
+    lang = _normalize_language(card, deck_name)
+    return labels.get(lang, lang.capitalize())
 
 
-def _fence_lang(card: Card) -> str:
+def _fence_lang(card: Card, deck_name: str = "") -> str:
     fences = {
         "typescript": "typescript",
         "ts": "typescript",
@@ -72,19 +123,20 @@ def _fence_lang(card: Card) -> str:
         "py": "python",
         "php": "php",
     }
-    return fences.get(_normalize_language(card), _normalize_language(card))
+    lang = _normalize_language(card, deck_name)
+    return fences.get(lang, lang)
 
 
-def _is_angular_context(card: Card) -> bool:
-    if _normalize_language(card) not in ("typescript", "ts", "javascript", "js"):
+def _is_angular_context(card: Card, deck_name: str = "") -> bool:
+    if _normalize_language(card, deck_name) not in ("typescript", "ts", "javascript", "js"):
         return False
     blob = f"{card.reference}\n{card.question}\n{card.task}\n{card.code}"
     return "@angular" in blob or "@Component" in blob or "standalone:" in blob
 
 
-def _system_prompt_live_code(card: Card) -> str:
-    label = _language_label(card)
-    if _is_angular_context(card):
+def _system_prompt_live_code(card: Card, deck_name: str = "") -> str:
+    label = _language_label(card, deck_name)
+    if _is_angular_context(card, deck_name):
         topic = f"Angular/{label}"
         criteria = f"API, idioms Angular/{label} и корректность решения"
     else:
@@ -104,9 +156,9 @@ def _system_prompt_live_code(card: Card) -> str:
 8. Только JSON:{_LIVE_CODE_JSON}"""
 
 
-def _system_prompt_code(card: Card) -> str:
-    label = _language_label(card)
-    if _is_angular_context(card):
+def _system_prompt_code(card: Card, deck_name: str = "") -> str:
+    label = _language_label(card, deck_name)
+    if _is_angular_context(card, deck_name):
         topic = f"Angular/{label}"
     else:
         topic = label
@@ -213,6 +265,7 @@ class AnswerEvaluator:
         *,
         is_follow_up: bool = False,
         follow_ups_remaining: int = 0,
+        deck_name: str = "",
     ) -> ReviewResult:
         history = history or []
         limit_note = (
@@ -220,8 +273,8 @@ class AnswerEvaluator:
             "Не задавай follow_up, если лимит 0."
         )
         if card.is_live_code:
-            fence = _fence_lang(card)
-            label = _language_label(card)
+            fence = _fence_lang(card, deck_name)
+            label = _language_label(card, deck_name)
             prefix = (
                 f"Язык карточки: {label}\n"
                 f"Задание (live-coding): {card.question}\n"
@@ -232,10 +285,10 @@ class AnswerEvaluator:
                 body = prefix + f"Код ученика (ответ на уточнение):\n```{fence}\n{user_answer}\n```"
             else:
                 body = prefix + f"Код ученика:\n```{fence}\n{user_answer}\n```"
-            system = _system_prompt_live_code(card) + "\n\n" + limit_note
+            system = _system_prompt_live_code(card, deck_name) + "\n\n" + limit_note
         elif card.is_code:
-            fence = _fence_lang(card)
-            label = _language_label(card)
+            fence = _fence_lang(card, deck_name)
+            label = _language_label(card, deck_name)
             prefix = (
                 f"Язык карточки: {label}\n"
                 f"Исходный код:\n```{fence}\n{card.code}\n```\n\n"
@@ -246,22 +299,26 @@ class AnswerEvaluator:
                 body = prefix + f"Ответ ученика на уточняющий вопрос (учти диалог):\n```{fence}\n{user_answer}\n```"
             else:
                 body = prefix + f"Ответ ученика:\n```{fence}\n{user_answer}\n```"
-            system = _system_prompt_code(card) + "\n\n" + limit_note
+            system = _system_prompt_code(card, deck_name) + "\n\n" + limit_note
         elif is_follow_up:
+            prefix = _text_card_prefix(card, deck_name)
             body = (
-                f"Исходный вопрос карточки: {card.question}\n"
+                prefix
+                + f"Исходный вопрос карточки: {card.question}\n"
                 f"Эталонный ответ: {card.reference}\n\n"
                 f"Это ответ ученика на уточняющий вопрос. Оцени, учитывая весь диалог.\n"
                 f"Ответ ученика:\n{user_answer}"
             )
-            system = SYSTEM_PROMPT_TEXT + "\n\n" + limit_note
+            system = _system_prompt_text(card, deck_name) + "\n\n" + limit_note
         else:
+            prefix = _text_card_prefix(card, deck_name)
             body = (
-                f"Вопрос карточки: {card.question}\n"
+                prefix
+                + f"Вопрос карточки: {card.question}\n"
                 f"Эталонный ответ: {card.reference}\n\n"
                 f"Ответ ученика:\n{user_answer}"
             )
-            system = SYSTEM_PROMPT_TEXT + "\n\n" + limit_note
+            system = _system_prompt_text(card, deck_name) + "\n\n" + limit_note
 
         messages = [ChatMessage("system", system)]
         messages.extend(history)

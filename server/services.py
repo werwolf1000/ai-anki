@@ -148,6 +148,7 @@ class AppServices:
             session.chat_history.copy(),
             is_follow_up=was_follow_up,
             follow_ups_remaining=remaining,
+            deck_name=session.deck.name,
         )
         session.chat_history.append(ChatMessage("user", answer.strip()))
         session.chat_history.append(ChatMessage("assistant", result.feedback))

@@ -44,6 +44,7 @@ class EvaluateWorker(QThread):
         history: list[ChatMessage],
         is_follow_up: bool,
         follow_ups_remaining: int,
+        deck_name: str = "",
     ):
         super().__init__()
         self.evaluator = evaluator
@@ -52,6 +53,7 @@ class EvaluateWorker(QThread):
         self.history = history
         self.is_follow_up = is_follow_up
         self.follow_ups_remaining = follow_ups_remaining
+        self.deck_name = deck_name
 
     def run(self) -> None:
         try:
@@ -61,6 +63,7 @@ class EvaluateWorker(QThread):
                 self.history,
                 is_follow_up=self.is_follow_up,
                 follow_ups_remaining=self.follow_ups_remaining,
+                deck_name=self.deck_name,
             )
             self.finished_ok.emit(result)
         except Exception as exc:  # noqa: BLE001
@@ -402,6 +405,7 @@ class StudyScreen(QWidget):
             self.chat_history.copy(),
             self.awaiting_follow_up,
             remaining,
+            self.deck.name,
         )
         self.worker.finished_ok.connect(self._on_review)
         self.worker.failed.connect(self._on_review_failed)

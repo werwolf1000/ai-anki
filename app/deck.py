@@ -14,7 +14,7 @@ class Card:
     card_type: str = "text"
     code: str = ""
     task: str = ""
-    language: str = "typescript"
+    language: str = ""
     answer_mode: str = ""
 
     def __post_init__(self) -> None:
@@ -67,11 +67,23 @@ class ReviewResult:
     raw: str = ""
 
 
+def infer_language_from_name(name: str) -> str:
+    n = name.lower()
+    if "php" in n:
+        return "php"
+    if "python" in n or "pytorch" in n or "tkinter" in n or "ttk" in n:
+        return "python"
+    if "angular" in n or "typescript" in n or "javascript" in n:
+        return "typescript"
+    return ""
+
+
 @dataclass
 class Deck:
     name: str
     cards: list[Card] = field(default_factory=list)
     deck_id: str = ""
+    language: str = ""
 
     def merge(self, other: Deck, *, suffix_name: bool = True) -> None:
         self.cards.extend(other.cards)
@@ -81,14 +93,23 @@ class Deck:
     @classmethod
     def load_json(cls, path: str | Path) -> Deck:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
+        name = data.get("name", Path(path).stem)
+        default_language = data.get("language") or infer_language_from_name(name) or ""
         if isinstance(data, list):
-            cards = [_card_from_dict(item) if isinstance(item, dict) else Card(question=str(item), reference="") for item in data]
-            return cls(name=Path(path).stem, cards=cards)
-        cards = [_card_from_dict(c) for c in data.get("cards", [])]
-        return cls(name=data.get("name", Path(path).stem), cards=cards)
+            cards = [
+                _card_from_dict(item, default_language=default_language)
+                if isinstance(item, dict)
+                else Card(question=str(item), reference="", language=default_language)
+                for item in data
+            ]
+            return cls(name=Path(path).stem, cards=cards, language=default_language)
+        cards = [_card_from_dict(c, default_language=default_language) for c in data.get("cards", [])]
+        return cls(name=name, cards=cards, language=default_language)
 
     @classmethod
     def load_anki_txt(cls, path: str | Path) -> Deck:
+        name = Path(path).stem
+        default_language = infer_language_from_name(name) or ""
         cards: list[Card] = []
         for line in Path(path).read_text(encoding="utf-8").splitlines():
             line = line.strip()
@@ -100,11 +121,11 @@ class Deck:
             front = _strip_html(front)
             back = _strip_html(back)
             if front:
-                cards.append(Card(question=front, reference=back))
-        return cls(name=Path(path).stem, cards=cards)
+                cards.append(Card(question=front, reference=back, language=default_language))
+        return cls(name=name, cards=cards, language=default_language)
 
 
-def _card_from_dict(item: dict) -> Card:
+def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
     known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode"}
     item = {k: v for k, v in item.items() if k in known}
     card_type = item.get("card_type")
@@ -117,7 +138,7 @@ def _card_from_dict(item: dict) -> Card:
         card_type=card_type,
         code=item.get("code", ""),
         task=item.get("task", ""),
-        language=item.get("language", "typescript"),
+        language=item.get("language") or default_language,
         answer_mode=item.get("answer_mode", ""),
     )
 
