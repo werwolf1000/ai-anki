@@ -4,7 +4,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
+from starlette.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from app.config_store import AUTO_ADVANCE_MAX_SEC, SESSION_LIMIT_MAX, auto_advance_seconds
@@ -13,10 +13,19 @@ from server.services import AppServices
 ROOT = Path(__file__).resolve().parent.parent
 STATIC = Path(__file__).resolve().parent / "static"
 
+
+class NoCacheStaticFiles(StaticFiles):
+    async def get_response(self, path: str, scope):
+        response = await super().get_response(path, scope)
+        if path.endswith((".css", ".js", ".html")):
+            response.headers["Cache-Control"] = "no-cache, must-revalidate"
+        return response
+
+
 app = FastAPI(title="AI Anki Web", version="1.0")
 services = AppServices(ROOT)
 
-app.mount("/static", StaticFiles(directory=STATIC), name="static")
+app.mount("/static", NoCacheStaticFiles(directory=STATIC), name="static")
 
 
 class SettingsIn(BaseModel):
@@ -41,7 +50,10 @@ class AnswerIn(BaseModel):
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(STATIC / "index.html")
+    return FileResponse(
+        STATIC / "index.html",
+        headers={"Cache-Control": "no-cache, must-revalidate"},
+    )
 
 
 @app.get("/api/decks")

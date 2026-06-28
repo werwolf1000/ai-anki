@@ -66,29 +66,59 @@ async function testOllama() {
   $("settings-msg").className = r.ok ? "muted" : "error";
 }
 
+function selectDeck(deckId) {
+  selectedDeckId = deckId;
+  $("decks-table").querySelectorAll("tr").forEach((r) => {
+    r.classList.toggle("selected", r.dataset.deckId === deckId);
+  });
+  $("decks-list").querySelectorAll(".deck-card").forEach((c) => {
+    c.classList.toggle("selected", c.dataset.deckId === deckId);
+  });
+}
+
 async function loadDecks() {
   const { decks } = await api("/api/decks");
   const tbody = $("decks-table").querySelector("tbody");
+  const list = $("decks-list");
   tbody.innerHTML = "";
+  list.innerHTML = "";
   decks.forEach((d) => {
     const tr = document.createElement("tr");
+    tr.dataset.deckId = d.deck_id;
     if (d.error) {
       tr.innerHTML = `<td>${d.name}</td><td colspan="7" class="error">${d.error}</td>`;
+      const card = document.createElement("div");
+      card.className = "deck-card";
+      card.innerHTML = `<div class="deck-card-title">${d.name}</div><div class="error">${d.error}</div>`;
+      list.appendChild(card);
     } else {
       tr.innerHTML = `
         <td>${d.name}</td><td>${d.total}</td><td>${d.mastered}</td><td>${d.passed_today}</td>
         <td>${d.due}</td><td>${d.new}</td><td>${d.weak}</td>
         <td>${d.studied ? d.avg_score : "—"}</td>`;
-      tr.onclick = () => {
-        tbody.querySelectorAll("tr").forEach((r) => r.classList.remove("selected"));
-        tr.classList.add("selected");
-        selectedDeckId = d.deck_id;
-      };
+      tr.onclick = () => selectDeck(d.deck_id);
+
+      const card = document.createElement("div");
+      card.className = "deck-card";
+      card.dataset.deckId = d.deck_id;
+      card.innerHTML = `
+        <div class="deck-card-title">${d.name}</div>
+        <div class="deck-card-stats">
+          <span>Всего ${d.total}</span>
+          <span>Усвоено ${d.mastered}</span>
+          <span>Сегодня ${d.passed_today}</span>
+          <span>К повтору ${d.due}</span>
+          <span>Новые ${d.new}</span>
+          <span>Слабые ${d.weak}</span>
+          <span>Ср. ${d.studied ? d.avg_score : "—"}</span>
+        </div>`;
+      card.onclick = () => selectDeck(d.deck_id);
+      list.appendChild(card);
     }
     tbody.appendChild(tr);
   });
   if (decks.length && !selectedDeckId && !decks[0].error) {
-    tbody.rows[0].click();
+    selectDeck(decks[0].deck_id);
   }
 }
 
