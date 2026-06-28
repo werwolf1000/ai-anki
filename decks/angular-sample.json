@@ -1,0 +1,14 @@
+[
+  {
+    "question": "Что такое standalone-компонент в Angular?",
+    "reference": "Компонент с imports в @Component, не требующий NgModule. Объявляет зависимости напрямую через imports: [...]."
+  },
+  {
+    "question": "Как работает двустороннее связывание [(ngModel)]?",
+    "reference": "Комбинация [ngModel] и (ngModelChange). Требует FormsModule. Banana in a box синтаксис."
+  },
+  {
+    "question": "Чем pure pipe отличается от impure?",
+    "reference": "Pure пересчитывается только при изменении ссылки/примитива входа. Impure — при каждой change detection."
+  }
+]

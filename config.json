@@ -1,0 +1,6 @@
+{
+  "ollama_url": "https://ollama.webmastermsk.ru:330068",
+  "model": "qwen3-code:30b",
+  "pass_score": 75,
+  "timeout": 120
+}
