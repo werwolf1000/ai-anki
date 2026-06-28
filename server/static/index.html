@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Anki</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>AI Anki</h1>
+    <p class="muted">Веб-версия · проверка ответов через Ollama</p>
+  </header>
+  <main>
+    <div id="home-view">
+      <section class="panel">
+        <h2>Настройки</h2>
+        <div class="grid-2">
+          <div>
+            <div class="field"><label>Карточек за сессию</label><input type="number" id="session_limit" min="1" max="50"></div>
+            <div class="field"><label>Порог зачёта</label><input type="number" id="pass_score" min="50" max="100"></div>
+            <div class="field"><label>Макс. уточнений / правок</label><input type="number" id="max_follow_ups" min="0" max="5"></div>
+            <div class="field"><label>Автопереход (с)</label><input type="number" id="auto_advance_sec" min="0" max="10"></div>
+          </div>
+          <div>
+            <div class="field"><label>Ollama URL</label><input type="text" id="ollama_url"></div>
+            <div class="field"><label>Модель</label><input type="text" id="model"></div>
+            <div class="field"><label>API-ключ</label><input type="password" id="api_key"></div>
+            <div class="field"><label>Таймаут (с)</label><input type="number" id="timeout" min="30" max="600"></div>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="btn-save">Сохранить</button>
+          <button type="button" class="secondary" id="btn-test">Проверить Ollama</button>
+          <span id="settings-msg" class="muted"></span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Колоды</h2>
+        <table id="decks-table">
+          <thead>
+            <tr>
+              <th>Колода</th><th>Всего</th><th>Усвоено</th><th>Сегодня</th>
+              <th>К повтору</th><th>Новые</th><th>Слабые</th><th>Ср. балл</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div class="btn-row">
+          <button type="button" id="btn-due">Повторить</button>
+          <button type="button" class="secondary" id="btn-new">Только новые</button>
+          <button type="button" class="secondary" id="btn-weak">Слабые</button>
+          <button type="button" class="secondary" id="btn-all">Вся колода</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="study-view" class="hidden">
+      <section class="panel">
+        <div class="btn-row" style="margin-top:0">
+          <button type="button" class="secondary" id="btn-back">← Колоды</button>
+          <span id="study-title" class="stats"></span>
+          <span id="study-stats" class="stats"></span>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Вопрос</h2>
+        <div id="question" class="question"></div>
+      </section>
+      <section class="panel">
+        <h2 id="answer-label">Ваш ответ</h2>
+        <textarea id="answer-text"></textarea>
+        <textarea id="answer-code" class="code hidden"></textarea>
+        <div class="btn-row">
+          <button type="button" id="btn-submit">Проверить ответ</button>
+          <button type="button" class="secondary" id="btn-hint">Подсказка</button>
+          <button type="button" class="secondary" id="btn-next">Следующая →</button>
+        </div>
+        <p id="status" class="muted"></p>
+      </section>
+      <section class="panel">
+        <h2>Обратная связь</h2>
+        <div id="feedback" class="feedback"></div>
+      </section>
+    </div>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+# AI Anki — Docker Compose для TrueNAS Scale
+# Разместите проект в dataset: /mnt/<pool>/web/ai-anki
+# SMB: smb://truenas.local/web/ai-anki
+
+services:
+  ai-anki:
+    build: .
+    image: ai-anki-web:latest
+    container_name: ai-anki
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      AI_ANKI_DATA_DIR: /data
+      # Ollama на другом хосте — переопределите в UI или здесь:
+      # OLLAMA_URL: http://host.docker.internal:11434
+    volumes:
+      - ./data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

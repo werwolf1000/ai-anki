@@ -34,6 +34,30 @@ run.bat
 
 ---
 
+### Веб-версия (Docker / TrueNAS)
+
+Серверная версия для браузера — тот же движок карточек и Ollama, без PyQt6.
+
+```bash
+cd ai-anki
+docker compose up -d --build
+# http://localhost:8080
+```
+
+Развёртывание на **TrueNAS Scale** (dataset `web/ai-anki`, SMB `smb://truenas.local/web/ai-anki`): см. **[TRUENAS.md](TRUENAS.md)**.
+
+Данные веб-версии: каталог `./data/`. В контейнере: `AI_ANKI_DATA_DIR=/data`.
+
+Локально без Docker:
+
+```bash
+pip install -r requirements-server.txt
+export AI_ANKI_DATA_DIR=./data
+uvicorn server.main:app --host 0.0.0.0 --port 8080
+```
+
+---
+
 ## Как пользоваться
 
 ### 1. Главный экран
@@ -181,7 +205,13 @@ ai-anki/
 ├── main.py              # точка входа
 ├── run.sh               # запуск (Linux / macOS)
 ├── run.bat              # запуск (Windows)
-├── config.json          # настройки по умолчанию
+├── docker-compose.yml   # веб-версия (TrueNAS / Docker)
+├── Dockerfile
+├── TRUENAS.md           # инструкция для TrueNAS Scale
+├── requirements-server.txt
+├── server/              # FastAPI + статический UI
+│   ├── main.py
+│   └── static/
 ├── app/
 │   ├── gui.py           # интерфейс и сессия
 │   ├── welcome.py       # главный экран

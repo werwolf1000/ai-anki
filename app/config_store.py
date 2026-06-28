@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 SESSION_LIMIT_MAX = 50
@@ -20,8 +21,14 @@ DEFAULTS: dict = {
 LEGACY_AUTO_ADVANCE_MS = 1500
 
 
+def data_dir() -> Path:
+    if env := os.environ.get("AI_ANKI_DATA_DIR"):
+        return Path(env)
+    return Path.home() / ".ai-anki"
+
+
 def user_config_path() -> Path:
-    return Path.home() / ".ai-anki" / "config.json"
+    return data_dir() / "config.json"
 
 
 def load_config(project_dir: Path) -> tuple[dict, Path]:

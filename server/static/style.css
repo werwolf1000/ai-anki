@@ -1,0 +1,83 @@
+:root {
+  --bg: #f4f5f7;
+  --card: #fff;
+  --border: #dde1e6;
+  --text: #1a1a1a;
+  --muted: #5c6370;
+  --accent: #2563eb;
+  --ok: #2e7d32;
+  --warn: #b8860b;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoto UI, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+}
+header h1 { margin: 0; font-size: 1.5rem; }
+main { max-width: 1100px; margin: 0 auto; padding: 1.5rem; }
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.panel h2 { margin: 0 0 0.75rem; font-size: 1.1rem; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+input, select, textarea {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font: inherit;
+}
+textarea { font-family: ui-monospace, monospace; min-height: 120px; resize: vertical; }
+textarea.code { min-height: 200px; }
+.field { margin-bottom: 0.75rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+button, .btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font: inherit;
+}
+button.secondary { background: #64748b; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+th, td { padding: 0.5rem; border-bottom: 1px solid var(--border); text-align: left; }
+tr.selected { background: #eff6ff; }
+tr:hover { cursor: pointer; background: #f8fafc; }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.feedback {
+  white-space: pre-wrap;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem;
+  min-height: 80px;
+}
+.stats { font-size: 0.9rem; color: var(--muted); }
+.hidden { display: none !important; }
+#study-view .question {
+  white-space: pre-wrap;
+  font-family: ui-monospace, monospace;
+  background: #f8fafc;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.error { color: #c0392b; }
