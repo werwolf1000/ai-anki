@@ -21,7 +21,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from app.config_store import SESSION_LIMIT_MAX, clamp_session_limit, save_config
+from app.config_store import AUTO_ADVANCE_MAX_SEC, DEFAULTS, SESSION_LIMIT_MAX, clamp_session_limit, save_config
 from app.ollama_client import OllamaClient
 from app.progress import ProgressStore, StudyMode
 from app.registry import DeckEntry, DeckRegistry
@@ -55,7 +55,9 @@ class WelcomeScreen(QWidget):
         self.session_limit.setValue(clamp_session_limit(self.config.get("session_limit", 20)))
         self.pass_score_spin.setValue(self.pass_score)
         self.max_follow_ups.setValue(int(self.config.get("max_follow_ups", 2)))
-        self.auto_advance.setValue(max(0, int(self.config.get("auto_advance_ms", 1500)) // 1000))
+        self.auto_advance.setValue(
+            max(0, min(AUTO_ADVANCE_MAX_SEC, int(self.config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"])) // 1000))
+        )
         self.ollama_url.setText(self.config.get("ollama_url", ""))
         self.ollama_model.setText(self.config.get("model", ""))
         self.ollama_timeout.setValue(int(self.config.get("timeout", 120)))
@@ -94,13 +96,17 @@ class WelcomeScreen(QWidget):
 
         self.max_follow_ups = QSpinBox()
         self.max_follow_ups.setRange(0, 5)
-        self.max_follow_ups.setToolTip("Сколько уточняющих вопросов от модели на карточку")
+        self.max_follow_ups.setToolTip(
+            "Уточняющие вопросы модели и правки кода на одной карточке (общий лимит)"
+        )
         left_form.addRow("Макс. уточнений", self.max_follow_ups)
 
         self.auto_advance = QSpinBox()
-        self.auto_advance.setRange(0, 10)
+        self.auto_advance.setRange(0, AUTO_ADVANCE_MAX_SEC)
         self.auto_advance.setSuffix(" с")
-        self.auto_advance.setToolTip("Пауза перед автопереходом к следующей карточке (0 — выключено)")
+        self.auto_advance.setToolTip(
+            f"Пауза перед автопереходом после зачёта (0 — выключено, макс. {AUTO_ADVANCE_MAX_SEC} с)"
+        )
         left_form.addRow("Автопереход", self.auto_advance)
 
         right_form = QFormLayout()

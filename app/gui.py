@@ -24,6 +24,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+from app.code_editor import CodeEditorPanel
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -117,6 +118,7 @@ class StudyScreen(QWidget):
         self.chat_history: list[ChatMessage] = []
         self.awaiting_follow_up = False
         self.follow_up_count = 0
+        self.revision_count = 0
         self.last_review = None
         self.worker: EvaluateWorker | None = None
         self._advance_timer = QTimer(self)
@@ -168,6 +170,14 @@ class StudyScreen(QWidget):
         self.answer_edit.setMaximumHeight(220)
         a_layout.addWidget(self.answer_edit)
         QShortcut(QKeySequence("Ctrl+Return"), self.answer_edit, self._submit_answer)
+
+        self.code_panel = CodeEditorPanel()
+        self.code_panel.setMinimumHeight(160)
+        self.code_panel.setMaximumHeight(360)
+        self.code_panel.submit_requested.connect(self._submit_answer)
+        self.code_panel.hide()
+        a_layout.addWidget(self.code_panel)
+
         layout.addWidget(self.answer_box)
 
         btn_row = QHBoxLayout()
@@ -307,17 +317,13 @@ class StudyScreen(QWidget):
         self.chat_history = []
         self.awaiting_follow_up = False
         self.follow_up_count = 0
+        self.revision_count = 0
         self.last_review = None
         self._pending_finalize = False
         prog = self.progress_store.get(self.deck, self.current_card.id)
         self.question_view.setPlainText(self.current_card.display_text())
-        if self.current_card.is_code:
-            self.answer_box.setTitle("Ваш код (исправленный или дополненный)")
-            self.answer_edit.setPlaceholderText("Вставьте исправленный код…")
-        else:
-            self.answer_box.setTitle("Ваш ответ (своими словами)")
-            self.answer_edit.setPlaceholderText("Напишите ответ…")
-        self.answer_edit.clear()
+        self._configure_answer_ui(self.current_card)
+        self._clear_answer()
         self.feedback_view.clear()
         self.submit_btn.setEnabled(True)
         self.hint_btn.setEnabled(False)
@@ -330,12 +336,40 @@ class StudyScreen(QWidget):
             f"лучший {prog.best_score} · попыток {prog.attempts}{due_hint}"
         )
 
+    def _configure_answer_ui(self, card: Card) -> None:
+        if card.needs_code_editor:
+            self.answer_edit.hide()
+            self.code_panel.show()
+            if card.is_live_code:
+                self.answer_box.setTitle("Редактор кода — напишите решение")
+            else:
+                self.answer_box.setTitle("Редактор кода — исправьте или дополните")
+            self.code_panel.set_language_hint(card.language)
+            self.code_panel.set_focus()
+        else:
+            self.code_panel.hide()
+            self.answer_edit.show()
+            self.answer_box.setTitle("Ваш ответ (своими словами)")
+            self.answer_edit.setPlaceholderText("Напишите ответ… Ctrl+Enter — отправить")
+            self.answer_edit.setFocus()
+
+    def _answer_text(self) -> str:
+        if self.current_card and self.current_card.needs_code_editor:
+            return self.code_panel.plain_text().strip()
+        return self.answer_edit.toPlainText().strip()
+
+    def _clear_answer(self) -> None:
+        if self.current_card and self.current_card.needs_code_editor:
+            self.code_panel.clear()
+        else:
+            self.answer_edit.clear()
+
     def _cancel_auto_advance(self) -> None:
         if self._advance_timer.isActive():
             self._advance_timer.stop()
 
     def _schedule_auto_advance(self) -> None:
-        delay = int(self.config.get("auto_advance_ms", 1500))
+        delay = int(self.config.get("auto_advance_ms", 10000))
         self._cancel_auto_advance()
         if delay <= 0:
             self.status_label.setText("Нажмите «Следующая →» для продолжения.")
@@ -353,9 +387,10 @@ class StudyScreen(QWidget):
     def _submit_answer(self) -> None:
         if not self.current_card:
             return
-        answer = self.answer_edit.toPlainText().strip()
+        answer = self._answer_text()
         if not answer:
-            QMessageBox.warning(self, "Пусто", "Напишите ответ.")
+            label = "Напишите код." if self.current_card.needs_code_editor else "Напишите ответ."
+            QMessageBox.warning(self, "Пусто", label)
             return
         max_fu = self._max_follow_ups()
         remaining = max(0, max_fu - self.follow_up_count)
@@ -380,7 +415,7 @@ class StudyScreen(QWidget):
         self._set_busy(False)
         self.last_review = result
         was_follow_up_answer = self.awaiting_follow_up
-        user_text = self.answer_edit.toPlainText().strip()
+        user_text = self._answer_text()
         self.chat_history.append(ChatMessage("user", user_text))
         self.chat_history.append(ChatMessage("assistant", result.feedback))
 
@@ -389,20 +424,47 @@ class StudyScreen(QWidget):
         if result.hint:
             lines.extend(["", f"💡 Подсказка: {result.hint}"])
 
+        passed = result.score >= self._pass_score()
+        interactions = self.follow_up_count + self.revision_count
+        finalize = True
+
         if result.follow_up and self.follow_up_count < max_fu:
             self.follow_up_count += 1
             lines.extend(["", f"❓ Уточнение ({self.follow_up_count}/{max_fu}): {result.follow_up}"])
             self.awaiting_follow_up = True
+            finalize = False
+        elif (
+            not passed
+            and self.current_card
+            and self.current_card.needs_code_editor
+            and interactions < max_fu
+        ):
+            self.revision_count += 1
+            self.awaiting_follow_up = False
+            lines.extend([
+                "",
+                f"✏️ Исправьте код и отправьте снова "
+                f"({self.revision_count}/{max_fu} · осталось {max_fu - self.follow_up_count - self.revision_count})",
+            ])
+            finalize = False
         else:
             if result.follow_up and self.follow_up_count >= max_fu:
                 lines.extend([
                     "",
                     f"ℹ️ Лимит уточнений ({max_fu}) исчерпан — карточка завершена.",
                 ])
+            elif (
+                not passed
+                and self.current_card
+                and self.current_card.needs_code_editor
+                and interactions >= max_fu
+            ):
+                lines.extend([
+                    "",
+                    f"ℹ️ Лимит правок ({max_fu}) исчерпан — карточка завершена.",
+                ])
             self.awaiting_follow_up = False
 
-        finalize = not self.awaiting_follow_up
-        passed = result.score >= self._pass_score()
         if finalize:
             if passed:
                 lines.extend(["", "✅ Засчитано! Следующее повторение по расписанию."])
@@ -412,6 +474,7 @@ class StudyScreen(QWidget):
         self.feedback_view.setPlainText("\n".join(lines))
         self.hint_btn.setEnabled(bool(result.hint or result.reference_summary))
         self.next_btn.setEnabled(True)
+        self.submit_btn.setEnabled(not finalize)
 
         prog = None
         if self.current_card:
@@ -437,11 +500,14 @@ class StudyScreen(QWidget):
                     f"лучший {prog.best_score} · попыток {prog.attempts}"
                 )
 
-        self.answer_edit.clear()
+        if finalize:
+            self._clear_answer()
         self._pending_finalize = finalize
 
-        if finalize:
+        if finalize and passed:
             self._schedule_auto_advance()
+        elif not finalize:
+            self.status_label.setText("Внесите правки и нажмите «Проверить ответ» или «Следующая →».")
 
     def _show_hint(self) -> None:
         if not self.last_review:

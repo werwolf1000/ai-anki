@@ -14,17 +14,35 @@ class Card:
     card_type: str = "text"
     code: str = ""
     task: str = ""
+    language: str = "typescript"
+    answer_mode: str = ""
 
     def __post_init__(self) -> None:
         if not self.id:
-            self.id = str(abs(hash(self.question + self.code)) % 10_000_000)
+            self.id = str(abs(hash(self.question + self.code + self.task)) % 10_000_000)
+
+    @property
+    def is_live_code(self) -> bool:
+        return self.card_type == "live_code"
 
     @property
     def is_code(self) -> bool:
-        return self.card_type == "code" or bool(self.code)
+        return self.card_type in ("code", "live_code") or bool(self.code)
+
+    @property
+    def needs_code_editor(self) -> bool:
+        if self.answer_mode == "text":
+            return False
+        if self.answer_mode == "code":
+            return True
+        return self.card_type in ("code", "live_code")
 
     def display_text(self) -> str:
         parts = [self.question.strip()]
+        if self.is_live_code:
+            if self.task.strip():
+                parts.extend(["", f"Задание: {self.task.strip()}"])
+            return "\n".join(parts)
         if self.code.strip():
             parts.extend(["", "── Код ──", self.code.strip()])
         if self.task.strip():
@@ -87,11 +105,11 @@ class Deck:
 
 
 def _card_from_dict(item: dict) -> Card:
-    known = {"question", "reference", "id", "card_type", "code", "task"}
-    extra = {k: v for k, v in item.items() if k not in known}
-    if extra:
-        item = {k: v for k, v in item.items() if k in known}
-    card_type = item.get("card_type", "code" if item.get("code") else "text")
+    known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode"}
+    item = {k: v for k, v in item.items() if k in known}
+    card_type = item.get("card_type")
+    if not card_type:
+        card_type = "code" if item.get("code") else "text"
     return Card(
         question=item.get("question", ""),
         reference=item.get("reference", ""),
@@ -99,6 +117,8 @@ def _card_from_dict(item: dict) -> Card:
         card_type=card_type,
         code=item.get("code", ""),
         task=item.get("task", ""),
+        language=item.get("language", "typescript"),
+        answer_mode=item.get("answer_mode", ""),
     )
 
 

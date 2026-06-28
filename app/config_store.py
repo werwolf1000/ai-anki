@@ -13,7 +13,7 @@ DEFAULTS: dict = {
     "timeout": 120,
     "max_follow_ups": 2,
     "session_limit": 20,
-    "auto_advance_ms": 1500,
+    "auto_advance_ms": 10000,
 }
 
 
@@ -33,7 +33,19 @@ def load_config(project_dir: Path) -> tuple[dict, Path]:
     elif project_path.exists():
         save_config(path, config)
     config["session_limit"] = clamp_session_limit(config.get("session_limit", DEFAULTS["session_limit"]))
+    config["auto_advance_ms"] = clamp_auto_advance_ms(config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"]))
     return config, path
+
+
+AUTO_ADVANCE_MAX_SEC = 10
+
+
+def clamp_auto_advance_ms(value: int | str) -> int:
+    try:
+        ms = int(value)
+    except (TypeError, ValueError):
+        ms = int(DEFAULTS["auto_advance_ms"])
+    return max(0, min(AUTO_ADVANCE_MAX_SEC * 1000, ms))
 
 
 def clamp_session_limit(value: int | str) -> int:
@@ -48,4 +60,5 @@ def save_config(path: Path, config: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     data = {**DEFAULTS, **config}
     data["session_limit"] = clamp_session_limit(data["session_limit"])
+    data["auto_advance_ms"] = clamp_auto_advance_ms(data["auto_advance_ms"])
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -32,6 +32,28 @@ SYSTEM_PROMPT_TEXT = """Ты — терпеливый преподаватель
 
 Если hint не нужен — пустая строка. Если follow_up не нужен — пустая строка."""
 
+SYSTEM_PROMPT_LIVE_CODE = """Ты — преподаватель Angular/TypeScript в режиме live-coding.
+Ученик пишет код с нуля по заданию карточки.
+
+Правила:
+1. Сравни код ученика с эталоном по смыслу, API и корректности Angular/TS — не требуй посимвольного совпадения.
+2. Допускай эквивалентные решения (signals vs observables где уместно, @if vs *ngIf в новых версиях).
+3. Оценка 0–100; correct=true если score >= 75.
+4. Проверь: синтаксис, imports/standalone, DI, шаблон, типы, логику.
+5. При ошибках — короткая hint (область проблемы, не полное решение).
+6. Если нужны уточнения — один follow_up; при лимите 0 — follow_up пустой.
+7. feedback — 2–4 предложения на русском.
+8. Только JSON:
+
+{
+  "correct": true,
+  "score": 85,
+  "feedback": "...",
+  "hint": "...",
+  "follow_up": "...",
+  "reference_summary": "кратко что должно быть в решении"
+}"""
+
 SYSTEM_PROMPT_CODE = """Ты — преподаватель Angular/TypeScript. Карточка с кодом: ученик должен исправить или дополнить фрагмент.
 
 Правила:
@@ -148,7 +170,18 @@ class AnswerEvaluator:
             f"Осталось уточняющих вопросов: {follow_ups_remaining}. "
             "Не задавай follow_up, если лимит 0."
         )
-        if card.is_code:
+        if card.is_live_code:
+            prefix = (
+                f"Задание (live-coding): {card.question}\n"
+                f"{('Подсказка: ' + card.task) if card.task else ''}\n"
+                f"Эталонное решение:\n```typescript\n{card.reference}\n```\n\n"
+            )
+            if is_follow_up:
+                body = prefix + f"Код ученика (ответ на уточнение):\n```typescript\n{user_answer}\n```"
+            else:
+                body = prefix + f"Код ученика:\n```typescript\n{user_answer}\n```"
+            system = SYSTEM_PROMPT_LIVE_CODE + "\n\n" + limit_note
+        elif card.is_code:
             prefix = (
                 f"Исходный код:\n```\n{card.code}\n```\n\n"
                 f"Задание: {card.task or 'Исправь или дополни код.'}\n"

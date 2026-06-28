@@ -1,0 +1,320 @@
+{
+  "name": "Angular Live-coding",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Standalone-компонент приветствия",
+      "task": "Создай standalone-компонент GreetingComponent: selector app-greeting, шаблон с @Input() name и текст «Hello, {{ name }}!».",
+      "reference": "import { Component, Input } from '@angular/core';\n\n@Component({\n  selector: 'app-greeting',\n  standalone: true,\n  template: `<p>Hello, {{ name }}!</p>`,\n})\nexport class GreetingComponent {\n  @Input() name = 'World';\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Сервис с providedIn root",
+      "task": "Напиши injectable-сервис CounterService с методами increment(): number и value(): number (внутренний счётчик).",
+      "reference": "import { Injectable } from '@angular/core';\n\n@Injectable({ providedIn: 'root' })\nexport class CounterService {\n  private count = 0;\n\n  increment(): number {\n    return ++this.count;\n  }\n\n  value(): number {\n    return this.count;\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Двустороннее связывание",
+      "task": "Standalone-компонент с input [(ngModel)] для title и параграфом, выводящим title.",
+      "reference": "import { Component } from '@angular/core';\nimport { FormsModule } from '@angular/forms';\n\n@Component({\n  selector: 'app-title-editor',\n  standalone: true,\n  imports: [FormsModule],\n  template: `\n    <input [(ngModel)]=\"title\" />\n    <p>{{ title }}</p>\n  `,\n})\nexport class TitleEditorComponent {\n  title = '';\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Reactive form — login",
+      "task": "Компонент с FormGroup: email (required), password (required, min 6). Кнопка submit disabled если form invalid.",
+      "reference": "import { Component } from '@angular/core';\nimport { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';\n\n@Component({\n  selector: 'app-login',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `\n    <form [formGroup]=\"form\" (ngSubmit)=\"submit()\">\n      <input formControlName=\"email\" />\n      <input type=\"password\" formControlName=\"password\" />\n      <button type=\"submit\" [disabled]=\"form.invalid\">Login</button>\n    </form>\n  `,\n})\nexport class LoginComponent {\n  form = this.fb.group({\n    email: ['', Validators.required],\n    password: ['', [Validators.required, Validators.minLength(6)]],\n  });\n\n  constructor(private fb: FormBuilder) {}\n\n  submit() {}\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HttpClient GET",
+      "task": "Сервис UserApi с методом getUsers(): Observable<User[]> через HttpClient GET /api/users.",
+      "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\n\nexport interface User {\n  id: number;\n  name: string;\n}\n\n@Injectable({ providedIn: 'root' })\nexport class UserApi {\n  private http = inject(HttpClient);\n\n  getUsers() {\n    return this.http.get<User[]>('/api/users');\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Async pipe в шаблоне",
+      "task": "Standalone UsersListComponent: users$ из UserApi, шаблон @for по users$ | async.",
+      "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { UserApi } from './user-api';\n\n@Component({\n  selector: 'app-users-list',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    @for (user of users$ | async; track user.id) {\n      <p>{{ user.name }}</p>\n    }\n  `,\n})\nexport class UsersListComponent {\n  private api = inject(UserApi);\n  users$ = this.api.getUsers();\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Output EventEmitter",
+      "task": "Дочерний компонент Rating с @Output() rated = new EventEmitter<number>() и кнопками 1–5.",
+      "reference": "import { Component, EventEmitter, Output } from '@angular/core';\n\n@Component({\n  selector: 'app-rating',\n  standalone: true,\n  template: `\n    @for (n of [1, 2, 3, 4, 5]; track n) {\n      <button type=\"button\" (click)=\"pick(n)\">{{ n }}</button>\n    }\n  `,\n})\nexport class RatingComponent {\n  @Output() rated = new EventEmitter<number>();\n\n  pick(value: number) {\n    this.rated.emit(value);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "RouterLink и RouterLinkActive",
+      "task": "NavComponent: ссылки /home и /about с routerLinkActive=\"active\".",
+      "reference": "import { Component } from '@angular/core';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\n\n@Component({\n  selector: 'app-nav',\n  standalone: true,\n  imports: [RouterLink, RouterLinkActive],\n  template: `\n    <a routerLink=\"/home\" routerLinkActive=\"active\">Home</a>\n    <a routerLink=\"/about\" routerLinkActive=\"active\">About</a>\n  `,\n})\nexport class NavComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Lazy load standalone route",
+      "task": "Маршрут path 'admin' с loadComponent для AdminPage.",
+      "reference": "import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  {\n    path: 'admin',\n    loadComponent: () => import('./admin/admin.page').then(m => m.AdminPage),\n  },\n];",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Route guard CanActivateFn",
+      "task": "Функция authGuard: inject AuthService, return router.parseUrl('/login') если !isLoggedIn(), иначе true.",
+      "reference": "import { inject } from '@angular/core';\nimport { CanActivateFn, Router } from '@angular/router';\nimport { AuthService } from './auth.service';\n\nexport const authGuard: CanActivateFn = () => {\n  const auth = inject(AuthService);\n  const router = inject(Router);\n  return auth.isLoggedIn() ? true : router.parseUrl('/login');\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Signal counter",
+      "task": "CounterComponent: signal count, кнопка increment через count.update.",
+      "reference": "import { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-counter',\n  standalone: true,\n  template: `\n    <p>{{ count() }}</p>\n    <button type=\"button\" (click)=\"increment()\">+</button>\n  `,\n})\nexport class CounterComponent {\n  count = signal(0);\n\n  increment() {\n    this.count.update(v => v + 1);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "computed signal",
+      "task": "Компонент с signal items: string[] и computed totalLength — сумма длин строк.",
+      "reference": "import { Component, computed, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-stats',\n  standalone: true,\n  template: `<p>Total: {{ totalLength() }}</p>`,\n})\nexport class StatsComponent {\n  items = signal(['a', 'bb', 'ccc']);\n  totalLength = computed(() => this.items().reduce((sum, s) => sum + s.length, 0));\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "effect для логирования",
+      "task": "Комponent с signal query и effect в constructor, который console.log при изменении query.",
+      "reference": "import { Component, effect, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-search-log',\n  standalone: true,\n  template: `<input [value]=\"query()\" (input)=\"onInput($event)\" />`,\n})\nexport class SearchLogComponent {\n  query = signal('');\n\n  constructor() {\n    effect(() => console.log('query:', this.query()));\n  }\n\n  onInput(event: Event) {\n    this.query.set((event.target as HTMLInputElement).value);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Pure pipe uppercase truncate",
+      "task": "Pipe truncate с @Pipe name truncate, transform(value: string, limit = 20): string.",
+      "reference": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({ name: 'truncate', standalone: true })\nexport class TruncatePipe implements PipeTransform {\n  transform(value: string, limit = 20): string {\n    if (!value) return '';\n    return value.length <= limit ? value : value.slice(0, limit) + '…';\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Custom directive — highlight",
+      "task": "Директива appHighlight: @HostBinding('style.backgroundColor') yellow при hover.",
+      "reference": "import { Directive, HostBinding, HostListener } from '@angular/core';\n\n@Directive({\n  selector: '[appHighlight]',\n  standalone: true,\n})\nexport class HighlightDirective {\n  @HostBinding('style.backgroundColor') bg = '';\n\n  @HostListener('mouseenter')\n  onEnter() {\n    this.bg = 'yellow';\n  }\n\n  @HostListener('mouseleave')\n  onLeave() {\n    this.bg = '';\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ControlValueAccessor — toggle",
+      "task": "Минимальный ToggleComponent с NG_VALUE_ACCESSOR, writeValue/registerOnChange, клик переключает boolean.",
+      "reference": "import { Component, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'app-toggle',\n  standalone: true,\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => ToggleComponent),\n    multi: true,\n  }],\n  template: `<button type=\"button\" (click)=\"toggle()\">{{ on ? 'ON' : 'OFF' }}</button>`,\n})\nexport class ToggleComponent implements ControlValueAccessor {\n  on = false;\n  private onChange: (v: boolean) => void = () => {};\n\n  writeValue(value: boolean): void {\n    this.on = !!value;\n  }\n\n  registerOnChange(fn: (v: boolean) => void): void {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(_fn: () => void): void {}\n\n  toggle() {\n    this.on = !this.on;\n    this.onChange(this.on);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HttpInterceptor — auth header",
+      "task": "interceptor authInterceptor: clone request с Authorization Bearer token из AuthService.",
+      "reference": "import { HttpInterceptorFn } from '@angular/common/http';\nimport { inject } from '@angular/core';\nimport { AuthService } from './auth.service';\n\nexport const authInterceptor: HttpInterceptorFn = (req, next) => {\n  const token = inject(AuthService).token();\n  if (!token) return next(req);\n  return next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }));\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Resolver для данных роута",
+      "task": "userResolver: inject UserApi, return getUserById(route.paramMap.get('id')!).",
+      "reference": "import { inject } from '@angular/core';\nimport { ResolveFn } from '@angular/router';\nimport { UserApi, User } from './user-api';\n\nexport const userResolver: ResolveFn<User> = route => {\n  const id = route.paramMap.get('id')!;\n  return inject(UserApi).getUserById(id);\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "@defer блок",
+      "task": "Шаблон с @defer (on viewport) для тяжёлого HeavyChartComponent и @placeholder «Loading…».",
+      "reference": "import { Component } from '@angular/core';\nimport { HeavyChartComponent } from './heavy-chart.component';\n\n@Component({\n  selector: 'app-dashboard',\n  standalone: true,\n  imports: [HeavyChartComponent],\n  template: `\n    @defer (on viewport) {\n      <app-heavy-chart />\n    } @placeholder {\n      <p>Loading…</p>\n    }\n  `,\n})\nexport class DashboardComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "inject() в field initializer",
+      "task": "Комponent использует private api = inject(ProductApi) без constructor DI.",
+      "reference": "import { Component, inject } from '@angular/core';\nimport { ProductApi } from './product-api';\n\n@Component({\n  selector: 'app-products',\n  standalone: true,\n  template: `@for (p of api.list(); track p.id) { <p>{{ p.name }}</p> }`,\n})\nexport class ProductsComponent {\n  protected api = inject(ProductApi);\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Model input (Angular 17+)",
+      "task": "Комponent с input.required<string>() для title и шаблоном h1.",
+      "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-heading',\n  standalone: true,\n  template: `<h1>{{ title() }}</h1>`,\n})\nexport class HeadingComponent {\n  title = input.required<string>();\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "output() function",
+      "task": "Child с output<number>() saved и кнопка emit(42).",
+      "reference": "import { Component, output } from '@angular/core';\n\n@Component({\n  selector: 'app-save-btn',\n  standalone: true,\n  template: `<button type=\"button\" (click)=\"save.emit(42)\">Save</button>`,\n})\nexport class SaveBtnComponent {\n  save = output<number>();\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "FormControl в standalone",
+      "task": "Reactive field search: FormControl default '', input [formControl] и valueChanges subscribe в ngOnInit.",
+      "reference": "import { Component, OnInit, inject } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { debounceTime } from 'rxjs';\n\n@Component({\n  selector: 'app-search',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `<input [formControl]=\"search\" placeholder=\"Search\" />`,\n})\nexport class SearchComponent implements OnInit {\n  search = new FormControl('', { nonNullable: true });\n\n  ngOnInit() {\n    this.search.valueChanges.pipe(debounceTime(300)).subscribe(v => console.log(v));\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "switchMap поиск",
+      "task": "SearchService.search(term): Observable<Item[]> — в компоненте search.valueChanges pipe switchMap к search.",
+      "reference": "import { Component, inject } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { AsyncPipe } from '@angular/common';\nimport { switchMap, debounceTime, distinctUntilChanged } from 'rxjs';\nimport { SearchService } from './search.service';\n\n@Component({\n  selector: 'app-live-search',\n  standalone: true,\n  imports: [ReactiveFormsModule, AsyncPipe],\n  template: `\n    <input [formControl]=\"q\" />\n    @for (item of results$ | async; track item.id) {\n      <div>{{ item.name }}</div>\n    }\n  `,\n})\nexport class LiveSearchComponent {\n  private search = inject(SearchService);\n  q = new FormControl('', { nonNullable: true });\n  results$ = this.q.valueChanges.pipe(\n    debounceTime(300),\n    distinctUntilChanged(),\n    switchMap(term => this.search.search(term)),\n  );\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "NgOptimizedImage",
+      "task": "Комponent с NgOptimizedImage, img ngSrc=\"/hero.jpg\" width height priority.",
+      "reference": "import { Component } from '@angular/core';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-hero',\n  standalone: true,\n  imports: [NgOptimizedImage],\n  template: `\n    <img ngSrc=\"/hero.jpg\" width=\"800\" height=\"400\" priority alt=\"Hero\" />\n  `,\n})\nexport class HeroComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "TrackBy функция",
+      "task": "Комponent *ngFor trackById для items с id (class Item { id, name }).",
+      "reference": "import { Component } from '@angular/core';\nimport { NgFor } from '@angular/common';\n\ninterface Item {\n  id: number;\n  name: string;\n}\n\n@Component({\n  selector: 'app-list',\n  standalone: true,\n  imports: [NgFor],\n  template: `\n    <div *ngFor=\"let item of items; trackBy: trackById\">{{ item.name }}</div>\n  `,\n})\nexport class ListComponent {\n  items: Item[] = [];\n\n  trackById(_index: number, item: Item) {\n    return item.id;\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HostListener document:keydown",
+      "task": "Комponent слушает @HostListener('document:keydown.escape') и закрывает modal flag.",
+      "reference": "import { Component, HostListener, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-modal',\n  standalone: true,\n  template: `\n    @if (open()) {\n      <div class=\"modal\">Press Esc to close</div>\n    }\n  `,\n})\nexport class ModalComponent {\n  open = signal(true);\n\n  @HostListener('document:keydown.escape')\n  onEsc() {\n    this.open.set(false);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Content projection ng-content",
+      "task": "CardComponent с ng-content select=\"[card-title]\" и default ng-content.",
+      "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-card',\n  standalone: true,\n  template: `\n    <header><ng-content select=\"[card-title]\"></ng-content></header>\n    <section><ng-content></ng-content></section>\n  `,\n})\nexport class CardComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ng-template ngTemplateOutlet",
+      "task": "Parent с TemplateRef #tpl и ngTemplateOutlet с context { $implicit: name }.",
+      "reference": "import { Component } from '@angular/core';\nimport { NgTemplateOutlet } from '@angular/common';\n\n@Component({\n  selector: 'app-parent',\n  standalone: true,\n  imports: [NgTemplateOutlet],\n  template: `\n    <ng-template #hello let-name>\n      <p>Hi, {{ name }}</p>\n    </ng-template>\n    <ng-container *ngTemplateOutlet=\"hello; context: { $implicit: 'Anna' }\" />\n  `,\n})\nexport class ParentComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "CanDeactivate guard",
+      "task": "canDeactivate: если form.dirty — confirm('Leave?').",
+      "reference": "import { CanDeactivateFn } from '@angular/router';\n\nexport interface HasDirtyForm {\n  isDirty(): boolean;\n}\n\nexport const dirtyFormGuard: CanDeactivateFn<HasDirtyForm> = component => {\n  if (!component.isDirty()) return true;\n  return confirm('Leave without saving?');\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "MatDialog open (conceptual)",
+      "task": "Сервис DialogService openConfirm(): Observable<boolean> — open ConfirmDialogComponent, afterClosed.",
+      "reference": "import { Injectable, inject } from '@angular/core';\nimport { MatDialog } from '@angular/material/dialog';\nimport { ConfirmDialogComponent } from './confirm-dialog.component';\n\n@Injectable({ providedIn: 'root' })\nexport class DialogService {\n  private dialog = inject(MatDialog);\n\n  openConfirm(message: string) {\n    return this.dialog\n      .open(ConfirmDialogComponent, { data: { message } })\n      .afterClosed();\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Signal input + OnPush",
+      "task": "ChangeDetection OnPush component с input signal user и @if (user()) show email.",
+      "reference": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-user-chip',\n  standalone: true,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    @if (user(); as u) {\n      <span>{{ u.email }}</span>\n    }\n  `,\n})\nexport class UserChipComponent {\n  user = input<{ email: string } | null>(null);\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Resource API (Angular 19 concept)",
+      "task": "Псевдо: rxResource или signal + toSignal(http.get) для products.",
+      "reference": "import { Component, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { toSignal } from '@angular/core/rxjs-interop';\n\n@Component({\n  selector: 'app-product-grid',\n  standalone: true,\n  template: `@for (p of products(); track p.id) { <article>{{ p.name }}</article> }`,\n})\nexport class ProductGridComponent {\n  private http = inject(HttpClient);\n  products = toSignal(this.http.get<Product[]>('/api/products'), { initialValue: [] });\n}\n\ninterface Product {\n  id: number;\n  name: string;\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Standalone bootstrapApplication",
+      "task": "main.ts: bootstrapApplication(AppComponent, providers: [provideRouter(routes), provideHttpClient()]).",
+      "reference": "import { bootstrapApplication } from '@angular/platform-browser';\nimport { provideRouter } from '@angular/router';\nimport { provideHttpClient } from '@angular/common/http';\nimport { AppComponent } from './app/app.component';\nimport { routes } from './app/app.routes';\n\nbootstrapApplication(AppComponent, {\n  providers: [provideRouter(routes), provideHttpClient()],\n});",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Functional ErrorHandler",
+      "task": "provideAppInitializer или ErrorHandler — class GlobalHandler implements ErrorHandler handleError console.error.",
+      "reference": "import { ErrorHandler, Injectable } from '@angular/core';\n\n@Injectable()\nexport class GlobalErrorHandler implements ErrorHandler {\n  handleError(error: unknown): void {\n    console.error('Unhandled error:', error);\n  }\n}\n\n// providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }]",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Route title и data",
+      "task": "Route с title: 'Products' и data: { animation: 'ProductsPage' }.",
+      "reference": "import { Routes } from '@angular/router';\nimport { ProductsPage } from './products.page';\n\nexport const routes: Routes = [\n  {\n    path: 'products',\n    component: ProductsPage,\n    title: 'Products',\n    data: { animation: 'ProductsPage' },\n  },\n];",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ViewChild signal",
+      "task": "Component с viewChild.required<ElementRef>('box') и ngAfterViewInit log nativeElement.",
+      "reference": "import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';\n\n@Component({\n  selector: 'app-box-host',\n  standalone: true,\n  template: `<div #box>Box</div>`,\n})\nexport class BoxHostComponent implements AfterViewInit {\n  box = viewChild.required<ElementRef<HTMLElement>>('box');\n\n  ngAfterViewInit() {\n    console.log(this.box().nativeElement);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "DestroyRef + takeUntilDestroyed",
+      "task": "Component подписка interval pipe takeUntilDestroyed() без manual unsubscribe.",
+      "reference": "import { Component, DestroyRef, inject } from '@angular/core';\nimport { takeUntilDestroyed } from '@angular/core/rxjs-interop';\nimport { interval } from 'rxjs';\n\n@Component({\n  selector: 'app-ticker',\n  standalone: true,\n  template: `<p>{{ tick }}</p>`,\n})\nexport class TickerComponent {\n  private destroyRef = inject(DestroyRef);\n  tick = 0;\n\n  constructor() {\n    interval(1000)\n      .pipe(takeUntilDestroyed(this.destroyRef))\n      .subscribe(n => (this.tick = n));\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Validators.custom email",
+      "task": "ValidatorFn emailPattern: return { email: true } если нет @.",
+      "reference": "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\nexport const simpleEmailValidator: ValidatorFn = (\n  control: AbstractControl\n): ValidationErrors | null => {\n  const value = String(control.value ?? '');\n  return value.includes('@') ? null : { email: true };\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "FormArray динамические телефоны",
+      "task": "FormBuilder group с FormArray phones, метод addPhone(), template @for control of phones.controls.",
+      "reference": "import { Component } from '@angular/core';\nimport { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';\n\n@Component({\n  selector: 'app-phones',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `\n    <div [formGroup]=\"form\">\n      <div formArrayName=\"phones\">\n        @for (ctrl of phones.controls; track $index) {\n          <input [formControlName]=\"$index\" />\n        }\n      </div>\n      <button type=\"button\" (click)=\"addPhone()\">Add</button>\n    </div>\n  `,\n})\nexport class PhonesComponent {\n  form = this.fb.group({ phones: this.fb.array([]) });\n\n  constructor(private fb: FormBuilder) {\n    this.addPhone();\n  }\n\n  get phones() {\n    return this.form.get('phones') as FormArray;\n  }\n\n  addPhone() {\n    this.phones.push(this.fb.control('', Validators.required));\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Pipe async + @let (Angular 18+)",
+      "task": "Шаблон @let user = users$ | async; @if (user) { ... }",
+      "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { UserApi } from './user-api';\n\n@Component({\n  selector: 'app-profile-link',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    @let user = users$ | async;\n    @if (user) {\n      <a [routerLink]=\"['/users', user.id]\">{{ user.name }}</a>\n    }\n  `,\n})\nexport class ProfileLinkComponent {\n  users$ = inject(UserApi).getUsers();\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Structural directive *ngIf else",
+      "task": "Шаблон *ngIf=\"loggedIn(); else guest\" с ng-template #guest.",
+      "reference": "import { Component, signal } from '@angular/core';\nimport { NgIf } from '@angular/common';\n\n@Component({\n  selector: 'app-auth-banner',\n  standalone: true,\n  imports: [NgIf],\n  template: `\n    <div *ngIf=\"loggedIn(); else guest\">Welcome back</div>\n    <ng-template #guest><div>Please log in</div></ng-template>\n  `,\n})\nexport class AuthBannerComponent {\n  loggedIn = signal(false);\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Router outlet + child routes",
+      "task": "Parent с router-outlet и children routes path '' -> List, ':id' -> Detail.",
+      "reference": "import { Routes } from '@angular/router';\nimport { ShellComponent } from './shell.component';\n\nexport const routes: Routes = [\n  {\n    path: 'items',\n    component: ShellComponent,\n    children: [\n      { path: '', loadComponent: () => import('./list').then(m => m.ListComponent) },\n      { path: ':id', loadComponent: () => import('./detail').then(m => m.DetailComponent) },\n    ],\n  },\n];",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Environment injection",
+      "task": "InjectionToken API_URL и useValue в providers из environment.apiUrl.",
+      "reference": "import { InjectionToken, inject } from '@angular/core';\n\nexport const API_URL = new InjectionToken<string>('API_URL');\n\nexport class ApiClient {\n  private base = inject(API_URL);\n\n  url(path: string) {\n    return `${this.base}${path}`;\n  }\n}\n\n// providers: [{ provide: API_URL, useValue: environment.apiUrl }]",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "TestBed standalone component",
+      "task": "Минимальный spec: TestBed.configureTestingModule({ imports: [CounterComponent] }); createComponent; click increment.",
+      "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { CounterComponent } from './counter.component';\n\ndescribe('CounterComponent', () => {\n  let fixture: ComponentFixture<CounterComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [CounterComponent] }).compileComponents();\n    fixture = TestBed.createComponent(CounterComponent);\n    fixture.detectChanges();\n  });\n\n  it('increments', () => {\n    fixture.nativeElement.querySelector('button').click();\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('1');\n  });\n});",
+      "language": "typescript"
+    }
+  ]
+}
