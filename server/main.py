@@ -48,6 +48,10 @@ class AnswerIn(BaseModel):
     answer: str
 
 
+class HintIn(BaseModel):
+    draft: str = ""
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(
@@ -151,9 +155,15 @@ def next_card(session_id: str) -> dict:
 
 
 @app.post("/api/session/{session_id}/hint")
-def show_hint(session_id: str) -> dict:
+def show_hint(session_id: str, body: HintIn | None = None) -> dict:
     session = services.sessions.get(session_id)
-    if not session or not session.last_review:
+    if not session or not session.current:
         raise HTTPException(404, "Подсказка недоступна")
-    hint = session.last_review.get("hint") or session.last_review.get("reference_summary") or ""
+    draft = body.draft if body else ""
+    try:
+        hint = services.request_hint(session, draft)
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(502, f"Ollama: {exc}") from exc
+    if not hint:
+        raise HTTPException(404, "Подсказка недоступна")
     return {"hint": hint}

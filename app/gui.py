@@ -70,6 +70,43 @@ class EvaluateWorker(QThread):
             self.failed.emit(str(exc))
 
 
+class HintWorker(QThread):
+    finished_ok = pyqtSignal(str)
+    failed = pyqtSignal(str)
+
+    def __init__(
+        self,
+        evaluator: AnswerEvaluator,
+        card: Card,
+        deck_name: str,
+        draft: str,
+        *,
+        from_review: bool = False,
+        review_hint: str = "",
+    ):
+        super().__init__()
+        self.evaluator = evaluator
+        self.card = card
+        self.deck_name = deck_name
+        self.draft = draft
+        self.from_review = from_review
+        self.review_hint = review_hint
+
+    def run(self) -> None:
+        try:
+            if self.from_review and self.review_hint:
+                self.finished_ok.emit(self.review_hint)
+                return
+            hint = self.evaluator.request_hint(
+                self.card,
+                deck_name=self.deck_name,
+                user_draft=self.draft,
+            )
+            self.finished_ok.emit(hint)
+        except Exception as exc:  # noqa: BLE001
+            self.failed.emit(str(exc))
+
+
 class HistoryDialog(QDialog):
     def __init__(self, parent: QWidget, card: Card, records: list) -> None:
         super().__init__(parent)
@@ -124,6 +161,7 @@ class StudyScreen(QWidget):
         self.revision_count = 0
         self.last_review = None
         self.worker: EvaluateWorker | None = None
+        self.hint_worker: HintWorker | None = None
         self._advance_timer = QTimer(self)
         self._advance_timer.setSingleShot(True)
         self._advance_timer.timeout.connect(self._next_card)
@@ -188,7 +226,6 @@ class StudyScreen(QWidget):
         self.submit_btn.clicked.connect(self._submit_answer)
         self.hint_btn = QPushButton("Подсказка")
         self.hint_btn.clicked.connect(self._show_hint)
-        self.hint_btn.setEnabled(False)
         self.next_btn = QPushButton("Следующая →")
         self.next_btn.clicked.connect(self._next_card)
         self.next_btn.setEnabled(False)
@@ -329,7 +366,7 @@ class StudyScreen(QWidget):
         self._clear_answer()
         self.feedback_view.clear()
         self.submit_btn.setEnabled(True)
-        self.hint_btn.setEnabled(False)
+        self.hint_btn.setEnabled(True)
         self.next_btn.setEnabled(False)
         due_hint = ""
         if prog.attempts > 0 and prog.due_at:
@@ -382,6 +419,7 @@ class StudyScreen(QWidget):
 
     def _set_busy(self, busy: bool) -> None:
         self.submit_btn.setEnabled(not busy)
+        self.hint_btn.setEnabled(not busy and self.current_card is not None)
         self.next_btn.setEnabled(not busy and self.last_review is not None)
         if busy:
             self._cancel_auto_advance()
@@ -425,8 +463,6 @@ class StudyScreen(QWidget):
 
         max_fu = self._max_follow_ups()
         lines = [f"Оценка: {result.score}/100", "", result.feedback]
-        if result.hint:
-            lines.extend(["", f"💡 Подсказка: {result.hint}"])
 
         passed = result.score >= self._pass_score()
         interactions = self.follow_up_count + self.revision_count
@@ -476,7 +512,7 @@ class StudyScreen(QWidget):
                 lines.extend(["", "↻ Карточка вернётся в повторение через несколько минут."])
 
         self.feedback_view.setPlainText("\n".join(lines))
-        self.hint_btn.setEnabled(bool(result.hint or result.reference_summary))
+        self.hint_btn.setEnabled(True)
         self.next_btn.setEnabled(True)
         self.submit_btn.setEnabled(not finalize)
 
@@ -513,12 +549,47 @@ class StudyScreen(QWidget):
         elif not finalize:
             self.status_label.setText("Внесите правки и нажмите «Проверить ответ» или «Следующая →».")
 
-    def _show_hint(self) -> None:
-        if not self.last_review:
+    def _append_hint(self, hint: str) -> None:
+        if not hint:
             return
-        hint = self.last_review.hint or self.last_review.reference_summary
-        if hint:
+        text = self.feedback_view.toPlainText()
+        if hint in text:
+            return
+        if text.strip():
             self.feedback_view.append(f"\n\n💡 {hint}")
+        else:
+            self.feedback_view.setPlainText(f"💡 {hint}")
+
+    def _show_hint(self) -> None:
+        if not self.current_card:
+            return
+        review_hint = ""
+        from_review = False
+        if self.last_review:
+            review_hint = self.last_review.hint or self.last_review.reference_summary
+            from_review = bool(review_hint)
+        self._set_busy(True)
+        self.hint_worker = HintWorker(
+            self._evaluator(),
+            self.current_card,
+            self.deck.name,
+            self._answer_text(),
+            from_review=from_review,
+            review_hint=review_hint,
+        )
+        self.hint_worker.finished_ok.connect(self._on_hint)
+        self.hint_worker.failed.connect(self._on_hint_failed)
+        self.hint_worker.start()
+
+    def _on_hint(self, hint: str) -> None:
+        self._set_busy(False)
+        self._append_hint(hint)
+        if not self.last_review:
+            self.status_label.setText("Подсказка получена. Отправьте ответ, когда будете готовы.")
+
+    def _on_hint_failed(self, message: str) -> None:
+        self._set_busy(False)
+        self.feedback_view.append(f"\n\n❌ Подсказка: {message}")
 
     def _next_card(self) -> None:
         self._cancel_auto_advance()

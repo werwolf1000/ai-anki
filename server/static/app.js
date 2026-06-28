@@ -153,6 +153,7 @@ async function showCard(card) {
     : "Ваш ответ (своими словами)";
   $("btn-submit").disabled = false;
   $("btn-next").disabled = true;
+  $("btn-hint").disabled = false;
   $("feedback").textContent = "";
   $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`;
 }
@@ -187,6 +188,7 @@ async function startMode(mode) {
 async function submitAnswer() {
   if (!sessionId) return;
   $("btn-submit").disabled = true;
+  $("btn-hint").disabled = true;
   $("status").textContent = "Ollama думает…";
   try {
     const r = await api(`/api/session/${sessionId}/answer`, {
@@ -197,6 +199,7 @@ async function submitAnswer() {
     updateStats(r.stats);
     $("btn-next").disabled = false;
     $("btn-submit").disabled = !r.can_submit;
+    $("btn-hint").disabled = false;
     if (r.finalize) clearAnswer();
     if (r.auto_advance_ms > 0) {
       $("status").textContent = `Следующая через ${r.auto_advance_ms / 1000} с…`;
@@ -209,6 +212,7 @@ async function submitAnswer() {
   } catch (e) {
     $("feedback").textContent = "❌ " + e.message;
     $("btn-submit").disabled = false;
+    $("btn-hint").disabled = false;
     $("status").textContent = "";
   }
 }
@@ -228,10 +232,32 @@ async function nextCard() {
 
 async function showHint() {
   if (!sessionId) return;
+  $("btn-hint").disabled = true;
+  $("status").textContent = "Запрашиваем подсказку…";
   try {
-    const r = await api(`/api/session/${sessionId}/hint`, { method: "POST" });
-    if (r.hint) $("feedback").textContent += "\n\n💡 " + r.hint;
-  } catch (_) { /* ignore */ }
+    const r = await api(`/api/session/${sessionId}/hint`, {
+      method: "POST",
+      body: JSON.stringify({ draft: getAnswer() }),
+    });
+    if (r.hint) {
+      const fb = $("feedback");
+      if (!fb.textContent.includes(r.hint)) {
+        fb.textContent += (fb.textContent.trim() ? "\n\n" : "") + "💡 " + r.hint;
+      }
+    }
+    $("status").textContent = fbHasReview($("feedback").textContent)
+      ? ""
+      : "Подсказка получена. Отправьте ответ, когда будете готовы.";
+  } catch (e) {
+    const fb = $("feedback");
+    fb.textContent += (fb.textContent.trim() ? "\n\n" : "") + "❌ Подсказка: " + e.message;
+    $("status").textContent = "";
+  }
+  $("btn-hint").disabled = false;
+}
+
+function fbHasReview(text) {
+  return /Оценка:\s*\d+\/100/.test(text);
 }
 
 $("btn-save").onclick = () => saveConfig().catch((e) => alert(e.message));

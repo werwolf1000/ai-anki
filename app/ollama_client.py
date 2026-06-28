@@ -176,6 +176,56 @@ def _system_prompt_code(card: Card, deck_name: str = "") -> str:
 8. Только JSON:{_CODE_JSON}"""
 
 
+def _system_prompt_hint(card: Card, deck_name: str = "") -> str:
+    topic = _topic_context(card, deck_name)
+    label = _language_label(card, deck_name)
+    return f"""Ты — преподаватель по теме {topic}.
+Ученик нажал «Подсказка» и просит помощь по карточке, не отправляя ответ на полную проверку.
+
+Правила:
+1. Дай короткую подсказку (1–3 предложения): направление, ключевая идея, что проверить или с чего начать.
+2. НЕ давай полный эталонный ответ, готовый код целиком и не пересказывай reference дословно.
+3. Контекст: {topic}. Язык/предмет: {label}.
+4. Если есть черновик ученика — подскажи, что в нём не так или чего не хватает, без готового решения.
+5. Отвечай ТОЛЬКО валидным JSON без markdown:
+{{"hint": "..."}}"""
+
+
+def _build_hint_body(card: Card, deck_name: str, user_draft: str) -> str:
+    prefix = _text_card_prefix(card, deck_name)
+    ref_note = f"Эталон (только для тебя, НЕ цитируй ученику):\n{card.reference}\n\n"
+    draft = user_draft.strip()
+
+    if card.is_live_code:
+        fence = _fence_lang(card, deck_name)
+        body = (
+            prefix
+            + f"Задание (live-coding): {card.question}\n"
+            + (f"Описание задания: {card.task}\n" if card.task else "")
+            + ref_note
+        )
+        if draft:
+            body += f"Черновик кода ученика:\n```{fence}\n{draft}\n```\n\n"
+        return body + "Дай подсказку, как двигаться дальше."
+
+    if card.is_code:
+        fence = _fence_lang(card, deck_name)
+        body = (
+            prefix
+            + f"Исходный код:\n```{fence}\n{card.code}\n```\n\n"
+            + f"Задание: {card.task or 'Исправь или дополни код.'}\n"
+            + ref_note
+        )
+        if draft:
+            body += f"Черновик ответа ученика:\n```{fence}\n{draft}\n```\n\n"
+        return body + "Дай подсказку, не раскрывая эталон."
+
+    body = prefix + f"Вопрос: {card.question}\n" + ref_note
+    if draft:
+        body += f"Черновик ответа ученика:\n{draft}\n\n"
+    return body + "Дай подсказку, не раскрывая эталон."
+
+
 def normalize_ollama_url(url: str) -> str:
     url = url.strip().rstrip("/")
     if not url:
@@ -329,6 +379,47 @@ class AnswerEvaluator:
         if follow_ups_remaining <= 0 and result.follow_up:
             result.follow_up = ""
         return result
+
+    def request_hint(
+        self,
+        card: Card,
+        *,
+        deck_name: str = "",
+        user_draft: str = "",
+    ) -> str:
+        system = _system_prompt_hint(card, deck_name)
+        body = _build_hint_body(card, deck_name, user_draft)
+        messages = [
+            ChatMessage("system", system),
+            ChatMessage("user", body),
+        ]
+        raw = self.client.chat(messages)
+        return self._parse_hint(raw)
+
+    @staticmethod
+    def _parse_hint(raw: str) -> str:
+        cleaned = raw.strip()
+        for tag in ("think", "redacted_thinking"):
+            cleaned = re.sub(rf"<{tag}>.*?</{tag}>", "", cleaned, flags=re.S | re.I)
+        cleaned = cleaned.strip()
+
+        json_text = cleaned
+        fence = re.search(r"```(?:json)?\s*(.*?)\s*```", cleaned, flags=re.S | re.I)
+        if fence:
+            json_text = fence.group(1)
+        else:
+            brace = re.search(r"\{.*\}", cleaned, flags=re.S)
+            if brace:
+                json_text = brace.group(0)
+
+        try:
+            data = json.loads(json_text)
+            hint = str(data.get("hint", "") or "").strip()
+            if hint:
+                return hint
+        except (json.JSONDecodeError, TypeError, ValueError):
+            pass
+        return cleaned or "Не удалось получить подсказку."
 
     @staticmethod
     def _parse_review(raw: str) -> ReviewResult:

@@ -26,6 +26,7 @@ class StudySession:
     pending_finalize: bool = False
     last_review: dict | None = None
     last_feedback: str = ""
+    cached_hint: str = ""
 
     @property
     def current(self) -> Card | None:
@@ -154,9 +155,6 @@ class AppServices:
         session.chat_history.append(ChatMessage("assistant", result.feedback))
 
         lines = [f"Оценка: {result.score}/100", "", result.feedback]
-        if result.hint:
-            lines.append("")
-            lines.append(f"💡 Подсказка: {result.hint}")
 
         passed = result.score >= self.pass_score()
         max_fu = self.max_follow_ups()
@@ -218,6 +216,22 @@ class AppServices:
             "stats": self.session_stats(session),
         }
 
+    def request_hint(self, session: StudySession, draft: str = "") -> str:
+        card = session.current
+        if not card:
+            raise ValueError("Сессия завершена")
+        if session.last_review:
+            hint = session.last_review.get("hint") or session.last_review.get("reference_summary") or ""
+            if hint:
+                return hint
+        hint = self.evaluator().request_hint(
+            card,
+            deck_name=session.deck.name,
+            user_draft=draft.strip(),
+        )
+        session.cached_hint = hint
+        return hint
+
     def next_card(self, session: StudySession) -> dict:
         if session.pending_finalize and session.index < len(session.queue):
             session.pending_finalize = False
@@ -228,6 +242,7 @@ class AppServices:
             session.revision_count = 0
             session.last_review = None
             session.last_feedback = ""
+            session.cached_hint = ""
         else:
             session.index += 1
             session.chat_history = []
@@ -236,6 +251,7 @@ class AppServices:
             session.revision_count = 0
             session.last_review = None
             session.last_feedback = ""
+            session.cached_hint = ""
 
         if session.finished:
             return {"done": True, "stats": self.session_stats(session)}
