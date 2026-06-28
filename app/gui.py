@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
-from PyQt6.QtCore import Qt, QThread, pyqtSignal
-from PyQt6.QtGui import QFont
+from app.config_store import clamp_session_limit, load_config, save_config
+
+from PyQt6.QtCore import Qt, QThread, QTimer, pyqtSignal
+from PyQt6.QtGui import QFont, QKeySequence, QShortcut
 from PyQt6.QtWidgets import (
     QApplication,
-    QFileDialog,
+    QDialog,
     QFormLayout,
     QGroupBox,
     QHBoxLayout,
@@ -17,6 +18,7 @@ from PyQt6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QSpinBox,
+    QStackedWidget,
     QTextEdit,
     QVBoxLayout,
     QWidget,
@@ -24,20 +26,31 @@ from PyQt6.QtWidgets import (
 
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
-from app.progress import ProgressStore
+from app.progress import ProgressStore, StudyMode
+from app.registry import DeckEntry, DeckRegistry
+from app.welcome import WelcomeScreen
 
 
 class EvaluateWorker(QThread):
     finished_ok = pyqtSignal(object)
     failed = pyqtSignal(str)
 
-    def __init__(self, evaluator: AnswerEvaluator, card: Card, answer: str, history: list[ChatMessage], is_follow_up: bool):
+    def __init__(
+        self,
+        evaluator: AnswerEvaluator,
+        card: Card,
+        answer: str,
+        history: list[ChatMessage],
+        is_follow_up: bool,
+        follow_ups_remaining: int,
+    ):
         super().__init__()
         self.evaluator = evaluator
         self.card = card
         self.answer = answer
         self.history = history
         self.is_follow_up = is_follow_up
+        self.follow_ups_remaining = follow_ups_remaining
 
     def run(self) -> None:
         try:
@@ -46,108 +59,116 @@ class EvaluateWorker(QThread):
                 self.answer,
                 self.history,
                 is_follow_up=self.is_follow_up,
+                follow_ups_remaining=self.follow_ups_remaining,
             )
             self.finished_ok.emit(result)
         except Exception as exc:  # noqa: BLE001
             self.failed.emit(str(exc))
 
 
-class MainWindow(QMainWindow):
-    def __init__(self) -> None:
-        super().__init__()
-        self.setWindowTitle("AI Anki — Ollama")
-        self.resize(960, 780)
+class HistoryDialog(QDialog):
+    def __init__(self, parent: QWidget, card: Card, records: list) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("История ответов")
+        self.resize(640, 480)
+        layout = QVBoxLayout(self)
+        layout.addWidget(QLabel(f"Карточка: {card.question[:120]}…" if len(card.question) > 120 else f"Карточка: {card.question}"))
+        view = QTextEdit()
+        view.setReadOnly(True)
+        if not records:
+            view.setPlainText("Пока нет сохранённых ответов.")
+        else:
+            blocks = []
+            for i, rec in enumerate(reversed(records), 1):
+                ts = rec.at[:19].replace("T", " ") if rec.at else "?"
+                kind = "уточнение" if rec.is_follow_up else "ответ"
+                blocks.append(
+                    f"── #{len(records) - i + 1} · {ts} · {kind} · {rec.score}/100 ──\n"
+                    f"{rec.answer[:800]}\n\n"
+                    f"Отзыв: {rec.feedback}\n"
+                )
+            view.setPlainText("\n".join(blocks))
+        layout.addWidget(view)
+        close = QPushButton("Закрыть")
+        close.clicked.connect(self.accept)
+        layout.addWidget(close)
 
-        self.config_path = Path(__file__).resolve().parent.parent / "config.json"
-        self.config = self._load_config()
-        self.deck: Deck | None = None
-        self.queue: list = []
+
+class StudyScreen(QWidget):
+    back_requested = pyqtSignal()
+
+    def __init__(
+        self,
+        deck: Deck,
+        mode: StudyMode,
+        progress_store: ProgressStore,
+        config: dict,
+        config_path: Path,
+    ) -> None:
+        super().__init__()
+        self.deck = deck
+        self.mode = mode
+        self.progress_store = progress_store
+        self.config = config
+        self.config_path = config_path
+        self.queue: list[Card] = []
         self.current_index = 0
         self.current_card: Card | None = None
         self.chat_history: list[ChatMessage] = []
         self.awaiting_follow_up = False
+        self.follow_up_count = 0
         self.last_review = None
         self.worker: EvaluateWorker | None = None
-
-        self.progress_store = ProgressStore(Path.home() / ".ai-anki" / "progress.json")
-        self.progress_store.load()
-
+        self._advance_timer = QTimer(self)
+        self._advance_timer.setSingleShot(True)
+        self._advance_timer.timeout.connect(self._next_card)
+        self._pending_finalize = False
         self._build_ui()
-        self._load_default_deck()
+        self._start_session()
 
-    def _load_config(self) -> dict:
-        defaults = {
-            "ollama_url": "https://ollama.webmastermsk.ru:330068",
-            "model": "qwen3-code:30b",
-            "pass_score": 75,
-            "timeout": 120,
-        }
-        if self.config_path.exists():
-            defaults.update(json.loads(self.config_path.read_text(encoding="utf-8")))
-        return defaults
-
-    def _save_config(self) -> None:
-        self.config = {
-            "ollama_url": self.url_edit.text().strip(),
-            "model": self.model_edit.text().strip(),
-            "pass_score": self.pass_score.value(),
-            "timeout": self.timeout_spin.value(),
-        }
-        self.config_path.write_text(json.dumps(self.config, ensure_ascii=False, indent=2), encoding="utf-8")
+    def _pass_score(self) -> int:
+        return int(self.config.get("pass_score", 75))
 
     def _build_ui(self) -> None:
-        root = QWidget()
-        self.setCentralWidget(root)
-        layout = QVBoxLayout(root)
+        layout = QVBoxLayout(self)
 
-        settings = QGroupBox("Ollama")
-        form = QFormLayout(settings)
-        self.url_edit = QLineEdit(self.config["ollama_url"])
-        self.model_edit = QLineEdit(self.config["model"])
-        self.pass_score = QSpinBox()
-        self.pass_score.setRange(50, 100)
-        self.pass_score.setValue(int(self.config.get("pass_score", 75)))
-        self.timeout_spin = QSpinBox()
-        self.timeout_spin.setRange(30, 600)
-        self.timeout_spin.setValue(int(self.config.get("timeout", 120)))
-        form.addRow("URL", self.url_edit)
-        form.addRow("Модель", self.model_edit)
-        form.addRow("Порог «усвоено»", self.pass_score)
-        form.addRow("Таймаут (с)", self.timeout_spin)
-        layout.addWidget(settings)
-
-        deck_row = QHBoxLayout()
-        self.deck_label = QLabel("Колода не загружена")
-        load_btn = QPushButton("Открыть колоду…")
-        load_btn.clicked.connect(self._load_deck_dialog)
-        test_btn = QPushButton("Проверить Ollama")
-        test_btn.clicked.connect(self._test_ollama)
-        deck_row.addWidget(self.deck_label, 1)
-        deck_row.addWidget(load_btn)
-        deck_row.addWidget(test_btn)
-        layout.addLayout(deck_row)
-
+        top = QHBoxLayout()
+        back_btn = QPushButton("← Колоды")
+        back_btn.clicked.connect(self.back_requested.emit)
+        self.deck_label = QLabel("")
         self.stats_label = QLabel("")
-        layout.addWidget(self.stats_label)
+        history_btn = QPushButton("История карточки")
+        history_btn.clicked.connect(self._show_card_history)
+        settings_btn = QPushButton("Ollama…")
+        settings_btn.clicked.connect(self._show_settings)
+        top.addWidget(back_btn)
+        top.addWidget(self.deck_label, 1)
+        top.addWidget(self.stats_label)
+        top.addWidget(history_btn)
+        top.addWidget(settings_btn)
+        layout.addLayout(top)
 
         q_box = QGroupBox("Вопрос")
         q_layout = QVBoxLayout(q_box)
         self.question_view = QTextEdit()
         self.question_view.setReadOnly(True)
-        self.question_view.setMaximumHeight(120)
-        font = QFont()
-        font.setPointSize(12)
+        self.question_view.setMinimumHeight(120)
+        self.question_view.setMaximumHeight(280)
+        font = QFont("Monospace")
+        font.setPointSize(11)
         self.question_view.setFont(font)
         q_layout.addWidget(self.question_view)
         layout.addWidget(q_box)
 
-        a_box = QGroupBox("Ваш ответ (своими словами)")
-        a_layout = QVBoxLayout(a_box)
+        self.answer_box = QGroupBox("Ваш ответ")
+        a_layout = QVBoxLayout(self.answer_box)
         self.answer_edit = QTextEdit()
-        self.answer_edit.setPlaceholderText("Напишите ответ… Enter+Ctrl — отправить")
-        self.answer_edit.setMaximumHeight(140)
+        self.answer_edit.setPlaceholderText("Напишите ответ… Ctrl+Enter — отправить")
+        self.answer_edit.setMinimumHeight(100)
+        self.answer_edit.setMaximumHeight(220)
         a_layout.addWidget(self.answer_edit)
-        layout.addWidget(a_box)
+        QShortcut(QKeySequence("Ctrl+Return"), self.answer_edit, self._submit_answer)
+        layout.addWidget(self.answer_box)
 
         btn_row = QHBoxLayout()
         self.submit_btn = QPushButton("Проверить ответ")
@@ -155,7 +176,7 @@ class MainWindow(QMainWindow):
         self.hint_btn = QPushButton("Подсказка")
         self.hint_btn.clicked.connect(self._show_hint)
         self.hint_btn.setEnabled(False)
-        self.next_btn = QPushButton("Следующая карточка →")
+        self.next_btn = QPushButton("Следующая →")
         self.next_btn.clicked.connect(self._next_card)
         self.next_btn.setEnabled(False)
         btn_row.addWidget(self.submit_btn)
@@ -164,102 +185,169 @@ class MainWindow(QMainWindow):
         btn_row.addWidget(self.next_btn)
         layout.addLayout(btn_row)
 
-        f_box = QGroupBox("Обратная связь / диалог")
+        f_box = QGroupBox("Обратная связь")
         f_layout = QVBoxLayout(f_box)
         self.feedback_view = QTextEdit()
         self.feedback_view.setReadOnly(True)
         f_layout.addWidget(self.feedback_view)
         layout.addWidget(f_box, 1)
 
-        self.status_label = QLabel("Загрузите колоду и ответьте на вопрос.")
+        self.status_label = QLabel("")
         layout.addWidget(self.status_label)
 
-    def _load_default_deck(self) -> None:
-        sample = Path(__file__).resolve().parent.parent / "decks" / "angular-sample.json"
-        anki = Path.home() / "Documents" / "anki-angular.txt"
-        if anki.exists():
-            self._load_deck_path(anki)
-        elif sample.exists():
-            self._load_deck_path(sample)
+    def _mode_label(self) -> str:
+        return {
+            StudyMode.DUE: "повторение",
+            StudyMode.NEW: "новые",
+            StudyMode.WEAK: "слабые",
+            StudyMode.ALL: "вся колода",
+        }.get(self.mode, "")
 
-    def _load_deck_dialog(self) -> None:
-        path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Колода",
-            str(Path.home() / "Documents"),
-            "Колоды (*.json *.txt);;JSON (*.json);;Anki TXT (*.txt)",
+    def _start_session(self) -> None:
+        self.progress_store.load()
+        self.progress_store.reconcile_deck(self.deck, self._pass_score())
+        self.queue = self.progress_store.build_queue(
+            self.deck,
+            self.mode,
+            pass_score=self._pass_score(),
+            limit=clamp_session_limit(self.config.get("session_limit", 20)),
         )
-        if path:
-            self._load_deck_path(path)
+        self.current_index = 0
+        code_n = sum(1 for c in self.deck.cards if c.is_code)
+        extra = f", код: {code_n}" if code_n else ""
+        self.deck_label.setText(f"{self.deck.name} · {self._mode_label()}")
+        s = self.progress_store.summary(self.deck, self._pass_score())
+        self.stats_label.setText(
+            f"Сегодня {s.passed_today} · Усвоено {s.mastered}/{s.total}{extra} · "
+            f"к повтору {s.due} · сессия {len(self.queue)}"
+        )
+        if not self.queue:
+            self.question_view.setPlainText("Нет карточек для выбранного режима.\nВернитесь и выберите другой режим.")
+            self.submit_btn.setEnabled(False)
+            self.status_label.setText("Очередь пуста")
+            return
+        self._show_current_card()
 
-    def _load_deck_path(self, path: str) -> None:
-        try:
-            p = Path(path)
-            if p.suffix.lower() == ".json":
-                self.deck = Deck.load_json(p)
-            else:
-                self.deck = Deck.load_anki_txt(p)
-            if not self.deck.cards:
-                raise ValueError("Колода пуста")
-            self.queue = self.progress_store.next_cards(self.deck)
-            self.current_index = 0
-            self.deck_label.setText(f"Колода: {self.deck.name} ({len(self.deck.cards)} карточек)")
-            self._show_current_card()
-            self._update_stats()
-        except Exception as exc:  # noqa: BLE001
-            QMessageBox.critical(self, "Ошибка", str(exc))
+    def _max_follow_ups(self) -> int:
+        return int(self.config.get("max_follow_ups", 2))
 
     def _client(self) -> OllamaClient:
         return OllamaClient(
-            self.url_edit.text().strip(),
-            self.model_edit.text().strip(),
-            timeout=self.timeout_spin.value(),
+            self.config["ollama_url"],
+            self.config["model"],
+            timeout=int(self.config.get("timeout", 120)),
+            api_key=self.config.get("api_key", ""),
         )
 
     def _evaluator(self) -> AnswerEvaluator:
         return AnswerEvaluator(self._client())
 
-    def _test_ollama(self) -> None:
-        self._save_config()
-        self.status_label.setText("Проверка Ollama…")
-        try:
-            ok = self._client().health()
-            if ok:
-                QMessageBox.information(self, "OK", "Ollama доступна")
-                self.status_label.setText("Ollama доступна")
-            else:
-                QMessageBox.warning(self, "Ошибка", "Ollama не ответила на /api/tags")
-        except Exception as exc:  # noqa: BLE001
-            QMessageBox.critical(self, "Ошибка", str(exc))
+    def _show_settings(self) -> None:
+        dlg = QDialog(self)
+        dlg.setWindowTitle("Ollama")
+        form = QFormLayout(dlg)
+        url = QLineEdit(self.config.get("ollama_url", ""))
+        model = QLineEdit(self.config.get("model", ""))
+        api_key = QLineEdit(self.config.get("api_key", ""))
+        api_key.setEchoMode(QLineEdit.EchoMode.Password)
+        pass_score = QSpinBox()
+        pass_score.setRange(50, 100)
+        pass_score.setValue(self._pass_score())
+        timeout = QSpinBox()
+        timeout.setRange(30, 600)
+        timeout.setValue(int(self.config.get("timeout", 120)))
+        max_fu = QSpinBox()
+        max_fu.setRange(0, 5)
+        max_fu.setValue(self._max_follow_ups())
+        form.addRow("URL", url)
+        form.addRow("Модель", model)
+        form.addRow("API-ключ", api_key)
+        form.addRow("Порог «усвоено»", pass_score)
+        form.addRow("Таймаут (с)", timeout)
+        form.addRow("Макс. уточнений", max_fu)
+        row = QHBoxLayout()
+        test = QPushButton("Проверить")
+        save = QPushButton("Сохранить")
+        row.addWidget(test)
+        row.addWidget(save)
+        form.addRow(row)
+
+        def do_save() -> None:
+            self.config.update({
+                "ollama_url": url.text().strip(),
+                "model": model.text().strip(),
+                "api_key": api_key.text().strip(),
+                "pass_score": pass_score.value(),
+                "timeout": timeout.value(),
+                "max_follow_ups": max_fu.value(),
+            })
+            save_config(self.config_path, self.config)
+            dlg.accept()
+
+        def do_test() -> None:
+            c = OllamaClient(url.text().strip(), model.text().strip(), timeout=timeout.value(), api_key=api_key.text().strip())
+            ok, detail = c.health()
+            QMessageBox.information(dlg, "Ollama", detail if ok else detail)
+
+        save.clicked.connect(do_save)
+        test.clicked.connect(do_test)
+        dlg.exec()
+
+    def _show_card_history(self) -> None:
+        if not self.current_card:
+            return
+        records = self.progress_store.card_history(self.deck, self.current_card.id)
+        HistoryDialog(self, self.current_card, records).exec()
 
     def _show_current_card(self) -> None:
+        self._cancel_auto_advance()
         if not self.queue:
-            self.question_view.setPlainText("Нет карточек.")
             return
         self.current_card = self.queue[self.current_index]
         self.chat_history = []
         self.awaiting_follow_up = False
+        self.follow_up_count = 0
         self.last_review = None
-        self.question_view.setPlainText(self.current_card.question)
+        self._pending_finalize = False
+        prog = self.progress_store.get(self.deck, self.current_card.id)
+        self.question_view.setPlainText(self.current_card.display_text())
+        if self.current_card.is_code:
+            self.answer_box.setTitle("Ваш код (исправленный или дополненный)")
+            self.answer_edit.setPlaceholderText("Вставьте исправленный код…")
+        else:
+            self.answer_box.setTitle("Ваш ответ (своими словами)")
+            self.answer_edit.setPlaceholderText("Напишите ответ…")
         self.answer_edit.clear()
         self.feedback_view.clear()
         self.submit_btn.setEnabled(True)
         self.hint_btn.setEnabled(False)
         self.next_btn.setEnabled(False)
-        self.status_label.setText(f"Карточка {self.current_index + 1}/{len(self.queue)}")
-
-    def _update_stats(self) -> None:
-        if not self.deck:
-            return
-        mastered = sum(
-            1 for c in self.deck.cards if self.progress_store.get(self.deck, c.id).mastered
+        due_hint = ""
+        if prog.attempts > 0 and prog.due_at:
+            due_hint = f" · повтор через {max(0, round(prog.days_until_due(), 1))} д"
+        self.status_label.setText(
+            f"{self.current_index + 1}/{len(self.queue)} · "
+            f"лучший {prog.best_score} · попыток {prog.attempts}{due_hint}"
         )
-        self.stats_label.setText(f"Усвоено: {mastered}/{len(self.deck.cards)}")
+
+    def _cancel_auto_advance(self) -> None:
+        if self._advance_timer.isActive():
+            self._advance_timer.stop()
+
+    def _schedule_auto_advance(self) -> None:
+        delay = int(self.config.get("auto_advance_ms", 1500))
+        self._cancel_auto_advance()
+        if delay <= 0:
+            self.status_label.setText("Нажмите «Следующая →» для продолжения.")
+            return
+        self.status_label.setText(f"Следующая карточка через {delay // 1000} с…")
+        self._advance_timer.start(delay)
 
     def _set_busy(self, busy: bool) -> None:
         self.submit_btn.setEnabled(not busy)
         self.next_btn.setEnabled(not busy and self.last_review is not None)
         if busy:
+            self._cancel_auto_advance()
             self.status_label.setText("Ollama думает…")
 
     def _submit_answer(self) -> None:
@@ -269,7 +357,8 @@ class MainWindow(QMainWindow):
         if not answer:
             QMessageBox.warning(self, "Пусто", "Напишите ответ.")
             return
-        self._save_config()
+        max_fu = self._max_follow_ups()
+        remaining = max(0, max_fu - self.follow_up_count)
         self._set_busy(True)
         self.worker = EvaluateWorker(
             self._evaluator(),
@@ -277,6 +366,7 @@ class MainWindow(QMainWindow):
             answer,
             self.chat_history.copy(),
             self.awaiting_follow_up,
+            remaining,
         )
         self.worker.finished_ok.connect(self._on_review)
         self.worker.failed.connect(self._on_review_failed)
@@ -284,80 +374,184 @@ class MainWindow(QMainWindow):
 
     def _on_review_failed(self, message: str) -> None:
         self._set_busy(False)
-        self.feedback_view.append(f"❌ Ошибка: {message}")
-        self.status_label.setText("Ошибка запроса к Ollama")
+        self.feedback_view.setPlainText(f"❌ Ошибка: {message}")
 
     def _on_review(self, result) -> None:
         self._set_busy(False)
         self.last_review = result
-
+        was_follow_up_answer = self.awaiting_follow_up
         user_text = self.answer_edit.toPlainText().strip()
         self.chat_history.append(ChatMessage("user", user_text))
         self.chat_history.append(ChatMessage("assistant", result.feedback))
 
-        lines = [
-            f"Оценка: {result.score}/100",
-            "",
-            result.feedback,
-        ]
+        max_fu = self._max_follow_ups()
+        lines = [f"Оценка: {result.score}/100", "", result.feedback]
         if result.hint:
             lines.extend(["", f"💡 Подсказка: {result.hint}"])
-        if result.follow_up:
-            lines.extend(["", f"❓ Уточнение: {result.follow_up}", "(Ответьте на уточнение и нажмите «Проверить ответ»)"])
+
+        if result.follow_up and self.follow_up_count < max_fu:
+            self.follow_up_count += 1
+            lines.extend(["", f"❓ Уточнение ({self.follow_up_count}/{max_fu}): {result.follow_up}"])
             self.awaiting_follow_up = True
         else:
+            if result.follow_up and self.follow_up_count >= max_fu:
+                lines.extend([
+                    "",
+                    f"ℹ️ Лимит уточнений ({max_fu}) исчерпан — карточка завершена.",
+                ])
             self.awaiting_follow_up = False
 
-        if result.correct and not result.follow_up:
-            lines.extend(["", "✅ Карточка усвоена!"])
-        elif not result.correct:
-            lines.extend(["", "Попробуйте ответить ещё раз или нажмите «Подсказка»."])
+        finalize = not self.awaiting_follow_up
+        passed = result.score >= self._pass_score()
+        if finalize:
+            if passed:
+                lines.extend(["", "✅ Засчитано! Следующее повторение по расписанию."])
+            else:
+                lines.extend(["", "↻ Карточка вернётся в повторение через несколько минут."])
 
         self.feedback_view.setPlainText("\n".join(lines))
         self.hint_btn.setEnabled(bool(result.hint or result.reference_summary))
         self.next_btn.setEnabled(True)
 
-        if self.deck and self.current_card and not self.awaiting_follow_up:
-            prog = self.progress_store.get(self.deck, self.current_card.id)
-            prog.attempts += 1
-            prog.last_score = result.score
-            prog.best_score = max(prog.best_score, result.score)
-            self.progress_store.update(self.deck, prog, self.pass_score.value())
-            self._update_stats()
+        prog = None
+        if self.current_card:
+            prog = self.progress_store.record_answer(
+                self.deck,
+                self.current_card.id,
+                answer=user_text,
+                score=result.score,
+                correct=passed,
+                feedback=result.feedback,
+                pass_score=self._pass_score(),
+                is_follow_up=was_follow_up_answer,
+                finalize=finalize,
+            )
+            s = self.progress_store.summary(self.deck, self._pass_score())
+            self.stats_label.setText(
+                f"Сегодня {s.passed_today} · Усвоено {s.mastered}/{s.total} · "
+                f"к повтору {s.due} · сессия {len(self.queue)}"
+            )
+            if prog and finalize:
+                self.status_label.setText(
+                    f"Сохранено · оценка {prog.last_score} · "
+                    f"лучший {prog.best_score} · попыток {prog.attempts}"
+                )
 
         self.answer_edit.clear()
-        if self.awaiting_follow_up:
-            self.answer_edit.setPlaceholderText("Ответ на уточняющий вопрос…")
-            self.status_label.setText("Ответьте на уточняющий вопрос")
-        else:
-            self.answer_edit.setPlaceholderText("Напишите ответ…")
-            self.status_label.setText("Готово. Следующая карточка или повторите ответ.")
+        self._pending_finalize = finalize
+
+        if finalize:
+            self._schedule_auto_advance()
 
     def _show_hint(self) -> None:
         if not self.last_review:
             return
         hint = self.last_review.hint or self.last_review.reference_summary
         if hint:
-            self.feedback_view.append(f"\n\n💡 Дополнительно: {hint}")
-        elif self.current_card:
-            ref = self.current_card.reference[:200]
-            self.feedback_view.append(f"\n\n📖 Начало эталона: {ref}…")
+            self.feedback_view.append(f"\n\n💡 {hint}")
 
     def _next_card(self) -> None:
+        self._cancel_auto_advance()
         if not self.queue:
+            self.back_requested.emit()
             return
-        self.current_index = (self.current_index + 1) % len(self.queue)
-        self.queue = self.progress_store.next_cards(self.deck)
-        if self.current_index >= len(self.queue):
-            self.current_index = 0
-        self._show_current_card()
-        self._update_stats()
 
-    def keyPressEvent(self, event) -> None:  # noqa: N802
-        if event.modifiers() & Qt.KeyboardModifier.ControlModifier and event.key() == Qt.Key.Key_Return:
-            self._submit_answer()
+        if self._pending_finalize:
+            self._pending_finalize = False
+            if self.current_index < len(self.queue):
+                self.queue.pop(self.current_index)
+            self._update_session_stats()
+        else:
+            self.current_index += 1
+
+        if self.current_index >= len(self.queue):
+            self._end_session()
             return
-        super().keyPressEvent(event)
+        self._show_current_card()
+
+    def _update_session_stats(self) -> None:
+        s = self.progress_store.summary(self.deck, self._pass_score())
+        self.stats_label.setText(
+            f"Сегодня {s.passed_today} · Усвоено {s.mastered}/{s.total} · "
+            f"к повтору {s.due} · сессия {len(self.queue)}"
+        )
+
+    def _end_session(self) -> None:
+        s = self.progress_store.summary(self.deck, self._pass_score())
+        QMessageBox.information(
+            self,
+            "Сессия завершена",
+            f"К повтору в колоде: {s.due}\n\n"
+            "Вернитесь на главный экран для новой сессии.",
+        )
+        self.back_requested.emit()
+
+
+class MainWindow(QMainWindow):
+    def __init__(self) -> None:
+        super().__init__()
+        self.setWindowTitle("AI Anki")
+        self.resize(980, 800)
+
+        base = Path(__file__).resolve().parent.parent
+        self.config, self.config_path = load_config(base)
+        data_dir = Path.home() / ".ai-anki"
+        self.progress_store = ProgressStore(data_dir / "progress.json")
+        self.progress_store.load()
+        self.registry = DeckRegistry(data_dir / "decks.json", base / "decks")
+        self.registry.load()
+
+        self.stack = QStackedWidget()
+        self.setCentralWidget(self.stack)
+
+        self.welcome = WelcomeScreen(
+            self.registry,
+            self.progress_store,
+            self.config,
+            self.config_path,
+            base / "decks",
+        )
+        self.welcome.deck_selected.connect(self._open_study)
+        self.welcome.config_saved.connect(self._reload_config)
+        self.stack.addWidget(self.welcome)
+
+        self.study_screen: StudyScreen | None = None
+
+    def _reload_config(self) -> None:
+        base = Path(__file__).resolve().parent.parent
+        self.config, self.config_path = load_config(base)
+
+    def _open_study(self, entry: DeckEntry, mode_value: str) -> None:
+        try:
+            deck = self.registry.load_deck(entry)
+            mode = StudyMode(mode_value)
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(self, "Ошибка", str(exc))
+            return
+
+        if self.study_screen is not None:
+            self.stack.removeWidget(self.study_screen)
+            self.study_screen.deleteLater()
+
+        self.config, self.config_path = load_config(Path(__file__).resolve().parent.parent)
+        self.progress_store.load()
+        self.study_screen = StudyScreen(deck, mode, self.progress_store, self.config, self.config_path)
+        self.study_screen.back_requested.connect(self._go_home)
+        self.stack.addWidget(self.study_screen)
+        self.stack.setCurrentWidget(self.study_screen)
+
+    def _go_home(self) -> None:
+        if self.study_screen is not None:
+            self.progress_store.save()
+            self.stack.removeWidget(self.study_screen)
+            self.study_screen.deleteLater()
+            self.study_screen = None
+        self.config, self.config_path = load_config(Path(__file__).resolve().parent.parent)
+        self.welcome.config = self.config
+        self.welcome.config_path = self.config_path
+        self.welcome.sync_from_config()
+        self.welcome.refresh()
+        self.stack.setCurrentWidget(self.welcome)
 
 
 def run_app() -> None:

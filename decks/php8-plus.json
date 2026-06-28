@@ -1,0 +1,3895 @@
+{
+  "name": "PHP 8+",
+  "cards": [
+    {
+      "question": "Что такое named arguments (именованные аргументы) в PHP 8?",
+      "reference": "Вызов функции с указанием имён параметров: foo(name: 'Ann', age: 30). Порядок не важен, можно пропускать параметры с default."
+    },
+    {
+      "question": "Можно ли смешивать позиционные и именованные аргументы?",
+      "reference": "Да, но именованные должны идти после всех позиционных."
+    },
+    {
+      "question": "Что такое constructor property promotion?",
+      "reference": "Объявление и инициализация свойств прямо в параметрах конструктора: public function __construct(private string $name) {}"
+    },
+    {
+      "question": "Какие модификаторы доступа допустимы в promoted properties?",
+      "reference": "public, protected, private — как у обычных свойств."
+    },
+    {
+      "question": "Что такое union types в PHP 8?",
+      "reference": "Тип вида int|string — значение может быть одним из перечисленных типов."
+    },
+    {
+      "question": "Можно ли использовать null в union type?",
+      "reference": "Да: ?string эквивалентно string|null. Можно писать явно int|null."
+    },
+    {
+      "question": "Что такое mixed type?",
+      "reference": "mixed — любой тип, включая null. Замена отсутствию типа для явной аннотации."
+    },
+    {
+      "question": "Что делает оператор ?-> (nullsafe)?",
+      "reference": "Вызывает метод/свойство только если левая часть не null, иначе весь результат null."
+    },
+    {
+      "question": "Чем ?-> отличается от ->?",
+      "reference": "-> на null вызывает Error; ?-> коротко заменяет цепочку if ($x !== null) $x->m();"
+    },
+    {
+      "question": "Что такое match expression?",
+      "reference": "Выражение, возвращающее значение по сравнению с === (строгое). Требует исчерпывающих веток или default."
+    },
+    {
+      "question": "Чем match лучше switch для возврата значений?",
+      "reference": "match — expression, не нужен break, сравнение строгое, можно вернуть результат напрямую."
+    },
+    {
+      "question": "Что такое throw expression?",
+      "reference": "throw можно использовать там, где допустимо выражение: $x ?? throw new Exception();"
+    },
+    {
+      "question": "Что такое attributes (атрибуты) в PHP 8?",
+      "reference": "Метаданные в #[...] для классов, методов, параметров. Читаются через Reflection API."
+    },
+    {
+      "question": "Как объявить пользовательский атрибут?",
+      "reference": "class Route { public function __construct(public string $path) {} } и #[Route('/api')] над методом."
+    },
+    {
+      "question": "Что такое WeakMap?",
+      "reference": "Коллекция с weak-ключами (объекты). Ключи удаляются GC при отсутствии других ссылок."
+    },
+    {
+      "question": "Что такое static return type?",
+      "reference": "Метод может вернуть static — тип наследника при late static binding."
+    },
+    {
+      "question": "Что делает str_contains()?",
+      "reference": "Проверяет наличие подстроки. Возвращает bool. PHP 8+."
+    },
+    {
+      "question": "Что делает str_starts_with() и str_ends_with()?",
+      "reference": "Проверяют начало/конец строки. Возвращают bool."
+    },
+    {
+      "question": "Что возвращает get_debug_type()?",
+      "reference": "Строковое имя типа переменной для отладки, точнее gettype() для объектов."
+    },
+    {
+      "question": "Что такое non-capturing catch?",
+      "reference": "catch (Exception) без переменной — когда исключение не нужно в теле."
+    },
+    {
+      "question": "Trailing comma в списке параметров — зачем?",
+      "reference": "Запятая после последнего параметра упрощает diff при добавлении параметров."
+    },
+    {
+      "question": "Что изменилось в сравнении строк с числами в PHP 8?",
+      "reference": "Нестрогое сравнение '0' == 'foo' теперь false (более предсказуемо)."
+    },
+    {
+      "question": "Что такое ClassName::class на объекте?",
+      "reference": "В PHP 8 можно $object::class — имя класса объекта."
+    },
+    {
+      "question": "JIT в PHP 8 — что это?",
+      "reference": "Just-In-Time компиляция OPcache для ускорения CPU-bound кода. Включается в php.ini."
+    },
+    {
+      "question": "Что такое enum в PHP 8.1?",
+      "reference": "Перечисление: enum Status { case Active; case Archived; } — типобезопасные константы."
+    },
+    {
+      "question": "Unit enum vs backed enum?",
+      "reference": "Unit — без значения. Backed: enum Status: string { case Active = 'active'; } — имеет scalar value."
+    },
+    {
+      "question": "Можно ли использовать enum как тип параметра?",
+      "reference": "Да: function set(Status $s). Передавать только case, не произвольные строки."
+    },
+    {
+      "question": "Есть ли методы у enum?",
+      "reference": "Да, enum может иметь методы, implements interfaces, traits (ограниченно)."
+    },
+    {
+      "question": "Что такое readonly property?",
+      "reference": "Свойство, присваиваемое только один раз (обычно в конструкторе). public readonly string $id;"
+    },
+    {
+      "question": "Можно ли изменить readonly property после инициализации?",
+      "reference": "Нет, кроме unset+повторной инициализации в __clone или unserialize (ограниченно)."
+    },
+    {
+      "question": "Что такое first-class callable syntax?",
+      "reference": "strlen(...) создаёт Closure из функции/метода без array callable."
+    },
+    {
+      "question": "Синтаксис first-class callable для метода?",
+      "reference": "$fn = $obj->method(...); или MyClass::method(...);"
+    },
+    {
+      "question": "Что такое Fiber в PHP 8.1?",
+      "reference": "Зелёные потоки для кооперативной многозадачности без async/await на уровне языка."
+    },
+    {
+      "question": "Что такое intersection types?",
+      "reference": "Тип A&B — объект должен реализовать оба интерфейса одновременно."
+    },
+    {
+      "question": "Что такое never return type?",
+      "reference": "Функция никогда не завершается нормально (throw, exit, infinite loop)."
+    },
+    {
+      "question": "final class constants — что это?",
+      "reference": "const можно пометить final — нельзя переопределить в наследнике."
+    },
+    {
+      "question": "Что делает array_is_list()?",
+      "reference": "Проверяет, что массив — list (0..n-1 ключи подряд)."
+    },
+    {
+      "question": "Что такое fsync() и fdatasync() в PHP 8.1?",
+      "reference": "Сброс буферов файла на диск для надёжной записи."
+    },
+    {
+      "question": "new in initializers — что разрешено?",
+      "reference": "В аргументах по умолчанию можно new ClassName() без скобок с аргументами в некоторых случаях."
+    },
+    {
+      "question": "Что такое readonly class?",
+      "reference": "class readonly Point { public function __construct(public float $x, public float $y) {} } — все свойства readonly."
+    },
+    {
+      "question": "Можно ли наследовать readonly class?",
+      "reference": "Только если родитель тоже readonly class."
+    },
+    {
+      "question": "Что такое DNF types (Disjunctive Normal Form)?",
+      "reference": "Комбинация union и intersection: (A&B)|C — скобки обязательны."
+    },
+    {
+      "question": "Standalone типы true, false, null как type hints?",
+      "reference": "function f(true $x) — параметр должен быть именно true. PHP 8.2+."
+    },
+    {
+      "question": "Константы в traits PHP 8.2?",
+      "reference": "trait T { public const X = 1; } — доступ через класс, использующий trait."
+    },
+    {
+      "question": "Что такое Random\\Randomizer?",
+      "reference": "OOP API для криптостойкого/детерминированного random: getInt, shuffleArray, pickArrayKeys."
+    },
+    {
+      "question": "SensitiveParameter attribute?",
+      "reference": "#[SensitiveParameter] скрывает значение аргумента в stack trace."
+    },
+    {
+      "question": "Что такое mysqli_execute_query()?",
+      "reference": "Упрощённый prepared query в mysqli для PHP 8.2+."
+    },
+    {
+      "question": "Typed class constants PHP 8.3?",
+      "reference": "interface I { public const string VERSION = '1'; } — тип у константы класса/интерфейса."
+    },
+    {
+      "question": "Dynamic class constant fetch?",
+      "reference": "ClassName::{$name} — обращение к константе по строковой переменной."
+    },
+    {
+      "question": "Что делает json_validate()?",
+      "reference": "Проверяет валидность JSON-строки без декодирования. Быстрее json_decode для проверки."
+    },
+    {
+      "question": "Attribute Override PHP 8.3?",
+      "reference": "#[\\Override] на методе — компилятор проверит, что метод реально переопределяет родительский."
+    },
+    {
+      "question": "Что такое clone with в PHP 8.3?",
+      "reference": "clone $obj with { prop: $value } — клон с изменением свойств (readonly-friendly)."
+    },
+    {
+      "question": "Randomizer getBytesFromString?",
+      "reference": "Генерация случайной строки из заданного алфавита."
+    },
+    {
+      "question": "Property hooks PHP 8.4?",
+      "reference": "get/set хуки у свойств: public string $name { get => strtoupper($this->name); set => $value = trim($value); }"
+    },
+    {
+      "question": "Asymmetric visibility PHP 8.4?",
+      "reference": "public private(set) string $name — чтение public, запись только из класса."
+    },
+    {
+      "question": "array_find() и array_find_key()?",
+      "reference": "Находят первый элемент/ключ по callback. PHP 8.4."
+    },
+    {
+      "question": "array_any() и array_all()?",
+      "reference": "Проверка, что хотя бы один / все элементы удовлетворяют predicate."
+    },
+    {
+      "question": "Что нового в DOM HTML5 PHP 8.4?",
+      "reference": "Dom\\HTMLDocument — современный парсинг HTML5."
+    },
+    {
+      "question": "Зачем declare(strict_types=1)?",
+      "reference": "Строгая проверка типов скаляров при вызовах в этом файле — без неявных приведений."
+    },
+    {
+      "question": "Чем interface отличается от abstract class?",
+      "reference": "Interface — контракт методов без реализации. Abstract — может иметь реализацию и состояние."
+    },
+    {
+      "question": "Когда использовать trait?",
+      "reference": "Гorizontal reuse поведения без множественного наследования классов."
+    },
+    {
+      "question": "Что такое late static binding?",
+      "reference": "static::method() вызывает метод класса наследника, self:: — класса, где написан код."
+    },
+    {
+      "question": "Что такое covariant return types?",
+      "reference": "Дочерний метод может вернуть более узкий тип (подкласс) чем родитель."
+    },
+    {
+      "question": "Что такое contravariant parameters?",
+      "reference": "Параметры могут быть шире в наследнике (PHP 7.4+ для параметров)."
+    },
+    {
+      "question": "Что делает __invoke на объекте?",
+      "reference": "Объект можно вызвать как функцию: $obj(...)."
+    },
+    {
+      "question": "Что такое anonymous class?",
+      "reference": "new class implements Foo { ... } — одноразовый класс без имени."
+    },
+    {
+      "question": "Чем final class полезен?",
+      "reference": "Запрещает наследование — контроль иерархии и безопасность."
+    },
+    {
+      "question": "Что такое clone и __clone?",
+      "reference": "clone копирует объект; __clone для глубокого копирования вложенных объектов."
+    },
+    {
+      "question": "Serialization __serialize / __unserialize?",
+      "reference": "Замена serialize_sleep/wakeup — контроль сериализации свойств."
+    },
+    {
+      "question": "Что такое backed enum from()?",
+      "reference": "Status::from('active') — case или ValueError. tryFrom() возвращает null."
+    },
+    {
+      "question": "Что такое readonly и clone?",
+      "reference": "При clone readonly свойства можно переинициализировать один раз в __clone."
+    },
+    {
+      "question": "Почему enum лучше const для статусов?",
+      "reference": "Типобезопасность, методы, исчерпываемость, IDE autocomplete."
+    },
+    {
+      "question": "Что такое typed property без default?",
+      "reference": "Должно быть инициализировано до чтения, иначе Error (uninitialized)."
+    },
+    {
+      "question": "Что делает unset($this->prop) для typed property?",
+      "reference": "Сбрасывает в uninitialized — повторная инициализация возможна."
+    },
+    {
+      "question": "Что такое arrow function fn()?",
+      "reference": "Краткий closure с автоматическим захватом by-value: fn($x) => $x * $this->factor."
+    },
+    {
+      "question": "Чем fn отличается от function() use?",
+      "reference": "fn захватывает автоматически, только одно выражение, by-value по умолчанию."
+    },
+    {
+      "question": "Что такое closure bindTo?",
+      "reference": "Привязка $this и scope для closure к другому объекту/классу."
+    },
+    {
+      "question": "Что такое Generator?",
+      "reference": "Функция с yield — ленивая итерация без загрузки всего набора в память."
+    },
+    {
+      "question": "yield from?",
+      "reference": "Делегирование другому генератору/iterable."
+    },
+    {
+      "question": "Что такое IteratorAggregate?",
+      "reference": "Класс с getIterator() — foreach по объекту."
+    },
+    {
+      "question": "SPL ArrayObject vs array?",
+      "reference": "ArrayObject — OOP обёртка, может иметь flags (STD_PROP_LIST и др.)."
+    },
+    {
+      "question": "Что такое SplFixedArray?",
+      "reference": "Массив фиксированного размера с быстрым доступом по int ключу."
+    },
+    {
+      "question": "Что такое WeakReference?",
+      "reference": "Ссылка на объект не препятствующая GC."
+    },
+    {
+      "question": "PDO::FETCH_ASSOC vs FETCH_OBJ?",
+      "reference": "ASSOC — массив; OBJ — stdClass или указанный класс."
+    },
+    {
+      "question": "Зачем PDO prepared statements?",
+      "reference": "Защита от SQL injection + кэш плана запроса."
+    },
+    {
+      "question": "Что такое emulated prepares?",
+      "reference": "PDO может эмулировать prepare на клиенте — настройка PDO::ATTR_EMULATE_PREPARES."
+    },
+    {
+      "question": "Что такое SQL injection?",
+      "reference": "Внедрение SQL через неэкранированный ввод. Лечится prepared statements."
+    },
+    {
+      "question": "Что такое XSS и htmlspecialchars?",
+      "reference": "Экранирование HTML при выводе пользовательских данных ENT_QUOTES, UTF-8."
+    },
+    {
+      "question": "Что такое CSRF token?",
+      "reference": "Секрет формы для проверки, что запрос от вашего UI, а не чужого сайта."
+    },
+    {
+      "question": "Что такое PSR-4 autoload?",
+      "reference": "Namespace Vendor\\Package\\Class → path по prefix и base directory."
+    },
+    {
+      "question": "Composer autoload files vs classmap?",
+      "reference": "files — eager include; classmap — scan; psr-4 — основной для src."
+    },
+    {
+      "question": "Что такое declare encoding?",
+      "reference": "declare(encoding='...') устарело; UTF-8 source files стандарт."
+    },
+    {
+      "question": "Что такое null coalescing ??",
+      "reference": "$a ?? $b — $a если isset и not null, иначе $b."
+    },
+    {
+      "question": "Что такое null coalescing assignment ??=",
+      "reference": "$a ??= $b — присвоить $b если $a null."
+    },
+    {
+      "question": "Spaceship operator <=>?",
+      "reference": "Возвращает -1, 0, 1 для сравнения (удобно в usort)."
+    },
+    {
+      "question": "Что такое spread operator ... в массивах?",
+      "reference": "[...$a, ...$b] — объединение массивов PHP 7.4+."
+    },
+    {
+      "question": "Что такое named args с variadic?",
+      "reference": "foo(...$arr) распаковка; можно комбинировать с named."
+    },
+    {
+      "question": "Что такое never в union?",
+      "reference": "never не комбинируется в union (нет значения)."
+    },
+    {
+      "question": "Что такое void return type?",
+      "reference": "Функция ничего не возвращает (return; без значения)."
+    },
+    {
+      "question": "Что такое callable type?",
+      "reference": "Любой вызываемый: closure, function name, [obj, method]."
+    },
+    {
+      "question": "Что такое object type hint?",
+      "reference": "object — любой объект, не scalar/array."
+    },
+    {
+      "question": "Что такое iterable?",
+      "reference": "array|Traversable — foreach совместимо."
+    },
+    {
+      "question": "Что такое array shape (PHPDoc)?",
+      "reference": "@param array{id:int,name:string} — документация структуры, не runtime."
+    },
+    {
+      "question": "Что такое list type (PHPDoc)?",
+      "reference": "list<string> — массив с последовательными int ключами."
+    },
+    {
+      "question": "Что такое template/generics в PHPStan?",
+      "reference": "@template T — статический анализ, не runtime PHP."
+    },
+    {
+      "question": "Что такое match с multiple conditions?",
+      "reference": "match(true) { $a > 0 && $b => ..., default => ... }"
+    },
+    {
+      "question": "Что такое str_replace vs preg_replace?",
+      "reference": "str — литерал; preg — regex. preg_quote для экранирования."
+    },
+    {
+      "question": "Что такое mb_string?",
+      "reference": "Расширение для многобайтовых строк UTF-8 — mb_strlen, mb_substr."
+    },
+    {
+      "question": "Что такое Intl extension?",
+      "reference": "Локализация, форматирование дат/чисел, collator."
+    },
+    {
+      "question": "DateTimeImmutable vs DateTime?",
+      "reference": "Immutable — modify возвращает новый объект, безопаснее."
+    },
+    {
+      "question": "Что такое DateInterval?",
+      "reference": "PT1H — период для DateTime::add/sub."
+    },
+    {
+      "question": "Что такое timezone в PHP?",
+      "reference": "DateTimeZone, ini date.timezone, immutable хранение UTC в БД."
+    },
+    {
+      "question": "Что такое filter_var FILTER_VALIDATE_EMAIL?",
+      "reference": "Валидация email — не замена полноценной проверки RFC."
+    },
+    {
+      "question": "Что такое filter_input?",
+      "reference": "Чтение суперглобалов с фильтрами INPUT_GET, INPUT_POST."
+    },
+    {
+      "question": "Что такое password_hash?",
+      "reference": "PASSWORD_DEFAULT (bcrypt/argon2) — безопасное хеширование паролей."
+    },
+    {
+      "question": "password_verify?",
+      "reference": "timing-safe сравнение пароля с hash."
+    },
+    {
+      "question": "Что такое sodium/crypto в PHP?",
+      "reference": "libsodium bindings — secretbox, sign, random_bytes."
+    },
+    {
+      "question": "random_bytes vs rand?",
+      "reference": "random_bytes криптостойкий; rand/mt_rand — не для секретов."
+    },
+    {
+      "question": "Что такое opcache?",
+      "reference": "Кэш bytecode — ускорение, preload в PHP 7.4+ для классов."
+    },
+    {
+      "question": "Что такое preloading?",
+      "reference": "Загрузка классов в память при старте PHP-FPM worker."
+    },
+    {
+      "question": "Что такое FFI в PHP?",
+      "reference": "Foreign Function Interface — вызов C из PHP (осторожно с безопасностью)."
+    },
+    {
+      "question": "Что такое fibers и event loop?",
+      "reference": "Fibers низкоуровневые; Revolt/Amp строят async поверх них."
+    },
+    {
+      "question": "Что такое attributes для validation?",
+      "reference": "Кастомные #[Assert\\NotNull] + reflection в middleware."
+    },
+    {
+      "question": "Что такое readonly и JSON serialize?",
+      "reference": "Readonly свойства сериализуются как обычные public в json_encode объекта."
+    },
+    {
+      "question": "json_encode JSON_THROW_ON_ERROR?",
+      "reference": "Исключение JsonException вместо false при ошибке."
+    },
+    {
+      "question": "json_decode associative true?",
+      "reference": "Массивы вместо stdClass для объектов JSON."
+    },
+    {
+      "question": "Что такое stream context HTTP?",
+      "reference": "stream_context_create для timeout, headers в file_get_contents."
+    },
+    {
+      "question": "curl vs file_get_contents?",
+      "reference": "curl гибче для HTTP методов, headers, TLS options."
+    },
+    {
+      "question": "Что такое multipart form?",
+      "reference": "CURLFile для загрузки файлов POST."
+    },
+    {
+      "question": "Что такое superglobals?",
+      "reference": "$_GET, $_POST, $_SERVER, $_SESSION, $_COOKIE, $_FILES, $_ENV."
+    },
+    {
+      "question": "session_start options?",
+      "reference": "cookie_httponly, secure, samesite через session_set_cookie_params."
+    },
+    {
+      "question": "Что такое SameSite=Lax?",
+      "reference": "Cookie не отправляется на cross-site POST, защита CSRF частично."
+    },
+    {
+      "question": "Что такое type juggling в строгом режиме?",
+      "reference": "strict_types отключает неявное (int)'123' при вызове из другого файла."
+    },
+    {
+      "question": "Что такое Reference (&)?",
+      "reference": "Передача по ссылке — alias переменной, осторожно с foreach &$arr."
+    },
+    {
+      "question": "Что такое __destruct?",
+      "reference": "Вызывается при уничтожении объекта — закрытие ресурсов."
+    },
+    {
+      "question": "Что такое register_shutdown_function?",
+      "reference": "Callback при завершении скрипта — flush, cleanup."
+    },
+    {
+      "question": "Что такое tick / declare ticks?",
+      "reference": "Устаревший механизм — редко используется."
+    },
+    {
+      "question": "Что такое opendir/scandir vs SplFileInfo?",
+      "reference": "SplFileInfo — OOP метаданные файла."
+    },
+    {
+      "question": "Что такое pathinfo?",
+      "reference": "dirname, basename, extension из пути."
+    },
+    {
+      "question": "realpath и symlink?",
+      "reference": "realpath разрешает симлинки до канонического пути."
+    },
+    {
+      "question": "file locking flock?",
+      "reference": "LOCK_EX эксклюзивная блокировка при записи логов."
+    },
+    {
+      "question": "tempnam и sys_get_temp_dir?",
+      "reference": "Безопасное создание temp файлов."
+    },
+    {
+      "question": "Что такое include vs require?",
+      "reference": "require — fatal если нет файла; include — warning."
+    },
+    {
+      "question": "once версии include?",
+      "reference": "include_once — предотвращает повторное определение классов."
+    },
+    {
+      "question": "Что такое namespace?",
+      "reference": "Изоляция имён классов Vendor\\Package\\Class."
+    },
+    {
+      "question": "use alias import?",
+      "reference": "use Foo\\Bar as Baz; короткое имя."
+    },
+    {
+      "question": "group use?",
+      "reference": "use Foo\\{Bar, Baz}; PHP 7+."
+    },
+    {
+      "question": "Что такое global keyword?",
+      "reference": "Доступ к global переменной внутри функции — лучше избегать."
+    },
+    {
+      "question": "static variable in function?",
+      "reference": "Сохраняет значение между вызовами функции."
+    },
+    {
+      "question": "Что такое __DIR__ и __FILE__?",
+      "reference": "Директория и путь текущего файла для require относительных путей."
+    },
+    {
+      "question": "Что такое match default обязателен?",
+      "reference": "Если не все cases покрыты — нужен default, иначе UnhandledMatchError."
+    },
+    {
+      "question": "UnhandledMatchError?",
+      "reference": "Исключение когда match не нашёл ветку."
+    },
+    {
+      "question": "ValueError в PHP 8?",
+      "reference": "Invalid argument that would be warning раньше — например Enum::from неверное значение."
+    },
+    {
+      "question": "TypeError?",
+      "reference": "Неверный тип аргумента/return при type hints."
+    },
+    {
+      "question": "Error vs Exception?",
+      "reference": "Error — иерархия engine errors (TypeError, ParseError); Exception — userland."
+    },
+    {
+      "question": "Throwable?",
+      "reference": "Error|Exception — общий catch для всего."
+    },
+    {
+      "question": "finally block?",
+      "reference": "Выполняется всегда после try/catch."
+    },
+    {
+      "question": "Exception getPrevious?",
+      "reference": "Цепочка исключений cause."
+    },
+    {
+      "question": "SPL exceptions?",
+      "reference": "InvalidArgumentException, RuntimeException — семантика ошибок."
+    },
+    {
+      "question": "Что такое assert()?",
+      "reference": "Проверка инвариантов в dev; может быть отключён zend.assertions."
+    },
+    {
+      "question": "Что такое compact/extract?",
+      "reference": "compact('a','b') — массив из переменных; extract — обратно (осторожно с безопасностью)."
+    },
+    {
+      "question": "list() destructuring?",
+      "reference": "[$a, $b] = $array; с ключами ['x'=>$x] = $arr PHP 7.1+."
+    },
+    {
+      "question": "match и enums?",
+      "reference": "match($status) { Status::Active => ..., Status::Archived => ... }"
+    },
+    {
+      "question": "enum cases in array?",
+      "reference": "array_column(Status::cases(), 'value') для backed enum."
+    },
+    {
+      "question": "What is Fibers suspend/resume?",
+      "reference": "Fiber::suspend передаёт управление; resume продолжает."
+    },
+    {
+      "question": "Generator send()?",
+      "reference": "Отправка значения в yield как результат выражения."
+    },
+    {
+      "question": "Iterator valid() current()?",
+      "reference": "Ручная итерация с проверкой valid()."
+    },
+    {
+      "question": "Countable interface?",
+      "reference": "count($obj) если implements Countable."
+    },
+    {
+      "question": "Stringable interface?",
+      "reference": "__toString(): string — объект как строка."
+    },
+    {
+      "question": "JsonSerializable?",
+      "reference": "json_encode вызывает jsonSerialize() для кастомного представления."
+    },
+    {
+      "question": "__toString must not throw?",
+      "reference": "Historically problematic; в PHP 8+ лучше не бросать из __toString."
+    },
+    {
+      "question": "Unit enum comparison?",
+      "reference": "Status::Active === Status::Active; case identity."
+    },
+    {
+      "question": "Backed enum value property?",
+      "reference": "Status::Active->value для scalar."
+    },
+    {
+      "question": "enum from int backed?",
+      "reference": "enum Priority: int { case High = 1; }"
+    },
+    {
+      "question": "readonly promoted in constructor?",
+      "reference": "public function __construct(public readonly string $id) {}"
+    },
+    {
+      "question": "private(set) PHP 8.4?",
+      "reference": "public string $slug { private(set) } — запись только внутри класса."
+    },
+    {
+      "question": "Property hooks get without field?",
+      "reference": "Может вычислять on-the-fly без backing field."
+    },
+    {
+      "question": "array_map arrow?",
+      "reference": "array_map(fn($n) => $n * 2, $nums);"
+    },
+    {
+      "question": "array_filter preserve keys?",
+      "reference": "array_filter без ARRAY_FILTER_USE_KEY сохраняет ключи по умолчанию."
+    },
+    {
+      "question": "array_values reindex?",
+      "reference": "Сброс ключей в 0..n после filter."
+    },
+    {
+      "question": "usort stable?",
+      "reference": "PHP sort не guaranteed stable до recent; usort custom comparator."
+    },
+    {
+      "question": "sort flags SORT_NUMERIC?",
+      "reference": "Числовое сравнение строк."
+    },
+    {
+      "question": "keys exists vs isset?",
+      "reference": "isset false для null; array_key_exists true для null key."
+    },
+    {
+      "question": "?? vs ?: ?",
+      "reference": "$a ?: $b — falsy; ?? только null/unset."
+    },
+    {
+      "question": "empty() on '0'?",
+      "reference": "empty('0') === true — частая ловушка."
+    },
+    {
+      "question": "is_countable?",
+      "reference": "Проверка array или Countable перед count()."
+    },
+    {
+      "question": "get_class($obj)?",
+      "reference": "Имя класса; $obj::class предпочтительнее PHP 8."
+    },
+    {
+      "question": "instanceof with string?",
+      "reference": "instanceof InterfaceName — true/false."
+    },
+    {
+      "question": "ReflectionClass getAttributes?",
+      "reference": "Чтение PHP 8 attributes с newInstance()."
+    },
+    {
+      "question": "Attribute IS_REPEATABLE?",
+      "reference": "Флаг #[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]."
+    },
+    {
+      "question": "Deprecated attribute PHP 8.4?",
+      "reference": "#[\\Deprecated] на функциях — runtime notice."
+    },
+    {
+      "question": "AllowDynamicProperties?",
+      "reference": "#[\\AllowDynamicProperties] отключает deprecation dynamic props."
+    },
+    {
+      "question": "Dynamic properties deprecation?",
+      "reference": "PHP 8.2+ deprecated необъявленные свойства на классах."
+    },
+    {
+      "question": "${var} deprecated?",
+      "reference": "Использовать {$var} в строках."
+    },
+    {
+      "question": "create static factory?",
+      "reference": "public static function create(): static new static();"
+    },
+    {
+      "question": "private constructor singleton?",
+      "reference": "getInstance() единственная точка создания."
+    },
+    {
+      "question": "interface default methods?",
+      "reference": "PHP interfaces могут иметь default body методов PHP 8+."
+    },
+    {
+      "question": "trait conflict resolution?",
+      "reference": "insteadof и as для разрешения коллизий методов."
+    },
+    {
+      "question": "trait alias as visibility?",
+      "reference": "use T { method as private otherMethod; }"
+    },
+    {
+      "question": "abstract trait methods?",
+      "reference": "Trait может объявить abstract method — класс должен реализовать."
+    },
+    {
+      "question": "Readonly class и dynamic?",
+      "reference": "Readonly class не может AllowDynamicProperties без явного attr."
+    },
+    {
+      "question": "enum implementing interface?",
+      "reference": "enum E implements I { case A; public function foo(): void {} }"
+    },
+    {
+      "question": "match strict types strings?",
+      "reference": "match '01' with 1 не совпадёт — ===."
+    },
+    {
+      "question": "bc math bcmath?",
+      "reference": "Точная арифметика для decimal money — bcadd, bcmul."
+    },
+    {
+      "question": "float precision money?",
+      "reference": "Не использовать float для денег — int cents или bcmath."
+    },
+    {
+      "question": "GMP extension?",
+      "reference": "Большие целые числа."
+    },
+    {
+      "question": "SplQueue SplStack?",
+      "reference": "Стандартные структуры данных SPL."
+    },
+    {
+      "question": "SplHeap?",
+      "reference": "Priority queue через compare method."
+    },
+    {
+      "question": "Closure fromCallable?",
+      "reference": "Closure::fromCallable([$obj, 'method']) альтернатива first-class."
+    },
+    {
+      "question": "bindTo null scope?",
+      "reference": "Static closure binding."
+    },
+    {
+      "question": "serialize enums?",
+      "reference": "Backed enum сериализуется как value при default serialize."
+    },
+    {
+      "question": "__sleep whitelist?",
+      "reference": "Старый способ — список свойств для serialize."
+    },
+    {
+      "question": "igbinary msgpack?",
+      "reference": "Альтернативные быстрые serializers через extensions."
+    },
+    {
+      "question": "pcntl extension?",
+      "reference": "Process control CLI only — signals fork."
+    },
+    {
+      "question": "posix getpid?",
+      "reference": "Unix PID CLI scripts."
+    },
+    {
+      "question": "proc_open?",
+      "reference": "Запуск subprocess с pipes."
+    },
+    {
+      "question": "escapeshellarg?",
+      "reference": "Безопасная обёртка аргумента shell command."
+    },
+    {
+      "question": "shell_exec vs exec?",
+      "reference": "Безопасность — избегать shell с user input."
+    },
+    {
+      "question": "LDAP/SQLite/PDO drivers?",
+      "reference": "PDO SQLite in-memory :memory: для tests."
+    },
+    {
+      "question": "Transactions PDO?",
+      "reference": "beginTransaction commit rollBack."
+    },
+    {
+      "question": "PDO ERRMODE_EXCEPTION?",
+      "reference": "PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION."
+    },
+    {
+      "question": "Named placeholders :name?",
+      "reference": "bindValue(':email', $email) в prepared."
+    },
+    {
+      "question": "positional ? placeholders?",
+      "reference": "bind by index 1-based."
+    },
+    {
+      "question": "lastInsertId?",
+      "reference": "Auto increment после INSERT."
+    },
+    {
+      "question": "rowCount for SELECT?",
+      "reference": "Не всегда надёжен — не полагаться для count rows SELECT."
+    },
+    {
+      "question": "FETCH_CLASS?",
+      "reference": "new instances of class with properties mapped."
+    },
+    {
+      "question": "Lazy objects PHP 8.4?",
+      "reference": "LazyGhost для отложенной инициализации proxy."
+    },
+    {
+      "question": "WeakMap use case?",
+      "reference": "Metadata к объектам без утечки памяти."
+    },
+    {
+      "question": "ObjectStorage?",
+      "reference": "Map object->data с object identity keys."
+    },
+    {
+      "question": "ArrayIterator?",
+      "reference": "OOP foreach over array by reference option."
+    },
+    {
+      "question": "CachingIterator?",
+      "reference": "Has seen current element — lookahead."
+    },
+    {
+      "question": "Regex PCRE u modifier?",
+      "reference": "UTF-8 mode preg_match."
+    },
+    {
+      "question": "preg_replace_callback?",
+      "reference": "Callback для каждого match replacement."
+    },
+    {
+      "question": "named capture (?P<name>?",
+      "reference": "Доступ $matches['name']."
+    },
+    {
+      "question": "str_split mb_str_split?",
+      "reference": "Multibyte split characters."
+    },
+    {
+      "question": "implode first arg glue?",
+      "reference": "implode(',', $arr) — glue первый параметр."
+    },
+    {
+      "question": "path stream wrappers?",
+      "reference": "php://memory, php://temp, file://."
+    },
+    {
+      "question": "filter_var boolean filters?",
+      "reference": "FILTER_VALIDATE_BOOLEAN для форм 'true'/'false'."
+    },
+    {
+      "question": "header() exit redirect?",
+      "reference": "header('Location: ...'); exit; после redirect."
+    },
+    {
+      "question": "http_response_code?",
+      "reference": "Установка 404, 500 status."
+    },
+    {
+      "question": "output buffering ob_start?",
+      "reference": "Capture echo для шаблонов."
+    },
+    {
+      "question": "fastcgi_finish_request?",
+      "reference": "Ответ клиенту и продолжить работу background."
+    },
+    {
+      "question": "CLI argv argc?",
+      "reference": "$argv массив аргументов скрипта."
+    },
+    {
+      "question": "getopt long options?",
+      "reference": "getopt('', ['file:','verbose']) parse CLI."
+    },
+    {
+      "question": "php -r run code?",
+      "reference": "One-liner execution php -r 'echo 1;'."
+    },
+    {
+      "question": "phpstan psalm levels?",
+      "reference": "Static analysis без runtime — ловят типы до deploy."
+    },
+    {
+      "question": "composer scripts?",
+      "reference": "post-install-cmd автomation."
+    },
+    {
+      "question": "semver caret ^8.0?",
+      "reference": "Composer ^8.0 >=8.0 <9.0."
+    },
+    {
+      "question": "platform php config?",
+      "reference": "composer platform.php фиксирует версию для resolve."
+    },
+    {
+      "question": "ext-json requirement?",
+      "reference": "composer require ext-json для json functions."
+    },
+    {
+      "question": "Attributes Route DI Symfony?",
+      "reference": "Frameworks читают attributes для routing PHP 8."
+    },
+    {
+      "question": "readonly DTO pattern?",
+      "reference": "readonly class UserDto { public function __construct(public string $name) {} }"
+    },
+    {
+      "question": "Value object equals?",
+      "reference": "Сравнение по свойствам, не identity."
+    },
+    {
+      "question": "Named constructor promote?",
+      "reference": "public static function fromArray(array $a): self new self(...)."
+    },
+    {
+      "question": "Exception handler set_exception_handler?",
+      "reference": "Global uncaught exception logging."
+    },
+    {
+      "question": "error_reporting E_ALL?",
+      "reference": "Dev — все errors; prod — log not display."
+    },
+    {
+      "question": "display_errors off prod?",
+      "reference": "Security — не показывать stack users."
+    },
+    {
+      "question": "custom error handler?",
+      "reference": "set_error_handler convert to ErrorException."
+    },
+    {
+      "question": "Throwable in catch order?",
+      "reference": "Сначала specific, потом Throwable."
+    },
+    {
+      "question": "finally return behavior?",
+      "reference": "return in finally overrides try return (осторожно)."
+    },
+    {
+      "question": "Generator return value?",
+      "reference": "return в generator доступен через getReturn() после iteration."
+    },
+    {
+      "question": "Fibers not in Apache mod_php?",
+      "reference": "Fibers нужны CLI или FPM careful — blocking breaks."
+    },
+    {
+      "question": "opcache validate_timestamps?",
+      "reference": "Dev 1 — re-read files; prod 0 performance."
+    },
+    {
+      "question": "preloading script path?",
+      "reference": "opcache.preload=preload.php lists classes."
+    },
+    {
+      "question": "JIT tracing vs function?",
+      "reference": "opcache.jit settings buffer_size."
+    },
+    {
+      "question": "Memory limit ini?",
+      "reference": "memory_limit для batch scripts."
+    },
+    {
+      "question": "max_execution_time?",
+      "reference": "CLI 0 unlimited default."
+    },
+    {
+      "question": "unlink rename atomic?",
+      "reference": "rename() often atomic same filesystem."
+    },
+    {
+      "question": "file_put_contents LOCK_EX?",
+      "reference": "Atomic write with lock flag."
+    },
+    {
+      "question": "glob brace?",
+      "reference": "glob('{a,b}.php', GLOB_BRACE) on supporting systems."
+    },
+    {
+      "question": "DirectoryIterator?",
+      "reference": "OOP directory traversal."
+    },
+    {
+      "question": "RecursiveIteratorIterator?",
+      "reference": "Recursive tree walk."
+    },
+    {
+      "question": "FilterIterator?",
+      "reference": "Custom filter on iteration."
+    },
+    {
+      "question": "SimpleXML vs DOM?",
+      "reference": "Simple quick; DOM full control."
+    },
+    {
+      "question": "libxml errors internal?",
+      "reference": "libxml_use_internal_errors for parse without warnings."
+    },
+    {
+      "question": "XMLReader streaming?",
+      "reference": "Large XML stream parse memory efficient."
+    },
+    {
+      "question": "CSV fgetcsv str_getcsv?",
+      "reference": "Parse CSV rows escape enclosure."
+    },
+    {
+      "question": "League CSV PHP?",
+      "reference": "Popular library for CSV import/export."
+    },
+    {
+      "question": "ZipArchive?",
+      "reference": "Create/read zip archives extension."
+    },
+    {
+      "question": "Phar archives?",
+      "reference": "PHP app as phar executable."
+    },
+    {
+      "question": "ReflectionParameter getType?",
+      "reference": "Nullable ?Type reflected."
+    },
+    {
+      "question": "Union reflection?",
+      "reference": "ReflectionUnionType getTypes()."
+    },
+    {
+      "question": "Intersection reflection?",
+      "reference": "ReflectionIntersectionType PHP 8.1+."
+    },
+    {
+      "question": "Never type reflection?",
+      "reference": "Indicates never returns."
+    },
+    {
+      "question": "Constructor promotion reflection?",
+      "reference": "Parameters with IS_PROMOTED flag."
+    },
+    {
+      "question": "Readonly reflection?",
+      "reference": "IS_READONLY on property reflection."
+    },
+    {
+      "question": "Enum reflection?",
+      "reference": "ReflectionEnum cases methods backing type."
+    },
+    {
+      "question": "Fiber reflection?",
+      "reference": "Limited — runtime debugging harder."
+    },
+    {
+      "question": "Attribute reflection target?",
+      "reference": "TARGET_CLASS | TARGET_METHOD flags validation."
+    },
+    {
+      "question": "Opcache status function?",
+      "reference": "opcache_get_status for hit rate monitoring."
+    },
+    {
+      "question": "Apcu user cache?",
+      "reference": "Shared memory user cache between requests FPM."
+    },
+    {
+      "question": "Redis session handler?",
+      "reference": "session.save_handler=redis scalable sessions."
+    },
+    {
+      "question": "Memcached vs Redis?",
+      "reference": "Both cache; Redis richer data structures."
+    },
+    {
+      "question": "uuid create?",
+      "reference": "ramsey/uuid library common — no core uuid until proposals."
+    },
+    {
+      "question": "Carbon Date library?",
+      "reference": "Wrapper DateTime fluent API."
+    },
+    {
+      "question": "Doctrine collections?",
+      "reference": "ArrayCollection filter map functional."
+    },
+    {
+      "question": "Symfony validator?",
+      "reference": "Constraint attributes on DTO properties."
+    },
+    {
+      "question": "Laravel not core?",
+      "reference": "Framework — но patterns: Eloquent, Facades separate topic."
+    },
+    {
+      "question": "PSR-3 LoggerInterface?",
+      "reference": "Standard logging interface interoperability."
+    },
+    {
+      "question": "PSR-7 HTTP message?",
+      "reference": "Request Response interfaces — Guzzle Nyholm."
+    },
+    {
+      "question": "PSR-15 middleware?",
+      "reference": "RequestHandlerInterface pipeline."
+    },
+    {
+      "question": "PSR-11 Container?",
+      "reference": "get has — DI container interop."
+    },
+    {
+      "question": "PSR-18 HTTP client?",
+      "reference": "sendRequest ClientInterface."
+    },
+    {
+      "question": "dotenv vlucas?",
+      "reference": "Load .env to $_ENV safely not commit secrets."
+    },
+    {
+      "question": "putenv vs $_ENV?",
+      "reference": "Prefer $_ENV $_SERVER visibility php.ini variables_order."
+    },
+    {
+      "question": "getenv?",
+      "reference": "Reads environment variable."
+    },
+    {
+      "question": "php.ini INI_SCANNER_TYPED?",
+      "reference": "Typed ini values in PHP 7+."
+    },
+    {
+      "question": "open_basedir restriction?",
+      "reference": "Limit filesystem paths shared hosting security."
+    },
+    {
+      "question": "disable_functions ini?",
+      "reference": "Hardening shell_exec disable shared hosting."
+    },
+    {
+      "question": "upload_max_filesize?",
+      "reference": "Limit POST upload size with post_max_size."
+    },
+    {
+      "question": "move_uploaded_file?",
+      "reference": "Only for $_FILES tmp — security check is_uploaded_file."
+    },
+    {
+      "question": "MIME finfo_file?",
+      "reference": "Detect mime not trust client type."
+    },
+    {
+      "question": "Image GD Imagick?",
+      "reference": "Resize images extensions."
+    },
+    {
+      "question": "exif_read_data?",
+      "reference": "Photo metadata caution privacy."
+    },
+    {
+      "question": "htmlspecialchars double encode?",
+      "reference": "ENT_QUOTES default UTF-8 prevent XSS."
+    },
+    {
+      "question": "Content Security Policy?",
+      "reference": "HTTP header reduces XSS impact not PHP core."
+    },
+    {
+      "question": "hash_equals timing safe?",
+      "reference": "Compare HMAC tokens constant time."
+    },
+    {
+      "question": "hash_hmac?",
+      "reference": "HMAC SHA256 message authentication."
+    },
+    {
+      "question": "openssl_encrypt AES?",
+      "reference": "Symmetric encryption random iv."
+    },
+    {
+      "question": "sodium_crypto_secretbox?",
+      "reference": "Modern encryption libsodium."
+    },
+    {
+      "question": "password_needs_rehash?",
+      "reference": "Upgrade hash algorithm when PASSWORD_DEFAULT changes."
+    },
+    {
+      "question": "Argon2id?",
+      "reference": "PASSWORD_ARGON2ID recommended memory hard."
+    },
+    {
+      "question": "LDAP escape?",
+      "reference": "ldap_escape filter DN user input."
+    },
+    {
+      "question": "Prepared LIKE escape?",
+      "reference": "Escape % _ for SQL LIKE manually or ESCAPE clause."
+    },
+    {
+      "question": "SQL second order injection?",
+      "reference": "Stored user data later used unsafe in query."
+    },
+    {
+      "question": "NoSQL injection?",
+      "reference": "Similar with Mongo queries — type validate input."
+    },
+    {
+      "question": "serialize untrusted?",
+      "reference": "Never unserialize user data — object injection RCE."
+    },
+    {
+      "question": "json safer than serialize?",
+      "reference": "json_decode data only no objects by default."
+    },
+    {
+      "question": "__wakeup __destruct gadget chains?",
+      "reference": "POP chains unserialize vulnerabilities."
+    },
+    {
+      "question": "TypeError strict API?",
+      "reference": "Return type enforcement public APIs."
+    },
+    {
+      "question": "Covariant templates Iterator?",
+      "reference": "Iterator yields typed via static analysis."
+    },
+    {
+      "question": "Generator yield key value?",
+      "reference": "yield $key => $value both."
+    },
+    {
+      "question": "Delegating generator?",
+      "reference": "yield from $otherGenerator;"
+    },
+    {
+      "question": "Traversable children?",
+      "reference": "IteratorAggregate outer foreach."
+    },
+    {
+      "question": "Partial function application?",
+      "reference": "No native — closure wrapper fn($x) => foo($cfg, $x)."
+    },
+    {
+      "question": "Currying PHP?",
+      "reference": "Manual nested closures."
+    },
+    {
+      "question": "Pipeline pattern?",
+      "reference": "array_reduce or dedicated Pipe class."
+    },
+    {
+      "question": "Either Result types libraries?",
+      "reference": "Functional error handling packages php-pipeline."
+    },
+    {
+      "question": "Immutable updates?",
+      "reference": "Clone with changes readonly DTO."
+    },
+    {
+      "question": "Entity vs Value Object?",
+      "reference": "Entity identity; VO compared by value."
+    },
+    {
+      "question": "Repository pattern?",
+      "reference": "Abstraction persistence layer interface."
+    },
+    {
+      "question": "Service layer?",
+      "reference": "Business logic not in controllers."
+    },
+    {
+      "question": "DTO vs Entity?",
+      "reference": "DTO transfer; Entity domain model persistence."
+    },
+    {
+      "question": "Hydrator?",
+      "reference": "Map array to object reflection or manual."
+    },
+    {
+      "question": "DataMapper ORM?",
+      "reference": "Separate entity and DB mapping Doctrine style."
+    },
+    {
+      "question": "Active Record pattern?",
+      "reference": "Model knows persistence Laravel Eloquent."
+    },
+    {
+      "question": "Unit test PHPUnit?",
+      "reference": "assertSame assertEquals data providers."
+    },
+    {
+      "question": "Mockery PHPUnit mock?",
+      "reference": "createMock stub expectations."
+    },
+    {
+      "question": "Test doubles?",
+      "reference": "Stub mock spy fake definitions."
+    },
+    {
+      "question": "Integration test DB?",
+      "reference": "Transaction rollback or sqlite memory."
+    },
+    {
+      "question": "Paratest parallel?",
+      "reference": "Parallel PHPUnit runs."
+    },
+    {
+      "question": "Coverage Xdebug pcov?",
+      "reference": "Code coverage drivers."
+    },
+    {
+      "question": "Mutation testing?",
+      "reference": "Infection PHP mutation score."
+    },
+    {
+      "question": "Static analysis level max?",
+      "reference": "PHPStan level 9 strictness."
+    },
+    {
+      "question": "Baseline phpstan?",
+      "reference": "Ignore legacy errors incrementally fix."
+    },
+    {
+      "question": "Rector automated refactor?",
+      "reference": "Upgrade PHP version codemods."
+    },
+    {
+      "question": "CS Fixer PSR-12?",
+      "reference": "Code style automation."
+    },
+    {
+      "question": "PHPCS?",
+      "reference": "Sniffs coding standard."
+    },
+    {
+      "question": "Deptrac architecture?",
+      "reference": "Layer dependency rules."
+    },
+    {
+      "question": "Composer audit?",
+      "reference": "Security advisory packages composer audit."
+    },
+    {
+      "question": "Roave security advisories?",
+      "reference": "Block known vulnerable deps dev."
+    },
+    {
+      "question": "PHP 8+: что делает str_contains($hay, $needle)?",
+      "reference": "bool — есть ли подстрока"
+    },
+    {
+      "question": "Когда предпочесть str_contains() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где bool — есть ли подстрока"
+    },
+    {
+      "question": "PHP 8+: что делает str_starts_with($hay, $needle)?",
+      "reference": "bool — начинается ли"
+    },
+    {
+      "question": "Когда предпочесть str_starts_with() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где bool — начинается ли"
+    },
+    {
+      "question": "PHP 8+: что делает str_ends_with($hay, $needle)?",
+      "reference": "bool — заканчивается ли"
+    },
+    {
+      "question": "Когда предпочесть str_ends_with() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где bool — заканчивается ли"
+    },
+    {
+      "question": "PHP 8+: что делает get_debug_type($var)?",
+      "reference": "string — тип для отладки"
+    },
+    {
+      "question": "Когда предпочесть get_debug_type() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где string — тип для отладки"
+    },
+    {
+      "question": "PHP 8+: что делает get_resource_id($res)?",
+      "reference": "int — id ресурса"
+    },
+    {
+      "question": "Когда предпочесть get_resource_id() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где int — id ресурса"
+    },
+    {
+      "question": "PHP 8+: что делает fdiv($a, $b)?",
+      "reference": "float division без деления на zero warning как /"
+    },
+    {
+      "question": "Когда предпочесть fdiv() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где float division без деления на zero warning как /"
+    },
+    {
+      "question": "PHP 8+: что делает preg_last_error_msg()?",
+      "reference": "string сообщение последней PCRE ошибки"
+    },
+    {
+      "question": "Когда предпочесть preg_last_error_msg() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где string сообщение последней pcre ошибки"
+    },
+    {
+      "question": "PHP 8+: что делает array_key_first($arr)?",
+      "reference": "первый ключ или null"
+    },
+    {
+      "question": "Когда предпочесть array_key_first() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где первый ключ или null"
+    },
+    {
+      "question": "PHP 8+: что делает array_key_last($arr)?",
+      "reference": "последний ключ или null"
+    },
+    {
+      "question": "Когда предпочесть array_key_last() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где последний ключ или null"
+    },
+    {
+      "question": "PHP 8+: что делает array_is_list($arr)?",
+      "reference": "bool list 0..n-1"
+    },
+    {
+      "question": "Когда предпочесть array_is_list() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где bool list 0..n-1"
+    },
+    {
+      "question": "PHP 8+: что делает json_validate($json)?",
+      "reference": "bool валидный JSON PHP 8.3"
+    },
+    {
+      "question": "Когда предпочесть json_validate() старым аналогам?",
+      "reference": "Использовать вместо strpos/substr комбинаций где bool валидный json php 8.3"
+    },
+    {
+      "question": "Enum: Status::from('x')?",
+      "reference": "ValueError если нет case. Status::tryFrom('x') возвращает null"
+    },
+    {
+      "question": "Enum: enum cases()?",
+      "reference": "array все case enum. foreach (Status::cases() as $case)"
+    },
+    {
+      "question": "Enum: Backed enum value?",
+      "reference": "scalar value property. Status::Active->value"
+    },
+    {
+      "question": "Enum: Unit enum name?",
+      "reference": "case name string. Status::Active->name"
+    },
+    {
+      "question": "Enum: enum in match?",
+      "reference": "exhaustive matching. match($s) { Status::A => 1, Status::B => 2 }"
+    },
+    {
+      "card_type": "code",
+      "question": "Named arguments: перепутан порядок параметров.",
+      "task": "Исправь вызов — передай email и name именованными аргументами.",
+      "code": "function createUser(string $name, string $email, bool $active = true): array {\n    return compact('name', 'email', 'active');\n}\n\n$result = createUser('a@b.com', 'Anna');",
+      "reference": "$result = createUser(name: 'Anna', email: 'a@b.com');"
+    },
+    {
+      "card_type": "code",
+      "question": "Nullsafe: возможен Error при null user.",
+      "task": "Используй nullsafe operator для получения city.",
+      "code": "$user = null;\n$city = $user->getAddress()->city;",
+      "reference": "$city = $user?->getAddress()?->city;"
+    },
+    {
+      "card_type": "code",
+      "question": "Match без default — риск UnhandledMatchError.",
+      "task": "Перепиши switch на match с default.",
+      "code": "$code = 404;\nswitch ($code) {\n    case 200: $msg = 'OK'; break;\n    case 404: $msg = 'Not Found'; break;\n}\necho $msg;",
+      "reference": "$msg = match ($code) {\n    200 => 'OK',\n    404 => 'Not Found',\n    default => 'Unknown',\n};"
+    },
+    {
+      "card_type": "code",
+      "question": "Constructor promotion: свойство не объявлено.",
+      "task": "Используй promoted property для $title.",
+      "code": "class Book {\n    public function __construct($title) {\n        $this->title = $title;\n    }\n}",
+      "reference": "class Book {\n    public function __construct(public string $title) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Union type: параметр принимает неверные типы.",
+      "task": "Добавь union type int|string для id.",
+      "code": "function findById($id): ?User {\n    return UserRepository::get($id);\n}",
+      "reference": "function findById(int|string $id): ?User {\n    return UserRepository::get($id);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Readonly: свойство переприсваивается.",
+      "task": "Сделай id readonly — присваивается только в конструкторе.",
+      "code": "class Order {\n    public string $id;\n\n    public function __construct(string $id) {\n        $this->id = $id;\n    }\n\n    public function refreshId(string $id): void {\n        $this->id = $id;\n    }\n}",
+      "reference": "class Order {\n    public function __construct(public readonly string $id) {}\n    // refreshId удалить или клонировать объект\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Enum вместо констант.",
+      "task": "Замени строковые константы на backed enum string.",
+      "code": "class Payment {\n    public const PENDING = 'pending';\n    public const PAID = 'paid';\n\n    public function __construct(public string $status) {}\n}",
+      "reference": "enum PaymentStatus: string {\n    case Pending = 'pending';\n    case Paid = 'paid';\n}\n\nclass Payment {\n    public function __construct(public PaymentStatus $status) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "First-class callable.",
+      "task": "Замени array callable на first-class syntax.",
+      "code": "$numbers = ['1', '2', '3'];\n$mapped = array_map(['intval'], $numbers);",
+      "reference": "$mapped = array_map(intval(...), $numbers);"
+    },
+    {
+      "card_type": "code",
+      "question": "Attribute не применяется.",
+      "task": "Добавь #[Attribute] и TARGET_METHOD на Route.",
+      "code": "class Route {\n    public function __construct(public string $path) {}\n}\n\nclass HomeController {\n    #[Route('/')]\n    public function index(): void {}\n}",
+      "reference": "#[\\Attribute(\\Attribute::TARGET_METHOD)]\nclass Route {\n    public function __construct(public string $path) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Intersection type: объект должен быть и Iterator и Countable.",
+      "task": "Укажи intersection type параметра.",
+      "code": "function process($collection): void {\n    foreach ($collection as $item) {\n        echo count($collection);\n    }\n}",
+      "reference": "function process(Iterator&Countable $collection): void {\n    foreach ($collection as $item) {\n        echo count($collection);\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Readonly class: свойство без readonly в promoted.",
+      "task": "Сделай класс readonly.",
+      "code": "class Point {\n    public function __construct(public float $x, public float $y) {}\n    public float $z = 0.0;\n}",
+      "reference": "readonly class Point {\n    public function __construct(public float $x, public float $y) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "json_validate вместо decode для проверки.",
+      "task": "Используй json_validate (PHP 8.3+) для проверки без decode.",
+      "code": "function isValidJson(string $json): bool {\n    json_decode($json);\n    return json_last_error() === JSON_ERROR_NONE;\n}",
+      "reference": "function isValidJson(string $json): bool {\n    return json_validate($json);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Override: метод не переопределяет родителя.",
+      "task": "Добавь #[\\Override] и исправь имя метода если нужно.",
+      "code": "class Base {\n    public function save(): void {}\n}\nclass Child extends Base {\n    public function saveData(): void {}\n}",
+      "reference": "class Child extends Base {\n    #[\\Override]\n    public function save(): void {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Strict types: неявное приведение string→int.",
+      "task": "Добавь strict_types и исправь вызов.",
+      "code": "function add(int $a, int $b): int {\n    return $a + $b;\n}\necho add('1', '2');",
+      "reference": "declare(strict_types=1);\n// ...\necho add(1, 2);"
+    },
+    {
+      "card_type": "code",
+      "question": "Arrow function: use $factor не нужен.",
+      "task": "Перепиши на fn().",
+      "code": "class Multiplier {\n    public function __construct(private int $factor) {}\n    public function double(array $nums): array {\n        return array_map(function ($n) {\n            return $n * $this->factor;\n        }, $nums);\n    }\n}",
+      "reference": "return array_map(fn($n) => $n * $this->factor, $nums);"
+    },
+    {
+      "card_type": "code",
+      "question": "Generator: загрузка всех строк в память.",
+      "task": "Перепиши readLines как generator с yield.",
+      "code": "function readLines(string $path): array {\n    $lines = [];\n    foreach (file($path) as $line) {\n        $lines[] = trim($line);\n    }\n    return $lines;\n}",
+      "reference": "function readLines(string $path): \\Generator {\n    $handle = fopen($path, 'r');\n    while (($line = fgets($handle)) !== false) {\n        yield trim($line);\n    }\n    fclose($handle);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "PDO: SQL injection через конкатенацию.",
+      "task": "Используй prepared statement.",
+      "code": "$email = $_GET['email'];\n$stmt = $pdo->query(\"SELECT * FROM users WHERE email = '$email'\");",
+      "reference": "$stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');\n$stmt->execute(['email' => $email]);"
+    },
+    {
+      "card_type": "code",
+      "question": "PDO ERRMODE silent.",
+      "task": "Включи exceptions на ошибках PDO.",
+      "code": "$pdo = new PDO($dsn, $user, $pass);\n$stmt = $pdo->query('SELEC * FROM users');",
+      "reference": "$pdo = new PDO($dsn, $user, $pass, [\n    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,\n]);"
+    },
+    {
+      "card_type": "code",
+      "question": "password_hash без algorithm.",
+      "task": "Используй PASSWORD_DEFAULT.",
+      "code": "$hash = md5($password);",
+      "reference": "$hash = password_hash($password, PASSWORD_DEFAULT);"
+    },
+    {
+      "card_type": "code",
+      "question": "XSS при выводе имени.",
+      "task": "Экранируй HTML при echo.",
+      "code": "echo '<p>Hello, ' . $name . '</p>';",
+      "reference": "echo '<p>Hello, ' . htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . '</p>';"
+    },
+    {
+      "card_type": "code",
+      "question": "Enum from без проверки.",
+      "task": "Используй tryFrom или try/catch для безопасного парсинга.",
+      "code": "$status = Status::from($_POST['status']);",
+      "reference": "$status = Status::tryFrom($_POST['status']) ?? Status::Pending;"
+    },
+    {
+      "card_type": "code",
+      "question": "match на enum не exhaustive.",
+      "task": "Добавь все cases Status.",
+      "code": "$label = match ($status) {\n    Status::Active => 'Active',\n};",
+      "reference": "$label = match ($status) {\n    Status::Active => 'Active',\n    Status::Archived => 'Archived',\n    Status::Draft => 'Draft',\n};"
+    },
+    {
+      "card_type": "code",
+      "question": "Never return: функция должна бросать.",
+      "task": "Укажи never и throw.",
+      "code": "function fail(string $msg) {\n    throw new RuntimeException($msg);\n}",
+      "reference": "function fail(string $msg): never {\n    throw new RuntimeException($msg);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Random: mt_rand для token.",
+      "task": "Используй random_bytes для токена.",
+      "code": "$token = bin2hex(substr(md5(mt_rand()), 0, 16));",
+      "reference": "$token = bin2hex(random_bytes(16));"
+    },
+    {
+      "card_type": "code",
+      "question": "Randomizer PHP 8.2.",
+      "task": "Перемешай массив через Random\\Randomizer.",
+      "code": "shuffle($items); // not seedable",
+      "reference": "$randomizer = new \\Random\\Randomizer();\n$items = $randomizer->shuffleArray($items);"
+    },
+    {
+      "card_type": "code",
+      "question": "Typed class constant.",
+      "task": "Добавь тип string константе VERSION в interface.",
+      "code": "interface App {\n    public const VERSION = '1.0';\n}",
+      "reference": "interface App {\n    public const string VERSION = '1.0';\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Clone readonly DTO with change PHP 8.3.",
+      "task": "Обнови email через clone with.",
+      "code": "readonly class User {\n    public function __construct(public string $name, public string $email) {}\n}\n$user = new User('Ann', 'a@b.com');\n// need new email",
+      "reference": "$updated = clone $user with { email: 'new@b.com' };"
+    },
+    {
+      "card_type": "code",
+      "question": "Property hook get PHP 8.4.",
+      "task": "Добавь get hook для uppercased name.",
+      "code": "class Profile {\n    public string $name = '';\n}",
+      "reference": "class Profile {\n    public string $name {\n        get => strtoupper($this->name);\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "array_find PHP 8.4.",
+      "task": "Найди первый чётный элемент через array_find.",
+      "code": "foreach ($nums as $n) {\n    if ($n % 2 === 0) { $first = $n; break; }\n}",
+      "reference": "$first = array_find($nums, fn(int $n) => $n % 2 === 0);"
+    },
+    {
+      "card_type": "code",
+      "question": "JsonException.",
+      "task": "json_decode с JSON_THROW_ON_ERROR.",
+      "code": "$data = json_decode($json, true);\nif ($data === null) { throw new Exception('bad json'); }",
+      "reference": "$data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);"
+    },
+    {
+      "card_type": "code",
+      "question": "Interface default method.",
+      "task": "Добавь default реализацию log в LoggerAware.",
+      "code": "interface LoggerAware {\n    public function log(string $msg): void;\n}",
+      "reference": "interface LoggerAware {\n    public function log(string $msg): void {\n        echo $msg, PHP_EOL;\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Trait conflict.",
+      "task": "Разреши конфликт методов A и B через insteadof.",
+      "code": "trait A { public function run(): void { echo 'A'; } }\ntrait B { public function run(): void { echo 'B'; } }\nclass Job {\n    use A, B;\n}",
+      "reference": "class Job {\n    use A, B {\n        A::run insteadof B;\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "SplFileObject чтение CSV.",
+      "task": "Установи CSV flags и читай строки.",
+      "code": "$file = new SplFileObject('data.csv');\nforeach ($file as $line) {\n    print_r(explode(',', $line));\n}",
+      "reference": "$file = new SplFileObject('data.csv');\n$file->setFlags(SplFileObject::READ_CSV);\nforeach ($file as $row) {\n    if ($row === [null]) continue;\n    print_r($row);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "DateTimeImmutable modify.",
+      "task": "Не мутируй DateTime — используй Immutable.",
+      "code": "$dt = new DateTime('2024-01-01');\n$dt->modify('+1 day');\nreturn $dt;",
+      "reference": "$dt = new DateTimeImmutable('2024-01-01');\nreturn $dt->modify('+1 day');"
+    },
+    {
+      "card_type": "code",
+      "question": "Fiber skeleton.",
+      "task": "Допиши suspend/resume для простого fiber.",
+      "code": "$fiber = new Fiber(function (): void {\n    $value = Fiber::suspend('first');\n    echo $value;\n});\n$fiber->start();\n$fiber->resume('hello');",
+      "reference": "// Fiber::suspend возвращает 'first' в start();\n// resume('hello') передаёт 'hello' в $value"
+    },
+    {
+      "card_type": "code",
+      "question": "WeakMap metadata.",
+      "task": "Привяжи metadata к объекту через WeakMap.",
+      "code": "$meta = [];\n$obj = new stdClass();\n$meta[spl_object_id($obj)] = 'data';",
+      "reference": "$map = new WeakMap();\n$obj = new stdClass();\n$map[$obj] = 'data';"
+    },
+    {
+      "card_type": "code",
+      "question": "Stringable return type.",
+      "task": "Реализуй __toString и Stringable.",
+      "code": "class Label {\n    public function __construct(private string $text) {}\n}",
+      "reference": "class Label implements Stringable {\n    public function __construct(private string $text) {}\n    public function __toString(): string {\n        return $this->text;\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "JsonSerializable DTO.",
+      "task": "Реализуй jsonSerialize для экспорта.",
+      "code": "class User {\n    public function __construct(public string $name) {}\n}\necho json_encode(new User('Ann'));",
+      "reference": "class User implements JsonSerializable {\n    public function __construct(public string $name) {}\n    public function jsonSerialize(): array {\n        return ['name' => $this->name];\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Backed enum JSON.",
+      "task": "Сериализуй enum как value в API response.",
+      "code": "return ['status' => $order->status];",
+      "reference": "return ['status' => $order->status->value];"
+    },
+    {
+      "card_type": "code",
+      "question": "array_is_list check.",
+      "task": "Проверь что массив list перед json как array not object.",
+      "code": "json_encode($data);",
+      "reference": "if (!array_is_list($data)) {\n    throw new InvalidArgumentException('Expected list');\n}\njson_encode($data);"
+    },
+    {
+      "card_type": "code",
+      "question": "str_contains вместо strpos.",
+      "task": "Замени strpos проверку на str_contains.",
+      "code": "if (strpos($haystack, 'needle') !== false) {}",
+      "reference": "if (str_contains($haystack, 'needle')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "Null coalescing chain.",
+      "task": "Упрости isset ternary для config.",
+      "code": "$host = isset($config['host']) ? $config['host'] : 'localhost';",
+      "reference": "$host = $config['host'] ?? 'localhost';"
+    },
+    {
+      "card_type": "code",
+      "question": "throw expression in ??",
+      "task": "Используй throw expression если ключ обязателен.",
+      "code": "$id = $data['id'] ?? null;\nif ($id === null) throw new InvalidArgumentException('id required');",
+      "reference": "$id = $data['id'] ?? throw new InvalidArgumentException('id required');"
+    },
+    {
+      "card_type": "code",
+      "question": "Non-capturing catch.",
+      "task": "Убери неиспользуемую переменную catch.",
+      "code": "try {\n    risky();\n} catch (Exception $e) {\n    log('failed');\n}",
+      "reference": "try {\n    risky();\n} catch (Exception) {\n    log('failed');\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Static return type factory.",
+      "task": "Верни static из create().",
+      "code": "class Model {\n    public static function create(): self {\n        return new self();\n    }\n}",
+      "reference": "class Model {\n    public static function create(): static {\n        return new static();\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Readonly clone __clone.",
+      "task": "Переинициализируй readonly id в __clone.",
+      "code": "readonly class Session {\n    public function __construct(public readonly string $id) {}\n}",
+      "reference": "readonly class Session {\n    public function __construct(public readonly string $id) {}\n    public function __clone(): void {\n        $this->id = bin2hex(random_bytes(8));\n    }\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "SensitiveParameter.",
+      "task": "Скрой password в stack trace.",
+      "code": "function login(string $password): void {\n    authenticate($password);\n}",
+      "reference": "function login(#[\\SensitiveParameter] string $password): void {\n    authenticate($password);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "DNF type hint.",
+      "task": "Укажи (Countable&Iterator)|array.",
+      "code": "function countItems($items): int {\n    return count($items);\n}",
+      "reference": "function countItems((Countable&Iterator)|array $items): int {\n    return count($items);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "True false standalone types.",
+      "task": "Типизируй flag только true.",
+      "code": "function enable(bool $flag = true): void {}",
+      "reference": "function enable(true $flag = true): void {}"
+    },
+    {
+      "card_type": "code",
+      "question": "Variadic named + spread.",
+      "task": "Передай options через spread массива.",
+      "code": "$opts = ['mode' => 'r', 'flag' => FILE_IGNORE_NEW_LINES];\n// вызови foo без перечисления",
+      "reference": "foo(...$opts); // или array unpacking в другом контексте"
+    },
+    {
+      "card_type": "code",
+      "question": "Closure bind for private.",
+      "task": "Вызови private method через Closure::bind.",
+      "code": "$obj = new Service();\n$obj->run(); // private",
+      "reference": "$closure = \\Closure::bind(fn() => $this->run(), $obj, Service::class);\n$closure();"
+    },
+    {
+      "card_type": "code",
+      "question": "Generator send.",
+      "task": "Передай значение в yield через send().",
+      "code": "function gen(): Generator {\n    $x = yield;\n    yield $x * 2;\n}\n$g = gen();\n$g->next();\necho $g->send(5);",
+      "reference": "// next() до первого yield; send(5) -> $x=5; следующий yield вернёт 10"
+    },
+    {
+      "card_type": "code",
+      "question": "hash_equals compare.",
+      "task": "Сравни HMAC без timing leak.",
+      "code": "if ($userHash === $expected) {}",
+      "reference": "if (hash_equals($expected, $userHash)) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "filter_var email.",
+      "task": "Валидируй email через filter_var.",
+      "code": "if (strpos($email, '@') !== false) {}",
+      "reference": "if (filter_var($email, FILTER_VALIDATE_EMAIL)) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "Session cookie secure.",
+      "task": "Настрой httponly и secure для session cookie.",
+      "code": "session_start();",
+      "reference": "session_set_cookie_params([\n    'lifetime' => 0,\n    'path' => '/',\n    'secure' => true,\n    'httponly' => true,\n    'samesite' => 'Lax',\n]);\nsession_start();"
+    },
+    {
+      "card_type": "code",
+      "question": "file_put_contents atomic.",
+      "task": "Запиши файл с блокировкой.",
+      "code": "file_put_contents($path, $data);",
+      "reference": "file_put_contents($path, $data, LOCK_EX);"
+    },
+    {
+      "card_type": "code",
+      "question": "is_countable before count.",
+      "task": "Проверь countable.",
+      "code": "echo count($maybeNull);",
+      "reference": "echo is_countable($maybeNull) ? count($maybeNull) : 0;"
+    },
+    {
+      "card_type": "code",
+      "question": "get_debug_type log.",
+      "task": "Логируй тип переменной при ошибке.",
+      "code": "error_log('type: ' . gettype($var));",
+      "reference": "error_log('type: ' . get_debug_type($var));"
+    },
+    {
+      "question": "В какой версии PHP появилось: named arguments?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши named arguments в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для named_arguments."
+    },
+    {
+      "question": "В какой версии PHP появилось: attributes?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши attributes в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для attributes."
+    },
+    {
+      "question": "В какой версии PHP появилось: match?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши match в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для match."
+    },
+    {
+      "question": "В какой версии PHP появилось: union types?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши union types в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для union_types."
+    },
+    {
+      "question": "В какой версии PHP появилось: nullsafe?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши nullsafe в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для nullsafe."
+    },
+    {
+      "question": "В какой версии PHP появилось: promotion?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши promotion в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для promotion."
+    },
+    {
+      "question": "В какой версии PHP появилось: WeakMap?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши WeakMap в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для WeakMap."
+    },
+    {
+      "question": "В какой версии PHP появилось: str_contains?",
+      "reference": "PHP 8.0. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши str_contains в PHP 8.0.",
+      "reference": "Относится к PHP 8.0. См. документацию php.net для str_contains."
+    },
+    {
+      "question": "В какой версии PHP появилось: enums?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши enums в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для enums."
+    },
+    {
+      "question": "В какой версии PHP появилось: readonly?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши readonly в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для readonly."
+    },
+    {
+      "question": "В какой версии PHP появилось: fibers?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши fibers в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для fibers."
+    },
+    {
+      "question": "В какой версии PHP появилось: intersection types?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши intersection types в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для intersection_types."
+    },
+    {
+      "question": "В какой версии PHP появилось: never?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши never в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для never."
+    },
+    {
+      "question": "В какой версии PHP появилось: first-class callable?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши first-class callable в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для first-class_callable."
+    },
+    {
+      "question": "В какой версии PHP появилось: array_is_list?",
+      "reference": "PHP 8.1. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши array_is_list в PHP 8.1.",
+      "reference": "Относится к PHP 8.1. См. документацию php.net для array_is_list."
+    },
+    {
+      "question": "В какой версии PHP появилось: readonly class?",
+      "reference": "PHP 8.2. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши readonly class в PHP 8.2.",
+      "reference": "Относится к PHP 8.2. См. документацию php.net для readonly_class."
+    },
+    {
+      "question": "В какой версии PHP появилось: DNF types?",
+      "reference": "PHP 8.2. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши DNF types в PHP 8.2.",
+      "reference": "Относится к PHP 8.2. См. документацию php.net для DNF_types."
+    },
+    {
+      "question": "В какой версии PHP появилось: true false null types?",
+      "reference": "PHP 8.2. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши true false null types в PHP 8.2.",
+      "reference": "Относится к PHP 8.2. См. документацию php.net для true_false_null_types."
+    },
+    {
+      "question": "В какой версии PHP появилось: Randomizer?",
+      "reference": "PHP 8.2. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши Randomizer в PHP 8.2.",
+      "reference": "Относится к PHP 8.2. См. документацию php.net для Randomizer."
+    },
+    {
+      "question": "В какой версии PHP появилось: SensitiveParameter?",
+      "reference": "PHP 8.2. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши SensitiveParameter в PHP 8.2.",
+      "reference": "Относится к PHP 8.2. См. документацию php.net для SensitiveParameter."
+    },
+    {
+      "question": "В какой версии PHP появилось: typed constants?",
+      "reference": "PHP 8.3. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши typed constants в PHP 8.3.",
+      "reference": "Относится к PHP 8.3. См. документацию php.net для typed_constants."
+    },
+    {
+      "question": "В какой версии PHP появилось: json_validate?",
+      "reference": "PHP 8.3. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши json_validate в PHP 8.3.",
+      "reference": "Относится к PHP 8.3. См. документацию php.net для json_validate."
+    },
+    {
+      "question": "В какой версии PHP появилось: Override?",
+      "reference": "PHP 8.3. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши Override в PHP 8.3.",
+      "reference": "Относится к PHP 8.3. См. документацию php.net для Override."
+    },
+    {
+      "question": "В какой версии PHP появилось: clone with?",
+      "reference": "PHP 8.3. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши clone with в PHP 8.3.",
+      "reference": "Относится к PHP 8.3. См. документацию php.net для clone_with."
+    },
+    {
+      "question": "В какой версии PHP появилось: dynamic class const fetch?",
+      "reference": "PHP 8.3. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши dynamic class const fetch в PHP 8.3.",
+      "reference": "Относится к PHP 8.3. См. документацию php.net для dynamic_class_const_fetch."
+    },
+    {
+      "question": "В какой версии PHP появилось: property hooks?",
+      "reference": "PHP 8.4. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши property hooks в PHP 8.4.",
+      "reference": "Относится к PHP 8.4. См. документацию php.net для property_hooks."
+    },
+    {
+      "question": "В какой версии PHP появилось: asymmetric visibility?",
+      "reference": "PHP 8.4. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши asymmetric visibility в PHP 8.4.",
+      "reference": "Относится к PHP 8.4. См. документацию php.net для asymmetric_visibility."
+    },
+    {
+      "question": "В какой версии PHP появилось: array_find?",
+      "reference": "PHP 8.4. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши array_find в PHP 8.4.",
+      "reference": "Относится к PHP 8.4. См. документацию php.net для array_find."
+    },
+    {
+      "question": "В какой версии PHP появилось: array_any?",
+      "reference": "PHP 8.4. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши array_any в PHP 8.4.",
+      "reference": "Относится к PHP 8.4. См. документацию php.net для array_any."
+    },
+    {
+      "question": "В какой версии PHP появилось: array_all?",
+      "reference": "PHP 8.4. Ключевая возможность современного PHP."
+    },
+    {
+      "question": "Кратко опиши array_all в PHP 8.4.",
+      "reference": "Относится к PHP 8.4. См. документацию php.net для array_all."
+    },
+    {
+      "question": "PDO: best practice для SELECT?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для SELECT — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для INSERT?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для INSERT — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для UPDATE?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для UPDATE — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для DELETE?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для DELETE — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для TRANSACTION?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для TRANSACTION — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для FETCH_ASSOC?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для FETCH_ASSOC — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для FETCH_OBJ?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для FETCH_OBJ — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для FETCH_CLASS?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для FETCH_CLASS — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для bindValue?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для bindValue — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для bindParam?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для bindParam — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для lastInsertId?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для lastInsertId — не конкатенировать SQL."
+    },
+    {
+      "question": "PDO: best practice для rowCount?",
+      "reference": "Использовать prepared statements, ERRMODE_EXCEPTION, для rowCount — не конкатенировать SQL."
+    },
+    {
+      "question": "SPL: для чего ArrayObject?",
+      "reference": "ArrayObject — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование ArrayObject.",
+      "task": "Дополни пример корректным созданием ArrayObject.",
+      "code": "// TODO: используй ArrayObject\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-arrayobject"
+    },
+    {
+      "question": "SPL: для чего ArrayIterator?",
+      "reference": "ArrayIterator — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование ArrayIterator.",
+      "task": "Дополни пример корректным созданием ArrayIterator.",
+      "code": "// TODO: используй ArrayIterator\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-arrayiterator"
+    },
+    {
+      "question": "SPL: для чего SplQueue?",
+      "reference": "SplQueue — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplQueue.",
+      "task": "Дополни пример корректным созданием SplQueue.",
+      "code": "// TODO: используй SplQueue\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-splqueue"
+    },
+    {
+      "question": "SPL: для чего SplStack?",
+      "reference": "SplStack — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplStack.",
+      "task": "Дополни пример корректным созданием SplStack.",
+      "code": "// TODO: используй SplStack\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-splstack"
+    },
+    {
+      "question": "SPL: для чего SplHeap?",
+      "reference": "SplHeap — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplHeap.",
+      "task": "Дополни пример корректным созданием SplHeap.",
+      "code": "// TODO: используй SplHeap\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-splheap"
+    },
+    {
+      "question": "SPL: для чего SplFixedArray?",
+      "reference": "SplFixedArray — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplFixedArray.",
+      "task": "Дополни пример корректным созданием SplFixedArray.",
+      "code": "// TODO: используй SplFixedArray\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-splfixedarray"
+    },
+    {
+      "question": "SPL: для чего SplFileObject?",
+      "reference": "SplFileObject — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplFileObject.",
+      "task": "Дополни пример корректным созданием SplFileObject.",
+      "code": "// TODO: используй SplFileObject\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-splfileobject"
+    },
+    {
+      "question": "SPL: для чего SplTempFileObject?",
+      "reference": "SplTempFileObject — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование SplTempFileObject.",
+      "task": "Дополни пример корректным созданием SplTempFileObject.",
+      "code": "// TODO: используй SplTempFileObject\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-spltempfileobject"
+    },
+    {
+      "question": "SPL: для чего CallbackFilterIterator?",
+      "reference": "CallbackFilterIterator — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование CallbackFilterIterator.",
+      "task": "Дополни пример корректным созданием CallbackFilterIterator.",
+      "code": "// TODO: используй CallbackFilterIterator\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-callbackfilteriterator"
+    },
+    {
+      "question": "SPL: для чего RecursiveDirectoryIterator?",
+      "reference": "RecursiveDirectoryIterator — стандартная структура/итератор SPL. Использовать вместо ad-hoc реализаций где уместно."
+    },
+    {
+      "card_type": "code",
+      "question": "SPL: базовое использование RecursiveDirectoryIterator.",
+      "task": "Дополни пример корректным созданием RecursiveDirectoryIterator.",
+      "code": "// TODO: используй RecursiveDirectoryIterator\n$data = [1, 2, 3];",
+      "reference": "// Пример зависит от класса — см. php.net/class-recursivedirectoryiterator"
+    },
+    {
+      "question": "Зачем нужна функция strlen()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция mb_strlen()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция substr()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция mb_substr()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция str_replace()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция preg_replace()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "card_type": "code",
+      "question": "Regex: ошибка в preg_replace.",
+      "task": "Экранируй пользовательский ввод через preg_quote.",
+      "code": "$user = 'file.txt';\n$pattern = '/preg_replace(' . $user . ')/';\npreg_replace($pattern, 'test');",
+      "reference": "$pattern = '/preg_replace(' . preg_quote($user, '/') . ')/';"
+    },
+    {
+      "question": "Зачем нужна функция preg_match()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "card_type": "code",
+      "question": "Regex: ошибка в preg_match.",
+      "task": "Экранируй пользовательский ввод через preg_quote.",
+      "code": "$user = 'file.txt';\n$pattern = '/preg_match(' . $user . ')/';\npreg_match($pattern, 'test');",
+      "reference": "$pattern = '/preg_match(' . preg_quote($user, '/') . ')/';"
+    },
+    {
+      "question": "Зачем нужна функция trim()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция ltrim()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция rtrim()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция strtolower()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция strtoupper()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция ucfirst()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция lcfirst()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция sprintf()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция vsprintf()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция number_format()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция str_pad()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция chunk_split()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция explode()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция implode()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция str_split()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция wordwrap()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция nl2br()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция strip_tags()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция htmlentities()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Зачем нужна функция html_entity_decode()?",
+      "reference": "Строковая операция PHP. В PHP 8+ предпочитать типобезопасные альтернативы где есть (str_contains вместо strpos)."
+    },
+    {
+      "question": "Когда использовать array_map()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_filter()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_reduce()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_column()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_combine()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_chunk()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_merge()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_diff()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_intersect()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_keys()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_values()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_flip()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_unique()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_reverse()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать usort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать uksort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать uasort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать sort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать rsort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать ksort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать krsort()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_walk()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_sum()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда использовать array_product()?",
+      "reference": "Работа с массивами PHP. Комбинировать с arrow functions fn() для краткости."
+    },
+    {
+      "question": "Когда бросается TypeError?",
+      "reference": "TypeError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается ValueError?",
+      "reference": "ValueError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается ParseError?",
+      "reference": "ParseError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается ArithmeticError?",
+      "reference": "ArithmeticError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается DivisionByZeroError?",
+      "reference": "DivisionByZeroError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается UnhandledMatchError?",
+      "reference": "UnhandledMatchError — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается Error?",
+      "reference": "Error — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается Exception?",
+      "reference": "Exception — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается RuntimeException?",
+      "reference": "RuntimeException — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается InvalidArgumentException?",
+      "reference": "InvalidArgumentException — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается LogicException?",
+      "reference": "LogicException — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Когда бросается JsonException?",
+      "reference": "JsonException — часть иерархии PHP ошибок/исключений. Обрабатывать специфичные типы перед Throwable."
+    },
+    {
+      "question": "Attribute flag TARGET_CLASS — что означает?",
+      "reference": "Константа Attribute::TARGET_CLASS задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag TARGET_METHOD — что означает?",
+      "reference": "Константа Attribute::TARGET_METHOD задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag TARGET_FUNCTION — что означает?",
+      "reference": "Константа Attribute::TARGET_FUNCTION задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag TARGET_PARAMETER — что означает?",
+      "reference": "Константа Attribute::TARGET_PARAMETER задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag TARGET_PROPERTY — что означает?",
+      "reference": "Константа Attribute::TARGET_PROPERTY задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag TARGET_CLASS_CONSTANT — что означает?",
+      "reference": "Константа Attribute::TARGET_CLASS_CONSTANT задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "question": "Attribute flag IS_REPEATABLE — что означает?",
+      "reference": "Константа Attribute::IS_REPEATABLE задаёт где атрибут можно применять или что он repeatable."
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [promoted private] #0-0",
+      "task": "Сделай private promoted property $email.",
+      "code": "class User {\n    private string $email;\n    public function __construct(string $email) { $this->email = $email; }\n}",
+      "reference": "class User {\n    public function __construct(private string $email) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [promoted private] #0-1",
+      "task": "Сделай private promoted property $email.",
+      "code": "class User {\n    private string $email;\n    public function __construct(string $email) { $this->email = $email; }\n}",
+      "reference": "class User {\n    public function __construct(private string $email) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [promoted private] #0-2",
+      "task": "Сделай private promoted property $email.",
+      "code": "class User {\n    private string $email;\n    public function __construct(string $email) { $this->email = $email; }\n}",
+      "reference": "class User {\n    public function __construct(private string $email) {}\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly promoted] #1-0",
+      "task": "Добавь readonly модификатор.",
+      "code": "class Id { public function __construct(public string $value) {} }",
+      "reference": "class Id { public function __construct(public readonly string $value) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly promoted] #1-1",
+      "task": "Добавь readonly модификатор.",
+      "code": "class Id { public function __construct(public string $value) {} }",
+      "reference": "class Id { public function __construct(public readonly string $value) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly promoted] #1-2",
+      "task": "Добавь readonly модификатор.",
+      "code": "class Id { public function __construct(public string $value) {} }",
+      "reference": "class Id { public function __construct(public readonly string $value) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [union nullable] #2-0",
+      "task": "Тип ?string для nullable.",
+      "code": "function f($x): string { return $x ?? ''; }",
+      "reference": "function f(?string $x): string { return $x ?? ''; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [union nullable] #2-1",
+      "task": "Тип ?string для nullable.",
+      "code": "function f($x): string { return $x ?? ''; }",
+      "reference": "function f(?string $x): string { return $x ?? ''; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [union nullable] #2-2",
+      "task": "Тип ?string для nullable.",
+      "code": "function f($x): string { return $x ?? ''; }",
+      "reference": "function f(?string $x): string { return $x ?? ''; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [match enum] #3-0",
+      "task": "match все cases Color.",
+      "code": "function label(Color $c) { return match($c) { Color::Red => 'R' }; }",
+      "reference": "function label(Color $c): string { return match($c) { Color::Red => 'R', Color::Green => 'G', Color::Blue => 'B' }; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [match enum] #3-1",
+      "task": "match все cases Color.",
+      "code": "function label(Color $c) { return match($c) { Color::Red => 'R' }; }",
+      "reference": "function label(Color $c): string { return match($c) { Color::Red => 'R', Color::Green => 'G', Color::Blue => 'B' }; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [match enum] #3-2",
+      "task": "match все cases Color.",
+      "code": "function label(Color $c) { return match($c) { Color::Red => 'R' }; }",
+      "reference": "function label(Color $c): string { return match($c) { Color::Red => 'R', Color::Green => 'G', Color::Blue => 'B' }; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [enum int backed] #4-0",
+      "task": "Backed enum int Priority.",
+      "code": "class P { const HIGH = 1; }",
+      "reference": "enum Priority: int { case High = 1; case Low = 0; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [enum int backed] #4-1",
+      "task": "Backed enum int Priority.",
+      "code": "class P { const HIGH = 1; }",
+      "reference": "enum Priority: int { case High = 1; case Low = 0; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [enum int backed] #4-2",
+      "task": "Backed enum int Priority.",
+      "code": "class P { const HIGH = 1; }",
+      "reference": "enum Priority: int { case High = 1; case Low = 0; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_starts_with] #5-0",
+      "task": "Замени substr check.",
+      "code": "if (substr($url, 0, 8) === 'https://') {}",
+      "reference": "if (str_starts_with($url, 'https://')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_starts_with] #5-1",
+      "task": "Замени substr check.",
+      "code": "if (substr($url, 0, 8) === 'https://') {}",
+      "reference": "if (str_starts_with($url, 'https://')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_starts_with] #5-2",
+      "task": "Замени substr check.",
+      "code": "if (substr($url, 0, 8) === 'https://') {}",
+      "reference": "if (str_starts_with($url, 'https://')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_ends_with] #6-0",
+      "task": "Проверка расширения файла.",
+      "code": "if (substr($f, -4) === '.php') {}",
+      "reference": "if (str_ends_with($f, '.php')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_ends_with] #6-1",
+      "task": "Проверка расширения файла.",
+      "code": "if (substr($f, -4) === '.php') {}",
+      "reference": "if (str_ends_with($f, '.php')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [str_ends_with] #6-2",
+      "task": "Проверка расширения файла.",
+      "code": "if (substr($f, -4) === '.php') {}",
+      "reference": "if (str_ends_with($f, '.php')) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [nullsafe chain] #7-0",
+      "task": "Безопасный chain.",
+      "code": "$x = $a->b->c;",
+      "reference": "$x = $a?->b?->c;"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [nullsafe chain] #7-1",
+      "task": "Безопасный chain.",
+      "code": "$x = $a->b->c;",
+      "reference": "$x = $a?->b?->c;"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [nullsafe chain] #7-2",
+      "task": "Безопасный chain.",
+      "code": "$x = $a->b->c;",
+      "reference": "$x = $a?->b?->c;"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [first class] #8-0",
+      "task": "intval callable.",
+      "code": "array_map('intval', $a)",
+      "reference": "array_map(intval(...), $a)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [first class] #8-1",
+      "task": "intval callable.",
+      "code": "array_map('intval', $a)",
+      "reference": "array_map(intval(...), $a)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [first class] #8-2",
+      "task": "intval callable.",
+      "code": "array_map('intval', $a)",
+      "reference": "array_map(intval(...), $a)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [never return] #9-0",
+      "task": "never type.",
+      "code": "function stop(): void { throw new Ex(); }",
+      "reference": "function stop(): never { throw new Ex(); }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [never return] #9-1",
+      "task": "never type.",
+      "code": "function stop(): void { throw new Ex(); }",
+      "reference": "function stop(): never { throw new Ex(); }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [never return] #9-2",
+      "task": "never type.",
+      "code": "function stop(): void { throw new Ex(); }",
+      "reference": "function stop(): never { throw new Ex(); }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [json throw] #10-0",
+      "task": "JSON_THROW_ON_ERROR.",
+      "code": "json_decode($j)",
+      "reference": "json_decode($j, true, 512, JSON_THROW_ON_ERROR)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [json throw] #10-1",
+      "task": "JSON_THROW_ON_ERROR.",
+      "code": "json_decode($j)",
+      "reference": "json_decode($j, true, 512, JSON_THROW_ON_ERROR)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [json throw] #10-2",
+      "task": "JSON_THROW_ON_ERROR.",
+      "code": "json_decode($j)",
+      "reference": "json_decode($j, true, 512, JSON_THROW_ON_ERROR)"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [password verify] #11-0",
+      "task": "password_verify.",
+      "code": "if (md5($p) === $hash) {}",
+      "reference": "if (password_verify($p, $hash)) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [password verify] #11-1",
+      "task": "password_verify.",
+      "code": "if (md5($p) === $hash) {}",
+      "reference": "if (password_verify($p, $hash)) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [password verify] #11-2",
+      "task": "password_verify.",
+      "code": "if (md5($p) === $hash) {}",
+      "reference": "if (password_verify($p, $hash)) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [random bytes token] #12-0",
+      "task": "random_bytes.",
+      "code": "$t = uniqid();",
+      "reference": "$t = bin2hex(random_bytes(16));"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [random bytes token] #12-1",
+      "task": "random_bytes.",
+      "code": "$t = uniqid();",
+      "reference": "$t = bin2hex(random_bytes(16));"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [random bytes token] #12-2",
+      "task": "random_bytes.",
+      "code": "$t = uniqid();",
+      "reference": "$t = bin2hex(random_bytes(16));"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [htmlspecialchars] #13-0",
+      "task": "XSS escape.",
+      "code": "echo $u;",
+      "reference": "echo htmlspecialchars($u, ENT_QUOTES, 'UTF-8');"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [htmlspecialchars] #13-1",
+      "task": "XSS escape.",
+      "code": "echo $u;",
+      "reference": "echo htmlspecialchars($u, ENT_QUOTES, 'UTF-8');"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [htmlspecialchars] #13-2",
+      "task": "XSS escape.",
+      "code": "echo $u;",
+      "reference": "echo htmlspecialchars($u, ENT_QUOTES, 'UTF-8');"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [strict declare] #14-0",
+      "task": "strict_types.",
+      "code": "// missing\nfunction i(int $v) {}",
+      "reference": "declare(strict_types=1);\nfunction i(int $v) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [strict declare] #14-1",
+      "task": "strict_types.",
+      "code": "// missing\nfunction i(int $v) {}",
+      "reference": "declare(strict_types=1);\nfunction i(int $v) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [strict declare] #14-2",
+      "task": "strict_types.",
+      "code": "// missing\nfunction i(int $v) {}",
+      "reference": "declare(strict_types=1);\nfunction i(int $v) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly class] #15-0",
+      "task": "readonly class.",
+      "code": "class D { public function __construct(public string $n) {} }",
+      "reference": "readonly class D { public function __construct(public string $n) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly class] #15-1",
+      "task": "readonly class.",
+      "code": "class D { public function __construct(public string $n) {} }",
+      "reference": "readonly class D { public function __construct(public string $n) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [readonly class] #15-2",
+      "task": "readonly class.",
+      "code": "class D { public function __construct(public string $n) {} }",
+      "reference": "readonly class D { public function __construct(public string $n) {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [override attr] #16-0",
+      "task": "Override attribute.",
+      "code": "class C extends B { public function run() {} }",
+      "reference": "class C extends B { #[\\Override] public function run() {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [override attr] #16-1",
+      "task": "Override attribute.",
+      "code": "class C extends B { public function run() {} }",
+      "reference": "class C extends B { #[\\Override] public function run() {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [override attr] #16-2",
+      "task": "Override attribute.",
+      "code": "class C extends B { public function run() {} }",
+      "reference": "class C extends B { #[\\Override] public function run() {} }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [typed const] #17-0",
+      "task": "typed const.",
+      "code": "interface I { const V = 1; }",
+      "reference": "interface I { const int V = 1; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [typed const] #17-1",
+      "task": "typed const.",
+      "code": "interface I { const V = 1; }",
+      "reference": "interface I { const int V = 1; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [typed const] #17-2",
+      "task": "typed const.",
+      "code": "interface I { const V = 1; }",
+      "reference": "interface I { const int V = 1; }"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [array find] #18-0",
+      "task": "array_find.",
+      "code": "foreach ($a as $v) { if ($v>0) return $v; }",
+      "reference": "return array_find($a, fn($v) => $v > 0);"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [array find] #18-1",
+      "task": "array_find.",
+      "code": "foreach ($a as $v) { if ($v>0) return $v; }",
+      "reference": "return array_find($a, fn($v) => $v > 0);"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [array find] #18-2",
+      "task": "array_find.",
+      "code": "foreach ($a as $v) { if ($v>0) return $v; }",
+      "reference": "return array_find($a, fn($v) => $v > 0);"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [sensitive param] #19-0",
+      "task": "SensitiveParameter.",
+      "code": "function f($secret) {}",
+      "reference": "function f(#[\\SensitiveParameter] string $secret) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [sensitive param] #19-1",
+      "task": "SensitiveParameter.",
+      "code": "function f($secret) {}",
+      "reference": "function f(#[\\SensitiveParameter] string $secret) {}"
+    },
+    {
+      "card_type": "code",
+      "question": "PHP 8+ практика [sensitive param] #19-2",
+      "task": "SensitiveParameter.",
+      "code": "function f($secret) {}",
+      "reference": "function f(#[\\SensitiveParameter] string $secret) {}"
+    },
+    {
+      "question": "PHP 8+ [типизация]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции типизация в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [типизация]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции типизация в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [типизация]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции типизация в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [типизация]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции типизация в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [типизация]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции типизация в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [enum]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции enum в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [enum]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции enum в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [enum]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции enum в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [enum]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции enum в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [enum]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции enum в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [match]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции match в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [match]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции match в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [match]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции match в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [match]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции match в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [match]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции match в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [attributes]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции attributes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [attributes]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции attributes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [attributes]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции attributes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [attributes]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции attributes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [attributes]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции attributes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [readonly]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции readonly в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [readonly]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции readonly в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [readonly]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции readonly в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [readonly]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции readonly в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [readonly]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции readonly в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [generators]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции generators в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [generators]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции generators в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [generators]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции generators в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [generators]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции generators в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [generators]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции generators в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [PDO]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции PDO в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [PDO]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции PDO в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [PDO]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции PDO в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [PDO]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции PDO в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [PDO]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции PDO в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [безопасность]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции безопасность в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [безопасность]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции безопасность в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [безопасность]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции безопасность в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [безопасность]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции безопасность в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [безопасность]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции безопасность в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [строки]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции строки в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [строки]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции строки в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [строки]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции строки в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [строки]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции строки в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [строки]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции строки в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [массивы]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции массивы в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [массивы]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции массивы в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [массивы]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции массивы в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [массивы]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции массивы в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [массивы]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции массивы в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [ООП]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции ООП в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [ООП]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции ООП в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [ООП]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции ООП в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [ООП]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции ООП в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [ООП]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции ООП в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [исключения]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции исключения в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [исключения]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции исключения в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [исключения]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции исключения в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [исключения]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции исключения в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [исключения]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции исключения в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [reflection]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции reflection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [reflection]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции reflection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [reflection]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции reflection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [reflection]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции reflection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [reflection]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции reflection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SPL]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции SPL в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SPL]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции SPL в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SPL]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции SPL в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SPL]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции SPL в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SPL]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции SPL в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [даты]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции даты в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [даты]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции даты в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [даты]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции даты в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [даты]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции даты в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [даты]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции даты в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [JSON]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции JSON в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [JSON]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции JSON в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [JSON]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции JSON в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [JSON]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции JSON в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [JSON]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции JSON в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [сессии]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции сессии в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [сессии]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции сессии в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [сессии]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции сессии в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [сессии]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции сессии в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [сессии]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции сессии в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CLI]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции CLI в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CLI]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции CLI в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CLI]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции CLI в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CLI]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции CLI в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CLI]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции CLI в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [composer]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции composer в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [composer]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции composer в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [composer]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции composer в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [composer]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции composer в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [composer]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции composer в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [static analysis]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции static analysis в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [static analysis]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции static analysis в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [static analysis]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции static analysis в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [static analysis]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции static analysis в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [static analysis]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции static analysis в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [fibers]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции fibers в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [fibers]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции fibers в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [fibers]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции fibers в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [fibers]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции fibers в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [fibers]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции fibers в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [random]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции random в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [random]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции random в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [random]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции random в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [random]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции random в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [random]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции random в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [password hashing]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции password hashing в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [password hashing]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции password hashing в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [password hashing]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции password hashing в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [password hashing]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции password hashing в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [password hashing]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции password hashing в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [XSS]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции XSS в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [XSS]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции XSS в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [XSS]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции XSS в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [XSS]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции XSS в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [XSS]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции XSS в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CSRF]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции CSRF в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CSRF]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции CSRF в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CSRF]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции CSRF в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CSRF]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции CSRF в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [CSRF]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции CSRF в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SQL injection]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции SQL injection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SQL injection]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции SQL injection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SQL injection]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции SQL injection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SQL injection]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции SQL injection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [SQL injection]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции SQL injection в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [autoload PSR-4]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции autoload PSR-4 в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [autoload PSR-4]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции autoload PSR-4 в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [autoload PSR-4]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции autoload PSR-4 в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [autoload PSR-4]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции autoload PSR-4 в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [autoload PSR-4]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции autoload PSR-4 в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [traits]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции traits в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [traits]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции traits в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [traits]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции traits в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [traits]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции traits в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [traits]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции traits в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [interfaces]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции interfaces в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [interfaces]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции interfaces в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [interfaces]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции interfaces в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [interfaces]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции interfaces в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [interfaces]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции interfaces в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [abstract classes]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции abstract classes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [abstract classes]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции abstract classes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [abstract classes]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции abstract classes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [abstract classes]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции abstract classes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [abstract classes]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции abstract classes в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [closures]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции closures в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [closures]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции closures в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [closures]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции closures в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [closures]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции closures в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [closures]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции closures в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [arrow functions]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции arrow functions в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [arrow functions]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции arrow functions в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [arrow functions]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции arrow functions в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [arrow functions]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции arrow functions в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [arrow functions]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции arrow functions в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [promoted properties]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции promoted properties в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [promoted properties]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции promoted properties в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [promoted properties]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции promoted properties в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [promoted properties]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции promoted properties в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [promoted properties]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции promoted properties в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [union types]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции union types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [union types]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции union types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [union types]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции union types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [union types]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции union types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [union types]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции union types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [intersection types]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции intersection types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [intersection types]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции intersection types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [intersection types]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции intersection types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [intersection types]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции intersection types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [intersection types]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции intersection types в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [never]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции never в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [never]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции never в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [never]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции never в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [never]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции never в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [never]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции never в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [WeakMap]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции WeakMap в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [WeakMap]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции WeakMap в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [WeakMap]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции WeakMap в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [WeakMap]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции WeakMap в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [WeakMap]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции WeakMap в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [first-class callable]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции first-class callable в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [first-class callable]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции first-class callable в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [first-class callable]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции first-class callable в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [first-class callable]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции first-class callable в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [first-class callable]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции first-class callable в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [nullsafe]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции nullsafe в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [nullsafe]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции nullsafe в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [nullsafe]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции nullsafe в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [nullsafe]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции nullsafe в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [nullsafe]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции nullsafe в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [named arguments]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции named arguments в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [named arguments]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции named arguments в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [named arguments]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции named arguments в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [named arguments]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции named arguments в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [named arguments]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции named arguments в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [property hooks]: контрольный вопрос #1",
+      "reference": "Повторите ключевые концепции property hooks в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [property hooks]: контрольный вопрос #2",
+      "reference": "Повторите ключевые концепции property hooks в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [property hooks]: контрольный вопрос #3",
+      "reference": "Повторите ключевые концепции property hooks в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [property hooks]: контрольный вопрос #4",
+      "reference": "Повторите ключевые концепции property hooks в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    },
+    {
+      "question": "PHP 8+ [property hooks]: контрольный вопрос #5",
+      "reference": "Повторите ключевые концепции property hooks в PHP 8+. Используйте официальную документацию php.net и практику на коде."
+    }
+  ]
+}

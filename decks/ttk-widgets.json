@@ -1,0 +1,2107 @@
+{
+  "name": "tkinter.ttk",
+  "cards": [
+    {
+      "question": "Что такое ttk в Python?",
+      "reference": "Подмодуль tkinter.ttk — themed widgets. Использует нативные стили ОС (Windows/macOS/Linux), в отличие от классических tk-виджетов."
+    },
+    {
+      "question": "Чем ttk.Button отличается от tk.Button?",
+      "reference": "ttk.Button рисуется темой ttk; tk.Button — классический вид. API похож, но стилизация через ttk.Style."
+    },
+    {
+      "question": "Как импортировать ttk?",
+      "reference": "import tkinter as tk\\nfrom tkinter import ttk — или from tkinter.ttk import Button, ..."
+    },
+    {
+      "question": "Нужен ли root для ttk?",
+      "reference": "Да, как и для tkinter: root = tk.Tk(); затем ttk.Frame(root) и другие виджеты."
+    },
+    {
+      "question": "pack vs grid vs place с ttk?",
+      "reference": "Те же менеджеры геометрии tkinter: .pack(), .grid(), .place() работают для ttk-виджетов."
+    },
+    {
+      "question": "Что такое ttk.Style?",
+      "reference": "Объект для настройки тем и стилей: Style().theme_use('clam'), style.configure('TButton', ...)."
+    },
+    {
+      "question": "Как узнать доступные темы?",
+      "reference": "style = ttk.Style(); style.theme_names() — например 'clam', 'alt', 'default', 'classic' на Linux."
+    },
+    {
+      "question": "theme_use()?",
+      "reference": "style.theme_use('clam') — переключить тему для всех ttk-виджетов в приложении."
+    },
+    {
+      "question": "Что такое layout в ttk.Style?",
+      "reference": "style.layout('TButton') — описание элементов отрисовки виджета (element tree темы)."
+    },
+    {
+      "question": "configure vs map в Style?",
+      "reference": "configure — статические опции; map — динамические по state (active, disabled)."
+    },
+    {
+      "question": "state у ttk-виджетов?",
+      "reference": "state=['disabled'] или state='readonly' (Combobox/Entry). state(['!disabled']) для включения."
+    },
+    {
+      "question": "ttk widget .configure?",
+      "reference": "Виджет.configure(text='OK') или cget('text') — как у tk, плюс style, state."
+    },
+    {
+      "question": "Класс vs ttk виджет Treeview?",
+      "reference": "Treeview только в ttk — таблицы и деревья с колонками."
+    },
+    {
+      "question": "Notebook в ttk?",
+      "reference": "Вкладки: nb = ttk.Notebook(parent); nb.add(frame, text='Tab 1')."
+    },
+    {
+      "question": "Progressbar modes?",
+      "reference": "mode='determinate' (value/maximum) или 'indeterminate' (start/stop анимация)."
+    },
+    {
+      "question": "Combobox readonly?",
+      "reference": "state='readonly' — выбор из values без произвольного ввода."
+    },
+    {
+      "question": "Separator orient?",
+      "reference": "orient='horizontal' или 'vertical' — линия-разделитель."
+    },
+    {
+      "question": "Panedwindow?",
+      "reference": "Разделитель панелей: pw.add(child1); pw.add(child2); orient horizontal/vertical."
+    },
+    {
+      "question": "Sizegrip?",
+      "reference": "Уголок для resize окна — обычно в правом нижнем углу status bar."
+    },
+    {
+      "question": "ttk.Spinbox?",
+      "reference": "Числовой ввод со стрелками (Python 3.7+ в ttk, раньше только tk.Spinbox)."
+    },
+    {
+      "question": "Scrollbar связь?",
+      "reference": "scrollbar = ttk.Scrollbar(..., command=widget.yview); widget.configure(yscrollcommand=scrollbar.set)."
+    },
+    {
+      "question": "Treeview show parameter?",
+      "reference": "show='tree' — только дерево; show='headings' — таблица; 'tree headings' — оба."
+    },
+    {
+      "question": "Treeview columns?",
+      "reference": "columns=('name','age'); heading('#0'); column('#0'); insert('', END, values=(...))."
+    },
+    {
+      "question": "Treeview selection?",
+      "reference": "selection() — iids; bind('<<TreeviewSelect>>', handler)."
+    },
+    {
+      "question": "Treeview tags?",
+      "reference": "tags=('odd',) + tag_configure для цветов строк."
+    },
+    {
+      "question": "virtual events ttk?",
+      "reference": "<<TreeviewSelect>>, <<NotebookTabChanged>>, <<ComboboxSelected>> — bind на них."
+    },
+    {
+      "question": "ttk.Frame vs tk.Frame?",
+      "reference": "ttk.Frame участвует в теме; tk.Frame — простой контейнер без themed border."
+    },
+    {
+      "question": "LabelFrame?",
+      "reference": "ttk.LabelFrame(parent, text='Group') — группа с рамкой и заголовком."
+    },
+    {
+      "question": "padding в ttk?",
+      "reference": "padding=10 в pack/grid или style; LabelFrame padding для внутренних отступов."
+    },
+    {
+      "question": "weight в grid?",
+      "reference": "parent.columnconfigure(0, weight=1) — растягивание при resize для ttk grid layouts."
+    },
+    {
+      "question": "ttk и DPI scaling?",
+      "reference": "На HiDPI иногда нужен tk scaling или platform-specific tweaks; ttk следует теме ОС."
+    },
+    {
+      "question": "Когда оставить tk виджет?",
+      "reference": "Text, Canvas, Menu — только в classic tk; ttk не заменяет всё."
+    },
+    {
+      "question": "ttk.Entry validate?",
+      "reference": "validate='key' + validatecommand — как tk.Entry; для сложного ввода часто trace variable."
+    },
+    {
+      "question": "StringVar и ttk?",
+      "reference": "textvariable=tk.StringVar() — работает с ttk.Entry, Label, Button, Combobox."
+    },
+    {
+      "question": "IntVar DoubleVar?",
+      "reference": "Для Scale, Spinbox, Progressbar valuevariable=IntVar()."
+    },
+    {
+      "question": "after() с ttk?",
+      "reference": "root.after(ms, callback) — таймеры UI; не блокировать mainloop долгими операциями."
+    },
+    {
+      "question": "mainloop?",
+      "reference": "root.mainloop() — event loop; все ttk обновления в главном потоке."
+    },
+    {
+      "question": "destroy widget?",
+      "reference": "widget.destroy() — удалить; master.quit() vs master.destroy() для выхода."
+    },
+    {
+      "question": "withdraw/deiconify?",
+      "reference": "root.withdraw() скрыть окно; deiconify() показать — splash/loader pattern."
+    },
+    {
+      "question": "transient и grab?",
+      "reference": "toplevel.transient(parent) — дочернее окно; grab_set() модальный диалог."
+    },
+    {
+      "question": "ttk в PyQt проектах?",
+      "reference": "Не смешивают — ttk только в tkinter apps. У пользователя может быть tkinter client отдельно."
+    },
+    {
+      "question": "ttk.Button — назначение?",
+      "reference": "Виджет ttk.Button — themed элемент UI. Создание: ttk.Button(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Button?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Button."
+    },
+    {
+      "question": "ttk.Label — назначение?",
+      "reference": "Виджет ttk.Label — themed элемент UI. Создание: ttk.Label(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Label?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Label."
+    },
+    {
+      "question": "ttk.Entry — назначение?",
+      "reference": "Виджет ttk.Entry — themed элемент UI. Создание: ttk.Entry(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Entry?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Entry."
+    },
+    {
+      "question": "ttk.Frame — назначение?",
+      "reference": "Виджет ttk.Frame — themed элемент UI. Создание: ttk.Frame(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Frame?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Frame."
+    },
+    {
+      "question": "ttk.LabelFrame — назначение?",
+      "reference": "Виджет ttk.LabelFrame — themed элемент UI. Создание: ttk.LabelFrame(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.LabelFrame?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.LabelFrame."
+    },
+    {
+      "question": "ttk.Menubutton — назначение?",
+      "reference": "Виджет ttk.Menubutton — themed элемент UI. Создание: ttk.Menubutton(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Menubutton?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Menubutton."
+    },
+    {
+      "question": "ttk.Panedwindow — назначение?",
+      "reference": "Виджет ttk.Panedwindow — themed элемент UI. Создание: ttk.Panedwindow(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Panedwindow?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Panedwindow."
+    },
+    {
+      "question": "ttk.Notebook — назначение?",
+      "reference": "Виджет ttk.Notebook — themed элемент UI. Создание: ttk.Notebook(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Notebook?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Notebook."
+    },
+    {
+      "question": "ttk.Progressbar — назначение?",
+      "reference": "Виджет ttk.Progressbar — themed элемент UI. Создание: ttk.Progressbar(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Progressbar?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Progressbar."
+    },
+    {
+      "question": "ttk.Radiobutton — назначение?",
+      "reference": "Виджет ttk.Radiobutton — themed элемент UI. Создание: ttk.Radiobutton(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Radiobutton?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Radiobutton."
+    },
+    {
+      "question": "ttk.Scale — назначение?",
+      "reference": "Виджет ttk.Scale — themed элемент UI. Создание: ttk.Scale(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Scale?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Scale."
+    },
+    {
+      "question": "ttk.Scrollbar — назначение?",
+      "reference": "Виджет ttk.Scrollbar — themed элемент UI. Создание: ttk.Scrollbar(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Scrollbar?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Scrollbar."
+    },
+    {
+      "question": "ttk.Separator — назначение?",
+      "reference": "Виджет ttk.Separator — themed элемент UI. Создание: ttk.Separator(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Separator?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Separator."
+    },
+    {
+      "question": "ttk.Sizegrip — назначение?",
+      "reference": "Виджет ttk.Sizegrip — themed элемент UI. Создание: ttk.Sizegrip(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Sizegrip?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Sizegrip."
+    },
+    {
+      "question": "ttk.Spinbox — назначение?",
+      "reference": "Виджет ttk.Spinbox — themed элемент UI. Создание: ttk.Spinbox(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Spinbox?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Spinbox."
+    },
+    {
+      "question": "ttk.Treeview — назначение?",
+      "reference": "Виджет ttk.Treeview — themed элемент UI. Создание: ttk.Treeview(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Treeview?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Treeview."
+    },
+    {
+      "question": "ttk.Combobox — назначение?",
+      "reference": "Виджет ttk.Combobox — themed элемент UI. Создание: ttk.Combobox(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Combobox?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Combobox."
+    },
+    {
+      "question": "ttk.Checkbutton — назначение?",
+      "reference": "Виджет ttk.Checkbutton — themed элемент UI. Создание: ttk.Checkbutton(parent, **options)."
+    },
+    {
+      "question": "Типичные опции ttk.Checkbutton?",
+      "reference": "Общие: style, takefocus, cursor, state. Специфичные — см. docs для ttk.Checkbutton."
+    },
+    {
+      "question": "Стиль TButton в ttk.Style?",
+      "reference": "style.configure('TButton', ...); style.map('TButton', ...). Стиль кнопок: padding, font, width"
+    },
+    {
+      "question": "Стиль TLabel в ttk.Style?",
+      "reference": "style.configure('TLabel', ...); style.map('TLabel', ...). Стиль меток: foreground, background, anchor"
+    },
+    {
+      "question": "Стиль TEntry в ttk.Style?",
+      "reference": "style.configure('TEntry', ...); style.map('TEntry', ...). Поля ввода: fieldbackground, bordercolor"
+    },
+    {
+      "question": "Стиль TFrame в ttk.Style?",
+      "reference": "style.configure('TFrame', ...); style.map('TFrame', ...). Контейнер: relief, borderwidth через theme"
+    },
+    {
+      "question": "Стиль Treeview в ttk.Style?",
+      "reference": "style.configure('Treeview', ...); style.map('Treeview', ...). Heading и Cell стили: Treeview.Heading, Treeview"
+    },
+    {
+      "question": "Стиль TNotebook в ttk.Style?",
+      "reference": "style.configure('TNotebook', ...); style.map('TNotebook', ...). Tab позиция: tabposition n/s/e/w"
+    },
+    {
+      "question": "Стиль TProgressbar в ttk.Style?",
+      "reference": "style.configure('TProgressbar', ...); style.map('TProgressbar', ...). thickness, troughcolor"
+    },
+    {
+      "question": "Стиль TCombobox в ttk.Style?",
+      "reference": "style.configure('TCombobox', ...); style.map('TCombobox', ...). arrowsize, padding"
+    },
+    {
+      "question": "Стиль TRadiobutton в ttk.Style?",
+      "reference": "style.configure('TRadiobutton', ...); style.map('TRadiobutton', ...). indicatorcolor, indicatormargin"
+    },
+    {
+      "question": "Стиль TCheckbutton в ttk.Style?",
+      "reference": "style.configure('TCheckbutton', ...); style.map('TCheckbutton', ...). indicator element в layout"
+    },
+    {
+      "card_type": "code",
+      "question": "Notebook: вкладки не добавлены.",
+      "task": "Добавь два Frame как вкладки «Главная» и «Настройки».",
+      "code": "import tkinter as tk\nfrom tkinter import ttk\n\nroot = tk.Tk()\nnb = ttk.Notebook(root)\nnb.pack(fill='both', expand=True)\nroot.mainloop()",
+      "reference": "tab1 = ttk.Frame(nb)\ntab2 = ttk.Frame(nb)\nnb.add(tab1, text='Главная')\nnb.add(tab2, text='Настройки')"
+    },
+    {
+      "card_type": "code",
+      "question": "Treeview без headings.",
+      "task": "Настрой колонки id и name, заголовки, одну строку.",
+      "code": "tree = ttk.Treeview(parent)\ntree.pack()",
+      "reference": "tree = ttk.Treeview(parent, columns=('id', 'name'), show='headings')\ntree.heading('id', text='ID')\ntree.heading('name', text='Name')\ntree.column('id', width=60)\ntree.insert('', 'end', values=(1, 'Alice'))"
+    },
+    {
+      "card_type": "code",
+      "question": "Scrollbar не связан с Listbox.",
+      "task": "Свяжи Listbox и ttk.Scrollbar.",
+      "code": "lb = tk.Listbox(frame)\nsb = ttk.Scrollbar(frame, orient='vertical')\nlb.pack(side='left')\nsb.pack(side='right')",
+      "reference": "lb = tk.Listbox(frame)\nsb = ttk.Scrollbar(frame, orient='vertical', command=lb.yview)\nlb.configure(yscrollcommand=sb.set)\nlb.pack(side='left', fill='both', expand=True)\nsb.pack(side='right', fill='y')"
+    },
+    {
+      "card_type": "code",
+      "question": "Progressbar determinate.",
+      "task": "Установи maximum=100 и value=40.",
+      "code": "pb = ttk.Progressbar(root, length=200)\npb.pack()",
+      "reference": "pb = ttk.Progressbar(root, length=200, mode='determinate', maximum=100, value=40)\npb.pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "Combobox без values.",
+      "task": "Задай values и readonly state.",
+      "code": "cb = ttk.Combobox(root)\ncb.pack()",
+      "reference": "cb = ttk.Combobox(root, values=['ru', 'en', 'de'], state='readonly')\ncb.pack()\ncb.current(0)"
+    },
+    {
+      "card_type": "code",
+      "question": "Кнопка не растягивается в grid.",
+      "task": "Сделай column weight=1 и sticky='ew'.",
+      "code": "btn = ttk.Button(root, text='Save')\nbtn.grid(row=0, column=0)",
+      "reference": "root.columnconfigure(0, weight=1)\nbtn = ttk.Button(root, text='Save')\nbtn.grid(row=0, column=0, sticky='ew', padx=5, pady=5)"
+    },
+    {
+      "card_type": "code",
+      "question": "Style не применён.",
+      "task": "Создай стиль Accent.TButton и примени к кнопке.",
+      "code": "btn = ttk.Button(root, text='Go')\nbtn.pack()",
+      "reference": "style = ttk.Style()\nstyle.configure('Accent.TButton', font=('Segoe UI', 10, 'bold'))\nbtn = ttk.Button(root, text='Go', style='Accent.TButton')\nbtn.pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "Disabled state.",
+      "task": "Отключи Entry при старте.",
+      "code": "entry = ttk.Entry(root)\nentry.pack()",
+      "reference": "entry = ttk.Entry(root, state='disabled')\nentry.pack()\n# entry.state(['!disabled']) — включить"
+    },
+    {
+      "card_type": "code",
+      "question": "Panedwindow одна панель.",
+      "task": "Добавь два Frame в horizontal Panedwindow.",
+      "code": "pw = ttk.Panedwindow(root, orient='horizontal')\npw.pack(fill='both', expand=True)",
+      "reference": "left = ttk.Frame(pw, width=200)\nright = ttk.Frame(pw)\npw.add(left, weight=1)\npw.add(right, weight=3)"
+    },
+    {
+      "card_type": "code",
+      "question": "Bind TreeviewSelect.",
+      "task": "Выведи selection в handler.",
+      "code": "def on_select(event):\n    pass\n\ntree.bind('<Button-1>', on_select)",
+      "reference": "def on_select(event):\n    sel = tree.selection()\n    if sel:\n        print(tree.item(sel[0], 'values'))\n\ntree.bind('<<TreeviewSelect>>', on_select)"
+    },
+    {
+      "card_type": "code",
+      "question": "Radiobutton group.",
+      "task": "Свяжи два Radiobutton одной IntVar.",
+      "code": "ttk.Radiobutton(root, text='A').pack()\nttk.Radiobutton(root, text='B').pack()",
+      "reference": "choice = tk.IntVar(value=1)\nttk.Radiobutton(root, text='A', variable=choice, value=1).pack()\nttk.Radiobutton(root, text='B', variable=choice, value=2).pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "Checkbutton variable.",
+      "task": "Используй BooleanVar для чекбокса.",
+      "code": "var = tk.StringVar()\nttk.Checkbutton(root, text='OK', variable=var).pack()",
+      "reference": "var = tk.BooleanVar(value=False)\nttk.Checkbutton(root, text='OK', variable=var).pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "LabelFrame форма.",
+      "task": "Помести Entry в LabelFrame с заголовком «Логин».",
+      "code": "entry = ttk.Entry(root)\nentry.pack()",
+      "reference": "lf = ttk.LabelFrame(root, text='Логин', padding=10)\nlf.pack(fill='x', padx=10, pady=5)\nttk.Entry(lf).pack(fill='x')"
+    },
+    {
+      "card_type": "code",
+      "question": "Scale без variable.",
+      "task": "Привяжи Scale к DoubleVar и Label.",
+      "code": "scale = ttk.Scale(root, from_=0, to=100)\nscale.pack()",
+      "reference": "vol = tk.DoubleVar(value=50)\nscale = ttk.Scale(root, from_=0, to=100, variable=vol)\nlbl = ttk.Label(root, textvariable=vol)\nscale.pack(); lbl.pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "Spinbox range.",
+      "task": "from_=0, to=10, increment=1.",
+      "code": "sp = ttk.Spinbox(root)\nsp.pack()",
+      "reference": "sp = ttk.Spinbox(root, from_=0, to=10, increment=1)\nsp.pack()"
+    },
+    {
+      "card_type": "code",
+      "question": "Separator в toolbar.",
+      "task": "Vertical separator между кнопками.",
+      "code": "# между btn1 и btn2 в horizontal frame",
+      "reference": "ttk.Separator(toolbar, orient='vertical').pack(side='left', fill='y', padx=4)"
+    },
+    {
+      "card_type": "code",
+      "question": "Theme switch.",
+      "task": "Переключи тему на 'clam'.",
+      "code": "root = tk.Tk()",
+      "reference": "root = tk.Tk()\nstyle = ttk.Style()\nstyle.theme_use('clam')"
+    },
+    {
+      "card_type": "code",
+      "question": "map hover button.",
+      "task": "Тёмнее background при active.",
+      "code": "style.configure('TButton', padding=6)",
+      "reference": "style.configure('TButton', padding=6)\nstyle.map('TButton', background=[('active', '#dce4f2')])"
+    },
+    {
+      "card_type": "code",
+      "question": "Treeview delete all.",
+      "task": "Очисти все строки перед reload.",
+      "code": "for item in tree.get_children():\n    pass",
+      "reference": "for item in tree.get_children():\n    tree.delete(item)"
+    },
+    {
+      "card_type": "code",
+      "question": "Combobox get value.",
+      "task": "Прочитай выбранное значение по кнопке.",
+      "code": "def save():\n    pass",
+      "reference": "def save():\n    lang = cb.get()\n    print(lang)"
+    },
+    {
+      "question": "ttk паттерн [форма login] #1",
+      "reference": "Типичная реализация «форма login» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [форма login] #2",
+      "reference": "Типичная реализация «форма login» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [форма login] #3",
+      "reference": "Типичная реализация «форма login» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [форма login] #4",
+      "reference": "Типичная реализация «форма login» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [таблица данных] #1",
+      "reference": "Типичная реализация «таблица данных» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [таблица данных] #2",
+      "reference": "Типичная реализация «таблица данных» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [таблица данных] #3",
+      "reference": "Типичная реализация «таблица данных» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [таблица данных] #4",
+      "reference": "Типичная реализация «таблица данных» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [master-detail] #1",
+      "reference": "Типичная реализация «master-detail» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [master-detail] #2",
+      "reference": "Типичная реализация «master-detail» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [master-detail] #3",
+      "reference": "Типичная реализация «master-detail» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [master-detail] #4",
+      "reference": "Типичная реализация «master-detail» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [settings dialog] #1",
+      "reference": "Типичная реализация «settings dialog» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [settings dialog] #2",
+      "reference": "Типичная реализация «settings dialog» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [settings dialog] #3",
+      "reference": "Типичная реализация «settings dialog» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [settings dialog] #4",
+      "reference": "Типичная реализация «settings dialog» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [wizard steps] #1",
+      "reference": "Типичная реализация «wizard steps» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [wizard steps] #2",
+      "reference": "Типичная реализация «wizard steps» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [wizard steps] #3",
+      "reference": "Типичная реализация «wizard steps» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [wizard steps] #4",
+      "reference": "Типичная реализация «wizard steps» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [status bar] #1",
+      "reference": "Типичная реализация «status bar» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [status bar] #2",
+      "reference": "Типичная реализация «status bar» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [status bar] #3",
+      "reference": "Типичная реализация «status bar» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [status bar] #4",
+      "reference": "Типичная реализация «status bar» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [toolbar actions] #1",
+      "reference": "Типичная реализация «toolbar actions» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [toolbar actions] #2",
+      "reference": "Типичная реализация «toolbar actions» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [toolbar actions] #3",
+      "reference": "Типичная реализация «toolbar actions» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [toolbar actions] #4",
+      "reference": "Типичная реализация «toolbar actions» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [filterable list] #1",
+      "reference": "Типичная реализация «filterable list» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [filterable list] #2",
+      "reference": "Типичная реализация «filterable list» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [filterable list] #3",
+      "reference": "Типичная реализация «filterable list» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [filterable list] #4",
+      "reference": "Типичная реализация «filterable list» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [sortable tree] #1",
+      "reference": "Типичная реализация «sortable tree» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [sortable tree] #2",
+      "reference": "Типичная реализация «sortable tree» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [sortable tree] #3",
+      "reference": "Типичная реализация «sortable tree» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [sortable tree] #4",
+      "reference": "Типичная реализация «sortable tree» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [themed dark] #1",
+      "reference": "Типичная реализация «themed dark» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [themed dark] #2",
+      "reference": "Типичная реализация «themed dark» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [themed dark] #3",
+      "reference": "Типичная реализация «themed dark» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [themed dark] #4",
+      "reference": "Типичная реализация «themed dark» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [responsive grid] #1",
+      "reference": "Типичная реализация «responsive grid» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [responsive grid] #2",
+      "reference": "Типичная реализация «responsive grid» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [responsive grid] #3",
+      "reference": "Типичная реализация «responsive grid» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [responsive grid] #4",
+      "reference": "Типичная реализация «responsive grid» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [scrollable frame] #1",
+      "reference": "Типичная реализация «scrollable frame» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [scrollable frame] #2",
+      "reference": "Типичная реализация «scrollable frame» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [scrollable frame] #3",
+      "reference": "Типичная реализация «scrollable frame» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [scrollable frame] #4",
+      "reference": "Типичная реализация «scrollable frame» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [modal confirm] #1",
+      "reference": "Типичная реализация «modal confirm» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [modal confirm] #2",
+      "reference": "Типичная реализация «modal confirm» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [modal confirm] #3",
+      "reference": "Типичная реализация «modal confirm» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [modal confirm] #4",
+      "reference": "Типичная реализация «modal confirm» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [file picker companion] #1",
+      "reference": "Типичная реализация «file picker companion» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [file picker companion] #2",
+      "reference": "Типичная реализация «file picker companion» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [file picker companion] #3",
+      "reference": "Типичная реализация «file picker companion» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [file picker companion] #4",
+      "reference": "Типичная реализация «file picker companion» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [progress long task] #1",
+      "reference": "Типичная реализация «progress long task» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [progress long task] #2",
+      "reference": "Типичная реализация «progress long task» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [progress long task] #3",
+      "reference": "Типичная реализация «progress long task» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [progress long task] #4",
+      "reference": "Типичная реализация «progress long task» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [thread safe UI update] #1",
+      "reference": "Типичная реализация «thread safe UI update» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [thread safe UI update] #2",
+      "reference": "Типичная реализация «thread safe UI update» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [thread safe UI update] #3",
+      "reference": "Типичная реализация «thread safe UI update» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [thread safe UI update] #4",
+      "reference": "Типичная реализация «thread safe UI update» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [after idle refresh] #1",
+      "reference": "Типичная реализация «after idle refresh» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [after idle refresh] #2",
+      "reference": "Типичная реализация «after idle refresh» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [after idle refresh] #3",
+      "reference": "Типичная реализация «after idle refresh» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [after idle refresh] #4",
+      "reference": "Типичная реализация «after idle refresh» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [validation entry] #1",
+      "reference": "Типичная реализация «validation entry» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [validation entry] #2",
+      "reference": "Типичная реализация «validation entry» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [validation entry] #3",
+      "reference": "Типичная реализация «validation entry» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [validation entry] #4",
+      "reference": "Типичная реализация «validation entry» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [tooltip pattern] #1",
+      "reference": "Типичная реализация «tooltip pattern» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [tooltip pattern] #2",
+      "reference": "Типичная реализация «tooltip pattern» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [tooltip pattern] #3",
+      "reference": "Типичная реализация «tooltip pattern» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [tooltip pattern] #4",
+      "reference": "Типичная реализация «tooltip pattern» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [menu bar ttk] #1",
+      "reference": "Типичная реализация «menu bar ttk» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [menu bar ttk] #2",
+      "reference": "Типичная реализация «menu bar ttk» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [menu bar ttk] #3",
+      "reference": "Типичная реализация «menu bar ttk» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "ttk паттерн [menu bar ttk] #4",
+      "reference": "Типичная реализация «menu bar ttk» в tkinter.ttk: Frame/Notebook/Treeview + grid weights + Style. Долгие задачи — threading + root.after для UI."
+    },
+    {
+      "question": "Событие <<TreeviewSelect>> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<<TreeviewSelect>>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <<TreeviewOpen>> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<<TreeviewOpen>>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <<TreeviewClose>> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<<TreeviewClose>>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <<NotebookTabChanged>> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<<NotebookTabChanged>>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <<ComboboxSelected>> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<<ComboboxSelected>>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Configure> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Configure>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <FocusIn> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<FocusIn>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <FocusOut> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<FocusOut>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Return> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Return>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Escape> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Escape>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Button-1> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Button-1>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Double-1> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Double-1>', handler). event.widget — источник."
+    },
+    {
+      "question": "Событие <Motion> в ttk/tk?",
+      "reference": "Привязка: widget.bind('<Motion>', handler). event.widget — источник."
+    },
+    {
+      "question": "ttk + tk: Text widget?",
+      "reference": "Только tk.Text — многострочный редактор; ttk не имеет аналога."
+    },
+    {
+      "question": "ttk + tk: Canvas?",
+      "reference": "tk.Canvas для рисования; ttk не заменяет."
+    },
+    {
+      "question": "ttk + tk: Menu?",
+      "reference": "tk.Menu для menubar/context; ttk.Menubutton только кнопка с menu."
+    },
+    {
+      "question": "ttk + tk: messagebox?",
+      "reference": "tkinter.messagebox — диалоги OK/Cancel."
+    },
+    {
+      "question": "ttk + tk: filedialog?",
+      "reference": "filedialog.askopenfilename — выбор файлов."
+    },
+    {
+      "question": "ttk + tk: colorchooser?",
+      "reference": "colorchooser.askcolor — выбор цвета."
+    },
+    {
+      "question": "Опция style у ttk.Button?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Button; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Button?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Button; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Button?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Button; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Button?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Button; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Button?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Button; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Label?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Label; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Label?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Label; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Label?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Label; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Label?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Label; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Label?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Label; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Entry?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Entry; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Entry?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Entry; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Entry?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Entry; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Entry?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Entry; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Entry?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Entry; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Frame?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Frame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Frame?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Frame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Frame?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Frame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Frame?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Frame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Frame?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Frame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.LabelFrame?",
+      "reference": "Общая опция ttk style — см. документацию ttk.LabelFrame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.LabelFrame?",
+      "reference": "Общая опция ttk state — см. документацию ttk.LabelFrame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.LabelFrame?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.LabelFrame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.LabelFrame?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.LabelFrame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.LabelFrame?",
+      "reference": "Общая опция ttk class — см. документацию ttk.LabelFrame; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Menubutton?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Menubutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Menubutton?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Menubutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Menubutton?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Menubutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Menubutton?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Menubutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Menubutton?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Menubutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Panedwindow?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Panedwindow; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Panedwindow?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Panedwindow; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Panedwindow?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Panedwindow; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Panedwindow?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Panedwindow; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Panedwindow?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Panedwindow; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Notebook?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Notebook; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Notebook?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Notebook; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Notebook?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Notebook; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Notebook?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Notebook; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Notebook?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Notebook; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Progressbar?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Progressbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Progressbar?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Progressbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Progressbar?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Progressbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Progressbar?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Progressbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Progressbar?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Progressbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Radiobutton?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Radiobutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Radiobutton?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Radiobutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Radiobutton?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Radiobutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Radiobutton?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Radiobutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Radiobutton?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Radiobutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Scale?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Scale; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Scale?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Scale; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Scale?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Scale; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Scale?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Scale; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Scale?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Scale; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Scrollbar?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Scrollbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Scrollbar?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Scrollbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Scrollbar?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Scrollbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Scrollbar?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Scrollbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Scrollbar?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Scrollbar; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Separator?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Separator; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Separator?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Separator; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Separator?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Separator; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Separator?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Separator; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Separator?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Separator; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Sizegrip?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Sizegrip; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Sizegrip?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Sizegrip; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Sizegrip?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Sizegrip; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Sizegrip?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Sizegrip; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Sizegrip?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Sizegrip; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Spinbox?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Spinbox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Spinbox?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Spinbox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Spinbox?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Spinbox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Spinbox?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Spinbox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Spinbox?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Spinbox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Treeview?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Treeview; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Treeview?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Treeview; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Treeview?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Treeview; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Treeview?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Treeview; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Treeview?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Treeview; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Combobox?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Combobox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Combobox?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Combobox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Combobox?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Combobox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Combobox?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Combobox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Combobox?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Combobox; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция style у ttk.Checkbutton?",
+      "reference": "Общая опция ttk style — см. документацию ttk.Checkbutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция state у ttk.Checkbutton?",
+      "reference": "Общая опция ttk state — см. документацию ttk.Checkbutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция takefocus у ttk.Checkbutton?",
+      "reference": "Общая опция ttk takefocus — см. документацию ttk.Checkbutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция cursor у ttk.Checkbutton?",
+      "reference": "Общая опция ttk cursor — см. документацию ttk.Checkbutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "question": "Опция class у ttk.Checkbutton?",
+      "reference": "Общая опция ttk class — см. документацию ttk.Checkbutton; настраивает поведение/вид themed widget."
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [grid sticky] #0-0",
+      "task": "sticky nsew",
+      "code": "widget.grid(row=0)",
+      "reference": "widget.grid(row=0, sticky='nsew')"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [grid sticky] #0-1",
+      "task": "sticky nsew",
+      "code": "widget.grid(row=0)",
+      "reference": "widget.grid(row=0, sticky='nsew')"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [grid sticky] #0-2",
+      "task": "sticky nsew",
+      "code": "widget.grid(row=0)",
+      "reference": "widget.grid(row=0, sticky='nsew')"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [pack expand] #1-0",
+      "task": "fill expand",
+      "code": "widget.pack()",
+      "reference": "widget.pack(fill='both', expand=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [pack expand] #1-1",
+      "task": "fill expand",
+      "code": "widget.pack()",
+      "reference": "widget.pack(fill='both', expand=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [pack expand] #1-2",
+      "task": "fill expand",
+      "code": "widget.pack()",
+      "reference": "widget.pack(fill='both', expand=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [column weight] #2-0",
+      "task": "weight config",
+      "code": "frame.grid()",
+      "reference": "frame.columnconfigure(0, weight=1)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [column weight] #2-1",
+      "task": "weight config",
+      "code": "frame.grid()",
+      "reference": "frame.columnconfigure(0, weight=1)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [column weight] #2-2",
+      "task": "weight config",
+      "code": "frame.grid()",
+      "reference": "frame.columnconfigure(0, weight=1)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [notebook select] #3-0",
+      "task": "select tab",
+      "code": "nb.add(f)",
+      "reference": "nb.select(f)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [notebook select] #3-1",
+      "task": "select tab",
+      "code": "nb.add(f)",
+      "reference": "nb.select(f)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [notebook select] #3-2",
+      "task": "select tab",
+      "code": "nb.add(f)",
+      "reference": "nb.select(f)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [tree iid] #4-0",
+      "task": "insert iid",
+      "code": "tree.insert('',0)",
+      "reference": "tree.insert('', 'end', iid='row1', values=(1,'a'))"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [tree iid] #4-1",
+      "task": "insert iid",
+      "code": "tree.insert('',0)",
+      "reference": "tree.insert('', 'end', iid='row1', values=(1,'a'))"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [tree iid] #4-2",
+      "task": "insert iid",
+      "code": "tree.insert('',0)",
+      "reference": "tree.insert('', 'end', iid='row1', values=(1,'a'))"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [style instance] #5-0",
+      "task": "custom style name",
+      "code": "TButton",
+      "reference": "Custom.TButton + style.configure"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [style instance] #5-1",
+      "task": "custom style name",
+      "code": "TButton",
+      "reference": "Custom.TButton + style.configure"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [style instance] #5-2",
+      "task": "custom style name",
+      "code": "TButton",
+      "reference": "Custom.TButton + style.configure"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [state tuple] #6-0",
+      "task": "disable btn",
+      "code": "state='disabled'",
+      "reference": "btn.state(['disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [state tuple] #6-1",
+      "task": "disable btn",
+      "code": "state='disabled'",
+      "reference": "btn.state(['disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [state tuple] #6-2",
+      "task": "disable btn",
+      "code": "state='disabled'",
+      "reference": "btn.state(['disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [enable state] #7-0",
+      "task": "enable",
+      "code": "state='normal'",
+      "reference": "btn.state(['!disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [enable state] #7-1",
+      "task": "enable",
+      "code": "state='normal'",
+      "reference": "btn.state(['!disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [enable state] #7-2",
+      "task": "enable",
+      "code": "state='normal'",
+      "reference": "btn.state(['!disabled'])"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [progress step] #8-0",
+      "task": "step value",
+      "code": "pb['value']=0",
+      "reference": "pb.step(5) or pb.configure(value=n)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [progress step] #8-1",
+      "task": "step value",
+      "code": "pb['value']=0",
+      "reference": "pb.step(5) or pb.configure(value=n)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [progress step] #8-2",
+      "task": "step value",
+      "code": "pb['value']=0",
+      "reference": "pb.step(5) or pb.configure(value=n)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [indeterminate pb] #9-0",
+      "task": "start anim",
+      "code": "mode default",
+      "reference": "pb.configure(mode='indeterminate'); pb.start(10)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [indeterminate pb] #9-1",
+      "task": "start anim",
+      "code": "mode default",
+      "reference": "pb.configure(mode='indeterminate'); pb.start(10)"
+    },
+    {
+      "card_type": "code",
+      "question": "ttk [indeterminate pb] #9-2",
+      "task": "start anim",
+      "code": "mode default",
+      "reference": "pb.configure(mode='indeterminate'); pb.start(10)"
+    },
+    {
+      "question": "ttk.Button: сценарий «создание»?",
+      "reference": "Практика ttk.Button — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «pack grid»?",
+      "reference": "Практика ttk.Button — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «style»?",
+      "reference": "Практика ttk.Button — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «state disabled»?",
+      "reference": "Практика ttk.Button — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «event bind»?",
+      "reference": "Практика ttk.Button — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «resize layout»?",
+      "reference": "Практика ttk.Button — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Button — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «validation»?",
+      "reference": "Практика ttk.Button — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Button: сценарий «focus order»?",
+      "reference": "Практика ttk.Button — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «создание»?",
+      "reference": "Практика ttk.Label — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «pack grid»?",
+      "reference": "Практика ttk.Label — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «style»?",
+      "reference": "Практика ttk.Label — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «state disabled»?",
+      "reference": "Практика ttk.Label — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «event bind»?",
+      "reference": "Практика ttk.Label — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «resize layout»?",
+      "reference": "Практика ttk.Label — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Label — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «validation»?",
+      "reference": "Практика ttk.Label — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Label: сценарий «focus order»?",
+      "reference": "Практика ttk.Label — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «создание»?",
+      "reference": "Практика ttk.Entry — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «pack grid»?",
+      "reference": "Практика ttk.Entry — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «style»?",
+      "reference": "Практика ttk.Entry — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «state disabled»?",
+      "reference": "Практика ttk.Entry — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «event bind»?",
+      "reference": "Практика ttk.Entry — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «resize layout»?",
+      "reference": "Практика ttk.Entry — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Entry — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «validation»?",
+      "reference": "Практика ttk.Entry — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Entry: сценарий «focus order»?",
+      "reference": "Практика ttk.Entry — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «создание»?",
+      "reference": "Практика ttk.Frame — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «pack grid»?",
+      "reference": "Практика ttk.Frame — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «style»?",
+      "reference": "Практика ttk.Frame — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «state disabled»?",
+      "reference": "Практика ttk.Frame — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «event bind»?",
+      "reference": "Практика ttk.Frame — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «resize layout»?",
+      "reference": "Практика ttk.Frame — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Frame — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «validation»?",
+      "reference": "Практика ttk.Frame — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Frame: сценарий «focus order»?",
+      "reference": "Практика ttk.Frame — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «создание»?",
+      "reference": "Практика ttk.LabelFrame — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «pack grid»?",
+      "reference": "Практика ttk.LabelFrame — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «style»?",
+      "reference": "Практика ttk.LabelFrame — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «state disabled»?",
+      "reference": "Практика ttk.LabelFrame — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «event bind»?",
+      "reference": "Практика ttk.LabelFrame — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «resize layout»?",
+      "reference": "Практика ttk.LabelFrame — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «scroll связка»?",
+      "reference": "Практика ttk.LabelFrame — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «validation»?",
+      "reference": "Практика ttk.LabelFrame — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.LabelFrame: сценарий «focus order»?",
+      "reference": "Практика ttk.LabelFrame — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «создание»?",
+      "reference": "Практика ttk.Menubutton — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «pack grid»?",
+      "reference": "Практика ttk.Menubutton — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «style»?",
+      "reference": "Практика ttk.Menubutton — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «state disabled»?",
+      "reference": "Практика ttk.Menubutton — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «event bind»?",
+      "reference": "Практика ttk.Menubutton — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «resize layout»?",
+      "reference": "Практика ttk.Menubutton — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Menubutton — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «validation»?",
+      "reference": "Практика ttk.Menubutton — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Menubutton: сценарий «focus order»?",
+      "reference": "Практика ttk.Menubutton — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «создание»?",
+      "reference": "Практика ttk.Panedwindow — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «pack grid»?",
+      "reference": "Практика ttk.Panedwindow — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «style»?",
+      "reference": "Практика ttk.Panedwindow — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «state disabled»?",
+      "reference": "Практика ttk.Panedwindow — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «event bind»?",
+      "reference": "Практика ttk.Panedwindow — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «resize layout»?",
+      "reference": "Практика ttk.Panedwindow — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Panedwindow — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «validation»?",
+      "reference": "Практика ttk.Panedwindow — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Panedwindow: сценарий «focus order»?",
+      "reference": "Практика ttk.Panedwindow — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «создание»?",
+      "reference": "Практика ttk.Notebook — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «pack grid»?",
+      "reference": "Практика ttk.Notebook — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «style»?",
+      "reference": "Практика ttk.Notebook — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «state disabled»?",
+      "reference": "Практика ttk.Notebook — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «event bind»?",
+      "reference": "Практика ttk.Notebook — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «resize layout»?",
+      "reference": "Практика ttk.Notebook — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Notebook — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «validation»?",
+      "reference": "Практика ttk.Notebook — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Notebook: сценарий «focus order»?",
+      "reference": "Практика ttk.Notebook — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «создание»?",
+      "reference": "Практика ttk.Progressbar — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «pack grid»?",
+      "reference": "Практика ttk.Progressbar — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «style»?",
+      "reference": "Практика ttk.Progressbar — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «state disabled»?",
+      "reference": "Практика ttk.Progressbar — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «event bind»?",
+      "reference": "Практика ttk.Progressbar — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «resize layout»?",
+      "reference": "Практика ttk.Progressbar — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Progressbar — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «validation»?",
+      "reference": "Практика ttk.Progressbar — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Progressbar: сценарий «focus order»?",
+      "reference": "Практика ttk.Progressbar — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «создание»?",
+      "reference": "Практика ttk.Radiobutton — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «pack grid»?",
+      "reference": "Практика ttk.Radiobutton — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «style»?",
+      "reference": "Практика ttk.Radiobutton — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «state disabled»?",
+      "reference": "Практика ttk.Radiobutton — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «event bind»?",
+      "reference": "Практика ttk.Radiobutton — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «resize layout»?",
+      "reference": "Практика ttk.Radiobutton — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Radiobutton — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «validation»?",
+      "reference": "Практика ttk.Radiobutton — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Radiobutton: сценарий «focus order»?",
+      "reference": "Практика ttk.Radiobutton — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «создание»?",
+      "reference": "Практика ttk.Scale — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «pack grid»?",
+      "reference": "Практика ttk.Scale — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «style»?",
+      "reference": "Практика ttk.Scale — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «state disabled»?",
+      "reference": "Практика ttk.Scale — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «event bind»?",
+      "reference": "Практика ttk.Scale — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «resize layout»?",
+      "reference": "Практика ttk.Scale — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Scale — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «validation»?",
+      "reference": "Практика ttk.Scale — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scale: сценарий «focus order»?",
+      "reference": "Практика ttk.Scale — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «создание»?",
+      "reference": "Практика ttk.Scrollbar — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «pack grid»?",
+      "reference": "Практика ttk.Scrollbar — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «style»?",
+      "reference": "Практика ttk.Scrollbar — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «state disabled»?",
+      "reference": "Практика ttk.Scrollbar — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «event bind»?",
+      "reference": "Практика ttk.Scrollbar — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «resize layout»?",
+      "reference": "Практика ttk.Scrollbar — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Scrollbar — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «validation»?",
+      "reference": "Практика ttk.Scrollbar — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Scrollbar: сценарий «focus order»?",
+      "reference": "Практика ttk.Scrollbar — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «создание»?",
+      "reference": "Практика ttk.Separator — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «pack grid»?",
+      "reference": "Практика ttk.Separator — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «style»?",
+      "reference": "Практика ttk.Separator — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «state disabled»?",
+      "reference": "Практика ttk.Separator — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «event bind»?",
+      "reference": "Практика ttk.Separator — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «resize layout»?",
+      "reference": "Практика ttk.Separator — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Separator — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «validation»?",
+      "reference": "Практика ttk.Separator — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Separator: сценарий «focus order»?",
+      "reference": "Практика ttk.Separator — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «создание»?",
+      "reference": "Практика ttk.Sizegrip — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «pack grid»?",
+      "reference": "Практика ttk.Sizegrip — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «style»?",
+      "reference": "Практика ttk.Sizegrip — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «state disabled»?",
+      "reference": "Практика ttk.Sizegrip — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «event bind»?",
+      "reference": "Практика ttk.Sizegrip — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «resize layout»?",
+      "reference": "Практика ttk.Sizegrip — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Sizegrip — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «validation»?",
+      "reference": "Практика ttk.Sizegrip — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Sizegrip: сценарий «focus order»?",
+      "reference": "Практика ttk.Sizegrip — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «создание»?",
+      "reference": "Практика ttk.Spinbox — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «pack grid»?",
+      "reference": "Практика ttk.Spinbox — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «style»?",
+      "reference": "Практика ttk.Spinbox — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «state disabled»?",
+      "reference": "Практика ttk.Spinbox — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «event bind»?",
+      "reference": "Практика ttk.Spinbox — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «resize layout»?",
+      "reference": "Практика ttk.Spinbox — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Spinbox — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «validation»?",
+      "reference": "Практика ttk.Spinbox — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Spinbox: сценарий «focus order»?",
+      "reference": "Практика ttk.Spinbox — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «создание»?",
+      "reference": "Практика ttk.Treeview — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «pack grid»?",
+      "reference": "Практика ttk.Treeview — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «style»?",
+      "reference": "Практика ttk.Treeview — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «state disabled»?",
+      "reference": "Практика ttk.Treeview — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «event bind»?",
+      "reference": "Практика ttk.Treeview — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «resize layout»?",
+      "reference": "Практика ttk.Treeview — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Treeview — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «validation»?",
+      "reference": "Практика ttk.Treeview — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Treeview: сценарий «focus order»?",
+      "reference": "Практика ttk.Treeview — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «создание»?",
+      "reference": "Практика ttk.Combobox — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «pack grid»?",
+      "reference": "Практика ttk.Combobox — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «style»?",
+      "reference": "Практика ttk.Combobox — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «state disabled»?",
+      "reference": "Практика ttk.Combobox — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «event bind»?",
+      "reference": "Практика ttk.Combobox — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «resize layout»?",
+      "reference": "Практика ttk.Combobox — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Combobox — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «validation»?",
+      "reference": "Практика ttk.Combobox — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Combobox: сценарий «focus order»?",
+      "reference": "Практика ttk.Combobox — focus order: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «создание»?",
+      "reference": "Практика ttk.Checkbutton — создание: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «pack grid»?",
+      "reference": "Практика ttk.Checkbutton — pack grid: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «style»?",
+      "reference": "Практика ttk.Checkbutton — style: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «state disabled»?",
+      "reference": "Практика ttk.Checkbutton — state disabled: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «event bind»?",
+      "reference": "Практика ttk.Checkbutton — event bind: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «resize layout»?",
+      "reference": "Практика ttk.Checkbutton — resize layout: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «scroll связка»?",
+      "reference": "Практика ttk.Checkbutton — scroll связка: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «validation»?",
+      "reference": "Практика ttk.Checkbutton — validation: см. docs, используй Style/geometry managers/virtual events."
+    },
+    {
+      "question": "ttk.Checkbutton: сценарий «focus order»?",
+      "reference": "Практика ttk.Checkbutton — focus order: см. docs, используй Style/geometry managers/virtual events."
+    }
+  ]
+}

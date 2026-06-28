@@ -1,0 +1,2252 @@
+{
+  "name": "PyTorch",
+  "cards": [
+    {
+      "question": "Что такое PyTorch?",
+      "reference": "Open-source ML framework от Meta. Динамический autograd, tensors на CPU/GPU, модуль torch.nn для нейросетей."
+    },
+    {
+      "question": "Tensor в PyTorch?",
+      "reference": "Многомерный массив с dtype и device, аналог NumPy с поддержкой GPU и autograd."
+    },
+    {
+      "question": "torch.tensor vs torch.Tensor?",
+      "reference": "torch.tensor(data) — рекомендуемая фабрика; torch.Tensor — legacy класс, лучше фабрики (zeros, ones, randn)."
+    },
+    {
+      "question": "dtype float32 vs float64?",
+      "reference": "float32 (torch.float) — стандарт DL; float64 реже, больше памяти."
+    },
+    {
+      "question": "device cpu vs cuda?",
+      "reference": "tensor.to('cuda') или .cuda() — GPU; 'cpu' — хост. torch.cuda.is_available()."
+    },
+    {
+      "question": "requires_grad?",
+      "reference": "True — отслеживать операции для backward; leaf tensor накапливает .grad."
+    },
+    {
+      "question": "with torch.no_grad()?",
+      "reference": "Отключить autograd — inference, eval, экономия памяти."
+    },
+    {
+      "question": "torch.inference_mode()?",
+      "reference": "Строже no_grad — быстрее inference, Python 3.7+ / recent PyTorch."
+    },
+    {
+      "question": "backward()?",
+      "reference": "Вычисляет градиенты от scalar loss назад по графу; loss.backward()."
+    },
+    {
+      "question": "optimizer.zero_grad()?",
+      "reference": "Обнулить .grad перед новым backward — иначе градиенты накапливаются."
+    },
+    {
+      "question": "optimizer.step()?",
+      "reference": "Обновить параметры по градиентам: w -= lr * grad."
+    },
+    {
+      "question": "nn.Module?",
+      "reference": "Базовый класс моделей: forward(), parameters(), train()/eval()."
+    },
+    {
+      "question": "model.train() vs eval()?",
+      "reference": "train — dropout/batchnorm training mode; eval — inference поведение."
+    },
+    {
+      "question": "nn.Linear?",
+      "reference": "y = x @ W.T + b — полносвязный слой; in_features, out_features."
+    },
+    {
+      "question": "nn.Conv2d?",
+      "reference": "Свёртка для изображений: in_channels, out_channels, kernel_size, stride, padding."
+    },
+    {
+      "question": "nn.ReLU / GELU?",
+      "reference": "Нелинейности; F.relu или nn.ReLU(inplace=False)."
+    },
+    {
+      "question": "nn.Dropout?",
+      "reference": "Regularization — обнуляет случайные элементы в train mode."
+    },
+    {
+      "question": "nn.BatchNorm2d?",
+      "reference": "Нормализация по batch/channel; running stats в eval."
+    },
+    {
+      "question": "nn.Sequential?",
+      "reference": "Контейнер слоёв по порядку: nn.Sequential(Linear, ReLU, Linear)."
+    },
+    {
+      "question": "nn.ModuleList vs Sequential?",
+      "reference": "ModuleList — список без forward; Sequential — вызывает по цепочке."
+    },
+    {
+      "question": "CrossEntropyLoss?",
+      "reference": "LogSoftmax + NLL для multiclass; input (N,C), target (N,) class indices long."
+    },
+    {
+      "question": "BCEWithLogitsLoss?",
+      "reference": "Binary classification — один logit на sample."
+    },
+    {
+      "question": "MSELoss?",
+      "reference": "Regression L2 между prediction и target."
+    },
+    {
+      "question": "torch.optim.SGD?",
+      "reference": "sgd = optim.SGD(model.parameters(), lr=0.01, momentum=0.9)."
+    },
+    {
+      "question": "torch.optim.Adam?",
+      "reference": "Adaptive lr per-parameter; популярен default lr 1e-3."
+    },
+    {
+      "question": "AdamW?",
+      "reference": "Adam с decoupled weight decay — transformers training."
+    },
+    {
+      "question": "learning rate scheduler?",
+      "reference": "StepLR, CosineAnnealingLR, ReduceLROnPlateau — меняют lr по эпохам."
+    },
+    {
+      "question": "Dataset __len__ __getitem__?",
+      "reference": "torch.utils.data.Dataset — контракт для DataLoader."
+    },
+    {
+      "question": "DataLoader?",
+      "reference": "Batch, shuffle, num_workers, pin_memory — итерация по Dataset."
+    },
+    {
+      "question": "collate_fn?",
+      "reference": "Кастомная сборка batch для variable-length sequences."
+    },
+    {
+      "question": "pin_memory?",
+      "reference": "True при GPU — быстрее host→device copy с page-locked memory."
+    },
+    {
+      "question": "num_workers?",
+      "reference": "Параллельная загрузка данных в subprocess; 0 — main process only."
+    },
+    {
+      "question": "torch.save / load?",
+      "reference": "torch.save(state_dict, path); load с map_location для CPU."
+    },
+    {
+      "question": "state_dict?",
+      "reference": "OrderedDict весов model.state_dict() — без architecture."
+    },
+    {
+      "question": "load_state_dict strict?",
+      "reference": "strict=False — частичная загрузка; missing/unexpected keys."
+    },
+    {
+      "question": "torch.nn.functional?",
+      "reference": "F.conv2d, F.relu — functional API без Module state."
+    },
+    {
+      "question": "view vs reshape?",
+      "reference": "view требует contiguous; reshape может copy; .contiguous() после permute."
+    },
+    {
+      "question": "permute / transpose?",
+      "reference": "permute(0,2,3,1) меняет порядок осей; transpose dims."
+    },
+    {
+      "question": "squeeze / unsqueeze?",
+      "reference": "Убрать/добавить dim size 1: x.unsqueeze(0) batch dim."
+    },
+    {
+      "question": "torch.stack vs cat?",
+      "reference": "stack — новая ось; cat — concat по существующей dim."
+    },
+    {
+      "question": "detach()?",
+      "reference": "Tensor без grad history — для фиксации значений в графе."
+    },
+    {
+      "question": "item()?",
+      "reference": "Scalar Python number из one-element tensor."
+    },
+    {
+      "question": "cpu().numpy()?",
+      "reference": "Экспорт на CPU в NumPy; .numpy() только detached cpu tensor."
+    },
+    {
+      "question": "torch.manual_seed?",
+      "reference": "Reproducibility: manual_seed, cuda.manual_seed_all."
+    },
+    {
+      "question": "deterministic algorithms?",
+      "reference": "torch.use_deterministic_algorithms(True) — может быть медленнее."
+    },
+    {
+      "question": "CUDA OOM?",
+      "reference": "Out of memory — уменьшить batch, gradient checkpointing, mixed precision."
+    },
+    {
+      "question": "mixed precision autocast?",
+      "reference": "torch.cuda.amp.autocast + GradScaler — fp16/bf16 training."
+    },
+    {
+      "question": "GradScaler?",
+      "reference": "Масштаб loss против underflow в fp16; scaler.step(optimizer)."
+    },
+    {
+      "question": "nn.Parameter?",
+      "reference": "Обучаемый tensor registered в Module."
+    },
+    {
+      "question": "register_buffer?",
+      "reference": "Tensor state не trainable (BatchNorm running_mean)."
+    },
+    {
+      "question": "named_parameters()?",
+      "reference": "Итерация (name, param) для fine-grained optimizers."
+    },
+    {
+      "question": "hook forward/backward?",
+      "reference": "Отладка градиентов tensor.register_hook."
+    },
+    {
+      "question": "torch.compile?",
+      "reference": "PyTorch 2.x graph optimization model = torch.compile(model)."
+    },
+    {
+      "question": "torchvision?",
+      "reference": "datasets, models, transforms для CV."
+    },
+    {
+      "question": "transforms Compose?",
+      "reference": "transforms.Compose([Resize, ToTensor, Normalize(mean,std)])."
+    },
+    {
+      "question": "Normalize ImageNet?",
+      "reference": "mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225] для pretrained."
+    },
+    {
+      "question": "ToTensor?",
+      "reference": "PIL/ndarray HWC uint8 → CHW float [0,1]."
+    },
+    {
+      "question": "pretrained weights?",
+      "reference": "models.resnet18(weights=ResNet18_Weights.DEFAULT)."
+    },
+    {
+      "question": "fine-tuning?",
+      "reference": "Заморозить backbone requires_grad=False; train только head."
+    },
+    {
+      "question": "transfer learning?",
+      "reference": "Pretrained features + новый classifier на своих данных."
+    },
+    {
+      "question": "epoch vs iteration?",
+      "reference": "Epoch — полный проход dataset; iteration — один batch step."
+    },
+    {
+      "question": "batch size tradeoff?",
+      "reference": "Больше batch — стабильнее grad, больше памяти; меньше — шумнее."
+    },
+    {
+      "question": "weight decay?",
+      "reference": "L2 regularization в optimizer; AdamW отдельно от adaptive steps."
+    },
+    {
+      "question": "gradient clipping?",
+      "reference": "torch.nn.utils.clip_grad_norm_(params, max_norm) — RNN/transformers."
+    },
+    {
+      "question": "nn.Embedding?",
+      "reference": "Lookup table indices → vectors; NLP tokens."
+    },
+    {
+      "question": "nn.LSTM / GRU?",
+      "reference": "RNN layers: input (seq, batch, feat); packed sequences pack_padded_sequence."
+    },
+    {
+      "question": "nn.Transformer?",
+      "reference": "Multi-head attention encoder/decoder; nn.MultiheadAttention."
+    },
+    {
+      "question": "attention mechanism?",
+      "reference": "Q,K,V softmax(QK^T/sqrt(d))V — long-range dependencies."
+    },
+    {
+      "question": "LayerNorm vs BatchNorm?",
+      "reference": "LayerNorm по features; BatchNorm по batch spatial — transformers vs CNN."
+    },
+    {
+      "question": "softmax dim?",
+      "reference": "F.softmax(logits, dim=-1) — вероятности по классам."
+    },
+    {
+      "question": "argmax vs max?",
+      "reference": "pred = logits.argmax(dim=1) — класс с max logit."
+    },
+    {
+      "question": "one-hot?",
+      "reference": "F.one_hot(target, num_classes) — для некоторых losses/metrics."
+    },
+    {
+      "question": "torchmetrics / manual accuracy?",
+      "reference": "(pred==target).float().mean() — training metric."
+    },
+    {
+      "question": "validation loop?",
+      "reference": "model.eval(); no_grad; отдельный val_loader; early stopping."
+    },
+    {
+      "question": "early stopping?",
+      "reference": "Останов если val loss не улучшается N epochs."
+    },
+    {
+      "question": "checkpointing?",
+      "reference": "Сохранять model+optimizer+epoch для resume training."
+    },
+    {
+      "question": "DistributedDataParallel?",
+      "reference": "torch.nn.parallel.DistributedDataParallel multi-GPU training."
+    },
+    {
+      "question": "DataParallel?",
+      "reference": "Старый DP — одна процесс multi-GPU; DDP предпочтительнее."
+    },
+    {
+      "question": "TensorBoard SummaryWriter?",
+      "reference": "from torch.utils.tensorboard import SummaryWriter — log scalars."
+    },
+    {
+      "question": "ONNX export?",
+      "reference": "torch.onnx.export(model, dummy_input, 'model.onnx') — deployment."
+    },
+    {
+      "question": "TorchScript?",
+      "reference": "torch.jit.trace/script — C++ runtime inference."
+    },
+    {
+      "question": "hub?",
+      "reference": "torch.hub.load repo model — pretrained from GitHub."
+    },
+    {
+      "question": "einops?",
+      "reference": "Сторонняя lib rearrange для readable tensor ops (optional)."
+    },
+    {
+      "question": "device mismatch error?",
+      "reference": "Все tensors и model на одном device перед forward."
+    },
+    {
+      "question": "shape mismatch matmul?",
+      "reference": "Проверять .shape; Linear expects (N, in_features)."
+    },
+    {
+      "question": "long dtype target?",
+      "reference": "CrossEntropyLoss target dtype torch.long class indices not one-hot."
+    },
+    {
+      "question": "logits vs probabilities?",
+      "reference": "Loss functions часто принимают raw logits; softmax внутри CE."
+    },
+    {
+      "question": "sigmoid vs softmax?",
+      "reference": "sigmoid multi-label independent; softmax multiclass exclusive."
+    },
+    {
+      "question": "F.cross_entropy?",
+      "reference": "Functional CE — ignore_index для padding tokens."
+    },
+    {
+      "question": "padding_idx Embedding?",
+      "reference": "nn.Embedding(vocab, dim, padding_idx=0) — zero grad pad."
+    },
+    {
+      "question": "DataLoader drop_last?",
+      "reference": "drop_last=True — отбросить неполный batch для BatchNorm stability."
+    },
+    {
+      "question": "random_split?",
+      "reference": "torch.utils.data.random_split(dataset, [train_len, val_len])."
+    },
+    {
+      "question": "Subset?",
+      "reference": "Subset(dataset, indices) — train/val split indices."
+    },
+    {
+      "question": "WeightedRandomSampler?",
+      "reference": "Balanced sampling при class imbalance."
+    },
+    {
+      "question": "class weights loss?",
+      "reference": "CrossEntropyLoss(weight=class_weights_tensor) для imbalance."
+    },
+    {
+      "question": "confusion matrix?",
+      "reference": " sklearn или manual bincount pred vs target analysis."
+    },
+    {
+      "question": "learning rate finder?",
+      "reference": "Эмпирический подбор lr — постепенное увеличение."
+    },
+    {
+      "question": "warmup scheduler?",
+      "reference": "Linear warmup lr первые N steps transformers training."
+    },
+    {
+      "question": "cosine schedule?",
+      "reference": "CosineAnnealingLR decay lr по cosine до eta_min."
+    },
+    {
+      "question": "model.parameters()?",
+      "reference": "Iterator всех Parameter для optimizer."
+    },
+    {
+      "question": "freeze layers?",
+      "reference": "for p in layer.parameters(): p.requires_grad = False"
+    },
+    {
+      "question": "unfreeze?",
+      "reference": "requires_grad=True для fine-tune последних blocks."
+    },
+    {
+      "question": "nn.Identity?",
+      "reference": "Placeholder pass-through в Sequential при ablation."
+    },
+    {
+      "question": "custom forward?",
+      "reference": "def forward(self, x): ... — define computation graph."
+    },
+    {
+      "question": "__call__ vs forward?",
+      "reference": "model(x) вызывает __call__ hooks; не вызывать forward напрямую если hooks нужны."
+    },
+    {
+      "question": "torch.linalg?",
+      "reference": "matrix ops solve, svd — linear algebra submodule."
+    },
+    {
+      "question": "einsum?",
+      "reference": "torch.einsum('bij,jk->bik', A, B) — Einstein summation."
+    },
+    {
+      "question": "broadcasting?",
+      "reference": "PyTorch как NumPy broadcasting rules для binops."
+    },
+    {
+      "question": "in-place ops risk?",
+      "reference": "inplace ReLU может break autograd if aliasing; осторожно с x.relu_()."
+    },
+    {
+      "question": "retain_graph?",
+      "reference": "backward(retain_graph=True) — несколько backward на один graph."
+    },
+    {
+      "question": "create_graph?",
+      "reference": "backward(create_graph=True) — higher-order derivatives."
+    },
+    {
+      "question": "torch.autograd.grad?",
+      "reference": "Functional grad outputs w.r.t inputs без .backward accumulation."
+    },
+    {
+      "question": "Module.to(device)?",
+      "reference": "model.to('cuda') — рекурсивно все parameters/buffers."
+    },
+    {
+      "question": "tensor.cuda()?",
+      "reference": "Перенос tensor на default GPU."
+    },
+    {
+      "question": "empty_cache?",
+      "reference": "torch.cuda.empty_cache() — освободить cached GPU memory (fragmentation)."
+    },
+    {
+      "question": "cudnn benchmark?",
+      "reference": "torch.backends.cudnn.benchmark=True — faster fixed input sizes."
+    },
+    {
+      "question": "reproducibility cudnn?",
+      "reference": "deterministic=True может замедлить convolutions."
+    },
+    {
+      "question": "jit errors?",
+      "reference": "Script requires type-friendly Python subset."
+    },
+    {
+      "question": "hub security?",
+      "reference": "Доверять только known repos при torch.hub.load."
+    },
+    {
+      "question": "pt vs pth checkpoint?",
+      "reference": "Convention .pt/.pth — torch.save pickle-based format."
+    },
+    {
+      "question": "safe_load map_location?",
+      "reference": "map_location='cpu' при load на машине без GPU."
+    },
+    {
+      "question": "nn.init?",
+      "reference": "init.xavier_uniform_, kaiming_normal_ для weight initialization."
+    },
+    {
+      "question": "bias init zeros?",
+      "reference": "nn.init.zeros_(layer.bias) common default."
+    },
+    {
+      "question": "BatchNorm affine?",
+      "reference": "affine=True learnable scale/shift gamma beta."
+    },
+    {
+      "question": "GroupNorm?",
+      "reference": "Alternative BN для small batch: nn.GroupNorm(num_groups, channels)."
+    },
+    {
+      "question": "InstanceNorm?",
+      "reference": "Style transfer per-instance normalization."
+    },
+    {
+      "question": "AdaptiveAvgPool2d?",
+      "reference": "Global average pool любой spatial → 1x1 per channel."
+    },
+    {
+      "question": "Flatten?",
+      "reference": "nn.Flatten() перед Linear после conv layers."
+    },
+    {
+      "question": "torchvision.models?",
+      "reference": "resnet, efficientnet, vit — pretrained backbones."
+    },
+    {
+      "question": "segmentation models?",
+      "reference": "torchvision FCN, DeepLab — или segmentation_models_pytorch lib."
+    },
+    {
+      "question": "detection?",
+      "reference": "torchvision Faster R-CNN, RetinaNet — detection API."
+    },
+    {
+      "question": "audio torchaudio?",
+      "reference": "Companion lib spectrogram, datasets speech."
+    },
+    {
+      "question": "text torchtext?",
+      "reference": "Legacy; HF transformers доминирует NLP now."
+    },
+    {
+      "question": "HF transformers + PyTorch?",
+      "reference": "AutoModel.from_pretrained — PyTorch backend default."
+    },
+    {
+      "question": "Dataset __getitem__ return?",
+      "reference": "Usually (features, label) tuple or dict."
+    },
+    {
+      "question": "custom loss?",
+      "reference": "Subclass nn.Module loss или функция на tensors with grad."
+    },
+    {
+      "question": "multi-GPU single machine?",
+      "reference": "DDP torchrun или Accelerate library."
+    },
+    {
+      "question": "CPU training?",
+      "reference": "Valid for small models; torch.set_num_threads for MKL."
+    },
+    {
+      "question": "MPS Apple Silicon?",
+      "reference": "device='mps' Metal Performance Shaders backend."
+    },
+    {
+      "question": "torch.float16?",
+      "reference": "Half precision tensors; GradScaler on CUDA."
+    },
+    {
+      "question": "bfloat16?",
+      "reference": "bf16 training Ampere+ GPUs transformers."
+    },
+    {
+      "question": "channels last?",
+      "reference": "memory_format=torch.channels_last conv optimization NVIDIA."
+    },
+    {
+      "question": "profiler?",
+      "reference": "torch.profiler profile activities CPU CUDA."
+    },
+    {
+      "question": "FLOPs estimate?",
+      "reference": "fvcore or manual — model complexity."
+    },
+    {
+      "question": "model.eval dropout?",
+      "reference": "Dropout disabled — deterministic forward (except BN running stats)."
+    },
+    {
+      "question": "BatchNorm train small batch?",
+      "reference": "Noisy stats — GroupNorm/LayerNorm alternative."
+    },
+    {
+      "question": "LayerNorm shape?",
+      "reference": "nn.LayerNorm(normalized_shape) last dims."
+    },
+    {
+      "question": "RNN batch_first?",
+      "reference": "batch_first=True input (batch, seq, feat)."
+    },
+    {
+      "question": "pack_padded_sequence?",
+      "reference": "Variable length RNN without pad steps."
+    },
+    {
+      "question": "CTC loss?",
+      "reference": "nn.CTCloss speech recognition sequence alignment."
+    },
+    {
+      "question": "triplet loss?",
+      "reference": "Metric learning anchor positive negative."
+    },
+    {
+      "question": "contrastive loss?",
+      "reference": "Self-supervised SimCLR style."
+    },
+    {
+      "question": "KL divergence?",
+      "reference": "F.kl_div log_probs vs target distribution."
+    },
+    {
+      "question": "negative log likelihood?",
+      "reference": "F.nll_loss после log_softmax."
+    },
+    {
+      "question": "label smoothing?",
+      "reference": "Soft targets regularization CE."
+    },
+    {
+      "question": "mixup cutmix?",
+      "reference": "Augmentation mixing samples CV training."
+    },
+    {
+      "question": "random seed worker?",
+      "reference": "worker_init_fn in DataLoader reproducibility."
+    },
+    {
+      "question": "persistent_workers?",
+      "reference": "DataLoader keep workers alive between epochs PyTorch 1.7+."
+    },
+    {
+      "question": "prefetch_factor?",
+      "reference": "DataLoader batches prefetched per worker."
+    },
+    {
+      "card_type": "code",
+      "question": "Training loop skeleton.",
+      "task": "Допиши zero_grad, backward, step.",
+      "code": "for x, y in loader:\n    pred = model(x)\n    loss = criterion(pred, y)\n    loss.backward()\n    optimizer.step()",
+      "reference": "optimizer.zero_grad(set_to_none=True)\nloss.backward()\noptimizer.step()"
+    },
+    {
+      "card_type": "code",
+      "question": "Device mismatch.",
+      "task": "Перенеси model и batch на cuda.",
+      "code": "model = MyNet()\nfor x, y in loader:\n    pred = model(x)",
+      "reference": "device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\nmodel = MyNet().to(device)\nfor x, y in loader:\n    x, y = x.to(device), y.to(device)\n    pred = model(x)"
+    },
+    {
+      "card_type": "code",
+      "question": "Eval no grad.",
+      "task": "Оберни validation в правильный context.",
+      "code": "for x, y in val_loader:\n    pred = model(x)\n    loss = criterion(pred, y)",
+      "reference": "model.eval()\nwith torch.inference_mode():\n    for x, y in val_loader:\n        x, y = x.to(device), y.to(device)\n        pred = model(x)\n        loss = criterion(pred, y)"
+    },
+    {
+      "card_type": "code",
+      "question": "CrossEntropy target dtype.",
+      "task": "Исправь dtype target для CE loss.",
+      "code": "criterion = nn.CrossEntropyLoss()\nloss = criterion(logits, y.float())",
+      "reference": "loss = criterion(logits, y.long())"
+    },
+    {
+      "card_type": "code",
+      "question": "Save load state_dict.",
+      "task": "Сохрани и загрузи только веса.",
+      "code": "torch.save(model, 'full.pt')\nm2 = torch.load('full.pt')",
+      "reference": "torch.save(model.state_dict(), 'weights.pt')\nmodel.load_state_dict(torch.load('weights.pt', map_location=device))"
+    },
+    {
+      "card_type": "code",
+      "question": "Custom Module.",
+      "task": "Допиши forward для двух Linear.",
+      "code": "class Net(nn.Module):\n    def __init__(self):\n        super().__init__()\n        self.fc1 = nn.Linear(784, 128)\n        self.fc2 = nn.Linear(128, 10)\n\n    def forward(self, x):\n        pass",
+      "reference": "def forward(self, x):\n    x = x.view(x.size(0), -1)\n    x = F.relu(self.fc1(x))\n    return self.fc2(x)"
+    },
+    {
+      "card_type": "code",
+      "question": "Dataset minimal.",
+      "task": "Реализуй __len__ и __getitem__.",
+      "code": "class MyDataset(Dataset):\n    def __init__(self, data):\n        self.data = data",
+      "reference": "def __len__(self):\n    return len(self.data)\n\ndef __getitem__(self, idx):\n    x, y = self.data[idx]\n    return torch.tensor(x), torch.tensor(y)"
+    },
+    {
+      "card_type": "code",
+      "question": "DataLoader create.",
+      "task": "batch_size=32, shuffle train.",
+      "code": "loader = DataLoader(train_ds)",
+      "reference": "loader = DataLoader(train_ds, batch_size=32, shuffle=True, num_workers=2, pin_memory=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "Freeze backbone.",
+      "task": "Заморозь все params кроме fc.",
+      "code": "model = torchvision.models.resnet18()\nmodel.fc = nn.Linear(512, num_classes)",
+      "reference": "for name, p in model.named_parameters():\n    if not name.startswith('fc'):\n        p.requires_grad = False"
+    },
+    {
+      "card_type": "code",
+      "question": "Gradient clip.",
+      "task": "clip grad norm 1.0 перед step.",
+      "code": "loss.backward()\noptimizer.step()",
+      "reference": "loss.backward()\ntorch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)\noptimizer.step()"
+    },
+    {
+      "card_type": "code",
+      "question": "Scheduler step epoch.",
+      "task": "StepLR каждые 10 epochs.",
+      "code": "scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)\nfor epoch in range(100):\n    train_one_epoch()\n    optimizer.step()",
+      "reference": "for epoch in range(100):\n    train_one_epoch()\n    scheduler.step()"
+    },
+    {
+      "card_type": "code",
+      "question": "Softmax dim.",
+      "task": "Вероятности по классам dim=1 для shape (N,C).",
+      "code": "probs = torch.softmax(logits, dim=0)",
+      "reference": "probs = torch.softmax(logits, dim=1)"
+    },
+    {
+      "card_type": "code",
+      "question": "Permute image batch.",
+      "task": "NHWC → NCHW для conv.",
+      "code": "x = batch  # (N,H,W,C)",
+      "reference": "x = batch.permute(0, 3, 1, 2).contiguous()"
+    },
+    {
+      "card_type": "code",
+      "question": "Autocast training.",
+      "task": "Mixed precision forward.",
+      "code": "pred = model(x)\nloss = criterion(pred, y)",
+      "reference": "scaler = torch.cuda.amp.GradScaler()\nwith torch.cuda.amp.autocast():\n    pred = model(x)\n    loss = criterion(pred, y)\nscaler.scale(loss).backward()\nscaler.step(optimizer)\nscaler.update()"
+    },
+    {
+      "card_type": "code",
+      "question": "Detach metric.",
+      "task": "Accuracy без grad.",
+      "code": "acc = (pred.argmax(1) == y).float().mean()\nloss.backward()",
+      "reference": "acc = (pred.argmax(1) == y).float().mean().detach()"
+    },
+    {
+      "card_type": "code",
+      "question": "Register buffer.",
+      "task": "Добавь non-trainable running stat.",
+      "code": "self.running_mean = torch.zeros(10)",
+      "reference": "self.register_buffer('running_mean', torch.zeros(10))"
+    },
+    {
+      "card_type": "code",
+      "question": "Model train eval toggle.",
+      "task": "Переключи режимы train/val в epoch loop.",
+      "code": "for epoch in epochs:\n    train()\n    validate()",
+      "reference": "model.train()\ntrain()\nmodel.eval()\nvalidate()"
+    },
+    {
+      "card_type": "code",
+      "question": "One-hot mistake.",
+      "task": "CE expects class indices not one-hot.",
+      "code": "target = F.one_hot(y, 10).float()\nloss = F.cross_entropy(logits, target)",
+      "reference": "loss = F.cross_entropy(logits, y.long())"
+    },
+    {
+      "card_type": "code",
+      "question": "Stack tensors.",
+      "task": "Собери batch из list tensors dim 0.",
+      "code": "batch = torch.cat([t for t in list_tensors])  # wrong if same shape new dim",
+      "reference": "batch = torch.stack(list_tensors, dim=0)"
+    },
+    {
+      "card_type": "code",
+      "question": "Inference single sample.",
+      "task": "Добавь batch dim и eval.",
+      "code": "out = model(x)  # x shape (3,224,224)",
+      "reference": "model.eval()\nwith torch.inference_mode():\n    out = model(x.unsqueeze(0))"
+    },
+    {
+      "card_type": "code",
+      "question": "Optimizer param groups.",
+      "task": "Разный lr backbone vs head.",
+      "code": "optim.Adam(model.parameters(), lr=1e-3)",
+      "reference": "optim.Adam([\n    {'params': model.backbone.parameters(), 'lr': 1e-5},\n    {'params': model.head.parameters(), 'lr': 1e-3},\n])"
+    },
+    {
+      "card_type": "code",
+      "question": "Normalize tensor.",
+      "task": "Apply ImageNet normalize after ToTensor.",
+      "code": "transform = transforms.ToTensor()",
+      "reference": "transform = transforms.Compose([\n    transforms.ToTensor(),\n    transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225]),\n])"
+    },
+    {
+      "card_type": "code",
+      "question": "Random seed.",
+      "task": "Seed torch and numpy.",
+      "code": "import torch",
+      "reference": "torch.manual_seed(42)\nimport numpy as np\nnp.random.seed(42)"
+    },
+    {
+      "card_type": "code",
+      "question": "Loss reduction.",
+      "task": "Mean loss over batch для scalar backward.",
+      "code": "loss = criterion(pred, y)  # sometimes sum",
+      "reference": "criterion = nn.CrossEntropyLoss(reduction='mean')"
+    },
+    {
+      "card_type": "code",
+      "question": "View flatten.",
+      "task": "Flatten before linear MNIST style.",
+      "code": "x = x.view(-1)",
+      "reference": "x = x.view(x.size(0), -1)"
+    },
+    {
+      "question": "PyTorch экосистема: torch?",
+      "reference": "Модуль/библиотека torch в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch."
+    },
+    {
+      "question": "PyTorch экосистема: torch.nn?",
+      "reference": "Модуль/библиотека torch.nn в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.nn?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.nn."
+    },
+    {
+      "question": "PyTorch экосистема: torch.nn.functional?",
+      "reference": "Модуль/библиотека torch.nn.functional в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.nn.functional?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.nn.functional."
+    },
+    {
+      "question": "PyTorch экосистема: torch.optim?",
+      "reference": "Модуль/библиотека torch.optim в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.optim?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.optim."
+    },
+    {
+      "question": "PyTorch экосистема: torch.utils.data?",
+      "reference": "Модуль/библиотека torch.utils.data в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.utils.data?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.utils.data."
+    },
+    {
+      "question": "PyTorch экосистема: torchvision?",
+      "reference": "Модуль/библиотека torchvision в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torchvision?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision."
+    },
+    {
+      "question": "PyTorch экосистема: torchvision.transforms?",
+      "reference": "Модуль/библиотека torchvision.transforms в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torchvision.transforms?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision.transforms."
+    },
+    {
+      "question": "PyTorch экосистема: torchvision.models?",
+      "reference": "Модуль/библиотека torchvision.models в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torchvision.models?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision.models."
+    },
+    {
+      "question": "PyTorch экосистема: torch.cuda.amp?",
+      "reference": "Модуль/библиотека torch.cuda.amp в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.cuda.amp?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.cuda.amp."
+    },
+    {
+      "question": "PyTorch экосистема: torch.distributed?",
+      "reference": "Модуль/библиотека torch.distributed в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.distributed?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.distributed."
+    },
+    {
+      "question": "PyTorch экосистема: torch.jit?",
+      "reference": "Модуль/библиотека torch.jit в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.jit?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.jit."
+    },
+    {
+      "question": "PyTorch экосистема: torch.onnx?",
+      "reference": "Модуль/библиотека torch.onnx в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.onnx?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.onnx."
+    },
+    {
+      "question": "PyTorch экосистема: torch.linalg?",
+      "reference": "Модуль/библиотека torch.linalg в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.linalg?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.linalg."
+    },
+    {
+      "question": "PyTorch экосистема: torch.fft?",
+      "reference": "Модуль/библиотека torch.fft в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torch.fft?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.fft."
+    },
+    {
+      "question": "PyTorch экосистема: TensorBoard?",
+      "reference": "Модуль/библиотека TensorBoard в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать TensorBoard?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от TensorBoard."
+    },
+    {
+      "question": "PyTorch экосистема: torchmetrics?",
+      "reference": "Модуль/библиотека torchmetrics в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать torchmetrics?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchmetrics."
+    },
+    {
+      "question": "PyTorch экосистема: lightning?",
+      "reference": "Модуль/библиотека lightning в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать lightning?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от lightning."
+    },
+    {
+      "question": "PyTorch экосистема: accelerate?",
+      "reference": "Модуль/библиотека accelerate в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать accelerate?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от accelerate."
+    },
+    {
+      "question": "PyTorch экосистема: timm?",
+      "reference": "Модуль/библиотека timm в стеке PyTorch — см. официальную документацию."
+    },
+    {
+      "question": "Когда использовать timm?",
+      "reference": "Типичные задачи: training, inference, data, deployment — зависит от timm."
+    },
+    {
+      "question": "nn.Conv1d — назначение?",
+      "reference": "Слой torch.nn.Conv1d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Conv2d — назначение?",
+      "reference": "Слой torch.nn.Conv2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Conv3d — назначение?",
+      "reference": "Слой torch.nn.Conv3d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.ConvTranspose2d — назначение?",
+      "reference": "Слой torch.nn.ConvTranspose2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.MaxPool2d — назначение?",
+      "reference": "Слой torch.nn.MaxPool2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.AvgPool2d — назначение?",
+      "reference": "Слой torch.nn.AvgPool2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.AdaptiveAvgPool2d — назначение?",
+      "reference": "Слой torch.nn.AdaptiveAvgPool2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Linear — назначение?",
+      "reference": "Слой torch.nn.Linear — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Dropout — назначение?",
+      "reference": "Слой torch.nn.Dropout — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.BatchNorm1d — назначение?",
+      "reference": "Слой torch.nn.BatchNorm1d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.BatchNorm2d — назначение?",
+      "reference": "Слой torch.nn.BatchNorm2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.LayerNorm — назначение?",
+      "reference": "Слой torch.nn.LayerNorm — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.GroupNorm — назначение?",
+      "reference": "Слой torch.nn.GroupNorm — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.InstanceNorm2d — назначение?",
+      "reference": "Слой torch.nn.InstanceNorm2d — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Embedding — назначение?",
+      "reference": "Слой torch.nn.Embedding — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.LSTM — назначение?",
+      "reference": "Слой torch.nn.LSTM — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.GRU — назначение?",
+      "reference": "Слой torch.nn.GRU — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.MultiheadAttention — назначение?",
+      "reference": "Слой torch.nn.MultiheadAttention — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.TransformerEncoder — назначение?",
+      "reference": "Слой torch.nn.TransformerEncoder — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.TransformerDecoder — назначение?",
+      "reference": "Слой torch.nn.TransformerDecoder — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.PReLU — назначение?",
+      "reference": "Слой torch.nn.PReLU — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.LeakyReLU — назначение?",
+      "reference": "Слой torch.nn.LeakyReLU — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Sigmoid — назначение?",
+      "reference": "Слой torch.nn.Sigmoid — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Tanh — назначение?",
+      "reference": "Слой torch.nn.Tanh — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Softmax — назначение?",
+      "reference": "Слой torch.nn.Softmax — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.LogSoftmax — назначение?",
+      "reference": "Слой torch.nn.LogSoftmax — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.BCELoss — назначение?",
+      "reference": "Слой torch.nn.BCELoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.BCEWithLogitsLoss — назначение?",
+      "reference": "Слой torch.nn.BCEWithLogitsLoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.CrossEntropyLoss — назначение?",
+      "reference": "Слой torch.nn.CrossEntropyLoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.MSELoss — назначение?",
+      "reference": "Слой torch.nn.MSELoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.L1Loss — назначение?",
+      "reference": "Слой torch.nn.L1Loss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.SmoothL1Loss — назначение?",
+      "reference": "Слой torch.nn.SmoothL1Loss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.NLLLoss — назначение?",
+      "reference": "Слой torch.nn.NLLLoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.CTCLoss — назначение?",
+      "reference": "Слой torch.nn.CTCLoss — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.Upsample — назначение?",
+      "reference": "Слой torch.nn.Upsample — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "nn.PixelShuffle — назначение?",
+      "reference": "Слой torch.nn.PixelShuffle — см. docs для input/output shape и типичного use case."
+    },
+    {
+      "question": "torch / F.matmul?",
+      "reference": "Tensor operation matmul — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.bmm?",
+      "reference": "Tensor operation bmm — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.einsum?",
+      "reference": "Tensor operation einsum — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.cat?",
+      "reference": "Tensor operation cat — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.stack?",
+      "reference": "Tensor operation stack — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.split?",
+      "reference": "Tensor operation split — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.chunk?",
+      "reference": "Tensor operation chunk — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.gather?",
+      "reference": "Tensor operation gather — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.scatter?",
+      "reference": "Tensor operation scatter — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.where?",
+      "reference": "Tensor operation where — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.masked_fill?",
+      "reference": "Tensor operation masked_fill — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.clamp?",
+      "reference": "Tensor operation clamp — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.sigmoid?",
+      "reference": "Tensor operation sigmoid — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.log_softmax?",
+      "reference": "Tensor operation log_softmax — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.softmax?",
+      "reference": "Tensor operation softmax — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.max?",
+      "reference": "Tensor operation max — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.min?",
+      "reference": "Tensor operation min — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.sum?",
+      "reference": "Tensor operation sum — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.mean?",
+      "reference": "Tensor operation mean — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.std?",
+      "reference": "Tensor operation std — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.norm?",
+      "reference": "Tensor operation norm — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.addmm?",
+      "reference": "Tensor operation addmm — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "torch / F.conv2d?",
+      "reference": "Tensor operation conv2d — shape rules и autograd support в PyTorch."
+    },
+    {
+      "question": "PyTorch training [overfitting] #1",
+      "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [overfitting] #2",
+      "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [overfitting] #3",
+      "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [underfitting] #1",
+      "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [underfitting] #2",
+      "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [underfitting] #3",
+      "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [regularization] #1",
+      "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [regularization] #2",
+      "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [regularization] #3",
+      "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [dropout] #1",
+      "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [dropout] #2",
+      "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [dropout] #3",
+      "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data augmentation] #1",
+      "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data augmentation] #2",
+      "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data augmentation] #3",
+      "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch normalization] #1",
+      "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch normalization] #2",
+      "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch normalization] #3",
+      "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [learning rate] #1",
+      "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [learning rate] #2",
+      "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [learning rate] #3",
+      "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [momentum] #1",
+      "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [momentum] #2",
+      "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [momentum] #3",
+      "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [weight initialization] #1",
+      "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [weight initialization] #2",
+      "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [weight initialization] #3",
+      "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [vanishing gradients] #1",
+      "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [vanishing gradients] #2",
+      "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [vanishing gradients] #3",
+      "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [exploding gradients] #1",
+      "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [exploding gradients] #2",
+      "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [exploding gradients] #3",
+      "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch size] #1",
+      "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch size] #2",
+      "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch size] #3",
+      "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [epoch count] #1",
+      "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [epoch count] #2",
+      "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [epoch count] #3",
+      "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [train val split] #1",
+      "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [train val split] #2",
+      "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [train val split] #3",
+      "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [test set] #1",
+      "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [test set] #2",
+      "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [test set] #3",
+      "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data leakage] #1",
+      "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data leakage] #2",
+      "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [data leakage] #3",
+      "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [normalization] #1",
+      "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [normalization] #2",
+      "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [normalization] #3",
+      "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [standardization] #1",
+      "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [standardization] #2",
+      "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [standardization] #3",
+      "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [imbalanced classes] #1",
+      "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [imbalanced classes] #2",
+      "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [imbalanced classes] #3",
+      "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric accuracy] #1",
+      "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric accuracy] #2",
+      "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric accuracy] #3",
+      "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric F1] #1",
+      "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric F1] #2",
+      "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric F1] #3",
+      "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric AUC] #1",
+      "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric AUC] #2",
+      "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [metric AUC] #3",
+      "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [hyperparameter tuning] #1",
+      "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [hyperparameter tuning] #2",
+      "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [hyperparameter tuning] #3",
+      "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [grid search] #1",
+      "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [grid search] #2",
+      "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [grid search] #3",
+      "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [random search] #1",
+      "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [random search] #2",
+      "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [random search] #3",
+      "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [Bayesian optimization] #1",
+      "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [Bayesian optimization] #2",
+      "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [Bayesian optimization] #3",
+      "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [model ensemble] #1",
+      "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [model ensemble] #2",
+      "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [model ensemble] #3",
+      "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [knowledge distillation] #1",
+      "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [knowledge distillation] #2",
+      "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [knowledge distillation] #3",
+      "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [quantization] #1",
+      "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [quantization] #2",
+      "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [quantization] #3",
+      "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [pruning] #1",
+      "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [pruning] #2",
+      "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [pruning] #3",
+      "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [deployment edge] #1",
+      "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [deployment edge] #2",
+      "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [deployment edge] #3",
+      "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [latency inference] #1",
+      "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [latency inference] #2",
+      "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [latency inference] #3",
+      "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch inference] #1",
+      "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch inference] #2",
+      "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [batch inference] #3",
+      "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [TorchServe] #1",
+      "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [TorchServe] #2",
+      "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "question": "PyTorch training [TorchServe] #3",
+      "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы."
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [requires_grad False] #0-0",
+      "task": "inference tensor",
+      "code": "x = torch.randn(3, requires_grad=True)",
+      "reference": "x = torch.randn(3, requires_grad=False)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [requires_grad False] #0-1",
+      "task": "inference tensor",
+      "code": "x = torch.randn(3, requires_grad=True)",
+      "reference": "x = torch.randn(3, requires_grad=False)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [requires_grad False] #0-2",
+      "task": "inference tensor",
+      "code": "x = torch.randn(3, requires_grad=True)",
+      "reference": "x = torch.randn(3, requires_grad=False)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [requires_grad False] #0-3",
+      "task": "inference tensor",
+      "code": "x = torch.randn(3, requires_grad=True)",
+      "reference": "x = torch.randn(3, requires_grad=False)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [zero grad] #1-0",
+      "task": "zero_grad",
+      "code": "optimizer.step() first",
+      "reference": "optimizer.zero_grad(set_to_none=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [zero grad] #1-1",
+      "task": "zero_grad",
+      "code": "optimizer.step() first",
+      "reference": "optimizer.zero_grad(set_to_none=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [zero grad] #1-2",
+      "task": "zero_grad",
+      "code": "optimizer.step() first",
+      "reference": "optimizer.zero_grad(set_to_none=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [zero grad] #1-3",
+      "task": "zero_grad",
+      "code": "optimizer.step() first",
+      "reference": "optimizer.zero_grad(set_to_none=True)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [model device] #2-0",
+      "task": "to device",
+      "code": "model(x.cuda())",
+      "reference": "model.to(device); x.to(device)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [model device] #2-1",
+      "task": "to device",
+      "code": "model(x.cuda())",
+      "reference": "model.to(device); x.to(device)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [model device] #2-2",
+      "task": "to device",
+      "code": "model(x.cuda())",
+      "reference": "model.to(device); x.to(device)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [model device] #2-3",
+      "task": "to device",
+      "code": "model(x.cuda())",
+      "reference": "model.to(device); x.to(device)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [long target] #3-0",
+      "task": "y.long()",
+      "code": "y.float()",
+      "reference": "y.long()"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [long target] #3-1",
+      "task": "y.long()",
+      "code": "y.float()",
+      "reference": "y.long()"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [long target] #3-2",
+      "task": "y.long()",
+      "code": "y.float()",
+      "reference": "y.long()"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [long target] #3-3",
+      "task": "y.long()",
+      "code": "y.float()",
+      "reference": "y.long()"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [eval mode] #4-0",
+      "task": "model.eval()",
+      "code": "model.train() always",
+      "reference": "model.eval() before val"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [eval mode] #4-1",
+      "task": "model.eval()",
+      "code": "model.train() always",
+      "reference": "model.eval() before val"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [eval mode] #4-2",
+      "task": "model.eval()",
+      "code": "model.train() always",
+      "reference": "model.eval() before val"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [eval mode] #4-3",
+      "task": "model.eval()",
+      "code": "model.train() always",
+      "reference": "model.eval() before val"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [no grad val] #5-0",
+      "task": "inference_mode",
+      "code": "with no_grad(): pass",
+      "reference": "with torch.inference_mode(): ..."
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [no grad val] #5-1",
+      "task": "inference_mode",
+      "code": "with no_grad(): pass",
+      "reference": "with torch.inference_mode(): ..."
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [no grad val] #5-2",
+      "task": "inference_mode",
+      "code": "with no_grad(): pass",
+      "reference": "with torch.inference_mode(): ..."
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [no grad val] #5-3",
+      "task": "inference_mode",
+      "code": "with no_grad(): pass",
+      "reference": "with torch.inference_mode(): ..."
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [state dict] #6-0",
+      "task": "save weights",
+      "code": "torch.save(model)",
+      "reference": "torch.save(model.state_dict())"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [state dict] #6-1",
+      "task": "save weights",
+      "code": "torch.save(model)",
+      "reference": "torch.save(model.state_dict())"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [state dict] #6-2",
+      "task": "save weights",
+      "code": "torch.save(model)",
+      "reference": "torch.save(model.state_dict())"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [state dict] #6-3",
+      "task": "save weights",
+      "code": "torch.save(model)",
+      "reference": "torch.save(model.state_dict())"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [load map] #7-0",
+      "task": "cpu load",
+      "code": "torch.load(path)",
+      "reference": "torch.load(path, map_location='cpu')"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [load map] #7-1",
+      "task": "cpu load",
+      "code": "torch.load(path)",
+      "reference": "torch.load(path, map_location='cpu')"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [load map] #7-2",
+      "task": "cpu load",
+      "code": "torch.load(path)",
+      "reference": "torch.load(path, map_location='cpu')"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [load map] #7-3",
+      "task": "cpu load",
+      "code": "torch.load(path)",
+      "reference": "torch.load(path, map_location='cpu')"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [squeeze batch] #8-0",
+      "task": "unsqueeze",
+      "code": "model(x)",
+      "reference": "model(x.unsqueeze(0))"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [squeeze batch] #8-1",
+      "task": "unsqueeze",
+      "code": "model(x)",
+      "reference": "model(x.unsqueeze(0))"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [squeeze batch] #8-2",
+      "task": "unsqueeze",
+      "code": "model(x)",
+      "reference": "model(x.unsqueeze(0))"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [squeeze batch] #8-3",
+      "task": "unsqueeze",
+      "code": "model(x)",
+      "reference": "model(x.unsqueeze(0))"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [cat dim] #9-0",
+      "task": "cat dim 0",
+      "code": "torch.cat(a,b)",
+      "reference": "torch.cat((a,b), dim=0)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [cat dim] #9-1",
+      "task": "cat dim 0",
+      "code": "torch.cat(a,b)",
+      "reference": "torch.cat((a,b), dim=0)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [cat dim] #9-2",
+      "task": "cat dim 0",
+      "code": "torch.cat(a,b)",
+      "reference": "torch.cat((a,b), dim=0)"
+    },
+    {
+      "card_type": "code",
+      "question": "PyTorch [cat dim] #9-3",
+      "task": "cat dim 0",
+      "code": "torch.cat(a,b)",
+      "reference": "torch.cat((a,b), dim=0)"
+    },
+    {
+      "question": "nn.Conv1d — типичный input shape?",
+      "reference": "Слой nn.Conv1d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Conv1d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv1d."
+    },
+    {
+      "question": "nn.Conv2d — типичный input shape?",
+      "reference": "Слой nn.Conv2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Conv2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv2d."
+    },
+    {
+      "question": "nn.Conv3d — типичный input shape?",
+      "reference": "Слой nn.Conv3d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Conv3d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv3d."
+    },
+    {
+      "question": "nn.ConvTranspose2d — типичный input shape?",
+      "reference": "Слой nn.ConvTranspose2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.ConvTranspose2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для ConvTranspose2d."
+    },
+    {
+      "question": "nn.MaxPool2d — типичный input shape?",
+      "reference": "Слой nn.MaxPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.MaxPool2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MaxPool2d."
+    },
+    {
+      "question": "nn.AvgPool2d — типичный input shape?",
+      "reference": "Слой nn.AvgPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.AvgPool2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для AvgPool2d."
+    },
+    {
+      "question": "nn.AdaptiveAvgPool2d — типичный input shape?",
+      "reference": "Слой nn.AdaptiveAvgPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.AdaptiveAvgPool2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для AdaptiveAvgPool2d."
+    },
+    {
+      "question": "nn.Linear — типичный input shape?",
+      "reference": "Слой nn.Linear — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Linear?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Linear."
+    },
+    {
+      "question": "nn.Dropout — типичный input shape?",
+      "reference": "Слой nn.Dropout — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Dropout?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Dropout."
+    },
+    {
+      "question": "nn.BatchNorm1d — типичный input shape?",
+      "reference": "Слой nn.BatchNorm1d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.BatchNorm1d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BatchNorm1d."
+    },
+    {
+      "question": "nn.BatchNorm2d — типичный input shape?",
+      "reference": "Слой nn.BatchNorm2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.BatchNorm2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BatchNorm2d."
+    },
+    {
+      "question": "nn.LayerNorm — типичный input shape?",
+      "reference": "Слой nn.LayerNorm — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.LayerNorm?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LayerNorm."
+    },
+    {
+      "question": "nn.GroupNorm — типичный input shape?",
+      "reference": "Слой nn.GroupNorm — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.GroupNorm?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для GroupNorm."
+    },
+    {
+      "question": "nn.InstanceNorm2d — типичный input shape?",
+      "reference": "Слой nn.InstanceNorm2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.InstanceNorm2d?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для InstanceNorm2d."
+    },
+    {
+      "question": "nn.Embedding — типичный input shape?",
+      "reference": "Слой nn.Embedding — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Embedding?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Embedding."
+    },
+    {
+      "question": "nn.LSTM — типичный input shape?",
+      "reference": "Слой nn.LSTM — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.LSTM?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LSTM."
+    },
+    {
+      "question": "nn.GRU — типичный input shape?",
+      "reference": "Слой nn.GRU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.GRU?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для GRU."
+    },
+    {
+      "question": "nn.MultiheadAttention — типичный input shape?",
+      "reference": "Слой nn.MultiheadAttention — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.MultiheadAttention?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MultiheadAttention."
+    },
+    {
+      "question": "nn.TransformerEncoder — типичный input shape?",
+      "reference": "Слой nn.TransformerEncoder — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.TransformerEncoder?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для TransformerEncoder."
+    },
+    {
+      "question": "nn.TransformerDecoder — типичный input shape?",
+      "reference": "Слой nn.TransformerDecoder — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.TransformerDecoder?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для TransformerDecoder."
+    },
+    {
+      "question": "nn.PReLU — типичный input shape?",
+      "reference": "Слой nn.PReLU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.PReLU?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для PReLU."
+    },
+    {
+      "question": "nn.LeakyReLU — типичный input shape?",
+      "reference": "Слой nn.LeakyReLU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.LeakyReLU?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LeakyReLU."
+    },
+    {
+      "question": "nn.Sigmoid — типичный input shape?",
+      "reference": "Слой nn.Sigmoid — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Sigmoid?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Sigmoid."
+    },
+    {
+      "question": "nn.Tanh — типичный input shape?",
+      "reference": "Слой nn.Tanh — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Tanh?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Tanh."
+    },
+    {
+      "question": "nn.Softmax — типичный input shape?",
+      "reference": "Слой nn.Softmax — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Softmax?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Softmax."
+    },
+    {
+      "question": "nn.LogSoftmax — типичный input shape?",
+      "reference": "Слой nn.LogSoftmax — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.LogSoftmax?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LogSoftmax."
+    },
+    {
+      "question": "nn.BCELoss — типичный input shape?",
+      "reference": "Слой nn.BCELoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.BCELoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BCELoss."
+    },
+    {
+      "question": "nn.BCEWithLogitsLoss — типичный input shape?",
+      "reference": "Слой nn.BCEWithLogitsLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.BCEWithLogitsLoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BCEWithLogitsLoss."
+    },
+    {
+      "question": "nn.CrossEntropyLoss — типичный input shape?",
+      "reference": "Слой nn.CrossEntropyLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.CrossEntropyLoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для CrossEntropyLoss."
+    },
+    {
+      "question": "nn.MSELoss — типичный input shape?",
+      "reference": "Слой nn.MSELoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.MSELoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MSELoss."
+    },
+    {
+      "question": "nn.L1Loss — типичный input shape?",
+      "reference": "Слой nn.L1Loss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.L1Loss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для L1Loss."
+    },
+    {
+      "question": "nn.SmoothL1Loss — типичный input shape?",
+      "reference": "Слой nn.SmoothL1Loss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.SmoothL1Loss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для SmoothL1Loss."
+    },
+    {
+      "question": "nn.NLLLoss — типичный input shape?",
+      "reference": "Слой nn.NLLLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.NLLLoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для NLLLoss."
+    },
+    {
+      "question": "nn.CTCLoss — типичный input shape?",
+      "reference": "Слой nn.CTCLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.CTCLoss?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для CTCLoss."
+    },
+    {
+      "question": "nn.Upsample — типичный input shape?",
+      "reference": "Слой nn.Upsample — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.Upsample?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Upsample."
+    },
+    {
+      "question": "nn.PixelShuffle — типичный input shape?",
+      "reference": "Слой nn.PixelShuffle — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д."
+    },
+    {
+      "question": "Ошибки при использовании nn.PixelShuffle?",
+      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для PixelShuffle."
+    },
+    {
+      "question": "Mixed precision [autocast] #1?",
+      "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [autocast] #2?",
+      "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [autocast] #3?",
+      "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [GradScaler] #1?",
+      "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [GradScaler] #2?",
+      "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [GradScaler] #3?",
+      "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [bf16] #1?",
+      "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [bf16] #2?",
+      "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [bf16] #3?",
+      "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [fp16] #1?",
+      "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [fp16] #2?",
+      "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [fp16] #3?",
+      "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [loss scaling] #1?",
+      "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [loss scaling] #2?",
+      "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [loss scaling] #3?",
+      "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [inf grad skip] #1?",
+      "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [inf grad skip] #2?",
+      "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU."
+    },
+    {
+      "question": "Mixed precision [inf grad skip] #3?",
+      "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU."
+    }
+  ]
+}

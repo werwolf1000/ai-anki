@@ -1,0 +1,508 @@
+{
+  "name": "Kanban",
+  "cards": [
+    {
+      "question": "Что такое Kanban (метод)?",
+      "reference": "Метод улучшения workflow: визуализация, WIP limits, управление flow, явные policies, feedback loops, эволюционные изменения."
+    },
+    {
+      "question": "Kanban vs Kanban board?",
+      "reference": "Board — инструмент визуализации. Kanban Method — система управления знанием работы (David J. Anderson)."
+    },
+    {
+      "question": "Шесть практик Kanban?",
+      "reference": "Visualize, Limit WIP, Manage Flow, Make Policies Explicit, Implement Feedback Loops, Improve Collaboratively (evolve experimentally)."
+    },
+    {
+      "question": "Pull system?",
+      "reference": "Работа начинается, когда есть capacity downstream — сигнал «взять следующее», а не push сверху."
+    },
+    {
+      "question": "Push vs pull?",
+      "reference": "Push — назначают работу независимо от capacity. Pull — следующая задача при освобождении слота/WIP."
+    },
+    {
+      "question": "WIP limit — зачем?",
+      "reference": "Снижает multitasking, выявляет bottlenecks, ускоряет flow, делает проблемы видимыми."
+    },
+    {
+      "question": "Что происходит при превышении WIP?",
+      "reference": "Команда фокусируется на завершении текущего, не берёт новое — или явно эскалирует policy exception."
+    },
+    {
+      "question": "Classes of Service?",
+      "reference": "Expedite, Fixed Date, Standard, Intangible — разные правила приоритета и WIP для типов работы."
+    },
+    {
+      "question": "Expedite lane?",
+      "reference": "Срочный класс с отдельным WIP (often 1); злоупотребление разрушает predictability."
+    },
+    {
+      "question": "Fixed Date CoS?",
+      "reference": "Работа с дедлайном — планирование backward от даты, может обгонять standard."
+    },
+    {
+      "question": "Intangible class?",
+      "reference": "Техдолг, улучшения — часто без жёсткого SLA, но критично для long-term flow."
+    },
+    {
+      "question": "Cumulative Flow Diagram (CFD)?",
+      "reference": "График count items по состояниям во времени; расширение band = WIP/задержки."
+    },
+    {
+      "question": "Cycle time chart?",
+      "reference": "Распределение времени от start до done; для SLA и predictability."
+    },
+    {
+      "question": "Throughput?",
+      "reference": "Количество завершённых items за период (week/month)."
+    },
+    {
+      "question": "Lead time в Kanban?",
+      "reference": "От commitment/запроса до delivery — ключевая customer metric."
+    },
+    {
+      "question": "Cycle time в Kanban?",
+      "reference": "От start work до done — процессная метрика."
+    },
+    {
+      "question": "Little's Law в Kanban?",
+      "reference": "Avg WIP = Throughput × Avg Cycle Time — для диагностики системы."
+    },
+    {
+      "question": "Blockers на board?",
+      "reference": "Явно помечать blocked items; track blocked time отдельно."
+    },
+    {
+      "question": "Swimlanes?",
+      "reference": "Горизонтальные дорожки по классу работы, команде, продукту — для clarity."
+    },
+    {
+      "question": "Columns vs states?",
+      "reference": "Column — визуал; state — реальное правило перехода (может быть sub-columns)."
+    },
+    {
+      "question": "Definition of Workflow?",
+      "reference": "Kanban equivalent policies: когда item ready, что значит each column, WIP per column."
+    },
+    {
+      "question": "STATIK — что это?",
+      "reference": "Systems Thinking Approach to Introducing Kanban: источники неудовлетворённости, demand analysis, capability, workflow design."
+    },
+    {
+      "question": "Service Delivery Manager?",
+      "reference": "Роль фокуса на flow metrics, policies, predictability (аналог SM в Kanban context)."
+    },
+    {
+      "question": "Replenishment meeting?",
+      "reference": "Populating ready queue — когда и сколько items pull в систему."
+    },
+    {
+      "question": "Kanban meeting (standup)?",
+      "reference": "Обход board справа налево: finish, help, flow — не round-robin people."
+    },
+    {
+      "question": "Risk review?",
+      "reference": "Анализ aging items, blockers, классов service."
+    },
+    {
+      "question": "Operations review?",
+      "reference": "Метрики между teams/services — throughput, lead time trends."
+    },
+    {
+      "question": "Strategy review?",
+      "reference": "Связь portfolio и Kanban system на верхнем уровне."
+    },
+    {
+      "question": "Evolutionary change vs transformation?",
+      "reference": "Kanban начинает с текущего процесса и улучшает incrementally, без big-bang reorg."
+    },
+    {
+      "question": "Scrumban?",
+      "reference": "Scrum events + Kanban flow/WIP; гибкий hybrid для зрелых команд."
+    },
+    {
+      "question": "Чем Kanban отличается от Scrum?",
+      "reference": "Kanban — continuous flow, optional roles/events. Scrum — fixed sprints, defined accountabilities."
+    },
+    {
+      "question": "Чем WIP limit отличается от team capacity?",
+      "reference": "WIP — explicit constraint на колонку/систему; capacity — люди/часы; WIP управляет flow напрямую."
+    },
+    {
+      "question": "Чем Commitment point отличается от backlog?",
+      "reference": "Commitment point — где item enters система и starts lead time clock."
+    },
+    {
+      "question": "CFD: band «In Progress» steadily widening. Диагноз?",
+      "reference": "WIP растёт, завершение не успевает — bottleneck или слишком высокий WIP limit; focus on finish.",
+      "card_type": "text"
+    },
+    {
+      "question": "Все items Expedite. Что делать?",
+      "reference": "Пересмотреть CoS policy; expedite WIP=1; обучить stakeholders cost of delay.",
+      "card_type": "text"
+    },
+    {
+      "question": "Lead time 30 days, cycle time 3 days. Где потери?",
+      "reference": "27 days waiting — queue before start; улучшать replenishment, prioritization, WIP до «In Progress».",
+      "card_type": "text"
+    },
+    {
+      "question": "Policy перехода «Backlog → Ready» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Backlog» перед pull в «Ready»."
+    },
+    {
+      "question": "Policy перехода «Ready → Analysis» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Ready» перед pull в «Analysis»."
+    },
+    {
+      "question": "Policy перехода «Analysis → Development» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Analysis» перед pull в «Development»."
+    },
+    {
+      "question": "Policy перехода «Development → Review» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Development» перед pull в «Review»."
+    },
+    {
+      "question": "Policy перехода «Review → Test» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Review» перед pull в «Test»."
+    },
+    {
+      "question": "Policy перехода «Test → Done» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Test» перед pull в «Done»."
+    },
+    {
+      "question": "Policy перехода «Done → Production» — что типично?",
+      "reference": "Explicit criteria: что должно быть выполнено в «Done» перед pull в «Production»."
+    },
+    {
+      "question": "Метрика Kanban: 85th percentile cycle time?",
+      "reference": "SLA «85% items done within X days»"
+    },
+    {
+      "question": "Метрика Kanban: aging WIP chart?",
+      "reference": "items с long cycle time в work — риск"
+    },
+    {
+      "question": "Метрика Kanban: blocked time?",
+      "reference": "сколько flow теряется на dependencies"
+    },
+    {
+      "question": "Метрика Kanban: flow efficiency?",
+      "reference": "active time / lead time"
+    },
+    {
+      "question": "Kanban myth: Kanban = no planning?",
+      "reference": "Есть replenishment и cadence; planning не исчезает, становится pull-based."
+    },
+    {
+      "question": "Kanban myth: Kanban = no deadlines?",
+      "reference": "Fixed Date CoS явно работает с deadlines."
+    },
+    {
+      "question": "Kanban myth: Visual board enough?",
+      "reference": "Без WIP limits и policies это просто sticky notes."
+    },
+    {
+      "question": "Kanban: что такое visualize workflow?",
+      "reference": "Первая практика — сделать невидимую работу видимой."
+    },
+    {
+      "question": "Kanban: что такое limit WIP?",
+      "reference": "Constraint на количество items в каждом состоянии."
+    },
+    {
+      "question": "Kanban: что такое manage flow?",
+      "reference": "Оптимизация movement work, не busyness людей."
+    },
+    {
+      "question": "Kanban: что такое make policies explicit?",
+      "reference": "Written rules для transitions и classes of service."
+    },
+    {
+      "question": "Kanban: что такое feedback loops?",
+      "reference": "Cadences для inspect и adapt metrics/policies."
+    },
+    {
+      "question": "Kanban: что такое evolve experimentally?",
+      "reference": "Small changes, measure, keep or rollback."
+    },
+    {
+      "question": "Kanban: что такое Kanban lens?",
+      "reference": "Start where you are — не менять roles/events сразу."
+    },
+    {
+      "question": "Kanban: что такое commitment point?",
+      "reference": "Где item считается committed — start lead time."
+    },
+    {
+      "question": "Kanban: что такое delivery point?",
+      "reference": "Где item считается delivered customer."
+    },
+    {
+      "question": "Kanban: что такое work item type?",
+      "reference": "Bug, feature, chore — разные policies возможны."
+    },
+    {
+      "question": "Kanban: что такое ticket?",
+      "reference": "Kanban card representing unit of work."
+    },
+    {
+      "question": "Kanban: что такое token?",
+      "reference": "Physical limit WIP — один token на item в колонке."
+    },
+    {
+      "question": "Kanban: что такое CONWIP?",
+      "reference": "Constant Work In Process — classic production control."
+    },
+    {
+      "question": "Kanban: что такое Drum-Buffer-Rope?",
+      "reference": "Theory of Constraints scheduling — связь с pull."
+    },
+    {
+      "question": "Kanban: что такое bottleneck?",
+      "reference": "Constraint limiting throughput всей системы."
+    },
+    {
+      "question": "Kanban: что такое starvation?",
+      "reference": "Downstream idle из-за empty queue upstream."
+    },
+    {
+      "question": "Kanban: что такое blocking?",
+      "reference": "Item cannot proceed — explicit blocker reason."
+    },
+    {
+      "question": "Kanban: что такое stalled work?",
+      "reference": "In progress too long — aging signal."
+    },
+    {
+      "question": "Kanban: что такое splitting items?",
+      "reference": "Разделить large item для smaller cycle time."
+    },
+    {
+      "question": "Kanban: что такое merging items?",
+      "reference": "Combine duplicate requests."
+    },
+    {
+      "question": "Kanban: что такое discard policy?",
+      "reference": "When to cancel obsolete items."
+    },
+    {
+      "question": "Kanban: что такое done definition per column?",
+      "reference": "Exit criteria каждого state."
+    },
+    {
+      "question": "Kanban: что такое entry criteria?",
+      "reference": "When item allowed enter column."
+    },
+    {
+      "question": "Kanban: что такое queue?",
+      "reference": "Buffer before active work — often limited WIP."
+    },
+    {
+      "question": "Kanban: что такое activity?",
+      "reference": "Active work state — value-adding time."
+    },
+    {
+      "question": "Kanban: что такое wait state?",
+      "reference": "Delay between activities — waste to minimize."
+    },
+    {
+      "question": "Kanban: что такое value stream map?",
+      "reference": "VSM — timeline steps и wait times."
+    },
+    {
+      "question": "Kanban: что такое process time?",
+      "reference": "Touch time on item."
+    },
+    {
+      "question": "Kanban: что такое touch time?",
+      "reference": "Time actively working on item."
+    },
+    {
+      "question": "Kanban: что такое delay time?",
+      "reference": "Waiting in queue or blocked."
+    },
+    {
+      "question": "Kanban: что такое percentile?",
+      "reference": "85th/95th cycle time для SLA promises."
+    },
+    {
+      "question": "Kanban: что такое histogram?",
+      "reference": "Distribution cycle times — tail matters."
+    },
+    {
+      "question": "Kanban: что такое scatterplot?",
+      "reference": "Cycle time vs start date — aging analysis."
+    },
+    {
+      "question": "Kanban: что такое throughput run chart?",
+      "reference": "Completed items per week trend."
+    },
+    {
+      "question": "Kanban: что такое WIP run chart?",
+      "reference": "Total WIP over time — should be stable."
+    },
+    {
+      "question": "Kanban: что такое Monte Carlo in Kanban?",
+      "reference": "Forecast completion dates from throughput history."
+    },
+    {
+      "question": "Kanban: что такое forecasting delivery?",
+      "reference": "When will these 50 items finish? — probabilistic answer."
+    },
+    {
+      "question": "Kanban: что такое SLE?",
+      "reference": "Service Level Expectation — e.g. 85% in 8 days."
+    },
+    {
+      "question": "Kanban: что такое dependency board?",
+      "reference": "Track cross-team blockers explicitly."
+    },
+    {
+      "question": "Kanban: что такое shared services?",
+      "reference": "Specialists (DBA, UX) — отдельная Kanban queue с WIP."
+    },
+    {
+      "question": "Kanban: что такое two-bin system?",
+      "reference": "Replenish when bin empty — pull signal."
+    },
+    {
+      "question": "Kanban: что такое min-max replenishment?",
+      "reference": "Refill ready queue to max when hits min."
+    },
+    {
+      "question": "Kanban: что такое cadence-based delivery?",
+      "reference": "Release every Tuesday regardless — decouple from item size."
+    },
+    {
+      "question": "Kanban: что такое release on demand?",
+      "reference": "Ship when item done if business wants."
+    },
+    {
+      "question": "Kanban: что такое cost of delay distribution?",
+      "reference": "Different CoS для prioritization в triage."
+    },
+    {
+      "question": "Kanban: что такое sequential prioritization?",
+      "reference": "One queue order — no multitasking priorities."
+    },
+    {
+      "question": "Kanban: что такое emergency swap?",
+      "reference": "Expedite displaces WIP — visible cost."
+    },
+    {
+      "question": "Kanban: что такое Kanban Maturity Model?",
+      "reference": "0–7 levels organizational Kanban capability."
+    },
+    {
+      "question": "Kanban: что такое Kanban University?",
+      "reference": "Training/certification body (David Anderson)."
+    },
+    {
+      "question": "Kanban: что такое Triage?",
+      "reference": "Quick sort incoming by type, urgency, CoS."
+    },
+    {
+      "question": "Kanban: что такое Service request manager?",
+      "reference": "Role managing customer expectations и SLE."
+    },
+    {
+      "question": "Kanban: что такое fitness criteria?",
+      "reference": "How to judge if Kanban system serves customer well."
+    },
+    {
+      "question": "Kanban: что такое genba Kanban?",
+      "reference": "Shop floor cards in manufacturing origin."
+    },
+    {
+      "question": "Kanban: что такое just-in-time?",
+      "reference": "Produce/pull when needed — reduce inventory/WIP."
+    },
+    {
+      "question": "Kanban: что такое heijunka?",
+      "reference": "Leveling production — smooth flow."
+    },
+    {
+      "question": "Kanban: что такое andon cord?",
+      "reference": "Signal quality problem — stop line — analogy for blockers."
+    },
+    {
+      "question": "Kanban: что такое policy board?",
+      "reference": "Physical display of WIP limits и policies."
+    },
+    {
+      "question": "Kanban: что такое Scrumban planning?",
+      "reference": "Sprint goals optional + Kanban flow day-to-day."
+    },
+    {
+      "question": "Kanban: что такое Kanban for sales funnel?",
+      "reference": "Lead → qualified → proposal — WIP per stage."
+    },
+    {
+      "question": "Kanban: что такое Kanban for hiring?",
+      "reference": "Applied → interview → offer — limit open reqs."
+    },
+    {
+      "question": "Kanban: что такое virtual Kanban?",
+      "reference": "Same principles in tool without physical board."
+    },
+    {
+      "question": "Kanban: что такое portfolio Kanban?",
+      "reference": "Epics/initiatives flow at strategic level."
+    },
+    {
+      "question": "Kanban: что такое scaling Kanban?",
+      "reference": "Connected Kanban systems с upstream/downstream."
+    },
+    {
+      "question": "Kanban: Kanban cadences?",
+      "reference": "Daily Kanban, Replenishment, Delivery Planning, Service Delivery Review, Operations/Strategy reviews."
+    },
+    {
+      "question": "Kanban: Two-tier board?",
+      "reference": "Upstream (discovery/options) + downstream (delivery) с разными WIP."
+    },
+    {
+      "question": "Kanban board electronic tools?",
+      "reference": "Jira, Azure Boards, Trello — policies и WIP важнее tool."
+    },
+    {
+      "question": "Personal Kanban?",
+      "reference": "Individual WIP limits для личной продуктивности."
+    },
+    {
+      "question": "Upstream Kanban?",
+      "reference": "Discovery/options перед commitment — reduce wrong features."
+    },
+    {
+      "question": "Queue replenishment?",
+      "reference": "When ready queue < threshold, refill from backlog."
+    },
+    {
+      "question": "Triage board?",
+      "reference": "Fast classification incoming work by CoS."
+    },
+    {
+      "question": "Defect triage policy?",
+      "reference": "Separate WIP or class; SLAs by severity."
+    },
+    {
+      "question": "Kanban for ops/support?",
+      "reference": "Classic: incoming → analyze → fix → verify → done with WIP per tier."
+    },
+    {
+      "question": "Metric: percent complete and accurate?",
+      "reference": "Forecast quality — % items delivered when promised."
+    },
+    {
+      "question": "Policy: unblock first?",
+      "reference": "Before new start, resolve blockers on board."
+    },
+    {
+      "question": "Fit for purpose?",
+      "reference": "Align service policies to customer expectations (David Anderson)."
+    }
+  ]
+}

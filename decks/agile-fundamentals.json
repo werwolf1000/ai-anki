@@ -1,0 +1,720 @@
+{
+  "name": "Agile — основы",
+  "cards": [
+    {
+      "question": "Что такое Agile?",
+      "reference": "Подход к разработке и управлению работой, основанный на итерациях, обратной связи, сотрудничестве и готовности к изменениям. Не один метод, а семейство практик и ценностей."
+    },
+    {
+      "question": "Четыре ценности Agile Manifesto (2001)?",
+      "reference": "Люди и взаимодействие важнее процессов и инструментов; работающий продукт важнее исчерпывающей документации; сотрудничество с заказчиком важнее согласования контракта; готовность к изменениям важнее следования плану."
+    },
+    {
+      "question": "Как читать формулировки Manifesto «X важнее Y»?",
+      "reference": "Это не отрицание Y, а приоритет: обе стороны ценны, но в неопределённости выбираем левую."
+    },
+    {
+      "question": "12 принципов Agile Manifesto — суть?",
+      "reference": "Ранняя и частая поставка ценности, приветствие изменений, частые релизы, ежедневное сотрудничество бизнеса и разработки, мотивированные люди, личное общение, работающий продукт как мера прогресса, устойчивый темп, техническое совершенство, простота, самоорганизующиеся команды, регулярная рефлексия."
+    },
+    {
+      "question": "Что такое итеративная разработка?",
+      "reference": "Повторяющиеся циклы, в каждом из которых создаётся приращение ценности и собирается обратная связь."
+    },
+    {
+      "question": "Что такое инкрементальный подход?",
+      "reference": "Продукт растёт по частям; каждая часть добавляет ценность, а не только «подготовительную работу»."
+    },
+    {
+      "question": "Что такое MVP?",
+      "reference": "Minimum Viable Product — минимальная версия, достаточная для проверки гипотезы ценности у реальных пользователей."
+    },
+    {
+      "question": "MVP vs MMF?",
+      "reference": "MVP — эксперимент/проверка гипотезы. MMF (Minimum Marketable Feature) — минимальный набор, который уже можно продавать или выпускать на рынок."
+    },
+    {
+      "question": "Что такое user story?",
+      "reference": "Краткое описание ценности с точки зрения пользователя: «Как [роль], я хочу [цель], чтобы [выгода]»."
+    },
+    {
+      "question": "Формат INVEST для user story?",
+      "reference": "Independent, Negotiable, Valuable, Estimable, Small, Testable — критерии качества формулировки истории."
+    },
+    {
+      "question": "Что такое acceptance criteria?",
+      "reference": "Проверяемые условия, при которых история считается выполненной. Часто Given/When/Then (BDD)."
+    },
+    {
+      "question": "Epic vs Feature vs User Story?",
+      "reference": "Epic — крупная инициатива; Feature — функциональный блок; Story — единица планирования и поставки в спринте/итерации."
+    },
+    {
+      "question": "Что такое product backlog?",
+      "reference": "Приоритизированный список всего, что может понадобиться продукту: функции, исправления, исследования, технический долг."
+    },
+    {
+      "question": "Кто приоритизирует backlog в Agile?",
+      "reference": "Product Owner / Product Manager — ответственность за порядок и максимизацию ценности."
+    },
+    {
+      "question": "Что такое Definition of Ready (DoR)?",
+      "reference": "Согласованные критерии, при которых элемент backlog готов к взятию в работу (понятность, оценка, зависимости, AC)."
+    },
+    {
+      "question": "Что такое Definition of Done (DoD)?",
+      "reference": "Согласованные критерии завершённости: код, тесты, ревью, документация, деплой — что значит «готово» для команды."
+    },
+    {
+      "question": "DoR vs DoD?",
+      "reference": "DoR — можно начинать работу; DoD — работа действительно завершена и пригодна для релиза/инкремента."
+    },
+    {
+      "question": "Что такое story points?",
+      "reference": "Относительная оценка сложности/объёма/риска, а не часы. Используется для планирования ёмкости, не как KPI производительности людей."
+    },
+    {
+      "question": "Planning Poker — зачем?",
+      "reference": "Коллективная оценка story points с обсуждением расхождений — снижает bias и улучшает понимание задачи."
+    },
+    {
+      "question": "Velocity — что это?",
+      "reference": "Сумма story points, завершённых командой за итерацию. Прогнозный инструмент, не цель для «увеличения любой ценой»."
+    },
+    {
+      "question": "Что такое WIP limit в Agile-контексте?",
+      "reference": "Ограничение незавершённой работы для фокуса и потока; центральная практика Kanban, полезна и в Scrum."
+    },
+    {
+      "question": "Что такое continuous delivery?",
+      "reference": "Способность часто и предсказуемо выпускать изменения в production с автоматизацией и качеством."
+    },
+    {
+      "question": "CI vs CD?",
+      "reference": "CI — частая интеграция и автоматические проверки. CD — доставка до staging/production по pipeline."
+    },
+    {
+      "question": "Что такое technical debt?",
+      "reference": "Компромиссы в коде/архитектуре, ускоряющие сейчас, но замедляющие изменения позже. Управляется явно в backlog."
+    },
+    {
+      "question": "Refactoring в Agile?",
+      "reference": "Постоянное улучшение структуры кода без изменения поведения — часть устойчивого темпа."
+    },
+    {
+      "question": "Что такое cross-functional team?",
+      "reference": "Команда со всеми навыками для создания инкремента без постоянной внешней зависимости по каждой задаче."
+    },
+    {
+      "question": "Что такое self-organizing team?",
+      "reference": "Команда сама решает, как выполнить работу в рамках целей; лидерство распределено, не микроменеджмент."
+    },
+    {
+      "question": "Роль менеджера в Agile?",
+      "reference": "Создавать условия, снимать impediments, защищать фокус, развивать систему — не распределять задачи по часам."
+    },
+    {
+      "question": "Что такое stakeholder?",
+      "reference": "Любой, кто заинтересован в продукте: пользователи, бизнес, compliance, поддержка, продажи."
+    },
+    {
+      "question": "Что такое feedback loop?",
+      "reference": "Короткий цикл «сделали → показали → узнали → скорректировали» — основа адаптации."
+    },
+    {
+      "question": "Build-measure-learn (Lean Startup)?",
+      "reference": "Цикл проверки гипотез: создать эксперiment/MVP → измерить → принять решение pivot/persevere."
+    },
+    {
+      "question": "Pivot vs persevere?",
+      "reference": "Pivot — смена гипотезы/направления на основе данных; persevere — продолжать текущую стратегию."
+    },
+    {
+      "question": "Что такое Lean?",
+      "reference": "Философия устранения потерь (muda) и максимизации ценности для клиента с минимальным WIP и pull."
+    },
+    {
+      "question": "7 видов потерь (muda) в разработке?",
+      "reference": "Частично: ожидание, передачи, лишняя функциональность, дефекты, переключение контекста, незавершённая работа, неиспользованный потенциал людей."
+    },
+    {
+      "question": "Что такое Kaizen?",
+      "reference": "Непрерывное улучшение маленькими шагами через регулярную рефлексию и эксперiments."
+    },
+    {
+      "question": "Что такое retrospective?",
+      "reference": "Регулярная встреча команды: что хорошо, что улучшить, конкретные действия на следующий цикл."
+    },
+    {
+      "question": "Start-Stop-Continue?",
+      "reference": "Формат ретро: что начать, что прекратить, что продолжить."
+    },
+    {
+      "question": "4L retrospective?",
+      "reference": "Liked, Learned, Lacked, Longed for."
+    },
+    {
+      "question": "Что такое impediment?",
+      "reference": "Препятствие, мешающее команде выполнить работу; должно быть видимым и эскалируемым."
+    },
+    {
+      "question": "Что такое timebox?",
+      "reference": "Фиксированный максимальный интервал времени на активность; по окончании — решение на основе имеющегося результата."
+    },
+    {
+      "question": "Что такое incremental funding?",
+      "reference": "Финансирование по этапам ценности вместо большого upfront-бюджета на весь проект."
+    },
+    {
+      "question": "Agile vs Waterfall — ключевое?",
+      "reference": "Waterfall предполагает предсказуемость требований; Agile — эмпирическое управление при неопределённости."
+    },
+    {
+      "question": "Empirical process control?",
+      "reference": "Прозрачность, инспекция, адаптация — управление через наблюдение реальности, а не только план."
+    },
+    {
+      "question": "Transparency в Agile?",
+      "reference": "Работа, риски, прогресс видны заинтересованным сторонам (доска, backlog, метрики потока)."
+    },
+    {
+      "question": "Inspection?",
+      "reference": "Регулярный пересмотр артеfactов и процесса (review, retro, daily sync)."
+    },
+    {
+      "question": "Adaptation?",
+      "reference": "Корректировка планов, backlog, процесса по результатам inspection."
+    },
+    {
+      "question": "Что такое servant leadership?",
+      "reference": "Лидерство через служение команде: убрать блокеры, развить автономию, создать безопасность."
+    },
+    {
+      "question": "Psychological safety?",
+      "reference": "Уверенность, что можно ошибаться, задавать вопросы и не соглашаться без наказания — основа обучения."
+    },
+    {
+      "question": "Что такое pair programming?",
+      "reference": "Два разработчика за одной задачей: driver + navigator; повышает качество и распространение знаний."
+    },
+    {
+      "question": "Mob programming?",
+      "reference": "Вся команда работает над одной задачей одновременно."
+    },
+    {
+      "question": "TDD в Agile?",
+      "reference": "Test-Driven Development: тест → минимальный код → рефакторинг; поддерживает частые изменения."
+    },
+    {
+      "question": "Что такое spike?",
+      "reference": "Timeboxed исследование для снижения неопределённости перед реализацией."
+    },
+    {
+      "question": "Что такое enabler story?",
+      "reference": "История, создающая инфраструктуру/архитектуру для будущих user stories."
+    },
+    {
+      "question": "Bug vs defect в backlog?",
+      "reference": "Дефект — несоответствие ожиданиям; обрабатывается по severity и SLA, может идти в sprint или отдельный поток."
+    },
+    {
+      "question": "Что такое release train (общее)?",
+      "reference": "Ритм регулярных релизов; в SAFe — Program Increment; в Kanban — cadence поставки."
+    },
+    {
+      "question": "Outcome vs output?",
+      "reference": "Output — сколько сделали; outcome — какой результат для пользователя/бизнеса. Agile фокусируется на outcome."
+    },
+    {
+      "question": "OKR и Agile?",
+      "reference": "OKR задают направление и амбициозные результаты; backlog и итерации — тактическое исполнение."
+    },
+    {
+      "question": "Что такое value stream?",
+      "reference": "Последовательность шагов от идеи до ценности у клиента; цель — сократить lead time и потери."
+    },
+    {
+      "question": "Batch size — почему меньше лучше?",
+      "reference": "Меньшие партии быстрее проходят систему, снижают риск и ускоряют обратную связь."
+    },
+    {
+      "question": "Что такое forecasting в Agile?",
+      "reference": "Прогноз на основе throughput/velocity и диапазонов, а не точной Gantt-даты на год."
+    },
+    {
+      "question": "Monte Carlo forecasting?",
+      "reference": "Статистический прогноз сроков по историческому throughput и оставшемуся объёму."
+    },
+    {
+      "question": "#NoEstimates — идея?",
+      "reference": "Планировать по размеру элементов и фактическому потоку, минимизируя costly estimation там, где throughput достаточен."
+    },
+    {
+      "question": "Что такое discovery vs delivery?",
+      "reference": "Discovery — понять проблему и гипотезы; delivery — реализовать проверенное решение."
+    },
+    {
+      "question": "Dual-track Agile?",
+      "reference": "Параллельные discovery и delivery tracks с постоянной связью."
+    },
+    {
+      "question": "Что такое design thinking в связке с Agile?",
+      "reference": "Empathize → Define → Ideate → Prototype → Test до/вместе с delivery."
+    },
+    {
+      "question": "Чем Agile отличается от Scrum?",
+      "reference": "Agile — зонтичные ценности и принципы. Scrum — конкретный фреймворк с ролями, событиями и артеfactами."
+    },
+    {
+      "question": "Чем Agile отличается от Kanban?",
+      "reference": "Agile — мышление и принципы. Kanban — метод управления потоком работы с визуализацией и WIP limits."
+    },
+    {
+      "question": "Чем Scrum отличается от Kanban?",
+      "reference": "Scrum — фиксированные спринты и роли. Kanban — непрерывный поток, эволюционные изменения, акцент на метриках потока."
+    },
+    {
+      "question": "Чем Story points отличается от часы?",
+      "reference": "Points — относительная сложность для планирования ёмкости. Часы — конкретное время; смешивать как KPI людей нельзя."
+    },
+    {
+      "question": "Чем Lead time отличается от cycle time?",
+      "reference": "Lead time — от запроса до доставки клиенту. Cycle time — от начала работы до завершения."
+    },
+    {
+      "question": "Команда закрыла 40 story points, но пользователи не используют фичу. Что не так с фокусом?",
+      "reference": "Фокус на output (points) вместо outcome. Нужны метрики использования, гипотезы ценности, discovery и связь с OKR.",
+      "card_type": "text"
+    },
+    {
+      "question": "Менеджер требует увеличить velocity каждый спринт. Какой риск?",
+      "reference": "Gaming метрики, падение качества, выгорание. Velocity — для прогноза, не KPI. Лучше улучшать поток и DoD.",
+      "card_type": "text"
+    },
+    {
+      "question": "Backlog на 2 года, команда не знает, с чего начать. Первый шаг?",
+      "reference": "Явная приоритизация по ценности/риску, thin slicing, ближайшие 1–2 итерации детализировать, остальное — грубо.",
+      "card_type": "text"
+    },
+    {
+      "question": "Как рефакторинг связан с Agile?",
+      "reference": "Рефакторинг: постоянное улучшение кода без смены поведения."
+    },
+    {
+      "question": "Когда применять рефакторинг?",
+      "reference": "Когда нужно постоянное улучшение кода без смены поведения в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как автотесты связан с Agile?",
+      "reference": "Автотесты: быстрая обратная связь и безопасные изменения."
+    },
+    {
+      "question": "Когда применять автотесты?",
+      "reference": "Когда нужно быстрая обратная связь и безопасные изменения в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как code review связан с Agile?",
+      "reference": "Code review: совместное качество и распространение знаний."
+    },
+    {
+      "question": "Когда применять code review?",
+      "reference": "Когда нужно совместное качество и распространение знаний в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как trunk-based development связан с Agile?",
+      "reference": "Trunk-based development: короткоживущие ветки и частая интеграция."
+    },
+    {
+      "question": "Когда применять trunk-based development?",
+      "reference": "Когда нужно короткоживущие ветки и частая интеграция в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как feature flags связан с Agile?",
+      "reference": "Feature flags: деплой без немедленного включения для пользователей."
+    },
+    {
+      "question": "Когда применять feature flags?",
+      "reference": "Когда нужно деплой без немедленного включения для пользователей в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как A/B тест связан с Agile?",
+      "reference": "A/b тест: сравнение вариантов на реальных пользователях."
+    },
+    {
+      "question": "Когда применять A/B тест?",
+      "reference": "Когда нужно сравнение вариантов на реальных пользователях в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как customer interview связан с Agile?",
+      "reference": "Customer interview: качественное discovery и проверка проблем."
+    },
+    {
+      "question": "Когда применять customer interview?",
+      "reference": "Когда нужно качественное discovery и проверка проблем в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как impact mapping связан с Agile?",
+      "reference": "Impact mapping: связь целей, акторов, impacts и deliverables."
+    },
+    {
+      "question": "Когда применять impact mapping?",
+      "reference": "Когда нужно связь целей, акторов, impacts и deliverables в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как story mapping связан с Agile?",
+      "reference": "Story mapping: визуализация пользовательского пути и релизов."
+    },
+    {
+      "question": "Когда применять story mapping?",
+      "reference": "Когда нужно визуализация пользовательского пути и релизов в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как Kano model связан с Agile?",
+      "reference": "Kano model: классификация must-be, performance, delighters."
+    },
+    {
+      "question": "Когда применять Kano model?",
+      "reference": "Когда нужно классификация must-be, performance, delighters в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как RICE prioritization связан с Agile?",
+      "reference": "Rice prioritization: Reach, Impact, Confidence, Effort для порядка backlog."
+    },
+    {
+      "question": "Когда применять RICE prioritization?",
+      "reference": "Когда нужно Reach, Impact, Confidence, Effort для порядка backlog в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как MoSCoW связан с Agile?",
+      "reference": "Moscow: Must, Should, Could, Won't — грубая приоритизация."
+    },
+    {
+      "question": "Когда применять MoSCoW?",
+      "reference": "Когда нужно Must, Should, Could, Won't — грубая приоритизация в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как cost of delay связан с Agile?",
+      "reference": "Cost of delay: экономический вес откладывания работы."
+    },
+    {
+      "question": "Когда применять cost of delay?",
+      "reference": "Когда нужно экономический вес откладывания работы в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как Little's Law связан с Agile?",
+      "reference": "Little's law: WIP = Throughput × Cycle Time — связь метрик потока."
+    },
+    {
+      "question": "Когда применять Little's Law?",
+      "reference": "Когда нужно WIP = Throughput × Cycle Time — связь метрик потока в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Как flow efficiency связан с Agile?",
+      "reference": "Flow efficiency: доля времени активной работы vs общего lead time."
+    },
+    {
+      "question": "Когда применять flow efficiency?",
+      "reference": "Когда нужно доля времени активной работы vs общего lead time в условиях частых изменений и фокуса на ценности."
+    },
+    {
+      "question": "Принцип Agile: ранняя поставка ценности — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу ранняя поставка ценности при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: приветствие изменений требований — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу приветствие изменений требований при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: устойчивый темп работы — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу устойчивый темп работы при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: лица-to-face коммуникация — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу лица-to-face коммуникация при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: самоорганизация команд — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу самоорганизация команд при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: простота — искусство не делать лишнего — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу простота — искусство не делать лишнего при trade-offs."
+    },
+    {
+      "question": "Принцип Agile: регулярная рефлексия и настройка — практический смысл?",
+      "reference": "В работе команды это означает сознательный выбор в пользу регулярная рефлексия и настройка при trade-offs."
+    },
+    {
+      "question": "Миф: «Agile = без документации» — верно?",
+      "reference": "Manifesto не отменяет документацию — нужна «достаточная», живая и полезная."
+    },
+    {
+      "question": "Миф: «Agile = хаос» — верно?",
+      "reference": "Agile опирается на дисциплину прозрачности, DoD, ритмы и эмпирическое управление."
+    },
+    {
+      "question": "Миф: «Agile только для IT» — верно?",
+      "reference": "Применим везде, где неопределённость и нужна адаптация: маркeting, HR, hardware."
+    },
+    {
+      "question": "Миф: «Sprint = mini-waterfall» — верно?",
+      "reference": "Спринт должен давать инкремент и обратную связь, а не только фазы анализа/теста в конце."
+    },
+    {
+      "question": "Agile: что такое iteration?",
+      "reference": "Фиксированный или timeboxed цикл разработки с поставкой результата."
+    },
+    {
+      "question": "Agile: что такое increment?",
+      "reference": "Приращение ценности продукта, соответствующее DoD."
+    },
+    {
+      "question": "Agile: что такое backlog grooming?",
+      "reference": "Устаревший термин; сейчас backlog refinement — уточнение элементов backlog."
+    },
+    {
+      "question": "Agile: что такое planning onion?",
+      "reference": "Стратегия → release → sprint → daily — разные горизонты планирования."
+    },
+    {
+      "question": "Agile: что такое information radiator?",
+      "reference": "Видимый дашборд/доска статуса для всех (Big Visible Chart)."
+    },
+    {
+      "question": "Agile: что такое osborne effect?",
+      "reference": "Риск: анонс фичи снижает продажи текущей версии — учитывать в roadmap."
+    },
+    {
+      "question": "Agile: что такое smurf account?",
+      "reference": "Anti-pattern: один человек делает всё критичное — bus factor 1."
+    },
+    {
+      "question": "Agile: что такое bus factor?",
+      "reference": "Сколько людей можно «потерять» без остановки команды."
+    },
+    {
+      "question": "Agile: что такое YAGNI?",
+      "reference": "You Aren't Gonna Need It — не строить функциональность «на будущее» без need."
+    },
+    {
+      "question": "Agile: что такое KISS?",
+      "reference": "Keep It Simple — простое решение предпочтительнее сложного."
+    },
+    {
+      "question": "Agile: что такое DRY?",
+      "reference": "Don't Repeat Yourself — устранять дублирование знаний в коде."
+    },
+    {
+      "question": "Agile: что такое Boy Scout Rule?",
+      "reference": "Оставь код чище, чем нашёл — микро-рефакторинг постоянно."
+    },
+    {
+      "question": "Agile: что такое fail fast?",
+      "reference": "Быстро получить сигнал об ошибке гипотезы, чтобы дешевле pivot."
+    },
+    {
+      "question": "Agile: что такое gemba?",
+      "reference": "«Место работы» — идти к пользователям/команде, а не только отчёты."
+    },
+    {
+      "question": "Agile: что такое gemba walk?",
+      "reference": "Наблюдение процесса на месте для понимания реальности."
+    },
+    {
+      "question": "Agile: что такое Hoshin Kanri?",
+      "reference": "Стратегическое выравнивание целей организации и команд."
+    },
+    {
+      "question": "Agile: что такое Obeya?",
+      "reference": "Большая комната/стена для визуального управления программой."
+    },
+    {
+      "question": "Agile: что такое cadence?",
+      "reference": "Регулярный ритм событий (planning, review) для predictability."
+    },
+    {
+      "question": "Agile: что такое heartbeat?",
+      "reference": "Синхронизация команд через общий cadence (как PI в SAFe)."
+    },
+    {
+      "question": "Agile: что такое work item aging?",
+      "reference": "Время с момента старта/создания item — индикатор застоя."
+    },
+    {
+      "question": "Agile: что такое slack capacity?",
+      "reference": "Запас ёмкости (~20%) на непредвиденное и improvement."
+    },
+    {
+      "question": "Agile: что такое slack time?",
+      "reference": "Выделенное время на обучение и улучшения внутри итерации."
+    },
+    {
+      "question": "Agile: что такое scope creep?",
+      "reference": "Некontrolled рост scope без пересмотра приоритетов."
+    },
+    {
+      "question": "Agile: что такое gold plating?",
+      "reference": "Добавление «красоты» сверх нужной ценности."
+    },
+    {
+      "question": "Agile: что такое analysis paralysis?",
+      "reference": "Застревание в анализе без delivery и feedback."
+    },
+    {
+      "question": "Agile: что такое HIPPO?",
+      "reference": "Highest Paid Person's Opinion — anti-pattern приоритизации без data."
+    },
+    {
+      "question": "Agile: что такое feature factory?",
+      "reference": "Команда выпускает фичи без проверки outcome."
+    },
+    {
+      "question": "Agile: что такое success theater?",
+      "reference": "Метрики активности вместо реальных результатов."
+    },
+    {
+      "question": "Agile: что такое cargo cult Agile?",
+      "reference": "Ритуалы без ценностей: доска есть, мышления нет."
+    },
+    {
+      "question": "Agile: что такое wagile?",
+      "reference": "Waterfall disguised as Agile — phases внутри «sprint»."
+    },
+    {
+      "question": "Agile: что такое sustainable pace?",
+      "reference": "Темп, который команда может держать indefinitely без burnout."
+    },
+    {
+      "question": "Agile: что такое whole team approach?",
+      "reference": "QA, dev, design вместе от discovery до release."
+    },
+    {
+      "question": "Agile: что такое shift-left?",
+      "reference": "Раньше вносить quality, security, testing в процесс."
+    },
+    {
+      "question": "Agile: что такое shift-right?",
+      "reference": "Production monitoring и эксперiments после release."
+    },
+    {
+      "question": "Agile: что такое Definition of Fun?",
+      "reference": "Командное соглашение о том, как работать с удовольствием."
+    },
+    {
+      "question": "Agile: что такое working agreement?",
+      "reference": "Явные правила коммуникации и collaboration команды."
+    },
+    {
+      "question": "Agile: что такое team charter?",
+      "reference": "Миссия, values, working agreements команды."
+    },
+    {
+      "question": "Agile: что такое social contract?",
+      "reference": "Нормы поведения на ретро, daily, review."
+    },
+    {
+      "question": "Agile: что такое delegation poker?",
+      "reference": "Уровни делегирования решений (7 levels) для PO/manager."
+    },
+    {
+      "question": "Agile: что такое liberating structures?",
+      "reference": "Набор форматов встреч для inclusive facilitation."
+    },
+    {
+      "question": "Agile: что такое open space?",
+      "reference": "Unconference формат: agenda на месте участниками."
+    },
+    {
+      "question": "Agile: что такое world café?",
+      "reference": "Ротация групп для обсуждения тем."
+    },
+    {
+      "question": "Agile: что такое lean coffee?",
+      "reference": "Agenda vote участниками на начало встречи."
+    },
+    {
+      "question": "Agile: что такое fishbowl?",
+      "reference": "Малый круг обсуждает, остальные слушают и могут войти."
+    },
+    {
+      "question": "Agile: что такое premortem?",
+      "reference": "До старта: представить провал и причины — снизить риски."
+    },
+    {
+      "question": "Agile: что такое postmortem?",
+      "reference": "Разбор инцидента без blame для learning."
+    },
+    {
+      "question": "Agile: что такое blameless postmortem?",
+      "reference": "Фокус на системе, не на наказании людей."
+    },
+    {
+      "question": "Agile: что такое five whys?",
+      "reference": "Корневая причина через цепочку «почему»."
+    },
+    {
+      "question": "Agile: что такое A3 report?",
+      "reference": "Lean формат problem-solving на одной странице."
+    },
+    {
+      "question": "Agile: что такое PDCA?",
+      "reference": "Plan-Do-Check-Act — цикл улучшения Deming."
+    },
+    {
+      "question": "Agile: что такое OODA loop?",
+      "reference": "Observe-Orient-Decide-Act — быстрая адаптация в uncertainty."
+    },
+    {
+      "question": "Agile: Когда выбирать Agile подход?",
+      "reference": "Высокая неопределённость, нужна частая обратная связь, сложные adaptive problems."
+    },
+    {
+      "question": "Agile: Когда Agile не лучший выбор?",
+      "reference": "Жёсткие регуляторные fixed-scope контракты без возможности iterate — нужна адаптация контракта."
+    },
+    {
+      "question": "Agile: Contracting for Agile?",
+      "reference": "Time & materials + outcome milestones, fixed price per sprint/PI с scope flexibility."
+    },
+    {
+      "question": "Что такое burndown chart?",
+      "reference": "График оставшейся работы в спринте; trend показывает, успеете ли к goal."
+    },
+    {
+      "question": "Что такое burnup chart?",
+      "reference": "Done vs total scope; видно scope creep если total растёт."
+    },
+    {
+      "question": "Three Amigos?",
+      "reference": "PO + dev + tester обсуждают story до sprint — shared understanding."
+    },
+    {
+      "question": "Definition of Awesome?",
+      "reference": "Расширенная команда vision качества beyond минимального DoD."
+    },
+    {
+      "question": "Shu-Ha-Ri в Agile?",
+      "reference": "Сначала правила, потом адаптация, потом мастерство — эволюция практик."
+    },
+    {
+      "question": "Agile coaching vs consulting?",
+      "reference": "Coach развивает capability команды; consultant часто даёт решения."
+    },
+    {
+      "question": "System thinking в Agile?",
+      "reference": "Оптимизировать whole value stream, не локальный maximum одной команды."
+    },
+    {
+      "question": "Flow vs resource efficiency?",
+      "reference": "Flow — быстрее ценность клиенту; resource — загрузка людей 100% — often conflict."
+    },
+    {
+      "question": "Work in progress aging?",
+      "reference": "Старые незавершённые items — signal риска и блокеров."
+    },
+    {
+      "question": "Explicit policies пример?",
+      "reference": "«Max 3 items в Code Review», «Ready = AC + no blockers»."
+    }
+  ]
+}

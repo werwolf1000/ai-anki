@@ -1,0 +1,541 @@
+{
+  "name": "Scrum",
+  "cards": [
+    {
+      "question": "Что такое Scrum?",
+      "reference": "Лёгкий фреймворк для решения сложных адаптивных задач через короткие итерации (Sprint), прозрачность и эмпирический контроль."
+    },
+    {
+      "question": "Три столпа Scrum?",
+      "reference": "Transparency, Inspection, Adaptation."
+    },
+    {
+      "question": "Три роли Scrum?",
+      "reference": "Product Owner, Scrum Master, Developers (Scrum Team)."
+    },
+    {
+      "question": "Product Owner — ответственность?",
+      "reference": "Максимизация ценности продукта, управление Product Backlog, приоритизация, ясность элементов."
+    },
+    {
+      "question": "Может ли PO быть несколько человек?",
+      "reference": "В Scrum один PO на продукт (может делегировать, но accountability един)."
+    },
+    {
+      "question": "Scrum Master — ответственность?",
+      "reference": "Эффективность Scrum: фасilitация, coaching, устранение impediments, работа с организацией."
+    },
+    {
+      "question": "SM vs project manager?",
+      "reference": "SM не управляет людьми и сроками задач; служит процессу и команде, не «начальник»."
+    },
+    {
+      "question": "Developers в Scrum?",
+      "reference": "Cross-functional профессионалы, создающие Increment; сами commit и plan sprint backlog."
+    },
+    {
+      "question": "Scrum Team size?",
+      "reference": "Обычно до 10 человек; при большем масштабе — несколько команд на одном продукте."
+    },
+    {
+      "question": "Что такое Sprint?",
+      "reference": "Timebox до 1 месяца (часто 2 недели), в котором создаётся Done Increment."
+    },
+    {
+      "question": "Можно ли менять Sprint Goal mid-sprint?",
+      "reference": "Не менять scope так, чтобы нарушить цель; scope negotiation с PO при новых insights."
+    },
+    {
+      "question": "Sprint Goal?",
+      "reference": "Единая цель спринта — «зачем этот спринт»; фокус команды и критерий гибкости scope."
+    },
+    {
+      "question": "События Scrum?",
+      "reference": "Sprint, Sprint Planning, Daily Scrum, Sprint Review, Sprint Retrospective."
+    },
+    {
+      "question": "Sprint Planning — цель?",
+      "reference": "Определить Sprint Goal, выбрать backlog items, спланировать работу на Sprint."
+    },
+    {
+      "question": "Daily Scrum — цель?",
+      "reference": "15 мин sync: прогресс к Sprint Goal, план на день, impediments. Не status report менеджеру."
+    },
+    {
+      "question": "Три вопроса Daily (классика)?",
+      "reference": "Что сделал? Что сделаю? Что мешает? (в 2020+ Scrum Guide акцент на Goal, не обязательно три вопроса)."
+    },
+    {
+      "question": "Sprint Review — цель?",
+      "reference": "Inspect Increment и backlog с stakeholders; адаптировать Product Backlog."
+    },
+    {
+      "question": "Sprint Retrospective — цель?",
+      "reference": "Inspect людей, взаимодействий, процесса, tools; план улучшений."
+    },
+    {
+      "question": "Артеfactы Scrum?",
+      "reference": "Product Backlog, Sprint Backlog, Increment."
+    },
+    {
+      "question": "Product Backlog?",
+      "reference": "Emergent, ordered list всего для продукта; единственный источник работы для Scrum Team."
+    },
+    {
+      "question": "Sprint Backlog?",
+      "reference": "Цель спринта + выбранные PB items + план доставки (often task board)."
+    },
+    {
+      "question": "Increment?",
+      "reference": "Конкретная проверяемая работа в соответствии с DoD; сумма всех Done items в Sprint + предыдущие."
+    },
+    {
+      "question": "DoD на уровне организации?",
+      "reference": "Минимум качества для любого Increment; команда может ужесточать, не ослаблять."
+    },
+    {
+      "question": "Backlog refinement?",
+      "reference": "Ongoing activity: декомпозиция, оценка, уточнение — обычно ≤10% capacity, не обязательное event."
+    },
+    {
+      "question": "Commitment в Sprint Planning?",
+      "reference": "Developers commit на Sprint Backlog; PO commit на ценность и порядок PB."
+    },
+    {
+      "question": "Who can cancel Sprint?",
+      "reference": "Only Product Owner, если цель устарела — rare."
+    },
+    {
+      "question": "Scrum of Scrums?",
+      "reference": "Sync нескольких Scrum-команд: представители обсуждают зависимости и интеграцию."
+    },
+    {
+      "question": "Nexus framework?",
+      "reference": "Scrum.org scaling: Nexus Integration Team, Nexus Sprint, dependencies между 3–9 teams."
+    },
+    {
+      "question": "LeSS?",
+      "reference": "Large-Scale Scrum: один PO, один backlog, feature teams, общие sprint."
+    },
+    {
+      "question": "Scrum@Scale?",
+      "reference": "Scaling через Scrum of Scrums и Executive Action Team."
+    },
+    {
+      "question": "Чем Sprint Review отличается от Demo?",
+      "reference": "Review — inspect & adapt с stakeholders и backlog; demo — часть показа Increment, не вся встреча."
+    },
+    {
+      "question": "Чем Sprint Backlog отличается от Kanban board?",
+      "reference": "Sprint Backlog — scope спринта; Kanban board может показывать flow с WIP limits вне спринта."
+    },
+    {
+      "question": "Чем PO отличается от Project sponsor?",
+      "reference": "PO отвечает за ценность продукта day-to-day; sponsor — funding и стратегические решения."
+    },
+    {
+      "question": "На Daily 45 минут, все докладывают PO. Проблема?",
+      "reference": "Daily превратился в status meeting. Вернуть 15 min timebox, фокус на Sprint Goal, impediments — offline sync.",
+      "card_type": "text"
+    },
+    {
+      "question": "Increment не соответствует DoD, но PO хочет релиз. Что делать?",
+      "reference": "DoD не negotiable для Increment. Либо довести до Done, либо явно не считать Done (technical debt, риск).",
+      "card_type": "text"
+    },
+    {
+      "question": "Команда не успевает Sprint Goal за 2 дня до конца. Действия?",
+      "reference": "Collaborate с PO: scope negotiation, focus on Goal, не «добавить людей» blindly; retro причин.",
+      "card_type": "text"
+    },
+    {
+      "question": "SM пишет задачи каждому разработчику. Это Scrum?",
+      "reference": "Нет — нарушение self-management Developers. SM должен coach, не распределять work.",
+      "card_type": "text"
+    },
+    {
+      "question": "Кто обязан участвовать в Sprint Planning?",
+      "reference": "Scrum Team; Review также stakeholders; PO ключевой на Planning и Review."
+    },
+    {
+      "question": "Timebox Sprint Planning?",
+      "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints."
+    },
+    {
+      "question": "Output Sprint Planning?",
+      "reference": "определить Why (Goal), What (PB items), How (plan)"
+    },
+    {
+      "question": "Кто обязан участвовать в Daily Scrum?",
+      "reference": "Scrum Team; Review также stakeholders; PO ключевой на Planning и Review."
+    },
+    {
+      "question": "Timebox Daily Scrum?",
+      "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints."
+    },
+    {
+      "question": "Output Daily Scrum?",
+      "reference": "адаптировать план на 24ч к Sprint Goal"
+    },
+    {
+      "question": "Кто обязан участвовать в Sprint Review?",
+      "reference": "Scrum Team; Review также stakeholders; PO ключевой на Planning и Review."
+    },
+    {
+      "question": "Timebox Sprint Review?",
+      "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints."
+    },
+    {
+      "question": "Output Sprint Review?",
+      "reference": "получить feedback, обновить backlog"
+    },
+    {
+      "question": "Кто обязан участвовать в Sprint Retrospective?",
+      "reference": "Scrum Team; Review также stakeholders; PO ключевой на Planning и Review."
+    },
+    {
+      "question": "Timebox Sprint Retrospective?",
+      "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints."
+    },
+    {
+      "question": "Output Sprint Retrospective?",
+      "reference": "1–3 улучшения процесса на следующий sprint"
+    },
+    {
+      "question": "Может ли user story быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли bug быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли technical debt быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли spike быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли research быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли enabler быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Может ли compliance item быть в Product Backlog?",
+      "reference": "Да — PB содержит всё, что нужно продукту; PO приоритизирует прозрачно."
+    },
+    {
+      "question": "Scrum scaling: feature team?",
+      "reference": "команда end-to-end по фиче, не component team"
+    },
+    {
+      "question": "Scrum scaling: component team?",
+      "reference": "риск зависимостей и медленного flow при масштабировании Scrum"
+    },
+    {
+      "question": "Scrum scaling: integration sprint?",
+      "reference": "anti-pattern — частые интеграции каждый sprint предпочтительнее"
+    },
+    {
+      "question": "Scrum scaling: hardening sprint?",
+      "reference": "anti-pattern — качество должно быть в каждом Increment via DoD"
+    },
+    {
+      "question": "Полезная метрика Scrum: Sprint Goal success?",
+      "reference": "достигнута ли цель, не только closed points"
+    },
+    {
+      "question": "Полезная метрика Scrum: escaped defects?",
+      "reference": "качество Increment после release"
+    },
+    {
+      "question": "Полезная метрика Scrum: team happiness?",
+      "reference": "индикатор устойчивости"
+    },
+    {
+      "question": "Полезная метрика Scrum: cycle time per story?",
+      "reference": "поток внутри спринта"
+    },
+    {
+      "question": "Scrum: что такое forecast?",
+      "reference": "Прогноз completion на основе velocity и оставшегося backlog."
+    },
+    {
+      "question": "Scrum: что такое release planning?",
+      "reference": "Optional: horizon beyond sprint; не replace sprint planning."
+    },
+    {
+      "question": "Scrum: что такое Sprint backlog item?",
+      "reference": "Unit work на sprint board; может быть task sub-items."
+    },
+    {
+      "question": "Scrum: что такое task?",
+      "reference": "Разбиение story для tracking; не обязательны в Scrum Guide."
+    },
+    {
+      "question": "Scrum: что такое impediment backlog?",
+      "reference": "Visible list блокеров для SM/организации."
+    },
+    {
+      "question": "Scrum: что такое Scrum board?",
+      "reference": "Visual Sprint Backlog: To Do, Doing, Done."
+    },
+    {
+      "question": "Scrum: что такое burndown?",
+      "reference": "Remaining work vs time in sprint."
+    },
+    {
+      "question": "Scrum: что такое burnup?",
+      "reference": "Completed vs total scope — виден scope change."
+    },
+    {
+      "question": "Scrum: что такое release burndown?",
+      "reference": "Across sprints до release milestone."
+    },
+    {
+      "question": "Scrum: что такое velocity range?",
+      "reference": "Min-max velocity для probabilistic forecast."
+    },
+    {
+      "question": "Scrum: что такое capacity?",
+      "reference": "Available person-days в sprint minus meetings, PTO."
+    },
+    {
+      "question": "Scrum: что такое focus factor?",
+      "reference": "Доля capacity на sprint work vs overhead."
+    },
+    {
+      "question": "Scrum: что такое committed scope?",
+      "reference": "Items team agrees to deliver toward Sprint Goal."
+    },
+    {
+      "question": "Scrum: что такое uncommitted backlog?",
+      "reference": "PB items not in current sprint."
+    },
+    {
+      "question": "Scrum: что такое emergent architecture?",
+      "reference": "Architecture evolves через increments, не big design upfront."
+    },
+    {
+      "question": "Scrum: что такое ScrumBut?",
+      "reference": "«We do Scrum, but…» — compromises без понимания why."
+    },
+    {
+      "question": "Scrum: что такое ScrumAnd?",
+      "reference": "Добавление practices (Kanban, XP) поверх Scrum framework."
+    },
+    {
+      "question": "Scrum: что такое Done column?",
+      "reference": "Items meeting DoD — потенциально shippable."
+    },
+    {
+      "question": "Scrum: что такое technical story?",
+      "reference": "Story для refactoring, tooling — должна давать value или enabler."
+    },
+    {
+      "question": "Scrum: что такое Scrum poker?",
+      "reference": "Same as Planning Poker — consensus estimation."
+    },
+    {
+      "question": "Scrum: что такое affinity estimation?",
+      "reference": "Группировка stories по размеру без чисел."
+    },
+    {
+      "question": "Scrum: что такое T-shirt sizing?",
+      "reference": "S/M/L/XL для грубой оценки epics/features."
+    },
+    {
+      "question": "Scrum: что такое ideal days?",
+      "reference": "Оценка в «идеальных днях» — осторожно, не равно calendar."
+    },
+    {
+      "question": "Scrum: что такое Sprint cancellation?",
+      "reference": "PO решает; done items review, rest re-estimate в PB."
+    },
+    {
+      "question": "Scrum: что такое part-time PO?",
+      "reference": "Risk: backlog starvation; нужен delegate или proxy."
+    },
+    {
+      "question": "Scrum: что такое proxy PO?",
+      "reference": "Временный представитель — должен иметь authority."
+    },
+    {
+      "question": "Scrum: что такое component team?",
+      "reference": "Team по слою (UI, API) — dependency overhead в Scrum."
+    },
+    {
+      "question": "Scrum: что такое feature team?",
+      "reference": "End-to-end delivery — предпочтительнее at scale."
+    },
+    {
+      "question": "Scrum: что такое Scrum Master as team admin?",
+      "reference": "Anti-pattern — SM не Jira- secretary only."
+    },
+    {
+      "question": "Scrum: что такое rotating SM?",
+      "reference": "Possible но теряется dedicated improvement focus."
+    },
+    {
+      "question": "Scrum: что такое Scrum of Scrums Master?",
+      "reference": "Facilitates multi-team sync."
+    },
+    {
+      "question": "Scrum: что такое integration team?",
+      "reference": "Dedicated integration — signal weak CI/CD на ART level."
+    },
+    {
+      "question": "Scrum: что такое Scrum values: Courage?",
+      "reference": "Говорить правду о scope, quality, risks."
+    },
+    {
+      "question": "Scrum: что такое Scrum values: Focus?",
+      "reference": "На Sprint Goal, не на random work."
+    },
+    {
+      "question": "Scrum: что такое Scrum values: Openness?",
+      "reference": "Прозрачность work, проблем, learning."
+    },
+    {
+      "question": "Scrum: что такое Scrum values: Respect?",
+      "reference": "К коллегам, stakeholders, users."
+    },
+    {
+      "question": "Scrum: что такое Scrum values: Commitment?",
+      "reference": "К Sprint Goal и team goals, не к scope любой ценой."
+    },
+    {
+      "question": "Scrum: что такое Scrum Guide?",
+      "reference": "Official definition Scrum by Ken Schwaber & Jeff Sutherland."
+    },
+    {
+      "question": "Scrum: что такое empirical process?",
+      "reference": "Decisions on observation, not only plan."
+    },
+    {
+      "question": "Scrum: что такое complex work?",
+      "reference": "Domain где analysis не даёт full answer upfront — Scrum sweet spot."
+    },
+    {
+      "question": "Scrum: что такое ordered backlog?",
+      "reference": "PB strictly ordered — top = highest value next."
+    },
+    {
+      "question": "Scrum: что такое transparency of backlog?",
+      "reference": "Visible, understood by Scrum Team and stakeholders."
+    },
+    {
+      "question": "Scrum: что такое Sprint timebox max?",
+      "reference": "One month or less — чаще 1–4 weeks."
+    },
+    {
+      "question": "Scrum: что такое consecutive Sprints?",
+      "reference": "No gap — next starts immediately after previous."
+    },
+    {
+      "question": "Scrum: что такое Sprint consistency?",
+      "reference": "Same length sprints для rhythm и metrics."
+    },
+    {
+      "question": "Scrum: что такое stakeholder collaboration?",
+      "reference": "Key на Review — feedback loop."
+    },
+    {
+      "question": "Scrum: что такое incremental delivery?",
+      "reference": "Each sprint adds Done work on previous increments."
+    },
+    {
+      "question": "Scrum: что такое potentially releasable?",
+      "reference": "Increment meets DoD — может go live if PO decides."
+    },
+    {
+      "question": "Scrum: что такое technical debt in sprint?",
+      "reference": "Allocate capacity — не только features."
+    },
+    {
+      "question": "Scrum: что такое bug fix in sprint?",
+      "reference": "Part of work — PO prioritizes in PB."
+    },
+    {
+      "question": "Scrum: что такое Scrum Master removing impediments?",
+      "reference": "Org-level blockers — SM escalates."
+    },
+    {
+      "question": "Scrum: что такое Developers self-assign?",
+      "reference": "Team pulls work — не manager assigns tasks."
+    },
+    {
+      "question": "Scrum: что такое cross-skilling?",
+      "reference": "Developers learn adjacent skills — reduce bottlenecks."
+    },
+    {
+      "question": "Scrum: что такое specialist?",
+      "reference": "Allowed но team collective ownership on Sprint Goal."
+    },
+    {
+      "question": "Scrum: что такое Scrum in regulated industry?",
+      "reference": "DoD includes validation; documentation as needed."
+    },
+    {
+      "question": "Scrum: что такое Scrum with offshore?",
+      "reference": "Overlap hours, clear DoD, strong refinement."
+    },
+    {
+      "question": "Scrum: что такое Scrum anti-pattern: zombie Scrum?",
+      "reference": "Mechanical events без improvement и value."
+    },
+    {
+      "question": "Scrum: Scrum Guide 2020: изменение «Development Team»?",
+      "reference": "Теперь единая Scrum Team без под-label Developers; акцент на одной команде."
+    },
+    {
+      "question": "Scrum: Accountability vs responsibility в Scrum?",
+      "reference": "Accountability — один на роль (PO, SM); work — collective Scrum Team."
+    },
+    {
+      "question": "Scrum Master сертификации?",
+      "reference": "PSM (Scrum.org), CSM (Scrum Alliance) — знание framework, не замена опыта."
+    },
+    {
+      "question": "Product Owner сертификации?",
+      "reference": "PSPO, CSPO — ownership и backlog practices."
+    },
+    {
+      "question": "Sprint length change?",
+      "reference": "Можно между sprints; shorter = faster feedback."
+    },
+    {
+      "question": "Carry-over stories?",
+      "reference": "Незавершённые возвращаются в PB; анализ причин на retro, не blame."
+    },
+    {
+      "question": "Scrum in hardware?",
+      "reference": "Possible with longer sprints, physical prototypes as Increment."
+    },
+    {
+      "question": "Definition of Done examples?",
+      "reference": "Unit tests pass, code review, docs updated, deployed to staging, no critical bugs."
+    },
+    {
+      "question": "Sprint zero?",
+      "reference": "Controversial — лучше enablers в PB и normal sprints."
+    },
+    {
+      "question": "Hardening sprint anti-pattern?",
+      "reference": "Quality must be in every Increment."
+    },
+    {
+      "question": "Scrum values?",
+      "reference": "Commitment, Focus, Openness, Respect, Courage."
+    },
+    {
+      "question": "Who orders Product Backlog?",
+      "reference": "Product Owner — один ordered list."
+    }
+  ]
+}

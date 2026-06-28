@@ -1,6 +1,10 @@
 {
-  "ollama_url": "https://ollama.webmastermsk.ru:330068",
-  "model": "qwen3-code:30b",
+  "ollama_url": "http://ollama.webmastermsk.ru:30068",
+  "model": "qwen3-coder:30b",
+  "api_key": "",
   "pass_score": 75,
-  "timeout": 120
+  "timeout": 120,
+  "max_follow_ups": 2,
+  "session_limit": 20,
+  "auto_advance_ms": 1500
 }

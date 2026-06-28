@@ -1,0 +1,612 @@
+{
+  "name": "SAFe",
+  "cards": [
+    {
+      "question": "Что такое SAFe?",
+      "reference": "Scaled Agile Framework — набор организационных и workflow patterns для Agile at enterprise scale."
+    },
+    {
+      "question": "SAFe Big Picture — уровни?",
+      "reference": "Team, Program (ART), Large Solution (optional), Portfolio, Full — в зависимости от конфигурации."
+    },
+    {
+      "question": "Что такое ART?",
+      "reference": "Agile Release Train — long-lived team of Agile teams (5–12), синхронизированная поставка value stream."
+    },
+    {
+      "question": "RTE — роль?",
+      "reference": "Release Train Engineer — «chief Scrum Master» train: PI planning facilitation, impediments, flow."
+    },
+    {
+      "question": "System Architect/Engineer?",
+      "reference": "Техническое направление, enablers, NFRs, архитектурный runway на ART."
+    },
+    {
+      "question": "Product Management в SAFe?",
+      "reference": "Content authority на Program level: Features, WSJF, roadmap на PI."
+    },
+    {
+      "question": "Business Owners?",
+      "reference": "Ключевые stakeholders train; assign value на PI objectives; go/no-go на ROI."
+    },
+    {
+      "question": "Что такое PI (Program Increment)?",
+      "reference": "Timebox 8–12 weeks (default 10) + Innovation & Planning (IP) iteration."
+    },
+    {
+      "question": "PI Planning — суть?",
+      "reference": "2-day event: vision, team breakouts, draft plans, dependencies, PI Objectives, confidence vote."
+    },
+    {
+      "question": "PI Objectives?",
+      "reference": "Business + team objectives на PI; SMART, measurable; used in Inspect & Adapt."
+    },
+    {
+      "question": "Stretch objectives?",
+      "reference": "Дополнительные цели при избытке capacity — явно optional."
+    },
+    {
+      "question": "Team PI Objectives vs Program?",
+      "reference": "Teams commit свои; aggregated на train level с Business Owners."
+    },
+    {
+      "question": "Innovation & Planning iteration?",
+      "reference": "Buffer для learning, hackathon, tech debt, planning next PI — no feature pressure."
+    },
+    {
+      "question": "Inspect & Adapt (I&A)?",
+      "reference": "End of PI: PI system demo, quantitative review, problem-solving workshop."
+    },
+    {
+      "question": "WSJF?",
+      "reference": "Weighted Shortest Job First: Cost of Delay / Job Size — prioritization на program/portfolio."
+    },
+    {
+      "question": "Cost of Delay?",
+      "reference": "Экономическая цена задержки: value, time criticality, risk reduction/opportunity enablement."
+    },
+    {
+      "question": "Feature в SAFe?",
+      "reference": "Program-level backlog item, декомposируется в stories на teams."
+    },
+    {
+      "question": "Enabler features?",
+      "reference": "Infrastructure, architecture, exploration — поддерживают future features."
+    },
+    {
+      "question": "Architectural runway?",
+      "reference": "Техническая подготовка на 2–3 PI вперёд для upcoming features."
+    },
+    {
+      "question": "NFRs (Nonfunctional Requirements)?",
+      "reference": "Performance, security, compliance — as backlog constraints и enablers."
+    },
+    {
+      "question": "Solution Train?",
+      "reference": "Для large solutions: несколько ARTs + suppliers, synchronized PI."
+    },
+    {
+      "question": "Portfolio SAFe?",
+      "reference": "Strategy & investment funding, lean portfolio management, value streams."
+    },
+    {
+      "question": "Value stream identification?",
+      "reference": "Operational или development value streams — кто поставляет ценность end-to-end."
+    },
+    {
+      "question": "Lean Portfolio Management?",
+      "reference": "Funding value streams, not projects; guardrails; portfolio kanban."
+    },
+    {
+      "question": "Epic в SAFe?",
+      "reference": "Large initiative; проходит portfolio kanban: funnel → review → analysis → backlog → implementing."
+    },
+    {
+      "question": "Lean business case для epic?",
+      "reference": "Оценка WSJF, cost, MVP, go/pivot/stop перед major funding."
+    },
+    {
+      "question": "Guardrails?",
+      "reference": "Budget, WIP limits, DoD на portfolio — decentralize decisions within boundaries."
+    },
+    {
+      "question": "Continuous Learning Culture?",
+      "reference": "One of SAFe core competencies — learning organization."
+    },
+    {
+      "question": "Lean-Agile Leadership?",
+      "reference": "Leaders model behaviors, empower teams, drive change."
+    },
+    {
+      "question": "Team and Technical Agility?",
+      "reference": "Scrum/Kanban, XP practices, built-in quality на team level."
+    },
+    {
+      "question": "Agile Product Delivery?",
+      "reference": "Customer centricity, design thinking, continuous delivery on ART."
+    },
+    {
+      "question": "Enterprise Solution Delivery?",
+      "reference": "Large solution coordination, suppliers, compliance."
+    },
+    {
+      "question": "Lean Portfolio Management competency?",
+      "reference": "Strategy, funding, governance aligned to flow of value."
+    },
+    {
+      "question": "Organizational Agility?",
+      "reference": "Flexible org design, lean thinking across business."
+    },
+    {
+      "question": "Continuous Learning Culture competency?",
+      "reference": "Invest in people, communities of practice, innovation."
+    },
+    {
+      "question": "Built-in Quality?",
+      "reference": "TDD, CI, pair work, architecture as code — quality не «phase at end»."
+    },
+    {
+      "question": "Program backlog?",
+      "reference": "Prioritized features/enablers для ART; owned by Product Management."
+    },
+    {
+      "question": "Team backlog?",
+      "reference": "Stories для одной Agile team в текущем PI."
+    },
+    {
+      "question": "Iteration (Sprint) в SAFe?",
+      "reference": "Default 2 weeks внутри PI; same as Scrum at team level."
+    },
+    {
+      "question": "System Demo?",
+      "reference": "End-of-iteration integrated demo across ART — real system, not team silos."
+    },
+    {
+      "question": "PO Sync?",
+      "reference": "Regular PO/PM sync dependencies и priorities across teams."
+    },
+    {
+      "question": "Scrum of Scrums в SAFe?",
+      "reference": "Coach sync / ART sync для cross-team coordination."
+    },
+    {
+      "question": "ART sync?",
+      "reference": "Weekly RTE-led: progress, risks, dependencies на train."
+    },
+    {
+      "question": "Чем PI Planning отличается от big upfront planning?",
+      "reference": "PI Planning — 8–12 week horizon with inspect & adapt each PI, not multi-year fixed plan."
+    },
+    {
+      "question": "Чем Feature отличается от Epic?",
+      "reference": "Feature — program backlog (weeks). Epic — portfolio initiative (months/quarters)."
+    },
+    {
+      "question": "Чем RTE отличается от Scrum Master?",
+      "reference": "RTE координирует train и PI events; SM — одну команду."
+    },
+    {
+      "question": "Чем SAFe отличается от LeSS?",
+      "reference": "SAFe — prescriptive framework with roles/events at scale. LeSS — minimal scaling Scrum with one backlog."
+    },
+    {
+      "question": "PI Planning: confidence vote 40%. Что делать?",
+      "reference": "Re-plan breakouts: resolve dependencies, scope adjustment, enablers, risks — до acceptable confidence или explicit trade-offs.",
+      "card_type": "text"
+    },
+    {
+      "question": "Team завершила все stories, но System Demo broken. Проблема?",
+      "reference": "Integration neglected — need CI, system team, Definition of Done на ART level, regular system demos each iteration.",
+      "card_type": "text"
+    },
+    {
+      "question": "100 features in PI, teams overloaded. Root cause?",
+      "reference": "WIP overload at program level; apply WSJF, reduce WIP, realistic capacity based on velocity history.",
+      "card_type": "text"
+    },
+    {
+      "question": "Конфигурация Essential SAFe?",
+      "reference": "Team + ART — минимальная конфигурация"
+    },
+    {
+      "question": "Конфигурация Large Solution SAFe?",
+      "reference": "+ Solution Train для complex products"
+    },
+    {
+      "question": "Конфигурация Portfolio SAFe?",
+      "reference": "+ LPM для strategy and funding"
+    },
+    {
+      "question": "Конфигурация Full SAFe?",
+      "reference": "All levels — enterprise-wide"
+    },
+    {
+      "question": "WSJF: User/business value?",
+      "reference": "WSJF numerator component"
+    },
+    {
+      "question": "WSJF: Time criticality?",
+      "reference": "deadline/market window"
+    },
+    {
+      "question": "WSJF: RR/OE?",
+      "reference": "Risk Reduction / Opportunity Enablement"
+    },
+    {
+      "question": "WSJF: Job size?",
+      "reference": "WSJF denominator — estimate effort"
+    },
+    {
+      "question": "Когда проводится PI Planning?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "Когда проводится System Demo?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "Когда проводится Inspect & Adapt?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "Когда проводится PO Sync?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "Когда проводится ART Sync?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "Когда проводится Solution Demo?",
+      "reference": "Cadence event на program/large solution level — см. SAFe Big Picture для частоты."
+    },
+    {
+      "question": "SAFe: что такое Agile Team?",
+      "reference": "5–11 members, Scrum Master, PO, devs — builds increment each iteration."
+    },
+    {
+      "question": "SAFe: что такое Team Backlog?",
+      "reference": "Stories для team в текущем PI."
+    },
+    {
+      "question": "SAFe: что такое Iteration Goals?",
+      "reference": "Team objectives aligned to PI — short term focus."
+    },
+    {
+      "question": "SAFe: что такое Iteration Planning?",
+      "reference": "Team plans stories for iteration like Sprint Planning."
+    },
+    {
+      "question": "SAFe: что такое Iteration Review?",
+      "reference": "Team demo like Sprint Review."
+    },
+    {
+      "question": "SAFe: что такое Iteration Retrospective?",
+      "reference": "Team improvement like Sprint Retro."
+    },
+    {
+      "question": "SAFe: что такое Program Increment?",
+      "reference": "8–12 week timebox для ART synchronized delivery."
+    },
+    {
+      "question": "SAFe: что такое PI Planning day 1?",
+      "reference": "Business context, vision, architecture, team breakouts draft."
+    },
+    {
+      "question": "SAFe: что такое PI Planning day 2?",
+      "reference": "Plan review, ROAM risks, confidence vote, final objectives."
+    },
+    {
+      "question": "SAFe: что такое ROAM?",
+      "reference": "Resolved, Owned, Accepted, Mitigated — risk categorization на PI planning."
+    },
+    {
+      "question": "SAFe: что такое Management review?",
+      "reference": "Part of PI planning — scope/capacity alignment."
+    },
+    {
+      "question": "SAFe: что такое Draft plan review?",
+      "reference": "Teams present plans, identify dependencies."
+    },
+    {
+      "question": "SAFe: что такое Final plan review?",
+      "reference": "Business Owners accept plan and objectives."
+    },
+    {
+      "question": "SAFe: что такое Program Board?",
+      "reference": "Visual PI plan: features, dependencies, milestones."
+    },
+    {
+      "question": "SAFe: что такое Feature timeline?",
+      "reference": "When feature expected complete across iterations."
+    },
+    {
+      "question": "SAFe: что такое Milestone?",
+      "reference": "Key date on program board — fixed date coordination."
+    },
+    {
+      "question": "SAFe: что такое Dependency?",
+      "reference": "Team A needs Team B — red string on program board."
+    },
+    {
+      "question": "SAFe: что такое Capacity?",
+      "reference": "Team velocity × iterations minus IP sprint."
+    },
+    {
+      "question": "SAFe: что такое Load vs capacity?",
+      "reference": "Compare committed features to team capacity in PI planning."
+    },
+    {
+      "question": "SAFe: что такое ART backlog?",
+      "reference": "Same as Program backlog — prioritized features/enablers."
+    },
+    {
+      "question": "SAFe: что такое Capability?",
+      "reference": "Long-lived solution area — multiple ARTs possible."
+    },
+    {
+      "question": "SAFe: что такое Value stream coordinator?",
+      "reference": "Coordinates multiple ARTs in value stream."
+    },
+    {
+      "question": "SAFe: что такое Solution Intent?",
+      "reference": "Living repository requirements, design, specs — fixed/flexible."
+    },
+    {
+      "question": "SAFe: что такое Fixed content?",
+      "reference": "Non-negotiable requirements in solution intent."
+    },
+    {
+      "question": "SAFe: что такое Variable content?",
+      "reference": "Evolving specs as learning occurs."
+    },
+    {
+      "question": "SAFe: что такое Model-Based Systems Engineering?",
+      "reference": "MBSE in SAFe for complex systems."
+    },
+    {
+      "question": "SAFe: что такое Compliance?",
+      "reference": "Regulatory needs as NFRs and enablers in backlog."
+    },
+    {
+      "question": "SAFe: что такое Lean UX?",
+      "reference": "SAFe UX loop: hypothesis, MVP, research, ARCHITECT collaboration."
+    },
+    {
+      "question": "SAFe: что такое Customer Centricity?",
+      "reference": "Design thinking, Gemba, continuous exploration."
+    },
+    {
+      "question": "SAFe: что такое Continuous Exploration?",
+      "reference": "Discover needs, ideate MVPs, create roadmap."
+    },
+    {
+      "question": "SAFe: что такое Continuous Integration?",
+      "reference": "Team/ART level frequent integration."
+    },
+    {
+      "question": "SAFe: что такое Continuous Deployment?",
+      "reference": "Automated release pipeline."
+    },
+    {
+      "question": "SAFe: что такое Continuous Release?",
+      "reference": "Release on demand to production."
+    },
+    {
+      "question": "SAFe: что такое DevOps?",
+      "reference": "CALMR culture in SAFe — break silos dev/ops."
+    },
+    {
+      "question": "SAFe: что такое System Team?",
+      "reference": "Integrates, runs system CI, supports demos across ART."
+    },
+    {
+      "question": "SAFe: что такое Shared Services?",
+      "reference": "Specialists supporting multiple ARTs."
+    },
+    {
+      "question": "SAFe: что такое Community of Practice?",
+      "reference": "Cross-ART skill sharing (architecture, testing)."
+    },
+    {
+      "question": "SAFe: что такое Center of Excellence?",
+      "reference": "LACE guides transformation."
+    },
+    {
+      "question": "SAFe: что такое Implementation roadmap?",
+      "reference": "Train execs, launch ART, expand, sustain."
+    },
+    {
+      "question": "SAFe: что такое Value stream KPI?",
+      "reference": "Flow, quality, satisfaction, outcomes per value stream."
+    },
+    {
+      "question": "SAFe: что такое Lean budget?",
+      "reference": "Fund value streams not projects — guardrails."
+    },
+    {
+      "question": "SAFe: что такое Epic Owner?",
+      "reference": "Guides epic through portfolio kanban."
+    },
+    {
+      "question": "SAFe: что такое Enterprise Architect?",
+      "reference": "Portfolio tech strategy, enabler epics."
+    },
+    {
+      "question": "SAFe: что такое Strategic themes?",
+      "reference": "Portfolio investment categories linked to strategy."
+    },
+    {
+      "question": "SAFe: что такое Portfolio vision?",
+      "reference": "Long-term direction for solutions."
+    },
+    {
+      "question": "SAFe: что такое Portfolio backlog?",
+      "reference": "Epics prioritized by WSJF."
+    },
+    {
+      "question": "SAFe: что такое Portfolio kanban?",
+      "reference": "Funnel → Reviewing → Analyzing → Backlog → Implementing."
+    },
+    {
+      "question": "SAFe: что такое Participatory budgeting?",
+      "reference": "Collaborative allocation across value streams."
+    },
+    {
+      "question": "SAFe: что такое Lean governance?",
+      "reference": "Lightweight decision rights within guardrails."
+    },
+    {
+      "question": "SAFe: что такое Metric: flow velocity?",
+      "reference": "Features completed per PI on ART."
+    },
+    {
+      "question": "SAFe: что такое Metric: flow time?",
+      "reference": "Time feature in program kanban."
+    },
+    {
+      "question": "SAFe: что такое Metric: flow load?",
+      "reference": "WIP features in progress on ART."
+    },
+    {
+      "question": "SAFe: что такое Metric: flow efficiency?",
+      "reference": "Active vs wait time on program."
+    },
+    {
+      "question": "SAFe: что такое Agile contracting?",
+      "reference": "SAFe guidance on outcome-based vendor contracts."
+    },
+    {
+      "question": "SAFe: что такое Supplier?",
+      "reference": "External team on Solution Train with same PI cadence."
+    },
+    {
+      "question": "SAFe: что такое Pre-PI planning?",
+      "reference": "Prep before main event — backlog readiness."
+    },
+    {
+      "question": "SAFe: что такое Post-PI planning?",
+      "reference": "Follow-up actions after event."
+    },
+    {
+      "question": "SAFe: что такое ART launch?",
+      "reference": "First PI planning kicks off new train."
+    },
+    {
+      "question": "SAFe: что такое Value stream launch?",
+      "reference": "Multiple ARTs aligned to stream."
+    },
+    {
+      "question": "SAFe: что такое SAFe Summit?",
+      "reference": "Community conference for practitioners."
+    },
+    {
+      "question": "SAFe: что такое SAFe practice exam?",
+      "reference": "Assessment for certification prep."
+    },
+    {
+      "question": "SAFe: что такое RTE sync?",
+      "reference": "Release Train Engineer coordinates SM community."
+    },
+    {
+      "question": "SAFe: что такое PO sync meeting?",
+      "reference": "Product owners align on priorities weekly."
+    },
+    {
+      "question": "SAFe: что такое Architect sync?",
+      "reference": "System architects coordinate enablers/NFRs."
+    },
+    {
+      "question": "SAFe: что такое Coach sync?",
+      "reference": "Scrum Masters and coaches share impediments."
+    },
+    {
+      "question": "SAFe: что такое Business Agility?",
+      "reference": "SAFe goal — respond rapidly to market change."
+    },
+    {
+      "question": "SAFe: что такое Principle: Take economic view?",
+      "reference": "Understand economic impact of decisions."
+    },
+    {
+      "question": "SAFe: что такое Principle: Apply systems thinking?",
+      "reference": "Optimize whole, not local."
+    },
+    {
+      "question": "SAFe: что такое Principle: Assume variability?",
+      "reference": "Preserve options, empirical decisions."
+    },
+    {
+      "question": "SAFe: что такое Principle: Build incrementally?",
+      "reference": "Fast integrated learning cycles."
+    },
+    {
+      "question": "SAFe: что такое Principle: Base milestones on objective evaluation?",
+      "reference": "Working systems, not documents."
+    },
+    {
+      "question": "SAFe: что такое Principle: Visualize WIP?",
+      "reference": "Limit batch sizes, manage queue lengths."
+    },
+    {
+      "question": "SAFe: что такое Principle: Apply cadence?",
+      "reference": "Synchronize cross-domain planning."
+    },
+    {
+      "question": "SAFe: что такое Principle: Decentralize decision-making?",
+      "reference": "Push authority to teams where possible."
+    },
+    {
+      "question": "SAFe: что такое Principle: Organize around value?",
+      "reference": "Value streams not functional silos."
+    },
+    {
+      "question": "SAFe: SAFe principles count?",
+      "reference": "10 Lean-Agile principles (e.g. take economic view, apply systems thinking, decentralize decisions)."
+    },
+    {
+      "question": "SAFe: CALMR approach DevOps?",
+      "reference": "Culture, Automation, Lean, Measure, Recover — SAFe DevOps competency."
+    },
+    {
+      "question": "SAFe implementation roadmap?",
+      "reference": "Train leaders → launch ART → expand — incremental not big bang."
+    },
+    {
+      "question": "SPC?",
+      "reference": "SAFe Program Consultant — certified change agent for SAFe adoption."
+    },
+    {
+      "question": "LACE?",
+      "reference": "Lean Agile Center of Excellence — coaching and tooling support."
+    },
+    {
+      "question": "Value stream mapping in SAFe?",
+      "reference": "Identify steps, wait times, automate handoffs on ART."
+    },
+    {
+      "question": "Capacity allocation PI?",
+      "reference": "Percent capacity for features, enablers, maintenance, innovation."
+    },
+    {
+      "question": "Program KPI?",
+      "reference": "Predictability measure, PI objectives achievement, flow metrics."
+    },
+    {
+      "question": "Predictability Measure?",
+      "reference": "Actual business value delivered vs planned PI objectives."
+    },
+    {
+      "question": "Compliance in SAFe?",
+      "reference": "Built-in quality, documented workflows, approval enablers in backlog."
+    },
+    {
+      "question": "Supplier integration?",
+      "reference": "Solution train coordinates external vendors on same PI cadence."
+    },
+    {
+      "question": "SAFe vs Spotify model?",
+      "reference": "SAFe prescriptive; Spotify squads/tribes/chapters — organizational pattern, not full framework."
+    }
+  ]
+}

@@ -1,14 +1,31 @@
-[
-  {
-    "question": "Что такое standalone-компонент в Angular?",
-    "reference": "Компонент с imports в @Component, не требующий NgModule. Объявляет зависимости напрямую через imports: [...]."
-  },
-  {
-    "question": "Как работает двустороннее связывание [(ngModel)]?",
-    "reference": "Комбинация [ngModel] и (ngModelChange). Требует FormsModule. Banana in a box синтаксис."
-  },
-  {
-    "question": "Чем pure pipe отличается от impure?",
-    "reference": "Pure пересчитывается только при изменении ссылки/примитива входа. Impure — при каждой change detection."
-  }
-]
+{
+  "name": "Angular — пример",
+  "cards": [
+    {
+      "question": "Что такое standalone-компонент в Angular?",
+      "reference": "Компонент с imports в @Component, не требующий NgModule. Объявляет зависимости напрямую через imports: [...]."
+    },
+    {
+      "question": "Как работает двустороннее связывание [(ngModel)]?",
+      "reference": "Комбинация [ngModel] и (ngModelChange). Требует FormsModule. Banana in a box синтаксис."
+    },
+    {
+      "question": "Чем pure pipe отличается от impure?",
+      "reference": "Pure пересчитывается только при изменении ссылки/примитива входа. Impure — при каждой change detection."
+    },
+    {
+      "card_type": "code",
+      "question": "*ngIf скрывает блок, но ошибка в консоли.",
+      "task": "Исправь шаблон — показывай сообщение только если error не null.",
+      "code": "@Component({\n  selector: 'app-alert',\n  standalone: true,\n  template: `\n    <div *ngIf=\"error\">\n      {{ error.message }}\n    </div>\n  `\n})\nexport class AlertComponent {\n  error: { message: string } | null = null;\n}",
+      "reference": "imports: [NgIf] // или CommonModule\n\n// В новых версиях: @if (error) { <div>{{ error.message }}</div> }"
+    },
+    {
+      "card_type": "code",
+      "question": "RouterLink не подсвечивает активный пункт меню.",
+      "task": "Добавь директиву/класс для active-состояния ссылки на /dashboard.",
+      "code": "@Component({\n  selector: 'app-nav',\n  standalone: true,\n  imports: [RouterLink],\n  template: `\n    <a routerLink=\"/dashboard\">Dashboard</a>\n  `\n})\nexport class NavComponent {}",
+      "reference": "<a routerLink=\"/dashboard\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{ exact: true }\">Dashboard</a>\n\n// imports: [RouterLink, RouterLinkActive]"
+    }
+  ]
+}

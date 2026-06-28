@@ -1,0 +1,2900 @@
+{
+  "name": "Python — основы",
+  "cards": [
+    {
+      "question": "Что такое интерпретируемый язык?",
+      "reference": "Python выполняется интерпретатором (CPython): код компилируется в bytecode и исполняется построчно/по объектам."
+    },
+    {
+      "question": "Чем list отличается от tuple?",
+      "reference": "list — изменяемый (mutable), tuple — неизменяемый (immutable). tuple часто для фиксированных наборов и ключей dict."
+    },
+    {
+      "question": "Чем dict отличается от set?",
+      "reference": "dict хранит пары ключ-значение; set — уникальные хешируемые элементы без порядка (до 3.7) / с insertion order как dict с 3.7+."
+    },
+    {
+      "question": "Что такое PEP 8?",
+      "reference": "Официальный стиль кода Python: отступы 4 пробела, snake_case для функций/переменных, PascalCase для классов."
+    },
+    {
+      "question": "Что делает оператор //?",
+      "reference": "Целочисленное деление: 7 // 2 == 3."
+    },
+    {
+      "question": "Что делает оператор **?",
+      "reference": "Возведение в степень: 2 ** 3 == 8."
+    },
+    {
+      "question": "Что такое truthy и falsy?",
+      "reference": "Falsy: False, None, 0, '', [], {}, set(). Остальное в bool() — True."
+    },
+    {
+      "question": "Чем is отличается от ==?",
+      "reference": "is сравнивает identity (один объект в памяти); == — equality по __eq__."
+    },
+    {
+      "question": "Что такое None?",
+      "reference": "Singleton «отсутствие значения». Часто default и маркер optional."
+    },
+    {
+      "question": "Что такое id()?",
+      "reference": "Уникальный идентификатор объекта в CPython (адрес), пока объект жив."
+    },
+    {
+      "question": "Что такое mutable default argument trap?",
+      "reference": "def f(x=[]): — один список на все вызовы. Использовать x=None и создавать внутри."
+    },
+    {
+      "question": "Что такое LEGB для имён?",
+      "reference": "Local → Enclosing → Global → Built-in — порядок поиска переменных."
+    },
+    {
+      "question": "Что такое __name__ == '__main__'?",
+      "reference": "Блок выполняется только при прямом запуске файла, не при import."
+    },
+    {
+      "question": "Чем import module от import from?",
+      "reference": "import math — math.sqrt; from math import sqrt — sqrt в namespace."
+    },
+    {
+      "question": "Что такое virtual environment (venv)?",
+      "reference": "Изолированный Python + pip пакеты для проекта без конфликтов с системой."
+    },
+    {
+      "question": "Что такое pip?",
+      "reference": "Менеджер пакетов PyPI: pip install requests."
+    },
+    {
+      "question": "Что такое REPL?",
+      "reference": "Read-Eval-Print Loop — интерактивный python в терминале."
+    },
+    {
+      "question": "Что такое indentation в Python?",
+      "reference": "Отступы определяют блоки кода вместо фигурных скобок."
+    },
+    {
+      "question": "Что такое pass?",
+      "reference": "Заглушка — ничего не делает, placeholder для пустого блока."
+    },
+    {
+      "question": "Что такое del?",
+      "reference": "Удаляет ссылку на имя; объект удалится GC когда refcount=0."
+    },
+    {
+      "question": "Что такое slice?",
+      "reference": "a[start:stop:step] — срез последовательности, stop не включается."
+    },
+    {
+      "question": "Отрицательный индекс?",
+      "reference": "a[-1] — последний элемент."
+    },
+    {
+      "question": "Что такое unpacking?",
+      "reference": "a, b = (1, 2); *rest, last = [1,2,3,4] — распаковка."
+    },
+    {
+      "question": "Что такое walrus operator := ?",
+      "reference": "Присваивание в выражении: if (n := len(data)) > 10: ... (Python 3.8+)."
+    },
+    {
+      "question": "Что такое match/case?",
+      "reference": "Structural pattern matching Python 3.10+: match value: case pattern: ..."
+    },
+    {
+      "question": "Что такое f-string?",
+      "reference": "f'Hello {name}' — форматирование строк, выражения в {}."
+    },
+    {
+      "question": "Что такое docstring?",
+      "reference": "Строка сразу после def/class — __doc__, help(). Тройные кавычки."
+    },
+    {
+      "question": "Что такое type hints?",
+      "reference": "Аннотации def foo(x: int) -> str — для статического анализа, не enforced runtime."
+    },
+    {
+      "question": "Что такое __init__?",
+      "reference": "Конструктор экземпляра класса, вызывается после __new__."
+    },
+    {
+      "question": "Что такое self?",
+      "reference": "Ссылка на текущий экземпляр в методах класса."
+    },
+    {
+      "question": "Что такое @staticmethod?",
+      "reference": "Метод без self/cls — обычная функция в namespace класса."
+    },
+    {
+      "question": "Что такое @classmethod?",
+      "reference": "Первый аргумент cls — альтернативные конструкторы, доступ к классу."
+    },
+    {
+      "question": "Что такое @property?",
+      "reference": "Геттер как атрибут: obj.x вместо obj.get_x()."
+    },
+    {
+      "question": "Что такое наследование?",
+      "reference": "class Child(Parent): — переиспользование и расширение поведения."
+    },
+    {
+      "question": "MRO — что это?",
+      "reference": "Method Resolution Order — порядок поиска методов при множественном наследовании (C3)."
+    },
+    {
+      "question": "Что такое super()?",
+      "reference": "Вызов метода родителя в наследнике с корректным MRO."
+    },
+    {
+      "question": "Что такое dunder __str__ vs __repr__?",
+      "reference": "__str__ — для пользователя; __repr__ — од однозначное repr для отладки."
+    },
+    {
+      "question": "Что такое __eq__?",
+      "reference": "Определяет поведение == для объектов."
+    },
+    {
+      "question": "Что такое __hash__?",
+      "reference": "Нужен для set/dict keys; если __eq__ — immutable objects должны иметь согласованный hash."
+    },
+    {
+      "question": "Что такое исключение?",
+      "reference": "Механизм ошибок: try/except/finally/else. raise ValueError('msg')."
+    },
+    {
+      "question": "Что такое finally?",
+      "reference": "Выполняется всегда — cleanup ресурсов."
+    },
+    {
+      "question": "else в try?",
+      "reference": "Выполняется если try завершился без except."
+    },
+    {
+      "question": "Что такое generator?",
+      "reference": "Функция с yield — ленивая итерация, сохраняет state между вызовами."
+    },
+    {
+      "question": "yield from?",
+      "reference": "Делегирование другому generator/iterable."
+    },
+    {
+      "question": "Что такое iterator?",
+      "reference": "Объект с __iter__ и __next__; StopIteration в конце."
+    },
+    {
+      "question": "Что такое iterable?",
+      "reference": "Объект с __iter__ — list, str, dict keys, generator."
+    },
+    {
+      "question": "Что такое decorator?",
+      "reference": "@decorator над функцией — wrapper, часто functools.wraps."
+    },
+    {
+      "question": "Что такое closure?",
+      "reference": "Внутренняя функция захватывает переменные enclosing scope."
+    },
+    {
+      "question": "nonlocal vs global?",
+      "reference": "nonlocal — изменить переменную enclosing; global — модульная."
+    },
+    {
+      "question": "Что такое context manager?",
+      "reference": "with open(...) as f: — __enter__/__exit__ или @contextmanager."
+    },
+    {
+      "question": "Что такое list comprehension?",
+      "reference": "[x*2 for x in range(10) if x % 2] — компактное создание списка."
+    },
+    {
+      "question": "dict comprehension?",
+      "reference": "{k: v for k, v in pairs}."
+    },
+    {
+      "question": "set comprehension?",
+      "reference": "{x for x in items}."
+    },
+    {
+      "question": "Что такое lambda?",
+      "reference": "Анонимная однострочная функция: lambda x: x*2."
+    },
+    {
+      "question": "map/filter/zip?",
+      "reference": "map(fn, iter), filter(pred, iter), zip(a,b) — итераторы; часто заменяются comprehensions."
+    },
+    {
+      "question": "enumerate?",
+      "reference": "for i, val in enumerate(items): — индекс + значение."
+    },
+    {
+      "question": "range?",
+      "reference": "range(stop) или range(start, stop, step) — lazy последовательность int."
+    },
+    {
+      "question": "sorted vs list.sort?",
+      "reference": "sorted возвращает новый list; .sort() in-place."
+    },
+    {
+      "question": "copy vs deepcopy?",
+      "reference": "copy.copy — shallow; copy.deepcopy — рекурсивная копия вложенных mutable."
+    },
+    {
+      "question": "defaultdict?",
+      "reference": "collections.defaultdict(factory) — auto default для missing keys."
+    },
+    {
+      "question": "Counter?",
+      "reference": "collections.Counter — подсчёт элементов, most_common()."
+    },
+    {
+      "question": "namedtuple?",
+      "reference": "collections.namedtuple — tuple с именованными полями."
+    },
+    {
+      "question": "deque?",
+      "reference": "collections.deque — быстрые append/pop с обоих концов."
+    },
+    {
+      "question": "dataclass?",
+      "reference": "@dataclass — автогенерация __init__, __repr__, сравнений."
+    },
+    {
+      "question": "Enum?",
+      "reference": "enum.Enum — именованные константы class Color(Enum): RED=1."
+    },
+    {
+      "question": "pathlib Path?",
+      "reference": "OOP пути: Path('a/b') / 'c.txt', .read_text(), .exists()."
+    },
+    {
+      "question": "json.loads/dumps?",
+      "reference": "Сериализация JSON; default=str для non-serializable."
+    },
+    {
+      "question": "datetime vs date?",
+      "reference": "datetime — дата+время; date — только дата; timezone-aware vs naive."
+    },
+    {
+      "question": "logging vs print?",
+      "reference": "logging — уровни, handlers, production; print — отладка."
+    },
+    {
+      "question": "unittest vs pytest?",
+      "reference": "unittest — stdlib; pytest — fixtures, parametrize, популярнее."
+    },
+    {
+      "question": "Что такое GIL?",
+      "reference": "Global Interpreter Lock — один поток bytecode в CPython; CPU-bound threading ограничен."
+    },
+    {
+      "question": "threading vs multiprocessing?",
+      "reference": "threading — I/O bound shared memory; multiprocessing — CPU bound отдельные процессы."
+    },
+    {
+      "question": "asyncio?",
+      "reference": "async/await cooperative concurrency для I/O; event loop."
+    },
+    {
+      "question": "async def?",
+      "reference": "Корутина — await на awaitable; asyncio.run(main())."
+    },
+    {
+      "question": "__all__?",
+      "reference": "Список public API при from module import *."
+    },
+    {
+      "question": "__slots__?",
+      "reference": "Ограничение атрибутов экземпляра — экономия памяти, фиксированные поля."
+    },
+    {
+      "question": "ABC abstractmethod?",
+      "reference": "abc.ABC + @abstractmethod — интерфейс с обязательной реализацией."
+    },
+    {
+      "question": "Protocol typing?",
+      "reference": "Structural subtyping — typing.Protocol для duck typing статически."
+    },
+    {
+      "question": "Optional и Union?",
+      "reference": "Optional[T] == Union[T, None]; Union[int, str] — несколько типов."
+    },
+    {
+      "question": "list vs List typing?",
+      "reference": "list[int] Python 3.9+; раньше List[int] from typing."
+    },
+    {
+      "question": "TypeVar generics?",
+      "reference": "T = TypeVar('T') для generic функций/классов."
+    },
+    {
+      "question": "isinstance vs type?",
+      "reference": "isinstance учитывает наследование; type(x) is int — exact type."
+    },
+    {
+      "question": "getattr/setattr/hasattr?",
+      "reference": "Динамический доступ к атрибутам по строковому имени."
+    },
+    {
+      "question": "callable?",
+      "reference": "callable(x) — можно ли вызвать x()."
+    },
+    {
+      "question": "any/all?",
+      "reference": "any(iter) — хотя бы один True; all(iter) — все True."
+    },
+    {
+      "question": "min/max/sum?",
+      "reference": "Агрегации; key= для custom compare."
+    },
+    {
+      "question": "re module?",
+      "reference": "regex: re.search, re.match, re.sub, raw strings r'\\d+'."
+    },
+    {
+      "question": "os vs sys?",
+      "reference": "os — файловая система, env; sys — interpreter argv, path, exit."
+    },
+    {
+      "question": "subprocess?",
+      "reference": "Запуск внешних команд без shell когда возможно."
+    },
+    {
+      "question": "pickle?",
+      "reference": "Сериализация Python objects — не безопасно для untrusted data."
+    },
+    {
+      "question": "with open encoding?",
+      "reference": "open(path, encoding='utf-8') — явная кодировка текстовых файлов."
+    },
+    {
+      "question": "if __name__ guard зачем?",
+      "reference": "Разделение importable module и script entry point."
+    },
+    {
+      "card_type": "code",
+      "question": "Mutable default argument.",
+      "task": "Исправь — каждый вызов должен получать новый пустой список.",
+      "code": "def add_item(item, bucket=[]):\n    bucket.append(item)\n    return bucket",
+      "reference": "def add_item(item, bucket=None):\n    if bucket is None:\n        bucket = []\n    bucket.append(item)\n    return bucket"
+    },
+    {
+      "card_type": "code",
+      "question": "IndexError при доступе к списку.",
+      "task": "Безопасно получи последний элемент или None.",
+      "code": "items = []\nlast = items[-1]",
+      "reference": "items = []\nlast = items[-1] if items else None\n# или: last = next(iter(reversed(items)), None)"
+    },
+    {
+      "card_type": "code",
+      "question": "Сравнение строк и чисел.",
+      "task": "Исправь проверку возраста — age приходит строкой из input.",
+      "code": "age = input('Age: ')\nif age >= 18:\n    print('adult')",
+      "reference": "age = int(input('Age: '))\nif age >= 18:\n    print('adult')"
+    },
+    {
+      "card_type": "code",
+      "question": "Копирование вложенного списка.",
+      "task": "Исправь — изменение b не должно менять a.",
+      "code": "import copy\na = [[1], [2]]\nb = copy.copy(a)\nb[0].append(99)\n# a тоже изменился",
+      "reference": "import copy\na = [[1], [2]]\nb = copy.deepcopy(a)\nb[0].append(99)"
+    },
+    {
+      "card_type": "code",
+      "question": "File not closed.",
+      "task": "Перепиши с context manager.",
+      "code": "f = open('data.txt')\ndata = f.read()\nf.close()",
+      "reference": "with open('data.txt', encoding='utf-8') as f:\n    data = f.read()"
+    },
+    {
+      "card_type": "code",
+      "question": "KeyError в dict.",
+      "task": "Получи значение с default без исключения.",
+      "code": "user = {'name': 'Ann'}\nemail = user['email']",
+      "reference": "email = user.get('email')\n# или user.get('email', '')"
+    },
+    {
+      "card_type": "code",
+      "question": "Set unique wrong way.",
+      "task": "Оставь уникальные слова, сохранив порядок (Py3.7+ dict).",
+      "code": "words = ['a', 'b', 'a', 'c']\nunique = list(set(words))",
+      "reference": "unique = list(dict.fromkeys(words))"
+    },
+    {
+      "card_type": "code",
+      "question": "Range off-by-one.",
+      "task": "Сгенерируй числа 1..10 включительно.",
+      "code": "nums = list(range(1, 10))\nprint(nums)",
+      "reference": "nums = list(range(1, 11))"
+    },
+    {
+      "card_type": "code",
+      "question": "String concatenation in loop.",
+      "task": "Эффективно собери строки.",
+      "code": "parts = ['a', 'b', 'c']\nresult = ''\nfor p in parts:\n    result += p",
+      "reference": "result = ''.join(parts)"
+    },
+    {
+      "card_type": "code",
+      "question": "Exception too broad.",
+      "task": "Лови конкретное исключение и пробрасывай дальше при необходимости.",
+      "code": "try:\n    value = int(text)\nexcept:\n    value = 0",
+      "reference": "try:\n    value = int(text)\nexcept ValueError:\n    value = 0"
+    },
+    {
+      "card_type": "code",
+      "question": "Class attribute shared.",
+      "task": "Исправь — у каждого User свой список tags.",
+      "code": "class User:\n    tags = []\n\n    def add_tag(self, tag):\n        self.tags.append(tag)",
+      "reference": "class User:\n    def __init__(self):\n        self.tags = []\n\n    def add_tag(self, tag):\n        self.tags.append(tag)"
+    },
+    {
+      "card_type": "code",
+      "question": "Missing return self in fluent API.",
+      "task": "Добавь return self в setter.",
+      "code": "class Query:\n    def filter(self, **kwargs):\n        self._filters.update(kwargs)\n\n    def limit(self, n):\n        self._limit = n\n        return self",
+      "reference": "class Query:\n    def filter(self, **kwargs):\n        self._filters.update(kwargs)\n        return self"
+    },
+    {
+      "card_type": "code",
+      "question": "Generator never yields.",
+      "task": "Допиши yield для чтения файла построчно.",
+      "code": "def read_lines(path):\n    with open(path, encoding='utf-8') as f:\n        for line in f:\n            pass",
+      "reference": "def read_lines(path):\n    with open(path, encoding='utf-8') as f:\n        for line in f:\n            yield line.rstrip('\\n')"
+    },
+    {
+      "card_type": "code",
+      "question": "Decorator loses metadata.",
+      "task": "Используй wraps.",
+      "code": "def logged(fn):\n    def wrapper(*args, **kwargs):\n        print('call', fn.__name__)\n        return fn(*args, **kwargs)\n    return wrapper",
+      "reference": "from functools import wraps\n\ndef logged(fn):\n    @wraps(fn)\n    def wrapper(*args, **kwargs):\n        print('call', fn.__name__)\n        return fn(*args, **kwargs)\n    return wrapper"
+    },
+    {
+      "card_type": "code",
+      "question": "List comprehension syntax.",
+      "task": "Квадраты чётных чисел 0..8.",
+      "code": "# result = ...",
+      "reference": "result = [x * x for x in range(10) if x % 2 == 0]"
+    },
+    {
+      "card_type": "code",
+      "question": "Dict merge Python 3.9+.",
+      "task": "Объедини defaults и overrides.",
+      "code": "defaults = {'a': 1, 'b': 2}\noverrides = {'b': 99}\n# merged =",
+      "reference": "merged = defaults | overrides\n# или {**defaults, **overrides}"
+    },
+    {
+      "card_type": "code",
+      "question": "Enum comparison.",
+      "task": "Сравни статус с enum, не со строкой.",
+      "code": "from enum import Enum\n\nclass Status(Enum):\n    ACTIVE = 'active'\n\nif status == 'active':\n    ...",
+      "reference": "if status == Status.ACTIVE:\n    ...\n# или status is Status.ACTIVE"
+    },
+    {
+      "card_type": "code",
+      "question": "Pathlib join.",
+      "task": "Собери путь config/settings.json от base.",
+      "code": "import os\nbase = '/var/app'\npath = os.path.join(base, 'config', 'settings.json')",
+      "reference": "from pathlib import Path\npath = Path('/var/app') / 'config' / 'settings.json'"
+    },
+    {
+      "card_type": "code",
+      "question": "JSON load file.",
+      "task": "Загрузи JSON с обработкой ошибок.",
+      "code": "import json\ndata = json.load(open('cfg.json'))",
+      "reference": "import json\nfrom pathlib import Path\n\nwith Path('cfg.json').open(encoding='utf-8') as f:\n    data = json.load(f)"
+    },
+    {
+      "card_type": "code",
+      "question": "Dataclass defaults.",
+      "task": "Исправь mutable default в dataclass.",
+      "code": "from dataclasses import dataclass\n\n@dataclass\nclass Bag:\n    items: list = []",
+      "reference": "from dataclasses import dataclass, field\n\n@dataclass\nclass Bag:\n    items: list = field(default_factory=list)"
+    },
+    {
+      "card_type": "code",
+      "question": "Type hint optional.",
+      "task": "Аннотируй name как optional str.",
+      "code": "def greet(name):\n    return f'Hi {name or \"guest\"}'",
+      "reference": "def greet(name: str | None) -> str:\n    return f'Hi {name or \"guest\"}'"
+    },
+    {
+      "card_type": "code",
+      "question": "Walrus in while.",
+      "task": "Прочитай строки пока не пустая (:=).",
+      "code": "while True:\n    line = input()\n    if line == '':\n        break\n    process(line)",
+      "reference": "while (line := input()) != '':\n    process(line)"
+    },
+    {
+      "card_type": "code",
+      "question": "Match case 3.10.",
+      "task": "Перепиши if/elif chain на match по команде.",
+      "code": "cmd = 'quit'\nif cmd == 'quit':\n    stop()\nelif cmd == 'save':\n    save()\nelse:\n    unknown()",
+      "reference": "match cmd:\n    case 'quit':\n        stop()\n    case 'save':\n        save()\n    case _:\n        unknown()"
+    },
+    {
+      "card_type": "code",
+      "question": "async await missing.",
+      "task": "Допиши await для fetch.",
+      "code": "import asyncio\n\nasync def main():\n    data = fetch_url('https://example.com')\n    print(data)\n\nasyncio.run(main())",
+      "reference": "async def main():\n    data = await fetch_url('https://example.com')\n    print(data)"
+    },
+    {
+      "card_type": "code",
+      "question": "Sorting custom key.",
+      "task": "Отсортируй users по len(name).",
+      "code": "users = [{'name': 'bob'}, {'name': 'ann'}]\nusers.sort()",
+      "reference": "users.sort(key=lambda u: len(u['name']))"
+    },
+    {
+      "card_type": "code",
+      "question": "Counter most common.",
+      "task": "Топ-3 слова по частоте.",
+      "code": "from collections import Counter\nwords = ['a', 'b', 'a', 'c', 'a', 'b']\n# top =",
+      "reference": "top = Counter(words).most_common(3)"
+    },
+    {
+      "card_type": "code",
+      "question": "is vs == None.",
+      "task": "Исправь проверку на None.",
+      "code": "if value == None:\n    ...",
+      "reference": "if value is None:\n    ..."
+    },
+    {
+      "card_type": "code",
+      "question": "Remove item while iterating.",
+      "task": "Безопасно убери нули из списка.",
+      "code": "nums = [1, 0, 2, 0, 3]\nfor n in nums:\n    if n == 0:\n        nums.remove(n)",
+      "reference": "nums = [n for n in nums if n != 0]\n# или list comprehension / filter"
+    },
+    {
+      "card_type": "code",
+      "question": "Unpacking swap.",
+      "task": "Поменяй a и b без temp.",
+      "code": "a, b = 1, 2\ntemp = a\na = b\nb = temp",
+      "reference": "a, b = 1, 2\na, b = b, a"
+    },
+    {
+      "card_type": "code",
+      "question": "f-string formatting.",
+      "task": "Выведи price с 2 знаками.",
+      "code": "price = 3.5\nmsg = 'Price: ' + str(round(price, 2))",
+      "reference": "msg = f'Price: {price:.2f}'"
+    },
+    {
+      "card_type": "code",
+      "question": "Context manager class.",
+      "task": "Допиши __exit__ для автоматического close.",
+      "code": "class Managed:\n    def __enter__(self):\n        self.resource = open_resource()\n        return self.resource\n\n    def __exit__(self, exc_type, exc, tb):\n        pass",
+      "reference": "def __exit__(self, exc_type, exc, tb):\n        self.resource.close()\n        return False"
+    },
+    {
+      "card_type": "code",
+      "question": "Property setter.",
+      "task": "Добавь setter с валидацией age > 0.",
+      "code": "class Person:\n    def __init__(self, age):\n        self._age = age\n\n    @property\n    def age(self):\n        return self._age",
+      "reference": "@age.setter\ndef age(self, value):\n    if value <= 0:\n        raise ValueError('age must be positive')\n    self._age = value"
+    },
+    {
+      "card_type": "code",
+      "question": "Super init.",
+      "task": "Вызови родительский __init__.",
+      "code": "class Animal:\n    def __init__(self, name):\n        self.name = name\n\nclass Dog(Animal):\n    def __init__(self, name, breed):\n        self.breed = breed",
+      "reference": "class Dog(Animal):\n    def __init__(self, name, breed):\n        super().__init__(name)\n        self.breed = breed"
+    },
+    {
+      "card_type": "code",
+      "question": "Read env variable.",
+      "task": "Получи DATABASE_URL с default.",
+      "code": "import os\nurl = os.environ['DATABASE_URL']",
+      "reference": "url = os.environ.get('DATABASE_URL', 'sqlite:///local.db')"
+    },
+    {
+      "card_type": "code",
+      "question": "Split lines.",
+      "task": "Разбей multiline string на непустые строки.",
+      "code": "text = 'a\\nb\\n\\nc'\nlines = text.split('\\n')\nresult = [l for l in lines if l]",
+      "reference": "result = [line for line in text.splitlines() if line.strip()]"
+    },
+    {
+      "card_type": "code",
+      "question": "Zip dict.",
+      "task": "Собери dict из двух списков keys и values.",
+      "code": "keys = ['a', 'b']\nvalues = [1, 2]\nd = {}\nfor i in range(len(keys)):\n    d[keys[i]] = values[i]",
+      "reference": "d = dict(zip(keys, values))"
+    },
+    {
+      "card_type": "code",
+      "question": "Reverse string.",
+      "task": "Идиоматичный reverse строки s.",
+      "code": "def rev(s):\n    out = ''\n    for ch in s:\n        out = ch + out\n    return out",
+      "reference": "def rev(s):\n    return s[::-1]"
+    },
+    {
+      "card_type": "code",
+      "question": "Any all validation.",
+      "task": "Проверь что все числа > 0.",
+      "code": "nums = [1, 2, 3]\nok = True\nfor n in nums:\n    if n <= 0:\n        ok = False\n        break",
+      "reference": "ok = all(n > 0 for n in nums)"
+    },
+    {
+      "card_type": "code",
+      "question": "Defaultdict grouping.",
+      "task": "Сгруппируй слова по первой букве.",
+      "code": "from collections import defaultdict\n\ngroups = defaultdict(list)\nfor word in words:\n    key = word[0]\n    if key not in groups:\n        groups[key] = []\n    groups[key].append(word)",
+      "reference": "groups = defaultdict(list)\nfor word in words:\n    groups[word[0]].append(word)"
+    },
+    {
+      "card_type": "code",
+      "question": "Raise with message.",
+      "task": "Брось ValueError если x отрицательный.",
+      "code": "def sqrt_pos(x):\n    return x ** 0.5",
+      "reference": "def sqrt_pos(x):\n    if x < 0:\n        raise ValueError('x must be non-negative')\n    return x ** 0.5"
+    },
+    {
+      "card_type": "code",
+      "question": "Logging level.",
+      "task": "Настрой INFO и лог вместо print.",
+      "code": "print('Server started')",
+      "reference": "import logging\nlogging.basicConfig(level=logging.INFO)\nlogging.info('Server started')"
+    },
+    {
+      "question": "ООП Python: инкапсуляция?",
+      "reference": "Сокрытие деталей через _private и @property"
+    },
+    {
+      "question": "Пример использования инкапсуляция в Python?",
+      "reference": "Сокрытие деталей через _private и @property"
+    },
+    {
+      "question": "ООП Python: полиморфизм?",
+      "reference": "Один интерфейс — разные реализации duck typing"
+    },
+    {
+      "question": "Пример использования полиморфизм в Python?",
+      "reference": "Один интерфейс — разные реализации duck typing"
+    },
+    {
+      "question": "ООП Python: абстракция?",
+      "reference": "ABC, Protocol — контракт без деталей реализации"
+    },
+    {
+      "question": "Пример использования абстракция в Python?",
+      "reference": "ABC, Protocol — контракт без деталей реализации"
+    },
+    {
+      "question": "ООП Python: композиция vs наследование?",
+      "reference": "has-a часто лучше is-a для гибкости"
+    },
+    {
+      "question": "Пример использования композиция vs наследование в Python?",
+      "reference": "has-a часто лучше is-a для гибкости"
+    },
+    {
+      "question": "ООП Python: duck typing?",
+      "reference": "Если walk/quack как утка — не нужен общий базовый класс"
+    },
+    {
+      "question": "Пример использования duck typing в Python?",
+      "reference": "Если walk/quack как утка — не нужен общий базовый класс"
+    },
+    {
+      "question": "ООП Python: magic methods?",
+      "reference": "__len__, __contains__, __getitem__ для protocol objects"
+    },
+    {
+      "question": "Пример использования magic methods в Python?",
+      "reference": "__len__, __contains__, __getitem__ для protocol objects"
+    },
+    {
+      "question": "ООП Python: descriptor?",
+      "reference": "__get__/__set__ — механизм property, ORM fields"
+    },
+    {
+      "question": "Пример использования descriptor в Python?",
+      "reference": "__get__/__set__ — механизм property, ORM fields"
+    },
+    {
+      "question": "ООП Python: metaclass?",
+      "reference": "type или custom metaclass — редко, class creation hook"
+    },
+    {
+      "question": "Пример использования metaclass в Python?",
+      "reference": "type или custom metaclass — редко, class creation hook"
+    },
+    {
+      "question": "ООП Python: __new__ vs __init__?",
+      "reference": "__new__ создаёт instance; __init__ инициализирует"
+    },
+    {
+      "question": "Пример использования __new__ vs __init__ в Python?",
+      "reference": "__new__ создаёт instance; __init__ инициализирует"
+    },
+    {
+      "question": "ООП Python: singleton antipattern?",
+      "reference": "Модуль-level object часто проще singleton class"
+    },
+    {
+      "question": "Пример использования singleton antipattern в Python?",
+      "reference": "Модуль-level object часто проще singleton class"
+    },
+    {
+      "question": "stdlib: модуль json — зачем?",
+      "reference": "json.loads/dumps, load/dump files"
+    },
+    {
+      "question": "Когда выбрать json вместо альтернатив?",
+      "reference": "Использовать json когда json.loads/dumps, load/dump files."
+    },
+    {
+      "question": "stdlib: модуль csv — зачем?",
+      "reference": "csv.reader/writer, DictReader"
+    },
+    {
+      "question": "Когда выбрать csv вместо альтернатив?",
+      "reference": "Использовать csv когда csv.reader/writer, DictReader."
+    },
+    {
+      "question": "stdlib: модуль pathlib — зачем?",
+      "reference": "Path объект для путей"
+    },
+    {
+      "question": "Когда выбрать pathlib вместо альтернатив?",
+      "reference": "Использовать pathlib когда Path объект для путей."
+    },
+    {
+      "question": "stdlib: модуль datetime — зачем?",
+      "reference": "datetime, date, timedelta, timezone"
+    },
+    {
+      "question": "Когда выбрать datetime вместо альтернатив?",
+      "reference": "Использовать datetime когда datetime, date, timedelta, timezone."
+    },
+    {
+      "question": "stdlib: модуль collections — зачем?",
+      "reference": "Counter, defaultdict, deque, namedtuple"
+    },
+    {
+      "question": "Когда выбрать collections вместо альтернатив?",
+      "reference": "Использовать collections когда Counter, defaultdict, deque, namedtuple."
+    },
+    {
+      "question": "stdlib: модуль itertools — зачем?",
+      "reference": "chain, product, permutations, groupby"
+    },
+    {
+      "question": "Когда выбрать itertools вместо альтернатив?",
+      "reference": "Использовать itertools когда chain, product, permutations, groupby."
+    },
+    {
+      "question": "stdlib: модуль functools — зачем?",
+      "reference": "lru_cache, partial, wraps, reduce"
+    },
+    {
+      "question": "Когда выбрать functools вместо альтернатив?",
+      "reference": "Использовать functools когда lru_cache, partial, wraps, reduce."
+    },
+    {
+      "question": "stdlib: модуль typing — зачем?",
+      "reference": "Optional, Union, Protocol, TypedDict"
+    },
+    {
+      "question": "Когда выбрать typing вместо альтернатив?",
+      "reference": "Использовать typing когда Optional, Union, Protocol, TypedDict."
+    },
+    {
+      "question": "stdlib: модуль dataclasses — зачем?",
+      "reference": "@dataclass, field, asdict"
+    },
+    {
+      "question": "Когда выбрать dataclasses вместо альтернатив?",
+      "reference": "Использовать dataclasses когда @dataclass, field, asdict."
+    },
+    {
+      "question": "stdlib: модуль enum — зачем?",
+      "reference": "Enum, IntEnum, auto"
+    },
+    {
+      "question": "Когда выбрать enum вместо альтернатив?",
+      "reference": "Использовать enum когда Enum, IntEnum, auto."
+    },
+    {
+      "question": "stdlib: модуль re — зачем?",
+      "reference": "regex match search sub"
+    },
+    {
+      "question": "Когда выбрать re вместо альтернатив?",
+      "reference": "Использовать re когда regex match search sub."
+    },
+    {
+      "question": "stdlib: модуль math — зачем?",
+      "reference": "ceil floor sqrt isnan"
+    },
+    {
+      "question": "Когда выбрать math вместо альтернатив?",
+      "reference": "Использовать math когда ceil floor sqrt isnan."
+    },
+    {
+      "question": "stdlib: модуль random — зачем?",
+      "reference": "random, randint, choice, seed — не crypto"
+    },
+    {
+      "question": "Когда выбрать random вместо альтернатив?",
+      "reference": "Использовать random когда random, randint, choice, seed — не crypto."
+    },
+    {
+      "question": "stdlib: модуль secrets — зачем?",
+      "reference": "token_hex, choice — crypto random"
+    },
+    {
+      "question": "Когда выбрать secrets вместо альтернатив?",
+      "reference": "Использовать secrets когда token_hex, choice — crypto random."
+    },
+    {
+      "question": "stdlib: модуль hashlib — зачем?",
+      "reference": "sha256 hexdigest"
+    },
+    {
+      "question": "Когда выбрать hashlib вместо альтернатив?",
+      "reference": "Использовать hashlib когда sha256 hexdigest."
+    },
+    {
+      "question": "stdlib: модуль hmac — зачем?",
+      "reference": "compare_digest message auth"
+    },
+    {
+      "question": "Когда выбрать hmac вместо альтернатив?",
+      "reference": "Использовать hmac когда compare_digest message auth."
+    },
+    {
+      "question": "stdlib: модуль sqlite3 — зачем?",
+      "reference": "DB-API connect cursor execute"
+    },
+    {
+      "question": "Когда выбрать sqlite3 вместо альтернатив?",
+      "reference": "Использовать sqlite3 когда DB-API connect cursor execute."
+    },
+    {
+      "question": "stdlib: модуль urllib — зачем?",
+      "reference": "request.urlopen parse"
+    },
+    {
+      "question": "Когда выбрать urllib вместо альтернатив?",
+      "reference": "Использовать urllib когда request.urlopen parse."
+    },
+    {
+      "question": "stdlib: модуль http.client — зачем?",
+      "reference": "низкоуровневый HTTP"
+    },
+    {
+      "question": "Когда выбрать http.client вместо альтернатив?",
+      "reference": "Использовать http.client когда низкоуровневый HTTP."
+    },
+    {
+      "question": "stdlib: модуль socket — зачем?",
+      "reference": "TCP/UDP networking"
+    },
+    {
+      "question": "Когда выбрать socket вместо альтернатив?",
+      "reference": "Использовать socket когда TCP/UDP networking."
+    },
+    {
+      "question": "stdlib: модуль threading — зачем?",
+      "reference": "Thread, Lock, Event"
+    },
+    {
+      "question": "Когда выбрать threading вместо альтернатив?",
+      "reference": "Использовать threading когда Thread, Lock, Event."
+    },
+    {
+      "question": "stdlib: модуль multiprocessing — зачем?",
+      "reference": "Process, Pool, Queue"
+    },
+    {
+      "question": "Когда выбрать multiprocessing вместо альтернатив?",
+      "reference": "Использовать multiprocessing когда Process, Pool, Queue."
+    },
+    {
+      "question": "stdlib: модуль asyncio — зачем?",
+      "reference": "run, create_task, gather, sleep"
+    },
+    {
+      "question": "Когда выбрать asyncio вместо альтернатив?",
+      "reference": "Использовать asyncio когда run, create_task, gather, sleep."
+    },
+    {
+      "question": "stdlib: модуль logging — зачем?",
+      "reference": "getLogger, handlers, formatters"
+    },
+    {
+      "question": "Когда выбрать logging вместо альтернатив?",
+      "reference": "Использовать logging когда getLogger, handlers, formatters."
+    },
+    {
+      "question": "stdlib: модуль argparse — зачем?",
+      "reference": "CLI arguments parser"
+    },
+    {
+      "question": "Когда выбрать argparse вместо альтернатив?",
+      "reference": "Использовать argparse когда CLI arguments parser."
+    },
+    {
+      "question": "stdlib: модуль configparser — зачем?",
+      "reference": "INI files"
+    },
+    {
+      "question": "Когда выбрать configparser вместо альтернатив?",
+      "reference": "Использовать configparser когда INI files."
+    },
+    {
+      "question": "stdlib: модуль tomllib — зачем?",
+      "reference": "TOML read Python 3.11+ stdlib"
+    },
+    {
+      "question": "Когда выбрать tomllib вместо альтернатив?",
+      "reference": "Использовать tomllib когда TOML read Python 3.11+ stdlib."
+    },
+    {
+      "question": "stdlib: модуль pickle — зачем?",
+      "reference": "serialize — unsafe untrusted"
+    },
+    {
+      "question": "Когда выбрать pickle вместо альтернатив?",
+      "reference": "Использовать pickle когда serialize — unsafe untrusted."
+    },
+    {
+      "question": "stdlib: модуль copy — зачем?",
+      "reference": "copy, deepcopy"
+    },
+    {
+      "question": "Когда выбрать copy вместо альтернатив?",
+      "reference": "Использовать copy когда copy, deepcopy."
+    },
+    {
+      "question": "stdlib: модуль pprint — зачем?",
+      "reference": "pretty print structures"
+    },
+    {
+      "question": "Когда выбрать pprint вместо альтернатив?",
+      "reference": "Использовать pprint когда pretty print structures."
+    },
+    {
+      "question": "stdlib: модуль textwrap — зачем?",
+      "reference": "wrap, dedent, indent"
+    },
+    {
+      "question": "Когда выбрать textwrap вместо альтернатив?",
+      "reference": "Использовать textwrap когда wrap, dedent, indent."
+    },
+    {
+      "question": "stdlib: модуль string — зачем?",
+      "reference": "Template, ascii_letters"
+    },
+    {
+      "question": "Когда выбрать string вместо альтернатив?",
+      "reference": "Использовать string когда Template, ascii_letters."
+    },
+    {
+      "question": "stdlib: модуль decimal — зачем?",
+      "reference": "Decimal точная decimal arithmetic"
+    },
+    {
+      "question": "Когда выбрать decimal вместо альтернатив?",
+      "reference": "Использовать decimal когда Decimal точная decimal arithmetic."
+    },
+    {
+      "question": "stdlib: модуль fractions — зачем?",
+      "reference": "Fraction rational numbers"
+    },
+    {
+      "question": "Когда выбрать fractions вместо альтернатив?",
+      "reference": "Использовать fractions когда Fraction rational numbers."
+    },
+    {
+      "question": "stdlib: модуль statistics — зачем?",
+      "reference": "mean median stdev"
+    },
+    {
+      "question": "Когда выбрать statistics вместо альтернатив?",
+      "reference": "Использовать statistics когда mean median stdev."
+    },
+    {
+      "question": "stdlib: модуль heapq — зачем?",
+      "reference": "heap push pop nsmallest"
+    },
+    {
+      "question": "Когда выбрать heapq вместо альтернатив?",
+      "reference": "Использовать heapq когда heap push pop nsmallest."
+    },
+    {
+      "question": "stdlib: модуль bisect — зачем?",
+      "reference": "sorted list insert search"
+    },
+    {
+      "question": "Когда выбрать bisect вместо альтернатив?",
+      "reference": "Использовать bisect когда sorted list insert search."
+    },
+    {
+      "question": "stdlib: модуль array — зачем?",
+      "reference": "typed array compact storage"
+    },
+    {
+      "question": "Когда выбрать array вместо альтернатив?",
+      "reference": "Использовать array когда typed array compact storage."
+    },
+    {
+      "question": "stdlib: модуль struct — зачем?",
+      "reference": "pack unpack binary"
+    },
+    {
+      "question": "Когда выбрать struct вместо альтернатив?",
+      "reference": "Использовать struct когда pack unpack binary."
+    },
+    {
+      "question": "stdlib: модуль gzip — зачем?",
+      "reference": "compress decompress files"
+    },
+    {
+      "question": "Когда выбрать gzip вместо альтернатив?",
+      "reference": "Использовать gzip когда compress decompress files."
+    },
+    {
+      "question": "stdlib: модуль shutil — зачем?",
+      "reference": "copytree, rmtree, which"
+    },
+    {
+      "question": "Когда выбрать shutil вместо альтернатив?",
+      "reference": "Использовать shutil когда copytree, rmtree, which."
+    },
+    {
+      "question": "stdlib: модуль tempfile — зачем?",
+      "reference": "TemporaryDirectory, NamedTemporaryFile"
+    },
+    {
+      "question": "Когда выбрать tempfile вместо альтернатив?",
+      "reference": "Использовать tempfile когда TemporaryDirectory, NamedTemporaryFile."
+    },
+    {
+      "question": "stdlib: модуль glob — зачем?",
+      "reference": "pathname patterns"
+    },
+    {
+      "question": "Когда выбрать glob вместо альтернатив?",
+      "reference": "Использовать glob когда pathname patterns."
+    },
+    {
+      "question": "stdlib: модуль fnmatch — зачем?",
+      "reference": "filename pattern match"
+    },
+    {
+      "question": "Когда выбрать fnmatch вместо альтернатив?",
+      "reference": "Использовать fnmatch когда filename pattern match."
+    },
+    {
+      "question": "stdlib: модуль subprocess — зачем?",
+      "reference": "run Popen capture_output"
+    },
+    {
+      "question": "Когда выбрать subprocess вместо альтернатив?",
+      "reference": "Использовать subprocess когда run Popen capture_output."
+    },
+    {
+      "question": "stdlib: модуль signal — зачем?",
+      "reference": "SIGINT handlers Unix"
+    },
+    {
+      "question": "Когда выбрать signal вместо альтернатив?",
+      "reference": "Использовать signal когда SIGINT handlers Unix."
+    },
+    {
+      "question": "stdlib: модуль contextlib — зачем?",
+      "reference": "contextmanager, suppress, ExitStack"
+    },
+    {
+      "question": "Когда выбрать contextlib вместо альтернатив?",
+      "reference": "Использовать contextlib когда contextmanager, suppress, ExitStack."
+    },
+    {
+      "question": "stdlib: модуль weakref — зачем?",
+      "reference": "WeakValueDictionary weak refs"
+    },
+    {
+      "question": "Когда выбрать weakref вместо альтернатив?",
+      "reference": "Использовать weakref когда WeakValueDictionary weak refs."
+    },
+    {
+      "question": "stdlib: модуль gc — зачем?",
+      "reference": "garbage collector debug"
+    },
+    {
+      "question": "Когда выбрать gc вместо альтернатив?",
+      "reference": "Использовать gc когда garbage collector debug."
+    },
+    {
+      "question": "stdlib: модуль inspect — зачем?",
+      "reference": "signature, getsource, iscoroutine"
+    },
+    {
+      "question": "Когда выбрать inspect вместо альтернатив?",
+      "reference": "Использовать inspect когда signature, getsource, iscoroutine."
+    },
+    {
+      "question": "stdlib: модуль ast — зачем?",
+      "reference": "parse Python source tree"
+    },
+    {
+      "question": "Когда выбрать ast вместо альтернатив?",
+      "reference": "Использовать ast когда parse Python source tree."
+    },
+    {
+      "question": "stdlib: модуль dis — зачем?",
+      "reference": "disassemble bytecode"
+    },
+    {
+      "question": "Когда выбрать dis вместо альтернатив?",
+      "reference": "Использовать dis когда disassemble bytecode."
+    },
+    {
+      "question": "stdlib: модуль traceback — зачем?",
+      "reference": "format_exc exception chains"
+    },
+    {
+      "question": "Когда выбрать traceback вместо альтернатив?",
+      "reference": "Использовать traceback когда format_exc exception chains."
+    },
+    {
+      "question": "stdlib: модуль warnings — зачем?",
+      "reference": "warn filterwarnings"
+    },
+    {
+      "question": "Когда выбрать warnings вместо альтернатив?",
+      "reference": "Использовать warnings когда warn filterwarnings."
+    },
+    {
+      "question": "stdlib: модуль unittest.mock — зачем?",
+      "reference": "Mock patch MagicMock"
+    },
+    {
+      "question": "Когда выбрать unittest.mock вместо альтернатив?",
+      "reference": "Использовать unittest.mock когда Mock patch MagicMock."
+    },
+    {
+      "question": "stdlib: модуль doctest — зачем?",
+      "reference": "test examples in docstrings"
+    },
+    {
+      "question": "Когда выбрать doctest вместо альтернатив?",
+      "reference": "Использовать doctest когда test examples in docstrings."
+    },
+    {
+      "question": "stdlib: модуль pdb — зачем?",
+      "reference": "debugger break set_trace"
+    },
+    {
+      "question": "Когда выбрать pdb вместо альтернатив?",
+      "reference": "Использовать pdb когда debugger break set_trace."
+    },
+    {
+      "question": "stdlib: модуль cProfile — зачем?",
+      "reference": "profile performance"
+    },
+    {
+      "question": "Когда выбрать cProfile вместо альтернатив?",
+      "reference": "Использовать cProfile когда profile performance."
+    },
+    {
+      "question": "stdlib: модуль timeit — зачем?",
+      "reference": "micro benchmark snippets"
+    },
+    {
+      "question": "Когда выбрать timeit вместо альтернатив?",
+      "reference": "Использовать timeit когда micro benchmark snippets."
+    },
+    {
+      "question": "stdlib: модуль zoneinfo — зачем?",
+      "reference": "IANA timezones Python 3.9+"
+    },
+    {
+      "question": "Когда выбрать zoneinfo вместо альтернатив?",
+      "reference": "Использовать zoneinfo когда IANA timezones Python 3.9+."
+    },
+    {
+      "question": "stdlib: модуль uuid — зачем?",
+      "reference": "uuid4 unique ids"
+    },
+    {
+      "question": "Когда выбрать uuid вместо альтернатив?",
+      "reference": "Использовать uuid когда uuid4 unique ids."
+    },
+    {
+      "question": "stdlib: модуль base64 — зачем?",
+      "reference": "encode decode bytes"
+    },
+    {
+      "question": "Когда выбрать base64 вместо альтернатив?",
+      "reference": "Использовать base64 когда encode decode bytes."
+    },
+    {
+      "question": "stdlib: модуль html — зачем?",
+      "reference": "escape unescape HTML"
+    },
+    {
+      "question": "Когда выбрать html вместо альтернатив?",
+      "reference": "Использовать html когда escape unescape HTML."
+    },
+    {
+      "question": "stdlib: модуль xml.etree — зачем?",
+      "reference": "ElementTree parse XML"
+    },
+    {
+      "question": "Когда выбрать xml.etree вместо альтернатив?",
+      "reference": "Использовать xml.etree когда ElementTree parse XML."
+    },
+    {
+      "question": "Когда возникает SyntaxError?",
+      "reference": "SyntaxError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает IndentationError?",
+      "reference": "IndentationError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает NameError?",
+      "reference": "NameError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает TypeError?",
+      "reference": "TypeError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает ValueError?",
+      "reference": "ValueError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает KeyError?",
+      "reference": "KeyError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает IndexError?",
+      "reference": "IndexError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает AttributeError?",
+      "reference": "AttributeError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает ImportError?",
+      "reference": "ImportError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает ModuleNotFoundError?",
+      "reference": "ModuleNotFoundError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает ZeroDivisionError?",
+      "reference": "ZeroDivisionError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает FileNotFoundError?",
+      "reference": "FileNotFoundError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает PermissionError?",
+      "reference": "PermissionError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает StopIteration?",
+      "reference": "StopIteration — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает RuntimeError?",
+      "reference": "RuntimeError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает NotImplementedError?",
+      "reference": "NotImplementedError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает RecursionError?",
+      "reference": "RecursionError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает MemoryError?",
+      "reference": "MemoryError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает KeyboardInterrupt?",
+      "reference": "KeyboardInterrupt — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает SystemExit?",
+      "reference": "SystemExit — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает AssertionError?",
+      "reference": "AssertionError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Когда возникает UnicodeDecodeError?",
+      "reference": "UnicodeDecodeError — типичная ошибка Python; обрабатывать через try/except если recoverable."
+    },
+    {
+      "question": "Built-in: что делает len()?",
+      "reference": "Встроенная функция Python len. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает print()?",
+      "reference": "Встроенная функция Python print. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает input()?",
+      "reference": "Встроенная функция Python input. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает open()?",
+      "reference": "Встроенная функция Python open. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает range()?",
+      "reference": "Встроенная функция Python range. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает enumerate()?",
+      "reference": "Встроенная функция Python enumerate. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает zip()?",
+      "reference": "Встроенная функция Python zip. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает map()?",
+      "reference": "Встроенная функция Python map. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает filter()?",
+      "reference": "Встроенная функция Python filter. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает sorted()?",
+      "reference": "Встроенная функция Python sorted. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает reversed()?",
+      "reference": "Встроенная функция Python reversed. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает sum()?",
+      "reference": "Встроенная функция Python sum. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает min()?",
+      "reference": "Встроенная функция Python min. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает max()?",
+      "reference": "Встроенная функция Python max. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает abs()?",
+      "reference": "Встроенная функция Python abs. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает round()?",
+      "reference": "Встроенная функция Python round. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает pow()?",
+      "reference": "Встроенная функция Python pow. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает divmod()?",
+      "reference": "Встроенная функция Python divmod. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает bool()?",
+      "reference": "Встроенная функция Python bool. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает int()?",
+      "reference": "Встроенная функция Python int. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает float()?",
+      "reference": "Встроенная функция Python float. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает str()?",
+      "reference": "Встроенная функция Python str. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает list()?",
+      "reference": "Встроенная функция Python list. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает dict()?",
+      "reference": "Встроенная функция Python dict. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает set()?",
+      "reference": "Встроенная функция Python set. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает tuple()?",
+      "reference": "Встроенная функция Python tuple. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает type()?",
+      "reference": "Встроенная функция Python type. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает isinstance()?",
+      "reference": "Встроенная функция Python isinstance. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает issubclass()?",
+      "reference": "Встроенная функция Python issubclass. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает hasattr()?",
+      "reference": "Встроенная функция Python hasattr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает getattr()?",
+      "reference": "Встроенная функция Python getattr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает setattr()?",
+      "reference": "Встроенная функция Python setattr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает delattr()?",
+      "reference": "Встроенная функция Python delattr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает callable()?",
+      "reference": "Встроенная функция Python callable. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает iter()?",
+      "reference": "Встроенная функция Python iter. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает next()?",
+      "reference": "Встроенная функция Python next. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает all()?",
+      "reference": "Встроенная функция Python all. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает any()?",
+      "reference": "Встроенная функция Python any. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает format()?",
+      "reference": "Встроенная функция Python format. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает repr()?",
+      "reference": "Встроенная функция Python repr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает ascii()?",
+      "reference": "Встроенная функция Python ascii. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает ord()?",
+      "reference": "Встроенная функция Python ord. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает chr()?",
+      "reference": "Встроенная функция Python chr. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает bin()?",
+      "reference": "Встроенная функция Python bin. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает hex()?",
+      "reference": "Встроенная функция Python hex. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает oct()?",
+      "reference": "Встроенная функция Python oct. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает id()?",
+      "reference": "Встроенная функция Python id. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает hash()?",
+      "reference": "Встроенная функция Python hash. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает help()?",
+      "reference": "Встроенная функция Python help. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает dir()?",
+      "reference": "Встроенная функция Python dir. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает vars()?",
+      "reference": "Встроенная функция Python vars. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает locals()?",
+      "reference": "Встроенная функция Python locals. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает globals()?",
+      "reference": "Встроенная функция Python globals. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает exec()?",
+      "reference": "Встроенная функция Python exec. См. docs.python.org built-in functions."
+    },
+    {
+      "question": "Built-in: что делает eval()?",
+      "reference": "Встроенная функция Python eval. См. docs.python.org built-in functions."
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [list comp filter] #0-0",
+      "task": "Список квадратов x>0",
+      "code": "[x*x for x in nums if x > 0]",
+      "reference": "[x**2 for x in nums if x > 0]"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [list comp filter] #0-1",
+      "task": "Список квадратов x>0",
+      "code": "[x*x for x in nums if x > 0]",
+      "reference": "[x**2 for x in nums if x > 0]"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [list comp filter] #0-2",
+      "task": "Список квадратов x>0",
+      "code": "[x*x for x in nums if x > 0]",
+      "reference": "[x**2 for x in nums if x > 0]"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [dict get default] #1-0",
+      "task": "get с default",
+      "code": "d['k']",
+      "reference": "d.get('k', 0)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [dict get default] #1-1",
+      "task": "get с default",
+      "code": "d['k']",
+      "reference": "d.get('k', 0)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [dict get default] #1-2",
+      "task": "get с default",
+      "code": "d['k']",
+      "reference": "d.get('k', 0)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [strip input] #2-0",
+      "task": "strip input",
+      "code": "name = input()",
+      "reference": "name = input().strip()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [strip input] #2-1",
+      "task": "strip input",
+      "code": "name = input()",
+      "reference": "name = input().strip()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [strip input] #2-2",
+      "task": "strip input",
+      "code": "name = input()",
+      "reference": "name = input().strip()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [main guard] #3-0",
+      "task": "main guard",
+      "code": "run()",
+      "reference": "if __name__ == '__main__': run()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [main guard] #3-1",
+      "task": "main guard",
+      "code": "run()",
+      "reference": "if __name__ == '__main__': run()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [main guard] #3-2",
+      "task": "main guard",
+      "code": "run()",
+      "reference": "if __name__ == '__main__': run()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [enum member] #4-0",
+      "task": "Enum member",
+      "code": "STATUS = 'active'",
+      "reference": "class S(Enum): ACTIVE='active'"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [enum member] #4-1",
+      "task": "Enum member",
+      "code": "STATUS = 'active'",
+      "reference": "class S(Enum): ACTIVE='active'"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [enum member] #4-2",
+      "task": "Enum member",
+      "code": "STATUS = 'active'",
+      "reference": "class S(Enum): ACTIVE='active'"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [path exists] #5-0",
+      "task": "Path exists",
+      "code": "os.path.exists(p)",
+      "reference": "Path(p).exists()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [path exists] #5-1",
+      "task": "Path exists",
+      "code": "os.path.exists(p)",
+      "reference": "Path(p).exists()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [path exists] #5-2",
+      "task": "Path exists",
+      "code": "os.path.exists(p)",
+      "reference": "Path(p).exists()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [join paths] #6-0",
+      "task": "Path join",
+      "code": "os.path.join(a,b)",
+      "reference": "Path(a) / b"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [join paths] #6-1",
+      "task": "Path join",
+      "code": "os.path.join(a,b)",
+      "reference": "Path(a) / b"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [join paths] #6-2",
+      "task": "Path join",
+      "code": "os.path.join(a,b)",
+      "reference": "Path(a) / b"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [read utf8] #7-0",
+      "task": "encoding utf-8",
+      "code": "open(f)",
+      "reference": "open(f, encoding='utf-8')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [read utf8] #7-1",
+      "task": "encoding utf-8",
+      "code": "open(f)",
+      "reference": "open(f, encoding='utf-8')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [read utf8] #7-2",
+      "task": "encoding utf-8",
+      "code": "open(f)",
+      "reference": "open(f, encoding='utf-8')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [except chain] #8-0",
+      "task": "raise from",
+      "code": "raise e2",
+      "reference": "raise e2 from e1"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [except chain] #8-1",
+      "task": "raise from",
+      "code": "raise e2",
+      "reference": "raise e2 from e1"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [except chain] #8-2",
+      "task": "raise from",
+      "code": "raise e2",
+      "reference": "raise e2 from e1"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [lru cache] #9-0",
+      "task": "functools cache",
+      "code": "def f(): pass",
+      "reference": "@lru_cache\\ndef f(): pass"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [lru cache] #9-1",
+      "task": "functools cache",
+      "code": "def f(): pass",
+      "reference": "@lru_cache\\ndef f(): pass"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [lru cache] #9-2",
+      "task": "functools cache",
+      "code": "def f(): pass",
+      "reference": "@lru_cache\\ndef f(): pass"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [partial] #10-0",
+      "task": "partial apply",
+      "code": "lambda x: add(1,x)",
+      "reference": "partial(add, 1)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [partial] #10-1",
+      "task": "partial apply",
+      "code": "lambda x: add(1,x)",
+      "reference": "partial(add, 1)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [partial] #10-2",
+      "task": "partial apply",
+      "code": "lambda x: add(1,x)",
+      "reference": "partial(add, 1)"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [deque popleft] #11-0",
+      "task": "queue BFS",
+      "code": "list.pop(0)",
+      "reference": "deque.popleft()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [deque popleft] #11-1",
+      "task": "queue BFS",
+      "code": "list.pop(0)",
+      "reference": "deque.popleft()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [deque popleft] #11-2",
+      "task": "queue BFS",
+      "code": "list.pop(0)",
+      "reference": "deque.popleft()"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [set lookup] #12-0",
+      "task": "membership O(1)",
+      "code": "if x in list_big",
+      "reference": "if x in set_big"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [set lookup] #12-1",
+      "task": "membership O(1)",
+      "code": "if x in list_big",
+      "reference": "if x in set_big"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [set lookup] #12-2",
+      "task": "membership O(1)",
+      "code": "if x in list_big",
+      "reference": "if x in set_big"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [tuple unpack] #13-0",
+      "task": "swap",
+      "code": "t=(a,b); a=t[1]; b=t[0]",
+      "reference": "a, b = b, a"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [tuple unpack] #13-1",
+      "task": "swap",
+      "code": "t=(a,b); a=t[1]; b=t[0]",
+      "reference": "a, b = b, a"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [tuple unpack] #13-2",
+      "task": "swap",
+      "code": "t=(a,b); a=t[1]; b=t[0]",
+      "reference": "a, b = b, a"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [chain lists] #14-0",
+      "task": "extend flat",
+      "code": "for l in lists: for x in l",
+      "reference": "from itertools import chain; list(chain.from_iterable(lists))"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [chain lists] #14-1",
+      "task": "extend flat",
+      "code": "for l in lists: for x in l",
+      "reference": "from itertools import chain; list(chain.from_iterable(lists))"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [chain lists] #14-2",
+      "task": "extend flat",
+      "code": "for l in lists: for x in l",
+      "reference": "from itertools import chain; list(chain.from_iterable(lists))"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [groupby sorted] #15-0",
+      "task": "group consecutive",
+      "code": "manual groups",
+      "reference": "from itertools import groupby"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [groupby sorted] #15-1",
+      "task": "group consecutive",
+      "code": "manual groups",
+      "reference": "from itertools import groupby"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [groupby sorted] #15-2",
+      "task": "group consecutive",
+      "code": "manual groups",
+      "reference": "from itertools import groupby"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [typed dict] #16-0",
+      "task": "TypedDict",
+      "code": "d: dict",
+      "reference": "class D(TypedDict): name: str"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [typed dict] #16-1",
+      "task": "TypedDict",
+      "code": "d: dict",
+      "reference": "class D(TypedDict): name: str"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [typed dict] #16-2",
+      "task": "TypedDict",
+      "code": "d: dict",
+      "reference": "class D(TypedDict): name: str"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [optional arg] #17-0",
+      "task": "None default",
+      "code": "def f(x=[]):",
+      "reference": "def f(x=None):"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [optional arg] #17-1",
+      "task": "None default",
+      "code": "def f(x=[]):",
+      "reference": "def f(x=None):"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [optional arg] #17-2",
+      "task": "None default",
+      "code": "def f(x=[]):",
+      "reference": "def f(x=None):"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [str methods] #18-0",
+      "task": "startswith",
+      "code": "s[:5]=='hello'",
+      "reference": "s.startswith('hello')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [str methods] #18-1",
+      "task": "startswith",
+      "code": "s[:5]=='hello'",
+      "reference": "s.startswith('hello')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [str methods] #18-2",
+      "task": "startswith",
+      "code": "s[:5]=='hello'",
+      "reference": "s.startswith('hello')"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [format spec] #19-0",
+      "task": "width pad",
+      "code": "'%5d' % n",
+      "reference": "f'{n:5d}'"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [format spec] #19-1",
+      "task": "width pad",
+      "code": "'%5d' % n",
+      "reference": "f'{n:5d}'"
+    },
+    {
+      "card_type": "code",
+      "question": "Python основы [format spec] #19-2",
+      "task": "width pad",
+      "code": "'%5d' % n",
+      "reference": "f'{n:5d}'"
+    },
+    {
+      "question": "Python основы [типы данных]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [типы данных]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [типы данных]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [типы данных]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [типы данных]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [операторы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [операторы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [операторы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [операторы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [операторы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [условия]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [условия]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [условия]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [условия]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [условия]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [циклы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [циклы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [циклы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [циклы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [циклы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [функции]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [функции]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [функции]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [функции]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [функции]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [args kwargs]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [args kwargs]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [args kwargs]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [args kwargs]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [args kwargs]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [списки]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [списки]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [списки]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [списки]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [списки]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [словари]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [словари]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [словари]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [словари]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [словари]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [множества]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [множества]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [множества]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [множества]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [множества]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [кортежи]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [кортежи]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [кортежи]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [кортежи]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [кортежи]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [строки]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [строки]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [строки]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [строки]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [строки]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [файлы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [файлы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [файлы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [файлы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [файлы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [исключения]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [исключения]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [исключения]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [исключения]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [исключения]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [классы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [классы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [классы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [классы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [классы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [наследование]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [наследование]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [наследование]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [наследование]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [наследование]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [декораторы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [декораторы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [декораторы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [декораторы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [декораторы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [генераторы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [генераторы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [генераторы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [генераторы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [генераторы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [итераторы]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [итераторы]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [итераторы]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [итераторы]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [итераторы]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [comprehensions]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [comprehensions]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [comprehensions]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [comprehensions]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [comprehensions]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [модули]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [модули]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [модули]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [модули]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [модули]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [venv]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [venv]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [venv]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [venv]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [venv]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pip]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pip]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pip]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pip]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pip]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [typing]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [typing]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [typing]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [typing]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [typing]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dataclass]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dataclass]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dataclass]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dataclass]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dataclass]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [asyncio]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [asyncio]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [asyncio]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [asyncio]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [asyncio]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [threading]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [threading]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [threading]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [threading]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [threading]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [collections]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [collections]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [collections]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [collections]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [collections]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pathlib]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pathlib]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pathlib]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pathlib]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pathlib]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [json]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [json]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [json]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [json]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [json]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [datetime]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [datetime]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [datetime]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [datetime]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [datetime]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [logging]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [logging]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [logging]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [logging]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [logging]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pytest]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pytest]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pytest]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pytest]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [pytest]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [list methods]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [list methods]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [list methods]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [list methods]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [list methods]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dict methods]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dict methods]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dict methods]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dict methods]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [dict methods]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [set methods]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [set methods]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [set methods]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [set methods]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [set methods]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [str methods]: вопрос #1",
+      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [str methods]: вопрос #2",
+      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [str methods]: вопрос #3",
+      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [str methods]: вопрос #4",
+      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python основы [str methods]: вопрос #5",
+      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL."
+    },
+    {
+      "question": "Python 3.8: walrus :=?",
+      "reference": "Нововведение Python 3.8: walrus :=."
+    },
+    {
+      "question": "Python 3.8: positional-only /?",
+      "reference": "Нововведение Python 3.8: positional-only /."
+    },
+    {
+      "question": "Python 3.8: f'{x=}' debug?",
+      "reference": "Нововведение Python 3.8: f'{x=}' debug."
+    },
+    {
+      "question": "Python 3.9: dict merge |?",
+      "reference": "Нововведение Python 3.9: dict merge |."
+    },
+    {
+      "question": "Python 3.9: list[str] builtins generics?",
+      "reference": "Нововведение Python 3.9: list[str] builtins generics."
+    },
+    {
+      "question": "Python 3.9: str.removeprefix?",
+      "reference": "Нововведение Python 3.9: str.removeprefix."
+    },
+    {
+      "question": "Python 3.10: match case?",
+      "reference": "Нововведение Python 3.10: match case."
+    },
+    {
+      "question": "Python 3.10: better errors?",
+      "reference": "Нововведение Python 3.10: better errors."
+    },
+    {
+      "question": "Python 3.10: ParamSpec?",
+      "reference": "Нововведение Python 3.10: ParamSpec."
+    },
+    {
+      "question": "Python 3.11: tomllib?",
+      "reference": "Нововведение Python 3.11: tomllib."
+    },
+    {
+      "question": "Python 3.11: Exception groups?",
+      "reference": "Нововведение Python 3.11: Exception groups."
+    },
+    {
+      "question": "Python 3.11: speedup?",
+      "reference": "Нововведение Python 3.11: speedup."
+    },
+    {
+      "question": "Python 3.12: f-string improvements?",
+      "reference": "Нововведение Python 3.12: f-string improvements."
+    },
+    {
+      "question": "Python 3.12: type parameter syntax?",
+      "reference": "Нововведение Python 3.12: type parameter syntax."
+    },
+    {
+      "question": "Python 3.12: per-interpreter GIL experimental?",
+      "reference": "Нововведение Python 3.12: per-interpreter GIL experimental."
+    },
+    {
+      "question": "list.append() — что делает?",
+      "reference": "Метод списка list.append. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.extend() — что делает?",
+      "reference": "Метод списка list.extend. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.insert() — что делает?",
+      "reference": "Метод списка list.insert. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.remove() — что делает?",
+      "reference": "Метод списка list.remove. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.pop() — что делает?",
+      "reference": "Метод списка list.pop. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.clear() — что делает?",
+      "reference": "Метод списка list.clear. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.index() — что делает?",
+      "reference": "Метод списка list.index. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.count() — что делает?",
+      "reference": "Метод списка list.count. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.sort() — что делает?",
+      "reference": "Метод списка list.sort. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.reverse() — что делает?",
+      "reference": "Метод списка list.reverse. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "list.copy() — что делает?",
+      "reference": "Метод списка list.copy. Изменяет или возвращает list in-place / новый объект."
+    },
+    {
+      "question": "dict.get() — что делает?",
+      "reference": "Метод словаря dict.get."
+    },
+    {
+      "question": "dict.keys() — что делает?",
+      "reference": "Метод словаря dict.keys."
+    },
+    {
+      "question": "dict.values() — что делает?",
+      "reference": "Метод словаря dict.values."
+    },
+    {
+      "question": "dict.items() — что делает?",
+      "reference": "Метод словаря dict.items."
+    },
+    {
+      "question": "dict.update() — что делает?",
+      "reference": "Метод словаря dict.update."
+    },
+    {
+      "question": "dict.pop() — что делает?",
+      "reference": "Метод словаря dict.pop."
+    },
+    {
+      "question": "dict.popitem() — что делает?",
+      "reference": "Метод словаря dict.popitem."
+    },
+    {
+      "question": "dict.setdefault() — что делает?",
+      "reference": "Метод словаря dict.setdefault."
+    },
+    {
+      "question": "dict.clear() — что делает?",
+      "reference": "Метод словаря dict.clear."
+    },
+    {
+      "question": "dict.copy() — что делает?",
+      "reference": "Метод словаря dict.copy."
+    },
+    {
+      "question": "str.split() — когда использовать?",
+      "reference": "Строковый метод str.split — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.join() — когда использовать?",
+      "reference": "Строковый метод str.join — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.strip() — когда использовать?",
+      "reference": "Строковый метод str.strip — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.replace() — когда использовать?",
+      "reference": "Строковый метод str.replace — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.find() — когда использовать?",
+      "reference": "Строковый метод str.find — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.startswith() — когда использовать?",
+      "reference": "Строковый метод str.startswith — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.endswith() — когда использовать?",
+      "reference": "Строковый метод str.endswith — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.lower() — когда использовать?",
+      "reference": "Строковый метод str.lower — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.upper() — когда использовать?",
+      "reference": "Строковый метод str.upper — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.title() — когда использовать?",
+      "reference": "Строковый метод str.title — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.format() — когда использовать?",
+      "reference": "Строковый метод str.format — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.partition() — когда использовать?",
+      "reference": "Строковый метод str.partition — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.removeprefix() — когда использовать?",
+      "reference": "Строковый метод str.removeprefix — типичные задачи обработки текста."
+    },
+    {
+      "question": "str.removesuffix() — когда использовать?",
+      "reference": "Строковый метод str.removesuffix — типичные задачи обработки текста."
+    }
+  ]
+}

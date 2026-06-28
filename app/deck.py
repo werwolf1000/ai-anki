@@ -11,10 +11,25 @@ class Card:
     question: str
     reference: str
     id: str = ""
+    card_type: str = "text"
+    code: str = ""
+    task: str = ""
 
     def __post_init__(self) -> None:
         if not self.id:
-            self.id = str(abs(hash(self.question)) % 10_000_000)
+            self.id = str(abs(hash(self.question + self.code)) % 10_000_000)
+
+    @property
+    def is_code(self) -> bool:
+        return self.card_type == "code" or bool(self.code)
+
+    def display_text(self) -> str:
+        parts = [self.question.strip()]
+        if self.code.strip():
+            parts.extend(["", "── Код ──", self.code.strip()])
+        if self.task.strip():
+            parts.extend(["", f"Задание: {self.task.strip()}"])
+        return "\n".join(parts)
 
 
 @dataclass
@@ -35,26 +50,23 @@ class ReviewResult:
 
 
 @dataclass
-class CardProgress:
-    card_id: str
-    attempts: int = 0
-    best_score: int = 0
-    mastered: bool = False
-    last_score: int = 0
-
-
-@dataclass
 class Deck:
     name: str
     cards: list[Card] = field(default_factory=list)
+    deck_id: str = ""
+
+    def merge(self, other: Deck, *, suffix_name: bool = True) -> None:
+        self.cards.extend(other.cards)
+        if suffix_name and other.name:
+            self.name = f"{self.name} + {other.name}"
 
     @classmethod
     def load_json(cls, path: str | Path) -> Deck:
         data = json.loads(Path(path).read_text(encoding="utf-8"))
         if isinstance(data, list):
-            cards = [Card(**item) if isinstance(item, dict) else Card(question=str(item), reference="") for item in data]
+            cards = [_card_from_dict(item) if isinstance(item, dict) else Card(question=str(item), reference="") for item in data]
             return cls(name=Path(path).stem, cards=cards)
-        cards = [Card(**c) for c in data.get("cards", [])]
+        cards = [_card_from_dict(c) for c in data.get("cards", [])]
         return cls(name=data.get("name", Path(path).stem), cards=cards)
 
     @classmethod
@@ -72,6 +84,22 @@ class Deck:
             if front:
                 cards.append(Card(question=front, reference=back))
         return cls(name=Path(path).stem, cards=cards)
+
+
+def _card_from_dict(item: dict) -> Card:
+    known = {"question", "reference", "id", "card_type", "code", "task"}
+    extra = {k: v for k, v in item.items() if k not in known}
+    if extra:
+        item = {k: v for k, v in item.items() if k in known}
+    card_type = item.get("card_type", "code" if item.get("code") else "text")
+    return Card(
+        question=item.get("question", ""),
+        reference=item.get("reference", ""),
+        id=item.get("id", ""),
+        card_type=card_type,
+        code=item.get("code", ""),
+        task=item.get("task", ""),
+    )
 
 
 def _strip_html(text: str) -> str:

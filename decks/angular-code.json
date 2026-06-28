@@ -1,0 +1,61 @@
+{
+  "name": "Angular — код",
+  "cards": [
+    {
+      "card_type": "code",
+      "question": "Компонент с формой: ngModel не работает.",
+      "task": "Исправь код — форма должна двусторонне связываться с title.",
+      "code": "@Component({\n  selector: 'app-editor',\n  standalone: true,\n  template: `\n    <input [(ngModel)]=\"title\" />\n    <p>{{ title }}</p>\n  `\n})\nexport class EditorComponent {\n  title = '';\n}",
+      "reference": "@Component({\n  selector: 'app-editor',\n  standalone: true,\n  imports: [FormsModule],\n  template: `\n    <input [(ngModel)]=\"title\" />\n    <p>{{ title }}</p>\n  `\n})\nexport class EditorComponent {\n  title = '';\n}\n\n// import { FormsModule } from '@angular/forms';"
+    },
+    {
+      "card_type": "code",
+      "question": "Список пользователей из Observable не отображается.",
+      "task": "Дополни шаблон, чтобы вывести users из async pipe.",
+      "code": "@Component({\n  selector: 'app-users',\n  standalone: true,\n  imports: [CommonModule],\n  template: `\n    <ul>\n      <!-- допиши здесь -->\n    </ul>\n  `\n})\nexport class UsersComponent {\n  users$ = this.api.getUsers();\n\n  constructor(private api: UserApi) {}\n}",
+      "reference": "template: `\n  <ul>\n    @for (user of users$ | async; track user.id) {\n      <li>{{ user.name }}</li>\n    }\n  </ul>\n`\n\n// или *ngFor=\"let user of users$ | async\""
+    },
+    {
+      "card_type": "code",
+      "question": "Роут не находит lazy-loaded модуль.",
+      "task": "Исправь конфигурацию маршрута для lazy load Standalone-компонента AdminPage.",
+      "code": "export const routes: Routes = [\n  { path: 'admin', component: AdminPage },\n  { path: '', redirectTo: 'home', pathMatch: 'full' }\n];",
+      "reference": "export const routes: Routes = [\n  {\n    path: 'admin',\n    loadComponent: () => import('./admin/admin.page').then(m => m.AdminPage)\n  },\n  { path: '', redirectTo: 'home', pathMatch: 'full' }\n];"
+    },
+    {
+      "card_type": "code",
+      "question": "Дочерний компонент не получает input.",
+      "task": "Исправь шаблон родителя — передай name в UserBadge.",
+      "code": "@Component({\n  selector: 'app-parent',\n  standalone: true,\n  imports: [UserBadgeComponent],\n  template: `<app-user-badge></app-user-badge>`\n})\nexport class ParentComponent {\n  userName = 'Anna';\n}\n\n// UserBadgeComponent: @Input() name!: string;",
+      "reference": "template: `<app-user-badge [name]=\"userName\" />`"
+    },
+    {
+      "card_type": "code",
+      "question": "HTTP-запрос не выполняется — DI ошибка.",
+      "task": "Исправь сервис: добавь корректную регистрацию и HttpClient.",
+      "code": "@Injectable()\nexport class ProductService {\n  constructor(private http: HttpClient) {}\n\n  load() {\n    return this.http.get<Product[]>('/api/products');\n  }\n}",
+      "reference": "@Injectable({ providedIn: 'root' })\nexport class ProductService {\n  constructor(private http: HttpClient) {}\n\n  load() {\n    return this.http.get<Product[]>('/api/products');\n  }\n}\n\n// В bootstrapApplication: provideHttpClient()"
+    },
+    {
+      "card_type": "code",
+      "question": "Сигнал не обновляет шаблон.",
+      "task": "Исправь метод increment — счётчик должен обновляться в UI.",
+      "code": "@Component({\n  selector: 'app-counter',\n  standalone: true,\n  template: `<button (click)=\"increment()\">{{ count() }}</button>`\n})\nexport class CounterComponent {\n  count = signal(0);\n\n  increment() {\n    this.count = signal(this.count() + 1);\n  }\n}",
+      "reference": "increment() {\n  this.count.update(v => v + 1);\n  // или: this.count.set(this.count() + 1);\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "Pipe не виден в шаблоне standalone-компонента.",
+      "task": "Добавь недостающий import, чтобы DatePipe форматировал дату.",
+      "code": "@Component({\n  selector: 'app-post',\n  standalone: true,\n  template: `<time>{{ createdAt | date:'short' }}</time>`\n})\nexport class PostComponent {\n  createdAt = new Date();\n}",
+      "reference": "@Component({\n  selector: 'app-post',\n  standalone: true,\n  imports: [DatePipe],\n  template: `<time>{{ createdAt | date:'short' }}</time>`\n})\nexport class PostComponent {\n  createdAt = new Date();\n}"
+    },
+    {
+      "card_type": "code",
+      "question": "ControlValueAccessor: кастомный input не участвует в reactive form.",
+      "task": "Добавь в компонент недостающие части для работы с formControlName.",
+      "code": "@Component({\n  selector: 'app-rating',\n  standalone: true,\n  template: `\n    @for (star of [1,2,3,4,5]; track star) {\n      <button type=\"button\" (click)=\"pick(star)\">{{ star }}</button>\n    }\n  `\n})\nexport class RatingComponent {\n  pick(star: number) {}\n}",
+      "reference": "@Component({\n  selector: 'app-rating',\n  standalone: true,\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true }],\n  ...\n})\nexport class RatingComponent implements ControlValueAccessor {\n  private onChange: (v: number) => void = () => {};\n  writeValue(value: number): void {}\n  registerOnChange(fn: (v: number) => void): void { this.onChange = fn; }\n  registerOnTouched(fn: () => void): void {}\n  pick(star: number) { this.onChange(star); }\n}"
+    }
+  ]
+}
