@@ -16,6 +16,9 @@ DEFAULTS: dict = {
     "auto_advance_ms": 10000,
 }
 
+# Старое значение по умолчанию (1.5 с → в UI показывалось как «1 с»)
+LEGACY_AUTO_ADVANCE_MS = 1500
+
 
 def user_config_path() -> Path:
     return Path.home() / ".ai-anki" / "config.json"
@@ -31,6 +34,8 @@ def load_config(project_dir: Path) -> tuple[dict, Path]:
     if path.exists():
         config.update(json.loads(path.read_text(encoding="utf-8")))
     elif project_path.exists():
+        save_config(path, config)
+    if migrate_config(config):
         save_config(path, config)
     config["session_limit"] = clamp_session_limit(config.get("session_limit", DEFAULTS["session_limit"]))
     config["auto_advance_ms"] = clamp_auto_advance_ms(config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"]))
@@ -48,6 +53,21 @@ def clamp_auto_advance_ms(value: int | str) -> int:
     return max(0, min(AUTO_ADVANCE_MAX_SEC * 1000, ms))
 
 
+def auto_advance_seconds(value: int | str) -> int:
+    """Секунды для QSpinBox (из миллисекунд, с учётом clamp)."""
+    ms = clamp_auto_advance_ms(value)
+    return ms // 1000
+
+
+def migrate_config(config: dict) -> bool:
+    """Обновить устаревшие значения. Возвращает True, если что-то изменилось."""
+    changed = False
+    if config.get("auto_advance_ms") == LEGACY_AUTO_ADVANCE_MS:
+        config["auto_advance_ms"] = DEFAULTS["auto_advance_ms"]
+        changed = True
+    return changed
+
+
 def clamp_session_limit(value: int | str) -> int:
     try:
         n = int(value)
@@ -62,3 +82,4 @@ def save_config(path: Path, config: dict) -> None:
     data["session_limit"] = clamp_session_limit(data["session_limit"])
     data["auto_advance_ms"] = clamp_auto_advance_ms(data["auto_advance_ms"])
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    config.update(data)

@@ -21,7 +21,14 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
-from app.config_store import AUTO_ADVANCE_MAX_SEC, DEFAULTS, SESSION_LIMIT_MAX, clamp_session_limit, save_config
+from app.config_store import (
+    AUTO_ADVANCE_MAX_SEC,
+    DEFAULTS,
+    SESSION_LIMIT_MAX,
+    auto_advance_seconds,
+    clamp_session_limit,
+    save_config,
+)
 from app.ollama_client import OllamaClient
 from app.progress import ProgressStore, StudyMode
 from app.registry import DeckEntry, DeckRegistry
@@ -56,7 +63,7 @@ class WelcomeScreen(QWidget):
         self.pass_score_spin.setValue(self.pass_score)
         self.max_follow_ups.setValue(int(self.config.get("max_follow_ups", 2)))
         self.auto_advance.setValue(
-            max(0, min(AUTO_ADVANCE_MAX_SEC, int(self.config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"])) // 1000))
+            auto_advance_seconds(self.config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"]))
         )
         self.ollama_url.setText(self.config.get("ollama_url", ""))
         self.ollama_model.setText(self.config.get("model", ""))
@@ -191,6 +198,7 @@ class WelcomeScreen(QWidget):
             "timeout": self.ollama_timeout.value(),
         })
         save_config(self.config_path, self.config)
+        self.sync_from_config()
         self.pass_score = int(self.config["pass_score"])
         self.config_saved.emit()
         self.refresh()
