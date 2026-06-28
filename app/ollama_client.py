@@ -9,7 +9,7 @@ import requests
 from app.deck import Card, ChatMessage, ReviewResult
 
 SYSTEM_PROMPT_TEXT = """Ты — терпеливый преподаватель в режиме карточек (как Anki).
-Проверяешь ответ ученика на вопрос по программированию/Angular.
+Проверяешь ответ ученика на вопрос по программированию.
 
 Правила:
 1. Ученик может отвечать своими словами — не требуй дословного совпадения с эталоном.
@@ -32,47 +32,96 @@ SYSTEM_PROMPT_TEXT = """Ты — терпеливый преподаватель
 
 Если hint не нужен — пустая строка. Если follow_up не нужен — пустая строка."""
 
-SYSTEM_PROMPT_LIVE_CODE = """Ты — преподаватель Angular/TypeScript в режиме live-coding.
-Ученик пишет код с нуля по заданию карточки.
+_LIVE_CODE_JSON = """
+{
+  "correct": true,
+  "score": 85,
+  "feedback": "...",
+  "hint": "...",
+  "follow_up": "...",
+  "reference_summary": "кратко что должно быть в решении"
+}"""
+
+_CODE_JSON = _LIVE_CODE_JSON
+
+
+def _normalize_language(card: Card) -> str:
+    return (card.language or "typescript").strip().lower() or "typescript"
+
+
+def _language_label(card: Card) -> str:
+    labels = {
+        "typescript": "TypeScript",
+        "ts": "TypeScript",
+        "javascript": "JavaScript",
+        "js": "JavaScript",
+        "python": "Python",
+        "py": "Python",
+        "php": "PHP",
+    }
+    return labels.get(_normalize_language(card), _normalize_language(card).capitalize())
+
+
+def _fence_lang(card: Card) -> str:
+    fences = {
+        "typescript": "typescript",
+        "ts": "typescript",
+        "javascript": "javascript",
+        "js": "javascript",
+        "python": "python",
+        "py": "python",
+        "php": "php",
+    }
+    return fences.get(_normalize_language(card), _normalize_language(card))
+
+
+def _is_angular_context(card: Card) -> bool:
+    if _normalize_language(card) not in ("typescript", "ts", "javascript", "js"):
+        return False
+    blob = f"{card.reference}\n{card.question}\n{card.task}\n{card.code}"
+    return "@angular" in blob or "@Component" in blob or "standalone:" in blob
+
+
+def _system_prompt_live_code(card: Card) -> str:
+    label = _language_label(card)
+    if _is_angular_context(card):
+        topic = f"Angular/{label}"
+        criteria = f"API, idioms Angular/{label} и корректность решения"
+    else:
+        topic = label
+        criteria = f"синтаксис, idioms языка {label}, типы (если есть), логику и соответствие заданию"
+    return f"""Ты — преподаватель {topic} в режиме live-coding.
+Ученик пишет код с нуля по заданию карточки. Ожидаемый язык ответа: {label}.
 
 Правила:
-1. Сравни код ученика с эталоном по смыслу, API и корректности Angular/TS — не требуй посимвольного совпадения.
-2. Допускай эквивалентные решения (signals vs observables где уместно, @if vs *ngIf в новых версиях).
-3. Оценка 0–100; correct=true если score >= 75.
-4. Проверь: синтаксис, imports/standalone, DI, шаблон, типы, логику.
+1. Сравни код ученика с эталоном по смыслу и {criteria} — не требуй посимвольного совпадения.
+2. НЕ требуй TypeScript/Angular, если карточка на другом языке. Оценивай код на {label}.
+3. Допускай эквивалентные решения, если они корректны для {label}.
+4. Оценка 0–100; correct=true если score >= 75.
 5. При ошибках — короткая hint (область проблемы, не полное решение).
 6. Если нужны уточнения — один follow_up; при лимите 0 — follow_up пустой.
 7. feedback — 2–4 предложения на русском.
-8. Только JSON:
+8. Только JSON:{_LIVE_CODE_JSON}"""
 
-{
-  "correct": true,
-  "score": 85,
-  "feedback": "...",
-  "hint": "...",
-  "follow_up": "...",
-  "reference_summary": "кратко что должно быть в решении"
-}"""
 
-SYSTEM_PROMPT_CODE = """Ты — преподаватель Angular/TypeScript. Карточка с кодом: ученик должен исправить или дополнить фрагмент.
+def _system_prompt_code(card: Card) -> str:
+    label = _language_label(card)
+    if _is_angular_context(card):
+        topic = f"Angular/{label}"
+    else:
+        topic = label
+    return f"""Ты — преподаватель {topic}. Карточка с кодом: ученик должен исправить или дополнить фрагмент.
+Ожидаемый язык ответа: {label}.
 
 Правила:
 1. Сравни ответ ученика с эталоном по смыслу — не требуй посимвольного совпадения.
-2. Проверь: исправлена ли ошибка / добавлено ли требуемое / корректен ли синтаксис и логика.
-3. Оценка 0–100; correct=true если score >= 75.
-4. При ошибках — короткая hint (укажи область проблемы, не давай готовое решение целиком).
-5. Если остались уточнения — один follow_up; если лимит исчерпан — follow_up пустой.
-6. feedback — что верно, что нет, 2–4 предложения на русском.
-7. Только JSON:
-
-{
-  "correct": true,
-  "score": 85,
-  "feedback": "...",
-  "hint": "...",
-  "follow_up": "...",
-  "reference_summary": "кратко что должно быть в решении"
-}"""
+2. НЕ требуй TypeScript/Angular, если карточка на {label}.
+3. Проверь: исправлена ли ошибка / добавлено ли требуемое / корректен ли синтаксис и логика на {label}.
+4. Оценка 0–100; correct=true если score >= 75.
+5. При ошибках — короткая hint (укажи область проблемы, не давай готовое решение целиком).
+6. Если остались уточнения — один follow_up; если лимит исчерпан — follow_up пустой.
+7. feedback — что верно, что нет, 2–4 предложения на русском.
+8. Только JSON:{_CODE_JSON}"""
 
 
 def normalize_ollama_url(url: str) -> str:
@@ -171,27 +220,33 @@ class AnswerEvaluator:
             "Не задавай follow_up, если лимит 0."
         )
         if card.is_live_code:
+            fence = _fence_lang(card)
+            label = _language_label(card)
             prefix = (
+                f"Язык карточки: {label}\n"
                 f"Задание (live-coding): {card.question}\n"
                 f"{('Подсказка: ' + card.task) if card.task else ''}\n"
-                f"Эталонное решение:\n```typescript\n{card.reference}\n```\n\n"
+                f"Эталонное решение:\n```{fence}\n{card.reference}\n```\n\n"
             )
             if is_follow_up:
-                body = prefix + f"Код ученика (ответ на уточнение):\n```typescript\n{user_answer}\n```"
+                body = prefix + f"Код ученика (ответ на уточнение):\n```{fence}\n{user_answer}\n```"
             else:
-                body = prefix + f"Код ученика:\n```typescript\n{user_answer}\n```"
-            system = SYSTEM_PROMPT_LIVE_CODE + "\n\n" + limit_note
+                body = prefix + f"Код ученика:\n```{fence}\n{user_answer}\n```"
+            system = _system_prompt_live_code(card) + "\n\n" + limit_note
         elif card.is_code:
+            fence = _fence_lang(card)
+            label = _language_label(card)
             prefix = (
-                f"Исходный код:\n```\n{card.code}\n```\n\n"
+                f"Язык карточки: {label}\n"
+                f"Исходный код:\n```{fence}\n{card.code}\n```\n\n"
                 f"Задание: {card.task or 'Исправь или дополни код.'}\n"
-                f"Эталонное решение:\n```\n{card.reference}\n```\n\n"
+                f"Эталонное решение:\n```{fence}\n{card.reference}\n```\n\n"
             )
             if is_follow_up:
-                body = prefix + f"Ответ ученика на уточняющий вопрос (учти диалог):\n```\n{user_answer}\n```"
+                body = prefix + f"Ответ ученика на уточняющий вопрос (учти диалог):\n```{fence}\n{user_answer}\n```"
             else:
-                body = prefix + f"Ответ ученика:\n```\n{user_answer}\n```"
-            system = SYSTEM_PROMPT_CODE + "\n\n" + limit_note
+                body = prefix + f"Ответ ученика:\n```{fence}\n{user_answer}\n```"
+            system = _system_prompt_code(card) + "\n\n" + limit_note
         elif is_follow_up:
             body = (
                 f"Исходный вопрос карточки: {card.question}\n"
