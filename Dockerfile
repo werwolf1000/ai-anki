@@ -20,7 +20,7 @@ RUN apt-get update \
     && mkdir -p server/static/vendor \
     && curl -fsSL https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.52.2.tgz \
        | tar -xz -C /tmp \
-    && mv /tmp/package/min/vs server/static/vendor/monaco \
+    && mv /tmp/package/min/vs server/static/vendor/vs \
     && rm -rf /tmp/package \
     && apt-get purge -y curl \
     && apt-get autoremove -y \

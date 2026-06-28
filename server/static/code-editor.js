@@ -1,6 +1,6 @@
 (() => {
   const CDN_VS = "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs";
-  const LOCAL_VS = "/static/vendor/monaco";
+  const LOCAL_VS = "/static/vendor/vs";
 
   let editor = null;
   let initPromise = null;
@@ -35,14 +35,17 @@
   }
 
   function workerLoaderUrl() {
-    return `/static/monaco-worker-loader.js?v=7&base=${encodeURIComponent(vsBase)}`;
+    return `/static/monaco-worker-loader.js?v=8&vs=${encodeURIComponent(vsBase)}`;
+  }
+
+  function monacoBaseUrl(vsPath) {
+    return vsPath.replace(/\/vs\/?$/, "") || vsPath.substring(0, vsPath.lastIndexOf("/"));
   }
 
   function configureMonacoEnv(base) {
     vsBase = base;
     window.MonacoEnvironment = {
-      baseUrl: base,
-      // AMD min build: always bootstrap via workerMain.js (classic worker, not module).
+      baseUrl: monacoBaseUrl(base),
       getWorker(_workerId, label) {
         return new Worker(workerLoaderUrl(), { name: workerLabelKey(label) });
       },
