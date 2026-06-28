@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI Anki</title>
-  <link rel="stylesheet" href="/static/style.css?v=3">
+  <link rel="stylesheet" href="/static/style.css?v=4">
 </head>
 <body>
   <header>
@@ -74,7 +74,7 @@
       <section class="panel">
         <h2 id="answer-label">Ваш ответ</h2>
         <textarea id="answer-text"></textarea>
-        <textarea id="answer-code" class="code hidden"></textarea>
+        <div id="code-editor-host" class="code-editor hidden" aria-label="Редактор кода"></div>
         <div class="btn-row">
           <button type="button" id="btn-submit">Проверить ответ</button>
           <button type="button" class="secondary" id="btn-hint">Подсказка</button>
@@ -88,6 +88,7 @@
       </section>
     </div>
   </main>
-  <script src="/static/app.js?v=3"></script>
+  <script src="/static/code-editor.js?v=4"></script>
+  <script src="/static/app.js?v=4"></script>
 </body>
 </html>

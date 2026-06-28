@@ -15,6 +15,17 @@ COPY server/ server/
 COPY decks/ decks/
 COPY config.json config.json
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl ca-certificates \
+    && mkdir -p server/static/vendor \
+    && curl -fsSL https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.52.2.tgz \
+       | tar -xz -C /tmp \
+    && mv /tmp/package/min/vs server/static/vendor/monaco \
+    && rm -rf /tmp/package \
+    && apt-get purge -y curl \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN mkdir -p /data
 
 EXPOSE 8080

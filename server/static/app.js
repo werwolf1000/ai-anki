@@ -18,6 +18,7 @@ async function api(path, opts = {}) {
 function showHome() {
   clearTimeout(autoAdvanceTimer);
   sessionId = null;
+  CodeEditor.hide();
   $("home-view").classList.remove("hidden");
   $("study-view").classList.add("hidden");
   loadDecks();
@@ -128,32 +129,40 @@ function updateStats(stats) {
     `к повтору ${stats.due} · сессия ${stats.index}/${stats.queue}`;
 }
 
-function showCard(card) {
+async function showCard(card) {
   if (!card) {
     $("question").textContent = "Нет карточек для выбранного режима.";
+    CodeEditor.hide();
+    $("answer-text").classList.add("hidden");
     $("btn-submit").disabled = true;
     return;
   }
   $("question").textContent = card.question;
   needsCode = card.needs_code;
-  $("answer-text").classList.toggle("hidden", needsCode);
-  $("answer-code").classList.toggle("hidden", !needsCode);
+  if (needsCode) {
+    $("answer-text").classList.add("hidden");
+    CodeEditor.clear();
+    await CodeEditor.show(card.language || "typescript");
+  } else {
+    CodeEditor.hide();
+    $("answer-text").classList.remove("hidden");
+    $("answer-text").value = "";
+  }
   $("answer-label").textContent = needsCode
     ? (card.is_live_code ? "Редактор кода — напишите решение" : "Редактор кода — исправьте или дополните")
     : "Ваш ответ (своими словами)";
-  if (!needsCode) $("answer-text").value = "";
   $("btn-submit").disabled = false;
   $("btn-next").disabled = true;
   $("feedback").textContent = "";
-  $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts}`;
+  $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Enter — проверить`;
 }
 
 function getAnswer() {
-  return needsCode ? $("answer-code").value : $("answer-text").value;
+  return needsCode ? CodeEditor.getValue().trim() : $("answer-text").value.trim();
 }
 
 function clearAnswer() {
-  if (needsCode) $("answer-code").value = "";
+  if (needsCode) CodeEditor.clear();
   else $("answer-text").value = "";
 }
 
@@ -171,8 +180,8 @@ async function startMode(mode) {
   $("study-title").textContent = `${data.deck_name} · ${data.mode}`;
   updateStats(data.stats);
   showStudy();
-  if (data.empty) showCard(null);
-  else showCard(data.card);
+  if (data.empty) await showCard(null);
+  else await showCard(data.card);
 }
 
 async function submitAnswer() {
@@ -214,7 +223,7 @@ async function nextCard() {
     return;
   }
   updateStats(r.stats);
-  showCard(r.card);
+  await showCard(r.card);
 }
 
 async function showHint() {
@@ -237,7 +246,11 @@ $("btn-next").onclick = nextCard;
 $("btn-hint").onclick = showHint;
 
 document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && e.key === "Enter") submitAnswer();
+  if (e.ctrlKey && e.key === "Enter" && !needsCode) submitAnswer();
+});
+
+document.getElementById("code-editor-host").addEventListener("code-submit", () => {
+  if (needsCode) submitAnswer();
 });
 
 loadConfig().catch(console.error);
