@@ -434,14 +434,15 @@ class StudyScreen(QWidget):
             QMessageBox.warning(self, "Пусто", label)
             return
         max_fu = self._max_follow_ups()
-        remaining = max(0, max_fu - self.follow_up_count)
+        code_card = bool(self.current_card and self.current_card.needs_code_editor)
+        remaining = 0 if code_card else max(0, max_fu - self.follow_up_count)
         self._set_busy(True)
         self.worker = EvaluateWorker(
             self._evaluator(),
             self.current_card,
             answer,
             self.chat_history.copy(),
-            self.awaiting_follow_up,
+            self.awaiting_follow_up and not code_card,
             remaining,
             self.deck.name,
         )
@@ -468,7 +469,11 @@ class StudyScreen(QWidget):
         interactions = self.follow_up_count + self.revision_count
         finalize = True
 
-        if result.follow_up and self.follow_up_count < max_fu:
+        if (
+            result.follow_up
+            and self.follow_up_count < max_fu
+            and not (self.current_card and self.current_card.needs_code_editor)
+        ):
             self.follow_up_count += 1
             lines.extend(["", f"❓ Уточнение ({self.follow_up_count}/{max_fu}): {result.follow_up}"])
             self.awaiting_follow_up = True

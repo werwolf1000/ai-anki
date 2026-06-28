@@ -151,7 +151,7 @@ def _system_prompt_live_code(card: Card, deck_name: str = "") -> str:
 3. Допускай эквивалентные решения, если они корректны для {label}.
 4. Оценка 0–100; correct=true если score >= 75.
 5. При ошибках — короткая hint (область проблемы, не полное решение).
-6. Если нужны уточнения — один follow_up; при лимите 0 — follow_up пустой.
+6. follow_up всегда пустая строка: ученик отвечает только кодом в редакторе, текстовых уточнений нет.
 7. feedback — 2–4 предложения на русском.
 8. Только JSON:{_LIVE_CODE_JSON}"""
 
@@ -171,7 +171,7 @@ def _system_prompt_code(card: Card, deck_name: str = "") -> str:
 3. Проверь: исправлена ли ошибка / добавлено ли требуемое / корректен ли синтаксис и логика на {label}.
 4. Оценка 0–100; correct=true если score >= 75.
 5. При ошибках — короткая hint (укажи область проблемы, не давай готовое решение целиком).
-6. Если остались уточнения — один follow_up; если лимит исчерпан — follow_up пустой.
+6. follow_up всегда пустая строка: ученик отвечает только кодом в редакторе, текстовых уточнений нет.
 7. feedback — что верно, что нет, 2–4 предложения на русском.
 8. Только JSON:{_CODE_JSON}"""
 
@@ -318,9 +318,18 @@ class AnswerEvaluator:
         deck_name: str = "",
     ) -> ReviewResult:
         history = history or []
+        code_only = card.needs_code_editor
+        if code_only:
+            follow_ups_remaining = 0
+            is_follow_up = False
         limit_note = (
-            f"Осталось уточняющих вопросов: {follow_ups_remaining}. "
-            "Не задавай follow_up, если лимит 0."
+            "Карточка с кодом: ученик отвечает только кодом в редакторе. "
+            "follow_up обязательно пустая строка; при ошибках используй hint."
+            if code_only
+            else (
+                f"Осталось уточняющих вопросов: {follow_ups_remaining}. "
+                "Не задавай follow_up, если лимит 0."
+            )
         )
         if card.is_live_code:
             fence = _fence_lang(card, deck_name)
@@ -377,6 +386,10 @@ class AnswerEvaluator:
         raw = self.client.chat(messages)
         result = self._parse_review(raw)
         if follow_ups_remaining <= 0 and result.follow_up:
+            result.follow_up = ""
+        if code_only and result.follow_up:
+            if not result.hint:
+                result.hint = result.follow_up
             result.follow_up = ""
         return result
 

@@ -142,12 +142,13 @@ class AppServices:
             raise ValueError("Пустой ответ")
 
         was_follow_up = session.awaiting_follow_up
-        remaining = max(0, self.max_follow_ups() - session.follow_up_count)
+        code_card = bool(card.needs_code_editor)
+        remaining = 0 if code_card else max(0, self.max_follow_ups() - session.follow_up_count)
         result = self.evaluator().evaluate(
             card,
             answer.strip(),
             session.chat_history.copy(),
-            is_follow_up=was_follow_up,
+            is_follow_up=was_follow_up and not code_card,
             follow_ups_remaining=remaining,
             deck_name=session.deck.name,
         )
@@ -161,7 +162,11 @@ class AppServices:
         interactions = session.follow_up_count + session.revision_count
         finalize = True
 
-        if result.follow_up and session.follow_up_count < max_fu:
+        if (
+            result.follow_up
+            and session.follow_up_count < max_fu
+            and not card.needs_code_editor
+        ):
             session.follow_up_count += 1
             session.awaiting_follow_up = True
             lines.append("")
