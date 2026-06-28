@@ -154,7 +154,7 @@ async function showCard(card) {
   $("btn-submit").disabled = false;
   $("btn-next").disabled = true;
   $("feedback").textContent = "";
-  $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Enter — проверить`;
+  $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`;
 }
 
 function getAnswer() {
