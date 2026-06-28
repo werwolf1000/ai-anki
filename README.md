@@ -44,7 +44,7 @@ docker compose up -d --build
 # http://localhost:8080
 ```
 
-Развёртывание на **TrueNAS Scale** (dataset `web/ai-anki`, SMB `smb://truenas.local/web/ai-anki`): см. **[TRUENAS.md](TRUENAS.md)**.
+Развёртывание на **TrueNAS Scale** (`/mnt/storage/web/ai-anki`, SMB `smb://truenas.local/web/ai-anki`): см. **[TRUENAS.md](TRUENAS.md)** — используйте `docker-compose.truenas.yml`.
 
 Данные веб-версии: каталог `./data/`. В контейнере: `AI_ANKI_DATA_DIR=/data`.
 
@@ -205,7 +205,8 @@ ai-anki/
 ├── main.py              # точка входа
 ├── run.sh               # запуск (Linux / macOS)
 ├── run.bat              # запуск (Windows)
-├── docker-compose.yml   # веб-версия (TrueNAS / Docker)
+├── docker-compose.yml         # локальный запуск (build: .)
+├── docker-compose.truenas.yml # TrueNAS (/mnt/storage/web/ai-anki)
 ├── Dockerfile
 ├── TRUENAS.md           # инструкция для TrueNAS Scale
 ├── requirements-server.txt

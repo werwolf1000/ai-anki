@@ -15,33 +15,33 @@ git clone git@github.com:werwolf1000/ai-anki.git
 cp -r ai-anki /mnt/web/ai-anki
 ```
 
-На TrueNAS путь будет примерно: **`/mnt/<pool>/web/ai-anki`**
+На TrueNAS путь для pool **storage**: **`/mnt/storage/web/ai-anki`**
 
 4. Создайте каталог для данных (прогресс, настройки):
 
 ```bash
-mkdir -p /mnt/<pool>/web/ai-anki/data
-chmod -R 775 /mnt/<pool>/web/ai-anki/data
+mkdir -p /mnt/storage/web/ai-anki/data
+chmod -R 775 /mnt/storage/web/ai-anki/data
 ```
 
 ## 2. Запуск через веб-интерфейс TrueNAS (Custom App)
 
 ### TrueNAS Scale 24.x+
 
-1. **Apps** → **Discover Apps** → **Custom App** (или **Install via YAML** / **Launch Docker Image**).
-2. Выберите **Install via Compose** / загрузите `docker-compose.yml` из dataset.
-3. Укажите **Host Path** проекта: `/mnt/<pool>/web/ai-anki`
-4. Compose file: `docker-compose.yml`
-5. Проверьте mapping:
+1. **Apps** → **Discover Apps** → **Custom App** (или **Install via Compose**).
+2. Загрузите **`docker-compose.truenas.yml`** из dataset (не generic `docker-compose.yml`).
+3. **Host Path** проекта: `/mnt/storage/web/ai-anki`
+4. Проверьте mapping:
    - Port **8080** → Host port (например `8080`)
-   - Volume **`./data:/data`**
-6. **Save** → **Deploy**.
+   - Volume **`/mnt/storage/web/ai-anki/data:/data`**
+   - Build context: **`/mnt/storage/web/ai-anki`**
+5. **Save** → **Deploy**.
 
 ### Альтернатива: SSH на TrueNAS
 
 ```bash
-cd /mnt/<pool>/web/ai-anki
-docker compose up -d --build
+cd /mnt/storage/web/ai-anki
+docker compose -f docker-compose.truenas.yml up -d --build
 ```
 
 ## 3. Открыть в браузере
@@ -84,9 +84,9 @@ volumes:
 ## 6. Обновление
 
 ```bash
-cd /mnt/<pool>/web/ai-anki
+cd /mnt/storage/web/ai-anki
 git pull
-docker compose up -d --build
+docker compose -f docker-compose.truenas.yml up -d --build
 ```
 
 ## 7. Устранение неполадок
