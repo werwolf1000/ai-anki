@@ -41,6 +41,10 @@ async function loadConfig() {
   $("model").value = c.model;
   $("api_key").value = c.api_key;
   $("timeout").value = c.timeout;
+  $("asr_url").value = c.asr_url || "";
+  $("asr_user").value = c.asr_user || "";
+  $("asr_password").value = c.asr_password || "";
+  $("asr_language").value = c.asr_language || "ru";
 }
 
 async function saveConfig() {
@@ -55,6 +59,10 @@ async function saveConfig() {
       model: $("model").value.trim(),
       api_key: $("api_key").value.trim(),
       timeout: +$("timeout").value,
+      asr_url: $("asr_url").value.trim(),
+      asr_user: $("asr_user").value.trim(),
+      asr_password: $("asr_password").value.trim(),
+      asr_language: $("asr_language").value.trim() || "ru",
     }),
   });
   $("settings-msg").textContent = "Сохранено";
@@ -133,6 +141,7 @@ async function showCard(card) {
   if (!card) {
     $("question").textContent = "Нет карточек для выбранного режима.";
     CodeEditor.hide();
+    VoiceInput.setVisible(false);
     $("answer-text").classList.add("hidden");
     $("btn-submit").disabled = true;
     return;
@@ -141,12 +150,14 @@ async function showCard(card) {
   needsCode = card.needs_code;
   if (needsCode) {
     $("answer-text").classList.add("hidden");
+    VoiceInput.setVisible(false);
     CodeEditor.clear();
     await CodeEditor.show(card.language || "typescript");
   } else {
     CodeEditor.hide();
     $("answer-text").classList.remove("hidden");
     $("answer-text").value = "";
+    VoiceInput.setVisible(true);
   }
   $("answer-label").textContent = needsCode
     ? (card.is_live_code ? "Редактор кода — напишите решение" : "Редактор кода — исправьте или дополните")
@@ -155,7 +166,9 @@ async function showCard(card) {
   $("btn-next").disabled = true;
   $("btn-hint").disabled = false;
   $("feedback").textContent = "";
-  $("status").textContent = `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`;
+  $("status").textContent = needsCode
+    ? `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`
+    : `лучший ${card.best_score} · попыток ${card.attempts} · 🎤 — ответ голосом`;
 }
 
 function getAnswer() {
@@ -189,6 +202,7 @@ async function submitAnswer() {
   if (!sessionId) return;
   $("btn-submit").disabled = true;
   $("btn-hint").disabled = true;
+  if (!needsCode) $("btn-voice").disabled = true;
   $("status").textContent = "Ollama думает…";
   try {
     const r = await api(`/api/session/${sessionId}/answer`, {
@@ -200,12 +214,19 @@ async function submitAnswer() {
     $("btn-next").disabled = false;
     $("btn-submit").disabled = !r.can_submit;
     $("btn-hint").disabled = false;
-    if (r.finalize) clearAnswer();
+    if (!needsCode) $("btn-voice").disabled = false;
+    if (r.clear_answer && !needsCode) {
+      $("answer-text").value = "";
+    } else if (r.finalize) {
+      clearAnswer();
+    }
     if (r.auto_advance_ms > 0) {
       $("status").textContent = `Следующая через ${r.auto_advance_ms / 1000} с…`;
       autoAdvanceTimer = setTimeout(nextCard, r.auto_advance_ms);
     } else if (!r.can_submit) {
-      $("status").textContent = "Внесите правки и отправьте снова или нажмите «Следующая →».";
+      $("status").textContent = r.clear_answer
+        ? "Ответьте на уточняющий вопрос (можно голосом)."
+        : "Внесите правки и отправьте снова или нажмите «Следующая →».";
     } else {
       $("status").textContent = "";
     }
@@ -213,6 +234,7 @@ async function submitAnswer() {
     $("feedback").textContent = "❌ " + e.message;
     $("btn-submit").disabled = false;
     $("btn-hint").disabled = false;
+    if (!needsCode) $("btn-voice").disabled = false;
     $("status").textContent = "";
   }
 }
@@ -277,6 +299,10 @@ document.addEventListener("keydown", (e) => {
 
 document.getElementById("code-editor-host").addEventListener("code-submit", () => {
   if (needsCode) submitAnswer();
+});
+
+VoiceInput.bind($("btn-voice"), $("answer-text"), (text) => {
+  $("status").textContent = text;
 });
 
 loadConfig().catch(console.error);

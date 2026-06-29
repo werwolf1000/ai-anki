@@ -478,6 +478,8 @@ class StudyScreen(QWidget):
             lines.extend(["", f"❓ Уточнение ({self.follow_up_count}/{max_fu}): {result.follow_up}"])
             self.awaiting_follow_up = True
             finalize = False
+            if not self.current_card.needs_code_editor:
+                self.answer_edit.clear()
         elif (
             not passed
             and self.current_card

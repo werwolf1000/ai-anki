@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from starlette.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -37,6 +37,10 @@ class SettingsIn(BaseModel):
     model: str | None = None
     api_key: str | None = None
     timeout: int | None = None
+    asr_url: str | None = None
+    asr_user: str | None = None
+    asr_password: str | None = None
+    asr_language: str | None = None
 
 
 class SessionStartIn(BaseModel):
@@ -87,6 +91,10 @@ def get_config() -> dict:
         "model": c.get("model", ""),
         "api_key": c.get("api_key", ""),
         "timeout": int(c.get("timeout", 120)),
+        "asr_url": c.get("asr_url", ""),
+        "asr_user": c.get("asr_user", ""),
+        "asr_password": c.get("asr_password", ""),
+        "asr_language": c.get("asr_language", "ru"),
     }
 
 
@@ -167,3 +175,17 @@ def show_hint(session_id: str, body: HintIn | None = None) -> dict:
     if not hint:
         raise HTTPException(404, "Подсказка недоступна")
     return {"hint": hint}
+
+
+@app.post("/api/asr/transcribe")
+async def transcribe_audio(audio: UploadFile = File(...)) -> dict:
+    try:
+        content = await audio.read()
+        text = services.transcribe_audio(content, audio.filename or "recording.webm")
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(502, f"ASR: {exc}") from exc
+    if not text:
+        raise HTTPException(502, "ASR вернул пустой текст")
+    return {"text": text}

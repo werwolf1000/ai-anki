@@ -15,6 +15,10 @@ DEFAULTS: dict = {
     "max_follow_ups": 2,
     "session_limit": 20,
     "auto_advance_ms": 10000,
+    "asr_url": "https://asr.webmastermsk.ru",
+    "asr_user": "",
+    "asr_password": "",
+    "asr_language": "ru",
 }
 
 # Старое значение по умолчанию (1.5 с → в UI показывалось как «1 с»)

@@ -124,7 +124,9 @@ button, .btn {
 }
 
 button.secondary { background: #64748b; }
+button.secondary.recording { background: #dc2626; }
 button:disabled { opacity: 0.5; cursor: not-allowed; }
+.hidden { display: none !important; }
 
 /* Mobile: card list for decks */
 .decks-list {

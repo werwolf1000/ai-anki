@@ -217,9 +217,22 @@ class AppServices:
             "finalize": finalize,
             "passed": passed,
             "can_submit": not finalize,
+            "clear_answer": session.awaiting_follow_up and not card.needs_code_editor,
             "auto_advance_ms": int(self.config.get("auto_advance_ms", 10000)) if finalize and passed else 0,
             "stats": self.session_stats(session),
         }
+
+    def transcribe_audio(self, content: bytes, filename: str) -> str:
+        from app.asr_client import transcribe_whisper
+
+        return transcribe_whisper(
+            self.config.get("asr_url", ""),
+            content,
+            filename,
+            language=str(self.config.get("asr_language", "ru")),
+            login=str(self.config.get("asr_user", "")),
+            password=str(self.config.get("asr_password", "")),
+        )
 
     def request_hint(self, session: StudySession, draft: str = "") -> str:
         card = session.current
@@ -271,6 +284,7 @@ class AppServices:
         allowed = (
             "session_limit", "pass_score", "max_follow_ups", "auto_advance_ms",
             "ollama_url", "model", "api_key", "timeout",
+            "asr_url", "asr_user", "asr_password", "asr_language",
         )
         for key in allowed:
             if key in payload:

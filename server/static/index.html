@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI Anki</title>
-  <link rel="stylesheet" href="/static/style.css?v=9">
+  <link rel="stylesheet" href="/static/style.css?v=10">
 </head>
 <body>
   <header>
@@ -27,6 +27,10 @@
             <div class="field"><label>Модель</label><input type="text" id="model"></div>
             <div class="field"><label>API-ключ</label><input type="password" id="api_key"></div>
             <div class="field"><label>Таймаут (с)</label><input type="number" id="timeout" min="30" max="600"></div>
+            <div class="field"><label>ASR URL (Whisper)</label><input type="text" id="asr_url" placeholder="https://asr.webmastermsk.ru"></div>
+            <div class="field"><label>ASR логин</label><input type="text" id="asr_user" autocomplete="username"></div>
+            <div class="field"><label>ASR пароль</label><input type="password" id="asr_password" autocomplete="current-password"></div>
+            <div class="field"><label>Язык ASR</label><input type="text" id="asr_language" placeholder="ru"></div>
           </div>
         </div>
         <div class="btn-row">
@@ -77,6 +81,7 @@
         <div id="code-editor-host" class="code-editor hidden" aria-label="Редактор кода"></div>
         <div class="btn-row">
           <button type="button" id="btn-submit">Проверить ответ</button>
+          <button type="button" class="secondary hidden" id="btn-voice">🎤 Голосом</button>
           <button type="button" class="secondary" id="btn-hint">Подсказка</button>
           <button type="button" class="secondary" id="btn-next">Следующая →</button>
         </div>
@@ -88,7 +93,8 @@
       </section>
     </div>
   </main>
-  <script src="/static/code-editor.js?v=9"></script>
-  <script src="/static/app.js?v=9"></script>
+  <script src="/static/code-editor.js?v=10"></script>
+  <script src="/static/voice-input.js?v=10"></script>
+  <script src="/static/app.js?v=10"></script>
 </body>
 </html>
