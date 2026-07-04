@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from app.config_store import clamp_session_limit, load_config, save_config
+from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
 
 from PyQt6.QtCore import Qt, QThread, QTimer, pyqtSignal
 from PyQt6.QtGui import QFont, QKeySequence, QShortcut
@@ -643,11 +643,13 @@ class MainWindow(QMainWindow):
 
         base = Path(__file__).resolve().parent.parent
         self.config, self.config_path = load_config(base)
-        data_dir = Path.home() / ".ai-anki"
-        self.progress_store = ProgressStore(data_dir / "progress.json")
+        dd = data_dir()
+        custom = custom_decks_dir()
+        self.progress_store = ProgressStore(dd / "progress.json")
         self.progress_store.load()
-        self.registry = DeckRegistry(data_dir / "decks.json", base / "decks")
+        self.registry = DeckRegistry(dd / "decks.json", base / "decks", custom)
         self.registry.load()
+        self.registry.migrate_progress(self.progress_store)
 
         self.stack = QStackedWidget()
         self.setCentralWidget(self.stack)
@@ -658,6 +660,7 @@ class MainWindow(QMainWindow):
             self.config,
             self.config_path,
             base / "decks",
+            custom,
         )
         self.welcome.deck_selected.connect(self._open_study)
         self.welcome.config_saved.connect(self._reload_config)

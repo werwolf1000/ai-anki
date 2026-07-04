@@ -45,6 +45,7 @@ class WelcomeScreen(QWidget):
         config: dict,
         config_path: Path,
         decks_dir: Path,
+        custom_decks_dir: Path | None = None,
     ) -> None:
         super().__init__()
         self.registry = registry
@@ -52,6 +53,7 @@ class WelcomeScreen(QWidget):
         self.config = config
         self.config_path = config_path
         self.decks_dir = decks_dir
+        self.custom_decks_dir = custom_decks_dir or decks_dir
         self._selected_entry: DeckEntry | None = None
         self._build_ui()
         self.sync_from_config()
@@ -224,6 +226,7 @@ class WelcomeScreen(QWidget):
 
     def refresh(self) -> None:
         self.registry.load()
+        self.registry.migrate_progress(self.progress)
         self.progress.load()
         entries = self.registry.entries
         self.table.setRowCount(len(entries))
@@ -311,7 +314,7 @@ class WelcomeScreen(QWidget):
         path, _ = QFileDialog.getOpenFileName(
             self,
             "Добавить колоду",
-            str(self.decks_dir),
+            str(self.custom_decks_dir),
             "Колоды (*.json *.txt);;JSON (*.json);;Anki TXT (*.txt)",
         )
         if not path:

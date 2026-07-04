@@ -31,6 +31,11 @@ def data_dir() -> Path:
     return Path.home() / ".ai-anki"
 
 
+def custom_decks_dir() -> Path:
+    """Пользовательские колоды — сохраняются в volume и не теряются при пересборке."""
+    return data_dir() / "decks"
+
+
 def user_config_path() -> Path:
     return data_dir() / "config.json"
 

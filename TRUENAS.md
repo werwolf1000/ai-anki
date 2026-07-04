@@ -17,10 +17,10 @@ cp -r ai-anki /mnt/web/ai-anki
 
 На TrueNAS путь для pool **storage**: **`/mnt/storage/web/ai-anki`**
 
-4. Создайте каталог для данных (прогресс, настройки):
+4. Создайте каталоги для данных (прогресс, настройки, свои колоды):
 
 ```bash
-mkdir -p /mnt/storage/web/ai-anki/data
+mkdir -p /mnt/storage/web/ai-anki/data/decks
 chmod -R 775 /mnt/storage/web/ai-anki/data
 ```
 
@@ -34,6 +34,7 @@ chmod -R 775 /mnt/storage/web/ai-anki/data
 4. Проверьте mapping:
    - Port **8080** → Host port (например `8080`)
    - Volume **`/mnt/storage/web/ai-anki/data:/data`**
+   - Volume **`/mnt/storage/web/ai-anki/decks:/app/decks:ro`**
    - Build context: **`/mnt/storage/web/ai-anki`**
 5. **Save** → **Deploy**.
 
@@ -72,14 +73,25 @@ Ollama обычно **не** в контейнере AI Anki. На главно�
 | `/data/progress.json` | `./data/progress.json` | Прогресс SRS |
 | `/data/config.json` | `./data/config.json` | Настройки |
 | `/data/decks.json` | `./data/decks.json` | Реестр колод |
+| `/data/decks/` | `./data/decks/` | Свои колоды (JSON/TXT) — **без пересборки** |
+| `/app/decks/` | `./decks/` (volume) | Встроенные колоды из репозитория |
 
-Колоды (JSON) — в `./decks/` (read-only в образе). Для добавления своих колод положите JSON в `decks/` и пересоберите образ, либо смонтируйте volume:
+**Важно:** прогресс и настройки живут только в `./data/`. При деплое обязательно монтируйте оба volume:
 
 ```yaml
 volumes:
-  - ./data:/data
-  - ./decks:/app/decks:ro
+  - /mnt/storage/web/ai-anki/data:/data
+  - /mnt/storage/web/ai-anki/decks:/app/decks:ro
 ```
+
+### Добавить или обновить карточки (web)
+
+1. **Встроенные колоды** — отредактируйте JSON в `./decks/` на NAS, затем перезапустите контейнер (пересборка не нужна):
+   ```bash
+   docker compose -f docker-compose.truenas.yml up -d
+   ```
+
+2. **Свои колоды** — положите `*.json` или `*.txt` в `./data/decks/` (создайте каталог при первом использовании). Перезапуск не обязателен — достаточно обновить страницу в браузере.
 
 ## 6. Обновление
 
@@ -88,6 +100,8 @@ cd /mnt/storage/web/ai-anki
 git pull
 docker compose -f docker-compose.truenas.yml up -d --build
 ```
+
+Прогресс сохранится, если volume `./data` смонтирован. Колоды подхватятся из `./decks` без пересборки образа.
 
 ## 7. Устранение неполадок
 

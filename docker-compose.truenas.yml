@@ -21,5 +21,6 @@ services:
       # OLLAMA_URL: http://host.docker.internal:11434
     volumes:
       - /mnt/storage/web/ai-anki/data:/data
+      - /mnt/storage/web/ai-anki/decks:/app/decks:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"

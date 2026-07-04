@@ -13,5 +13,6 @@ services:
       AI_ANKI_DATA_DIR: /data
     volumes:
       - ./data:/data
+      - ./decks:/app/decks:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"

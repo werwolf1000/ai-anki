@@ -5,7 +5,7 @@ import uuid
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from app.config_store import clamp_session_limit, data_dir, load_config, save_config
+from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -48,14 +48,16 @@ class AppServices:
         self.config, self.config_path = load_config(root)
         self.progress = ProgressStore(dd / "progress.json")
         self.progress.load()
-        self.registry = DeckRegistry(dd / "decks.json", root / "decks")
+        self.registry = DeckRegistry(dd / "decks.json", root / "decks", custom_decks_dir())
         self.registry.load()
+        self.registry.migrate_progress(self.progress)
         self.sessions: dict[str, StudySession] = {}
 
     def reload_config(self) -> None:
         self.config, self.config_path = load_config(self.root)
         self.progress.load()
         self.registry.load()
+        self.registry.migrate_progress(self.progress)
 
     def pass_score(self) -> int:
         return int(self.config.get("pass_score", 75))

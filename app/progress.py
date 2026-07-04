@@ -366,3 +366,33 @@ class ProgressStore:
                 changed = True
         if changed:
             self.save()
+
+    def migrate_deck_keys(self, mapping: dict[str, str]) -> bool:
+        """Перенести прогресс со старых deck_id (по абсолютному пути) на стабильные."""
+        changed = False
+        for old_id, new_id in mapping.items():
+            if not old_id or not new_id or old_id == new_id or old_id not in self.data:
+                continue
+            old_cards = self.data.pop(old_id)
+            target = self.data.setdefault(new_id, {})
+            for cid, prog in old_cards.items():
+                if cid not in target:
+                    target[cid] = prog
+                    continue
+                existing = target[cid]
+                existing.best_score = max(existing.best_score, prog.best_score)
+                existing.last_score = max(existing.last_score, prog.last_score)
+                existing.attempts = max(existing.attempts, prog.attempts)
+                existing.mastered = existing.mastered or prog.mastered
+                existing.history.extend(prog.history)
+                if len(existing.history) > 50:
+                    existing.history = existing.history[-50:]
+                if prog.last_reviewed_at > existing.last_reviewed_at:
+                    existing.last_reviewed_at = prog.last_reviewed_at
+                    existing.due_at = prog.due_at
+                    existing.interval_days = prog.interval_days
+                    existing.ease = prog.ease
+            changed = True
+        if changed:
+            self.save()
+        return changed
