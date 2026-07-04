@@ -7,7 +7,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Any
 
-from app.deck import Deck
+from app.deck import Deck, stable_card_id
 
 
 def _now() -> datetime:
@@ -356,7 +356,8 @@ class ProgressStore:
         self.save()
 
     def reconcile_deck(self, deck: Deck, pass_score: int) -> None:
-        """Пересчитать mastered (интервал ≥ 7 дней) для записей progress.json."""
+        """Пересчитать mastered и при необходимости перенести прогресс на стабильные id карточек."""
+        self.remap_unstable_card_ids(deck)
         key = self.deck_key(deck)
         changed = False
         for prog in self.data.get(key, {}).values():
@@ -366,6 +367,65 @@ class ProgressStore:
                 changed = True
         if changed:
             self.save()
+
+    @staticmethod
+    def _progress_card_match_score(card, prog: CardProgress) -> int:
+        if not prog.history:
+            return 0
+        answer = prog.history[-1].answer.lower()
+        score = 0
+        for text in (card.question, card.task, card.reference):
+            t = text.lower().strip()
+            if not t:
+                continue
+            if len(t) > 15 and t[:60] in answer:
+                score += 3
+                continue
+            words = [w for w in t.split() if len(w) > 4][:8]
+            hits = sum(1 for w in words if w in answer)
+            if hits >= 2:
+                score += 2
+            elif hits == 1:
+                score += 1
+        return score
+
+    def remap_unstable_card_ids(self, deck: Deck) -> bool:
+        """Сопоставить прогресс со старыми hash-id карточек с текущими стабильными id."""
+        key = self.deck_key(deck)
+        deck_map = self.data.get(key)
+        if not deck_map:
+            return False
+
+        deck_card_ids = {c.id for c in deck.cards}
+        orphan_ids = [cid for cid in list(deck_map) if cid not in deck_card_ids]
+        if not orphan_ids:
+            return False
+
+        changed = False
+        assigned_cards: set[str] = set(deck_map.keys()) & deck_card_ids
+
+        for old_cid in orphan_ids:
+            prog = deck_map[old_cid]
+            best_card = None
+            best_score = 0
+            for card in deck.cards:
+                if card.id in assigned_cards:
+                    continue
+                match = self._progress_card_match_score(card, prog)
+                if match > best_score:
+                    best_score = match
+                    best_card = card
+            if best_card is None or best_score < 1:
+                continue
+            prog.card_id = best_card.id
+            deck_map[best_card.id] = prog
+            del deck_map[old_cid]
+            assigned_cards.add(best_card.id)
+            changed = True
+
+        if changed:
+            self.save()
+        return changed
 
     def migrate_deck_keys(self, mapping: dict[str, str]) -> bool:
         """Перенести прогресс со старых deck_id (по абсолютному пути) на стабильные."""

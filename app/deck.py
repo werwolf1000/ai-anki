@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
+
+
+def stable_card_id(question: str, code: str = "", task: str = "") -> str:
+    """Стабильный id карточки — одинаковый на desktop, web и после перезапуска."""
+    raw = (question + code + task).encode("utf-8")
+    return str(int(hashlib.sha256(raw).hexdigest(), 16) % 10_000_000)
 
 
 @dataclass
@@ -19,7 +26,7 @@ class Card:
 
     def __post_init__(self) -> None:
         if not self.id:
-            self.id = str(abs(hash(self.question + self.code + self.task)) % 10_000_000)
+            self.id = stable_card_id(self.question, self.code, self.task)
 
     @property
     def is_live_code(self) -> bool:
