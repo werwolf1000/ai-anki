@@ -5,18 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-
-def live(q: str, task: str, ref: str, *, lang: str = "typescript", topic: str = "") -> dict:
-    return {
-        "card_type": "live_code",
-        "question": q,
-        "task": task,
-        "reference": ref.strip(),
-        "language": lang,
-        "topic": topic,
-    }
-
-
+from live_coding_card import live
 def build_cards() -> list[dict]:
     return [
         live(
@@ -1183,8 +1172,9 @@ export class LabelComponent {
 
 def main() -> None:
     from live_coding_topics import assign_topics
+    from angular_live_bank import extra_cards
 
-    cards = assign_topics(build_cards(), "angular")
+    cards = assign_topics(build_cards() + extra_cards(), "angular")
     deck = {"name": "Angular Live-coding", "cards": cards}
     out = Path(__file__).with_name("angular-live-coding.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")

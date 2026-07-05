@@ -3,467 +3,1435 @@
   "cards": [
     {
       "card_type": "live_code",
-      "question": "Функция greet",
+      "question": "Задача: Функция greet.\n\nНапиши функцию greet(string $name): string, возвращающую \"Hello, {$name}!\".\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Напиши функцию greet(string $name): string, возвращающую \"Hello, {$name}!\".",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction greet(string $name): string\n{\n    return \"Hello, {$name}!\";\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "Сумма массива",
+      "question": "Задача: Сумма массива.\n\nФункция total(array $numbers): int — сумма элементов (без array_sum).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция total(array $numbers): int — сумма элементов (без array_sum).",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction total(array $numbers): int\n{\n    $sum = 0;\n    foreach ($numbers as $n) {\n        $sum += $n;\n    }\n    return $sum;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "array_map — квадраты",
+      "question": "Задача: array_map — квадраты.\n\nФункция squares(array $numbers): array — квадраты каждого int.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция squares(array $numbers): array — квадраты каждого int.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction squares(array $numbers): array\n{\n    return array_map(fn (int $n): int => $n * $n, $numbers);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "array_filter чётные",
+      "question": "Задача: array_filter чётные.\n\nФункция evens(array $numbers): array — только чётные числа.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция evens(array $numbers): array — только чётные числа.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction evens(array $numbers): array\n{\n    return array_values(array_filter($numbers, fn (int $n): bool => $n % 2 === 0));\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "Constructor property promotion",
+      "question": "Задача: Constructor property promotion.\n\nКласс User с promoted properties public int $id и public string $email.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс User с promoted properties public int $id и public string $email.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class User\n{\n    public function __construct(\n        public int $id,\n        public string $email,\n    ) {\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Readonly class DTO",
+      "question": "Задача: Readonly class DTO.\n\nReadonly class Money с полями int $amount и string $currency (PHP 8.2+).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Readonly class Money с полями int $amount и string $currency (PHP 8.2+).",
       "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class Money\n{\n    public function __construct(\n        public int $amount,\n        public string $currency,\n    ) {\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "ООП"
     },
     {
       "card_type": "live_code",
-      "question": "match HTTP status",
+      "question": "Задача: match HTTP status.\n\nФункция statusLabel(int $code): string через match: 200->'OK', 404->'Not Found', default 'Unknown'.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция statusLabel(int $code): string через match: 200->'OK', 404->'Not Found', default 'Unknown'.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction statusLabel(int $code): string\n{\n    return match ($code) {\n        200 => 'OK',\n        404 => 'Not Found',\n        default => 'Unknown',\n    };\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Nullsafe operator",
+      "question": "Задача: Nullsafe operator.\n\nФункция userCity(?User $user): ?string — вернуть $user?->address?->city.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция userCity(?User $user): ?string — вернуть $user?->address?->city.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction userCity(?User $user): ?string\n{\n    return $user?->address?->city;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Backed enum Status",
+      "question": "Задача: Backed enum Status.\n\nEnum Status: string с case Active='active', Archived='archived'.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Enum Status: string с case Active='active', Archived='archived'.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nenum Status: string\n{\n    case Active = 'active';\n    case Archived = 'archived';\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Enums и Attributes"
     },
     {
       "card_type": "live_code",
-      "question": "Named arguments",
+      "question": "Задача: Named arguments.\n\nФункция createUser(string $email, int $id = 0): User — вызов с named args id и email в примере комментария.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция createUser(string $email, int $id = 0): User — вызов с named args id и email в примере комментария.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction createUser(string $email, int $id = 0): User\n{\n    return new User(id: $id, email: $email);\n}\n\n// createUser(id: 1, email: 'a@b.c');",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "Interface + implementation",
+      "question": "Задача: Interface + implementation.\n\nInterface Logger с log(string $message): void; класс EchoLogger.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Interface Logger с log(string $message): void; класс EchoLogger.",
       "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Logger\n{\n    public function log(string $message): void;\n}\n\nfinal class EchoLogger implements Logger\n{\n    public function log(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "ООП"
     },
     {
       "card_type": "live_code",
-      "question": "PDO prepared SELECT",
+      "question": "Задача: PDO prepared SELECT.\n\nФункция fetchUserName(PDO $pdo, int $id): ?string — SELECT name FROM users WHERE id = ?.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция fetchUserName(PDO $pdo, int $id): ?string — SELECT name FROM users WHERE id = ?.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction fetchUserName(PDO $pdo, int $id): ?string\n{\n    $stmt = $pdo->prepare('SELECT name FROM users WHERE id = ?');\n    $stmt->execute([$id]);\n    $row = $stmt->fetch(PDO::FETCH_ASSOC);\n    return $row['name'] ?? null;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "JSON encode/decode",
+      "question": "Задача: JSON encode/decode.\n\nФункция toJson(array $data): string через json_encode с JSON_THROW_ON_ERROR.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция toJson(array $data): string через json_encode с JSON_THROW_ON_ERROR.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toJson(array $data): string\n{\n    return json_encode($data, JSON_THROW_ON_ERROR);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Строки и JSON"
     },
     {
       "card_type": "live_code",
-      "question": "Custom exception",
+      "question": "Задача: Custom exception.\n\nКласс ValidationException extends Exception; validateNonEmpty(string $value, string $field): string.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс ValidationException extends Exception; validateNonEmpty(string $value, string $field): string.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class ValidationException extends Exception\n{\n    public function __construct(public readonly string $field, string $message)\n    {\n        parent::__construct($message);\n    }\n}\n\nfunction validateNonEmpty(string $value, string $field): string\n{\n    if (trim($value) === '') {\n        throw new ValidationException($field, 'must not be empty');\n    }\n    return $value;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Arrow function pipeline",
+      "question": "Задача: Arrow function pipeline.\n\nФункция positiveSquares(array $numbers): array — квадраты положительных через array_filter + array_map.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция positiveSquares(array $numbers): array — квадраты положительных через array_filter + array_map.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction positiveSquares(array $numbers): array\n{\n    $positive = array_filter($numbers, fn (int $n): bool => $n > 0);\n    return array_map(fn (int $n): int => $n * $n, $positive);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "First-class callable",
+      "question": "Задача: First-class callable.\n\nКласс Calculator с add(int $a, int $b): int; переменная $fn = $calc->add(...).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс Calculator с add(int $a, int $b): int; переменная $fn = $calc->add(...).",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Calculator\n{\n    public function add(int $a, int $b): int\n    {\n        return $a + $b;\n    }\n}\n\n$calc = new Calculator();\n$fn = $calc->add(...);",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "Trait Timestampable",
+      "question": "Задача: Trait Timestampable.\n\nTrait Timestampable с protected ?DateTimeImmutable $createdAt и методом touch(): void.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Trait Timestampable с protected ?DateTimeImmutable $createdAt и методом touch(): void.",
       "reference": "<?php\ndeclare(strict_types=1);\n\ntrait Timestampable\n{\n    protected ?DateTimeImmutable $createdAt = null;\n\n    public function touch(): void\n    {\n        $this->createdAt = new DateTimeImmutable();\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "ООП"
     },
     {
       "card_type": "live_code",
-      "question": "Attribute Route",
+      "question": "Задача: Attribute Route.\n\nАтрибут #[Route('/api/users')] над методом listUsers().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Атрибут #[Route('/api/users')] над методом listUsers().",
       "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfinal class UserController\n{\n    #[Route('/api/users')]\n    public function listUsers(): array\n    {\n        return [];\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Enums и Attributes"
     },
     {
       "card_type": "live_code",
-      "question": "Union type parseId",
+      "question": "Задача: Union type parseId.\n\nФункция parseId(int|string $value): int — если string, (int)$value.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция parseId(int|string $value): int — если string, (int)$value.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parseId(int|string $value): int\n{\n    return is_int($value) ? $value : (int) $value;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Generator rangeStep",
+      "question": "Задача: Generator rangeStep.\n\nGenerator function rangeStep(int $start, int $stop, int $step = 1): Generator.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Generator function rangeStep(int $start, int $stop, int $step = 1): Generator.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction rangeStep(int $start, int $stop, int $step = 1): Generator\n{\n    for ($value = $start; $value < $stop; $value += $step) {\n        yield $value;\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Closure counter",
+      "question": "Задача: Closure counter.\n\nФункция makeCounter(): Closure возвращает closure, увеличивающий внутренний счётчик.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция makeCounter(): Closure возвращает closure, увеличивающий внутренний счётчик.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction makeCounter(): Closure\n{\n    $count = 0;\n    return function () use (&$count): int {\n        return ++$count;\n    };\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "str_contains helper",
+      "question": "Задача: str_contains helper.\n\nФункция contains(string $haystack, string $needle): bool через str_contains().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция contains(string $haystack, string $needle): bool через str_contains().",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction contains(string $haystack, string $needle): bool\n{\n    return str_contains($haystack, $needle);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Строки и JSON"
     },
     {
       "card_type": "live_code",
-      "question": "DateTime format",
+      "question": "Задача: DateTime format.\n\nФункция formatToday(string $format = 'Y-m-d'): string через new DateTimeImmutable('today').\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция formatToday(string $format = 'Y-m-d'): string через new DateTimeImmutable('today').",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction formatToday(string $format = 'Y-m-d'): string\n{\n    return (new DateTimeImmutable('today'))->format($format);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "SplFileObject read lines",
+      "question": "Задача: SplFileObject read lines.\n\nФункция readLines(string $path): array читает файл построчно через SplFileObject.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция readLines(string $path): array читает файл построчно через SplFileObject.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction readLines(string $path): array\n{\n    $file = new SplFileObject($path);\n    $lines = [];\n    foreach ($file as $line) {\n        if ($line === false) {\n            continue;\n        }\n        $lines[] = rtrim($line, \"\\r\\n\");\n    }\n    return $lines;\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Namespace autoload class",
+      "question": "Задача: Namespace autoload class.\n\nNamespace App\\Service; final class Greeter с методом hello(string $name): string.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Namespace App\\Service; final class Greeter с методом hello(string $name): string.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nnamespace App\\Service;\n\nfinal class Greeter\n{\n    public function hello(string $name): string\n    {\n        return \"Hi, {$name}\";\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Основы"
     },
     {
       "card_type": "live_code",
-      "question": "Static factory",
+      "question": "Задача: Static factory.\n\nКласс Email с private __construct и static fromString(string $raw): self.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс Email с private __construct и static fromString(string $raw): self.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Email\n{\n    private function __construct(public readonly string $value)\n    {\n    }\n\n    public static function fromString(string $raw): self\n    {\n        return new self(trim($raw));\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "Array combine",
+      "question": "Задача: Array combine.\n\nФункция combine(array $keys, array $values): array через array_combine (одинаковая длина).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция combine(array $keys, array $values): array через array_combine (одинаковая длина).",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction combine(array $keys, array $values): array\n{\n    return array_combine($keys, $values);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "Spread merge arrays",
+      "question": "Задача: Spread merge arrays.\n\nФункция mergeArrays(array ...$parts): array через array_merge.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция mergeArrays(array ...$parts): array через array_merge.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction mergeArrays(array ...$parts): array\n{\n    return array_merge(...$parts);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Массивы"
     },
     {
       "card_type": "live_code",
-      "question": "Enum method label",
+      "question": "Задача: Enum method label.\n\nBacked enum Priority: int (Low=1, High=2) с методом label(): string.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Backed enum Priority: int (Low=1, High=2) с методом label(): string.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nenum Priority: int\n{\n    case Low = 1;\n    case High = 2;\n\n    public function label(): string\n    {\n        return match ($this) {\n            self::Low => 'low',\n            self::High => 'high',\n        };\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Enums и Attributes"
     },
     {
       "card_type": "live_code",
-      "question": "Readonly promotion Order",
+      "question": "Задача: Readonly promotion Order.\n\nReadonly class Order с promoted properties string $id и float $total.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Readonly class Order с promoted properties string $id и float $total.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class Order\n{\n    public function __construct(\n        public string $id,\n        public float $total,\n    ) {\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "ООП"
     },
     {
       "card_type": "live_code",
-      "question": "Throw expression",
+      "question": "Задача: Throw expression.\n\nФункция requirePositive(int $n): int с $n > 0 ?: throw new InvalidArgumentException().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция requirePositive(int $n): int с $n > 0 ?: throw new InvalidArgumentException().",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction requirePositive(int $n): int\n{\n    return $n > 0 ? $n : throw new InvalidArgumentException('must be positive');\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PHP 8+"
     },
     {
       "card_type": "live_code",
-      "question": "htmlspecialchars helper",
+      "question": "Задача: htmlspecialchars helper.\n\nФункция e(string $value): string — htmlspecialchars с ENT_QUOTES и UTF-8.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция e(string $value): string — htmlspecialchars с ENT_QUOTES и UTF-8.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction e(string $value): string\n{\n    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Строки и JSON"
     },
     {
       "card_type": "live_code",
-      "question": "Password hash verify",
+      "question": "Задача: Password hash verify.\n\nФункции hashPassword(string $plain): string и verifyPassword(string $plain, string $hash): bool.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функции hashPassword(string $plain): string и verifyPassword(string $plain, string $hash): bool.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction hashPassword(string $plain): string\n{\n    return password_hash($plain, PASSWORD_DEFAULT);\n}\n\nfunction verifyPassword(string $plain, string $hash): bool\n{\n    return password_verify($plain, $hash);\n}",
-      "language": "php",
+      "language": "python",
       "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Simple router",
+      "question": "Задача: Simple router.\n\nКласс Router с методами get(string $path, callable $handler): void и dispatch(string $method, string $path).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс Router с методами get(string $path, callable $handler): void и dispatch(string $method, string $path).",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Router\n{\n    /** @var array<string, callable> */\n    private array $routes = [];\n\n    public function get(string $path, callable $handler): void\n    {\n        $this->routes['GET ' . $path] = $handler;\n    }\n\n    public function dispatch(string $method, string $path): mixed\n    {\n        $key = $method . ' ' . $path;\n        if (!isset($this->routes[$key])) {\n            throw new RuntimeException('Not found');\n        }\n        return ($this->routes[$key])();\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Value object Email validate",
+      "question": "Задача: Value object Email validate.\n\nКласс EmailValue с private string $value, конструктор валидирует filter_var FILTER_VALIDATE_EMAIL.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Класс EmailValue с private string $value, конструктор валидирует filter_var FILTER_VALIDATE_EMAIL.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class EmailValue\n{\n    public function __construct(private readonly string $value)\n    {\n        if (filter_var($value, FILTER_VALIDATE_EMAIL) === false) {\n            throw new InvalidArgumentException('Invalid email');\n        }\n    }\n\n    public function toString(): string\n    {\n        return $this->value;\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Fibonacci generator",
+      "question": "Задача: Fibonacci generator.\n\nGenerator function fibonacci(int $count): Generator — первые $count чисел Фибоначчи.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Generator function fibonacci(int $count): Generator — первые $count чисел Фибоначчи.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction fibonacci(int $count): Generator\n{\n    $a = 0;\n    $b = 1;\n    for ($i = 0; $i < $count; $i++) {\n        yield $a;\n        [$a, $b] = [$b, $a + $b];\n    }\n}",
-      "language": "php",
+      "language": "python",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Palindrome check",
+      "question": "Задача: Palindrome check.\n\nФункция isPalindrome(string $text): bool — игнорировать регистр и не-буквы.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
       "task": "Функция isPalindrome(string $text): bool — игнорировать регистр и не-буквы.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfunction isPalindrome(string $text): bool\n{\n    $clean = strtolower(preg_replace('/[^a-z0-9]/i', '', $text) ?? '');\n    return $clean === strrev($clean);\n}",
+      "language": "python",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: HttpClient stub.\n\nКласс HttpResponse с promoted int $status, string $body и методом isSuccessful(): bool.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс HttpResponse с promoted int $status, string $body и методом isSuccessful(): bool.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class HttpResponse\n{\n    public function __construct(\n        public int $status,\n        public string $body,\n    ) {\n    }\n\n    public function isSuccessful(): bool\n    {\n        return $this->status >= 200 && $this->status < 300;\n    }\n}",
+      "language": "python",
+      "topic": "PDO и HTTP"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Interface Logger.\n\nInterface Logger с методом log(string $message): void; класс EchoLogger реализует его.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Interface Logger с методом log(string $message): void; класс EchoLogger реализует его.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Logger\n{\n    public function log(string $message): void;\n}\n\nfinal class EchoLogger implements Logger\n{\n    public function log(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}",
+      "language": "python",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Abstract Animal.\n\nAbstract class Animal с abstract name(): string; class Dog extends и возвращает 'dog'.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Abstract class Animal с abstract name(): string; class Dog extends и возвращает 'dog'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Animal\n{\n    abstract public function name(): string;\n}\n\nfinal class Dog extends Animal\n{\n    public function name(): string\n    {\n        return 'dog';\n    }\n}",
+      "language": "python",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: DateTimeImmutable add.\n\nФункция addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable\n{\n    return $dt->modify(sprintf('%+d days', $days));\n}",
+      "language": "python",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: JSON encode decode.\n\nФункции toJson(array $data): string и fromJson(string $raw): array через json_encode/json_decode.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функции toJson(array $data): string и fromJson(string $raw): array через json_encode/json_decode.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toJson(array $data): string\n{\n    return json_encode($data, JSON_THROW_ON_ERROR);\n}\n\nfunction fromJson(string $raw): array\n{\n    $data = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);\n    return is_array($data) ? $data : [];\n}",
+      "language": "python",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Array map filter.\n\nФункция activeEmails(array $users): array — map email, filter non-empty (array_column + array_filter).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция activeEmails(array $users): array — map email, filter non-empty (array_column + array_filter).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction activeEmails(array $users): array\n{\n    $emails = array_column($users, 'email');\n    return array_values(array_filter($emails, fn(string $e) => $e !== ''));\n}",
+      "language": "python",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: IteratorAggregate Range.\n\nКласс NumberRange implements IteratorAggregate для int $from..$to.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс NumberRange implements IteratorAggregate для int $from..$to.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class NumberRange implements IteratorAggregate\n{\n    public function __construct(private int $from, private int $to)\n    {\n    }\n\n    public function getIterator(): Traversable\n    {\n        for ($i = $this->from; $i <= $this->to; $i++) {\n            yield $i;\n        }\n    }\n}",
+      "language": "python",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Named arguments greet.\n\nФункция greet(string $name, string $greeting = 'Hello'): string с named args в вызове в комментарии не нужно — просто реализуй.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция greet(string $name, string $greeting = 'Hello'): string с named args в вызове в комментарии не нужно — просто реализуй.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction greet(string $name, string $greeting = 'Hello'): string\n{\n    return \"{$greeting}, {$name}!\";\n}",
+      "language": "python",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: str_starts_with helper.\n\nФункция startsWith(string $haystack, string $prefix): bool через str_starts_with.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция startsWith(string $haystack, string $prefix): bool через str_starts_with.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction startsWith(string $haystack, string $prefix): bool\n{\n    return str_starts_with($haystack, $prefix);\n}",
+      "language": "python",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: str_contains helper.\n\nФункция contains(string $haystack, string $needle): bool через str_contains.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция contains(string $haystack, string $needle): bool через str_contains.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction contains(string $haystack, string $needle): bool\n{\n    return str_contains($haystack, $needle);\n}",
+      "language": "python",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Array find key.\n\nФункция findKey(array $items, callable $predicate): int|string|null.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция findKey(array $items, callable $predicate): int|string|null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction findKey(array $items, callable $predicate): int|string|null\n{\n    foreach ($items as $key => $value) {\n        if ($predicate($value, $key)) {\n            return $key;\n        }\n    }\n    return null;\n}",
+      "language": "python",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Class __toString.\n\nКласс Point с promoted int $x, $y и __toString(): string как '(x,y)'.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Point с promoted int $x, $y и __toString(): string как '(x,y)'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Point\n{\n    public function __construct(public int $x, public int $y)\n    {\n    }\n\n    public function __toString(): string\n    {\n        return \"({$this->x},{$this->y})\";\n    }\n}",
+      "language": "python",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Union types parseId.\n\nФункция parseId(int|string $value): int — если string, (int)$value.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция parseId(int|string $value): int — если string, (int)$value.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parseId(int|string $value): int\n{\n    return is_int($value) ? $value : (int) $value;\n}",
+      "language": "python",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: never type abort.\n\nФункция abort(string $message): never бросает RuntimeException.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция abort(string $message): never бросает RuntimeException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction abort(string $message): never\n{\n    throw new RuntimeException($message);\n}",
+      "language": "python",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: First class callable.\n\nКласс Greeter с методом hello(string $name): string; переменная $fn = $greeter->hello(...).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Greeter с методом hello(string $name): string; переменная $fn = $greeter->hello(...).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Greeter\n{\n    public function hello(string $name): string\n    {\n        return \"Hi, {$name}\";\n    }\n}\n\n$greeter = new Greeter();\n$fn = $greeter->hello(...);",
+      "language": "python",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_chunk.\n\nФункция chunk(array $items, int $size): array через array_chunk.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция chunk(array $items, int $size): array через array_chunk.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction chunk(array $items, int $size): array\n{\n    return array_chunk($items, $size);\n}",
+      "language": "python",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_column.\n\nФункция pluck(array $rows, string $field): array через array_column.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция pluck(array $rows, string $field): array через array_column.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction pluck(array $rows, string $field): array\n{\n    return array_column($rows, $field);\n}",
+      "language": "python",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: usort by length.\n\nФункция sortByLength(array $words): array через usort по strlen.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция sortByLength(array $words): array через usort по strlen.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sortByLength(array $words): array\n{\n    usort($words, fn(string $a, string $b) => strlen($a) <=> strlen($b));\n    return $words;\n}",
+      "language": "python",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: DTO from array.\n\nReadonly class UserDto с id, email; static fromArray(array $row): self.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Readonly class UserDto с id, email; static fromArray(array $row): self.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class UserDto\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n\n    public static function fromArray(array $row): self\n    {\n        return new self((int) $row['id'], (string) $row['email']);\n    }\n}",
+      "language": "python",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: SplQueue BFS stub.\n\nФункция bfsLevels(array $tree): int — заглушка: вернуть count($tree) через SplQueue (положить корни, dequeue один).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция bfsLevels(array $tree): int — заглушка: вернуть count($tree) через SplQueue (положить корни, dequeue один).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction bfsLevels(array $tree): int\n{\n    $queue = new SplQueue();\n    foreach ($tree as $node) {\n        $queue->enqueue($node);\n    }\n    if ($queue->isEmpty()) {\n        return 0;\n    }\n    $queue->dequeue();\n    return count($tree);\n}",
+      "language": "python",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Attributes Route.\n\nPHP 8 Attribute Route(string $path); повесь на метод контроллера index().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "PHP 8 Attribute Route(string $path); повесь на метод контроллера index().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfinal class HomeController\n{\n    #[Route('/')]\n    public function index(): string\n    {\n        return 'ok';\n    }\n}",
+      "language": "python",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Типизированные константы.\n\nОбъявите класс AppConfig с публичной типизированной константой string VERSION = '1.0.0'. Добавьте статический метод version(): string, возвращающий значение константы.\n\nТребования:\n• Используйте typed class constant (PHP 8.3+).\n• Класс final.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Объявите класс AppConfig с публичной типизированной константой string VERSION = '1.0.0'. Добавьте статический метод version(): string, возвращающий значение константы.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class AppConfig\n{\n    public const string VERSION = '1.0.0';\n\n    public static function version(): string\n    {\n        return self::VERSION;\n    }\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Проверка типа is_*.\n\nНапишите функцию describeValue(mixed $value): string. Для int верните 'int', для string — 'string', для bool — 'bool', иначе 'other'.\n\nТребования:\n• Используйте match.\n• Параметр mixed.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Напишите функцию describeValue(mixed $value): string. Для int верните 'int', для string — 'string', для bool — 'bool', иначе 'other'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction describeValue(mixed $value): string\n{\n    return match (true) {\n        is_int($value) => 'int',\n        is_string($value) => 'string',\n        is_bool($value) => 'bool',\n        default => 'other',\n    };\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Switch с строгим сравнением.\n\nФункция httpMethodLabel(string $method): string через switch. GET → 'read', POST → 'create', PUT → 'update', DELETE → 'delete', иначе 'unknown'.\n\nТребования:\n• Нормализуйте метод через strtoupper.\n• Покройте default-ветку.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция httpMethodLabel(string $method): string через switch. GET → 'read', POST → 'create', PUT → 'update', DELETE → 'delete', иначе 'unknown'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction httpMethodLabel(string $method): string\n{\n    return match (strtoupper($method)) {\n        'GET' => 'read',\n        'POST' => 'create',\n        'PUT' => 'update',\n        'DELETE' => 'delete',\n        default => 'unknown',\n    };\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Цикл foreach с ключом.\n\nФункция invertMap(array $map): array меняет местами строковые ключи и int-значения. Пример: ['a' => 1, 'b' => 2] → [1 => 'a', 2 => 'b'].\n\nТребования:\n• Используйте foreach.\n• Верните новый массив.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция invertMap(array $map): array меняет местами строковые ключи и int-значения. Пример: ['a' => 1, 'b' => 2] → [1 => 'a', 2 => 'b'].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction invertMap(array $map): array\n{\n    $result = [];\n    foreach ($map as $key => $value) {\n        $result[$value] = $key;\n    }\n    return $result;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Do-while минимум один проход.\n\nФункция readUntilEmpty(array $items): int считает, сколько раз можно взять элемент через array_shift, пока массив не опустеет. Используйте do-while для хотя бы одной итерации при непустом входе.\n\nТребования:\n• Используйте do-while.\n• Пустой массив → 0.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция readUntilEmpty(array $items): int считает, сколько раз можно взять элемент через array_shift, пока массив не опустеет. Используйте do-while для хотя бы одной итерации при непустом входе.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction readUntilEmpty(array $items): int\n{\n    $count = 0;\n    if ($items === []) {\n        return 0;\n    }\n    do {\n        array_shift($items);\n        $count++;\n    } while ($items !== []);\n    return $count;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Глобальная функция с default.\n\nФункция repeat(string $text, int $times = 3): string возвращает строку, повторённую $times раз через str_repeat. При $times <= 0 верните пустую строку.\n\nТребования:\n• Значение по умолчанию для $times.\n• Обработайте неположительный $times.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция repeat(string $text, int $times = 3): string возвращает строку, повторённую $times раз через str_repeat. При $times <= 0 верните пустую строку.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction repeat(string $text, int $times = 3): string\n{\n    if ($times <= 0) {\n        return '';\n    }\n    return str_repeat($text, $times);\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Ссылочный параметр swap.\n\nФункция swap(int &$a, int &$b): void меняет значения двух переменных местами без временного массива.\n\nТребования:\n• Оба параметра по ссылке.\n• Тип void.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция swap(int &$a, int &$b): void меняет значения двух переменных местами без временного массива.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction swap(int &$a, int &$b): void\n{\n    $tmp = $a;\n    $a = $b;\n    $b = $tmp;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Variadic sum.\n\nФункция sumAll(int ...$values): int возвращает сумму всех переданных целых. Без аргументов верните 0.\n\nТребования:\n• Используйте variadic ...$values.\n• Пустой вызов → 0.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция sumAll(int ...$values): int возвращает сумму всех переданных целых. Без аргументов верните 0.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sumAll(int ...$values): int\n{\n    return array_sum($values);\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Константа уровня файла.\n\nОбъявите константу MAX_ITEMS = 100 и функцию isWithinLimit(int $count): bool, возвращающую true, если $count <= MAX_ITEMS.\n\nТребования:\n• Константа на уровне файла.\n• Строгое сравнение не требуется для <=.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Объявите константу MAX_ITEMS = 100 и функцию isWithinLimit(int $count): bool, возвращающую true, если $count <= MAX_ITEMS.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nconst MAX_ITEMS = 100;\n\nfunction isWithinLimit(int $count): bool\n{\n    return $count <= MAX_ITEMS;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Heredoc шаблон.\n\nФункция renderBanner(string $title): string возвращает многострочный баннер через heredoc с подстановкой $title в отдельной строке.\n\nТребования:\n• Используйте heredoc.\n• Включите $title в текст.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция renderBanner(string $title): string возвращает многострочный баннер через heredoc с подстановкой $title в отдельной строке.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction renderBanner(string $title): string\n{\n    return <<<BANNER\n=== {$title} ===\nWelcome!\nBANNER;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Оператор ??=.\n\nФункция ensureDefault(?string &$value, string $default = 'guest'): string присваивает $default через ??=, если $value равно null, и возвращает итог.\n\nТребования:\n• Используйте оператор ??=.\n• Параметр по ссылке.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция ensureDefault(?string &$value, string $default = 'guest'): string присваивает $default через ??=, если $value равно null, и возвращает итог.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction ensureDefault(?string &$value, string $default = 'guest'): string\n{\n    $value ??= $default;\n    return $value;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Проверка callable.\n\nФункция invokeIfCallable(mixed $target, string $method, mixed ...$args): mixed вызывает [$target, $method](...$args), если callable, иначе возвращает null.\n\nТребования:\n• Проверка is_callable.\n• Variadic args.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция invokeIfCallable(mixed $target, string $method, mixed ...$args): mixed вызывает [$target, $method](...$args), если callable, иначе возвращает null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction invokeIfCallable(mixed $target, string $method, mixed ...$args): mixed\n{\n    $callable = [$target, $method];\n    if (!is_callable($callable)) {\n        return null;\n    }\n    return $callable(...$args);\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Compact и extract.\n\nФункция buildUserRow(string $name, int $age): array возвращает ассоциативный массив через compact('name', 'age').\n\nТребования:\n• Используйте compact.\n• Ключи name и age.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция buildUserRow(string $name, int $age): array возвращает ассоциативный массив через compact('name', 'age').",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction buildUserRow(string $name, int $age): array\n{\n    return compact('name', 'age');\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: list деструктуризация.\n\nФункция firstAndLast(array $items): array возвращает [первый, последний] элемент через list() / деструктуризацию. Пустой массив → [null, null].\n\nТребования:\n• Обработайте пустой массив.\n• Используйте array_key_last.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция firstAndLast(array $items): array возвращает [первый, последний] элемент через list() / деструктуризацию. Пустой массив → [null, null].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction firstAndLast(array $items): array\n{\n    if ($items === []) {\n        return [null, null];\n    }\n    $first = $items[0];\n    $last = $items[array_key_last($items)];\n    return [$first, $last];\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: goto cleanup pattern.\n\nФункция processResource(bool $fail): string открывает логическую секцию try и при $fail переходит через goto cleanup к возврату 'failed', иначе 'ok'.\n\nТребования:\n• Используйте goto cleanup.\n• Два возможных результата.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция processResource(bool $fail): string открывает логическую секцию try и при $fail переходит через goto cleanup к возврату 'failed', иначе 'ok'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction processResource(bool $fail): string\n{\n    $status = 'ok';\n    if ($fail) {\n        $status = 'failed';\n        goto cleanup;\n    }\n    cleanup:\n    return $status;\n}",
+      "language": "php",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Intersection type CountableIterator.\n\nКласс InMemoryCollection implements Iterator, Countable с полем private array $items. Реализуйте current, key, next, rewind, valid, count.\n\nТребования:\n• Iterator + Countable.\n• Храните данные в private array.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс InMemoryCollection implements Iterator, Countable с полем private array $items. Реализуйте current, key, next, rewind, valid, count.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class InMemoryCollection implements Iterator, Countable\n{\n    private int $position = 0;\n\n    public function __construct(private array $items)\n    {\n    }\n\n    public function current(): mixed\n    {\n        return $this->items[$this->position];\n    }\n\n    public function key(): int\n    {\n        return $this->position;\n    }\n\n    public function next(): void\n    {\n        $this->position++;\n    }\n\n    public function rewind(): void\n    {\n        $this->position = 0;\n    }\n\n    public function valid(): bool\n    {\n        return isset($this->items[$this->position]);\n    }\n\n    public function count(): int\n    {\n        return count($this->items);\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Standalone type true.\n\nФункция alwaysTrue(): true всегда возвращает литерал true (тип возврата true, PHP 8.2+).\n\nТребования:\n• Тип возврата true.\n• Без других веток.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция alwaysTrue(): true всегда возвращает литерал true (тип возврата true, PHP 8.2+).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction alwaysTrue(): true\n{\n    return true;\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Standalone type false.\n\nФункция alwaysFalse(): false всегда возвращает литерал false.\n\nТребования:\n• Тип возврата false.\n• Один return.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция alwaysFalse(): false всегда возвращает литерал false.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction alwaysFalse(): false\n{\n    return false;\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Readonly property promotion.\n\nКласс Product с promoted readonly string $sku и readonly float $price в конструкторе.\n\nТребования:\n• Оба поля readonly promoted.\n• Класс final.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Product с promoted readonly string $sku и readonly float $price в конструкторе.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Product\n{\n    public function __construct(\n        public readonly string $sku,\n        public readonly float $price,\n    ) {\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Const в trait.\n\nTrait HasVersion с public const string VERSION = 'v2' и методом version(): string.\n\nТребования:\n• Typed const в trait.\n• Метод version().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Trait HasVersion с public const string VERSION = 'v2' и методом version(): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ntrait HasVersion\n{\n    public const string VERSION = 'v2';\n\n    public function version(): string\n    {\n        return self::VERSION;\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Dynamic properties deprecated guard.\n\nКласс StrictModel с #[\\AllowDynamicProperties] не используйте — наоборот, объявите public string $name и __get для неизвестных свойств с LogicException.\n\nТребования:\n• Явное поле name.\n• __get бросает LogicException.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс StrictModel с #[\\AllowDynamicProperties] не используйте — наоборот, объявите public string $name и __get для неизвестных свойств с LogicException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class StrictModel\n{\n    public string $name = '';\n\n    public function __get(string $name): never\n    {\n        throw new LogicException(\"Unknown property: {$name}\");\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Fibers stub.\n\nФункция runInFiber(callable $fn): mixed создаёт Fiber, передаёт $fn в start и возвращает get() (заглушка однопоточного запуска).\n\nТребования:\n• Используйте класс Fiber.\n• Верните результат get().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция runInFiber(callable $fn): mixed создаёт Fiber, передаёт $fn в start и возвращает get() (заглушка однопоточного запуска).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction runInFiber(callable $fn): mixed\n{\n    $fiber = new Fiber($fn);\n    $fiber->start();\n    return $fiber->get();\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: enum в match.\n\nUnit enum Color { Red, Green, Blue } и функция colorCode(Color $color): int возвращает 0xFF0000, 0x00FF00, 0x0000FF соответственно.\n\nТребования:\n• Unit enum Color.\n• match по всем case.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Unit enum Color { Red, Green, Blue } и функция colorCode(Color $color): int возвращает 0xFF0000, 0x00FF00, 0x0000FF соответственно.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Color\n{\n    case Red;\n    case Green;\n    case Blue;\n}\n\nfunction colorCode(Color $color): int\n{\n    return match ($color) {\n        Color::Red => 0xFF0000,\n        Color::Green => 0x00FF00,\n        Color::Blue => 0x0000FF,\n    };\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Partial application pipe.\n\nФункция pipe(int $value, callable ...$steps): int последовательно применяет callable к значению.\n\nТребования:\n• Variadic callable steps.\n• Тип int на входе и выходе.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция pipe(int $value, callable ...$steps): int последовательно применяет callable к значению.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction pipe(int $value, callable ...$steps): int\n{\n    foreach ($steps as $step) {\n        $value = $step($value);\n    }\n    return $value;\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Stringable interface.\n\nКласс Label implements Stringable с private string $text и __toString(): string.\n\nТребования:\n• implements Stringable.\n• Приватное поле text.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Label implements Stringable с private string $text и __toString(): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Label implements Stringable\n{\n    public function __construct(private string $text)\n    {\n    }\n\n    public function __toString(): string\n    {\n        return $this->text;\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: WeakMap кэш.\n\nКласс ObjectCache с private WeakMap $cache и методами get(object $key, callable $factory): mixed.\n\nТребования:\n• Используйте WeakMap.\n• Ленивое создание через factory.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс ObjectCache с private WeakMap $cache и методами get(object $key, callable $factory): mixed.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class ObjectCache\n{\n    private WeakMap $cache;\n\n    public function __construct()\n    {\n        $this->cache = new WeakMap();\n    }\n\n    public function get(object $key, callable $factory): mixed\n    {\n        if (!$this->cache->offsetExists($key)) {\n            $this->cache->offsetSet($key, $factory());\n        }\n        return $this->cache->offsetGet($key);\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: json_validate PHP 8.3.\n\nФункция isValidJson(string $raw): bool использует json_validate без декодирования.\n\nТребования:\n• Только json_validate.\n• Без json_decode.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция isValidJson(string $raw): bool использует json_validate без декодирования.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction isValidJson(string $raw): bool\n{\n    return json_validate($raw);\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Override attribute.\n\nБазовый класс BaseWorker с virtual log(): void и наследник ChildWorker с #[\\Override] public function log(): void, пишущим 'child'.\n\nТребования:\n• Атрибут #[\\Override].\n• Переопределите log().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Базовый класс BaseWorker с virtual log(): void и наследник ChildWorker с #[\\Override] public function log(): void, пишущим 'child'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nclass BaseWorker\n{\n    public function log(): void\n    {\n        echo 'base', PHP_EOL;\n    }\n}\n\nfinal class ChildWorker extends BaseWorker\n{\n    #[\\Override]\n    public function log(): void\n    {\n        echo 'child', PHP_EOL;\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Randomizer getBytes.\n\nФункция secureToken(int $length = 16): string генерирует hex-токен через Random\\Randomizer и getBytes.\n\nТребования:\n• Класс Random\\Randomizer.\n• Верните hex-строку.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция secureToken(int $length = 16): string генерирует hex-токен через Random\\Randomizer и getBytes.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction secureToken(int $length = 16): string\n{\n    $randomizer = new Random\\Randomizer();\n    return bin2hex($randomizer->getBytes($length));\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Closure bindTo.\n\nФункция boundGreeting(object $obj, string $name): string создаёт closure, возвращающую \"Hi, {$name}\", и привязывает к $obj через bindTo.\n\nТребования:\n• Используйте bindTo.\n• Верните строку приветствия.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция boundGreeting(object $obj, string $name): string создаёт closure, возвращающую \"Hi, {$name}\", и привязывает к $obj через bindTo.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction boundGreeting(object $obj, string $name): string\n{\n    $fn = function () use ($name): string {\n        return \"Hi, {$name}\";\n    };\n    $bound = $fn->bindTo($obj, $obj::class);\n    return $bound();\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: DNF types в property.\n\nКласс Payload с promoted public int|string|null $id в конструкторе и методом isNumeric(): bool.\n\nТребования:\n• Union int|string|null.\n• Метод isNumeric().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Payload с promoted public int|string|null $id в конструкторе и методом isNumeric(): bool.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Payload\n{\n    public function __construct(public int|string|null $id)\n    {\n    }\n\n    public function isNumeric(): bool\n    {\n        return is_int($this->id);\n    }\n}",
+      "language": "php",
+      "topic": "PHP 8+"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Композиция Engine.\n\nКласс Car с private Engine $engine и методом start(): string, делегирующим $this->engine->ignite(). Engine::ignite(): string возвращает 'vroom'.\n\nТребования:\n• Композиция, не наследование.\n• Делегирование ignite().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Car с private Engine $engine и методом start(): string, делегирующим $this->engine->ignite(). Engine::ignite(): string возвращает 'vroom'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Engine\n{\n    public function ignite(): string\n    {\n        return 'vroom';\n    }\n}\n\nfinal class Car\n{\n    public function __construct(private Engine $engine)\n    {\n    }\n\n    public function start(): string\n    {\n        return $this->engine->ignite();\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Late static binding.\n\nКласс Model с static create(): static и наследник User, переопределяющий create() для возврата new self(...).\n\nТребования:\n• static create(): static.\n• User возвращает new self().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Model с static create(): static и наследник User, переопределяющий create() для возврата new self(...).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nclass Model\n{\n    public static function create(): static\n    {\n        return new static();\n    }\n}\n\nfinal class User extends Model\n{\n    public static function create(): static\n    {\n        return new self();\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Final override method.\n\nКласс Base с public function id(): string и final class Child extends Base с id(): string возвращающим 'child'.\n\nТребования:\n• Наследование Base → Child.\n• Переопределите id().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Base с public function id(): string и final class Child extends Base с id(): string возвращающим 'child'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nclass Base\n{\n    public function id(): string\n    {\n        return 'base';\n    }\n}\n\nfinal class Child extends Base\n{\n    public function id(): string\n    {\n        return 'child';\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Magic __call.\n\nКласс DynamicApi с __call(string $name, array $arguments): string возвращает \"called {$name}\".\n\nТребования:\n• Метод __call.\n• Игнорируйте $arguments в ответе.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс DynamicApi с __call(string $name, array $arguments): string возвращает \"called {$name}\".",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class DynamicApi\n{\n    public function __call(string $name, array $arguments): string\n    {\n        return \"called {$name}\";\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Magic __invoke.\n\nКласс Multiplier с __construct(private int $factor) и __invoke(int $value): int.\n\nТребования:\n• Объект вызываемый как функция.\n• Умножение на factor.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Multiplier с __construct(private int $factor) и __invoke(int $value): int.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Multiplier\n{\n    public function __construct(private int $factor)\n    {\n    }\n\n    public function __invoke(int $value): int\n    {\n        return $value * $this->factor;\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Clone с __clone.\n\nКласс Box с public array $items и __clone(), выполняющим $this->items = [...$this->items].\n\nТребования:\n• Глубокое копирование items.\n• Используйте spread в __clone.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Box с public array $items и __clone(), выполняющим $this->items = [...$this->items].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Box\n{\n    public function __construct(public array $items)\n    {\n    }\n\n    public function __clone(): void\n    {\n        $this->items = [...$this->items];\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Serializable __serialize.\n\nКласс SessionData с private string $token и парами __serialize/__unserialize для сохранения только token.\n\nТребования:\n• __serialize и __unserialize.\n• Храните token.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс SessionData с private string $token и парами __serialize/__unserialize для сохранения только token.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class SessionData\n{\n    public function __construct(private string $token)\n    {\n    }\n\n    public function __serialize(): array\n    {\n        return ['token' => $this->token];\n    }\n\n    public function __unserialize(array $data): void\n    {\n        $this->token = $data['token'];\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Interface segregation.\n\nИнтерфейсы Readable { read(): string } и Writable { write(string $data): void }; класс MemoryStream implements оба.\n\nТребования:\n• Два интерфейса.\n• Буфер в памяти.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейсы Readable { read(): string } и Writable { write(string $data): void }; класс MemoryStream implements оба.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Readable\n{\n    public function read(): string;\n}\n\ninterface Writable\n{\n    public function write(string $data): void;\n}\n\nfinal class MemoryStream implements Readable, Writable\n{\n    private string $buffer = '';\n\n    public function read(): string\n    {\n        return $this->buffer;\n    }\n\n    public function write(string $data): void\n    {\n        $this->buffer .= $data;\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Abstract template method.\n\nAbstract class Exporter с final export(): string вызывающим serialize($this->data()) и abstract protected data(): array. JsonExporter возвращает ['ok' => true].\n\nТребования:\n• Template method export().\n• JsonExporter с data().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Abstract class Exporter с final export(): string вызывающим serialize($this->data()) и abstract protected data(): array. JsonExporter возвращает ['ok' => true].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Exporter\n{\n    final public function export(): string\n    {\n        return json_encode($this->data(), JSON_THROW_ON_ERROR);\n    }\n\n    abstract protected function data(): array;\n}\n\nfinal class JsonExporter extends Exporter\n{\n    protected function data(): array\n    {\n        return ['ok' => true];\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Static counter.\n\nКласс RequestId с private static int $seq и static next(): int, инкрементирующим счётчик.\n\nТребования:\n• Статическое поле seq.\n• Метод next().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс RequestId с private static int $seq и static next(): int, инкрементирующим счётчик.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class RequestId\n{\n    private static int $seq = 0;\n\n    public static function next(): int\n    {\n        return ++self::$seq;\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Private constructor singleton.\n\nКласс ConfigStore — singleton: private __construct, static getInstance(): self, поле private static ?self $instance.\n\nТребования:\n• Приватный конструктор.\n• Один экземпляр getInstance().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс ConfigStore — singleton: private __construct, static getInstance(): self, поле private static ?self $instance.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class ConfigStore\n{\n    private static ?self $instance = null;\n\n    private function __construct()\n    {\n    }\n\n    public static function getInstance(): self\n    {\n        return self::$instance ??= new self();\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Covariant return stub.\n\nКласс Animal с makeSound(): string и Dog extends Animal с makeSound(): string возвращающим 'woof'.\n\nТребования:\n• Наследник Dog.\n• Переопределите makeSound().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Animal с makeSound(): string и Dog extends Animal с makeSound(): string возвращающим 'woof'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nclass Animal\n{\n    public function makeSound(): string\n    {\n        return '...';\n    }\n}\n\nfinal class Dog extends Animal\n{\n    public function makeSound(): string\n    {\n        return 'woof';\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Delegation __get.\n\nКласс ProxyConfig с __construct(private object $inner) и __get, читающим свойства $inner.\n\nТребования:\n• Делегируйте чтение inner.\n• Метод __get.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс ProxyConfig с __construct(private object $inner) и __get, читающим свойства $inner.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class ProxyConfig\n{\n    public function __construct(private object $inner)\n    {\n    }\n\n    public function __get(string $name): mixed\n    {\n        return $this->inner->$name;\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Comparable equals.\n\nКласс Uuid с private string $value, __construct и equals(self $other): bool через === значений.\n\nТребования:\n• Типизированный параметр self.\n• Сравнение приватных value.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Uuid с private string $value, __construct и equals(self $other): bool через === значений.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Uuid\n{\n    public function __construct(private string $value)\n    {\n    }\n\n    public function equals(self $other): bool\n    {\n        return $this->value === $other->value;\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Protected constructor base.\n\nAbstract class Entity с protected __construct(public readonly int $id) и final class User extends Entity без своего конструктора — публичный __construct вызывает parent.\n\nТребования:\n• protected конструктор в базе.\n• User вызывает parent.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Abstract class Entity с protected __construct(public readonly int $id) и final class User extends Entity без своего конструктора — публичный __construct вызывает parent.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Entity\n{\n    protected function __construct(public readonly int $id)\n    {\n    }\n}\n\nfinal class User extends Entity\n{\n    public function __construct(int $id)\n    {\n        parent::__construct($id);\n    }\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_reduce product.\n\nФункция product(array $numbers): int — произведение int через array_reduce. Пустой массив → 1.\n\nТребования:\n• array_reduce.\n• Пустой массив → 1.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция product(array $numbers): int — произведение int через array_reduce. Пустой массив → 1.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction product(array $numbers): int\n{\n    if ($numbers === []) {\n        return 1;\n    }\n    return array_reduce($numbers, fn (int $carry, int $n): int => $carry * $n, 1);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_walk_by_reference.\n\nФункция doubleInPlace(array &$numbers): void удваивает каждый элемент через array_walk.\n\nТребования:\n• Изменение по ссылке.\n• array_walk.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция doubleInPlace(array &$numbers): void удваивает каждый элемент через array_walk.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction doubleInPlace(array &$numbers): void\n{\n    array_walk($numbers, function (int &$value): void {\n        $value *= 2;\n    });\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_unique strict.\n\nФункция uniqueInts(array $values): array возвращает уникальные int через array_unique(SORT_REGULAR) с переиндексацией.\n\nТребования:\n• array_unique.\n• array_values для сброса ключей.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция uniqueInts(array $values): array возвращает уникальные int через array_unique(SORT_REGULAR) с переиндексацией.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction uniqueInts(array $values): array\n{\n    return array_values(array_unique($values, SORT_REGULAR));\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_flip lookup.\n\nФункция invertLabels(array $labels): array строит карту значение→ключ через array_flip. Дубликаты значений — последний ключ побеждает (поведение array_flip).\n\nТребования:\n• array_flip.\n• Верните массив.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция invertLabels(array $labels): array строит карту значение→ключ через array_flip. Дубликаты значений — последний ключ побеждает (поведение array_flip).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction invertLabels(array $labels): array\n{\n    return array_flip($labels);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_intersect_key.\n\nФункция commonKeys(array $a, array $b): array возвращает элементы $a, чьи ключи есть в $b, через array_intersect_key.\n\nТребования:\n• array_intersect_key.\n• Сохраните значения из $a.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция commonKeys(array $a, array $b): array возвращает элементы $a, чьи ключи есть в $b, через array_intersect_key.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction commonKeys(array $a, array $b): array\n{\n    return array_intersect_key($a, $b);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_diff_assoc.\n\nФункция diffByValueAndKey(array $left, array $right): array — array_diff_assoc($left, $right).\n\nТребования:\n• array_diff_assoc.\n• Два входных массива.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция diffByValueAndKey(array $left, array $right): array — array_diff_assoc($left, $right).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction diffByValueAndKey(array $left, array $right): array\n{\n    return array_diff_assoc($left, $right);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: uksort custom.\n\nФункция sortKeysAlpha(array $map): array сортирует ключи через uksort и strcmp.\n\nТребования:\n• uksort.\n• strcmp для ключей.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция sortKeysAlpha(array $map): array сортирует ключи через uksort и strcmp.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sortKeysAlpha(array $map): array\n{\n    uksort($map, fn (string $a, string $b): int => strcmp($a, $b));\n    return $map;\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_pad.\n\nФункция padRight(array $items, int $size, mixed $fill = 0): array дополняет массив до $size элементов справа.\n\nТребования:\n• array_pad.\n• Параметр fill с default.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция padRight(array $items, int $size, mixed $fill = 0): array дополняет массив до $size элементов справа.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction padRight(array $items, int $size, mixed $fill = 0): array\n{\n    return array_pad($items, $size, $fill);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_slice page.\n\nФункция paginate(array $items, int $page, int $perPage = 10): array возвращает срез для страницы (page с 1).\n\nТребования:\n• array_slice.\n• Нумерация page с 1.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция paginate(array $items, int $page, int $perPage = 10): array возвращает срез для страницы (page с 1).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction paginate(array $items, int $page, int $perPage = 10): array\n{\n    $offset = max(0, ($page - 1) * $perPage);\n    return array_slice($items, $offset, $perPage);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_replace_recursive.\n\nФункция mergeDefaults(array $data, array $defaults): array через array_replace_recursive.\n\nТребования:\n• array_replace_recursive.\n• defaults как база.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция mergeDefaults(array $data, array $defaults): array через array_replace_recursive.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction mergeDefaults(array $data, array $defaults): array\n{\n    return array_replace_recursive($defaults, $data);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_key_exists vs isset.\n\nФункция hasKey(array $map, string $key): bool возвращает true, если ключ есть, даже когда значение null — используйте array_key_exists.\n\nТребования:\n• array_key_exists, не isset.\n• Ключ string.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция hasKey(array $map, string $key): bool возвращает true, если ключ есть, даже когда значение null — используйте array_key_exists.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction hasKey(array $map, string $key): bool\n{\n    return array_key_exists($key, $map);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: SplFixedArray.\n\nКласс FixedBuffer оборачивает SplFixedArray: __construct(int $size), set(int $i, int $v), get(int $i): int.\n\nТребования:\n• SplFixedArray внутри.\n• Методы set/get.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс FixedBuffer оборачивает SplFixedArray: __construct(int $size), set(int $i, int $v), get(int $i): int.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class FixedBuffer\n{\n    private SplFixedArray $data;\n\n    public function __construct(int $size)\n    {\n        $this->data = new SplFixedArray($size);\n    }\n\n    public function set(int $index, int $value): void\n    {\n        $this->data[$index] = $value;\n    }\n\n    public function get(int $index): int\n    {\n        return (int) $this->data[$index];\n    }\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_count_values.\n\nФункция frequency(array $tokens): array считает частоту строк через array_count_values.\n\nТребования:\n• array_count_values.\n• Вход — массив строк.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция frequency(array $tokens): array считает частоту строк через array_count_values.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction frequency(array $tokens): array\n{\n    return array_count_values($tokens);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: natsort strings.\n\nФункция naturalSort(array $files): array сортирует строки естественным порядком через natsort и возвращает массив.\n\nТребования:\n• natsort.\n• array_values после сортировки.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция naturalSort(array $files): array сортирует строки естественным порядком через natsort и возвращает массив.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction naturalSort(array $files): array\n{\n    natsort($files);\n    return array_values($files);\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: array_multisort.\n\nФункция sortByScoreThenName(array $rows): array сортирует массив строк по полям score (desc) и name (asc) через array_multisort.\n\nТребования:\n• array_multisort.\n• Два поля сортировки.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция sortByScoreThenName(array $rows): array сортирует массив строк по полям score (desc) и name (asc) через array_multisort.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sortByScoreThenName(array $rows): array\n{\n    $scores = array_column($rows, 'score');\n    $names = array_column($rows, 'name');\n    array_multisort($scores, SORT_DESC, $names, SORT_ASC, $rows);\n    return $rows;\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: mb_strlen.\n\nФункция charCount(string $text): int возвращает количество символов в UTF-8 через mb_strlen.\n\nТребования:\n• mb_strlen с UTF-8.\n• Тип int.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция charCount(string $text): int возвращает количество символов в UTF-8 через mb_strlen.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction charCount(string $text): int\n{\n    return mb_strlen($text, 'UTF-8');\n}",
       "language": "php",
       "topic": "Строки и JSON"
     },
     {
       "card_type": "live_code",
-      "question": "HttpClient stub",
-      "task": "Класс HttpResponse с promoted int $status, string $body и методом isSuccessful(): bool.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class HttpResponse\n{\n    public function __construct(\n        public int $status,\n        public string $body,\n    ) {\n    }\n\n    public function isSuccessful(): bool\n    {\n        return $this->status >= 200 && $this->status < 300;\n    }\n}",
+      "question": "Задача: mb_substr excerpt.\n\nФункция excerpt(string $text, int $max = 50): string обрезает UTF-8 строку через mb_substr и добавляет '…', если длиннее $max.\n\nТребования:\n• mb_substr и mb_strlen.\n• Многоточие при обрезке.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция excerpt(string $text, int $max = 50): string обрезает UTF-8 строку через mb_substr и добавляет '…', если длиннее $max.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction excerpt(string $text, int $max = 50): string\n{\n    if (mb_strlen($text, 'UTF-8') <= $max) {\n        return $text;\n    }\n    return mb_substr($text, 0, $max, 'UTF-8') . '…';\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: mb_strtolower.\n\nФункция normalizeTitle(string $title): string приводит UTF-8 к нижнему регистру через mb_strtolower.\n\nТребования:\n• mb_strtolower.\n• Кодировка UTF-8.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция normalizeTitle(string $title): string приводит UTF-8 к нижнему регистру через mb_strtolower.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction normalizeTitle(string $title): string\n{\n    return mb_strtolower($title, 'UTF-8');\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: NumberFormatter currency.\n\nФункция formatRub(int $amount): string форматирует копейки как рубли через NumberFormatter (LOCALE ru_RU, CURRENCY).\n\nТребования:\n• NumberFormatter.\n• Валюта RUB.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция formatRub(int $amount): string форматирует копейки как рубли через NumberFormatter (LOCALE ru_RU, CURRENCY).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction formatRub(int $amount): string\n{\n    $fmt = new NumberFormatter('ru_RU', NumberFormatter::CURRENCY);\n    return $fmt->formatCurrency($amount / 100, 'RUB');\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: IntlDateFormatter.\n\nФункция formatRuDate(DateTimeImmutable $dt): string форматирует дату по-русски через IntlDateFormatter(MEDIUM, NONE).\n\nТребования:\n• IntlDateFormatter.\n• Локаль ru_RU.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция formatRuDate(DateTimeImmutable $dt): string форматирует дату по-русски через IntlDateFormatter(MEDIUM, NONE).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction formatRuDate(DateTimeImmutable $dt): string\n{\n    $formatter = new IntlDateFormatter(\n        'ru_RU',\n        IntlDateFormatter::MEDIUM,\n        IntlDateFormatter::NONE,\n    );\n    return $formatter->format($dt);\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: sprintf padding.\n\nФункция padLeft(string $value, int $width = 8): string дополняет строку нулями слева через sprintf.\n\nТребования:\n• sprintf с zero-padding.\n• Ширина настраиваемая.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция padLeft(string $value, int $width = 8): string дополняет строку нулями слева через sprintf.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction padLeft(string $value, int $width = 8): string\n{\n    return sprintf('%0' . $width . 's', $value);\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: preg_replace_callback.\n\nФункция maskDigits(string $text): string заменяет каждую цифру на '*' через preg_replace_callback('/\\d/').\n\nТребования:\n• preg_replace_callback.\n• Маскируйте все цифры.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция maskDigits(string $text): string заменяет каждую цифру на '*' через preg_replace_callback('/\\d/').",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction maskDigits(string $text): string\n{\n    return preg_replace_callback('/\\d/', fn (): string => '*', $text) ?? $text;\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: preg_split tokens.\n\nФункция tokenize(string $text): array разбивает по пробелам через preg_split('/\\s+/').\n\nТребования:\n• preg_split.\n• Уберите пустые токены.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция tokenize(string $text): array разбивает по пробелам через preg_split('/\\s+/').",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction tokenize(string $text): array\n{\n    $parts = preg_split('/\\s+/', trim($text)) ?: [];\n    return array_values(array_filter($parts, fn (string $p): bool => $p !== ''));\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: json_encode flags.\n\nФункция toPrettyJson(array $data): string кодирует JSON с PRETTY_PRINT | UNESCAPED_UNICODE и JSON_THROW_ON_ERROR.\n\nТребования:\n• JSON_PRETTY_PRINT.\n• JSON_THROW_ON_ERROR.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция toPrettyJson(array $data): string кодирует JSON с PRETTY_PRINT | UNESCAPED_UNICODE и JSON_THROW_ON_ERROR.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toPrettyJson(array $data): string\n{\n    return json_encode(\n        $data,\n        JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE,\n    );\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: json_decode depth.\n\nФункция parsePayload(string $raw): array декодирует JSON в ассоциативный массив с json_decode(..., true, 512, JSON_THROW_ON_ERROR).\n\nТребования:\n• Ассоциативный массив.\n• JSON_THROW_ON_ERROR.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция parsePayload(string $raw): array декодирует JSON в ассоциативный массив с json_decode(..., true, 512, JSON_THROW_ON_ERROR).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parsePayload(string $raw): array\n{\n    $data = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);\n    return is_array($data) ? $data : [];\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: strtr translation.\n\nФункция leetSpeak(string $text): string заменяет a→4, e→3, i→1, o→0 через strtr.\n\nТребования:\n• strtr с картой замен.\n• Четыре гласные.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция leetSpeak(string $text): string заменяет a→4, e→3, i→1, o→0 через strtr.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction leetSpeak(string $text): string\n{\n    return strtr($text, ['a' => '4', 'e' => '3', 'i' => '1', 'o' => '0']);\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: hash_equals timing safe.\n\nФункция safeEquals(string $known, string $user): bool сравнивает строки через hash_equals.\n\nТребования:\n• hash_equals.\n• Тип bool.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция safeEquals(string $known, string $user): bool сравнивает строки через hash_equals.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction safeEquals(string $known, string $user): bool\n{\n    return hash_equals($known, $user);\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: bin2hex random.\n\nФункция randomHex(int $bytes = 8): string генерирует случайные байты random_bytes и кодирует bin2hex.\n\nТребования:\n• random_bytes.\n• bin2hex.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция randomHex(int $bytes = 8): string генерирует случайные байты random_bytes и кодирует bin2hex.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction randomHex(int $bytes = 8): string\n{\n    return bin2hex(random_bytes($bytes));\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: sscanf parse.\n\nФункция parsePoint(string $raw): array парсит '(x,y)' через sscanf и возвращает [x, y] как int.\n\nТребования:\n• sscanf.\n• При ошибке [0, 0].\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция parsePoint(string $raw): array парсит '(x,y)' через sscanf и возвращает [x, y] как int.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parsePoint(string $raw): array\n{\n    $matched = sscanf($raw, '(%d,%d)', $x, $y);\n    if ($matched !== 2) {\n        return [0, 0];\n    }\n    return [(int) $x, (int) $y];\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Backed enum tryFrom.\n\nEnum Role: string (Admin='admin', User='user') и функция parseRole(string $raw): ?Role через Role::tryFrom.\n\nТребования:\n• Backed enum.\n• tryFrom без исключения.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Enum Role: string (Admin='admin', User='user') и функция parseRole(string $raw): ?Role через Role::tryFrom.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Role: string\n{\n    case Admin = 'admin';\n    case User = 'user';\n}\n\nfunction parseRole(string $raw): ?Role\n{\n    return Role::tryFrom($raw);\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Enum cases list.\n\nEnum Color: string (Red='red', Green='green') и функция allColors(): array возвращает массив значений из Color::cases().\n\nТребования:\n• Color::cases().\n• Верните строковые value.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Enum Color: string (Red='red', Green='green') и функция allColors(): array возвращает массив значений из Color::cases().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Color: string\n{\n    case Red = 'red';\n    case Green = 'green';\n}\n\nfunction allColors(): array\n{\n    return array_map(fn (Color $c): string => $c->value, Color::cases());\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Enum from throws.\n\nEnum Level: int (Info=1, Error=2) и функция requireLevel(int $raw): Level через Level::from.\n\nТребования:\n• Level::from.\n• int backed enum.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Enum Level: int (Info=1, Error=2) и функция requireLevel(int $raw): Level через Level::from.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Level: int\n{\n    case Info = 1;\n    case Error = 2;\n}\n\nfunction requireLevel(int $raw): Level\n{\n    return Level::from($raw);\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Unit enum method.\n\nUnit enum Direction { North, South } с методом opposite(): self.\n\nТребования:\n• Unit enum.\n• Метод opposite().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Unit enum Direction { North, South } с методом opposite(): self.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Direction\n{\n    case North;\n    case South;\n\n    public function opposite(): self\n    {\n        return match ($this) {\n            self::North => self::South,\n            self::South => self::North,\n        };\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Attribute Deprecated.\n\nКласс LegacyApi с методом oldEndpoint(), помеченным #[\\Deprecated] (PHP 8.4+) или комментарием @deprecated и trigger_error(E_USER_DEPRECATED) внутри.\n\nТребования:\n• trigger_error E_USER_DEPRECATED.\n• Публичный метод oldEndpoint().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс LegacyApi с методом oldEndpoint(), помеченным #[\\Deprecated] (PHP 8.4+) или комментарием @deprecated и trigger_error(E_USER_DEPRECATED) внутри.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class LegacyApi\n{\n    public function oldEndpoint(): void\n    {\n        trigger_error('oldEndpoint is deprecated', E_USER_DEPRECATED);\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Repeatable attribute.\n\nАтрибут #[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)] class Tag { public function __construct(public string $name) {} } и метод с двумя #[Tag].\n\nТребования:\n• IS_REPEATABLE.\n• Два Tag на одном методе.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Атрибут #[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)] class Tag { public function __construct(public string $name) {} } и метод с двумя #[Tag].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD | Attribute::IS_REPEATABLE)]\nfinal class Tag\n{\n    public function __construct(public string $name)\n    {\n    }\n}\n\nfinal class TaggedService\n{\n    #[Tag('cache')]\n    #[Tag('metrics')]\n    public function run(): void\n    {\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Attribute reader.\n\nФункция readRoutePath(object $object, string $method): ?string читает первый атрибут Route через ReflectionMethod::getAttributes(Route::class).\n\nТребования:\n• ReflectionMethod.\n• Верните path или null.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция readRoutePath(object $object, string $method): ?string читает первый атрибут Route через ReflectionMethod::getAttributes(Route::class).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfunction readRoutePath(object $object, string $method): ?string\n{\n    $ref = new ReflectionMethod($object, $method);\n    $attrs = $ref->getAttributes(Route::class);\n    if ($attrs === []) {\n        return null;\n    }\n    return $attrs[0]->newInstance()->path;\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Backed enum json serialize.\n\nEnum Status: string (Ok='ok', Fail='fail') и функция statusToJson(Status $s): string кодирующая ['status' => $s->value].\n\nТребования:\n• JSON с value enum.\n• Backed enum Status.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Enum Status: string (Ok='ok', Fail='fail') и функция statusToJson(Status $s): string кодирующая ['status' => $s->value].",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Status: string\n{\n    case Ok = 'ok';\n    case Fail = 'fail';\n}\n\nfunction statusToJson(Status $status): string\n{\n    return json_encode(['status' => $status->value], JSON_THROW_ON_ERROR);\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Property attribute.\n\nАтрибут #[Column('email')] на promoted property string $email в readonly class UserRecord.\n\nТребования:\n• Attribute на property.\n• readonly class.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Атрибут #[Column('email')] на promoted property string $email в readonly class UserRecord.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_PROPERTY)]\nfinal class Column\n{\n    public function __construct(public string $name)\n    {\n    }\n}\n\nreadonly class UserRecord\n{\n    public function __construct(\n        #[Column('email')]\n        public string $email,\n    ) {\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Class attribute Target.\n\nАтрибут #[Entity('users')] на классе UserEntity с методом table(): string, читающим имя из ReflectionClass.\n\nТребования:\n• TARGET_CLASS.\n• ReflectionClass в table().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Атрибут #[Entity('users')] на классе UserEntity с методом table(): string, читающим имя из ReflectionClass.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_CLASS)]\nfinal class Entity\n{\n    public function __construct(public string $table)\n    {\n    }\n}\n\n#[Entity('users')]\nfinal class UserEntity\n{\n    public function table(): string\n    {\n        $ref = new ReflectionClass(self::class);\n        $attrs = $ref->getAttributes(Entity::class);\n        return $attrs[0]->newInstance()->table;\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Enum interface pattern.\n\nInterface Labelable { public function label(): string; } и enum Size: string implements Labelable (S='s', M='m') с label() возвращающим value в upper.\n\nТребования:\n• enum implements interface.\n• label() в upper case.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Interface Labelable { public function label(): string; } и enum Size: string implements Labelable (S='s', M='m') с label() возвращающим value в upper.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Labelable\n{\n    public function label(): string;\n}\n\nenum Size: string implements Labelable\n{\n    case S = 's';\n    case M = 'm';\n\n    public function label(): string\n    {\n        return strtoupper($this->value);\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Parameter attribute.\n\nАтрибут #[Valid('email')] и функция validate(#[Valid('email')] string $email): string возвращающая trim($email) (атрибут только объявите).\n\nТребования:\n• TARGET_PARAMETER.\n• Атрибут на параметре.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Атрибут #[Valid('email')] и функция validate(#[Valid('email')] string $email): string возвращающая trim($email) (атрибут только объявите).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_PARAMETER)]\nfinal class Valid\n{\n    public function __construct(public string $rule)\n    {\n    }\n}\n\nfunction validate(#[Valid('email')] string $email): string\n{\n    return trim($email);\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Flags enum bit.\n\nEnum Permission: int (Read=1, Write=2, Execute=4) и функция hasFlag(int $mask, Permission $p): bool.\n\nТребования:\n• Битовая маска.\n• Строгое сравнение ===.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Enum Permission: int (Read=1, Write=2, Execute=4) и функция hasFlag(int $mask, Permission $p): bool.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum Permission: int\n{\n    case Read = 1;\n    case Write = 2;\n    case Execute = 4;\n}\n\nfunction hasFlag(int $mask, Permission $permission): bool\n{\n    return ($mask & $permission->value) === $permission->value;\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Attribute constructor promote.\n\nАтрибут CacheTtl с promoted public int $seconds и использование #[CacheTtl(60)] на методе.\n\nТребования:\n• Promoted property в атрибуте.\n• Пример на методе.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Атрибут CacheTtl с promoted public int $seconds и использование #[CacheTtl(60)] на методе.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class CacheTtl\n{\n    public function __construct(public int $seconds)\n    {\n    }\n}\n\nfinal class ReportService\n{\n    #[CacheTtl(60)]\n    public function build(): array\n    {\n        return [];\n    }\n}",
+      "language": "php",
+      "topic": "Enums и Attributes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: PDO transaction.\n\nФункция transfer(PDO $pdo, int $from, int $to, int $amount): void открывает транзакцию, выполняет два UPDATE и commit; при PDOException — rollBack и проброс.\n\nТребования:\n• beginTransaction/commit.\n• rollBack в catch.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция transfer(PDO $pdo, int $from, int $to, int $amount): void открывает транзакцию, выполняет два UPDATE и commit; при PDOException — rollBack и проброс.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction transfer(PDO $pdo, int $from, int $to, int $amount): void\n{\n    $pdo->beginTransaction();\n    try {\n        $stmt = $pdo->prepare('UPDATE accounts SET balance = balance - ? WHERE id = ?');\n        $stmt->execute([$amount, $from]);\n        $stmt = $pdo->prepare('UPDATE accounts SET balance = balance + ? WHERE id = ?');\n        $stmt->execute([$amount, $to]);\n        $pdo->commit();\n    } catch (PDOException $e) {\n        $pdo->rollBack();\n        throw $e;\n    }\n}",
       "language": "php",
       "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Interface Logger",
-      "task": "Interface Logger с методом log(string $message): void; класс EchoLogger реализует его.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Logger\n{\n    public function log(string $message): void;\n}\n\nfinal class EchoLogger implements Logger\n{\n    public function log(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}",
+      "question": "Задача: PDO INSERT lastInsertId.\n\nФункция createUser(PDO $pdo, string $email): int вставляет строку в users(email) и возвращает (int) lastInsertId().\n\nТребования:\n• Prepared INSERT.\n• lastInsertId().\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция createUser(PDO $pdo, string $email): int вставляет строку в users(email) и возвращает (int) lastInsertId().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction createUser(PDO $pdo, string $email): int\n{\n    $stmt = $pdo->prepare('INSERT INTO users (email) VALUES (?)');\n    $stmt->execute([$email]);\n    return (int) $pdo->lastInsertId();\n}",
       "language": "php",
-      "topic": "ООП"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Abstract Animal",
-      "task": "Abstract class Animal с abstract name(): string; class Dog extends и возвращает 'dog'.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Animal\n{\n    abstract public function name(): string;\n}\n\nfinal class Dog extends Animal\n{\n    public function name(): string\n    {\n        return 'dog';\n    }\n}",
+      "question": "Задача: PDO FETCH_CLASS.\n\nКласс UserRow с public int $id, string $email и функция fetchUser(PDO $pdo, int $id): ?UserRow через PDO::FETCH_CLASS.\n\nТребования:\n• FETCH_CLASS.\n• nullable возврат.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс UserRow с public int $id, string $email и функция fetchUser(PDO $pdo, int $id): ?UserRow через PDO::FETCH_CLASS.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UserRow\n{\n    public int $id;\n    public string $email;\n}\n\nfunction fetchUser(PDO $pdo, int $id): ?UserRow\n{\n    $stmt = $pdo->prepare('SELECT id, email FROM users WHERE id = ?');\n    $stmt->execute([$id]);\n    $stmt->setFetchMode(PDO::FETCH_CLASS, UserRow::class);\n    $row = $stmt->fetch();\n    return $row instanceof UserRow ? $row : null;\n}",
       "language": "php",
-      "topic": "ООП"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "DateTimeImmutable add",
-      "task": "Функция addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable\n{\n    return $dt->modify(sprintf('%+d days', $days));\n}",
+      "question": "Задача: PDO emulate prepares off.\n\nФункция configurePdo(PDO $pdo): void отключает эмуляцию prepared statements через setAttribute(PDO::ATTR_EMULATE_PREPARES, false).\n\nТребования:\n• ATTR_EMULATE_PREPARES false.\n• Тип void.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция configurePdo(PDO $pdo): void отключает эмуляцию prepared statements через setAttribute(PDO::ATTR_EMULATE_PREPARES, false).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction configurePdo(PDO $pdo): void\n{\n    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);\n}",
       "language": "php",
-      "topic": "Основы"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "JSON encode decode",
-      "task": "Функции toJson(array $data): string и fromJson(string $raw): array через json_encode/json_decode.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toJson(array $data): string\n{\n    return json_encode($data, JSON_THROW_ON_ERROR);\n}\n\nfunction fromJson(string $raw): array\n{\n    $data = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);\n    return is_array($data) ? $data : [];\n}",
+      "question": "Задача: Curl GET stub.\n\nКласс CurlClient с методом get(string $url): string использующим curl_init/curl_exec/curl_close (заглушка без реального URL в тесте).\n\nТребования:\n• curl_init/exec/close.\n• CURLOPT_RETURNTRANSFER.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс CurlClient с методом get(string $url): string использующим curl_init/curl_exec/curl_close (заглушка без реального URL в тесте).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class CurlClient\n{\n    public function get(string $url): string\n    {\n        $handle = curl_init($url);\n        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);\n        $body = curl_exec($handle);\n        curl_close($handle);\n        return is_string($body) ? $body : '';\n    }\n}",
       "language": "php",
-      "topic": "Строки и JSON"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Array map filter",
-      "task": "Функция activeEmails(array $users): array — map email, filter non-empty (array_column + array_filter).",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction activeEmails(array $users): array\n{\n    $emails = array_column($users, 'email');\n    return array_values(array_filter($emails, fn(string $e) => $e !== ''));\n}",
+      "question": "Задача: HTTP response headers.\n\nФункция buildJsonResponse(array $data, int $status = 200): void отправляет header Content-Type и http_response_code, затем echo json_encode.\n\nТребования:\n• http_response_code.\n• JSON Content-Type.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция buildJsonResponse(array $data, int $status = 200): void отправляет header Content-Type и http_response_code, затем echo json_encode.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction buildJsonResponse(array $data, int $status = 200): void\n{\n    http_response_code($status);\n    header('Content-Type: application/json; charset=utf-8');\n    echo json_encode($data, JSON_THROW_ON_ERROR);\n}",
       "language": "php",
-      "topic": "Массивы"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "IteratorAggregate Range",
-      "task": "Класс NumberRange implements IteratorAggregate для int $from..$to.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class NumberRange implements IteratorAggregate\n{\n    public function __construct(private int $from, private int $to)\n    {\n    }\n\n    public function getIterator(): Traversable\n    {\n        for ($i = $this->from; $i <= $this->to; $i++) {\n            yield $i;\n        }\n    }\n}",
+      "question": "Задача: Session start handler.\n\nФункция startSecureSession(): void вызывает session_start() после ini_set session.cookie_httponly=1.\n\nТребования:\n• session_start.\n• cookie_httponly.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция startSecureSession(): void вызывает session_start() после ini_set session.cookie_httponly=1.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction startSecureSession(): void\n{\n    ini_set('session.cookie_httponly', '1');\n    if (session_status() !== PHP_SESSION_ACTIVE) {\n        session_start();\n    }\n}",
       "language": "php",
-      "topic": "ООП"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Named arguments greet",
-      "task": "Функция greet(string $name, string $greeting = 'Hello'): string с named args в вызове в комментарии не нужно — просто реализуй.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction greet(string $name, string $greeting = 'Hello'): string\n{\n    return \"{$greeting}, {$name}!\";\n}",
+      "question": "Задача: Session flash message.\n\nФункции flash(string $key, string $message): void сохраняют в $_SESSION[$key] и takeFlash(string $key): ?string читает и удаляет значение.\n\nТребования:\n• Запись в $_SESSION.\n• takeFlash удаляет ключ.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функции flash(string $key, string $message): void сохраняют в $_SESSION[$key] и takeFlash(string $key): ?string читает и удаляет значение.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction flash(string $key, string $message): void\n{\n    $_SESSION[$key] = $message;\n}\n\nfunction takeFlash(string $key): ?string\n{\n    if (!isset($_SESSION[$key])) {\n        return null;\n    }\n    $value = (string) $_SESSION[$key];\n    unset($_SESSION[$key]);\n    return $value;\n}",
       "language": "php",
-      "topic": "Основы"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "str_starts_with helper",
-      "task": "Функция startsWith(string $haystack, string $prefix): bool через str_starts_with.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction startsWith(string $haystack, string $prefix): bool\n{\n    return str_starts_with($haystack, $prefix);\n}",
+      "question": "Задача: setcookie signature.\n\nФункция setRememberCookie(string $token, int $ttl = 86400): void вызывает setcookie с HttpOnly, Secure, SameSite=Strict (массив options PHP 7.3+).\n\nТребования:\n• setcookie с массивом опций.\n• HttpOnly и SameSite.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция setRememberCookie(string $token, int $ttl = 86400): void вызывает setcookie с HttpOnly, Secure, SameSite=Strict (массив options PHP 7.3+).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction setRememberCookie(string $token, int $ttl = 86400): void\n{\n    setcookie('remember', $token, [\n        'expires' => time() + $ttl,\n        'path' => '/',\n        'secure' => true,\n        'httponly' => true,\n        'samesite' => 'Strict',\n    ]);\n}",
       "language": "php",
-      "topic": "Строки и JSON"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "str_contains helper",
-      "task": "Функция contains(string $haystack, string $needle): bool через str_contains.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction contains(string $haystack, string $needle): bool\n{\n    return str_contains($haystack, $needle);\n}",
+      "question": "Задача: File upload stub.\n\nФункция validateUpload(array $file): string проверяет UPLOAD_ERR_OK и mime через finfo_file, возвращая расширение 'pdf' или бросая InvalidArgumentException.\n\nТребования:\n• Проверка error.\n• finfo MIME pdf.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция validateUpload(array $file): string проверяет UPLOAD_ERR_OK и mime через finfo_file, возвращая расширение 'pdf' или бросая InvalidArgumentException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction validateUpload(array $file): string\n{\n    if (($file['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {\n        throw new InvalidArgumentException('Upload failed');\n    }\n    $finfo = new finfo(FILEINFO_MIME_TYPE);\n    $mime = $finfo->file($file['tmp_name']);\n    if ($mime !== 'application/pdf') {\n        throw new InvalidArgumentException('Only PDF allowed');\n    }\n    return 'pdf';\n}",
       "language": "php",
-      "topic": "Строки и JSON"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Array find key",
-      "task": "Функция findKey(array $items, callable $predicate): int|string|null.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction findKey(array $items, callable $predicate): int|string|null\n{\n    foreach ($items as $key => $value) {\n        if ($predicate($value, $key)) {\n            return $key;\n        }\n    }\n    return null;\n}",
+      "question": "Задача: stream_context HTTP.\n\nФункция fetchWithTimeout(string $url, int $seconds = 5): string создаёт stream_context с timeout и file_get_contents.\n\nТребования:\n• stream_context_create.\n• file_get_contents.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция fetchWithTimeout(string $url, int $seconds = 5): string создаёт stream_context с timeout и file_get_contents.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction fetchWithTimeout(string $url, int $seconds = 5): string\n{\n    $context = stream_context_create([\n        'http' => ['timeout' => $seconds],\n    ]);\n    $body = file_get_contents($url, false, $context);\n    return is_string($body) ? $body : '';\n}",
       "language": "php",
-      "topic": "PHP 8+"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Class __toString",
-      "task": "Класс Point с promoted int $x, $y и __toString(): string как '(x,y)'.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Point\n{\n    public function __construct(public int $x, public int $y)\n    {\n    }\n\n    public function __toString(): string\n    {\n        return \"({$this->x},{$this->y})\";\n    }\n}",
+      "question": "Задача: php://memory stream.\n\nФункция writeToMemory(string $data): string пишет $data в php://memory через fopen/fwrite/stream_get_contents.\n\nТребования:\n• php://memory.\n• rewind перед чтением.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция writeToMemory(string $data): string пишет $data в php://memory через fopen/fwrite/stream_get_contents.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction writeToMemory(string $data): string\n{\n    $handle = fopen('php://memory', 'r+');\n    fwrite($handle, $data);\n    rewind($handle);\n    $contents = stream_get_contents($handle);\n    fclose($handle);\n    return is_string($contents) ? $contents : '';\n}",
       "language": "php",
-      "topic": "ООП"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "Union types parseId",
-      "task": "Функция parseId(int|string $value): int — если string, (int)$value.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parseId(int|string $value): int\n{\n    return is_int($value) ? $value : (int) $value;\n}",
+      "question": "Задача: filter_input GET.\n\nФункция readPageParam(): int читает GET page через filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) или 1 по умолчанию.\n\nТребования:\n• filter_input INPUT_GET.\n• Default 1.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция readPageParam(): int читает GET page через filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) или 1 по умолчанию.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction readPageParam(): int\n{\n    $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);\n    return is_int($page) && $page > 0 ? $page : 1;\n}",
       "language": "php",
-      "topic": "PHP 8+"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "never type abort",
-      "task": "Функция abort(string $message): never бросает RuntimeException.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction abort(string $message): never\n{\n    throw new RuntimeException($message);\n}",
+      "question": "Задача: Request method guard.\n\nФункция requirePost(): void бросает RuntimeException, если $_SERVER['REQUEST_METHOD'] !== 'POST'.\n\nТребования:\n• Проверка REQUEST_METHOD.\n• RuntimeException.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Функция requirePost(): void бросает RuntimeException, если $_SERVER['REQUEST_METHOD'] !== 'POST'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction requirePost(): void\n{\n    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {\n        throw new RuntimeException('POST required');\n    }\n}",
       "language": "php",
-      "topic": "PHP 8+"
+      "topic": "PDO и HTTP"
     },
     {
       "card_type": "live_code",
-      "question": "First class callable",
-      "task": "Класс Greeter с методом hello(string $name): string; переменная $fn = $greeter->hello(...).",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Greeter\n{\n    public function hello(string $name): string\n    {\n        return \"Hi, {$name}\";\n    }\n}\n\n$greeter = new Greeter();\n$fn = $greeter->hello(...);",
-      "language": "php",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "live_code",
-      "question": "array_chunk",
-      "task": "Функция chunk(array $items, int $size): array через array_chunk.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction chunk(array $items, int $size): array\n{\n    return array_chunk($items, $size);\n}",
-      "language": "php",
-      "topic": "Массивы"
-    },
-    {
-      "card_type": "live_code",
-      "question": "array_column",
-      "task": "Функция pluck(array $rows, string $field): array через array_column.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction pluck(array $rows, string $field): array\n{\n    return array_column($rows, $field);\n}",
-      "language": "php",
-      "topic": "Массивы"
-    },
-    {
-      "card_type": "live_code",
-      "question": "usort by length",
-      "task": "Функция sortByLength(array $words): array через usort по strlen.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sortByLength(array $words): array\n{\n    usort($words, fn(string $a, string $b) => strlen($a) <=> strlen($b));\n    return $words;\n}",
-      "language": "php",
-      "topic": "Массивы"
-    },
-    {
-      "card_type": "live_code",
-      "question": "DTO from array",
-      "task": "Readonly class UserDto с id, email; static fromArray(array $row): self.",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class UserDto\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n\n    public static function fromArray(array $row): self\n    {\n        return new self((int) $row['id'], (string) $row['email']);\n    }\n}",
-      "language": "php",
-      "topic": "ООП"
-    },
-    {
-      "card_type": "live_code",
-      "question": "SplQueue BFS stub",
-      "task": "Функция bfsLevels(array $tree): int — заглушка: вернуть count($tree) через SplQueue (положить корни, dequeue один).",
-      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction bfsLevels(array $tree): int\n{\n    $queue = new SplQueue();\n    foreach ($tree as $node) {\n        $queue->enqueue($node);\n    }\n    if ($queue->isEmpty()) {\n        return 0;\n    }\n    $queue->dequeue();\n    return count($tree);\n}",
+      "question": "Задача: Strategy pricing.\n\nИнтерфейс PricingStrategy с amount(int $qty): int; классы FixedPrice и TenPercentDiscount.\n\nТребования:\n• Интерфейс Strategy.\n• Декоратор скидки.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс PricingStrategy с amount(int $qty): int; классы FixedPrice и TenPercentDiscount.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface PricingStrategy\n{\n    public function amount(int $qty): int;\n}\n\nfinal class FixedPrice implements PricingStrategy\n{\n    public function __construct(private int $unit)\n    {\n    }\n\n    public function amount(int $qty): int\n    {\n        return $this->unit * $qty;\n    }\n}\n\nfinal class TenPercentDiscount implements PricingStrategy\n{\n    public function __construct(private PricingStrategy $inner)\n    {\n    }\n\n    public function amount(int $qty): int\n    {\n        $base = $this->inner->amount($qty);\n        return (int) round($base * 0.9);\n    }\n}",
       "language": "php",
       "topic": "Паттерны"
     },
     {
       "card_type": "live_code",
-      "question": "Attributes Route",
-      "task": "PHP 8 Attribute Route(string $path); повесь на метод контроллера index().",
-      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfinal class HomeController\n{\n    #[Route('/')]\n    public function index(): string\n    {\n        return 'ok';\n    }\n}",
+      "question": "Задача: Factory method.\n\nAbstract class NotificationFactory с abstract create(): Notification и EmailNotificationFactory возвращающий new EmailNotification().\n\nТребования:\n• Abstract factory.\n• EmailNotification.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Abstract class NotificationFactory с abstract create(): Notification и EmailNotificationFactory возвращающий new EmailNotification().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Notification\n{\n    public function send(): void;\n}\n\nfinal class EmailNotification implements Notification\n{\n    public function send(): void\n    {\n        echo 'email', PHP_EOL;\n    }\n}\n\nabstract class NotificationFactory\n{\n    abstract public function create(): Notification;\n}\n\nfinal class EmailNotificationFactory extends NotificationFactory\n{\n    public function create(): Notification\n    {\n        return new EmailNotification();\n    }\n}",
       "language": "php",
-      "topic": "Enums и Attributes"
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Repository stub.\n\nИнтерфейс UserRepository { findById(int $id): ?UserRow } и InMemoryUserRepository с private array $store.\n\nТребования:\n• Интерфейс Repository.\n• In-memory реализация.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс UserRepository { findById(int $id): ?UserRow } и InMemoryUserRepository с private array $store.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UserRow\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n}\n\ninterface UserRepository\n{\n    public function findById(int $id): ?UserRow;\n}\n\nfinal class InMemoryUserRepository implements UserRepository\n{\n    /** @var array<int, UserRow> */\n    private array $store = [];\n\n    public function add(UserRow $user): void\n    {\n        $this->store[$user->id] = $user;\n    }\n\n    public function findById(int $id): ?UserRow\n    {\n        return $this->store[$id] ?? null;\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Event dispatcher.\n\nКласс EventDispatcher с listen(string $event, callable $handler): void и dispatch(string $event, mixed $payload = null): void вызывающим все обработчики.\n\nТребования:\n• listen + dispatch.\n• Несколько обработчиков на событие.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс EventDispatcher с listen(string $event, callable $handler): void и dispatch(string $event, mixed $payload = null): void вызывающим все обработчики.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class EventDispatcher\n{\n    /** @var array<string, list<callable>> */\n    private array $listeners = [];\n\n    public function listen(string $event, callable $handler): void\n    {\n        $this->listeners[$event][] = $handler;\n    }\n\n    public function dispatch(string $event, mixed $payload = null): void\n    {\n        foreach ($this->listeners[$event] ?? [] as $handler) {\n            $handler($payload);\n        }\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Middleware pipeline.\n\nКласс MiddlewarePipeline с pipe(callable $middleware): self и handle(mixed $request): mixed, где каждый middleware — fn($req, $next).\n\nТребования:\n• Onion middleware.\n• pipe возвращает self.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс MiddlewarePipeline с pipe(callable $middleware): self и handle(mixed $request): mixed, где каждый middleware — fn($req, $next).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class MiddlewarePipeline\n{\n    /** @var list<callable> */\n    private array $stack = [];\n\n    public function pipe(callable $middleware): self\n    {\n        $this->stack[] = $middleware;\n        return $this;\n    }\n\n    public function handle(mixed $request): mixed\n    {\n        $runner = array_reduce(\n            array_reverse($this->stack),\n            fn (callable $next, callable $mw): callable => fn (mixed $req): mixed => $mw($req, $next),\n            fn (mixed $req): mixed => $req,\n        );\n        return $runner($request);\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Value object Money.\n\nКласс Money с private int $cents и string $currency; сложение add(Money $other): self только при одинаковой валюте, иначе InvalidArgumentException.\n\nТребования:\n• Приватные поля.\n• Проверка валюты.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс Money с private int $cents и string $currency; сложение add(Money $other): self только при одинаковой валюте, иначе InvalidArgumentException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Money\n{\n    public function __construct(private int $cents, private string $currency)\n    {\n    }\n\n    public function add(self $other): self\n    {\n        if ($this->currency !== $other->currency) {\n            throw new InvalidArgumentException('Currency mismatch');\n        }\n        return new self($this->cents + $other->cents, $this->currency);\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Command bus.\n\nИнтерфейс CommandHandler { handle(object $command): void } и CommandBus с register(string $class, CommandHandler $handler) и dispatch(object $command).\n\nТребования:\n• register по классу команды.\n• dispatch вызывает handler.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс CommandHandler { handle(object $command): void } и CommandBus с register(string $class, CommandHandler $handler) и dispatch(object $command).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface CommandHandler\n{\n    public function handle(object $command): void;\n}\n\nfinal class CommandBus\n{\n    /** @var array<string, CommandHandler> */\n    private array $handlers = [];\n\n    public function register(string $commandClass, CommandHandler $handler): void\n    {\n        $this->handlers[$commandClass] = $handler;\n    }\n\n    public function dispatch(object $command): void\n    {\n        $class = $command::class;\n        if (!isset($this->handlers[$class])) {\n            throw new RuntimeException(\"No handler for {$class}\");\n        }\n        $this->handlers[$class]->handle($command);\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Observer SPL.\n\nКласс JobSubject implements SplSubject с attach/detach/notify и JobObserver implements SplObserver.\n\nТребования:\n• SplSubject/SplObserver.\n• SplObjectStorage.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс JobSubject implements SplSubject с attach/detach/notify и JobObserver implements SplObserver.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class JobSubject implements SplSubject\n{\n    /** @var SplObjectStorage<SplObserver, null> */\n    private SplObjectStorage $observers;\n\n    public function __construct()\n    {\n        $this->observers = new SplObjectStorage();\n    }\n\n    public function attach(SplObserver $observer): void\n    {\n        $this->observers->attach($observer);\n    }\n\n    public function detach(SplObserver $observer): void\n    {\n        $this->observers->detach($observer);\n    }\n\n    public function notify(): void\n    {\n        foreach ($this->observers as $observer) {\n            $observer->update($this);\n        }\n    }\n}\n\nfinal class JobObserver implements SplObserver\n{\n    public function update(SplSubject $subject): void\n    {\n        echo 'updated', PHP_EOL;\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Specification pattern.\n\nИнтерфейс Specification { isSatisfiedBy(int $value): bool } и классы EvenSpec и GreaterThanSpec.\n\nТребования:\n• Интерфейс Specification.\n• Две реализации.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс Specification { isSatisfiedBy(int $value): bool } и классы EvenSpec и GreaterThanSpec.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Specification\n{\n    public function isSatisfiedBy(int $value): bool;\n}\n\nfinal class EvenSpec implements Specification\n{\n    public function isSatisfiedBy(int $value): bool\n    {\n        return $value % 2 === 0;\n    }\n}\n\nfinal class GreaterThanSpec implements Specification\n{\n    public function __construct(private int $min)\n    {\n    }\n\n    public function isSatisfiedBy(int $value): bool\n    {\n        return $value > $this->min;\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Adapter legacy.\n\nКласс LegacyLogger с logRaw(string $msg) и Adapter implements LoggerInterface с log($level, $message) делегирующим logRaw.\n\nТребования:\n• Adapter оборачивает LegacyLogger.\n• Метод log(level, message).\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс LegacyLogger с logRaw(string $msg) и Adapter implements LoggerInterface с log($level, $message) делегирующим logRaw.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class LegacyLogger\n{\n    public function logRaw(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}\n\ninterface LoggerInterface\n{\n    public function log(string $level, string $message): void;\n}\n\nfinal class LoggerAdapter implements LoggerInterface\n{\n    public function __construct(private LegacyLogger $legacy)\n    {\n    }\n\n    public function log(string $level, string $message): void\n    {\n        $this->legacy->logRaw(\"[{$level}] {$message}\");\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: DTO mapper.\n\nReadonly class AddressDto(string $city, string $zip) и AddressMapper::fromRow(array $row): AddressDto.\n\nТребования:\n• readonly DTO.\n• Mapper fromRow.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Readonly class AddressDto(string $city, string $zip) и AddressMapper::fromRow(array $row): AddressDto.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class AddressDto\n{\n    public function __construct(public string $city, public string $zip)\n    {\n    }\n}\n\nfinal class AddressMapper\n{\n    public function fromRow(array $row): AddressDto\n    {\n        return new AddressDto(\n            (string) ($row['city'] ?? ''),\n            (string) ($row['zip'] ?? ''),\n        );\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Null object pattern.\n\nИнтерфейс Cache { get(string $key): ?string } и NullCache всегда возвращающий null.\n\nТребования:\n• Null object Cache.\n• get всегда null.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс Cache { get(string $key): ?string } и NullCache всегда возвращающий null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Cache\n{\n    public function get(string $key): ?string;\n}\n\nfinal class NullCache implements Cache\n{\n    public function get(string $key): ?string\n    {\n        return null;\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Builder step.\n\nКласс QueryBuilder с select(string $cols): self, from(string $table): self и build(): string.\n\nТребования:\n• Fluent interface.\n• build() возвращает SQL.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс QueryBuilder с select(string $cols): self, from(string $table): self и build(): string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class QueryBuilder\n{\n    private string $columns = '*';\n    private string $table = '';\n\n    public function select(string $columns): self\n    {\n        $this->columns = $columns;\n        return $this;\n    }\n\n    public function from(string $table): self\n    {\n        $this->table = $table;\n        return $this;\n    }\n\n    public function build(): string\n    {\n        return \"SELECT {$this->columns} FROM {$this->table}\";\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Chain of responsibility.\n\nAbstract class Handler с setNext(Handler $next) и handle(int $n): ?int; EvenHandler возвращает $n/2 если чётное, иначе передаёт дальше.\n\nТребования:\n• setNext chain.\n• EvenHandler обрабатывает чётные.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Abstract class Handler с setNext(Handler $next) и handle(int $n): ?int; EvenHandler возвращает $n/2 если чётное, иначе передаёт дальше.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Handler\n{\n    private ?Handler $next = null;\n\n    public function setNext(Handler $handler): Handler\n    {\n        $this->next = $handler;\n        return $handler;\n    }\n\n    public function handle(int $value): ?int\n    {\n        return $this->next?->handle($value);\n    }\n}\n\nfinal class EvenHandler extends Handler\n{\n    public function handle(int $value): ?int\n    {\n        if ($value % 2 === 0) {\n            return (int) ($value / 2);\n        }\n        return parent::handle($value);\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: Exception hierarchy.\n\nКлассы DomainException extends RuntimeException и UserNotFoundException extends DomainException; функция findOrFail(?UserRow $user): UserRow бросает UserNotFoundException если null.\n\nТребования:\n• Иерархия исключений.\n• findOrFail бросает UserNotFoundException.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Классы DomainException extends RuntimeException и UserNotFoundException extends DomainException; функция findOrFail(?UserRow $user): UserRow бросает UserNotFoundException если null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UserRow\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n}\n\nclass DomainException extends RuntimeException\n{\n}\n\nfinal class UserNotFoundException extends DomainException\n{\n}\n\nfunction findOrFail(?UserRow $user): UserRow\n{\n    if ($user === null) {\n        throw new UserNotFoundException('User not found');\n    }\n    return $user;\n}",
+      "language": "php",
+      "topic": "ООП"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: SplStack undo.\n\nКласс UndoStack с private SplStack $stack, push(string $state): void и pop(): ?string.\n\nТребования:\n• SplStack.\n• pop на пустом → null.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс UndoStack с private SplStack $stack, push(string $state): void и pop(): ?string.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UndoStack\n{\n    private SplStack $stack;\n\n    public function __construct()\n    {\n        $this->stack = new SplStack();\n    }\n\n    public function push(string $state): void\n    {\n        $this->stack->push($state);\n    }\n\n    public function pop(): ?string\n    {\n        if ($this->stack->isEmpty()) {\n            return null;\n        }\n        return $this->stack->pop();\n    }\n}",
+      "language": "php",
+      "topic": "Массивы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: filter_var validation.\n\nКласс UrlValue с конструктором, принимающим string $url и бросающим InvalidArgumentException, если filter_var($url, FILTER_VALIDATE_URL) === false.\n\nТребования:\n• filter_var FILTER_VALIDATE_URL.\n• readonly property value.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Класс UrlValue с конструктором, принимающим string $url и бросающим InvalidArgumentException, если filter_var($url, FILTER_VALIDATE_URL) === false.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UrlValue\n{\n    public function __construct(public readonly string $value)\n    {\n        if (filter_var($value, FILTER_VALIDATE_URL) === false) {\n            throw new InvalidArgumentException('Invalid URL');\n        }\n    }\n}",
+      "language": "php",
+      "topic": "Строки и JSON"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Задача: SOLID DIP.\n\nИнтерфейс Mailer { send(string $to, string $body): void } и класс UserService получающий Mailer в конструкторе (dependency injection), метод notify(UserRow $user).\n\nТребования:\n• Зависимость от интерфейса Mailer.\n• Конструкторная инъекция.\n\nНапишите полное решение с нуля в редакторе кода. Допускаются необходимые import и вспомогательные определения.",
+      "task": "Интерфейс Mailer { send(string $to, string $body): void } и класс UserService получающий Mailer в конструкторе (dependency injection), метод notify(UserRow $user).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class UserRow\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n}\n\ninterface Mailer\n{\n    public function send(string $to, string $body): void;\n}\n\nfinal class UserService\n{\n    public function __construct(private Mailer $mailer)\n    {\n    }\n\n    public function notify(UserRow $user): void\n    {\n        $this->mailer->send($user->email, 'Welcome!');\n    }\n}",
+      "language": "php",
+      "topic": "Паттерны"
     }
   ]
 }

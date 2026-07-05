@@ -329,7 +329,7 @@ class WelcomeScreen(QWidget):
             dialog = TopicPickerDialog(
                 self._selected_entry,
                 self.registry,
-                self.progress_store,
+                self.progress,
                 mode,
                 pass_score=int(self.config.get("pass_score", 75)),
                 parent=self,

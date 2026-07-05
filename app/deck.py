@@ -60,8 +60,9 @@ class Card:
     def display_text(self) -> str:
         parts = [self.question.strip()]
         if self.is_live_code:
-            if self.task.strip():
-                parts.extend(["", f"Задание: {self.task.strip()}"])
+            task = self.task.strip()
+            if task and task not in self.question:
+                parts.extend(["", f"Задание: {task}"])
             return "\n".join(parts)
         if self.code.strip():
             parts.extend(["", "── Код ──", self.code.strip()])
