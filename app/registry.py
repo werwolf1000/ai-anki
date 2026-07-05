@@ -61,6 +61,16 @@ class DeckEntry:
 
         return any(is_live_coding_entry(p) for p in self.paths)
 
+    @property
+    def is_math(self) -> bool:
+        from app.live_coding import is_math_entry
+
+        return any(is_math_entry(p) for p in self.paths)
+
+    @property
+    def has_topics(self) -> bool:
+        return self.is_live_coding or self.is_math
+
     @classmethod
     def from_dict(cls, data: dict) -> DeckEntry:
         paths = data.get("paths") or ([data["path"]] if data.get("path") else [])

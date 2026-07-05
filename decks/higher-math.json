@@ -4,128 +4,1653 @@
   "cards": [
     {
       "card_type": "math",
-      "question": "Найдите производную $f(x) = x^3 \\sin x$.",
-      "reference": "f'(x) = 3x^2 \\sin x + x^3 \\cos x"
+      "question": "Найдите $f'(x)$, если $f(x)=x^2$.",
+      "reference": "f'(x)=2x",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите производную $g(x) = \\ln(x^2 + 1)$.",
-      "reference": "g'(x) = \\frac{2x}{x^2 + 1}"
+      "question": "Найдите $f'(x)$, если $f(x)=x^3$.",
+      "reference": "f'(x)=3x^2",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите $\\displaystyle \\int x e^{x}\\,dx$.",
-      "reference": "\\int x e^{x}\\,dx = e^{x}(x - 1) + C"
+      "question": "Найдите $f'(x)$, если $f(x)=x^5$.",
+      "reference": "f'(x)=5x^4",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите $\\displaystyle \\int \\frac{1}{x}\\,dx$ при $x > 0$.",
-      "reference": "\\int \\frac{1}{x}\\,dx = \\ln x + C"
+      "question": "Найдите $f'(x)$, если $f(x)=x^{-1}$.",
+      "reference": "f'(x)=-x^{-2}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin x}{x}$.",
-      "reference": "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1"
+      "question": "Найдите $f'(x)$, если $f(x)=x^{-2}$.",
+      "reference": "f'(x)=-2x^{-3}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Разложите $e^x$ в ряд Маклорена до $x^3$ включительно.",
-      "reference": "e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + o(x^3)"
+      "question": "Найдите $f'(x)$, если $f(x)=\\sqrt{x}$.",
+      "reference": "f'(x)=\\frac{1}{2\\sqrt{x}}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите $\\det A$, где $A = \\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$.",
-      "reference": "\\det A = 2 \\cdot 3 - 1 \\cdot 5 = 1"
+      "question": "Найдите $f'(x)$, если $f(x)=x^{1/3}$.",
+      "reference": "f'(x)=\\frac{1}{3}x^{-2/3}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите $AB$, если $A = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$, $B = \\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix}$.",
-      "reference": "AB = \\begin{pmatrix} 7 & 9 \\\\ 2 & 4 \\end{pmatrix}"
+      "question": "Найдите производную $f(x)=x^2 \\sin x$.",
+      "reference": "f'(x)=2x \\sin x + x^2 \\cos x",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите обратную матрицу $A^{-1}$ для $A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
-      "reference": "A^{-1} = \\frac{1}{-2}\\begin{pmatrix} 4 & -2 \\\\ -3 & 1 \\end{pmatrix} = \\begin{pmatrix} -2 & 1 \\\\ 1.5 & -0.5 \\end{pmatrix}"
+      "question": "Найдите производную $f(x)=x e^x$.",
+      "reference": "f'(x)=e^x(x+1)",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите скалярное произведение $\\vec{a} \\cdot \\vec{b}$, если $\\vec{a} = (1, 2, -1)$, $\\vec{b} = (2, 0, 3)$.",
-      "reference": "\\vec{a} \\cdot \\vec{b} = 1 \\cdot 2 + 2 \\cdot 0 + (-1) \\cdot 3 = -1"
+      "question": "Найдите производную $f(x)=x \\ln x$.",
+      "reference": "f'(x)=\\ln x + 1",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите $\\vec{a} \\times \\vec{b}$, если $\\vec{a} = (1, 0, 0)$, $\\vec{b} = (0, 1, 0)$.",
-      "reference": "\\vec{a} \\times \\vec{b} = (0, 0, 1)"
+      "question": "Найдите производную $f(x)=x^2 \\cos x$.",
+      "reference": "f'(x)=2x \\cos x - x^2 \\sin x",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите частные производные $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y) = x^2 y + \\sin y$.",
-      "reference": "\\frac{\\partial f}{\\partial x} = 2xy,\\quad \\frac{\\partial f}{\\partial y} = x^2 + \\cos y"
+      "question": "Найдите производную $f(x)=e^x \\sin x$.",
+      "reference": "f'(x)=e^x(\\sin x + \\cos x)",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите градиент $\\nabla f$ в точке $(1, 2)$ для $f(x,y) = x^2 + y^2$.",
-      "reference": "\\nabla f = (2x, 2y),\\quad \\nabla f(1,2) = (2, 4)"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\ln(x^2+1)\\right)$.",
+      "reference": "\\frac{d}{dx}(\\ln(x^2+1))=\\frac{2x}{x^2+1}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Решите систему $\\begin{cases} x + y = 5 \\\\ 2x - y = 1 \\end{cases}$.",
-      "reference": "x = 2,\\quad y = 3"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\ln(\\cos x)\\right)$.",
+      "reference": "\\frac{d}{dx}(\\ln(\\cos x))=-\\tan x",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите собственные значения матрицы $A = \\begin{pmatrix} 4 & 1 \\\\ 2 & 3 \\end{pmatrix}$.",
-      "reference": "\\lambda_1 = 5,\\quad \\lambda_2 = 2"
+      "question": "Найдите $\\frac{d}{dx}\\left(e^{x^2}\\right)$.",
+      "reference": "\\frac{d}{dx}(e^{x^2})=2x e^{x^2}",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите $\\displaystyle \\int_0^1 x^2\\,dx$.",
-      "reference": "\\int_0^1 x^2\\,dx = \\frac{1}{3}"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\sin(x^2)\\right)$.",
+      "reference": "\\frac{d}{dx}(\\sin(x^2))=2x \\cos(x^2)",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите вторую производную $f''(x)$ для $f(x) = x^4 - 3x^2$.",
-      "reference": "f''(x) = 12x^2 - 6"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\cos(3x)\\right)$.",
+      "reference": "\\frac{d}{dx}(\\cos(3x))=-3\\sin(3x)",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Запишите формулу Тейлора для $f(x)$ в окрестности $x_0$ до второго порядка.",
-      "reference": "f(x) = f(x_0) + f'(x_0)(x-x_0) + \\frac{f''(x_0)}{2!}(x-x_0)^2 + o((x-x_0)^2)"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\sin^2 x\\right)$.",
+      "reference": "\\frac{d}{dx}(\\sin^2 x)=\\sin(2x)",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Вычислите ранг матрицы $A = \\begin{pmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 1 & 1 & 1 \\end{pmatrix}$.",
-      "reference": "\\operatorname{rank} A = 2"
+      "question": "Найдите $\\frac{d}{dx}\\left((x^2+1)^5\\right)$.",
+      "reference": "\\frac{d}{dx}((x^2+1)^5)=10x(x^2+1)^4",
+      "topic": "Производные"
     },
     {
       "card_type": "math",
-      "question": "Найдите длину вектора $\\vec{v} = (3, 4)$.",
-      "reference": "|\\vec{v}| = \\sqrt{3^2 + 4^2} = 5"
+      "question": "Найдите $\\frac{d}{dx}\\left(\\sqrt{x^2+4}\\right)$.",
+      "reference": "\\frac{d}{dx}(\\sqrt{x^2+4})=\\frac{x}{\\sqrt{x^2+4}}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\sin x)$.",
+      "reference": "\\frac{d}{dx}(\\sin x)=\\cos x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\cos x)$.",
+      "reference": "\\frac{d}{dx}(\\cos x)=-\\sin x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\tan x)$.",
+      "reference": "\\frac{d}{dx}(\\tan x)=\\frac{1}{\\cos^2 x}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(e^x)$.",
+      "reference": "\\frac{d}{dx}(e^x)=e^x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(a^x)$.",
+      "reference": "\\frac{d}{dx}(a^x)=a^x \\ln a",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\arctan x)$.",
+      "reference": "\\frac{d}{dx}(\\arctan x)=\\frac{1}{1+x^2}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\arcsin x)$.",
+      "reference": "\\frac{d}{dx}(\\arcsin x)=\\frac{1}{\\sqrt{1-x^2}}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}(\\operatorname{sh} x)$.",
+      "reference": "\\frac{d}{dx}(\\operatorname{sh} x)=\\operatorname{ch} x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=x^4 - 3x^2$.",
+      "reference": "f''(x)=4x^3 - 6x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=x^3 - 6x^2 + 5$.",
+      "reference": "f''(x)=3x^2 - 12x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=\\sin x + \\cos x$.",
+      "reference": "f''(x)=\\cos x - \\sin x",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=e^x + x e^x$.",
+      "reference": "f''(x)=e^x(2+x)",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=\\frac{x}{x+1}$.",
+      "reference": "f''(x)=\\frac{1}{(x+1)^2}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f''(x)$ для $f(x)=\\frac{1}{x^2+1}$.",
+      "reference": "f''(x)=\\frac{-2x}{(x^2+1)^2}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите уравнение касательной к $y=x^2$ в точке $x=1$.",
+      "reference": "y - 1 = 2(x - 1) \\;\\Rightarrow\\; y = 2x - 1",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите уравнение касательной к $y=\\ln x$ в точке $x=1$.",
+      "reference": "y = x - 1",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f'(2)$, если $f(x)=x^3-x$.",
+      "reference": "f'(x)=3x^2-1,\\quad f'(2)=11",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите производную $y=|x|$ в точках $x>0$ и $x<0$.",
+      "reference": "y'=1\\ (x>0),\\quad y'=-1\\ (x<0)",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $dy/dx$, если $x^2+y^2=25$ (неявное дифференцирование).",
+      "reference": "\\frac{dy}{dx}=-\\frac{x}{y}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $dy/dx$, если $e^{xy}=x+y$.",
+      "reference": "\\frac{dy}{dx}=\\frac{1-ye^{xy}}{xe^{xy}-1}",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $f'(x)$ для $f(x)=x^x$ при $x>0$.",
+      "reference": "f'(x)=x^x(\\ln x + 1)",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите точки экстремума $f(x)=x^3-3x$.",
+      "reference": "f'(x)=3x^2-3=0 \\Rightarrow x=\\pm1;\\; x=-1\\ —\\ макс.,\\; x=1\\ —\\ мин.",
+      "topic": "Производные"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x\\,dx$.",
+      "reference": "\\int x\\,dx = \\frac{x^2}{2}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x^2\\,dx$.",
+      "reference": "\\int x^2\\,dx = \\frac{x^3}{3}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x^3\\,dx$.",
+      "reference": "\\int x^3\\,dx = \\frac{x^4}{4}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{x}\\,dx$.",
+      "reference": "\\int \\frac{1}{x}\\,dx = \\ln|x|+C",
+      "topic": "Интегралы"
     },
     {
       "card_type": "math",
       "question": "Вычислите $\\displaystyle \\int \\cos x\\,dx$.",
-      "reference": "\\int \\cos x\\,dx = \\sin x + C"
+      "reference": "\\int \\cos x\\,dx = \\sin x+C",
+      "topic": "Интегралы"
     },
     {
       "card_type": "math",
-      "question": "Найдите $\\frac{d}{dx}\\left( \\arctan x \\right)$.",
-      "reference": "\\frac{d}{dx}(\\arctan x) = \\frac{1}{1 + x^2}"
+      "question": "Вычислите $\\displaystyle \\int \\sin x\\,dx$.",
+      "reference": "\\int \\sin x\\,dx = -\\cos x+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int e^x\\,dx$.",
+      "reference": "\\int e^x\\,dx = e^x+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int a^x\\,dx$.",
+      "reference": "\\int a^x\\,dx = \\frac{a^x}{\\ln a}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\sec^2 x\\,dx$.",
+      "reference": "\\int \\sec^2 x\\,dx = \\tan x+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{\\cos^2 x}\\,dx$.",
+      "reference": "\\int \\frac{1}{\\cos^2 x}\\,dx = \\tan x+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int 2x e^{x^2}\\,dx$ (замена переменной).",
+      "reference": "\\int 2x e^{x^2}\\,dx = e^{x^2}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{2x}{x^2+1}\\,dx$ (замена переменной).",
+      "reference": "\\int \\frac{2x}{x^2+1}\\,dx = \\ln(x^2+1)+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{2\\sqrt{x}}\\,dx$ (замена переменной).",
+      "reference": "\\int \\frac{1}{2\\sqrt{x}}\\,dx = \\sqrt{x}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x\\sqrt{x^2+1}\\,dx$ (замена переменной).",
+      "reference": "\\int x\\sqrt{x^2+1}\\,dx = \\frac{(x^2+1)^{3/2}}{3}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{\\ln x}{x}\\,dx$ (замена переменной).",
+      "reference": "\\int \\frac{\\ln x}{x}\\,dx = \\frac{(\\ln x)^2}{2}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\sin x \\cos x\\,dx$ (замена переменной).",
+      "reference": "\\int \\sin x \\cos x\\,dx = -\\frac{\\cos^2 x}{2}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{e^x}{e^x+1}\\,dx$ (замена переменной).",
+      "reference": "\\int \\frac{e^x}{e^x+1}\\,dx = \\ln(e^x+1)+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x e^x\\,dx$ (по частям).",
+      "reference": "\\int x e^x\\,dx = e^x(x-1)+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x \\sin x\\,dx$ (по частям).",
+      "reference": "\\int x \\sin x\\,dx = \\sin x - x\\cos x + C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x \\cos x\\,dx$ (по частям).",
+      "reference": "\\int x \\cos x\\,dx = x\\sin x + \\cos x + C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\ln x\\,dx$ (по частям).",
+      "reference": "\\int \\ln x\\,dx = x\\ln x - x + C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x \\ln x\\,dx$ (по частям).",
+      "reference": "\\int x \\ln x\\,dx = \\frac{x^2}{2}\\ln x - \\frac{x^2}{4}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x^2 e^x\\,dx$ (по частям).",
+      "reference": "\\int x^2 e^x\\,dx = e^x(x^2-2x+2)+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^1 x^2\\,dx$.",
+      "reference": "\\int_0^1 x^2\\,dx = \\frac{1}{3}",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^2 x\\,dx$.",
+      "reference": "\\int_0^2 x\\,dx = 2",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^\\pi/2 \\cos x\\,dx$.",
+      "reference": "\\int_0^\\pi/2 \\cos x\\,dx = 1",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^\\pi \\sin x\\,dx$.",
+      "reference": "\\int_0^\\pi \\sin x\\,dx = 2",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^1 e^x\\,dx$.",
+      "reference": "\\int_0^1 e^x\\,dx = e-1",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_1^e \\frac{1}{x}\\,dx$.",
+      "reference": "\\int_1^e \\frac{1}{x}\\,dx = 1",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_-1^1 x^3\\,dx$.",
+      "reference": "\\int_-1^1 x^3\\,dx = 0",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_-1^1 |x|\\,dx$.",
+      "reference": "\\int_-1^1 |x|\\,dx = 1",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^1 \\sqrt{1-x^2}\\,dx$.",
+      "reference": "\\int_0^1 \\sqrt{1-x^2}\\,dx = \\frac{\\pi}{4}",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите площадь под графиком $y=x$ на $[0,3]$.",
+      "reference": "S=\\int_0^3 x\\,dx = \\frac{9}{2}",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите объём тела вращения $y=x^2$ вокруг $Ox$ на $[0,1]$.",
+      "reference": "V=\\pi\\int_0^1 x^4\\,dx = \\frac{\\pi}{5}",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{x^2+4}\\,dx$.",
+      "reference": "\\int \\frac{1}{x^2+4}\\,dx = \\frac{1}{2}\\arctan\\frac{x}{2}+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{\\sqrt{1-x^2}}\\,dx$.",
+      "reference": "\\arcsin x + C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{1+x^2}\\,dx$.",
+      "reference": "\\arctan x + C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{2x+1}{x^2+x}\\,dx$.",
+      "reference": "\\ln|x^2+x|+C",
+      "topic": "Интегралы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin x}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\tan x}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\tan x}{x} = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{1-\\cos x}{x^2}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{1-\\cos x}{x^2} = \\frac{1}{2}",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{e^x-1}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{e^x-1}{x} = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\ln(1+x)}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\ln(1+x)}{x} = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{a^x-1}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{a^x-1}{x} = \\ln a",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin 3x}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\sin 3x}{x} = 3",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin 5x}{\\sin 2x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\sin 5x}{\\sin 2x} = \\frac{5}{2}",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 1} \\frac{x^2-1}{x-1}$.",
+      "reference": "\\lim_{x \\to 1} \\frac{x^2-1}{x-1} = 2",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 2} \\frac{x^2-4}{x-2}$.",
+      "reference": "\\lim_{x \\to 2} \\frac{x^2-4}{x-2} = 4",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 2} \\frac{x^3-8}{x-2}$.",
+      "reference": "\\lim_{x \\to 2} \\frac{x^3-8}{x-2} = 12",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 2} \\frac{x^2+x-6}{x-2}$.",
+      "reference": "\\lim_{x \\to 2} \\frac{x^2+x-6}{x-2} = 5",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 1} \\frac{\\sqrt{x}-1}{x-1}$.",
+      "reference": "\\lim_{x \\to 1} \\frac{\\sqrt{x}-1}{x-1} = \\frac{1}{2}",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\lim_{x \\to 1} \\frac{\\sqrt{x+3}-2}{x-1}$.",
+      "reference": "\\lim_{x \\to 1} \\frac{\\sqrt{x+3}-2}{x-1} = \\frac{1}{4}",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\frac{3x^2+1}{2x^2-x}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\frac{3x^2+1}{2x^2-x} = \\frac{3}{2}",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\frac{5x+1}{x^2+2}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\frac{5x+1}{x^2+2} = 0",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\frac{x^2+1}{3x+2}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\frac{x^2+1}{3x+2} = +\\infty",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\left(1+\\frac{1}{x}\\right)^x$.",
+      "reference": "\\lim_{x \\to +\\infty} \\left(1+\\frac{1}{x}\\right)^x = e",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\left(1+\\frac{2}{x}\\right)^{3x}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\left(1+\\frac{2}{x}\\right)^{3x} = e^6",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\frac{\\ln x}{x}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\frac{\\ln x}{x} = 0",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to +\\infty} \\frac{x}{e^x}$.",
+      "reference": "\\lim_{x \\to +\\infty} \\frac{x}{e^x} = 0",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0^+} \\frac{|x|}{x}$.",
+      "reference": "\\lim_{x \\to 0^+} \\frac{|x|}{x} = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0^-} \\frac{|x|}{x}$.",
+      "reference": "\\lim_{x \\to 0^-} \\frac{|x|}{x} = -1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0^+} \\frac{1}{x}$.",
+      "reference": "\\lim_{x \\to 0^+} \\frac{1}{x} = +\\infty",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0^-} \\frac{1}{x}$.",
+      "reference": "\\lim_{x \\to 0^-} \\frac{1}{x} = -\\infty",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 2^-} \\lfloor x \\rfloor$.",
+      "reference": "\\lim_{x \\to 2^-} \\lfloor x \\rfloor = 1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 2^+} \\lfloor x \\rfloor$.",
+      "reference": "\\lim_{x \\to 2^+} \\lfloor x \\rfloor = 2",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Проверьте непрерывность $f(x)=\\frac{\\sin x}{x}$ в $x=0$, если $f(0)=1$.",
+      "reference": "\\lim_{x\\to0} f(x)=1=f(0) \\Rightarrow f\\ непрерывна\\ в\\ 0",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x\\to0}\\frac{\\sqrt{1+x}-\\sqrt{1-x}}{x}$.",
+      "reference": "\\lim_{x\\to0}\\frac{\\sqrt{1+x}-\\sqrt{1-x}}{x}=1",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x\\to\\infty}\\frac{\\sin x}{x}$.",
+      "reference": "\\left|\\frac{\\sin x}{x}\\right|\\le\\frac{1}{|x|}\\to0",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x\\to0}(1+3x)^{1/x}$.",
+      "reference": "e^3",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x\\to0}\\frac{e^{2x}-1}{\\sin x}$.",
+      "reference": "2",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x\\to1}\\frac{x^3-1}{x-1}$.",
+      "reference": "3",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{n\\to\\infty}\\frac{2n+1}{n+3}$.",
+      "reference": "2",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{n\\to\\infty}\\left(\\frac{n+1}{n}\\right)^n$.",
+      "reference": "e",
+      "topic": "Пределы"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $e^x$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\sin x$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "\\sin x = x - \\frac{x^3}{3!} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\cos x$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "\\cos x = 1 - \\frac{x^2}{2!} + \\frac{x^4}{4!} + o(x^4)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\ln(1+x)$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "\\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\frac{1}{1-x}$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "\\frac{1}{1-x} = 1 + x + x^2 + x^3 + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\arctan x$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "\\arctan x = x - \\frac{x^3}{3} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $(1+x)^\\alpha$ в ряд Маклорена до $x^3$ включительно (или до указанного порядка).",
+      "reference": "(1+x)^\\alpha = 1 + \\alpha x + \\frac{\\alpha(\\alpha-1)}{2}x^2 + o(x^2)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите формулу Тейлора для $\\sin x$ в окрестности $x_0=0$ до 2-го порядка.",
+      "reference": "\\sin x = x + o(x)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите формулу Тейлора для $e^x$ в окрестности $x_0=1$ до 2-го порядка.",
+      "reference": "e^x = e + e(x-1) + \\frac{e}{2}(x-1)^2 + o((x-1)^2)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите формулу Тейлора для $\\ln x$ в окрестности $x_0=1$ до 2-го порядка.",
+      "reference": "\\ln x = \\ln 1 + (x-1) - \\frac{(x-1)^2}{2} + o((x-1)^2)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите формулу Тейлора для $\\sqrt{x}$ в окрестности $x_0=1$ до 2-го порядка.",
+      "reference": "\\sqrt{x} = 1 + \\frac{x-1}{2} - \\frac{(x-1)^2}{8} + o((x-1)^2)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите общую формулу Тейлора для $f(x)$ в окрестности $x_0$ до $n$-го порядка.",
+      "reference": "f(x)=\\sum_{k=0}^{n}\\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k + o((x-x_0)^n)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите сумму геометрического ряда $\\sum_{n=0}^{\\infty} q^n$ при $|q|<1$.",
+      "reference": "\\sum_{n=0}^{\\infty} q^n = \\frac{1}{1-q}",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите сумму $\\sum_{n=1}^{\\infty}\\frac{1}{2^n}$.",
+      "reference": "1",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите сумму $\\sum_{n=0}^{\\infty}\\frac{1}{3^n}$.",
+      "reference": "\\frac{3}{2}",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $S_N=\\sum_{n=1}^{N} n$.",
+      "reference": "S_N=\\frac{N(N+1)}{2}",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $S_N=\\sum_{n=1}^{N} n^2$.",
+      "reference": "S_N=\\frac{N(N+1)(2N+1)}{6}",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Признак Даламбера: когда ряд $\\sum a_n$ сходится?",
+      "reference": "если\\ \\lim\\frac{a_{n+1}}{a_n}<1",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Признак Коши: когда ряд $\\sum a_n$ расходится?",
+      "reference": "если\\ \\lim\\sqrt[n]{|a_n|}>1",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Оцените $e^{0.1}$ по разложению $e^x$ до $x^2$.",
+      "reference": "e^{0.1}\\approx1+0.1+\\frac{0.01}{2}=1.105",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Оцените $\\sin(0.1)$ по разложению до $x^3$.",
+      "reference": "\\sin(0.1)\\approx0.1-\\frac{0.001}{6}\\approx0.09983",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите радиус сходимости $\\sum_{n=0}^{\\infty}\\frac{x^n}{n!}$.",
+      "reference": "R=+\\infty",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите радиус сходимости $\\sum_{n=0}^{\\infty} x^n$.",
+      "reference": "R=1",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\cos x$ до $x^4$ и найдите коэффициент при $x^2$.",
+      "reference": "1 - \\frac{x^2}{2} + \\frac{x^4}{24} + o(x^4);\\ коэффициент\\ -\\frac{1}{2}",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $e^{-x}$ в ряд Маклорена до $x^3$.",
+      "reference": "1 - x + \\frac{x^2}{2} - \\frac{x^3}{6} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\sin(2x)$ до $x^3$.",
+      "reference": "2x - \\frac{8x^3}{6} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $\\ln(1-x)$ до $x^3$.",
+      "reference": "-x - \\frac{x^2}{2} - \\frac{x^3}{3} + o(x^3)",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите остаток в форме Лагранжа для Тейлора 1-го порядка $f(x)$ в $x_0$.",
+      "reference": "R_1(x)=\\frac{f''(\\xi)}{2}(x-x_0)^2,\\ \\xi\\ между\\ x\\ и\\ x_0",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Частичная сумма $S_3$ для $\\sum_{n=0}^{\\infty} x^n$.",
+      "reference": "S_3=1+x+x^2+x^3",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите сумму $\\sum_{n=1}^{\\infty}\\frac{1}{n(n+1)}$ (телескоп).",
+      "reference": "1",
+      "topic": "Ряды и приближения"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$.",
+      "reference": "\\det A = 1",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
+      "reference": "\\det A = -2",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} 3 & 2 \\\\ 1 & 4 \\end{pmatrix}$.",
+      "reference": "\\det A = 10",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}$.",
+      "reference": "\\det A = -1",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} 2 & 0 \\\\ 0 & 3 \\end{pmatrix}$.",
+      "reference": "\\det A = 6",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A=\\begin{pmatrix} -1 & 2 \\\\ 3 & -4 \\end{pmatrix}$.",
+      "reference": "\\det A = -2",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $AB$, если $A=\\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$, $B=\\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix}$.",
+      "reference": "AB = \\begin{pmatrix} 7 & 9 \\\\ 2 & 4 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $AB$, если $A=\\begin{pmatrix} 1 & 0 \\\\ 2 & 1 \\end{pmatrix}$, $B=\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
+      "reference": "AB = \\begin{pmatrix} 1 & 2 \\\\ 5 & 8 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $AB$, если $A=\\begin{pmatrix} 2 & 1 \\\\ 1 & 1 \\end{pmatrix}$, $B=\\begin{pmatrix} 1 & 3 \\\\ 2 & 1 \\end{pmatrix}$.",
+      "reference": "AB = \\begin{pmatrix} 4 & 7 \\\\ 3 & 4 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A^{-1}$ для $A=\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
+      "reference": "A^{-1} = \\begin{pmatrix} -2 & 1 \\\\ 1.5 & -0.5 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A^{-1}$ для $A=\\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$.",
+      "reference": "A^{-1} = \\begin{pmatrix} 3 & -1 \\\\ -5 & 2 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A^{-1}$ для $A=\\begin{pmatrix} 1 & 1 \\\\ 0 & 1 \\end{pmatrix}$.",
+      "reference": "A^{-1} = \\begin{pmatrix} 1 & -1 \\\\ 0 & 1 \\end{pmatrix}",
+      "topic": "Матрицы"
     },
     {
       "card_type": "math",
       "question": "Вычислите $\\det\\begin{pmatrix} 1 & 0 & 2 \\\\ 0 & 3 & 1 \\\\ 4 & 0 & 5 \\end{pmatrix}$.",
-      "reference": "\\det = 1 \\cdot (3 \\cdot 5 - 1 \\cdot 0) - 0 + 2 \\cdot (0 \\cdot 0 - 3 \\cdot 4) = 15 - 24 = -9"
+      "reference": "\\det = -9",
+      "topic": "Матрицы"
     },
     {
       "card_type": "math",
-      "question": "Запишите уравнение касательной к $y = x^2$ в точке $x = 1$.",
-      "reference": "y - 1 = 2(x - 1) \\;\\Rightarrow\\; y = 2x - 1"
+      "question": "Вычислите $\\det\\begin{pmatrix} 1 & 2 & 3 \\\\ 0 & 1 & 4 \\\\ 0 & 0 & 5 \\end{pmatrix}$.",
+      "reference": "\\det = 5",
+      "topic": "Матрицы"
     },
     {
       "card_type": "math",
-      "question": "Найдите $\\nabla \\cdot \\vec{F}$ для $\\vec{F} = (x, y, z)$.",
-      "reference": "\\nabla \\cdot \\vec{F} = 1 + 1 + 1 = 3"
+      "question": "Найдите $(A^T)^T$ для любой матрицы $A$.",
+      "reference": "(A^T)^T = A",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $(AB)^T$, если $A,B$ — матрицы $m\\times n$ и $n\\times p$.",
+      "reference": "(AB)^T = B^T A^T",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det\\begin{pmatrix} 2 & 0 & 0 \\\\ 0 & 3 & 0 \\\\ 0 & 0 & 4 \\end{pmatrix}$.",
+      "reference": "\\det = 24",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите след $\\operatorname{tr}(A)$ для $A=\\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
+      "reference": "\\operatorname{tr}(A)=5",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Является ли $A=\\begin{pmatrix} 1 & 2 \\\\ 2 & 4 \\end{pmatrix}$ обратимой?",
+      "reference": "\\det A=0 \\Rightarrow A\\ необратима",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $2A$ для $A=\\begin{pmatrix} 1 & -1 \\\\ 2 & 0 \\end{pmatrix}$.",
+      "reference": "2A=\\begin{pmatrix} 2 & -2 \\\\ 4 & 0 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A-B$ для $A=\\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix}$, $B=\\begin{pmatrix} 1 & 0 \\\\ 1 & 2 \\end{pmatrix}$.",
+      "reference": "A-B=\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\det(kA)$, если $A$ — $n\\times n$, $\\det A=5$.",
+      "reference": "\\det(kA)=k^n\\det A = 5k^n",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det\\begin{pmatrix} 1 & 1 & 1 \\\\ 1 & 2 & 3 \\\\ 1 & 4 & 9 \\end{pmatrix}$.",
+      "reference": "\\det = 2",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите ранг $\\begin{pmatrix} 1 & 0 \\\\ 2 & 0 \\end{pmatrix}$.",
+      "reference": "\\operatorname{rank}=1",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A^2$ для $A=\\begin{pmatrix} 0 & 1 \\\\ 0 & 0 \\end{pmatrix}$.",
+      "reference": "A^2=\\begin{pmatrix} 0 & 0 \\\\ 0 & 0 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите единичную матрицу $I_3$.",
+      "reference": "I_3=\\begin{pmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\det\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$.",
+      "reference": "ad-bc",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите обратную для $\\begin{pmatrix} 3 & 0 \\\\ 0 & 5 \\end{pmatrix}$.",
+      "reference": "A^{-1}=\\begin{pmatrix} 1/3 & 0 \\\\ 0 & 1/5 \\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det\\begin{pmatrix} 1 & 2 & 0 \\\\ 3 & 1 & 1 \\\\ 0 & 1 & 2 \\end{pmatrix}$.",
+      "reference": "\\det = -9",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $A^T$ для $A=\\begin{pmatrix} 1 & 2 & 3 \\end{pmatrix}$ (строка).",
+      "reference": "A^T=\\begin{pmatrix}1\\\\2\\\\3\\end{pmatrix}",
+      "topic": "Матрицы"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} x+y=5 \\\\ 2x-y=1 \\end{cases}$.",
+      "reference": "x=2,\\ y=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} 2x+y=7 \\\\ x-y=2 \\end{cases}$.",
+      "reference": "x=3,\\ y=1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} x+2y=8 \\\\ 3x-y=1 \\end{cases}$.",
+      "reference": "x=2,\\ y=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} x-y=0 \\\\ 2x+y=9 \\end{cases}$.",
+      "reference": "x=3,\\ y=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} 3x+2y=12 \\\\ x-y=1 \\end{cases}$.",
+      "reference": "x=2,\\ y=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения $A=\\begin{pmatrix} 4 & 1 \\\\ 2 & 3 \\end{pmatrix}$.",
+      "reference": "\\lambda_1=5,\\ \\lambda_2=2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения $A=\\begin{pmatrix} 2 & 0 \\\\ 0 & 3 \\end{pmatrix}$.",
+      "reference": "\\lambda_1=2,\\ \\lambda_2=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения $A=\\begin{pmatrix} 0 & 1 \\\\ -2 & 3 \\end{pmatrix}$.",
+      "reference": "\\lambda_1=1,\\ \\lambda_2=2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения $A=\\begin{pmatrix} 1 & 2 \\\\ 2 & 1 \\end{pmatrix}$.",
+      "reference": "\\lambda_1=3,\\ \\lambda_2=-1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения $A=\\begin{pmatrix} 5 & -1 \\\\ 2 & 2 \\end{pmatrix}$.",
+      "reference": "\\lambda_1=4,\\ \\lambda_2=3",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите ранг $A=\\begin{pmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 1 & 1 & 1 \\end{pmatrix}$.",
+      "reference": "\\operatorname{rank} A = 2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите ранг $A=\\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\\\ 1 & 1 \\end{pmatrix}$.",
+      "reference": "\\operatorname{rank} A = 2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственный вектор для $\\lambda=5$ матрицы $\\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}$.",
+      "reference": "v=(1,1)^T",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите характеристическое уравнение $A=\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}$.",
+      "reference": "\\lambda^2-(a+d)\\lambda+(ad-bc)=0",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите $\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}x=\\begin{pmatrix}5\\\\11\\end{pmatrix}$.",
+      "reference": "x=\\begin{pmatrix}1\\\\2\\end{pmatrix}",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Сколько решений у системы 3 уравнений с 2 неизвестными при rank=2?",
+      "reference": "либо\\ нет,\\ либо\\ бесконечно\\ много\\ (если\\ совместна)",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\det A$ для $A=\\begin{pmatrix}2&1&0\\\\0&2&1\\\\0&0&2\\end{pmatrix}$ (верхняя треугольная).",
+      "reference": "\\det A=8",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Являются ли векторы $(1,0)$ и $(2,0)$ линейно зависимыми?",
+      "reference": "да,\\ v_2=2v_1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите размерность подпространства, натянутого на $(1,0,0)$ и $(0,1,0)$ в $\\mathbb{R}^3$.",
+      "reference": "2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите методом Крамера 2×2: $\\begin{cases}2x+y=5\\\\x-y=1\\end{cases}$.",
+      "reference": "x=2,\\ y=1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\operatorname{null}(A)$ для $A=\\begin{pmatrix}1&2&3\\\\2&4&6\\end{pmatrix}$ (размерность).",
+      "reference": "\\dim\\ker A=1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Ортонормируйте $(1,1)$ и $(1,0)$ (Gram–Schmidt в $\\mathbb{R}^2$).",
+      "reference": "e_1=\\frac{1}{\\sqrt2}(1,1),\\ e_2=\\frac{1}{\\sqrt2}(1,-1)",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\|x\\|$ для $x=(3,4)$ в $\\mathbb{R}^2$.",
+      "reference": "\\|x\\|=5",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите проекцию $(4,0)$ на $(1,1)$.",
+      "reference": "(2,2)",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Диагонализируема ли $\\begin{pmatrix}2&1\\\\0&2\\end{pmatrix}$?",
+      "reference": "нет\\ (жordan\\ cell,\\ не\\ два\\ собственных\\ вектора)",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите след матрицы с собственными значениями $2,3,5$.",
+      "reference": "\\operatorname{tr}=10",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\det A$, если собственные значения $1,2,3$.",
+      "reference": "\\det A=6",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите однородную систему $\\begin{cases}x+y+z=0\\\\2x+2y+2z=0\\end{cases}$ (опишите решение).",
+      "reference": "x=-s-t,\\ y=s,\\ z=t",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите ранг диагональной $3\\times3$ с двумя ненулевыми диагональными элементами.",
+      "reference": "2",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $Av$ для $A=I_2$, $v=(3,-1)^T$.",
+      "reference": "Av=v",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Существует ли ненулевой $x$: $Ax=0$ при $\\det A\\ne0$?",
+      "reference": "нет,\\ только\\ x=0",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите базис $\\ker\\begin{pmatrix}1&-1\\end{pmatrix}$.",
+      "reference": "(1,1)^T",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите координаты $(2,1)$ в базисе $e_1=(1,0)$, $e_2=(0,1)$.",
+      "reference": "(2,1)",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\lambda$ для которых $\\det\\begin{pmatrix}\\lambda&1\\\\1&\\lambda\\end{pmatrix}=0$.",
+      "reference": "\\lambda=\\pm1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите $\\begin{cases}x+2y+z=4\\\\2x+5y+z=9\\end{cases}$ (одна свободная).",
+      "reference": "z=t,\\ x=2-t,\\ y=1",
+      "topic": "Линейная алгебра"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\vec{a}\\cdot\\vec{b}$, если $\\vec{a}=(1, 2, -1)$, $\\vec{b}=(2, 0, 3)$.",
+      "reference": "\\vec{a}\\cdot\\vec{b}=-1",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\vec{a}\\cdot\\vec{b}$, если $\\vec{a}=(1, 1)$, $\\vec{b}=(1, 0)$.",
+      "reference": "\\vec{a}\\cdot\\vec{b}=1",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\vec{a}\\cdot\\vec{b}$, если $\\vec{a}=(3, 4)$, $\\vec{b}=(4, 3)$.",
+      "reference": "\\vec{a}\\cdot\\vec{b}=24",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\vec{a}\\cdot\\vec{b}$, если $\\vec{a}=(1, 2, 3)$, $\\vec{b}=(0, 0, 1)$.",
+      "reference": "\\vec{a}\\cdot\\vec{b}=3",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\vec{a}\\cdot\\vec{b}$, если $\\vec{a}=(2, -1, 2)$, $\\vec{b}=(1, 0, -2)$.",
+      "reference": "\\vec{a}\\cdot\\vec{b}=0",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a}\\times\\vec{b}$, $\\vec{a}=(1, 0, 0)$, $\\vec{b}=(0, 1, 0)$.",
+      "reference": "\\vec{a}\\times\\vec{b}=(0,0,1)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a}\\times\\vec{b}$, $\\vec{a}=(1, 0, 0)$, $\\vec{b}=(0, 0, 1)$.",
+      "reference": "\\vec{a}\\times\\vec{b}=(0,-1,0)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a}\\times\\vec{b}$, $\\vec{a}=(2, 0, 0)$, $\\vec{b}=(0, 3, 0)$.",
+      "reference": "\\vec{a}\\times\\vec{b}=(0,0,6)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a}\\times\\vec{b}$, $\\vec{a}=(1, 1, 0)$, $\\vec{b}=(0, 1, 1)$.",
+      "reference": "\\vec{a}\\times\\vec{b}=(1,-1,1)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите длину $\\vec{v}=(3, 4)$.",
+      "reference": "|\\vec{v}|=5",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите длину $\\vec{v}=(1, 2, 2)$.",
+      "reference": "|\\vec{v}|=3",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите длину $\\vec{v}=(6, 8, 0)$.",
+      "reference": "|\\vec{v}|=10",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите длину $\\vec{v}=(1, 1, 1)$.",
+      "reference": "|\\vec{v}|=\\sqrt{3}",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите угол между $(1,0)$ и $(1,1)$ в градусах.",
+      "reference": "\\cos\\theta=\\frac{1}{\\sqrt2}\\Rightarrow\\theta=45^\\circ",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите проекцию $\\vec{a}=(4,0)$ на $\\vec{b}=(1,1)$.",
+      "reference": "\\operatorname{proj}_{\\vec b}\\vec a=(2,2)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Комplanarны ли $(1,0,0)$, $(0,1,0)$, $(1,1,0)$?",
+      "reference": "да,\\ третий\\ —\\ сумма\\ первых\\ двух",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите единичный вектор направления $(3,4)$.",
+      "reference": "\\left(\\frac{3}{5},\\frac{4}{5}\\right)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a}\\cdot\\vec{b}$, если $|\\vec a|=3$, $|\\vec b|=4$, угол $60^\\circ$.",
+      "reference": "6",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите площадь параллелограмма на $(2,0,0)$ и $(0,3,0)$.",
+      "reference": "6",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите объём параллелепипеда на $(1,0,0)$, $(0,2,0)$, $(0,0,3)$.",
+      "reference": "6",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Ортогональны ли $(1,2)$ и $(2,-1)$?",
+      "reference": "да,\\ (1,2)\\cdot(2,-1)=0",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите расстояние между точками $(1,2)$ и $(4,6)$.",
+      "reference": "5",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec r(t)=(\\cos t,\\sin t)$ — что это за кривая?",
+      "reference": "окружность\\ радиуса\\ 1",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dt}(\\vec r)$ для $\\vec r(t)=(t,t^2)$.",
+      "reference": "\\vec r'(t)=(1,2t)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $|\\vec r'(1)|$ для $\\vec r(t)=(t,t^2)$.",
+      "reference": "\\sqrt{5}",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите смешанное произведение $(1,0,0)\\cdot((0,1,0)\\times(0,0,1))$.",
+      "reference": "1",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec n$ — нормаль к плоскости $2x-y+z=1$.",
+      "reference": "\\vec n=(2,-1,1)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите расстояние от $(0,0,0)$ до плоскости $x+y+z=3$.",
+      "reference": "\\sqrt{3}",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите параметрическое уравнение прямой через $(0,0)$ и $(1,2)$.",
+      "reference": "(x,y)=(t,2t)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec a\\times\\vec a$ для любого $\\vec a$.",
+      "reference": "\\vec 0",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec a\\cdot(\\vec b\\times\\vec c)$ — что означает знак?",
+      "reference": "ориентированный\\ объём\\ параллелепипеда",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Декартова форма $(2,3)$ + $(-1,1)$.",
+      "reference": "(1,4)",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\lambda$, чтобы $(1,2)$ и $(2,\\lambda)$ ортогональны.",
+      "reference": "\\lambda=-1",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите угол между $(1,0,0)$ и $(0,1,0)$.",
+      "reference": "90^\\circ",
+      "topic": "Векторы"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=x^2 y + \\sin y$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=2xy,\\quad \\frac{\\partial f}{\\partial y}=x^2 + \\cos y",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=x^2 + y^2$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=2x,\\quad \\frac{\\partial f}{\\partial y}=2y",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=e^{xy}$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=y e^{xy},\\quad \\frac{\\partial f}{\\partial y}=x e^{xy}",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=\\ln(x^2+y^2)$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=\\frac{2x}{x^2+y^2},\\quad \\frac{\\partial f}{\\partial y}=\\frac{2y}{x^2+y^2}",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=x^3 y^2$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=3x^2 y^2,\\quad \\frac{\\partial f}{\\partial y}=2x^3 y",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y)=\\sin(xy)$.",
+      "reference": "\\frac{\\partial f}{\\partial x}=y\\cos(xy),\\quad \\frac{\\partial f}{\\partial y}=x\\cos(xy)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите градиент $\\nabla f$ в $(1,2)$ для $f(x,y)=x^2+y^2$.",
+      "reference": "\\nabla f=(2x,2y),\\ \\nabla f(1,2)=(2,4)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla f$ для $f(x,y,z)=x+y+z$.",
+      "reference": "\\nabla f=(1,1,1)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla \\cdot \\vec F$ для $\\vec F=(x,y,z)$.",
+      "reference": "3",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla \\cdot \\vec F$ для $\\vec F=(x^2, y, z^2)$.",
+      "reference": "2x+1+2z",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla \\times \\vec F$ для $\\vec F=(0,0,z)$.",
+      "reference": "(0,0,0)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla \\times \\vec F$ для $\\vec F=(y,-x,0)$.",
+      "reference": "(0,0,-2)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите уравнение касательной плоскости к $z=x^2+y^2$ в $(1,1,2)$.",
+      "reference": "z-2=2(x-1)+2(y-1)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите направление наибольшего роста $f(x,y)=xy$ в $(2,3)$.",
+      "reference": "\\nabla f=(y,x)=(3,2)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите производную по направлению $D_{\\vec u}f$ при $\\vec u=(1,0)$, $f=x^2+y$ в $(1,2)$.",
+      "reference": "D_{\\vec u}f=2",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите стационарные точки $f(x,y)=x^2+y^2-2x$.",
+      "reference": "(1,0)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Классифицируйте стационарную точку $f(x,y)=x^2+y^2$ в $(0,0)$.",
+      "reference": "минимум\\ (H=\\begin{pmatrix}2&0\\\\0&2\\end{pmatrix}\\ positive)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial^2 f}{\\partial x\\partial y}$ для $f=xy^2$.",
+      "reference": "2y",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Проверьте равенство $\\frac{\\partial^2 f}{\\partial x\\partial y}=\\frac{\\partial^2 f}{\\partial y\\partial x}$ для $f=e^{xy}$.",
+      "reference": "e^{xy}(1+xy)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\iint_D 1\\,dxdy$, $D=[0,1]\\times[0,2]$.",
+      "reference": "2",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\iint_D xy\\,dxdy$, $D=[0,1]\\times[0,1]$.",
+      "reference": "\\frac{1}{4}",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Перейдите в полярные: $x=r\\cos\\theta$, $y=r\\sin\\theta$, $dxdy=?$.",
+      "reference": "dxdy=r\\,dr\\,d\\theta",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{dz}{dt}$ при $z=x^2+y^2$, $x=t$, $y=t^2$.",
+      "reference": "2t+4t^3",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial z}{\\partial x}$ для $z=f(x,y)$, $y=g(x)$ (цепное правило).",
+      "reference": "f_x + f_y g'(x)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\lim_{(x,y)\\to(0,0)}\\frac{xy}{x^2+y^2}$.",
+      "reference": "не\\ существует\\ (разные\\ пути)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla f$ для $f=\\arctan(y/x)$.",
+      "reference": "\\left(\\frac{-y}{x^2+y^2},\\frac{x}{x^2+y^2}\\right)",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Является ли $\\vec F=(y,x)$ консervative?",
+      "reference": "нет,\\ \\frac{\\partial P}{\\partial y}=1\\ne\\frac{\\partial Q}{\\partial x}=1?\\ Q=x,\\ P=y\\ —\\ да\\ conservative",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla\\cdot(\\nabla\\times\\vec F)$.",
+      "reference": "0",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla\\times(\\nabla f)$.",
+      "reference": "\\vec 0",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{\\partial f}{\\partial x}$ для $f(x,y)=|xy|$ в $(1,1)$ по направлениям.",
+      "reference": "не\\ дифференцируема\\ в\\ 0;\\ в\\ (1,1)\\ partial\\ exist",
+      "topic": "Многомерный анализ"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите якобиан $\\frac{\\partial(x,y)}{\\partial(u,v)}$ для $x=u+v$, $y=u-v$.",
+      "reference": "\\det\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}=-2",
+      "topic": "Многомерный анализ"
     }
   ]
 }

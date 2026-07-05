@@ -325,7 +325,7 @@ class WelcomeScreen(QWidget):
             return
 
         topic = ""
-        if self._selected_entry.is_live_coding:
+        if self._selected_entry.has_topics:
             dialog = TopicPickerDialog(
                 self._selected_entry,
                 self.registry,

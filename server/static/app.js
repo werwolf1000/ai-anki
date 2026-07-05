@@ -1,5 +1,5 @@
 let selectedDeckId = null;
-let selectedDeckIsLiveCoding = false;
+let selectedDeckHasTopics = false;
 let decksById = {};
 let pendingMode = "due";
 let sessionId = null;
@@ -108,7 +108,7 @@ async function testOllama() {
 
 function selectDeck(deckId) {
   selectedDeckId = deckId;
-  selectedDeckIsLiveCoding = !!(decksById[deckId]?.is_live_coding);
+  selectedDeckHasTopics = !!(decksById[deckId]?.has_topics);
   $("decks-table").querySelectorAll("tr").forEach((r) => {
     r.classList.toggle("selected", r.dataset.deckId === deckId);
   });
@@ -163,7 +163,7 @@ async function loadDecks() {
   if (decks.length && !selectedDeckId && !decks[0].error) {
     selectDeck(decks[0].deck_id);
   } else if (selectedDeckId && decksById[selectedDeckId]) {
-    selectedDeckIsLiveCoding = !!decksById[selectedDeckId].is_live_coding;
+    selectedDeckHasTopics = !!decksById[selectedDeckId].has_topics;
   }
 }
 
@@ -198,7 +198,7 @@ async function requestStudy(mode) {
     alert("Выберите колоду");
     return;
   }
-  if (selectedDeckIsLiveCoding) {
+  if (selectedDeckHasTopics) {
     await openTopicPicker(mode);
     return;
   }
@@ -230,7 +230,8 @@ async function showCard(card) {
     VoiceInput.setVisible(false);
     CodeEditor.hide();
     MathEditor.clear();
-    await MathEditor.renderQuestion($("question"), card.question);
+    const qText = card.topic ? `[${card.topic}]\n\n${card.question}` : card.question;
+    await MathEditor.renderQuestion($("question"), qText);
     await MathEditor.show(card.math_starter || "");
     $("answer-label").textContent = "Редактор формул LaTeX — введите решение";
     $("status").textContent =

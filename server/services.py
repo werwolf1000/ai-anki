@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
-from app.live_coding import is_live_coding_deck, topic_summaries
+from app.live_coding import has_topic_picker_deck, topic_summaries
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -85,6 +85,8 @@ class AppServices:
             "deck_id": entry.deck_id,
             "name": entry.name,
             "is_live_coding": entry.is_live_coding,
+            "is_math": entry.is_math,
+            "has_topics": entry.has_topics,
             "total": s.total,
             "mastered": s.mastered,
             "passed_today": s.passed_today,
@@ -100,8 +102,8 @@ class AppServices:
         if not entry:
             raise ValueError("Колода не найдена")
         deck = self.registry.load_deck(entry)
-        if not is_live_coding_deck(deck):
-            raise ValueError("Колода не live-coding")
+        if not has_topic_picker_deck(deck):
+            raise ValueError("У этой колоды нет тем для выбора")
         self.progress.load()
         self.progress.reconcile_deck(deck, self.pass_score())
         topics = topic_summaries(deck, self.progress, pass_score=self.pass_score())
@@ -114,10 +116,10 @@ class AppServices:
         deck = self.registry.load_deck(entry)
         self.progress.load()
         self.progress.reconcile_deck(deck, self.pass_score())
-        if is_live_coding_deck(deck):
+        if has_topic_picker_deck(deck):
             topic = (topic or "").strip()
             if not topic:
-                raise ValueError("Для live-coding колоды нужно выбрать тему")
+                raise ValueError("Для этой колоды нужно выбрать тему")
             known = {row["name"] for row in topic_summaries(deck, self.progress, pass_score=self.pass_score())}
             if topic not in known:
                 raise ValueError(f"Неизвестная тема: {topic}")

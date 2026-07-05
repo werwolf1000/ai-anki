@@ -9,6 +9,10 @@ import requests
 from app.deck import Card, ChatMessage, ReviewResult, infer_language_from_name
 
 def _topic_context(card: Card, deck_name: str = "") -> str:
+    if card.topic.strip():
+        if deck_name:
+            return f"темы «{card.topic.strip()}» колоды «{deck_name}»"
+        return f"темы «{card.topic.strip()}»"
     label = _language_label(card, deck_name)
     lang = _normalize_language(card, deck_name)
     if deck_name:
@@ -274,7 +278,7 @@ def _system_prompt_code(card: Card, deck_name: str = "") -> str:
 
 
 def _system_prompt_math(card: Card, deck_name: str = "") -> str:
-    topic = deck_name or "высшей математики"
+    topic = _topic_context(card, deck_name) if card.topic.strip() else (deck_name or "высшей математики")
     return f"""Ты — преподаватель {topic}. Ученик отвечает формулами в LaTeX.
 
 Правила:

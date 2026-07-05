@@ -8,12 +8,33 @@ def is_live_coding_entry(filename: str) -> bool:
     return "live-coding" in filename.lower()
 
 
+def is_math_entry(filename: str) -> bool:
+    name = filename.lower()
+    return name.endswith(".json") and "math" in name
+
+
 def is_live_coding_deck(deck: Deck) -> bool:
     return bool(deck.cards) and all(c.is_live_code for c in deck.cards)
 
 
+def is_math_deck(deck: Deck) -> bool:
+    return bool(deck.cards) and all(c.is_math for c in deck.cards)
+
+
+def has_topic_picker_deck(deck: Deck) -> bool:
+    return is_live_coding_deck(deck) or is_math_deck(deck)
+
+
+def _topic_cards(deck: Deck) -> list[Card]:
+    if is_live_coding_deck(deck):
+        return [c for c in deck.cards if c.is_live_code]
+    if is_math_deck(deck):
+        return [c for c in deck.cards if c.is_math]
+    return []
+
+
 def deck_topics(deck: Deck) -> list[str]:
-    names = sorted({c.topic.strip() for c in deck.cards if c.is_live_code and c.topic.strip()})
+    names = sorted({c.topic.strip() for c in _topic_cards(deck) if c.topic.strip()})
     return names
 
 
@@ -28,9 +49,7 @@ def topic_summaries(
     cards_map = progress.data.get(key, {})
     buckets: dict[str, dict] = {}
 
-    for card in deck.cards:
-        if not card.is_live_code:
-            continue
+    for card in _topic_cards(deck):
         name = card.topic.strip() or "Разное"
         if name not in buckets:
             buckets[name] = {"name": name, "total": 0, "due": 0, "new": 0, "weak": 0}
