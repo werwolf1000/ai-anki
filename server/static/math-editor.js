@@ -29,6 +29,18 @@
     document.head.appendChild(l);
   }
 
+  async function waitForMathLive() {
+    if (window.MathfieldElement) return window.MathfieldElement;
+    if (window.MathLive && window.MathLive.MathfieldElement) {
+      return window.MathLive.MathfieldElement;
+    }
+    if (customElements.get("math-field")) {
+      return customElements.get("math-field");
+    }
+    await customElements.whenDefined("math-field");
+    return customElements.get("math-field");
+  }
+
   async function ensureReady() {
     if (ready) return ready;
     ready = (async () => {
@@ -37,8 +49,35 @@
       await loadScript("https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js");
       await loadScript("https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js");
       await loadScript("https://cdn.jsdelivr.net/npm/mathlive/dist/mathlive.min.js");
+      await waitForMathLive();
     })();
     return ready;
+  }
+
+  function latexOf(el) {
+    if (!el) return "";
+    if (typeof el.getValue === "function") {
+      try {
+        return el.getValue("latex") || el.getValue() || el.value || "";
+      } catch {
+        return el.value || "";
+      }
+    }
+    return el.value || "";
+  }
+
+  function setLatex(el, text) {
+    if (!el) return;
+    const value = text || "";
+    if (typeof el.setValue === "function") {
+      try {
+        el.setValue(value, { format: "latex" });
+        return;
+      } catch {
+        /* fall through */
+      }
+    }
+    el.value = value;
   }
 
   function renderLatex(el, text) {
@@ -71,14 +110,23 @@
 
     if (!field) {
       host.innerHTML = "";
-      field = MathLive.makeMathField(host, {
+      const MathfieldElement = await waitForMathLive();
+      if (!MathfieldElement) {
+        throw new Error("MathLive не загрузился (MathfieldElement недоступен)");
+      }
+
+      field = new MathfieldElement({
         smartFence: true,
         smartSuperscript: true,
         virtualKeyboardMode: "manual",
         fontsDirectory: "https://cdn.jsdelivr.net/npm/mathlive/dist/fonts",
       });
+      field.style.width = "100%";
+      field.style.fontSize = "1.1rem";
+      host.appendChild(field);
+
       field.addEventListener("input", () => {
-        renderLatex(preview, field.getValue("latex"));
+        renderLatex(preview, latexOf(field));
       });
       field.addEventListener("keydown", (ev) => {
         if (ev.ctrlKey && ev.key === "Enter") {
@@ -88,8 +136,8 @@
       });
     }
 
-    field.setValue(starter || "", { format: "latex" });
-    renderLatex(preview, field.getValue("latex"));
+    setLatex(field, starter || "");
+    renderLatex(preview, latexOf(field));
     field.focus();
   }
 
@@ -99,11 +147,11 @@
   }
 
   function getValue() {
-    return field ? field.getValue("latex") : "";
+    return latexOf(field).trim();
   }
 
   function clear() {
-    if (field) field.setValue("", { format: "latex" });
+    setLatex(field, "");
     renderLatex(document.getElementById(previewId), "");
   }
 
