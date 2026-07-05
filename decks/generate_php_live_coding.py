@@ -6,13 +6,14 @@ import json
 from pathlib import Path
 
 
-def live(q: str, task: str, ref: str, *, lang: str = "php") -> dict:
+def live(q: str, task: str, ref: str, *, lang: str = "php", topic: str = "") -> dict:
     return {
         "card_type": "live_code",
         "question": q,
         "task": task,
         "reference": ref.strip(),
         "language": lang,
+        "topic": topic,
     }
 
 
@@ -886,7 +887,9 @@ final class HomeController
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "php")
     deck = {"name": "PHP Live-coding", "cards": cards}
     out = Path(__file__).with_name("php-live-coding.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")

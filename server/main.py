@@ -47,6 +47,7 @@ class SettingsIn(BaseModel):
 class SessionStartIn(BaseModel):
     deck_id: str
     mode: str = "due"
+    topic: str | None = None
 
 
 class AnswerIn(BaseModel):
@@ -112,16 +113,24 @@ def test_ollama() -> dict:
     return {"ok": ok, "detail": detail}
 
 
+@app.get("/api/deck/{deck_id}/topics")
+def deck_topics(deck_id: str) -> dict:
+    try:
+        return services.deck_topics(deck_id)
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+
 @app.post("/api/session")
 def start_session(body: SessionStartIn) -> dict:
     try:
-        session = services.start_session(body.deck_id, body.mode)
+        session = services.start_session(body.deck_id, body.mode, topic=body.topic)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
     card = services.card_payload(session)
     return {
         "session_id": session.id,
-        "deck_name": session.deck.name,
+        "deck_name": services.session_display_name(session),
         "mode": session.mode.value,
         "empty": card is None,
         "card": card,
@@ -135,7 +144,7 @@ def get_session(session_id: str) -> dict:
     if not session:
         raise HTTPException(404, "Сессия не найдена")
     return {
-        "deck_name": session.deck.name,
+        "deck_name": services.session_display_name(session),
         "card": services.card_payload(session),
         "stats": services.session_stats(session),
         "feedback": session.last_feedback,

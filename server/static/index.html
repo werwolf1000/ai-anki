@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI Anki</title>
-  <link rel="stylesheet" href="/static/style.css?v=13">
+  <link rel="stylesheet" href="/static/style.css?v=14">
 </head>
 <body>
   <header>
@@ -69,6 +69,18 @@
       </section>
     </div>
 
+    <div id="topic-view" class="hidden">
+      <section class="panel">
+        <div class="btn-row" style="margin-top:0">
+          <button type="button" class="secondary" id="btn-topic-back">← Колоды</button>
+          <span id="topic-deck-title" class="stats"></span>
+        </div>
+        <h2>Выберите тему</h2>
+        <p class="muted" id="topic-mode-label"></p>
+        <div id="topics-list" class="topics-list"></div>
+      </section>
+    </div>
+
     <div id="study-view" class="hidden">
       <section class="panel">
         <div class="btn-row" style="margin-top:0">
@@ -104,9 +116,9 @@
       </section>
     </div>
   </main>
-  <script src="/static/code-editor.js?v=13"></script>
-  <script src="/static/math-editor.js?v=13"></script>
-  <script src="/static/voice-input.js?v=13"></script>
-  <script src="/static/app.js?v=13"></script>
+  <script src="/static/code-editor.js?v=14"></script>
+  <script src="/static/math-editor.js?v=14"></script>
+  <script src="/static/voice-input.js?v=14"></script>
+  <script src="/static/app.js?v=14"></script>
 </body>
 </html>

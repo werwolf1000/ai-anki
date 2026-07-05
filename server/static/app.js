@@ -1,4 +1,7 @@
 let selectedDeckId = null;
+let selectedDeckIsLiveCoding = false;
+let decksById = {};
+let pendingMode = "due";
 let sessionId = null;
 let autoAdvanceTimer = null;
 let needsCode = false;
@@ -27,14 +30,29 @@ function showHome() {
   CodeEditor.hide();
   MathEditor.hide();
   $("home-view").classList.remove("hidden");
+  $("topic-view").classList.add("hidden");
   $("study-view").classList.add("hidden");
   loadDecks();
 }
 
+function showTopicPicker() {
+  $("home-view").classList.add("hidden");
+  $("topic-view").classList.remove("hidden");
+  $("study-view").classList.add("hidden");
+}
+
 function showStudy() {
   $("home-view").classList.add("hidden");
+  $("topic-view").classList.add("hidden");
   $("study-view").classList.remove("hidden");
 }
+
+const MODE_LABELS = {
+  due: "повторение",
+  new: "новые",
+  weak: "слабые",
+  all: "вся колода",
+};
 
 async function loadConfig() {
   const c = await api("/api/config");
@@ -90,6 +108,7 @@ async function testOllama() {
 
 function selectDeck(deckId) {
   selectedDeckId = deckId;
+  selectedDeckIsLiveCoding = !!(decksById[deckId]?.is_live_coding);
   $("decks-table").querySelectorAll("tr").forEach((r) => {
     r.classList.toggle("selected", r.dataset.deckId === deckId);
   });
@@ -100,11 +119,13 @@ function selectDeck(deckId) {
 
 async function loadDecks() {
   const { decks } = await api("/api/decks");
+  decksById = {};
   const tbody = $("decks-table").querySelector("tbody");
   const list = $("decks-list");
   tbody.innerHTML = "";
   list.innerHTML = "";
   decks.forEach((d) => {
+    if (!d.error) decksById[d.deck_id] = d;
     const tr = document.createElement("tr");
     tr.dataset.deckId = d.deck_id;
     if (d.error) {
@@ -141,7 +162,47 @@ async function loadDecks() {
   });
   if (decks.length && !selectedDeckId && !decks[0].error) {
     selectDeck(decks[0].deck_id);
+  } else if (selectedDeckId && decksById[selectedDeckId]) {
+    selectedDeckIsLiveCoding = !!decksById[selectedDeckId].is_live_coding;
   }
+}
+
+async function openTopicPicker(mode) {
+  if (!selectedDeckId) {
+    alert("Выберите колоду");
+    return;
+  }
+  pendingMode = mode;
+  const data = await api(`/api/deck/${selectedDeckId}/topics`);
+  $("topic-deck-title").textContent = data.name;
+  $("topic-mode-label").textContent = `Режим: ${MODE_LABELS[mode] || mode}`;
+  const list = $("topics-list");
+  list.innerHTML = "";
+  data.topics.forEach((t) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "topic-card";
+    btn.innerHTML = `
+      <div class="topic-card-title">${t.name}</div>
+      <div class="topic-card-stats">
+        всего ${t.total} · к повтору ${t.due} · новые ${t.new} · слабые ${t.weak}
+      </div>`;
+    btn.onclick = () => startMode(mode, t.name).catch((e) => alert(e.message));
+    list.appendChild(btn);
+  });
+  showTopicPicker();
+}
+
+async function requestStudy(mode) {
+  if (!selectedDeckId) {
+    alert("Выберите колоду");
+    return;
+  }
+  if (selectedDeckIsLiveCoding) {
+    await openTopicPicker(mode);
+    return;
+  }
+  await startMode(mode);
 }
 
 function updateStats(stats) {
@@ -178,7 +239,9 @@ async function showCard(card) {
     MathEditor.hide();
     $("answer-text").classList.add("hidden");
     VoiceInput.setVisible(false);
-    $("question").textContent = card.question;
+    const qParts = [card.question];
+    if (card.topic) qParts.unshift(`[${card.topic}]`);
+    $("question").textContent = qParts.join("\n");
     CodeEditor.clear();
     await CodeEditor.show(card.language || "typescript", codeEditorTheme);
     $("answer-label").textContent = card.is_live_code
@@ -216,15 +279,17 @@ function clearAnswer() {
   else $("answer-text").value = "";
 }
 
-async function startMode(mode) {
+async function startMode(mode, topic = "") {
   if (!selectedDeckId) {
     alert("Выберите колоду");
     return;
   }
   clearTimeout(autoAdvanceTimer);
+  const payload = { deck_id: selectedDeckId, mode };
+  if (topic) payload.topic = topic;
   const data = await api("/api/session", {
     method: "POST",
-    body: JSON.stringify({ deck_id: selectedDeckId, mode }),
+    body: JSON.stringify(payload),
   });
   sessionId = data.session_id;
   $("study-title").textContent = `${data.deck_name} · ${data.mode}`;
@@ -322,10 +387,11 @@ function fbHasReview(text) {
 
 $("btn-save").onclick = () => saveConfig().catch((e) => alert(e.message));
 $("btn-test").onclick = () => testOllama().catch((e) => alert(e.message));
-$("btn-due").onclick = () => startMode("due").catch((e) => alert(e.message));
-$("btn-new").onclick = () => startMode("new").catch((e) => alert(e.message));
-$("btn-weak").onclick = () => startMode("weak").catch((e) => alert(e.message));
-$("btn-all").onclick = () => startMode("all").catch((e) => alert(e.message));
+$("btn-due").onclick = () => requestStudy("due").catch((e) => alert(e.message));
+$("btn-new").onclick = () => requestStudy("new").catch((e) => alert(e.message));
+$("btn-weak").onclick = () => requestStudy("weak").catch((e) => alert(e.message));
+$("btn-all").onclick = () => requestStudy("all").catch((e) => alert(e.message));
+$("btn-topic-back").onclick = showHome;
 $("btn-back").onclick = showHome;
 $("btn-submit").onclick = submitAnswer;
 $("btn-next").onclick = nextCard;

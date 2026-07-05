@@ -6,6 +6,7 @@ from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QFont, QColor
 from PyQt6.QtWidgets import (
     QComboBox,
+    QDialog,
     QFileDialog,
     QFormLayout,
     QGroupBox,
@@ -32,12 +33,13 @@ from app.config_store import (
     save_config,
 )
 from app.ollama_client import OllamaClient
+from app.topic_picker import TopicPickerDialog
 from app.progress import ProgressStore, StudyMode
 from app.registry import DeckEntry, DeckRegistry
 
 
 class WelcomeScreen(QWidget):
-    deck_selected = pyqtSignal(object, str)  # DeckEntry, StudyMode value
+    deck_selected = pyqtSignal(object, str, str)  # DeckEntry, StudyMode value, topic
     config_saved = pyqtSignal()
 
     def __init__(
@@ -321,7 +323,22 @@ class WelcomeScreen(QWidget):
         if not self._selected_entry:
             QMessageBox.information(self, "Колода", "Выберите колоду в таблице.")
             return
-        self.deck_selected.emit(self._selected_entry, mode.value)
+
+        topic = ""
+        if self._selected_entry.is_live_coding:
+            dialog = TopicPickerDialog(
+                self._selected_entry,
+                self.registry,
+                self.progress_store,
+                mode,
+                pass_score=int(self.config.get("pass_score", 75)),
+                parent=self,
+            )
+            if dialog.exec() != QDialog.DialogCode.Accepted or not dialog.selected_topic:
+                return
+            topic = dialog.selected_topic
+
+        self.deck_selected.emit(self._selected_entry, mode.value, topic)
 
     def _add_deck(self) -> None:
         path, _ = QFileDialog.getOpenFileName(

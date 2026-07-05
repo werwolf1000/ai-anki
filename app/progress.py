@@ -302,6 +302,7 @@ class ProgressStore:
         *,
         pass_score: int = 75,
         limit: int = 50,
+        topic: str | None = None,
     ) -> list:
         now = _now()
         key = self.deck_key(deck)
@@ -313,6 +314,10 @@ class ProgressStore:
         candidates: list[tuple[int, float, Any]] = []
 
         for card in deck.cards:
+            if topic:
+                card_topic = card.topic.strip() or "Разное"
+                if card_topic != topic.strip():
+                    continue
             p = prog(card)
             if mode == StudyMode.NEW:
                 if not p.is_new():

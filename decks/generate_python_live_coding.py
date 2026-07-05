@@ -6,13 +6,14 @@ import json
 from pathlib import Path
 
 
-def live(q: str, task: str, ref: str, *, lang: str = "python") -> dict:
+def live(q: str, task: str, ref: str, *, lang: str = "python", topic: str = "") -> dict:
     return {
         "card_type": "live_code",
         "question": q,
         "task": task,
         "reference": ref.strip(),
         "language": lang,
+        "topic": topic,
     }
 
 
@@ -630,7 +631,9 @@ class Color(str, Enum):
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "python")
     deck = {"name": "Python Live-coding", "cards": cards}
     out = Path(__file__).with_name("python-live-coding.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")

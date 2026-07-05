@@ -146,10 +146,13 @@ class StudyScreen(QWidget):
         progress_store: ProgressStore,
         config: dict,
         config_path: Path,
+        *,
+        topic: str = "",
     ) -> None:
         super().__init__()
         self.deck = deck
         self.mode = mode
+        self.topic = topic.strip()
         self.progress_store = progress_store
         self.config = config
         self.config_path = config_path
@@ -274,11 +277,13 @@ class StudyScreen(QWidget):
             self.mode,
             pass_score=self._pass_score(),
             limit=clamp_session_limit(self.config.get("session_limit", 20)),
+            topic=self.topic or None,
         )
         self.current_index = 0
         code_n = sum(1 for c in self.deck.cards if c.is_code)
         extra = f", код: {code_n}" if code_n else ""
-        self.deck_label.setText(f"{self.deck.name} · {self._mode_label()}")
+        topic_part = f" · {self.topic}" if self.topic else ""
+        self.deck_label.setText(f"{self.deck.name}{topic_part} · {self._mode_label()}")
         s = self.progress_store.summary(self.deck, self._pass_score())
         self.stats_label.setText(
             f"Сегодня {s.passed_today} · Усвоено {s.mastered}/{s.total}{extra} · "
@@ -374,7 +379,10 @@ class StudyScreen(QWidget):
         self.last_review = None
         self._pending_finalize = False
         prog = self.progress_store.get(self.deck, self.current_card.id)
-        self.question_view.setPlainText(self.current_card.display_text())
+        text = self.current_card.display_text()
+        if self.current_card.topic.strip():
+            text = f"[{self.current_card.topic.strip()}]\n\n{text}"
+        self.question_view.setPlainText(text)
         self._configure_answer_ui(self.current_card)
         self._clear_answer()
         self.feedback_view.clear()
@@ -712,7 +720,7 @@ class MainWindow(QMainWindow):
         if self.study_screen is not None:
             self.study_screen.apply_config(self.config)
 
-    def _open_study(self, entry: DeckEntry, mode_value: str) -> None:
+    def _open_study(self, entry: DeckEntry, mode_value: str, topic: str = "") -> None:
         try:
             deck = self.registry.load_deck(entry)
             mode = StudyMode(mode_value)
@@ -726,7 +734,9 @@ class MainWindow(QMainWindow):
 
         self.config, self.config_path = load_config(Path(__file__).resolve().parent.parent)
         self.progress_store.load()
-        self.study_screen = StudyScreen(deck, mode, self.progress_store, self.config, self.config_path)
+        self.study_screen = StudyScreen(
+            deck, mode, self.progress_store, self.config, self.config_path, topic=topic
+        )
         self.study_screen.back_requested.connect(self._go_home)
         self.stack.addWidget(self.study_screen)
         self.stack.setCurrentWidget(self.study_screen)

@@ -23,6 +23,7 @@ class Card:
     task: str = ""
     language: str = ""
     answer_mode: str = ""
+    topic: str = ""
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -147,7 +148,7 @@ class Deck:
 
 
 def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
-    known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode"}
+    known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode", "topic"}
     item = {k: v for k, v in item.items() if k in known}
     card_type = item.get("card_type")
     if not card_type:
@@ -164,6 +165,7 @@ def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
         task=item.get("task", ""),
         language=item.get("language") or default_language,
         answer_mode=item.get("answer_mode", ""),
+        topic=str(item.get("topic", "") or ""),
     )
 
 

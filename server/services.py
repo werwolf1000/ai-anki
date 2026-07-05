@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
+from app.live_coding import is_live_coding_deck, topic_summaries
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -17,6 +18,7 @@ class StudySession:
     id: str
     deck: Deck
     mode: StudyMode
+    topic: str = ""
     queue: list[Card] = field(default_factory=list)
     index: int = 0
     chat_history: list[ChatMessage] = field(default_factory=list)
@@ -82,6 +84,7 @@ class AppServices:
         return {
             "deck_id": entry.deck_id,
             "name": entry.name,
+            "is_live_coding": entry.is_live_coding,
             "total": s.total,
             "mastered": s.mastered,
             "passed_today": s.passed_today,
@@ -92,21 +95,43 @@ class AppServices:
             "studied": s.studied,
         }
 
-    def start_session(self, deck_id: str, mode: str) -> StudySession:
+    def deck_topics(self, deck_id: str) -> dict:
+        entry = self.registry.get(deck_id)
+        if not entry:
+            raise ValueError("Колода не найдена")
+        deck = self.registry.load_deck(entry)
+        if not is_live_coding_deck(deck):
+            raise ValueError("Колода не live-coding")
+        self.progress.load()
+        self.progress.reconcile_deck(deck, self.pass_score())
+        topics = topic_summaries(deck, self.progress, pass_score=self.pass_score())
+        return {"deck_id": deck_id, "name": entry.name, "topics": topics}
+
+    def start_session(self, deck_id: str, mode: str, *, topic: str | None = None) -> StudySession:
         entry = self.registry.get(deck_id)
         if not entry:
             raise ValueError("Колода не найдена")
         deck = self.registry.load_deck(entry)
         self.progress.load()
         self.progress.reconcile_deck(deck, self.pass_score())
+        if is_live_coding_deck(deck):
+            topic = (topic or "").strip()
+            if not topic:
+                raise ValueError("Для live-coding колоды нужно выбрать тему")
+            known = {row["name"] for row in topic_summaries(deck, self.progress, pass_score=self.pass_score())}
+            if topic not in known:
+                raise ValueError(f"Неизвестная тема: {topic}")
+        else:
+            topic = ""
         queue = self.progress.build_queue(
             deck,
             StudyMode(mode),
             pass_score=self.pass_score(),
             limit=clamp_session_limit(self.config.get("session_limit", 20)),
+            topic=topic or None,
         )
         sid = uuid.uuid4().hex
-        session = StudySession(id=sid, deck=deck, mode=StudyMode(mode), queue=queue)
+        session = StudySession(id=sid, deck=deck, mode=StudyMode(mode), topic=topic or "", queue=queue)
         self.sessions[sid] = session
         return session
 
@@ -121,6 +146,11 @@ class AppServices:
             "index": session.index + 1 if session.queue else 0,
         }
 
+    def session_display_name(self, session: StudySession) -> str:
+        if session.topic:
+            return f"{session.deck.name} · {session.topic}"
+        return session.deck.name
+
     def card_payload(self, session: StudySession) -> dict | None:
         card = session.current
         if not card:
@@ -132,6 +162,7 @@ class AppServices:
             "needs_math": card.needs_math_editor,
             "language": card.language,
             "is_live_code": card.is_live_code,
+            "topic": card.topic,
             "math_starter": card.task if card.needs_math_editor else "",
             "attempts": prog.attempts,
             "best_score": prog.best_score,

@@ -55,6 +55,12 @@ class DeckEntry:
     def primary_path(self) -> str:
         return self.paths[0] if self.paths else ""
 
+    @property
+    def is_live_coding(self) -> bool:
+        from app.live_coding import is_live_coding_entry
+
+        return any(is_live_coding_entry(p) for p in self.paths)
+
     @classmethod
     def from_dict(cls, data: dict) -> DeckEntry:
         paths = data.get("paths") or ([data["path"]] if data.get("path") else [])

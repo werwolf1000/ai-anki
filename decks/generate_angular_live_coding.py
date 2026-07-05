@@ -6,13 +6,14 @@ import json
 from pathlib import Path
 
 
-def live(q: str, task: str, ref: str, *, lang: str = "typescript") -> dict:
+def live(q: str, task: str, ref: str, *, lang: str = "typescript", topic: str = "") -> dict:
     return {
         "card_type": "live_code",
         "question": q,
         "task": task,
         "reference": ref.strip(),
         "language": lang,
+        "topic": topic,
     }
 
 
@@ -1181,7 +1182,9 @@ export class LabelComponent {
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "angular")
     deck = {"name": "Angular Live-coding", "cards": cards}
     out = Path(__file__).with_name("angular-live-coding.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")
