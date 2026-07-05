@@ -33,6 +33,7 @@ from app.config_store import (
     save_config,
 )
 from app.ollama_client import OllamaClient
+from app.live_coding import has_topic_picker_deck
 from app.topic_picker import TopicPickerDialog
 from app.progress import ProgressStore, StudyMode
 from app.registry import DeckEntry, DeckRegistry
@@ -325,7 +326,8 @@ class WelcomeScreen(QWidget):
             return
 
         topic = ""
-        if self._selected_entry.has_topics:
+        deck = self.registry.load_deck(self._selected_entry)
+        if has_topic_picker_deck(deck):
             dialog = TopicPickerDialog(
                 self._selected_entry,
                 self.registry,

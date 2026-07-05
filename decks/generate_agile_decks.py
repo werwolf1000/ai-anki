@@ -780,11 +780,13 @@ def build_all() -> dict[str, list[dict]]:
     kanban = add_flashcards(kanban, kanban_pairs)
     safe = add_flashcards(safe, safe_pairs)
 
+    from live_coding_topics import assign_topics
+
     return {
-        "agile-fundamentals.json": ("Agile — основы", agile),
-        "scrum-framework.json": ("Scrum", scrum),
-        "kanban-method.json": ("Kanban", kanban),
-        "safe-scaled-agile.json": ("SAFe", safe),
+        "agile-fundamentals.json": ("Agile — основы", assign_topics(agile, "agile")),
+        "scrum-framework.json": ("Scrum", assign_topics(scrum, "scrum")),
+        "kanban-method.json": ("Kanban", assign_topics(kanban, "kanban")),
+        "safe-scaled-agile.json": ("SAFe", assign_topics(safe, "safe")),
     }
 
 

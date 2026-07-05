@@ -39,26 +39,72 @@ def assign_angular_topic(card: dict) -> str:
 
 def assign_python_topic(card: dict) -> str:
     text = _blob(card)
-    if _has(text, "async def", "await ", "asyncio"):
+    if _has(text, "async def", "await ", "asyncio", "async/await", "корутин"):
         return "Async"
-    if _has(text, "TypedDict", "Protocol", "NamedTuple"):
+    if _has(text, "TypedDict", "Protocol", "NamedTuple", "TypeVar", "Optional", "Union", "type hint", "typing"):
         return "Typing"
-    if _has(text, "@dataclass", "class Counter", "class User", "class HttpResponse", "Enum"):
+    if _has(
+        text,
+        "@dataclass",
+        "class ",
+        "наследован",
+        "self",
+        "__init__",
+        "staticmethod",
+        "classmethod",
+        "property",
+        "MRO",
+        "super()",
+        "dunder",
+        "ABC",
+        "abstractmethod",
+        "Enum",
+        "Counter",
+        "class User",
+        "class HttpResponse",
+    ):
         return "ООП"
-    if _has(text, "@lru_cache", "contextmanager", "generator", " yield", "partial", "decorator", "groupby"):
+    if _has(text, "@lru_cache", "contextmanager", "generator", " yield", "partial", "decorator", "groupby", "closure"):
         return "Функциональное"
-    if _has(text, "Counter", "defaultdict", "deque", "bisect"):
+    if _has(text, "defaultdict", "deque", "bisect", "Counter", "namedtuple"):
         return "Collections"
-    if _has(text, "pathlib", "json.", "tempfile", "sqlite", "argparse", "itertools", "SplFile", "import os"):
+    if _has(
+        text,
+        "pathlib",
+        "json.",
+        "tempfile",
+        "sqlite",
+        "argparse",
+        "itertools",
+        "re module",
+        "subprocess",
+        "logging",
+        "unittest",
+        "pytest",
+        "GIL",
+        "threading",
+        "multiprocessing",
+    ):
         return "Stdlib"
     return "Основы"
 
 
 def assign_php_topic(card: dict) -> str:
     text = _blob(card)
-    if _has(text, "enum ", "#[", "Attribute"):
+    if _has(text, "enum ", "#[", "Attribute", "атрибут"):
         return "Enums и Attributes"
-    if _has(text, "interface ", "abstract class", "implements ", "trait ", "readonly class", "__toString"):
+    if _has(
+        text,
+        "interface ",
+        "abstract class",
+        "implements ",
+        "trait ",
+        "readonly class",
+        "__toString",
+        "наследован",
+        "promoted propert",
+        "constructor property",
+    ):
         return "ООП"
     if _has(text, "PDO", "password_hash", "HttpResponse", "password_verify"):
         return "PDO и HTTP"
@@ -68,8 +114,102 @@ def assign_php_topic(card: dict) -> str:
         return "Строки и JSON"
     if _has(text, "Router", "DTO", "Value Object", "ValueObject", "SplQueue", "Generator", "SplFileObject"):
         return "Паттерны"
-    if _has(text, "match ", "nullsafe", "throw new", ": never", "int|string", "promoted", "readonly "):
+    if _has(
+        text,
+        "match ",
+        "nullsafe",
+        "throw new",
+        ": never",
+        "int|string",
+        "promoted",
+        "readonly ",
+        "named argument",
+        "union type",
+        "PHP 8",
+    ):
         return "PHP 8+"
+    return "Основы"
+
+
+def assign_pytorch_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "DataLoader", "Dataset", "collate_fn", "num_workers", "pin_memory", "__getitem__"):
+        return "DataLoader"
+    if _has(text, "cuda", "GPU", "device", "amp", "GradScaler", "autocast", "OOM", "mixed precision"):
+        return "GPU и производительность"
+    if _has(text, "optim.", "SGD", "Adam", "scheduler", "backward", "zero_grad", "loss", "optimizer"):
+        return "Обучение"
+    if _has(text, "nn.", "Conv2d", "Linear", "BatchNorm", "Dropout", "Module", "Sequential"):
+        return "Модули nn"
+    if _has(text, "tensor", "Tensor", "view", "reshape", "permute", "detach", "requires_grad"):
+        return "Тензоры"
+    return "Основы"
+
+
+def assign_ttk_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "Treeview", "Notebook", "Panedwindow"):
+        return "Сложные виджеты"
+    if _has(text, "Style", "theme", "layout", "theme_use", "tag_configure"):
+        return "Стили и темы"
+    if _has(text, "Combobox", "Spinbox", "Scale", "Progressbar", "Entry"):
+        return "Элементы ввода"
+    if _has(text, "Button", "Label", "Frame", "Checkbutton", "Radiobutton", "Scrollbar"):
+        return "Базовые виджеты"
+    return "Основы"
+
+
+def assign_agile_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "Scrum", "Kanban", "SAFe", "LeSS", "Nexus", "XP", "Crystal"):
+        return "Фреймворки"
+    if _has(text, "backlog", "story", "Epic", "MVP", "INVEST", "acceptance", "DoR", "DoD"):
+        return "Backlog и stories"
+    if _has(text, "retro", "Kaizen", "impediment", "retrospective", "feedback"):
+        return "Командные практики"
+    if _has(text, "velocity", "story point", "metric", "WIP", "burndown", "cycle time", "throughput"):
+        return "Метрики и поток"
+    if _has(text, "Lean", "muda", "value stream", "build-measure", "pivot"):
+        return "Lean"
+    return "Основы"
+
+
+def assign_scrum_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "Product Owner", "Scrum Master", "Developer", "Stakeholder", "роль"):
+        return "Роли"
+    if _has(text, "Sprint Planning", "Daily Scrum", "Review", "Retrospective", "Refinement", "событие", "ceremony"):
+        return "События"
+    if _has(text, "Increment", "Product Backlog", "Sprint Backlog", "артефакт", "Definition of Done"):
+        return "Артефакты"
+    if _has(text, "Nexus", "LeSS", "масштаб", "Scrum of Scrums"):
+        return "Масштабирование"
+    return "Основы"
+
+
+def assign_kanban_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "WIP", "limit", "политик", "policy", "class of service"):
+        return "WIP и политики"
+    if _has(text, "lead time", "cycle time", "throughput", "CFD", "метрик", "SLA"):
+        return "Метрики потока"
+    if _has(text, "replenish", "upstream", "discovery", "triage", "queue"):
+        return "Поток работы"
+    if _has(text, "Swimlane", "доск", "board", "column", "visual"):
+        return "Визуализация"
+    return "Основы"
+
+
+def assign_safe_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "Portfolio", "Value Stream", "Solution Train", "Large Solution"):
+        return "Portfolio и потоки"
+    if _has(text, "PI Planning", "ART", "Program Increment", "Objective"):
+        return "PI Planning"
+    if _has(text, "Epic", "Feature", "Enabler", "Story", "backlog"):
+        return "Backlog SAFe"
+    if _has(text, "RTE", "System Architect", "Product Management", "Business Owner", "роль"):
+        return "Роли SAFe"
     return "Основы"
 
 
@@ -78,6 +218,12 @@ def assign_topics(cards: list[dict], deck_kind: str) -> list[dict]:
         "angular": assign_angular_topic,
         "python": assign_python_topic,
         "php": assign_php_topic,
+        "pytorch": assign_pytorch_topic,
+        "ttk": assign_ttk_topic,
+        "agile": assign_agile_topic,
+        "scrum": assign_scrum_topic,
+        "kanban": assign_kanban_topic,
+        "safe": assign_safe_topic,
     }
     assign = assigners.get(deck_kind)
     if not assign:

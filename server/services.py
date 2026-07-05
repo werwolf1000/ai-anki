@@ -86,7 +86,7 @@ class AppServices:
             "name": entry.name,
             "is_live_coding": entry.is_live_coding,
             "is_math": entry.is_math,
-            "has_topics": entry.has_topics,
+            "has_topics": has_topic_picker_deck(deck),
             "total": s.total,
             "mastered": s.mastered,
             "passed_today": s.passed_today,

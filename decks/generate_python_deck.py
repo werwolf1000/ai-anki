@@ -763,7 +763,9 @@ logging.info('Server started')""",
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "python")
     if len(cards) < 500:
         raise SystemExit(f"Only {len(cards)} cards, need 500+")
     code_n = sum(1 for c in cards if c.get("card_type") == "code" or c.get("code"))

@@ -363,7 +363,9 @@ style.map('TButton', background=[('active', '#dce4f2')])""",
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "ttk")
     deck = {"name": "tkinter.ttk", "cards": cards}
     out = Path(__file__).with_name("ttk-widgets.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")

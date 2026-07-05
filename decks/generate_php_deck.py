@@ -1177,7 +1177,9 @@ $pattern = '/{fn}(' . $user . ')/';
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "php")
     if len(cards) < 500:
         raise SystemExit(f"Only {len(cards)} cards generated, need 500+")
 

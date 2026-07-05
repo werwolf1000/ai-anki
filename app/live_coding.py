@@ -22,19 +22,11 @@ def is_math_deck(deck: Deck) -> bool:
 
 
 def has_topic_picker_deck(deck: Deck) -> bool:
-    return is_live_coding_deck(deck) or is_math_deck(deck)
-
-
-def _topic_cards(deck: Deck) -> list[Card]:
-    if is_live_coding_deck(deck):
-        return [c for c in deck.cards if c.is_live_code]
-    if is_math_deck(deck):
-        return [c for c in deck.cards if c.is_math]
-    return []
+    return len(deck_topics(deck)) >= 2
 
 
 def deck_topics(deck: Deck) -> list[str]:
-    names = sorted({c.topic.strip() for c in _topic_cards(deck) if c.topic.strip()})
+    names = sorted({c.topic.strip() for c in deck.cards if c.topic.strip()})
     return names
 
 
@@ -49,7 +41,7 @@ def topic_summaries(
     cards_map = progress.data.get(key, {})
     buckets: dict[str, dict] = {}
 
-    for card in _topic_cards(deck):
+    for card in deck.cards:
         name = card.topic.strip() or "Разное"
         if name not in buckets:
             buckets[name] = {"name": name, "total": 0, "due": 0, "new": 0, "weak": 0}

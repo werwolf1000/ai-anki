@@ -69,6 +69,7 @@ class DeckEntry:
 
     @property
     def has_topics(self) -> bool:
+        """Быстрая эвристика для UI; точнее — has_topic_picker_deck(deck)."""
         return self.is_live_coding or self.is_math
 
     @classmethod

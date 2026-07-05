@@ -497,7 +497,9 @@ np.random.seed(42)""",
 
 
 def main() -> None:
-    cards = build_cards()
+    from live_coding_topics import assign_topics
+
+    cards = assign_topics(build_cards(), "pytorch")
     deck = {"name": "PyTorch", "cards": cards}
     out = Path(__file__).with_name("pytorch-basics.json")
     out.write_text(json.dumps(deck, ensure_ascii=False, indent=2), encoding="utf-8")
