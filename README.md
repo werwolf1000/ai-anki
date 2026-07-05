@@ -1,11 +1,13 @@
 # AI Anki
 
-Интерактивные карточки с проверкой ответов через Ollama: свободная формулировка, подсказки, уточняющие вопросы и live-coding.
+Интерактивные карточки с проверкой ответов через Ollama: свободная формулировка, подсказки, уточняющие вопросы, live-coding и формулы LaTeX.
 
 ## Требования
 
 - Python 3.10+
 - Доступ к Ollama API (локально или удалённый сервер)
+- **Desktop:** PyQt6, PyQt6-WebEngine (MathLive/KaTeX), PyQt6-QScintilla (редактор кода)
+- **Web:** см. `requirements-server.txt` или Docker
 
 ## Запуск
 
@@ -72,7 +74,9 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | Порог зачёта | 75 | Минимальная оценка 0–100 для «засчитано» |
 | Макс. уточнений | 2 | Уточняющие вопросы модели и правки кода на одной карточке |
 | Автопереход | 10 с | Пауза перед следующей карточкой **после зачёта** (0 — выключено) |
+| Тема редактора | light | Светлая / тёмная (код и Monaco в web) |
 | Ollama URL / Модель / Таймаут | см. `config.json` | Подключение к API |
+| ASR (web) | см. `config.json` | Whisper для голосового ввода |
 
 Нажмите **«Сохранить»**, затем **«Проверить Ollama»** — должны появиться доступные модели.
 
@@ -87,7 +91,9 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | **Слабые места** | Лучший балл ниже порога зачёта |
 | **Вся колода** | Все карточки подряд (без фильтра по сроку) |
 
-Двойной щелчок по колоде — быстрый старт в режиме «Повторить».
+**Двойной щелчок** по колоде — быстрый старт в режиме «Повторить» (desktop и web).
+
+**Выбор темы:** если в колоде две и более тем (`topic` на карточках), перед сессией откроется список тем — в занятие попадут только карточки выбранной темы. Работает для live-coding, математики, Python/PHP/PyTorch, Agile и др.
 
 **Добавить колоду…** — свой JSON или Anki TXT. **Обновить** — перечитать прогресс и колоды с диска.
 
@@ -95,23 +101,21 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 ### 2. Сессия занятий
 
-В шапке: **Сегодня** · **Усвоено** · **к повтору** · **сессия N**.
+В шапке: **Сегодня** · **Усвоено** · **к повтору** · **сессия N/M**.
 
-1. Прочитайте **вопрос** (для карточек с кодом — исходный фрагмент и задание).
+1. Прочитайте **вопрос** (для карточек с кодом — исходный фрагмент и задание; для math — KaTeX-рендер).
 2. Введите ответ:
-   - **Текстовые карточки** — поле «Ваш ответ».
-   - **Код** — **редактор с номерами строк** (исправление или написание с нуля).
+   - **Теория** — поле «Ваш ответ» (в web — 🎤 голосом через ASR).
+   - **Код** — редактор с номерами строк (QScintilla / Monaco).
+   - **Math** — MathLive + предпросмотр KaTeX (LaTeX).
 3. **Ctrl+Enter** или **«Проверить ответ»** — Ollama оценит ответ (0–100) и даст обратную связь.
 4. При необходимости:
    - **Подсказка** — дополнительная подсказка от модели.
    - **Уточняющий вопрос** — ответьте в том же поле и снова нажмите «Проверить».
-   - **Правки кода** — если балл ниже порога, код **не стирается**; исправьте и отправьте снова (в пределах лимита уточнений/правок).
-5. При **зачёте** (оценка ≥ порога) через **автопереход** (по умолчанию 10 с) откроется следующая карточка, либо нажмите **«Следующая →»** сразу.
-6. При **незачёте** после исчерпания лимита правок — **«Следующая →»** вручную; карточка вернётся в повторение через несколько минут.
-7. **«← Колоды»** — на главный экран; прогресс сохраняется автоматически.
-8. **«История карточки»** — все прошлые ответы по текущей карточке.
-
-**«Ollama…»** в сессии — быстрая смена URL, модели и порога (дублирует часть настроек с главного экрана).
+   - **Правки кода / формул** — если балл ниже порога, ответ **не стирается**; исправьте и отправьте снова.
+5. При **зачёте** через **автопереход** откроется следующая карточка, либо **«Следующая →»** сразу.
+6. **«← Колоды»** — на главный экран; прогресс сохраняется автоматически.
+7. **«История карточки»** (desktop) — все прошлые ответы по текущей карточке.
 
 ---
 
@@ -122,11 +126,12 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 ```json
 {
   "question": "Что такое standalone-компонент?",
-  "reference": "Компонент с imports в @Component, без NgModule…"
+  "reference": "Компонент с imports в @Component, без NgModule…",
+  "topic": "Компоненты"
 }
 ```
 
-**Код (исправить / дополнить)** — показывается багgy-фрагмент, ответ в редакторе кода:
+**Код (исправить / дополнить):**
 
 ```json
 {
@@ -138,42 +143,57 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 }
 ```
 
-**Live-coding** — код пишется с нуля по заданию:
+**Live-coding** — код с нуля:
 
 ```json
 {
   "card_type": "live_code",
   "question": "Standalone-компонент приветствия",
-  "task": "Создай компонент с @Input() name…",
   "reference": "… эталонный код …",
-  "language": "typescript"
+  "language": "typescript",
+  "topic": "Компоненты"
 }
 ```
+
+**Математика (LaTeX):**
+
+```json
+{
+  "card_type": "math",
+  "answer_mode": "math",
+  "question": "Производная $\\sin x$",
+  "reference": "\\cos x",
+  "topic": "Производные"
+}
+```
+
+Поле **`topic`** опционально; при двух и более различных темах в колоде включается выбор темы перед сессией.
 
 ---
 
 ### 4. Прогресс и повторения
 
-Данные в `~/.ai-anki/`:
+Данные в `~/.ai-anki/` (или `AI_ANKI_DATA_DIR`):
 
 | Файл | Содержимое |
 |------|------------|
 | `progress.json` | Баллы, интервалы SRS, история ответов |
 | `decks.json` | Зарегистрированные колоды |
-| `config.json` | Ваши настройки приложения |
+| `config.json` | Настройки приложения |
+| `decks/` | Пользовательские колоды (web volume) |
 
-**Интервальное повторение:** при зачёте интервал растёт (1 д → 2.5 д → …); при ошибке — возврат через несколько минут. **Усвоено** — карточки с интервалом ≥ 7 дней и лучшим баллом ≥ порога. **Сегодня** — сколько карточек засчитано в текущий календарный день.
+**Интервальное повторение:** при зачёте интервал растёт; при ошибке — возврат через несколько минут. **Усвоено** — интервал ≥ 7 дней и лучший балл ≥ порога.
 
 ---
 
 ## Настройка Ollama
 
-1. **URL** — например `http://ollama.webmastermsk.ru:30068` (прямой Ollama API).
+1. **URL** — например `http://ollama.webmastermsk.ru:30068`.
 2. **API-ключ** — для прямого Ollama не нужен; для Open WebUI — ключ из *Settings → Account*.
-3. **Модель** — например `qwen3-coder:30b` (имя должно совпадать с сервером).
-4. **Проверить Ollama** на главном экране — в ответе список моделей.
+3. **Модель** — например `qwen3-coder:30b`.
+4. **Проверить Ollama** на главном экране.
 
-Настройки по умолчанию лежат в `config.json` проекта; при первом сохранении копируются в `~/.ai-anki/config.json`.
+Настройки по умолчанию — в `config.json` проекта; при первом сохранении копируются в user config.
 
 ---
 
@@ -185,6 +205,7 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | Python — основы | `decks/python-basics.json` |
 | tkinter.ttk | `decks/ttk-widgets.json` |
 | PyTorch | `decks/pytorch-basics.json` |
+| **Высшая математика** | `decks/higher-math.json` |
 | Angular (пример) | `decks/angular-sample.json` |
 | **Angular Live-coding** | `decks/angular-live-coding.json` |
 | **Python Live-coding** | `decks/python-live-coding.json` |
@@ -195,9 +216,9 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | Kanban | `decks/kanban-method.json` |
 | SAFe | `decks/safe-scaled-agile.json` |
 
-Составная колода **Angular (полная)** объединяет `decks/anki-angular.txt` и `decks/angular-code.json`. На десктопе, если есть `~/Documents/anki-angular.txt`, используется он вместо встроенного файла.
+Составная колода **Angular (полная)** объединяет `decks/anki-angular.txt` и `decks/angular-code.json`.
 
-Перегенерация колод: скрипты `decks/generate_*.py` (запускать из каталога `decks/`).
+Перегенерация: скрипты `decks/generate_*.py` (из каталога `decks/`). Темы для обычных колод — `decks/live_coding_topics.py` + `assign_topics()`.
 
 ---
 
@@ -205,23 +226,71 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 ```
 ai-anki/
-├── main.py              # точка входа
-├── run.sh               # запуск (Linux / macOS)
-├── run.bat              # запуск (Windows)
-├── docker-compose.yml         # локальный запуск (build: .)
-├── docker-compose.truenas.yml # TrueNAS (/mnt/storage/web/ai-anki)
+├── main.py                 # точка входа desktop
+├── run.sh / run.bat
+├── docker-compose.yml
+├── docker-compose.truenas.yml
 ├── Dockerfile
-├── TRUENAS.md           # инструкция для TrueNAS Scale
-├── requirements-server.txt
-├── server/              # FastAPI + статический UI
-│   ├── main.py
-│   └── static/
-├── app/
-│   ├── gui.py           # интерфейс и сессия
-│   ├── welcome.py       # главный экран
-│   ├── code_editor.py   # редактор кода
-│   ├── ollama_client.py # проверка ответов
-│   ├── progress.py      # SRS и история
-│   └── registry.py      # колоды
-└── decks/               # JSON-колоды и генераторы
+├── TRUENAS.md
+├── requirements.txt        # desktop
+├── requirements-server.txt # web
+├── docs/                   # API-справочник (классы, методы, функции)
+├── scripts/
+│   └── generate_api_docs.py
+├── server/                 # FastAPI + статический UI
+│   ├── main.py             # REST API
+│   ├── services.py         # веб-сессии
+│   └── static/             # index.html, app.js, Monaco, MathLive
+└── app/                    # общее ядро (desktop + web)
+    ├── gui.py              # PyQt6: сессия, MainWindow
+    ├── welcome.py          # главный экран
+    ├── deck.py             # Card, Deck
+    ├── progress.py         # SRS, очереди, история
+    ├── registry.py         # реестр колод
+    ├── live_coding.py      # темы, live-coding / math
+    ├── ollama_client.py    # Ollama + промпты
+    ├── config_store.py     # config.json
+    ├── code_editor.py      # QScintilla
+    ├── math_editor.py      # MathLive (WebEngine)
+    ├── topic_picker.py     # выбор темы
+    ├── asr_client.py       # Whisper (web)
+    └── assets/             # math_editor.html, math_question.html
 ```
+
+---
+
+## Документация API
+
+Подробный справочник по **каждому классу, методу и функции** — в каталоге **[docs/](docs/README.md)**:
+
+| Раздел | Описание |
+|--------|----------|
+| [docs/README.md](docs/README.md) | Оглавление API |
+| [docs/classes/](docs/classes/) | Классы (`Card`, `ProgressStore`, `AppServices`, …) |
+| [docs/methods/](docs/methods/) | Отдельный файл на каждый метод |
+| [docs/functions/](docs/functions/) | Модульные функции |
+| [docs/modules/](docs/modules/) | Оглавление по Python-модулям |
+
+Обновление после изменения кода:
+
+```bash
+python3 scripts/generate_api_docs.py
+```
+
+Описания задаются в словаре `DESCRIPTIONS` в `scripts/generate_api_docs.py`.
+
+---
+
+## Web API (кратко)
+
+| Метод | Путь | Назначение |
+|-------|------|------------|
+| GET | `/api/decks` | Список колод и статистика |
+| GET | `/api/deck/{id}/topics` | Темы колоды |
+| POST | `/api/session` | Старт сессии `{deck_id, mode, topic?}` |
+| POST | `/api/session/{id}/answer` | Проверка ответа |
+| POST | `/api/session/{id}/next` | Следующая карточка |
+| POST | `/api/session/{id}/hint` | Подсказка |
+| POST | `/api/asr/transcribe` | Голос → текст |
+
+Подробнее: [docs/modules/server.main.md](docs/modules/server.main.md), [docs/classes/AppServices.md](docs/classes/AppServices.md).
