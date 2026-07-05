@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 8px 10px;
+      font-family: system-ui, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.45;
+      overflow: hidden;
+    }
+    #content {
+      min-height: 2rem;
+      max-height: 120px;
+      overflow-x: auto;
+      overflow-y: auto;
+    }
+    #error {
+      color: #b91c1c;
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="content"></div>
+  <div id="error"></div>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/auto-render.min.js"></script>
+  <script>
+    (function () {
+      let bridge = null;
+      let pending = "";
+
+      function showError(msg) {
+        document.getElementById("error").textContent = msg || "";
+      }
+
+      function renderLatex(el, text) {
+        if (!el) return;
+        if (!text) {
+          el.textContent = "";
+          return;
+        }
+        el.textContent = text;
+        if (window.renderMathInElement) {
+          renderMathInElement(el, {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false },
+              { left: "\\[", right: "\\]", display: true },
+            ],
+            throwOnError: false,
+          });
+        }
+      }
+
+      function init() {
+        window.MathQuestion = {
+          render(text) {
+            renderLatex(document.getElementById("content"), text || "");
+            showError("");
+          },
+        };
+        if (pending) {
+          window.MathQuestion.render(pending);
+          pending = "";
+        }
+        if (bridge && bridge.viewReady) {
+          bridge.viewReady();
+        }
+      }
+
+      window.setQuestionText = (text) => {
+        if (window.MathQuestion) {
+          window.MathQuestion.render(text);
+        } else {
+          pending = text || "";
+        }
+      };
+
+      if (typeof qt !== "undefined") {
+        new QWebChannel(qt.webChannelTransport, (channel) => {
+          bridge = channel.objects.bridge;
+          init();
+        });
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>

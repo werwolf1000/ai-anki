@@ -25,7 +25,7 @@ from PyQt6.QtWidgets import (
 )
 
 from app.code_editor import CodeEditorPanel
-from app.math_editor import MathEditorPanel
+from app.math_editor import create_math_editor_panel, create_math_question_view
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -209,7 +209,17 @@ class StudyScreen(QWidget):
         font.setPointSize(11)
         self.question_view.setFont(font)
         q_layout.addWidget(self.question_view)
+        self.math_question_view = create_math_question_view()
+        self.math_question_view.setMaximumHeight(200)
+        self.math_question_view.hide()
+        q_layout.addWidget(self.math_question_view)
         layout.addWidget(q_box)
+
+        self.math_box = QGroupBox("Редактор формул LaTeX — Ctrl+Enter проверить")
+        self._math_box_layout = QVBoxLayout(self.math_box)
+        self.math_panel = None
+        self.math_box.hide()
+        layout.addWidget(self.math_box)
 
         self.answer_box = QGroupBox("Ваш ответ")
         a_layout = QVBoxLayout(self.answer_box)
@@ -227,13 +237,6 @@ class StudyScreen(QWidget):
         self.code_panel.submit_requested.connect(self._submit_answer)
         self.code_panel.hide()
         a_layout.addWidget(self.code_panel)
-
-        self.math_panel = MathEditorPanel()
-        self.math_panel.setMinimumHeight(160)
-        self.math_panel.setMaximumHeight(360)
-        self.math_panel.hide()
-        a_layout.addWidget(self.math_panel)
-        QShortcut(QKeySequence("Ctrl+Return"), self.math_panel.editor, self._submit_answer)
 
         layout.addWidget(self.answer_box)
 
@@ -382,7 +385,14 @@ class StudyScreen(QWidget):
         text = self.current_card.display_text()
         if self.current_card.topic.strip():
             text = f"[{self.current_card.topic.strip()}]\n\n{text}"
-        self.question_view.setPlainText(text)
+        if self.current_card.needs_math_editor:
+            self.question_view.hide()
+            self.math_question_view.show()
+            self.math_question_view.set_question(text)
+        else:
+            self.math_question_view.hide()
+            self.question_view.show()
+            self.question_view.setPlainText(text)
         self._configure_answer_ui(self.current_card)
         self._clear_answer()
         self.feedback_view.clear()
@@ -397,19 +407,30 @@ class StudyScreen(QWidget):
             f"лучший {prog.best_score} · попыток {prog.attempts}{due_hint}"
         )
 
+    def _ensure_math_panel(self) -> None:
+        if self.math_panel is not None:
+            return
+        self.math_panel = create_math_editor_panel()
+        if hasattr(self.math_panel, "submit_requested"):
+            self.math_panel.submit_requested.connect(self._submit_answer)
+        self._math_box_layout.addWidget(self.math_panel)
+
     def _configure_answer_ui(self, card: Card) -> None:
         if card.needs_math_editor:
-            self.answer_edit.hide()
+            self._ensure_math_panel()
+            self.answer_box.hide()
             self.code_panel.hide()
-            self.math_panel.show()
-            self.answer_box.setTitle("Редактор формул — ответ в LaTeX")
+            self.answer_edit.hide()
+            self.math_box.show()
             if card.task.strip():
                 self.math_panel.set_text(card.task.strip())
             else:
                 self.math_panel.clear()
             self.math_panel.set_focus()
         elif card.needs_code_editor:
-            self.math_panel.hide()
+            self.math_box.hide()
+            self.answer_box.show()
+            self.math_panel.hide() if self.math_panel else None
             self.answer_edit.hide()
             self.code_panel.show()
             if card.is_live_code:
@@ -420,22 +441,24 @@ class StudyScreen(QWidget):
             self.code_panel.set_language_hint(card.language)
             self.code_panel.set_focus()
         else:
+            self.math_box.hide()
             self.code_panel.hide()
-            self.math_panel.hide()
+            self.math_panel.hide() if self.math_panel else None
+            self.answer_box.show()
             self.answer_edit.show()
             self.answer_box.setTitle("Ваш ответ (своими словами)")
             self.answer_edit.setPlaceholderText("Напишите ответ… Ctrl+Enter — отправить")
             self.answer_edit.setFocus()
 
     def _answer_text(self) -> str:
-        if self.current_card and self.current_card.needs_math_editor:
+        if self.current_card and self.current_card.needs_math_editor and self.math_panel:
             return self.math_panel.plain_text().strip()
         if self.current_card and self.current_card.needs_code_editor:
             return self.code_panel.plain_text().strip()
         return self.answer_edit.toPlainText().strip()
 
     def _clear_answer(self) -> None:
-        if self.current_card and self.current_card.needs_math_editor:
+        if self.current_card and self.current_card.needs_math_editor and self.math_panel:
             self.math_panel.clear()
         elif self.current_card and self.current_card.needs_code_editor:
             self.code_panel.clear()
@@ -755,8 +778,17 @@ class MainWindow(QMainWindow):
         self.stack.setCurrentWidget(self.welcome)
 
 
-def run_app() -> None:
-    app = QApplication([])
+def run_app(argv: list[str] | None = None) -> None:
+    import sys
+
+    if argv is None:
+        argv = sys.argv
+    # WebEngine/Chromium требует корректный argv (не пустой список).
+    try:
+        from PyQt6.QtWebEngineWidgets import QWebEngineView  # noqa: F401
+    except ImportError:
+        pass
+    app = QApplication(argv)
     app.setApplicationName("AI Anki")
     window = MainWindow()
     window.show()

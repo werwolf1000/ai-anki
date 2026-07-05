@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 8px;
+      font-family: system-ui, sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      overflow-x: hidden;
+    }
+    body {
+      --keyboard-zindex: 100;
+    }
+    #math-editor-host {
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 4px 8px;
+      background: #fff;
+    }
+    math-field {
+      display: block;
+      width: 100%;
+      font-size: 1.05rem;
+      min-height: 2.25rem;
+    }
+    #keyboard-container {
+      width: 100%;
+      min-height: 0;
+      position: relative;
+      margin-top: 6px;
+      overflow: visible;
+    }
+    #keyboard-container math-virtual-keyboard {
+      position: relative !important;
+      inset: auto !important;
+      transform: none !important;
+      width: 100% !important;
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    #fallback-keyboard {
+      display: none;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #f8fafc;
+      padding: 6px;
+    }
+    #fallback-keyboard.visible {
+      display: block;
+    }
+    .fallback-kb-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .fallback-kb-row:last-child {
+      margin-bottom: 0;
+    }
+    .fallback-kb-btn {
+      min-width: 2rem;
+      height: 2rem;
+      padding: 0 6px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      background: #fff;
+      color: #1e293b;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .fallback-kb-btn:hover {
+      background: #e2e8f0;
+    }
+    .fallback-kb-btn.action {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+    .math-preview-label {
+      margin: 8px 0 4px;
+      font-size: 12px;
+      color: #64748b;
+    }
+    #math-preview {
+      min-height: 36px;
+      padding: 6px 10px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    #error {
+      color: #b91c1c;
+      font-size: 12px;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div id="math-editor-host"></div>
+  <div id="keyboard-container"></div>
+  <div class="math-preview-label">Предпросмотр</div>
+  <div id="math-preview"></div>
+  <div id="error"></div>
+  <script>
+    (function () {
+      const CDN = "https://cdn.jsdelivr.net/npm";
+      const FALLBACK_ROWS = [
+        [
+          { label: "a/b", insert: "\\frac{#@}{#0}" },
+          { label: "√", insert: "\\sqrt{#0}" },
+          { label: "xⁿ", insert: "#@^{#?}" },
+          { label: "xₙ", insert: "#@_{#?}" },
+          { label: "(", insert: "(" },
+          { label: ")", insert: ")" },
+          { label: "[", insert: "[" },
+          { label: "]", insert: "]" },
+        ],
+        [
+          { label: "∫", insert: "\\int" },
+          { label: "∑", insert: "\\sum" },
+          { label: "π", insert: "\\pi" },
+          { label: "∞", insert: "\\infty" },
+          { label: "≤", insert: "\\le" },
+          { label: "≥", insert: "\\ge" },
+          { label: "≠", insert: "\\ne" },
+          { label: "±", insert: "\\pm" },
+        ],
+        [
+          { label: "α", insert: "\\alpha" },
+          { label: "β", insert: "\\beta" },
+          { label: "θ", insert: "\\theta" },
+          { label: "λ", insert: "\\lambda" },
+          { label: "sin", insert: "\\sin" },
+          { label: "cos", insert: "\\cos" },
+          { label: "tan", insert: "\\tan" },
+          { label: "ln", insert: "\\ln" },
+        ],
+        [
+          { label: "7", insert: "7" },
+          { label: "8", insert: "8" },
+          { label: "9", insert: "9" },
+          { label: "÷", insert: "\\div" },
+          { label: "4", insert: "4" },
+          { label: "5", insert: "5" },
+          { label: "6", insert: "6" },
+          { label: "×", insert: "\\times" },
+        ],
+        [
+          { label: "1", insert: "1" },
+          { label: "2", insert: "2" },
+          { label: "3", insert: "3" },
+          { label: "−", insert: "-" },
+          { label: "0", insert: "0" },
+          { label: ".", insert: "." },
+          { label: "=", insert: "=" },
+          { label: "+", insert: "+" },
+        ],
+        [
+          { label: "⌫", insert: "[backspace]", action: true },
+          { label: "␣", insert: "\\:" },
+          { label: "Скрыть", insert: "[hide-keyboard]", action: true },
+        ],
+      ];
+
+      let field = null;
+      let bridge = null;
+      let libsReady = null;
+      let fallbackVisible = false;
+      let keyboardConfigured = false;
+
+      function showError(msg) {
+        document.getElementById("error").textContent = msg || "";
+      }
+
+      function loadCss(href) {
+        if (document.querySelector(`link[href="${href}"]`)) return;
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+      }
+
+      function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          if (document.querySelector(`script[src="${src}"]`)) {
+            resolve();
+            return;
+          }
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => resolve();
+          script.onerror = () => reject(new Error(`Не удалось загрузить ${src}`));
+          document.head.appendChild(script);
+        });
+      }
+
+      async function waitForMathLive() {
+        if (window.MathfieldElement) return window.MathfieldElement;
+        if (window.MathLive && window.MathLive.MathfieldElement) {
+          return window.MathLive.MathfieldElement;
+        }
+        await customElements.whenDefined("math-field");
+        return customElements.get("math-field");
+      }
+
+      async function ensureLibs() {
+        if (libsReady) return libsReady;
+        libsReady = (async () => {
+          loadCss(`${CDN}/mathlive/mathlive-static.css`);
+          loadCss(`${CDN}/mathlive/mathlive-fonts.css`);
+          loadCss(`${CDN}/katex@0.16.11/dist/katex.min.css`);
+          await loadScript(`${CDN}/katex@0.16.11/dist/katex.min.js`);
+          await loadScript(`${CDN}/katex@0.16.11/dist/contrib/auto-render.min.js`);
+          await loadScript(`${CDN}/mathlive/mathlive.min.js`);
+          return waitForMathLive();
+        })();
+        return libsReady;
+      }
+
+      function latexOf(el) {
+        if (!el) return "";
+        try {
+          if (typeof el.getValue === "function") {
+            return el.getValue("latex") || el.getValue() || el.value || "";
+          }
+        } catch (_) { /* ignore */ }
+        return el.value || "";
+      }
+
+      function setLatex(el, text) {
+        if (!el) return;
+        const value = text || "";
+        try {
+          if (typeof el.setValue === "function") {
+            el.setValue(value, { format: "latex" });
+            return;
+          }
+        } catch (_) { /* ignore */ }
+        el.value = value;
+      }
+
+      function renderLatex(el, text) {
+        if (!el) return;
+        if (!text) {
+          el.textContent = "";
+          return;
+        }
+        el.textContent = text;
+        if (window.renderMathInElement) {
+          renderMathInElement(el, {
+            delimiters: [
+              { left: "$$", right: "$$", display: true },
+              { left: "$", right: "$", display: false },
+              { left: "\\(", right: "\\)", display: false },
+              { left: "\\[", right: "\\]", display: true },
+            ],
+            throwOnError: false,
+          });
+        }
+      }
+
+      function notifyLatex() {
+        if (bridge && bridge.onLatexChanged) {
+          bridge.onLatexChanged(latexOf(field));
+        }
+      }
+
+      function keyboardContainer() {
+        return document.getElementById("keyboard-container");
+      }
+
+      function fallbackPanel() {
+        let panel = document.getElementById("fallback-keyboard");
+        if (panel) return panel;
+        panel = document.createElement("div");
+        panel.id = "fallback-keyboard";
+        FALLBACK_ROWS.forEach((row) => {
+          const rowEl = document.createElement("div");
+          rowEl.className = "fallback-kb-row";
+          row.forEach(({ label, insert, action }) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "fallback-kb-btn" + (action ? " action" : "");
+            btn.textContent = label;
+            btn.addEventListener("click", (ev) => {
+              ev.preventDefault();
+              insertKeycap(insert);
+            });
+            rowEl.appendChild(btn);
+          });
+          panel.appendChild(rowEl);
+        });
+        keyboardContainer().appendChild(panel);
+        return panel;
+      }
+
+      function insertKeycap(token) {
+        if (!field) return;
+        if (token === "[backspace]") {
+          field.executeCommand("deleteBackward");
+          return;
+        }
+        if (token === "[hide-keyboard]") {
+          setFallbackVisible(false);
+          const vk = window.mathVirtualKeyboard;
+          if (vk && vk.visible) vk.hide();
+          return;
+        }
+        if (typeof field.executeCommand === "function") {
+          field.executeCommand(["insert", token]);
+        } else if (typeof field.insert === "function") {
+          field.insert(token);
+        }
+        renderLatex(document.getElementById("math-preview"), latexOf(field));
+        notifyLatex();
+        field.focus();
+      }
+
+      function nativeKeyboardVisible() {
+        const container = keyboardContainer();
+        const native = container.querySelector("math-virtual-keyboard");
+        if (!native) return false;
+        const rect = native.getBoundingClientRect();
+        return rect.height > 40 && rect.width > 40;
+      }
+
+      function syncHeight() {
+        const container = keyboardContainer();
+        const vk = window.mathVirtualKeyboard;
+        let height = 0;
+        if (fallbackVisible) {
+          height = Math.ceil(fallbackPanel().offsetHeight || 240);
+        } else if (vk && vk.visible && nativeKeyboardVisible()) {
+          height = Math.ceil(vk.boundingRect?.height || container.offsetHeight || 0);
+        }
+        container.style.minHeight = height ? `${height}px` : "0px";
+        if (bridge && bridge.onKeyboardHeightChanged) {
+          bridge.onKeyboardHeightChanged(height);
+        }
+      }
+
+      function setFallbackVisible(visible) {
+        fallbackVisible = visible;
+        const panel = fallbackPanel();
+        panel.classList.toggle("visible", visible);
+        syncHeight();
+      }
+
+      function showKeyboardPanel() {
+        const vk = window.mathVirtualKeyboard;
+        const container = keyboardContainer();
+        if (vk) {
+          vk.container = container;
+        }
+        if (field) {
+          field.mathVirtualKeyboardPolicy = "sandboxed";
+        }
+        if (vk) {
+          vk.show();
+        }
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (nativeKeyboardVisible()) {
+              setFallbackVisible(false);
+            } else {
+              setFallbackVisible(true);
+            }
+            syncHeight();
+          });
+        });
+      }
+
+      function hideKeyboardPanel() {
+        setFallbackVisible(false);
+        const vk = window.mathVirtualKeyboard;
+        if (vk && vk.visible) {
+          vk.hide();
+        }
+        syncHeight();
+      }
+
+      function configureVirtualKeyboard() {
+        if (keyboardConfigured) return;
+        keyboardConfigured = true;
+        const vk = window.mathVirtualKeyboard;
+        const container = keyboardContainer();
+        if (!vk || !field) return;
+
+        vk.container = container;
+        field.mathVirtualKeyboardPolicy = "sandboxed";
+
+        vk.addEventListener("before-virtual-keyboard-toggle", (ev) => {
+          vk.container = container;
+        });
+
+        vk.addEventListener("virtual-keyboard-toggle", (ev) => {
+          const visible = ev.detail?.visible ?? vk.visible;
+          if (visible) {
+            showKeyboardPanel();
+          } else {
+            hideKeyboardPanel();
+          }
+        });
+
+        vk.addEventListener("geometrychange", () => {
+          if (vk.visible && nativeKeyboardVisible()) {
+            setFallbackVisible(false);
+          }
+          syncHeight();
+        });
+      }
+
+      function attachMathEditor() {
+        window.MathEditor = {
+          setValue(text) {
+            setLatex(field, text || "");
+            renderLatex(document.getElementById("math-preview"), latexOf(field));
+            notifyLatex();
+            if (field) field.focus();
+          },
+          getValue() {
+            return latexOf(field).trim();
+          },
+          clear() {
+            window.MathEditor.setValue("");
+          },
+          focus() {
+            if (field) field.focus();
+          },
+        };
+        showError("");
+        if (bridge && bridge.editorReady) {
+          bridge.editorReady();
+        }
+      }
+
+      async function initEditor() {
+        try {
+          const host = document.getElementById("math-editor-host");
+          const preview = document.getElementById("math-preview");
+          host.innerHTML = "";
+
+          const MathfieldElement = await ensureLibs();
+          if (!MathfieldElement) {
+            throw new Error("MathLive не загрузился");
+          }
+
+          MathfieldElement.fontsDirectory = `${CDN}/mathlive/fonts`;
+
+          const vk = window.mathVirtualKeyboard;
+          if (vk) {
+            vk.container = keyboardContainer();
+          }
+
+          field = new MathfieldElement();
+          field.style.width = "100%";
+          field.style.display = "block";
+          field.setAttribute("math-virtual-keyboard-policy", "sandboxed");
+
+          field.addEventListener("mount", () => {
+            field.smartFence = true;
+            field.smartSuperscript = true;
+            configureVirtualKeyboard();
+            attachMathEditor();
+          }, { once: true });
+
+          field.addEventListener("input", () => {
+            renderLatex(preview, latexOf(field));
+            notifyLatex();
+          });
+          field.addEventListener("keydown", (ev) => {
+            if (ev.ctrlKey && ev.key === "Enter") {
+              ev.preventDefault();
+              if (bridge && bridge.requestSubmit) {
+                bridge.requestSubmit();
+              }
+            }
+          });
+
+          host.appendChild(field);
+
+          setTimeout(() => {
+            if (window.MathEditor) return;
+            field.smartFence = true;
+            field.smartSuperscript = true;
+            configureVirtualKeyboard();
+            attachMathEditor();
+          }, 1500);
+        } catch (err) {
+          showError(String(err));
+        }
+      }
+
+      if (typeof qt !== "undefined") {
+        new QWebChannel(qt.webChannelTransport, (channel) => {
+          bridge = channel.objects.bridge;
+          initEditor();
+        });
+      } else {
+        initEditor();
+      }
+    })();
+  </script>
+</body>
+</html>
