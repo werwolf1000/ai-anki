@@ -87,6 +87,103 @@ _LIVE_CODE_JSON = """
 _CODE_JSON = _LIVE_CODE_JSON
 
 
+def _fix_json_backslashes(text: str) -> str:
+    """Double backslashes that are not valid JSON escape sequences (e.g. LaTeX \\sin)."""
+    result: list[str] = []
+    i = 0
+    while i < len(text):
+        if text[i] != "\\" or i + 1 >= len(text):
+            result.append(text[i])
+            i += 1
+            continue
+        nxt = text[i + 1]
+        if nxt in '"\\/bfnrt':
+            result.append(text[i : i + 2])
+            i += 2
+        elif nxt == "u" and i + 5 < len(text):
+            hex_part = text[i + 2 : i + 6]
+            if re.fullmatch(r"[0-9a-fA-F]{4}", hex_part):
+                result.append(text[i : i + 6])
+                i += 6
+                continue
+            result.append("\\\\")
+            result.append(nxt)
+            i += 2
+        else:
+            result.append("\\\\")
+            result.append(nxt)
+            i += 2
+    return "".join(result)
+
+
+def _extract_json_blob(cleaned: str) -> str:
+    fence = re.search(r"```(?:json)?\s*(.*?)\s*```", cleaned, flags=re.S | re.I)
+    if fence:
+        return fence.group(1).strip()
+    brace = re.search(r"\{.*\}", cleaned, flags=re.S)
+    if brace:
+        return brace.group(0)
+    return cleaned
+
+
+def _extract_json_string_field(text: str, key: str) -> str:
+    marker = f'"{key}"'
+    pos = text.find(marker)
+    if pos < 0:
+        return ""
+    colon = text.find(":", pos + len(marker))
+    if colon < 0:
+        return ""
+    i = colon + 1
+    while i < len(text) and text[i].isspace():
+        i += 1
+    if i >= len(text) or text[i] != '"':
+        return ""
+    i += 1
+    chars: list[str] = []
+    while i < len(text):
+        c = text[i]
+        if c == "\\" and i + 1 < len(text):
+            chars.append(c)
+            chars.append(text[i + 1])
+            i += 2
+            continue
+        if c == '"':
+            break
+        chars.append(c)
+        i += 1
+    raw = "".join(chars)
+    try:
+        return json.loads(f'"{raw}"')
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return raw.replace("\\n", "\n").replace('\\"', '"').replace("\\\\", "\\")
+
+
+def _loads_llm_json(text: str) -> dict:
+    for candidate in (text, _fix_json_backslashes(text)):
+        try:
+            data = json.loads(candidate)
+            if isinstance(data, dict):
+                return data
+        except (json.JSONDecodeError, TypeError, ValueError):
+            continue
+
+    fallback: dict = {}
+    score_m = re.search(r'"score"\s*:\s*(\d+)', text)
+    if score_m:
+        fallback["score"] = int(score_m.group(1))
+    correct_m = re.search(r'"correct"\s*:\s*(true|false)', text, re.I)
+    if correct_m:
+        fallback["correct"] = correct_m.group(1).lower() == "true"
+    for key in ("feedback", "hint", "follow_up", "reference_summary"):
+        val = _extract_json_string_field(text, key)
+        if val:
+            fallback[key] = val
+    if fallback:
+        return fallback
+    raise ValueError("Could not parse LLM JSON")
+
+
 def _effective_language(card: Card, deck_name: str = "") -> str:
     return (
         (card.language or "").strip().lower()
@@ -460,17 +557,10 @@ class AnswerEvaluator:
             cleaned = re.sub(rf"<{tag}>.*?</{tag}>", "", cleaned, flags=re.S | re.I)
         cleaned = cleaned.strip()
 
-        json_text = cleaned
-        fence = re.search(r"```(?:json)?\s*(.*?)\s*```", cleaned, flags=re.S | re.I)
-        if fence:
-            json_text = fence.group(1)
-        else:
-            brace = re.search(r"\{.*\}", cleaned, flags=re.S)
-            if brace:
-                json_text = brace.group(0)
+        json_text = _extract_json_blob(cleaned)
 
         try:
-            data = json.loads(json_text)
+            data = _loads_llm_json(json_text)
             hint = str(data.get("hint", "") or "").strip()
             if hint:
                 return hint
@@ -485,17 +575,10 @@ class AnswerEvaluator:
             cleaned = re.sub(rf"<{tag}>.*?</{tag}>", "", cleaned, flags=re.S | re.I)
         cleaned = cleaned.strip()
 
-        json_text = cleaned
-        fence = re.search(r"```(?:json)?\s*(.*?)\s*```", cleaned, flags=re.S | re.I)
-        if fence:
-            json_text = fence.group(1)
-        else:
-            brace = re.search(r"\{.*\}", cleaned, flags=re.S)
-            if brace:
-                json_text = brace.group(0)
+        json_text = _extract_json_blob(cleaned)
 
         try:
-            data = json.loads(json_text)
+            data = _loads_llm_json(json_text)
             score = int(data.get("score", 0))
             return ReviewResult(
                 correct=bool(data.get("correct", score >= 75)),
@@ -510,6 +593,6 @@ class AnswerEvaluator:
             return ReviewResult(
                 correct=False,
                 score=0,
-                feedback=raw or "Не удалось разобрать ответ модели.",
+                feedback="Не удалось разобрать ответ модели. Попробуйте отправить снова.",
                 raw=raw,
             )
