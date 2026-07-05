@@ -3,7 +3,7 @@
   "cards": [
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию greet(name: str) -> str, возвращающую f'Hello, {name}!'.\n",
+      "question": "Реализовать Python-функцию greet(name: str) -> str, возвращающую f'Hello, {name}!'.\n\nРезультат работы: f'Hello, {name}!'.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: greet(\"Alice\") → \"Hello, Alice!\"",
       "task": "",
       "reference": "def greet(name: str) -> str:\n    return f'Hello, {name}!'",
       "language": "python",
@@ -11,7 +11,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию total(numbers: list[int]) -> int — сумма элементов (без sum()).\n",
+      "question": "Реализовать Python-функцию total(numbers: list[int]) -> int — сумма элементов (без sum()).\n\nсумма элементов (без sum()).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Реализовать вручную, без использования sum()\n- Корректная работа с пустым массивом или списком\n\nПример: [1, 2, 3] → 6",
       "task": "",
       "reference": "def total(numbers: list[int]) -> int:\n    result = 0\n    for n in numbers:\n        result += n\n    return result",
       "language": "python",
@@ -19,7 +19,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию squares(n: int) -> list[int] возвращает [0, 1, 4,.\n\n(n-1)^2].",
+      "question": "Реализовать Python-функцию squares(n: int) -> list[int] возвращает [0, 1, 4,.\n\n(n-1)^2].\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: squares(4) → [0, 1, 4, 9]",
       "task": "",
       "reference": "def squares(n: int) -> list[int]:\n    return [i * i for i in range(n)]",
       "language": "python",
@@ -27,7 +27,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию evens(numbers: list[int]) -> list[int] — только чётные числа.\n",
+      "question": "Реализовать Python-функцию evens(numbers: list[int]) -> list[int] — только чётные числа.\n\nтолько чётные числа.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: evens([1, 2, 3, 4]) → [2, 4]",
       "task": "",
       "reference": "def evens(numbers: list[int]) -> list[int]:\n    return [n for n in numbers if n % 2 == 0]",
       "language": "python",
@@ -35,7 +35,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию invert_unique(items: list[str]) -> dict[str, int] — слово -> длина (уникальные ключи).\n",
+      "question": "Реализовать Python-функцию invert_unique(items: list[str]) -> dict[str, int] — слово -> длина (уникальные ключи).\n\nслово -> длина (уникальные ключи).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: invert_unique(...) — поведение согласно описанию",
       "task": "",
       "reference": "def invert_unique(items: list[str]) -> dict[str, int]:\n    return {word: len(word) for word in items}",
       "language": "python",
@@ -43,7 +43,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Counter с методами increment() -> int и value() -> int (внутренний счётчик).\n",
+      "question": "Реализовать Python: Класс Counter с методами increment() -> int и value() -> int (внутренний счётчик).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: increment() → 1, increment() → 2, value() → 2",
       "task": "",
       "reference": "class Counter:\n    def __init__(self) -> None:\n        self._count = 0\n\n    def increment(self) -> int:\n        self._count += 1\n        return self._count\n\n    def value(self) -> int:\n        return self._count",
       "language": "python",
@@ -51,7 +51,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Dataclass User с полями id: int, email: str и методом domain() -> str (часть после @).\n",
+      "question": "Реализовать Python: Dataclass User с полями id: int, email: str и методом domain() -> str (часть после @).\n\nDataclass с полями и методами экземпляра.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Dataclass с полями и методами экземпляра\n\nПример: class().domain() — поведение согласно описанию",
       "task": "",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass User:\n    id: int\n    email: str\n\n    def domain(self) -> str:\n        return self.email.split('@', 1)[1]",
       "language": "python",
@@ -59,7 +59,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Person(first: str, last: str) с @property full_name -> str.\n",
+      "question": "Реализовать Python: Класс Person(first: str, last: str) с @property full_name -> str.\n\nProperty вычисляет производное значение из полей объекта.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: Person('John', 'Doe').full_name → 'John Doe'",
       "task": "",
       "reference": "class Person:\n    def __init__(self, first: str, last: str) -> None:\n        self.first = first\n        self.last = last\n\n    @property\n    def full_name(self) -> str:\n        return f'{self.first} {self.last}'",
       "language": "python",
@@ -67,7 +67,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию write_lines(path: str, lines: list[str]) записывает строки в файл через with open(..., 'w').\n",
+      "question": "Реализовать Python-функцию write_lines(path: str, lines: list[str]) записывает строки в файл через with open(..., 'w').\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: write_lines(...) — поведение согласно описанию",
       "task": "",
       "reference": "def write_lines(path: str, lines: list[str]) -> None:\n    with open(path, 'w', encoding='utf-8') as f:\n        for line in lines:\n            f.write(line + '\\n')",
       "language": "python",
@@ -75,7 +75,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию load_json(path: str) -> dict читает UTF-8 JSON из файла.\n",
+      "question": "Реализовать Python-функцию load_json(path: str) -> dict читает UTF-8 JSON из файла.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: load_json(...) — поведение согласно описанию",
       "task": "",
       "reference": "import json\n\n\ndef load_json(path: str) -> dict:\n    with open(path, encoding='utf-8') as f:\n        return json.load(f)",
       "language": "python",
@@ -83,7 +83,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Декоратор @uppercase оборачивает функцию, возвращающую str, и возвращает результат в upper().\n",
+      "question": "Реализовать Python: Декоратор @uppercase оборачивает функцию, возвращающую str, и возвращает результат в upper().\n\nРезультат работы: str, и возвращает результат в upper().\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: uppercase(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import wraps\nfrom typing import Callable\n\n\ndef uppercase(fn: Callable[[], str]) -> Callable[[], str]:\n    @wraps(fn)\n    def wrapper() -> str:\n        return fn().upper()\n\n    return wrapper",
       "language": "python",
@@ -91,7 +91,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Генератор range_step(start, stop, step) — как range, но yield.\n\n\nНеобходимо предусмотреть:\n- Корректную работу граничных значений start/stop\n- Обработку некорректного шага (0 или неверное направление), если применимо\n- Поддержку положительного и отрицательного шага",
+      "question": "Реализовать Python: Генератор range_step(start, stop, step) — как range, но yield.\n\nкак range, но yield.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n- Поддержку положительного и отрицательного шага\n\nПример: range_step(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Iterator\n\n\ndef range_step(start: int, stop: int, step: int = 1) -> Iterator[int]:\n    value = start\n    while value < stop:\n        yield value\n        value += step",
       "language": "python",
@@ -99,7 +99,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию add_all(*values: int) -> int — сумма произвольного числа аргументов.\n",
+      "question": "Реализовать Python-функцию add_all(*values: int) -> int — сумма произвольного числа аргументов.\n\nсумма произвольного числа аргументов.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: add_all(...) — поведение согласно описанию",
       "task": "",
       "reference": "def add_all(*values: int) -> int:\n    return sum(values)",
       "language": "python",
@@ -107,7 +107,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию merge_dicts(**kwargs) -> dict возвращает копию kwargs.\n",
+      "question": "Реализовать Python-функцию merge_dicts(**kwargs) -> dict возвращает копию kwargs.\n\nРезультат работы: копию kwargs.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: merge_dicts(...) — поведение согласно описанию",
       "task": "",
       "reference": "def merge_dicts(**kwargs) -> dict:\n    return dict(kwargs)",
       "language": "python",
@@ -115,7 +115,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс ValidationError(Exception) с полем field: str; raise при пустой строке validate_non_empty(s, field).\n",
+      "question": "Класс ValidationError(Exception) с полем field: str; raise при пустой строке validate_non_empty(s, field).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: validate_non_empty('', 'email') → ValidationError",
       "task": "",
       "reference": "class ValidationError(Exception):\n    def __init__(self, field: str, message: str) -> None:\n        super().__init__(message)\n        self.field = field\n\n\ndef validate_non_empty(value: str, field: str) -> str:\n    if not value.strip():\n        raise ValidationError(field, 'must not be empty')\n    return value",
       "language": "python",
@@ -123,7 +123,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию status_label(code: int) -> str через match: 200->'OK', 404->'Not Found', иначе 'Unknown'.\n",
+      "question": "Реализовать Python-функцию status_label(code: int) -> str через match: 200->'OK', 404->'Not Found', иначе 'Unknown'.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Покрытие всех указанных веток / case и значение по умолчанию\n- Читаемость кода без лишней сложности\n\nПример: statusLabel(200) → 'OK', statusLabel(404) → 'Not Found'",
       "task": "",
       "reference": "def status_label(code: int) -> str:\n    match code:\n        case 200:\n            return 'OK'\n        case 404:\n            return 'Not Found'\n        case _:\n            return 'Unknown'",
       "language": "python",
@@ -131,7 +131,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Enum Status со значениями ACTIVE='active', ARCHIVED='archived' (str enum).\n",
+      "question": "Реализовать Python: Enum Status со значениями ACTIVE='active', ARCHIVED='archived' (str enum).\n\nEnum с указанными case.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Покрытие всех указанных веток / case и значение по умолчанию\n- Читаемость кода без лишней сложности\n\nПример: Status.ACTIVE.value == 'active'",
       "task": "",
       "reference": "from enum import Enum\n\n\nclass Status(str, Enum):\n    ACTIVE = 'active'\n    ARCHIVED = 'archived'",
       "language": "python",
@@ -139,7 +139,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию list_py_files(directory: str) -> list[str] — имена *.py в каталоге через pathlib.\n",
+      "question": "Реализовать Python-функцию list_py_files(directory: str) -> list[str] — имена *.py в каталоге через pathlib.\n\nимена *.py в каталоге через pathlib.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: list_py_files(...) — поведение согласно описанию",
       "task": "",
       "reference": "from pathlib import Path\n\n\ndef list_py_files(directory: str) -> list[str]:\n    return sorted(p.name for p in Path(directory).glob('*.py'))",
       "language": "python",
@@ -147,7 +147,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию group_by_first_letter(words: list[str]) -> dict[str, list[str]].\n",
+      "question": "Реализовать Python-функцию group_by_first_letter(words: list[str]) -> dict[str, list[str]].\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: group_by_first_letter(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import defaultdict\n\n\ndef group_by_first_letter(words: list[str]) -> dict[str, list[str]]:\n    groups: dict[str, list[str]] = defaultdict(list)\n    for word in words:\n        if word:\n            groups[word[0].lower()].append(word)\n    return dict(groups)",
       "language": "python",
@@ -155,7 +155,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию word_freq(text: str) -> dict[str, int] — частота слов (split по пробелам, lower).\n",
+      "question": "Реализовать Python-функцию word_freq(text: str) -> dict[str, int] — частота слов (split по пробелам, lower).\n\nчастота слов (split по пробелам, lower).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Граничные значения и краевые случаи\n\nПример: word_freq(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import Counter\n\n\ndef word_freq(text: str) -> dict[str, int]:\n    return dict(Counter(word.lower() for word in text.split()))",
       "language": "python",
@@ -163,7 +163,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию to_pairs(keys: list[str], values: list[int]) -> list[tuple[str, int]] через zip.\n",
+      "question": "Реализовать Python-функцию to_pairs(keys: list[str], values: list[int]) -> list[tuple[str, int]] через zip.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: to_pairs(...) — поведение согласно описанию",
       "task": "",
       "reference": "def to_pairs(keys: list[str], values: list[int]) -> list[tuple[str, int]]:\n    return list(zip(keys, values, strict=True))",
       "language": "python",
@@ -171,7 +171,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию unique_sorted(items: list[int]) -> list[int] — уникальные отсортированные.\n",
+      "question": "Реализовать Python-функцию unique_sorted(items: list[int]) -> list[int] — уникальные отсортированные.\n\nуникальные отсортированные.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: unique_sorted(...) — поведение согласно описанию",
       "task": "",
       "reference": "def unique_sorted(items: list[int]) -> list[int]:\n    return sorted(set(items))",
       "language": "python",
@@ -179,7 +179,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию make_adder(n: int) возвращает lambda x: x + n.\n",
+      "question": "Реализовать Python-функцию make_adder(n: int) возвращает lambda x: x + n.\n\nРезультат работы: lambda x: x + n.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: make_adder(...) — поведение согласно описанию",
       "task": "",
       "reference": "def make_adder(n: int):\n    return lambda x: x + n",
       "language": "python",
@@ -187,7 +187,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию positive_squares(numbers: list[int]) -> list[int] — квадраты положительных.\n",
+      "question": "Реализовать Python-функцию positive_squares(numbers: list[int]) -> list[int] — квадраты положительных.\n\nквадраты положительных.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: squares(4) → [0, 1, 4, 9]",
       "task": "",
       "reference": "def positive_squares(numbers: list[int]) -> list[int]:\n    return [n * n for n in numbers if n > 0]",
       "language": "python",
@@ -195,7 +195,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: ABC Storage с abstractmethod save(key: str, value: str) -> None; класс MemoryStorage с dict.\n",
+      "question": "Реализовать Python: ABC Storage с abstractmethod save(key: str, value: str) -> None; класс MemoryStorage с dict.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n- Инкапсуляция состояния и публичный API\n\nПример: Storage().save() — поведение согласно описанию",
       "task": "",
       "reference": "from abc import ABC, abstractmethod\n\n\nclass Storage(ABC):\n    @abstractmethod\n    def save(self, key: str, value: str) -> None:\n        ...\n\n\nclass MemoryStorage(Storage):\n    def __init__(self) -> None:\n        self._data: dict[str, str] = {}\n\n    def save(self, key: str, value: str) -> None:\n        self._data[key] = value",
       "language": "python",
@@ -203,7 +203,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Timer с __enter__/__exit__ и полем elapsed (заглушка: elapsed=0.0).\n",
+      "question": "Реализовать Python: Класс Timer с __enter__/__exit__ и полем elapsed (заглушка: elapsed=0.0).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование класса Timer согласно описанию",
       "task": "",
       "reference": "class Timer:\n    def __enter__(self) -> 'Timer':\n        self.elapsed = 0.0\n        return self\n\n    def __exit__(self, exc_type, exc, tb) -> None:\n        return None",
       "language": "python",
@@ -211,7 +211,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию fetch_user_name(conn, user_id: int) -> str | None — SELECT name FROM users WHERE id=?.\n",
+      "question": "Реализовать Python-функцию fetch_user_name(conn, user_id: int) -> str | None — SELECT name FROM users WHERE id=?.\n\nSELECT name FROM users WHERE id=?.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: fetch_user_name(...) — поведение согласно описанию",
       "task": "",
       "reference": "def fetch_user_name(conn, user_id: int) -> str | None:\n    row = conn.execute('SELECT name FROM users WHERE id = ?', (user_id,)).fetchone()\n    return row[0] if row else None",
       "language": "python",
@@ -219,7 +219,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: TypedDict UserRow с id: int, name: str; функция as_row(id, name) -> UserRow.\n",
+      "question": "Реализовать Python: TypedDict UserRow с id: int, name: str; функция as_row(id, name) -> UserRow.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: as_row(id, name) → UserRow",
       "task": "",
       "reference": "from typing import TypedDict\n\n\nclass UserRow(TypedDict):\n    id: int\n    name: str\n\n\ndef as_row(user_id: int, name: str) -> UserRow:\n    return {'id': user_id, 'name': name}",
       "language": "python",
@@ -227,7 +227,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: async def fetch_status(code: int) -> str — await asyncio.sleep(0); return status_label(code).\n",
+      "question": "Реализовать Python: async def fetch_status(code: int) -> str — await asyncio.sleep(0); return status_label(code).\n\nawait asyncio.sleep(0); return status_label(code).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: fetch_status(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def fetch_status(code: int) -> str:\n    await asyncio.sleep(0)\n    return status_label(code)\n\n\ndef status_label(code: int) -> str:\n    return 'OK' if code == 200 else 'Error'",
       "language": "python",
@@ -235,7 +235,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию is_palindrome(s: str) -> bool — игнорировать регистр и пробелы.\n",
+      "question": "Реализовать Python-функцию is_palindrome(s: str) -> bool — игнорировать регистр и пробелы.\n\nигнорировать регистр и пробелы.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: is_palindrome(...) — поведение согласно описанию",
       "task": "",
       "reference": "def is_palindrome(text: str) -> bool:\n    cleaned = ''.join(ch.lower() for ch in text if ch.isalnum())\n    return cleaned == cleaned[::-1]",
       "language": "python",
@@ -243,7 +243,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse_kv(line: str) -> tuple[str, str] для строки 'key=value' (один =).\n",
+      "question": "Реализовать Python-функцию parse_kv(line: str) -> tuple[str, str] для строки 'key=value' (один =).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: parse_kv(...) — поведение согласно описанию",
       "task": "",
       "reference": "def parse_kv(line: str) -> tuple[str, str]:\n    key, value = line.split('=', 1)\n    return key.strip(), value.strip()",
       "language": "python",
@@ -251,7 +251,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию build_parser() -> ArgumentParser с аргументом --limit type=int default=10.\n",
+      "question": "Реализовать Python-функцию build_parser() -> ArgumentParser с аргументом --limit type=int default=10.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: build_parser() → ArgumentParser с аргументом --limit type=int default=10",
       "task": "",
       "reference": "import argparse\n\n\ndef build_parser() -> argparse.ArgumentParser:\n    parser = argparse.ArgumentParser()\n    parser.add_argument('--limit', type=int, default=10)\n    return parser",
       "language": "python",
@@ -259,7 +259,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: NamedTuple Point(x: int, y: int) и функция distance_origin(p: Point) -> float.\n",
+      "question": "Реализовать Python: NamedTuple Point(x: int, y: int) и функция distance_origin(p: Point) -> float.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: Point().distance_origin() — поведение согласно описанию",
       "task": "",
       "reference": "from math import hypot\nfrom typing import NamedTuple\n\n\nclass Point(NamedTuple):\n    x: int\n    y: int\n\n\ndef distance_origin(p: Point) -> float:\n    return hypot(p.x, p.y)",
       "language": "python",
@@ -267,7 +267,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Card с __slots__ = ('rank', 'suit') и методом label() -> str.\n",
+      "question": "Реализовать Python: Класс Card с __slots__ = ('rank', 'suit') и методом label() -> str.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: Card('A', 'spades').label() → 'A of spades'",
       "task": "",
       "reference": "class Card:\n    __slots__ = ('rank', 'suit')\n\n    def __init__(self, rank: str, suit: str) -> None:\n        self.rank = rank\n        self.suit = suit\n\n    def label(self) -> str:\n        return f'{self.rank} of {self.suit}'",
       "language": "python",
@@ -275,7 +275,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию first_long_line(path) -> str | None — первая строка длиннее 10 символов (:=).\n",
+      "question": "Реализовать Python-функцию first_long_line(path) -> str | None — первая строка длиннее 10 символов (:=).\n\nпервая строка длиннее 10 символов (:=).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: first_long_line(...) — поведение согласно описанию",
       "task": "",
       "reference": "def first_long_line(path: str) -> str | None:\n    with open(path, encoding='utf-8') as f:\n        while line := f.readline():\n            if len(line.strip()) > 10:\n                return line.strip()\n    return None",
       "language": "python",
@@ -283,7 +283,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Protocol Printable с def __str__ -> str; функция print_all(items: list[Printable]).\n",
+      "question": "Реализовать Python: Protocol Printable с def __str__ -> str; функция print_all(items: list[Printable]).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: Printable().print_all() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import Protocol\n\n\nclass Printable(Protocol):\n    def __str__(self) -> str: ...\n\n\ndef print_all(items: list[Printable]) -> None:\n    for item in items:\n        print(str(item))",
       "language": "python",
@@ -291,7 +291,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию factorial(n: int) -> int через цикл (n >= 0).\n",
+      "question": "Реализовать Python-функцию factorial(n: int) -> int через цикл (n >= 0).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: factorial(...) — поведение согласно описанию",
       "task": "",
       "reference": "def factorial(n: int) -> int:\n    if n < 0:\n        raise ValueError('n must be non-negative')\n    result = 1\n    for i in range(2, n + 1):\n        result *= i\n    return result",
       "language": "python",
@@ -299,7 +299,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию rotate_left(items: list[int], k: int) -> list[int] с collections.deque.\n",
+      "question": "Реализовать Python-функцию rotate_left(items: list[int], k: int) -> list[int] с collections.deque.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: rotate_left(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import deque\n\n\ndef rotate_left(items: list[int], k: int) -> list[int]:\n    d = deque(items)\n    d.rotate(-k)\n    return list(d)",
       "language": "python",
@@ -307,7 +307,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Dataclass HttpResponse(status: int, body: str) и метод is_ok() -> bool (200 <= status < 300).\n",
+      "question": "Реализовать Python: Dataclass HttpResponse(status: int, body: str) и метод is_ok() -> bool (200 <= status < 300).\n\nDataclass с полями и методами экземпляра.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Dataclass с полями и методами экземпляра\n\nПример: class().is_ok() — поведение согласно описанию",
       "task": "",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass HttpResponse:\n    status: int\n    body: str\n\n    def is_ok(self) -> bool:\n        return 200 <= self.status < 300",
       "language": "python",
@@ -315,7 +315,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию index_of(sorted_items: list[int], target: int) -> int через bisect (индекс или -1).\n",
+      "question": "Реализовать Python-функцию index_of(sorted_items: list[int], target: int) -> int через bisect (индекс или -1).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: index_of(...) — поведение согласно описанию",
       "task": "",
       "reference": "import bisect\n\n\ndef index_of(sorted_items: list[int], target: int) -> int:\n    pos = bisect.bisect_left(sorted_items, target)\n    if pos < len(sorted_items) and sorted_items[pos] == target:\n        return pos\n    return -1",
       "language": "python",
@@ -323,7 +323,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию factorial(n: int) -> int с @functools.lru_cache (n >= 0).\n",
+      "question": "Реализовать Python-функцию factorial(n: int) -> int с @functools.lru_cache (n >= 0).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: factorial(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import lru_cache\n\n\n@lru_cache(maxsize=None)\ndef factorial(n: int) -> int:\n    if n < 2:\n        return 1\n    return n * factorial(n - 1)",
       "language": "python",
@@ -331,7 +331,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Context manager timer() печатает elapsed seconds при выходе (time.perf_counter).\n",
+      "question": "Реализовать Python: Context manager timer() печатает elapsed seconds при выходе (time.perf_counter).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n\nПример: timer(...) — поведение согласно описанию",
       "task": "",
       "reference": "from contextlib import contextmanager\nimport time\n\n\n@contextmanager\ndef timer():\n    start = time.perf_counter()\n    try:\n        yield\n    finally:\n        print(time.perf_counter() - start)",
       "language": "python",
@@ -339,7 +339,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию flatten(groups: list[list[int]]) -> list[int] через itertools.chain.from_iterable.\n",
+      "question": "Реализовать Python-функцию flatten(groups: list[list[int]]) -> list[int] через itertools.chain.from_iterable.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: flatten(...) — поведение согласно описанию",
       "task": "",
       "reference": "from itertools import chain\n\n\ndef flatten(groups: list[list[int]]) -> list[int]:\n    return list(chain.from_iterable(groups))",
       "language": "python",
@@ -347,7 +347,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию list_py_files(folder: Path) -> list[Path] — только *.py в каталоге (без рекурсии).\n",
+      "question": "Реализовать Python-функцию list_py_files(folder: Path) -> list[Path] — только *.py в каталоге (без рекурсии).\n\nтолько *.py в каталоге (без рекурсии).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: list_py_files(...) — поведение согласно описанию",
       "task": "",
       "reference": "from pathlib import Path\n\n\ndef list_py_files(folder: Path) -> list[Path]:\n    return sorted(folder.glob('*.py'))",
       "language": "python",
@@ -355,7 +355,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию safe_json_loads(raw: str) -> dict | None — None при JSONDecodeError.\n",
+      "question": "Реализовать Python-функцию safe_json_loads(raw: str) -> dict | None — None при JSONDecodeError.\n\nNone при JSONDecodeError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: safe_json_loads(...) — поведение согласно описанию",
       "task": "",
       "reference": "import json\n\n\ndef safe_json_loads(raw: str) -> dict | None:\n    try:\n        data = json.loads(raw)\n    except json.JSONDecodeError:\n        return None\n    return data if isinstance(data, dict) else None",
       "language": "python",
@@ -363,7 +363,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию write_temp(text: str) -> Path создаёт NamedTemporaryFile delete=False и пишет text.\n",
+      "question": "Реализовать Python-функцию write_temp(text: str) -> Path создаёт NamedTemporaryFile delete=False и пишет text.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: write_temp(text: str) → Path создаёт NamedTemporaryFile delete=False и пишет text",
       "task": "",
       "reference": "from pathlib import Path\nimport tempfile\n\n\ndef write_temp(text: str) -> Path:\n    with tempfile.NamedTemporaryFile('w', encoding='utf-8', delete=False, suffix='.txt') as fh:\n        fh.write(text)\n        return Path(fh.name)",
       "language": "python",
@@ -371,7 +371,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int].\n",
+      "question": "Реализовать Python-функцию pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int].\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: pairs_to_dict(...) — поведение согласно описанию",
       "task": "",
       "reference": "def pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int]:\n    return dict(zip(keys, values, strict=True))",
       "language": "python",
@@ -379,7 +379,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию overlap(a: set[int], b: set[int]) -> int — размер пересечения.\n",
+      "question": "Реализовать Python-функцию overlap(a: set[int], b: set[int]) -> int — размер пересечения.\n\nразмер пересечения.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: overlap(...) — поведение согласно описанию",
       "task": "",
       "reference": "def overlap(a: set[int], b: set[int]) -> int:\n    return len(a & b)",
       "language": "python",
@@ -387,7 +387,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию sort_by_length(words: list[str]) -> list[str] по len без изменения исходного списка.\n",
+      "question": "Реализовать Python-функцию sort_by_length(words: list[str]) -> list[str] по len без изменения исходного списка.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: sort_by_length(...) — поведение согласно описанию",
       "task": "",
       "reference": "def sort_by_length(words: list[str]) -> list[str]:\n    return sorted(words, key=len)",
       "language": "python",
@@ -395,7 +395,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию all_positive(numbers: list[int]) -> bool через all().\n",
+      "question": "Реализовать Python-функцию all_positive(numbers: list[int]) -> bool через all().\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: all_positive(...) — поведение согласно описанию",
       "task": "",
       "reference": "def all_positive(numbers: list[int]) -> bool:\n    return all(n > 0 for n in numbers)",
       "language": "python",
@@ -403,7 +403,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию join_words(words: list[str], sep: str = ', ') -> str.\n",
+      "question": "Реализовать Python-функцию join_words(words: list[str], sep: str = ', ') -> str.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: join_words(...) — поведение согласно описанию",
       "task": "",
       "reference": "def join_words(words: list[str], sep: str = ', ') -> str:\n    return sep.join(words)",
       "language": "python",
@@ -411,7 +411,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию partition(numbers: list[int]) -> tuple[list[int], list[int]] — чётные и нечётные.\n",
+      "question": "Реализовать Python-функцию partition(numbers: list[int]) -> tuple[list[int], list[int]] — чётные и нечётные.\n\nчётные и нечётные.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: evens([1, 2, 3, 4]) → [2, 4]",
       "task": "",
       "reference": "def partition(numbers: list[int]) -> tuple[list[int], list[int]]:\n    evens = [n for n in numbers if n % 2 == 0]\n    odds = [n for n in numbers if n % 2 != 0]\n    return evens, odds",
       "language": "python",
@@ -419,7 +419,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию group_lengths(words: list[str]) -> dict[int, list[str]] через itertools.groupby (предварительно sort by len).\n",
+      "question": "Реализовать Python-функцию group_lengths(words: list[str]) -> dict[int, list[str]] через itertools.groupby (предварительно sort by len).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: group_lengths(...) — поведение согласно описанию",
       "task": "",
       "reference": "from itertools import groupby\n\n\ndef group_lengths(words: list[str]) -> dict[int, list[str]]:\n    sorted_words = sorted(words, key=len)\n    return {length: list(group) for length, group in groupby(sorted_words, key=len)}",
       "language": "python",
@@ -427,7 +427,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию most_common(items: list[str], n: int = 3) -> list[tuple[str, int]] через Counter.\n",
+      "question": "Реализовать Python-функцию most_common(items: list[str], n: int = 3) -> list[tuple[str, int]] через Counter.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: most_common(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import Counter\n\n\ndef most_common(items: list[str], n: int = 3) -> list[tuple[str, int]]:\n    return Counter(items).most_common(n)",
       "language": "python",
@@ -435,7 +435,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию group_by_first_letter(words: list[str]) -> dict[str, list[str]] через defaultdict(list).\n",
+      "question": "Реализовать Python-функцию group_by_first_letter(words: list[str]) -> dict[str, list[str]] через defaultdict(list).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: group_by_first_letter(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import defaultdict\n\n\ndef group_by_first_letter(words: list[str]) -> dict[str, list[str]]:\n    groups: defaultdict[str, list[str]] = defaultdict(list)\n    for word in words:\n        if word:\n            groups[word[0].lower()].append(word)\n    return dict(groups)",
       "language": "python",
@@ -443,7 +443,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию make_multiplier(factor: int) возвращает callable умножающий на factor (functools.partial).\n",
+      "question": "Реализовать Python-функцию make_multiplier(factor: int) возвращает callable умножающий на factor (functools.partial).\n\nРезультат работы: callable умножающий на factor (functools.partial).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: make_multiplier(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import partial\n\n\ndef make_multiplier(factor: int):\n    return partial(lambda x, k: x * k, k=factor)",
       "language": "python",
@@ -451,7 +451,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: TypedDict User с полями id: int, name: str; функция user_label(u: User) -> str.\n",
+      "question": "Реализовать Python: TypedDict User с полями id: int, name: str; функция user_label(u: User) -> str.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: User().user_label() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import TypedDict\n\n\nclass User(TypedDict):\n    id: int\n    name: str\n\n\ndef user_label(u: User) -> str:\n    return f\"{u['name']} (#{u['id']})",
       "language": "python",
@@ -459,7 +459,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Protocol Closable с методом close() -> None; функция safe_close(obj: Closable) -> None.\n",
+      "question": "Реализовать Python: Protocol Closable с методом close() -> None; функция safe_close(obj: Closable) -> None.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Инкапсуляция состояния и публичный API\n\nПример: Closable().close() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import Protocol\n\n\nclass Closable(Protocol):\n    def close(self) -> None: ...\n\n\ndef safe_close(obj: Closable) -> None:\n    obj.close()",
       "language": "python",
@@ -467,7 +467,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию first_non_empty(lines: list[str]) -> str | None — первая непустая строка (можно walrus).\n",
+      "question": "Реализовать Python-функцию first_non_empty(lines: list[str]) -> str | None — первая непустая строка (можно walrus).\n\nпервая непустая строка (можно walrus).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Безопасная обработка None / null / optional значений\n\nПример: first_non_empty(...) — поведение согласно описанию",
       "task": "",
       "reference": "def first_non_empty(lines: list[str]) -> str | None:\n    for line in lines:\n        if (stripped := line.strip()):\n            return stripped\n    return None",
       "language": "python",
@@ -475,7 +475,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Enum Color(str, Enum) с Red='red', Green='green' и методом is_warm() -> bool (Red).\n",
+      "question": "Реализовать Python: Enum Color(str, Enum) с Red='red', Green='green' и методом is_warm() -> bool (Red).\n\nEnum с указанными case.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Покрытие всех указанных веток / case и значение по умолчанию\n\nПример: Color.ACTIVE.value == 'active'",
       "task": "",
       "reference": "from enum import Enum\n\n\nclass Color(str, Enum):\n    Red = 'red'\n    Green = 'green'\n\n    def is_warm(self) -> bool:\n        return self is Color.Red",
       "language": "python",
@@ -483,7 +483,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализуйте функцию reverse_string(text: str) -> str, которая возвращает строку text в обратном порядке.\n\nПустая строка должна вернуть ''. Не используйте срез [::-1] — пройдитесь по символам в цикле.\n\nНеобходимо предусмотреть:\n- Сигнатура reverse_string(text: str) -> str\n- Пустая строка -> ''",
+      "question": "Реализуйте функцию reverse_string(text: str) -> str, которая возвращает строку text в обратном порядке.\n\nПустая строка должна вернуть ''. Не используйте срез [::-1] — пройдитесь по символам в цикле.\n\nНеобходимо предусмотреть:\n- Сигнатура reverse_string(text: str) -> str\n- Пустая строка -> ''\n\nПример: reverse_string(...) — поведение согласно описанию",
       "task": "",
       "reference": "def reverse_string(text: str) -> str:\n    result: list[str] = []\n    for ch in text:\n        result.insert(0, ch)\n    return ''.join(result)",
       "language": "python",
@@ -491,7 +491,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Напишите count_vowels(text: str) -> int: количество гласных a, e, i, o, u (регистр не важен).\n\nНегласные и цифры не считаются. Пустая строка -> 0.",
+      "question": "Напишите count_vowels(text: str) -> int: количество гласных a, e, i, o, u (регистр не важен).\n\nНегласные и цифры не считаются. Пустая строка -> 0.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: Пустая строка → 0",
       "task": "",
       "reference": "def count_vowels(text: str) -> int:\n    vowels = set('aeiou')\n    return sum(1 for ch in text.lower() if ch in vowels)",
       "language": "python",
@@ -499,7 +499,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию clamp(value: float, low: float, high: float) -> float ограничивает value диапазоном [low, high].\n\nЕсли value < low — вернуть low; если value > high — high. Предполагайте low <= high.",
+      "question": "Реализовать Python-функцию clamp(value: float, low: float, high: float) -> float ограничивает value диапазоном [low, high].\n\nЕсли value < low — вернуть low; если value > high — high. Предполагайте low <= high.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Граничные значения и краевые случаи\n- Читаемость кода без лишней сложности\n\nПример: clamp(...) — поведение согласно описанию",
       "task": "",
       "reference": "def clamp(value: float, low: float, high: float) -> float:\n    if value < low:\n        return low\n    if value > high:\n        return high\n    return value",
       "language": "python",
@@ -507,7 +507,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию running_sum(numbers: list[int]) -> list[int] возвращает префиксные суммы: для [1, 2, 3] -> [1, 3, 6].\n\nПустой список -> [].",
+      "question": "Реализовать Python-функцию running_sum(numbers: list[int]) -> list[int] возвращает префиксные суммы: для [1, 2, 3] -> [1, 3, 6].\n\nПустой список -> [].\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: Пустой список → []",
       "task": "",
       "reference": "def running_sum(numbers: list[int]) -> list[int]:\n    result: list[int] = []\n    total = 0\n    for n in numbers:\n        total += n\n        result.append(total)\n    return result",
       "language": "python",
@@ -515,7 +515,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию second_largest(numbers: list[int]) -> int | None возвращает второе по величине число без полной сортировки.\n\nДубликаты учитываются: [5, 5, 1] -> 5. Меньше двух элементов -> None.\n\nНеобходимо предусмотреть:\n- Без sorted() всего списка\n- None если элементов < 2",
+      "question": "Реализовать Python-функцию second_largest(numbers: list[int]) -> int | None возвращает второе по величине число без полной сортировки.\n\nДубликаты учитываются: [5, 5, 1] -> 5. Меньше двух элементов -> None.\n\nНеобходимо предусмотреть:\n- Без sorted() всего списка\n- None если элементов < 2\n\nПример: [5, 5, 1] → 5",
       "task": "",
       "reference": "def second_largest(numbers: list[int]) -> int | None:\n    if len(numbers) < 2:\n        return None\n    first = second = float('-inf')\n    for n in numbers:\n        if n > first:\n            second, first = first, n\n        elif n > second and n != first:\n            second = n\n    return int(second) if second != float('-inf') else None",
       "language": "python",
@@ -523,7 +523,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию find_min_index(numbers: list[int]) -> int | None возвращает индекс минимального элемента.\n\nПри нескольких минимумах — первый индекс. Пустой список -> None.",
+      "question": "Реализовать Python-функцию find_min_index(numbers: list[int]) -> int | None возвращает индекс минимального элемента.\n\nПри нескольких минимумах — первый индекс. Пустой список -> None.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Безопасная обработка None / null / optional значений\n- Граничные значения и краевые случаи\n\nПример: Пустой список → None",
       "task": "",
       "reference": "def find_min_index(numbers: list[int]) -> int | None:\n    if not numbers:\n        return None\n    min_idx = 0\n    for i, n in enumerate(numbers):\n        if n < numbers[min_idx]:\n            min_idx = i\n    return min_idx",
       "language": "python",
@@ -531,7 +531,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализуйте binary_search(sorted_items: list[int], target: int) -> int: индекс target в отсортированном списке или -1.\n\nАлгоритм O(log n), без bisect.\n\nНеобходимо предусмотреть:\n- O(log n)\n- Вернуть -1 если не найден",
+      "question": "Реализуйте binary_search(sorted_items: list[int], target: int) -> int: индекс target в отсортированном списке или -1.\n\nАлгоритм O(log n), без bisect.\n\nНеобходимо предусмотреть:\n- O(log n)\n- Вернуть -1 если не найден\n\nПример: binary_search(...) — поведение согласно описанию",
       "task": "",
       "reference": "def binary_search(sorted_items: list[int], target: int) -> int:\n    left, right = 0, len(sorted_items) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if sorted_items[mid] == target:\n            return mid\n        if sorted_items[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1",
       "language": "python",
@@ -539,7 +539,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию bubble_sort(items: list[int]) -> list[int] сортирует копию списка пузырьковой сортировкой.\n\nИсходный список не меняется.",
+      "question": "Реализовать Python-функцию bubble_sort(items: list[int]) -> list[int] сортирует копию списка пузырьковой сортировкой.\n\nИсходный список не меняется.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: bubble_sort(...) — поведение согласно описанию",
       "task": "",
       "reference": "def bubble_sort(items: list[int]) -> list[int]:\n    arr = items.copy()\n    n = len(arr)\n    for i in range(n):\n        swapped = False\n        for j in range(0, n - i - 1):\n            if arr[j] > arr[j + 1]:\n                arr[j], arr[j + 1] = arr[j + 1], arr[j]\n                swapped = True\n        if not swapped:\n            break\n    return arr",
       "language": "python",
@@ -547,7 +547,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию two_sum(numbers: list[int], target: int) -> tuple[int, int] | None возвращает индексы двух чисел, сумма которых равна target.\n\nКаждый элемент используется один раз. Нет пары -> None.",
+      "question": "Реализовать Python-функцию two_sum(numbers: list[int], target: int) -> tuple[int, int] | None возвращает индексы двух чисел, сумма которых равна target.\n\nКаждый элемент используется один раз. Нет пары -> None.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: two_sum(...) — поведение согласно описанию",
       "task": "",
       "reference": "def two_sum(numbers: list[int], target: int) -> tuple[int, int] | None:\n    seen: dict[int, int] = {}\n    for i, n in enumerate(numbers):\n        need = target - n\n        if need in seen:\n            return seen[need], i\n        seen[n] = i\n    return None",
       "language": "python",
@@ -555,7 +555,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию max_subarray(numbers: list[int]) -> int — максимальная сумма непрерывного подмассива (алгоритм Кадане).\n\nПустой список -> 0.\n\nНеобходимо предусмотреть:\n- Корректную работу с пустым входным массивом",
+      "question": "Реализовать Python-функцию max_subarray(numbers: list[int]) -> int — максимальная сумма непрерывного подмассива (алгоритм Кадане).\n\nПустой список -> 0.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Граничные значения и краевые случаи\n\nПример: Пустой список → 0",
       "task": "",
       "reference": "def max_subarray(numbers: list[int]) -> int:\n    if not numbers:\n        return 0\n    best = current = numbers[0]\n    for n in numbers[1:]:\n        current = max(n, current + n)\n        best = max(best, current)\n    return best",
       "language": "python",
@@ -563,7 +563,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию is_anagram(a: str, b: str) -> bool: True, если a и b — анаграммы (одинаковые буквы, регистр игнорируется, пробелы не учитываются).\n",
+      "question": "Реализовать Python-функцию is_anagram(a: str, b: str) -> bool: True, если a и b — анаграммы (одинаковые буквы, регистр игнорируется, пробелы не учитываются).\n\nанаграммы (одинаковые буквы, регистр игнорируется, пробелы не учитываются).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: is_anagram(...) — поведение согласно описанию",
       "task": "",
       "reference": "def is_anagram(a: str, b: str) -> bool:\n    def key(s: str) -> list[str]:\n        return sorted(ch.lower() for ch in s if ch.isalpha())\n    return key(a) == key(b)",
       "language": "python",
@@ -571,7 +571,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию interleave(a: list[int], b: list[int]) -> list[int] чередует элементы двух списков; если один длиннее — допишите остаток в конец.\n",
+      "question": "Реализовать Python-функцию interleave(a: list[int], b: list[int]) -> list[int] чередует элементы двух списков; если один длиннее — допишите остаток в конец.\n\nдопишите остаток в конец.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: interleave(...) — поведение согласно описанию",
       "task": "",
       "reference": "def interleave(a: list[int], b: list[int]) -> list[int]:\n    result: list[int] = []\n    i = 0\n    while i < len(a) or i < len(b):\n        if i < len(a):\n            result.append(a[i])\n        if i < len(b):\n            result.append(b[i])\n        i += 1\n    return result",
       "language": "python",
@@ -579,7 +579,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию rotate_right(items: list[int], k: int) -> list[int] циклически сдвигает список вправо на k позиций.\n\nk может быть больше len(items).",
+      "question": "Реализовать Python-функцию rotate_right(items: list[int], k: int) -> list[int] циклически сдвигает список вправо на k позиций.\n\nk может быть больше len(items).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: rotate_right(...) — поведение согласно описанию",
       "task": "",
       "reference": "def rotate_right(items: list[int], k: int) -> list[int]:\n    if not items:\n        return []\n    k %= len(items)\n    return items[-k:] + items[:-k]",
       "language": "python",
@@ -587,7 +587,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию insert_sorted(sorted_items: list[int], value: int) -> list[int] вставляет value в отсортированный список, сохраняя порядок.\n\nБез sort().",
+      "question": "Реализовать Python-функцию insert_sorted(sorted_items: list[int], value: int) -> list[int] вставляет value в отсортированный список, сохраняя порядок.\n\nБез sort().\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Реализовать вручную, без использования sort()\n- Корректная работа с пустым массивом или списком\n\nПример: insert_sorted(...) — поведение согласно описанию",
       "task": "",
       "reference": "def insert_sorted(sorted_items: list[int], value: int) -> list[int]:\n    result = sorted_items.copy()\n    for i, n in enumerate(result):\n        if value <= n:\n            result.insert(i, value)\n            return result\n    result.append(value)\n    return result",
       "language": "python",
@@ -595,7 +595,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию remove_adjacent_dupes(items: list[int]) -> list[int] удаляет соседние дубликаты: [1, 1, 2, 2, 3] -> [1, 2, 3].\n",
+      "question": "Реализовать Python-функцию remove_adjacent_dupes(items: list[int]) -> list[int] удаляет соседние дубликаты: [1, 1, 2, 2, 3] -> [1, 2, 3].\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: [1, 1, 2, 2, 3] → [1, 2, 3]",
       "task": "",
       "reference": "def remove_adjacent_dupes(items: list[int]) -> list[int]:\n    if not items:\n        return []\n    result = [items[0]]\n    for n in items[1:]:\n        if n != result[-1]:\n            result.append(n)\n    return result",
       "language": "python",
@@ -603,7 +603,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию title_case(text: str) -> str переводит каждое слово в Title Case (первая буква заглавная).\n\nРазделитель — пробел.",
+      "question": "Реализовать Python-функцию title_case(text: str) -> str переводит каждое слово в Title Case (первая буква заглавная).\n\nРазделитель — пробел.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: title_case(...) — поведение согласно описанию",
       "task": "",
       "reference": "def title_case(text: str) -> str:\n    return ' '.join(word.capitalize() for word in text.split())",
       "language": "python",
@@ -611,7 +611,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию count_words(text: str) -> int считает слова, разделённые пробелами.\n\nПоследовательности пробелов не создают пустых слов. '' -> 0.",
+      "question": "Реализовать Python-функцию count_words(text: str) -> int считает слова, разделённые пробелами.\n\nПоследовательности пробелов не создают пустых слов. '' -> 0.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: count_words(...) — поведение согласно описанию",
       "task": "",
       "reference": "def count_words(text: str) -> int:\n    if not text.strip():\n        return 0\n    return len(text.split())",
       "language": "python",
@@ -619,7 +619,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию strip_prefix(text: str, prefix: str) -> str удаляет prefix из начала text один раз, если он там есть; иначе вернуть text без изменений.\n",
+      "question": "Реализовать Python-функцию strip_prefix(text: str, prefix: str) -> str удаляет prefix из начала text один раз, если он там есть; иначе вернуть text без изменений.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: strip_prefix(...) — поведение согласно описанию",
       "task": "",
       "reference": "def strip_prefix(text: str, prefix: str) -> str:\n    if text.startswith(prefix):\n        return text[len(prefix):]\n    return text",
       "language": "python",
@@ -627,7 +627,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию caesar_cipher(text: str, shift: int) -> str сдвигает латинские буквы на shift позиций в алфавите (a-z, регистр сохраняется).\n\nНе-буквы не меняются.",
+      "question": "Реализовать Python-функцию caesar_cipher(text: str, shift: int) -> str сдвигает латинские буквы на shift позиций в алфавите (a-z, регистр сохраняется).\n\nНе-буквы не меняются.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: caesar_cipher(...) — поведение согласно описанию",
       "task": "",
       "reference": "def caesar_cipher(text: str, shift: int) -> str:\n    result: list[str] = []\n    for ch in text:\n        if 'a' <= ch <= 'z':\n            base = ord('a')\n            result.append(chr((ord(ch) - base + shift) % 26 + base))\n        elif 'A' <= ch <= 'Z':\n            base = ord('A')\n            result.append(chr((ord(ch) - base + shift) % 26 + base))\n        else:\n            result.append(ch)\n    return ''.join(result)",
       "language": "python",
@@ -635,7 +635,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию roman_to_int(s: str) -> int конвертирует римское число (I, V, X, L, C, D, M) в int.\n\nПоддержите вычитательные пары: IV=4, IX=9, XL=40.",
+      "question": "Реализовать Python-функцию roman_to_int(s: str) -> int конвертирует римское число (I, V, X, L, C, D, M) в int.\n\nПоддержите вычитательные пары: IV=4, IX=9, XL=40.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: roman_to_int(...) — поведение согласно описанию",
       "task": "",
       "reference": "def roman_to_int(s: str) -> int:\n    values = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    total = 0\n    prev = 0\n    for ch in reversed(s):\n        val = values[ch]\n        if val < prev:\n            total -= val\n        else:\n            total += val\n            prev = val\n    return total",
       "language": "python",
@@ -643,7 +643,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию validate_email_simple(email: str) -> bool: True, если есть ровно один '@', до и после него — непустые части без пробелов.\n",
+      "question": "Реализовать Python-функцию validate_email_simple(email: str) -> bool: True, если есть ровно один '@', до и после него — непустые части без пробелов.\n\nнепустые части без пробелов.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: validate_email_simple(...) — поведение согласно описанию",
       "task": "",
       "reference": "def validate_email_simple(email: str) -> bool:\n    if email.count('@') != 1:\n        return False\n    local, domain = email.split('@')\n    return bool(local) and bool(domain) and ' ' not in local and ' ' not in domain",
       "language": "python",
@@ -651,7 +651,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse_int_safe(raw: str, default: int = 0) -> int парсит int из строки; при ValueError вернуть default.\n",
+      "question": "Реализовать Python-функцию parse_int_safe(raw: str, default: int = 0) -> int парсит int из строки; при ValueError вернуть default.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: parse_int_safe(...) — поведение согласно описанию",
       "task": "",
       "reference": "def parse_int_safe(raw: str, default: int = 0) -> int:\n    try:\n        return int(raw.strip())\n    except ValueError:\n        return default",
       "language": "python",
@@ -659,7 +659,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию transpose(matrix: list[list[int]]) -> list[list[int]] транспонирует прямоугольную матрицу.\n\nПустая матрица -> [].",
+      "question": "Реализовать Python-функцию transpose(matrix: list[list[int]]) -> list[list[int]] транспонирует прямоугольную матрицу.\n\nПустая матрица -> [].\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: Пустая матрица → []",
       "task": "",
       "reference": "def transpose(matrix: list[list[int]]) -> list[list[int]]:\n    if not matrix:\n        return []\n    return [list(row) for row in zip(*matrix)]",
       "language": "python",
@@ -667,7 +667,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию dedupe_sorted(items: list[int]) -> list[int] удаляет дубликаты из отсортированного списка за один проход: [1, 1, 2, 3, 3] -> [1, 2, 3].\n",
+      "question": "Реализовать Python-функцию dedupe_sorted(items: list[int]) -> list[int] удаляет дубликаты из отсортированного списка за один проход: [1, 1, 2, 3, 3] -> [1, 2, 3].\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: [1, 1, 2, 3, 3] → [1, 2, 3]",
       "task": "",
       "reference": "def dedupe_sorted(items: list[int]) -> list[int]:\n    if not items:\n        return []\n    result = [items[0]]\n    for n in items[1:]:\n        if n != result[-1]:\n            result.append(n)\n    return result",
       "language": "python",
@@ -675,7 +675,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию longest_increasing(numbers: list[int]) -> int — длина самой длинной строго возрастающей подпоследовательности.\n\n[] -> 0.",
+      "question": "Реализовать Python-функцию longest_increasing(numbers: list[int]) -> int — длина самой длинной строго возрастающей подпоследовательности.\n\n[] -> 0.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: longest_increasing(...) — поведение согласно описанию",
       "task": "",
       "reference": "def longest_increasing(numbers: list[int]) -> int:\n    if not numbers:\n        return 0\n    tails: list[int] = []\n    for n in numbers:\n        lo, hi = 0, len(tails)\n        while lo < hi:\n            mid = (lo + hi) // 2\n            if tails[mid] < n:\n                lo = mid + 1\n            else:\n                hi = mid\n        if lo == len(tails):\n            tails.append(n)\n        else:\n            tails[lo] = n\n    return len(tails)",
       "language": "python",
@@ -683,7 +683,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Stack с методами push(x: int) -> None, pop() -> int, is_empty() -> bool.\n\npop() на пустом стеке бросает IndexError.",
+      "question": "Класс Stack с методами push(x: int) -> None, pop() -> int, is_empty() -> bool.\n\npop() на пустом стеке бросает IndexError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Безопасная обработка None / null / optional значений\n- Инкапсуляция состояния и публичный API\n\nПример: push(1); push(2); pop() → 2",
       "task": "",
       "reference": "class Stack:\n    def __init__(self) -> None:\n        self._items: list[int] = []\n\n    def push(self, x: int) -> None:\n        self._items.append(x)\n\n    def pop(self) -> int:\n        if not self._items:\n            raise IndexError('pop from empty stack')\n        return self._items.pop()\n\n    def is_empty(self) -> bool:\n        return not self._items",
       "language": "python",
@@ -691,7 +691,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Queue (FIFO) с enqueue(x: int), dequeue() -> int, is_empty() -> bool.\n\ndequeue на пустой очереди — IndexError.",
+      "question": "Класс Queue (FIFO) с enqueue(x: int), dequeue() -> int, is_empty() -> bool.\n\ndequeue на пустой очереди — IndexError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: enqueue(1); dequeue() → 1",
       "task": "",
       "reference": "from collections import deque\n\n\nclass Queue:\n    def __init__(self) -> None:\n        self._items: deque[int] = deque()\n\n    def enqueue(self, x: int) -> None:\n        self._items.append(x)\n\n    def dequeue(self) -> int:\n        if not self._items:\n            raise IndexError('dequeue from empty queue')\n        return self._items.popleft()\n\n    def is_empty(self) -> bool:\n        return not self._items",
       "language": "python",
@@ -699,7 +699,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс BankAccount с deposit(amount), withdraw(amount) и balance() -> float.\n\nwithdraw при недостатке средств бросает ValueError. Баланс не может быть отрицательным.",
+      "question": "Класс BankAccount с deposit(amount), withdraw(amount) и balance() -> float.\n\nwithdraw при недостатке средств бросает ValueError. Баланс не может быть отрицательным.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: BankAccount().deposit() — поведение согласно описанию",
       "task": "",
       "reference": "class BankAccount:\n    def __init__(self, initial: float = 0.0) -> None:\n        self._balance = initial\n\n    def deposit(self, amount: float) -> None:\n        if amount < 0:\n            raise ValueError('amount must be non-negative')\n        self._balance += amount\n\n    def withdraw(self, amount: float) -> None:\n        if amount < 0:\n            raise ValueError('amount must be non-negative')\n        if amount > self._balance:\n            raise ValueError('insufficient funds')\n        self._balance -= amount\n\n    def balance(self) -> float:\n        return self._balance",
       "language": "python",
@@ -707,7 +707,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Rectangle(width: float, height: float) с методами area() -> float и perimeter() -> float.\n",
+      "question": "Реализовать Python: Класс Rectangle(width: float, height: float) с методами area() -> float и perimeter() -> float.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: Rectangle().area() — поведение согласно описанию",
       "task": "",
       "reference": "class Rectangle:\n    def __init__(self, width: float, height: float) -> None:\n        self.width = width\n        self.height = height\n\n    def area(self) -> float:\n        return self.width * self.height\n\n    def perimeter(self) -> float:\n        return 2 * (self.width + self.height)",
       "language": "python",
@@ -715,7 +715,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Базовый класс Animal с speak() -> str возвращающим '...'.\n\nDog.speak() -> 'woof', Cat.speak() -> 'meow'.",
+      "question": "Базовый класс Animal с speak() -> str возвращающим '...'.\n\nDog.speak() -> 'woof', Cat.speak() -> 'meow'.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: speak( возвращающим '...'. Dog.speak() → 'woof'",
       "task": "",
       "reference": "class Animal:\n    def speak(self) -> str:\n        return '...'\n\n\nclass Dog(Animal):\n    def speak(self) -> str:\n        return 'woof'\n\n\nclass Cat(Animal):\n    def speak(self) -> str:\n        return 'meow'",
       "language": "python",
@@ -723,7 +723,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Dataclass Product(id: int, name: str) с @classmethod from_dict(data: dict) -> Product, читающим ключи 'id' и 'name'.\n",
+      "question": "Dataclass Product(id: int, name: str) с @classmethod from_dict(data: dict) -> Product, читающим ключи 'id' и 'name'.\n\nDataclass с полями и методами экземпляра.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Инкапсуляция состояния и публичный API\n- Dataclass с полями и методами экземпляра\n\nПример: from_dict(data: dict) → Product",
       "task": "",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass Product:\n    id: int\n    name: str\n\n    @classmethod\n    def from_dict(cls, data: dict) -> 'Product':\n        return cls(id=int(data['id']), name=str(data['name']))",
       "language": "python",
@@ -731,7 +731,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Email с @staticmethod is_valid(value: str) -> bool: один '@', непустые local и domain.\n",
+      "question": "Реализовать Python: Класс Email с @staticmethod is_valid(value: str) -> bool: один '@', непустые local и domain.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Инкапсуляция состояния и публичный API\n\nПример: Email().is_valid() — поведение согласно описанию",
       "task": "",
       "reference": "class Email:\n    @staticmethod\n    def is_valid(value: str) -> bool:\n        if value.count('@') != 1:\n            return False\n        local, domain = value.split('@')\n        return bool(local.strip()) and bool(domain.strip())",
       "language": "python",
@@ -739,7 +739,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Product(name: str, price: float) с __repr__ -> str вида Product(name='apple', price=1.5).\n",
+      "question": "Реализовать Python: Класс Product(name: str, price: float) с __repr__ -> str вида Product(name='apple', price=1.5).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование класса Product согласно описанию",
       "task": "",
       "reference": "class Product:\n    def __init__(self, name: str, price: float) -> None:\n        self.name = name\n        self.price = price\n\n    def __repr__(self) -> str:\n        return f'Product(name={self.name!r}, price={self.price!r})'",
       "language": "python",
@@ -747,7 +747,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Point(x: int, y: int) с __eq__: два Point равны, если совпадают x и y.\n\nСравнение с не-Point -> False.",
+      "question": "Класс Point(x: int, y: int) с __eq__: два Point равны, если совпадают x и y.\n\nСравнение с не-Point -> False.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование класса Point согласно описанию",
       "task": "",
       "reference": "class Point:\n    def __init__(self, x: int, y: int) -> None:\n        self.x = x\n        self.y = y\n\n    def __eq__(self, other: object) -> bool:\n        if not isinstance(other, Point):\n            return False\n        return self.x == other.x and self.y == other.y",
       "language": "python",
@@ -755,7 +755,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Vector2(x, y) с __add__ для покомпонентного сложения и __mul__(scalar: float) для умножения на скаляр.\n",
+      "question": "Класс Vector2(x, y) с __add__ для покомпонентного сложения и __mul__(scalar: float) для умножения на скаляр.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование класса Vector2 согласно описанию",
       "task": "",
       "reference": "class Vector2:\n    def __init__(self, x: float, y: float) -> None:\n        self.x = x\n        self.y = y\n\n    def __add__(self, other: 'Vector2') -> 'Vector2':\n        return Vector2(self.x + other.x, self.y + other.y)\n\n    def __mul__(self, scalar: float) -> 'Vector2':\n        return Vector2(self.x * scalar, self.y * scalar)",
       "language": "python",
@@ -763,7 +763,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс Playlist с add(title: str), tracks() -> list[str] и __len__ -> int (число треков).\n",
+      "question": "Реализовать Python: Класс Playlist с add(title: str), tracks() -> list[str] и __len__ -> int (число треков).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: Playlist().add() — поведение согласно описанию",
       "task": "",
       "reference": "class Playlist:\n    def __init__(self) -> None:\n        self._tracks: list[str] = []\n\n    def add(self, title: str) -> None:\n        self._tracks.append(title)\n\n    def tracks(self) -> list[str]:\n        return list(self._tracks)\n\n    def __len__(self) -> int:\n        return len(self._tracks)",
       "language": "python",
@@ -771,7 +771,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Range(start, stop, step=1) итерируемый через __iter__, yielding int как range(start, stop, step).\n\n\nНеобходимо предусмотреть:\n- Корректную работу граничных значений start/stop\n- Обработку некорректного шага (0 или неверное направление), если применимо\n- Поддержку положительного и отрицательного шага",
+      "question": "Класс Range(start, stop, step=1) итерируемый через __iter__, yielding int как range(start, stop, step).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n- Поддержку положительного и отрицательного шага\n\nПример: использование класса Range согласно описанию",
       "task": "",
       "reference": "from collections.abc import Iterator\n\n\nclass Range:\n    def __init__(self, start: int, stop: int, step: int = 1) -> None:\n        self.start = start\n        self.stop = stop\n        self.step = step\n\n    def __iter__(self) -> Iterator[int]:\n        value = self.start\n        while value < self.stop:\n            yield value\n            value += self.step",
       "language": "python",
@@ -779,7 +779,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Bag хранит элементы str; __contains__(item) -> bool проверяет наличие.\n\nМетод add(item: str) добавляет элемент.",
+      "question": "Класс Bag хранит элементы str; __contains__(item) -> bool проверяет наличие.\n\nМетод add(item: str) добавляет элемент.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: Bag().add() — поведение согласно описанию",
       "task": "",
       "reference": "class Bag:\n    def __init__(self) -> None:\n        self._items: set[str] = set()\n\n    def add(self, item: str) -> None:\n        self._items.add(item)\n\n    def __contains__(self, item: object) -> bool:\n        return isinstance(item, str) and item in self._items",
       "language": "python",
@@ -787,7 +787,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Dataclass OrderItem(name: str, price: float, qty: int) и Order(items: list[OrderItem]) с методом total() -> float.\n",
+      "question": "Dataclass OrderItem(name: str, price: float, qty: int) и Order(items: list[OrderItem]) с методом total() -> float.\n\nDataclass с полями и методами экземпляра.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Инкапсуляция состояния и публичный API\n- Dataclass с полями и методами экземпляра\n\nПример: class().total() — поведение согласно описанию",
       "task": "",
       "reference": "from dataclasses import dataclass, field\n\n\n@dataclass\nclass OrderItem:\n    name: str\n    price: float\n    qty: int\n\n\n@dataclass\nclass Order:\n    items: list[OrderItem] = field(default_factory=list)\n\n    def total(self) -> float:\n        return sum(item.price * item.qty for item in self.items)",
       "language": "python",
@@ -795,7 +795,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Enum Priority(IntEnum): LOW=1, MEDIUM=2, HIGH=3.\n\nМетод is_high() -> bool.",
+      "question": "Enum Priority(IntEnum): LOW=1, MEDIUM=2, HIGH=3.\n\nМетод is_high() -> bool.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Граничные значения и краевые случаи\n- Инкапсуляция состояния и публичный API\n- Покрытие всех указанных веток / case и значение по умолчанию\n\nПример: Priority.ACTIVE.value == 'active'",
       "task": "",
       "reference": "from enum import IntEnum\n\n\nclass Priority(IntEnum):\n    LOW = 1\n    MEDIUM = 2\n    HIGH = 3\n\n    def is_high(self) -> bool:\n        return self is Priority.HIGH",
       "language": "python",
@@ -803,7 +803,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс Node(value: int, next: Node | None = None) и LinkedList с append(value) и to_list() -> list[int].\n",
+      "question": "Класс Node(value: int, next: Node | None = None) и LinkedList с append(value) и to_list() -> list[int].\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: Node().append() — поведение согласно описанию",
       "task": "",
       "reference": "class Node:\n    def __init__(self, value: int, next: 'Node | None' = None) -> None:\n        self.value = value\n        self.next = next\n\n\nclass LinkedList:\n    def __init__(self) -> None:\n        self.head: Node | None = None\n\n    def append(self, value: int) -> None:\n        node = Node(value)\n        if self.head is None:\n            self.head = node\n            return\n        current = self.head\n        while current.next is not None:\n            current = current.next\n        current.next = node\n\n    def to_list(self) -> list[int]:\n        result: list[int] = []\n        current = self.head\n        while current is not None:\n            result.append(current.value)\n            current = current.next\n        return result",
       "language": "python",
@@ -811,7 +811,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс ManagedFile(path, mode='r') как контекстный менеджер: __enter__ открывает файл и возвращает handle; __exit__ закрывает.\n",
+      "question": "Класс ManagedFile(path, mode='r') как контекстный менеджер: __enter__ открывает файл и возвращает handle; __exit__ закрывает.\n\nРезультат работы: handle; __exit__ закрывает.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование класса ManagedFile согласно описанию",
       "task": "",
       "reference": "class ManagedFile:\n    def __init__(self, path: str, mode: str = 'r') -> None:\n        self.path = path\n        self.mode = mode\n        self._handle = None\n\n    def __enter__(self):\n        self._handle = open(self.path, self.mode, encoding='utf-8')\n        return self._handle\n\n    def __exit__(self, exc_type, exc, tb) -> None:\n        if self._handle is not None:\n            self._handle.close()",
       "language": "python",
@@ -819,7 +819,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс EventEmitter с subscribe(fn), unsubscribe(fn) и emit(value).\n\nemit вызывает все подписанные callable с value.",
+      "question": "Класс EventEmitter с subscribe(fn), unsubscribe(fn) и emit(value).\n\nemit вызывает все подписанные callable с value.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: EventEmitter().subscribe() — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\nclass EventEmitter:\n    def __init__(self) -> None:\n        self._listeners: list[Callable[[str], None]] = []\n\n    def subscribe(self, fn: Callable[[str], None]) -> None:\n        self._listeners.append(fn)\n\n    def unsubscribe(self, fn: Callable[[str], None]) -> None:\n        self._listeners.remove(fn)\n\n    def emit(self, value: str) -> None:\n        for fn in list(self._listeners):\n            fn(value)",
       "language": "python",
@@ -827,7 +827,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Декоратор @timing печатает 'elapsed: X.XXs' после вызова обёрнутой функции (time.perf_counter).\n\nСохраняйте имя через @wraps.",
+      "question": "Декоратор @timing печатает 'elapsed: X.XXs' после вызова обёрнутой функции (time.perf_counter).\n\nСохраняйте имя через @wraps.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: timing(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import wraps\nimport time\nfrom collections.abc import Callable\nfrom typing import TypeVar\n\nF = TypeVar('F', bound=Callable)\n\n\ndef timing(fn: F) -> F:\n    @wraps(fn)\n    def wrapper(*args, **kwargs):\n        start = time.perf_counter()\n        try:\n            return fn(*args, **kwargs)\n        finally:\n            print(f'elapsed: {time.perf_counter() - start:.2f}s')\n    return wrapper  # type: ignore[return-value]",
       "language": "python",
@@ -835,7 +835,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Декоратор retry(times: int) повторяет вызов функции до times раз при исключении; если все попытки провалились — пробросить последнее.\n",
+      "question": "Декоратор retry(times: int) повторяет вызов функции до times раз при исключении; если все попытки провалились — пробросить последнее.\n\nпробросить последнее.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: retry(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import wraps\n\n\ndef retry(times: int):\n    def decorator(fn):\n        @wraps(fn)\n        def wrapper(*args, **kwargs):\n            last_exc = None\n            for _ in range(times):\n                try:\n                    return fn(*args, **kwargs)\n                except Exception as exc:\n                    last_exc = exc\n            raise last_exc\n        return wrapper\n    return decorator",
       "language": "python",
@@ -843,7 +843,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию make_memoize() возвращает декоратор, кеширующий результаты по tuple(args).\n\nБез functools.lru_cache.",
+      "question": "Реализовать Python-функцию make_memoize() возвращает декоратор, кеширующий результаты по tuple(args).\n\nБез functools.lru_cache.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Реализовать вручную, без использования functools.lru_cache\n- Читаемость кода без лишней сложности\n\nПример: make_memoize(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef make_memoize():\n    def decorator(fn: Callable):\n        cache: dict[tuple, object] = {}\n\n        def wrapper(*args):\n            key = args\n            if key not in cache:\n                cache[key] = fn(*args)\n            return cache[key]\n        return wrapper\n    return decorator",
       "language": "python",
@@ -851,7 +851,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию compose(f, g) возвращает h(x) = f(g(x)) для int -> int функций.\n",
+      "question": "Реализовать Python-функцию compose(f, g) возвращает h(x) = f(g(x)) для int -> int функций.\n\nРезультат работы: h(x) = f(g(x)) для int -> int функций.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: compose(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef compose(f: Callable[[int], int], g: Callable[[int], int]) -> Callable[[int], int]:\n    def h(x: int) -> int:\n        return f(g(x))\n    return h",
       "language": "python",
@@ -859,7 +859,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию map_keys(data: dict[str, int], fn: Callable[[str], str]) -> dict[str, int] применяет fn к каждому ключу.\n",
+      "question": "Реализовать Python-функцию map_keys(data: dict[str, int], fn: Callable[[str], str]) -> dict[str, int] применяет fn к каждому ключу.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: map_keys(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef map_keys(data: dict[str, int], fn: Callable[[str], str]) -> dict[str, int]:\n    return {fn(key): value for key, value in data.items()}",
       "language": "python",
@@ -867,7 +867,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию filter_dict(data: dict[str, int], predicate) -> dict[str, int] оставляет пары, где predicate(key, value) истинно.\n",
+      "question": "Реализовать Python-функцию filter_dict(data: dict[str, int], predicate) -> dict[str, int] оставляет пары, где predicate(key, value) истинно.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: filter_dict(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef filter_dict(\n    data: dict[str, int],\n    predicate: Callable[[str, int], bool],\n) -> dict[str, int]:\n    return {k: v for k, v in data.items() if predicate(k, v)}",
       "language": "python",
@@ -875,7 +875,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию product(numbers: list[int]) -> int — произведение элементов через functools.reduce.\n\nПустой список -> 1.",
+      "question": "Реализовать Python-функцию product(numbers: list[int]) -> int — произведение элементов через functools.reduce.\n\nПустой список -> 1.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: Пустой список → 1",
       "task": "",
       "reference": "from functools import reduce\n\n\ndef product(numbers: list[int]) -> int:\n    return reduce(lambda a, b: a * b, numbers, 1)",
       "language": "python",
@@ -883,7 +883,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию curry_add(a: int) возвращает функцию принимающую b: int и возвращающую a + b.\n",
+      "question": "Реализовать Python-функцию curry_add(a: int) возвращает функцию принимающую b: int и возвращающую a + b.\n\nРезультат работы: функцию принимающую b: int и возвращающую a + b.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: curry_add(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef curry_add(a: int) -> Callable[[int], int]:\n    def add_b(b: int) -> int:\n        return a + b\n    return add_b",
       "language": "python",
@@ -891,7 +891,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Генератор batches(items: list[int], size: int) yield'ит подсписки длины size (последний может быть короче).\n\nsize <= 0 -> ValueError.\n\nНеобходимо предусмотреть:\n- Корректную работу граничных значений start/stop\n- Обработку некорректного шага (0 или неверное направление), если применимо",
+      "question": "Генератор batches(items: list[int], size: int) yield'ит подсписки длины size (последний может быть короче).\n\nsize <= 0 -> ValueError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n\nПример: batches(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Iterator\n\n\ndef batches(items: list[int], size: int) -> Iterator[list[int]]:\n    if size <= 0:\n        raise ValueError('size must be positive')\n    for i in range(0, len(items), size):\n        yield items[i:i + size]",
       "language": "python",
@@ -899,7 +899,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию prefix_sums(numbers: list[int]) -> list[int] через itertools.accumulate.\n",
+      "question": "Реализовать Python-функцию prefix_sums(numbers: list[int]) -> list[int] через itertools.accumulate.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: prefix_sums(...) — поведение согласно описанию",
       "task": "",
       "reference": "from itertools import accumulate\n\n\ndef prefix_sums(numbers: list[int]) -> list[int]:\n    return list(accumulate(numbers))",
       "language": "python",
@@ -907,7 +907,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию pad_zip(a: list[str], b: list[str], fill: str = '') -> list[tuple[str, str]] через itertools.zip_longest.\n",
+      "question": "Реализовать Python-функцию pad_zip(a: list[str], b: list[str], fill: str = '') -> list[tuple[str, str]] через itertools.zip_longest.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: pad_zip(...) — поведение согласно описанию",
       "task": "",
       "reference": "from itertools import zip_longest\n\n\ndef pad_zip(a: list[str], b: list[str], fill: str = '') -> list[tuple[str, str]]:\n    return list(zip_longest(a, b, fillvalue=fill))",
       "language": "python",
@@ -915,7 +915,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию compact(items: list[int | None]) -> list[int] удаляет None, сохраняя порядок.\n",
+      "question": "Реализовать Python-функцию compact(items: list[int | None]) -> list[int] удаляет None, сохраняя порядок.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: compact(...) — поведение согласно описанию",
       "task": "",
       "reference": "def compact(items: list[int | None]) -> list[int]:\n    return [x for x in items if x is not None]",
       "language": "python",
@@ -923,7 +923,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию make_counter(start: int = 0) возвращает callable без аргументов, каждый вызов возвращает следующее int значение.\n",
+      "question": "Реализовать Python-функцию make_counter(start: int = 0) возвращает callable без аргументов, каждый вызов возвращает следующее int значение.\n\nРезультат работы: callable без аргументов, каждый вызов возвращает следующее int значение.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: make_counter(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef make_counter(start: int = 0) -> Callable[[], int]:\n    state = {'value': start}\n\n    def next_value() -> int:\n        current = state['value']\n        state['value'] += 1\n        return current\n    return next_value",
       "language": "python",
@@ -931,7 +931,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Декоратор @require_positive проверяет, что все int-позиционные аргументы > 0; иначе ValueError.\n",
+      "question": "Реализовать Python: Декоратор @require_positive проверяет, что все int-позиционные аргументы > 0; иначе ValueError.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: require_positive(...) — поведение согласно описанию",
       "task": "",
       "reference": "from functools import wraps\n\n\ndef require_positive(fn):\n    @wraps(fn)\n    def wrapper(*args, **kwargs):\n        for arg in args:\n            if isinstance(arg, int) and arg <= 0:\n                raise ValueError('arguments must be positive')\n        return fn(*args, **kwargs)\n    return wrapper",
       "language": "python",
@@ -939,7 +939,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию pipeline(value: int, *funcs) последовательно применяет func(value) слева направо; funcs — Callable[[int], int].\n",
+      "question": "Реализовать Python-функцию pipeline(value: int, *funcs) последовательно применяет func(value) слева направо; funcs — Callable[[int], int].\n\nCallable[[int], int].\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: pipeline(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef pipeline(value: int, *funcs: Callable[[int], int]) -> int:\n    result = value\n    for fn in funcs:\n        result = fn(result)\n    return result",
       "language": "python",
@@ -947,7 +947,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Генератор countdown(n: int) yield'ит n, n-1, ..., 1.\n\nn < 1 -> пустой генератор.\n\nНеобходимо предусмотреть:\n- Корректную работу граничных значений start/stop\n- Обработку некорректного шага (0 или неверное направление), если применимо",
+      "question": "Генератор countdown(n: int) yield'ит n, n-1, ..., 1.\n\nn < 1 -> пустой генератор.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n\nПример: countdown(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Iterator\n\n\ndef countdown(n: int) -> Iterator[int]:\n    while n >= 1:\n        yield n\n        n -= 1",
       "language": "python",
@@ -955,7 +955,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию split_iter(iterable) -> tuple[list[int], list[int]] материализует итератор в две независимые копии через itertools.tee.\n",
+      "question": "Реализовать Python-функцию split_iter(iterable) -> tuple[list[int], list[int]] материализует итератор в две независимые копии через itertools.tee.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: split_iter(...) — поведение согласно описанию",
       "task": "",
       "reference": "from itertools import tee\n\n\ndef split_iter(iterable) -> tuple[list[int], list[int]]:\n    a, b = tee(iterable)\n    return list(a), list(b)",
       "language": "python",
@@ -963,7 +963,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию count_permutations(items: list[int]) -> int — число перестановок без повторений через math.perm.\n",
+      "question": "Реализовать Python-функцию count_permutations(items: list[int]) -> int — число перестановок без повторений через math.perm.\n\nчисло перестановок без повторений через math.perm.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: count_permutations(...) — поведение согласно описанию",
       "task": "",
       "reference": "from math import perm\n\n\ndef count_permutations(items: list[int]) -> int:\n    return perm(len(items), len(items))",
       "language": "python",
@@ -971,7 +971,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс SimpleLRU(maxsize: int) с get(key) -> int | None и put(key, value).\n\nПри переполнении удаляйте самый старый ключ (OrderedDict).",
+      "question": "Класс SimpleLRU(maxsize: int) с get(key) -> int | None и put(key, value).\n\nПри переполнении удаляйте самый старый ключ (OrderedDict).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n- Граничные значения и краевые случаи\n\nПример: SimpleLRU().get() — поведение согласно описанию",
       "task": "",
       "reference": "from collections import OrderedDict\n\n\nclass SimpleLRU:\n    def __init__(self, maxsize: int) -> None:\n        self.maxsize = maxsize\n        self._data: OrderedDict[str, int] = OrderedDict()\n\n    def get(self, key: str) -> int | None:\n        if key not in self._data:\n            return None\n        self._data.move_to_end(key)\n        return self._data[key]\n\n    def put(self, key: str, value: int) -> None:\n        if key in self._data:\n            self._data.move_to_end(key)\n        self._data[key] = value\n        if len(self._data) > self.maxsize:\n            self._data.popitem(last=False)",
       "language": "python",
@@ -979,7 +979,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию letter_freq(text: str) -> dict[str, int] считает частоту латинских букв (lower case) через Counter.\n",
+      "question": "Реализовать Python-функцию letter_freq(text: str) -> dict[str, int] считает частоту латинских букв (lower case) через Counter.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Граничные значения и краевые случаи\n\nПример: letter_freq(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import Counter\n\n\ndef letter_freq(text: str) -> dict[str, int]:\n    letters = [ch.lower() for ch in text if ch.isalpha()]\n    return dict(Counter(letters))",
       "language": "python",
@@ -987,7 +987,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию nested_default() -> defaultdict создаёт defaultdict, где отсутствующие ключи инициализируются пустым list.\n",
+      "question": "Реализовать Python-функцию nested_default() -> defaultdict создаёт defaultdict, где отсутствующие ключи инициализируются пустым list.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: nested_default() → defaultdict создаёт defaultdict",
       "task": "",
       "reference": "from collections import defaultdict\n\n\ndef nested_default() -> defaultdict[str, list[int]]:\n    return defaultdict(list)",
       "language": "python",
@@ -995,7 +995,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс LastN хранит последние n int через deque(maxlen=n); метод add(x) и values() -> list[int].\n",
+      "question": "Реализовать Python: Класс LastN хранит последние n int через deque(maxlen=n); метод add(x) и values() -> list[int].\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Граничные значения и краевые случаи\n- Инкапсуляция состояния и публичный API\n\nПример: LastN().add() — поведение согласно описанию",
       "task": "",
       "reference": "from collections import deque\n\n\nclass LastN:\n    def __init__(self, n: int) -> None:\n        self._items: deque[int] = deque(maxlen=n)\n\n    def add(self, x: int) -> None:\n        self._items.append(x)\n\n    def values(self) -> list[int]:\n        return list(self._items)",
       "language": "python",
@@ -1003,7 +1003,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию layered_get(maps: list[dict[str, int]], key: str) -> int | None ищет key в ChainMap слева направо.\n",
+      "question": "Реализовать Python-функцию layered_get(maps: list[dict[str, int]], key: str) -> int | None ищет key в ChainMap слева направо.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: layered_get(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import ChainMap\n\n\ndef layered_get(maps: list[dict[str, int]], key: str) -> int | None:\n    chain = ChainMap(*maps)\n    return chain.get(key)",
       "language": "python",
@@ -1011,7 +1011,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: NamedTuple Coord(x: int, y: int) и parse_coord(s: str) -> Coord для 'x,y'.\n",
+      "question": "Реализовать Python: NamedTuple Coord(x: int, y: int) и parse_coord(s: str) -> Coord для 'x,y'.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: parse_coord(s: str) → Coord для 'x",
       "task": "",
       "reference": "from typing import NamedTuple\n\n\nclass Coord(NamedTuple):\n    x: int\n    y: int\n\n\ndef parse_coord(raw: str) -> Coord:\n    x_str, y_str = raw.split(',', 1)\n    return Coord(int(x_str.strip()), int(y_str.strip()))",
       "language": "python",
@@ -1019,7 +1019,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию merge_sorted(lists: list[list[int]]) -> list[int] через heapq.merge.\n",
+      "question": "Реализовать Python-функцию merge_sorted(lists: list[list[int]]) -> list[int] через heapq.merge.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: merge_sorted(...) — поведение согласно описанию",
       "task": "",
       "reference": "import heapq\n\n\ndef merge_sorted(lists: list[list[int]]) -> list[int]:\n    return list(heapq.merge(*lists))",
       "language": "python",
@@ -1027,7 +1027,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию top_k(numbers: list[int], k: int) -> list[int] — k наибольших элементов в порядке убывания (heapq.nlargest).\n",
+      "question": "Реализовать Python-функцию top_k(numbers: list[int], k: int) -> list[int] — k наибольших элементов в порядке убывания (heapq.nlargest).\n\nk наибольших элементов в порядке убывания (heapq.nlargest).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: top_k(...) — поведение согласно описанию",
       "task": "",
       "reference": "import heapq\n\n\ndef top_k(numbers: list[int], k: int) -> list[int]:\n    return heapq.nlargest(k, numbers)",
       "language": "python",
@@ -1035,7 +1035,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию bag_subtract(a: dict[str, int], b: dict[str, int]) -> dict[str, int] вычитает счётчики; отрицательные значения удаляются.\n",
+      "question": "Реализовать Python-функцию bag_subtract(a: dict[str, int], b: dict[str, int]) -> dict[str, int] вычитает счётчики; отрицательные значения удаляются.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: bag_subtract(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import Counter\n\n\ndef bag_subtract(a: dict[str, int], b: dict[str, int]) -> dict[str, int]:\n    result = Counter(a) - Counter(b)\n    return {k: v for k, v in result.items() if v > 0}",
       "language": "python",
@@ -1043,7 +1043,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию normalize_counts(counts: dict[str, int]) -> dict[str, float] делит каждое значение на сумму всех (доли).\n\nПустой dict -> {}.",
+      "question": "Реализовать Python-функцию normalize_counts(counts: dict[str, int]) -> dict[str, float] делит каждое значение на сумму всех (доли).\n\nПустой dict -> {}.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: normalize_counts(...) — поведение согласно описанию",
       "task": "",
       "reference": "def normalize_counts(counts: dict[str, int]) -> dict[str, float]:\n    total = sum(counts.values())\n    if total == 0:\n        return {}\n    return {k: v / total for k, v in counts.items()}",
       "language": "python",
@@ -1051,7 +1051,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс MinHeap с push(x: int) и pop() -> int (минимум).\n\npop на пустой куче — IndexError.",
+      "question": "Класс MinHeap с push(x: int) и pop() -> int (минимум).\n\npop на пустой куче — IndexError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Граничные значения и краевые случаи\n\nПример: MinHeap().push() — поведение согласно описанию",
       "task": "",
       "reference": "import heapq\n\n\nclass MinHeap:\n    def __init__(self) -> None:\n        self._data: list[int] = []\n\n    def push(self, x: int) -> None:\n        heapq.heappush(self._data, x)\n\n    def pop(self) -> int:\n        if not self._data:\n            raise IndexError('pop from empty heap')\n        return heapq.heappop(self._data)",
       "language": "python",
@@ -1059,7 +1059,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию tree() возвращает defaultdict, создающий вложенные defaultdict(tree) для построения trie-подобной структуры dict.\n",
+      "question": "Реализовать Python-функцию tree() возвращает defaultdict, создающий вложенные defaultdict(tree) для построения trie-подобной структуры dict.\n\nРезультат работы: defaultdict, создающий вложенные defaultdict(tree) для построения trie-подобной структуры dict.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: tree(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import defaultdict\n\n\ndef tree():\n    return defaultdict(tree)",
       "language": "python",
@@ -1067,7 +1067,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию rotate_bits(value: int, width: int, k: int) -> int циклически сдвигает width-битное число влево на k (используйте deque над битами).\n",
+      "question": "Реализовать Python-функцию rotate_bits(value: int, width: int, k: int) -> int циклически сдвигает width-битное число влево на k (используйте deque над битами).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: rotate_bits(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import deque\n\n\ndef rotate_bits(value: int, width: int, k: int) -> int:\n    bits = deque(format(value & ((1 << width) - 1), f'0{width}b'))\n    bits.rotate(-k % width)\n    return int(''.join(bits), 2)",
       "language": "python",
@@ -1075,7 +1075,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию read_text_file(path: str) -> str читает UTF-8 текст через pathlib.Path.read_text.\n",
+      "question": "Реализовать Python-функцию read_text_file(path: str) -> str читает UTF-8 текст через pathlib.Path.read_text.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: read_text_file(...) — поведение согласно описанию",
       "task": "",
       "reference": "from pathlib import Path\n\n\ndef read_text_file(path: str) -> str:\n    return Path(path).read_text(encoding='utf-8')",
       "language": "python",
@@ -1083,7 +1083,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию ensure_dir(path: str) -> Path создаёт каталог и родителей (mkdir parents=True, exist_ok=True).\n",
+      "question": "Реализовать Python-функцию ensure_dir(path: str) -> Path создаёт каталог и родителей (mkdir parents=True, exist_ok=True).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: ensure_dir(path: str) → Path создаёт каталог и родителей (mkdir parents=True",
       "task": "",
       "reference": "from pathlib import Path\n\n\ndef ensure_dir(path: str) -> Path:\n    target = Path(path)\n    target.mkdir(parents=True, exist_ok=True)\n    return target",
       "language": "python",
@@ -1091,7 +1091,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию find_by_suffix(root: str, suffix: str) -> list[str] рекурсивно ищет файлы с suffix через Path.rglob; вернуть отсортированные строковые пути.\n",
+      "question": "Реализовать Python-функцию find_by_suffix(root: str, suffix: str) -> list[str] рекурсивно ищет файлы с suffix через Path.rglob; вернуть отсортированные строковые пути.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: find_by_suffix(...) — поведение согласно описанию",
       "task": "",
       "reference": "from pathlib import Path\n\n\ndef find_by_suffix(root: str, suffix: str) -> list[str]:\n    return sorted(str(p) for p in Path(root).rglob(f'*{suffix}'))",
       "language": "python",
@@ -1099,7 +1099,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию write_json(path: str, data: dict) -> None записывает JSON с indent=2 и ensure_ascii=False.\n",
+      "question": "Реализовать Python-функцию write_json(path: str, data: dict) -> None записывает JSON с indent=2 и ensure_ascii=False.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: write_json(...) — поведение согласно описанию",
       "task": "",
       "reference": "import json\nfrom pathlib import Path\n\n\ndef write_json(path: str, data: dict) -> None:\n    Path(path).write_text(\n        json.dumps(data, indent=2, ensure_ascii=False) + '\\n',\n        encoding='utf-8',\n    )",
       "language": "python",
@@ -1107,7 +1107,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию write_csv(path: str, rows: list[list[str]]) -> None пишет CSV через csv.writer с newline=''.\n",
+      "question": "Реализовать Python-функцию write_csv(path: str, rows: list[list[str]]) -> None пишет CSV через csv.writer с newline=''.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: write_csv(...) — поведение согласно описанию",
       "task": "",
       "reference": "import csv\n\n\ndef write_csv(path: str, rows: list[list[str]]) -> None:\n    with open(path, 'w', encoding='utf-8', newline='') as fh:\n        writer = csv.writer(fh)\n        writer.writerows(rows)",
       "language": "python",
@@ -1115,7 +1115,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию read_csv_dicts(path: str) -> list[dict[str, str]] читает CSV с заголовком через csv.DictReader.\n",
+      "question": "Реализовать Python-функцию read_csv_dicts(path: str) -> list[dict[str, str]] читает CSV с заголовком через csv.DictReader.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: read_csv_dicts(...) — поведение согласно описанию",
       "task": "",
       "reference": "import csv\n\n\ndef read_csv_dicts(path: str) -> list[dict[str, str]]:\n    with open(path, encoding='utf-8', newline='') as fh:\n        return list(csv.DictReader(fh))",
       "language": "python",
@@ -1123,7 +1123,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию insert_user(conn, name: str) -> int вставляет строку в users(name) и возвращает lastrowid.\n",
+      "question": "Реализовать Python-функцию insert_user(conn, name: str) -> int вставляет строку в users(name) и возвращает lastrowid.\n\nРезультат работы: lastrowid.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: insert_user(...) — поведение согласно описанию",
       "task": "",
       "reference": "def insert_user(conn, name: str) -> int:\n    cur = conn.execute('INSERT INTO users (name) VALUES (?)', (name,))\n    conn.commit()\n    return int(cur.lastrowid)",
       "language": "python",
@@ -1131,7 +1131,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию init_db(conn) -> None создаёт таблицу notes(id INTEGER PRIMARY KEY, text TEXT) если её нет.\n",
+      "question": "Реализовать Python-функцию init_db(conn) -> None создаёт таблицу notes(id INTEGER PRIMARY KEY, text TEXT) если её нет.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: init_db(...) — поведение согласно описанию",
       "task": "",
       "reference": "def init_db(conn) -> None:\n    conn.execute(\n        'CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)'\n    )\n    conn.commit()",
       "language": "python",
@@ -1139,7 +1139,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию fetch_all_names(conn) -> list[str] выполняет SELECT name FROM users ORDER BY name и возвращает список имён.\n",
+      "question": "Реализовать Python-функцию fetch_all_names(conn) -> list[str] выполняет SELECT name FROM users ORDER BY name и возвращает список имён.\n\nРезультат работы: список имён.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: fetch_all_names(...) — поведение согласно описанию",
       "task": "",
       "reference": "def fetch_all_names(conn) -> list[str]:\n    rows = conn.execute('SELECT name FROM users ORDER BY name').fetchall()\n    return [row[0] for row in rows]",
       "language": "python",
@@ -1147,7 +1147,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию build_parser() -> ArgumentParser с флагом --verbose (store_true) и позиционным filename.\n",
+      "question": "Реализовать Python-функцию build_parser() -> ArgumentParser с флагом --verbose (store_true) и позиционным filename.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: build_parser() → ArgumentParser с флагом --verbose (store_true) и позиционным filename",
       "task": "",
       "reference": "import argparse\n\n\ndef build_parser() -> argparse.ArgumentParser:\n    parser = argparse.ArgumentParser()\n    parser.add_argument('filename')\n    parser.add_argument('--verbose', action='store_true')\n    return parser",
       "language": "python",
@@ -1155,7 +1155,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию build_cli() -> ArgumentParser с subparsers: команда 'sum' с nargs='+' int аргументами.\n",
+      "question": "Реализовать Python-функцию build_cli() -> ArgumentParser с subparsers: команда 'sum' с nargs='+' int аргументами.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: build_cli() → ArgumentParser с subparsers: команда 'sum' с nargs='+' int аргументами",
       "task": "",
       "reference": "import argparse\n\n\ndef build_cli() -> argparse.ArgumentParser:\n    parser = argparse.ArgumentParser()\n    sub = parser.add_subparsers(dest='command', required=True)\n    sum_cmd = sub.add_parser('sum')\n    sum_cmd.add_argument('numbers', nargs='+', type=int)\n    return parser",
       "language": "python",
@@ -1163,7 +1163,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию temp_workspace() -> Path создаёт TemporaryDirectory и возвращает Path к нему (каталог живёт до gc/явного cleanup — верните Path и сохраните ссылку на объект).\n",
+      "question": "Реализовать Python-функцию temp_workspace() -> Path создаёт TemporaryDirectory и возвращает Path к нему (каталог живёт до gc/явного cleanup — верните Path и сохраните ссылку на объект).\n\nверните Path и сохраните ссылку на объект).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: temp_workspace() → Path создаёт TemporaryDirectory и возвращает Path к нему (каталог живёт до gc/явного cleanup — верните Path и сохраните ссылку на объект)",
       "task": "",
       "reference": "from pathlib import Path\nimport tempfile\n\n\ndef temp_workspace() -> tuple[Path, tempfile.TemporaryDirectory[str]]:\n    tmp = tempfile.TemporaryDirectory()\n    return Path(tmp.name), tmp",
       "language": "python",
@@ -1171,7 +1171,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию extract_digits(text: str) -> list[int] находит все целые числа в строке через re.findall.\n",
+      "question": "Реализовать Python-функцию extract_digits(text: str) -> list[int] находит все целые числа в строке через re.findall.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: extract_digits(...) — поведение согласно описанию",
       "task": "",
       "reference": "import re\n\n\ndef extract_digits(text: str) -> list[int]:\n    return [int(match) for match in re.findall(r'\\d+', text)]",
       "language": "python",
@@ -1179,7 +1179,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию normalize_spaces(text: str) -> str заменяет последовательности пробельных символов одним пробелом и обрезает края (re.sub).\n",
+      "question": "Реализовать Python-функцию normalize_spaces(text: str) -> str заменяет последовательности пробельных символов одним пробелом и обрезает края (re.sub).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: normalize_spaces(...) — поведение согласно описанию",
       "task": "",
       "reference": "import re\n\n\ndef normalize_spaces(text: str) -> str:\n    return re.sub(r'\\s+', ' ', text).strip()",
       "language": "python",
@@ -1187,7 +1187,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию sha256_hex(data: str) -> str возвращает SHA-256 hexdigest для UTF-8 строки.\n",
+      "question": "Реализовать Python-функцию sha256_hex(data: str) -> str возвращает SHA-256 hexdigest для UTF-8 строки.\n\nРезультат работы: SHA-256 hexdigest для UTF-8 строки.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: sha256_hex(...) — поведение согласно описанию",
       "task": "",
       "reference": "import hashlib\n\n\ndef sha256_hex(data: str) -> str:\n    return hashlib.sha256(data.encode('utf-8')).hexdigest()",
       "language": "python",
@@ -1195,7 +1195,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Функции b64_encode(text: str) -> str и b64_decode(raw: str) -> str через base64 для UTF-8 строк.\n",
+      "question": "Реализовать Python: Функции b64_encode(text: str) -> str и b64_decode(raw: str) -> str через base64 для UTF-8 строк.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: b64_encode(...) — поведение согласно описанию",
       "task": "",
       "reference": "import base64\n\n\ndef b64_encode(text: str) -> str:\n    return base64.b64encode(text.encode('utf-8')).decode('ascii')\n\n\ndef b64_decode(raw: str) -> str:\n    return base64.b64decode(raw.encode('ascii')).decode('utf-8')",
       "language": "python",
@@ -1203,7 +1203,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse_query(url: str) -> dict[str, list[str]] парсит query string через urllib.parse.parse_qs.\n",
+      "question": "Реализовать Python-функцию parse_query(url: str) -> dict[str, list[str]] парсит query string через urllib.parse.parse_qs.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: parse_query(...) — поведение согласно описанию",
       "task": "",
       "reference": "from urllib.parse import parse_qs, urlparse\n\n\ndef parse_query(url: str) -> dict[str, list[str]]:\n    return parse_qs(urlparse(url).query)",
       "language": "python",
@@ -1211,7 +1211,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse_iso_date(raw: str) -> str возвращает дату YYYY-MM-DD из ISO строки datetime.fromisoformat.\n",
+      "question": "Реализовать Python-функцию parse_iso_date(raw: str) -> str возвращает дату YYYY-MM-DD из ISO строки datetime.fromisoformat.\n\nРезультат работы: дату YYYY-MM-DD из ISO строки datetime.fromisoformat.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: parse_iso_date(...) — поведение согласно описанию",
       "task": "",
       "reference": "from datetime import datetime\n\n\ndef parse_iso_date(raw: str) -> str:\n    return datetime.fromisoformat(raw).date().isoformat()",
       "language": "python",
@@ -1219,7 +1219,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Dataclass HttpRequest(method: str, url: str) и класс StubClient с get(url) -> HttpResponse (dataclass status=200, body='OK').\n\nБез реального HTTP.",
+      "question": "Dataclass HttpRequest(method: str, url: str) и класс StubClient с get(url) -> HttpResponse (dataclass status=200, body='OK').\n\nБез реального HTTP.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Dataclass с полями и методами экземпляра\n\nПример: get(url) → HttpResponse (dataclass status=200",
       "task": "",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass HttpRequest:\n    method: str\n    url: str\n\n\n@dataclass\nclass HttpResponse:\n    status: int\n    body: str\n\n\nclass StubClient:\n    def get(self, url: str) -> HttpResponse:\n        return HttpResponse(status=200, body='OK')",
       "language": "python",
@@ -1227,7 +1227,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse_positive(raw: str) -> int бросает ValueError для неположительных и нечисловых значений.\n\nНапишите parse_positive и helper assert_raises_value_error используя pytest-style try/except (без import pytest).\n\nНеобходимо предусмотреть:\n- parse_positive и assert_raises_value_error в одном модуле",
+      "question": "Реализовать Python-функцию parse_positive(raw: str) -> int бросает ValueError для неположительных и нечисловых значений.\n\nНапишите parse_positive и helper assert_raises_value_error используя pytest-style try/except (без import pytest).\n\nНеобходимо предусмотреть:\n- parse_positive и assert_raises_value_error в одном модуле\n\nПример: parse_positive(...) — поведение согласно описанию",
       "task": "",
       "reference": "def parse_positive(raw: str) -> int:\n    value = int(raw)\n    if value <= 0:\n        raise ValueError('must be positive')\n    return value\n\n\ndef assert_raises_value_error(fn, *args) -> bool:\n    try:\n        fn(*args)\n    except ValueError:\n        return True\n    return False",
       "language": "python",
@@ -1235,7 +1235,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию setup_logging(level: str = 'INFO') -> None вызывает logging.basicConfig с format='%(levelname)s:%(message)s'.\n",
+      "question": "Реализовать Python-функцию setup_logging(level: str = 'INFO') -> None вызывает logging.basicConfig с format='%(levelname)s:%(message)s'.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: setup_logging(...) — поведение согласно описанию",
       "task": "",
       "reference": "import logging\n\n\ndef setup_logging(level: str = 'INFO') -> None:\n    logging.basicConfig(level=getattr(logging, level.upper(), logging.INFO),\n                        format='%(levelname)s:%(message)s')",
       "language": "python",
@@ -1243,7 +1243,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию read_setting(text: str, section: str, option: str) -> str | None парсит ini из строки через configparser.\n",
+      "question": "Реализовать Python-функцию read_setting(text: str, section: str, option: str) -> str | None парсит ini из строки через configparser.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: read_setting(...) — поведение согласно описанию",
       "task": "",
       "reference": "import configparser\nfrom io import StringIO\n\n\ndef read_setting(text: str, section: str, option: str) -> str | None:\n    parser = configparser.ConfigParser()\n    parser.read_file(StringIO(text))\n    if parser.has_option(section, option):\n        return parser.get(section, option)\n    return None",
       "language": "python",
@@ -1251,7 +1251,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию clone(data: dict) -> dict возвращает глубокую копию вложенного dict через copy.deepcopy.\n",
+      "question": "Реализовать Python-функцию clone(data: dict) -> dict возвращает глубокую копию вложенного dict через copy.deepcopy.\n\nРезультат работы: глубокую копию вложенного dict через copy.deepcopy.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: clone(...) — поведение согласно описанию",
       "task": "",
       "reference": "import copy\n\n\ndef clone(data: dict) -> dict:\n    return copy.deepcopy(data)",
       "language": "python",
@@ -1259,7 +1259,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию read_lines_strip(path: str) -> list[str] читает UTF-8 файл построчно и возвращает строки без trailing \\n и пробелов по краям.\n",
+      "question": "Реализовать Python-функцию read_lines_strip(path: str) -> list[str] читает UTF-8 файл построчно и возвращает строки без trailing \\n и пробелов по краям.\n\nРезультат работы: строки без trailing \\n и пробелов по краям.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Реализовать вручную, без использования trailing\n- Корректная работа с пустым массивом или списком\n\nПример: read_lines_strip(...) — поведение согласно описанию",
       "task": "",
       "reference": "def read_lines_strip(path: str) -> list[str]:\n    with open(path, encoding='utf-8') as fh:\n        return [line.strip() for line in fh]",
       "language": "python",
@@ -1267,7 +1267,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Generic класс TypedStack[T] с push(item: T) и pop() -> T.\n\nПустой pop -> IndexError.",
+      "question": "Generic класс TypedStack[T] с push(item: T) и pop() -> T.\n\nПустой pop -> IndexError.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности\n\nПример: pop() → T",
       "task": "",
       "reference": "from typing import Generic, TypeVar\n\nT = TypeVar('T')\n\n\nclass TypedStack(Generic[T]):\n    def __init__(self) -> None:\n        self._items: list[T] = []\n\n    def push(self, item: T) -> None:\n        self._items.append(item)\n\n    def pop(self) -> T:\n        if not self._items:\n            raise IndexError('empty stack')\n        return self._items.pop()",
       "language": "python",
@@ -1275,7 +1275,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "TypedDict Config с mode: Literal['dev', 'prod'].\n\nФункция is_prod(cfg: Config) -> bool.",
+      "question": "TypedDict Config с mode: Literal['dev', 'prod'].\n\nФункция is_prod(cfg: Config) -> bool.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: Config().is_prod() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import Literal, TypedDict\n\n\nclass Config(TypedDict):\n    mode: Literal['dev', 'prod']\n\n\ndef is_prod(cfg: Config) -> bool:\n    return cfg['mode'] == 'prod'",
       "language": "python",
@@ -1283,7 +1283,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию coerce_number(value: int | float | str) -> float принимает int, float или str и возвращает float.\n",
+      "question": "Реализовать Python-функцию coerce_number(value: int | float | str) -> float принимает int, float или str и возвращает float.\n\nРезультат работы: float.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: coerce_number(...) — поведение согласно описанию",
       "task": "",
       "reference": "def coerce_number(value: int | float | str) -> float:\n    if isinstance(value, (int, float)):\n        return float(value)\n    return float(value.strip())",
       "language": "python",
@@ -1291,7 +1291,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию greet_optional(name: str | None = None) -> str: None или '' -> 'Hello, guest!', иначе f'Hello, {name}!'.\n",
+      "question": "Реализовать Python-функцию greet_optional(name: str | None = None) -> str: None или '' -> 'Hello, guest!', иначе f'Hello, {name}!'.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: greet(\"Alice\") → \"Hello, Alice!\"",
       "task": "",
       "reference": "def greet_optional(name: str | None = None) -> str:\n    if not name:\n        return 'Hello, guest!'\n    return f'Hello, {name}!'",
       "language": "python",
@@ -1299,7 +1299,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию apply_if(value: int, pred: Callable[[int], bool], fn: Callable[[int], int]) -> int возвращает fn(value) если pred(value) else value.\n",
+      "question": "Реализовать Python-функцию apply_if(value: int, pred: Callable[[int], bool], fn: Callable[[int], int]) -> int возвращает fn(value) если pred(value) else value.\n\nРезультат работы: fn(value) если pred(value) else value.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: apply_if(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections.abc import Callable\n\n\ndef apply_if(\n    value: int,\n    pred: Callable[[int], bool],\n    fn: Callable[[int], int],\n) -> int:\n    return fn(value) if pred(value) else value",
       "language": "python",
@@ -1307,7 +1307,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Generic класс Repository[T] с private list _items, add(item: T), all() -> list[T].\n",
+      "question": "Реализовать Python: Generic класс Repository[T] с private list _items, add(item: T), all() -> list[T].\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: Repository().add() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import Generic, TypeVar\n\nT = TypeVar('T')\n\n\nclass Repository(Generic[T]):\n    def __init__(self) -> None:\n        self._items: list[T] = []\n\n    def add(self, item: T) -> None:\n        self._items.append(item)\n\n    def all(self) -> list[T]:\n        return list(self._items)",
       "language": "python",
@@ -1315,7 +1315,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию as_str(value: object) -> str использует typing.cast для str после проверки isinstance.\n",
+      "question": "Реализовать Python-функцию as_str(value: object) -> str использует typing.cast для str после проверки isinstance.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: as_str(...) — поведение согласно описанию",
       "task": "",
       "reference": "from typing import cast\n\n\ndef as_str(value: object) -> str:\n    if not isinstance(value, str):\n        raise TypeError('expected str')\n    return cast(str, value)",
       "language": "python",
@@ -1323,7 +1323,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию parse(raw: str) -> int и parse(raw: bytes) -> int с @overload; реализация принимает str | bytes.\n",
+      "question": "Реализовать Python-функцию parse(raw: str) -> int и parse(raw: bytes) -> int с @overload; реализация принимает str | bytes.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: parse(...) — поведение согласно описанию",
       "task": "",
       "reference": "from typing import overload\n\n\n@overload\ndef parse(raw: str) -> int: ...\n\n\n@overload\ndef parse(raw: bytes) -> int: ...\n\n\ndef parse(raw: str | bytes) -> int:\n    if isinstance(raw, bytes):\n        raw = raw.decode('utf-8')\n    return int(raw.strip())",
       "language": "python",
@@ -1331,7 +1331,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Модуль с Final константой MAX_RETRIES: Final[int] = 3 и функцией attempts() -> int возвращающей MAX_RETRIES.\n",
+      "question": "Модуль с Final константой MAX_RETRIES: Final[int] = 3 и функцией attempts() -> int возвращающей MAX_RETRIES.\n\nРезультат работы: MAX_RETRIES.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Граничные значения и краевые случаи\n- Читаемость кода без лишней сложности\n\nПример: attempts(...) — поведение согласно описанию",
       "task": "",
       "reference": "from typing import Final\n\nMAX_RETRIES: Final[int] = 3\n\n\ndef attempts() -> int:\n    return MAX_RETRIES",
       "language": "python",
@@ -1339,7 +1339,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Type alias PositiveInt = Annotated[int, 'positive'] и функция ensure_positive(n: int) -> PositiveInt бросающая ValueError если n <= 0.\n",
+      "question": "Type alias PositiveInt = Annotated[int, 'positive'] и функция ensure_positive(n: int) -> PositiveInt бросающая ValueError если n <= 0.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: ensure_positive(n: int) → PositiveInt бросающая ValueError если n <= 0",
       "task": "",
       "reference": "from typing import Annotated\n\nPositiveInt = Annotated[int, 'positive']\n\n\ndef ensure_positive(n: int) -> PositiveInt:\n    if n <= 0:\n        raise ValueError('must be positive')\n    return n",
       "language": "python",
@@ -1347,7 +1347,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Protocol SupportsLen с __len__ -> int.\n\nФункция total_len(items: list[SupportsLen]) -> int суммирует len каждого элемента.",
+      "question": "Protocol SupportsLen с __len__ -> int.\n\nФункция total_len(items: list[SupportsLen]) -> int суммирует len каждого элемента.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: [1, 2, 3] → 6",
       "task": "",
       "reference": "from typing import Protocol\n\n\nclass SupportsLen(Protocol):\n    def __len__(self) -> int: ...\n\n\ndef total_len(items: list[SupportsLen]) -> int:\n    return sum(len(item) for item in items)",
       "language": "python",
@@ -1355,7 +1355,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "TypedDict ProductRow с total=False: id обязателен, name опционален.\n\nФункция row_id(row: ProductRow) -> int.",
+      "question": "TypedDict ProductRow с total=False: id обязателен, name опционален.\n\nФункция row_id(row: ProductRow) -> int.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: ProductRow().row_id() — поведение согласно описанию",
       "task": "",
       "reference": "from typing import TypedDict\n\n\nclass ProductRow(TypedDict, total=False):\n    id: int\n    name: str\n\n\ndef row_id(row: ProductRow) -> int:\n    return row['id']",
       "language": "python",
@@ -1363,7 +1363,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "async def fetch_one(url: str) -> str возвращает url после await asyncio.sleep(0).\n\nasync def fetch_all(urls: list[str]) -> list[str] через asyncio.gather.",
+      "question": "async def fetch_one(url: str) -> str возвращает url после await asyncio.sleep(0).\n\nasync def fetch_all(urls: list[str]) -> list[str] через asyncio.gather.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Корректное использование async/await или Observable\n\nПример: fetch_one(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def fetch_one(url: str) -> str:\n    await asyncio.sleep(0)\n    return url\n\n\nasync def fetch_all(urls: list[str]) -> list[str]:\n    return list(await asyncio.gather(*(fetch_one(u) for u in urls)))",
       "language": "python",
@@ -1371,7 +1371,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "async def with_timeout(coro, seconds: float): оборачивает coroutine в asyncio.wait_for; TimeoutError -> None.\n",
+      "question": "async def with_timeout(coro, seconds: float): оборачивает coroutine в asyncio.wait_for; TimeoutError -> None.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Безопасная обработка None / null / optional значений\n- Корректное использование async/await или Observable\n\nПример: with_timeout(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def with_timeout(coro, seconds: float):\n    try:\n        return await asyncio.wait_for(coro, timeout=seconds)\n    except asyncio.TimeoutError:\n        return None",
       "language": "python",
@@ -1379,7 +1379,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "async def worker(queue: asyncio.Queue[int], results: list[int]) -> None: while True: item = await queue.get(); если item is None — break; results.append(item * 2); queue.task_done().\n",
+      "question": "async def worker(queue: asyncio.Queue[int], results: list[int]) -> None: while True: item = await queue.get(); если item is None — break; results.append(item * 2); queue.task_done().\n\nbreak; results.append(item * 2); queue.task_done().\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n- Корректное использование async/await или Observable\n\nПример: worker(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def worker(queue: asyncio.Queue[int | None], results: list[int]) -> None:\n    while True:\n        item = await queue.get()\n        if item is None:\n            queue.task_done()\n            break\n        results.append(item * 2)\n        queue.task_done()",
       "language": "python",
@@ -1387,7 +1387,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс AsyncCounter с async increment(): используйте asyncio.Lock для безопасного увеличения self.value.\n",
+      "question": "Класс AsyncCounter с async increment(): используйте asyncio.Lock для безопасного увеличения self.value.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Корректное использование async/await или Observable\n\nПример: increment() → 1, increment() → 2, value() → 2",
       "task": "",
       "reference": "import asyncio\n\n\nclass AsyncCounter:\n    def __init__(self) -> None:\n        self.value = 0\n        self._lock = asyncio.Lock()\n\n    async def increment(self) -> int:\n        async with self._lock:\n            self.value += 1\n            return self.value",
       "language": "python",
@@ -1395,7 +1395,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: async def staggered(n: int) -> list[int] await'ит sleep(0) n раз и возвращает [0, 1, ..., n-1].\n",
+      "question": "Реализовать Python: async def staggered(n: int) -> list[int] await'ит sleep(0) n раз и возвращает [0, 1, ..., n-1].\n\nРезультат работы: [0, 1, ..., n-1].\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Корректное использование async/await или Observable\n\nПример: staggered(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def staggered(n: int) -> list[int]:\n    result: list[int] = []\n    for i in range(n):\n        await asyncio.sleep(0)\n        result.append(i)\n    return result",
       "language": "python",
@@ -1403,7 +1403,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: async def async_range(n: int) async-generates 0..n-1 с await asyncio.sleep(0) на шаг.\n",
+      "question": "Реализовать Python: async def async_range(n: int) async-generates 0..n-1 с await asyncio.sleep(0) на шаг.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n- Корректное использование async/await или Observable\n\nПример: async_range(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\nfrom collections.abc import AsyncIterator\n\n\nasync def async_range(n: int) -> AsyncIterator[int]:\n    for i in range(n):\n        await asyncio.sleep(0)\n        yield i",
       "language": "python",
@@ -1411,7 +1411,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс async_timer с async __aenter__/__aexit__; __aenter__ записывает start, __aexit__ печатает elapsed (perf_counter).\n",
+      "question": "Класс async_timer с async __aenter__/__aexit__; __aenter__ записывает start, __aexit__ печатает elapsed (perf_counter).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: использование класса async_timer согласно описанию",
       "task": "",
       "reference": "import asyncio\nimport time\n\n\nclass async_timer:\n    async def __aenter__(self):\n        self.start = time.perf_counter()\n        return self\n\n    async def __aexit__(self, exc_type, exc, tb) -> None:\n        await asyncio.sleep(0)\n        print(time.perf_counter() - self.start)",
       "language": "python",
@@ -1419,7 +1419,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "async def run_limited(tasks: list, limit: int) -> list через Semaphore(limit) и gather; каждая задача await sleep(0) и возвращает свой индекс.\n",
+      "question": "async def run_limited(tasks: list, limit: int) -> list через Semaphore(limit) и gather; каждая задача await sleep(0) и возвращает свой индекс.\n\nРезультат работы: свой индекс.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: run_limited(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def run_limited(n: int, limit: int) -> list[int]:\n    sem = asyncio.Semaphore(limit)\n    results: list[int] = []\n\n    async def one(i: int) -> None:\n        async with sem:\n            await asyncio.sleep(0)\n            results.append(i)\n\n    await asyncio.gather(*(one(i) for i in range(n)))\n    return sorted(results)",
       "language": "python",
@@ -1427,7 +1427,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "async def spawn_double(n: int) -> int создаёт asyncio.create_task для double(n) и await'ит результат.\n\ndouble await sleep(0) и return n * 2.",
+      "question": "async def spawn_double(n: int) -> int создаёт asyncio.create_task для double(n) и await'ит результат.\n\ndouble await sleep(0) и return n * 2.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: double(...) — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nasync def double(n: int) -> int:\n    await asyncio.sleep(0)\n    return n * 2\n\n\nasync def spawn_double(n: int) -> int:\n    task = asyncio.create_task(double(n))\n    return await task",
       "language": "python",
@@ -1435,7 +1435,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python: Класс AsyncGate с async wait_until_open(): ждёт asyncio.Event; метод open() устанавливает event.\n",
+      "question": "Реализовать Python: Класс AsyncGate с async wait_until_open(): ждёт asyncio.Event; метод open() устанавливает event.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Инкапсуляция состояния и публичный API\n- Корректное использование async/await или Observable\n\nПример: AsyncGate().open() — поведение согласно описанию",
       "task": "",
       "reference": "import asyncio\n\n\nclass AsyncGate:\n    def __init__(self) -> None:\n        self._event = asyncio.Event()\n\n    def open(self) -> None:\n        self._event.set()\n\n    async def wait_until_open(self) -> None:\n        await self._event.wait()",
       "language": "python",
@@ -1443,7 +1443,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс AppError(Exception) и функция load_config(raw: str) -> dict: JSONDecodeError оборачивается в AppError с сообщением 'invalid config'.\n\n\nНеобходимо предусмотреть:\n- Использовать raise ... from exc\n- AppError при не-dict JSON",
+      "question": "Класс AppError(Exception) и функция load_config(raw: str) -> dict: JSONDecodeError оборачивается в AppError с сообщением 'invalid config'.\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Использовать raise ... from exc\n- AppError при не-dict JSON\n\nПример: AppError().load_config() — поведение согласно описанию",
       "task": "",
       "reference": "import json\n\n\nclass AppError(Exception):\n    pass\n\n\ndef load_config(raw: str) -> dict:\n    try:\n        data = json.loads(raw)\n    except json.JSONDecodeError as exc:\n        raise AppError('invalid config') from exc\n    if not isinstance(data, dict):\n        raise AppError('invalid config')\n    return data",
       "language": "python",
@@ -1451,7 +1451,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Frozen dataclass Settings(debug: bool, port: int) и функция as_tuple(s: Settings) -> tuple[bool, int].\n",
+      "question": "Frozen dataclass Settings(debug: bool, port: int) и функция as_tuple(s: Settings) -> tuple[bool, int].\n\nDataclass с полями и методами экземпляра.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Dataclass с полями и методами экземпляра\n- Читаемость кода без лишней сложности\n\nПример: Settings().as_tuple() — поведение согласно описанию",
       "task": "",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass(frozen=True)\nclass Settings:\n    debug: bool\n    port: int\n\n\ndef as_tuple(s: Settings) -> tuple[bool, int]:\n    return s.debug, s.port",
       "language": "python",
@@ -1459,7 +1459,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Класс ImmutablePoint с __slots__ = ('x', 'y'), без __dict__.\n\nx, y — int; метод distance_sq() -> int возвращает x*x + y*y.",
+      "question": "Класс ImmutablePoint с __slots__ = ('x', 'y'), без __dict__.\n\nx, y — int; метод distance_sq() -> int возвращает x*x + y*y.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Реализовать вручную, без использования __dict__\n- Корректная работа с пустым массивом или списком\n- Инкапсуляция состояния и публичный API\n\nПример: ImmutablePoint().distance_sq() — поведение согласно описанию",
       "task": "",
       "reference": "class ImmutablePoint:\n    __slots__ = ('x', 'y')\n\n    def __init__(self, x: int, y: int) -> None:\n        self.x = x\n        self.y = y\n\n    def distance_sq(self) -> int:\n        return self.x * self.x + self.y * self.y",
       "language": "python",
@@ -1467,7 +1467,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию add(a: int, b: int) -> int с docstring содержащим doctest примеры >>> add(2, 3)\\n5.\n\nРеализуйте add корректно.",
+      "question": "Реализовать Python-функцию add(a: int, b: int) -> int с docstring содержащим doctest примеры >>> add(2, 3)\\n5.\n\nРеализуйте add корректно.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: add(...) — поведение согласно описанию",
       "task": "",
       "reference": "def add(a: int, b: int) -> int:\n    \"\"\"Add two integers.\n\n    >>> add(2, 3)\n    5\n    >>> add(-1, 1)\n    0\n    \"\"\"\n    return a + b",
       "language": "python",
@@ -1475,7 +1475,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию current_time() -> float импортирует time.perf_counter.\n\nНапишите fake_clock(fixed: float) -> context manager, подменяющий perf_counter на lambda: fixed (unittest.mock.patch).",
+      "question": "Реализовать Python-функцию current_time() -> float импортирует time.perf_counter.\n\nНапишите fake_clock(fixed: float) -> context manager, подменяющий perf_counter на lambda: fixed (unittest.mock.patch).\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации\n\nПример: current_time( импортирует time.perf_counter. Напишите fake_clock(fixed: float) → context manager",
       "task": "",
       "reference": "import time\nfrom contextlib import contextmanager\nfrom unittest.mock import patch\n\n\ndef current_time() -> float:\n    return time.perf_counter()\n\n\n@contextmanager\ndef fake_clock(fixed: float):\n    with patch('time.perf_counter', return_value=fixed):\n        yield",
       "language": "python",
@@ -1483,7 +1483,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию split_email(email: str) -> tuple[str, str] возвращает local, domain через email.utils.parseaddr не требуется — split по @ достаточно с валидацией.\n",
+      "question": "Реализовать Python-функцию split_email(email: str) -> tuple[str, str] возвращает local, domain через email.utils.parseaddr не требуется — split по @ достаточно с валидацией.\n\nsplit по @ достаточно с валидацией.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: split_email(...) — поведение согласно описанию",
       "task": "",
       "reference": "def split_email(email: str) -> tuple[str, str]:\n    if email.count('@') != 1:\n        raise ValueError('invalid email')\n    local, domain = email.split('@')\n    if not local or not domain:\n        raise ValueError('invalid email')\n    return local, domain",
       "language": "python",
@@ -1491,7 +1491,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию selection_sort(items: list[int]) -> list[int] — сортировка выбором на копии списка.\n",
+      "question": "Реализовать Python-функцию selection_sort(items: list[int]) -> list[int] — сортировка выбором на копии списка.\n\nсортировка выбором на копии списка.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: selection_sort(...) — поведение согласно описанию",
       "task": "",
       "reference": "def selection_sort(items: list[int]) -> list[int]:\n    arr = items.copy()\n    for i in range(len(arr)):\n        min_idx = i\n        for j in range(i + 1, len(arr)):\n            if arr[j] < arr[min_idx]:\n                min_idx = j\n        arr[i], arr[min_idx] = arr[min_idx], arr[i]\n    return arr",
       "language": "python",
@@ -1499,7 +1499,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию merge_two(a: list[int], b: list[int]) -> list[int] сливает два отсортированных списка в один отсортированный за O(n+m).\n",
+      "question": "Реализовать Python-функцию merge_two(a: list[int], b: list[int]) -> list[int] сливает два отсортированных списка в один отсортированный за O(n+m).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: merge_two(...) — поведение согласно описанию",
       "task": "",
       "reference": "def merge_two(a: list[int], b: list[int]) -> list[int]:\n    i = j = 0\n    result: list[int] = []\n    while i < len(a) and j < len(b):\n        if a[i] <= b[j]:\n            result.append(a[i])\n            i += 1\n        else:\n            result.append(b[j])\n            j += 1\n    result.extend(a[i:])\n    result.extend(b[j:])\n    return result",
       "language": "python",
@@ -1507,7 +1507,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию max_sum_window(numbers: list[int], k: int) -> int — максимальная сумма окна длины k.\n\nk <= 0 или len < k -> 0.",
+      "question": "Реализовать Python-функцию max_sum_window(numbers: list[int], k: int) -> int — максимальная сумма окна длины k.\n\nk <= 0 или len < k -> 0.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Граничные значения и краевые случаи\n\nПример: max_sum_window(...) — поведение согласно описанию",
       "task": "",
       "reference": "def max_sum_window(numbers: list[int], k: int) -> int:\n    if k <= 0 or len(numbers) < k:\n        return 0\n    window = sum(numbers[:k])\n    best = window\n    for i in range(k, len(numbers)):\n        window += numbers[i] - numbers[i - k]\n        best = max(best, window)\n    return best",
       "language": "python",
@@ -1515,7 +1515,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Python-функцию bfs_dist(graph: dict[int, list[int]], start: int, target: int) -> int | None — кратчайшее число рёбер в невзвешенном графе; нет пути -> None.\n",
+      "question": "Реализовать Python-функцию bfs_dist(graph: dict[int, list[int]], start: int, target: int) -> int | None — кратчайшее число рёбер в невзвешенном графе; нет пути -> None.\n\nкратчайшее число рёбер в невзвешенном графе; нет пути -> None.\n\nНеобходимо предусмотреть:\n- Соблюдение указанных type hints и возвращаемого типа\n- Корректная работа с пустым массивом или списком\n- Безопасная обработка None / null / optional значений\n\nПример: bfs_dist(...) — поведение согласно описанию",
       "task": "",
       "reference": "from collections import deque\n\n\ndef bfs_dist(graph: dict[int, list[int]], start: int, target: int) -> int | None:\n    if start == target:\n        return 0\n    seen = {start}\n    queue: deque[tuple[int, int]] = deque([(start, 0)])\n    while queue:\n        node, dist = queue.popleft()\n        for nxt in graph.get(node, []):\n            if nxt in seen:\n                continue\n            if nxt == target:\n                return dist + 1\n            seen.add(nxt)\n            queue.append((nxt, dist + 1))\n    return None",
       "language": "python",
