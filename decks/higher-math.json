@@ -1,0 +1,131 @@
+{
+  "name": "Высшая математика",
+  "language": "latex",
+  "cards": [
+    {
+      "card_type": "math",
+      "question": "Найдите производную $f(x) = x^3 \\sin x$.",
+      "reference": "f'(x) = 3x^2 \\sin x + x^3 \\cos x"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите производную $g(x) = \\ln(x^2 + 1)$.",
+      "reference": "g'(x) = \\frac{2x}{x^2 + 1}"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int x e^{x}\\,dx$.",
+      "reference": "\\int x e^{x}\\,dx = e^{x}(x - 1) + C"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\frac{1}{x}\\,dx$ при $x > 0$.",
+      "reference": "\\int \\frac{1}{x}\\,dx = \\ln x + C"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\displaystyle \\lim_{x \\to 0} \\frac{\\sin x}{x}$.",
+      "reference": "\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1"
+    },
+    {
+      "card_type": "math",
+      "question": "Разложите $e^x$ в ряд Маклорена до $x^3$ включительно.",
+      "reference": "e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + o(x^3)"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det A$, где $A = \\begin{pmatrix} 2 & 1 \\\\ 5 & 3 \\end{pmatrix}$.",
+      "reference": "\\det A = 2 \\cdot 3 - 1 \\cdot 5 = 1"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $AB$, если $A = \\begin{pmatrix} 1 & 2 \\\\ 0 & 1 \\end{pmatrix}$, $B = \\begin{pmatrix} 3 & 1 \\\\ 2 & 4 \\end{pmatrix}$.",
+      "reference": "AB = \\begin{pmatrix} 7 & 9 \\\\ 2 & 4 \\end{pmatrix}"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите обратную матрицу $A^{-1}$ для $A = \\begin{pmatrix} 1 & 2 \\\\ 3 & 4 \\end{pmatrix}$.",
+      "reference": "A^{-1} = \\frac{1}{-2}\\begin{pmatrix} 4 & -2 \\\\ -3 & 1 \\end{pmatrix} = \\begin{pmatrix} -2 & 1 \\\\ 1.5 & -0.5 \\end{pmatrix}"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите скалярное произведение $\\vec{a} \\cdot \\vec{b}$, если $\\vec{a} = (1, 2, -1)$, $\\vec{b} = (2, 0, 3)$.",
+      "reference": "\\vec{a} \\cdot \\vec{b} = 1 \\cdot 2 + 2 \\cdot 0 + (-1) \\cdot 3 = -1"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\vec{a} \\times \\vec{b}$, если $\\vec{a} = (1, 0, 0)$, $\\vec{b} = (0, 1, 0)$.",
+      "reference": "\\vec{a} \\times \\vec{b} = (0, 0, 1)"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите частные производные $\\frac{\\partial f}{\\partial x}$, $\\frac{\\partial f}{\\partial y}$ для $f(x,y) = x^2 y + \\sin y$.",
+      "reference": "\\frac{\\partial f}{\\partial x} = 2xy,\\quad \\frac{\\partial f}{\\partial y} = x^2 + \\cos y"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите градиент $\\nabla f$ в точке $(1, 2)$ для $f(x,y) = x^2 + y^2$.",
+      "reference": "\\nabla f = (2x, 2y),\\quad \\nabla f(1,2) = (2, 4)"
+    },
+    {
+      "card_type": "math",
+      "question": "Решите систему $\\begin{cases} x + y = 5 \\\\ 2x - y = 1 \\end{cases}$.",
+      "reference": "x = 2,\\quad y = 3"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите собственные значения матрицы $A = \\begin{pmatrix} 4 & 1 \\\\ 2 & 3 \\end{pmatrix}$.",
+      "reference": "\\lambda_1 = 5,\\quad \\lambda_2 = 2"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int_0^1 x^2\\,dx$.",
+      "reference": "\\int_0^1 x^2\\,dx = \\frac{1}{3}"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите вторую производную $f''(x)$ для $f(x) = x^4 - 3x^2$.",
+      "reference": "f''(x) = 12x^2 - 6"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите формулу Тейлора для $f(x)$ в окрестности $x_0$ до второго порядка.",
+      "reference": "f(x) = f(x_0) + f'(x_0)(x-x_0) + \\frac{f''(x_0)}{2!}(x-x_0)^2 + o((x-x_0)^2)"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите ранг матрицы $A = \\begin{pmatrix} 1 & 2 & 3 \\\\ 2 & 4 & 6 \\\\ 1 & 1 & 1 \\end{pmatrix}$.",
+      "reference": "\\operatorname{rank} A = 2"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите длину вектора $\\vec{v} = (3, 4)$.",
+      "reference": "|\\vec{v}| = \\sqrt{3^2 + 4^2} = 5"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\displaystyle \\int \\cos x\\,dx$.",
+      "reference": "\\int \\cos x\\,dx = \\sin x + C"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\frac{d}{dx}\\left( \\arctan x \\right)$.",
+      "reference": "\\frac{d}{dx}(\\arctan x) = \\frac{1}{1 + x^2}"
+    },
+    {
+      "card_type": "math",
+      "question": "Вычислите $\\det\\begin{pmatrix} 1 & 0 & 2 \\\\ 0 & 3 & 1 \\\\ 4 & 0 & 5 \\end{pmatrix}$.",
+      "reference": "\\det = 1 \\cdot (3 \\cdot 5 - 1 \\cdot 0) - 0 + 2 \\cdot (0 \\cdot 0 - 3 \\cdot 4) = 15 - 24 = -9"
+    },
+    {
+      "card_type": "math",
+      "question": "Запишите уравнение касательной к $y = x^2$ в точке $x = 1$.",
+      "reference": "y - 1 = 2(x - 1) \\;\\Rightarrow\\; y = 2x - 1"
+    },
+    {
+      "card_type": "math",
+      "question": "Найдите $\\nabla \\cdot \\vec{F}$ для $\\vec{F} = (x, y, z)$.",
+      "reference": "\\nabla \\cdot \\vec{F} = 1 + 1 + 1 = 3"
+    }
+  ]
+}

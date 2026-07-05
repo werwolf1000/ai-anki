@@ -37,12 +37,24 @@ class Card:
         return self.card_type in ("code", "live_code") or bool(self.code)
 
     @property
+    def is_math(self) -> bool:
+        return self.card_type == "math" or self.answer_mode == "math"
+
+    @property
     def needs_code_editor(self) -> bool:
+        if self.is_math:
+            return False
         if self.answer_mode == "text":
             return False
         if self.answer_mode == "code":
             return True
         return self.card_type in ("code", "live_code")
+
+    @property
+    def needs_math_editor(self) -> bool:
+        if self.answer_mode == "text" or self.answer_mode == "code":
+            return False
+        return self.is_math
 
     def display_text(self) -> str:
         parts = [self.question.strip()]
@@ -82,6 +94,8 @@ def infer_language_from_name(name: str) -> str:
         return "python"
     if "angular" in n or "typescript" in n or "javascript" in n:
         return "typescript"
+    if "math" in n or "матем" in n:
+        return "latex"
     return ""
 
 
@@ -137,7 +151,10 @@ def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
     item = {k: v for k, v in item.items() if k in known}
     card_type = item.get("card_type")
     if not card_type:
-        card_type = "code" if item.get("code") else "text"
+        if item.get("answer_mode") == "math":
+            card_type = "math"
+        else:
+            card_type = "code" if item.get("code") else "text"
     return Card(
         question=item.get("question", ""),
         reference=item.get("reference", ""),

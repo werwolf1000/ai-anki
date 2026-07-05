@@ -25,6 +25,7 @@ from PyQt6.QtWidgets import (
 )
 
 from app.code_editor import CodeEditorPanel
+from app.math_editor import MathEditorPanel
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
@@ -219,6 +220,13 @@ class StudyScreen(QWidget):
         self.code_panel.hide()
         a_layout.addWidget(self.code_panel)
 
+        self.math_panel = MathEditorPanel()
+        self.math_panel.setMinimumHeight(160)
+        self.math_panel.setMaximumHeight(360)
+        self.math_panel.hide()
+        a_layout.addWidget(self.math_panel)
+        QShortcut(QKeySequence("Ctrl+Return"), self.math_panel.editor, self._submit_answer)
+
         layout.addWidget(self.answer_box)
 
         btn_row = QHBoxLayout()
@@ -377,7 +385,18 @@ class StudyScreen(QWidget):
         )
 
     def _configure_answer_ui(self, card: Card) -> None:
-        if card.needs_code_editor:
+        if card.needs_math_editor:
+            self.answer_edit.hide()
+            self.code_panel.hide()
+            self.math_panel.show()
+            self.answer_box.setTitle("Редактор формул — ответ в LaTeX")
+            if card.task.strip():
+                self.math_panel.set_text(card.task.strip())
+            else:
+                self.math_panel.clear()
+            self.math_panel.set_focus()
+        elif card.needs_code_editor:
+            self.math_panel.hide()
             self.answer_edit.hide()
             self.code_panel.show()
             if card.is_live_code:
@@ -388,18 +407,23 @@ class StudyScreen(QWidget):
             self.code_panel.set_focus()
         else:
             self.code_panel.hide()
+            self.math_panel.hide()
             self.answer_edit.show()
             self.answer_box.setTitle("Ваш ответ (своими словами)")
             self.answer_edit.setPlaceholderText("Напишите ответ… Ctrl+Enter — отправить")
             self.answer_edit.setFocus()
 
     def _answer_text(self) -> str:
+        if self.current_card and self.current_card.needs_math_editor:
+            return self.math_panel.plain_text().strip()
         if self.current_card and self.current_card.needs_code_editor:
             return self.code_panel.plain_text().strip()
         return self.answer_edit.toPlainText().strip()
 
     def _clear_answer(self) -> None:
-        if self.current_card and self.current_card.needs_code_editor:
+        if self.current_card and self.current_card.needs_math_editor:
+            self.math_panel.clear()
+        elif self.current_card and self.current_card.needs_code_editor:
             self.code_panel.clear()
         else:
             self.answer_edit.clear()
@@ -430,19 +454,26 @@ class StudyScreen(QWidget):
             return
         answer = self._answer_text()
         if not answer:
-            label = "Напишите код." if self.current_card.needs_code_editor else "Напишите ответ."
+            if self.current_card.needs_math_editor:
+                label = "Напишите формулу."
+            elif self.current_card.needs_code_editor:
+                label = "Напишите код."
+            else:
+                label = "Напишите ответ."
             QMessageBox.warning(self, "Пусто", label)
             return
         max_fu = self._max_follow_ups()
         code_card = bool(self.current_card and self.current_card.needs_code_editor)
-        remaining = 0 if code_card else max(0, max_fu - self.follow_up_count)
+        math_card = bool(self.current_card and self.current_card.needs_math_editor)
+        editor_card = code_card or math_card
+        remaining = 0 if editor_card else max(0, max_fu - self.follow_up_count)
         self._set_busy(True)
         self.worker = EvaluateWorker(
             self._evaluator(),
             self.current_card,
             answer,
             self.chat_history.copy(),
-            self.awaiting_follow_up and not code_card,
+            self.awaiting_follow_up and not editor_card,
             remaining,
             self.deck.name,
         )
@@ -472,7 +503,7 @@ class StudyScreen(QWidget):
         if (
             result.follow_up
             and self.follow_up_count < max_fu
-            and not (self.current_card and self.current_card.needs_code_editor)
+            and not (self.current_card and (self.current_card.needs_code_editor or self.current_card.needs_math_editor))
         ):
             self.follow_up_count += 1
             lines.extend(["", f"❓ Уточнение ({self.follow_up_count}/{max_fu}): {result.follow_up}"])
@@ -483,14 +514,15 @@ class StudyScreen(QWidget):
         elif (
             not passed
             and self.current_card
-            and self.current_card.needs_code_editor
+            and (self.current_card.needs_code_editor or self.current_card.needs_math_editor)
             and interactions < max_fu
         ):
             self.revision_count += 1
             self.awaiting_follow_up = False
+            label = "формулу" if self.current_card.needs_math_editor else "код"
             lines.extend([
                 "",
-                f"✏️ Исправьте код и отправьте снова "
+                f"✏️ Исправьте {label} и отправьте снова "
                 f"({self.revision_count}/{max_fu} · осталось {max_fu - self.follow_up_count - self.revision_count})",
             ])
             finalize = False
@@ -503,7 +535,7 @@ class StudyScreen(QWidget):
             elif (
                 not passed
                 and self.current_card
-                and self.current_card.needs_code_editor
+                and (self.current_card.needs_code_editor or self.current_card.needs_math_editor)
                 and interactions >= max_fu
             ):
                 lines.extend([

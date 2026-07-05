@@ -129,8 +129,10 @@ class AppServices:
         return {
             "question": card.display_text(),
             "needs_code": card.needs_code_editor,
+            "needs_math": card.needs_math_editor,
             "language": card.language,
             "is_live_code": card.is_live_code,
+            "math_starter": card.task if card.needs_math_editor else "",
             "attempts": prog.attempts,
             "best_score": prog.best_score,
             "last_score": prog.last_score,
@@ -145,12 +147,14 @@ class AppServices:
 
         was_follow_up = session.awaiting_follow_up
         code_card = bool(card.needs_code_editor)
-        remaining = 0 if code_card else max(0, self.max_follow_ups() - session.follow_up_count)
+        math_card = bool(card.needs_math_editor)
+        editor_card = code_card or math_card
+        remaining = 0 if editor_card else max(0, self.max_follow_ups() - session.follow_up_count)
         result = self.evaluator().evaluate(
             card,
             answer.strip(),
             session.chat_history.copy(),
-            is_follow_up=was_follow_up and not code_card,
+            is_follow_up=was_follow_up and not editor_card,
             follow_ups_remaining=remaining,
             deck_name=session.deck.name,
         )
@@ -167,19 +171,20 @@ class AppServices:
         if (
             result.follow_up
             and session.follow_up_count < max_fu
-            and not card.needs_code_editor
+            and not editor_card
         ):
             session.follow_up_count += 1
             session.awaiting_follow_up = True
             lines.append("")
             lines.append(f"❓ Уточнение ({session.follow_up_count}/{max_fu}): {result.follow_up}")
             finalize = False
-        elif not passed and card.needs_code_editor and interactions < max_fu:
+        elif not passed and editor_card and interactions < max_fu:
             session.revision_count += 1
             session.awaiting_follow_up = False
+            label = "формулу" if math_card else "код"
             lines.extend([
                 "",
-                f"✏️ Исправьте код и отправьте снова "
+                f"✏️ Исправьте {label} и отправьте снова "
                 f"({session.revision_count}/{max_fu} · "
                 f"осталось {max_fu - session.follow_up_count - session.revision_count})",
             ])
@@ -188,7 +193,7 @@ class AppServices:
             session.awaiting_follow_up = False
             if result.follow_up and session.follow_up_count >= max_fu:
                 lines.extend(["", f"ℹ️ Лимит уточнений ({max_fu}) исчерпан — карточка завершена."])
-            elif not passed and card.needs_code_editor and interactions >= max_fu:
+            elif not passed and editor_card and interactions >= max_fu:
                 lines.extend(["", f"ℹ️ Лимит правок ({max_fu}) исчерпан — карточка завершена."])
 
         if finalize:
@@ -219,7 +224,7 @@ class AppServices:
             "finalize": finalize,
             "passed": passed,
             "can_submit": not finalize,
-            "clear_answer": session.awaiting_follow_up and not card.needs_code_editor,
+            "clear_answer": session.awaiting_follow_up and not editor_card,
             "auto_advance_ms": int(self.config.get("auto_advance_ms", 10000)) if finalize and passed else 0,
             "stats": self.session_stats(session),
         }

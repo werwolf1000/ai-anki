@@ -176,6 +176,21 @@ def _system_prompt_code(card: Card, deck_name: str = "") -> str:
 8. Только JSON:{_CODE_JSON}"""
 
 
+def _system_prompt_math(card: Card, deck_name: str = "") -> str:
+    topic = deck_name or "высшей математики"
+    return f"""Ты — преподаватель {topic}. Ученик отвечает формулами в LaTeX.
+
+Правила:
+1. Сравни ответ ученика с эталоном по математическому смыслу — эквивалентные записи засчитывай.
+2. Допускай разные формы: упрощённые дроби, $AB$ vs явная матрица, pmatrix/bmatrix, перестановку сомножителей.
+3. Для матриц и векторов проверяй элементы; для производных/интегралов — корректность выражения.
+4. Оценка 0–100; correct=true если score >= 75.
+5. follow_up всегда пустая строка — ученик отвечает только формулой в редакторе.
+6. hint — короткая подсказка без полного решения.
+7. feedback — 2–4 предложения на русском.
+8. Только JSON:{_LIVE_CODE_JSON}"""
+
+
 def _system_prompt_hint(card: Card, deck_name: str = "") -> str:
     topic = _topic_context(card, deck_name)
     label = _language_label(card, deck_name)
@@ -219,6 +234,17 @@ def _build_hint_body(card: Card, deck_name: str, user_draft: str) -> str:
         if draft:
             body += f"Черновик ответа ученика:\n```{fence}\n{draft}\n```\n\n"
         return body + "Дай подсказку, не раскрывая эталон."
+
+    if card.is_math:
+        body = (
+            prefix
+            + f"Задание: {card.question}\n"
+            + (f"Подсказка к заданию: {card.task}\n" if card.task else "")
+            + ref_note
+        )
+        if draft:
+            body += f"Черновик формулы ученика (LaTeX):\n```latex\n{draft}\n```\n\n"
+        return body + "Дай подсказку по формуле, не раскрывая эталон."
 
     body = prefix + f"Вопрос: {card.question}\n" + ref_note
     if draft:
@@ -319,7 +345,8 @@ class AnswerEvaluator:
     ) -> ReviewResult:
         history = history or []
         code_only = card.needs_code_editor
-        if code_only:
+        math_only = card.needs_math_editor
+        if code_only or math_only:
             follow_ups_remaining = 0
             is_follow_up = False
         limit_note = (
@@ -327,8 +354,13 @@ class AnswerEvaluator:
             "follow_up обязательно пустая строка; при ошибках используй hint."
             if code_only
             else (
-                f"Осталось уточняющих вопросов: {follow_ups_remaining}. "
-                "Не задавай follow_up, если лимит 0."
+                "Карточка с формулой: ученик отвечает только LaTeX в математическом редакторе. "
+                "follow_up обязательно пустая строка; при ошибках используй hint."
+                if math_only
+                else (
+                    f"Осталось уточняющих вопросов: {follow_ups_remaining}. "
+                    "Не задавай follow_up, если лимит 0."
+                )
             )
         )
         if card.is_live_code:
@@ -359,6 +391,14 @@ class AnswerEvaluator:
             else:
                 body = prefix + f"Ответ ученика:\n```{fence}\n{user_answer}\n```"
             system = _system_prompt_code(card, deck_name) + "\n\n" + limit_note
+        elif card.is_math:
+            prefix = (
+                f"Задание: {card.question}\n"
+                + (f"Уточнение: {card.task}\n" if card.task else "")
+                + f"Эталон (LaTeX):\n```latex\n{card.reference}\n```\n\n"
+            )
+            body = prefix + f"Формула ученика (LaTeX):\n```latex\n{user_answer}\n```"
+            system = _system_prompt_math(card, deck_name) + "\n\n" + limit_note
         elif is_follow_up:
             prefix = _text_card_prefix(card, deck_name)
             body = (
@@ -388,6 +428,10 @@ class AnswerEvaluator:
         if follow_ups_remaining <= 0 and result.follow_up:
             result.follow_up = ""
         if code_only and result.follow_up:
+            if not result.hint:
+                result.hint = result.follow_up
+            result.follow_up = ""
+        if math_only and result.follow_up:
             if not result.hint:
                 result.hint = result.follow_up
             result.follow_up = ""

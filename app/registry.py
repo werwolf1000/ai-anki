@@ -38,6 +38,7 @@ BUILTIN_DISPLAY_NAMES: dict[str, str] = {
     "scrum-framework.json": "Scrum",
     "kanban-method.json": "Kanban",
     "safe-scaled-agile.json": "SAFe",
+    "higher-math.json": "Высшая математика",
 }
 
 SKIP_STANDALONE: set[str] = {"angular-code.json"}
