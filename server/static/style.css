@@ -99,6 +99,41 @@ textarea.code { min-height: 200px; }
 
 .code-editor.hidden { display: none !important; }
 
+.math-wrap.hidden { display: none !important; }
+
+.math-wrap {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.math-editor {
+  width: 100%;
+  min-height: 72px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  background: #fff;
+  font-size: 1.1rem;
+}
+
+.math-preview-label {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.85rem;
+}
+
+.math-preview {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+#study-view .question .katex-display {
+  margin: 0.5rem 0;
+}
+
 @media (max-width: 640px) {
   .code-editor { height: 240px; }
 }

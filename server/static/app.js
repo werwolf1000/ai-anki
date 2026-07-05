@@ -2,8 +2,13 @@ let selectedDeckId = null;
 let sessionId = null;
 let autoAdvanceTimer = null;
 let needsCode = false;
+let needsMath = false;
 
 const $ = (id) => document.getElementById(id);
+
+function usesEditor() {
+  return needsCode || needsMath;
+}
 
 async function api(path, opts = {}) {
   const res = await fetch(path, {
@@ -19,6 +24,7 @@ function showHome() {
   clearTimeout(autoAdvanceTimer);
   sessionId = null;
   CodeEditor.hide();
+  MathEditor.hide();
   $("home-view").classList.remove("hidden");
   $("study-view").classList.add("hidden");
   loadDecks();
@@ -141,42 +147,65 @@ async function showCard(card) {
   if (!card) {
     $("question").textContent = "Нет карточек для выбранного режима.";
     CodeEditor.hide();
+    MathEditor.hide();
     VoiceInput.setVisible(false);
     $("answer-text").classList.add("hidden");
     $("btn-submit").disabled = true;
     return;
   }
-  $("question").textContent = card.question;
+
   needsCode = card.needs_code;
-  if (needsCode) {
+  needsMath = card.needs_math;
+
+  if (needsMath) {
     $("answer-text").classList.add("hidden");
     VoiceInput.setVisible(false);
+    CodeEditor.hide();
+    MathEditor.clear();
+    await MathEditor.renderQuestion($("question"), card.question);
+    await MathEditor.show(card.math_starter || "");
+    $("answer-label").textContent = "Редактор формул LaTeX — введите решение";
+    $("status").textContent =
+      `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Enter — проверить`;
+  } else if (needsCode) {
+    MathEditor.hide();
+    $("answer-text").classList.add("hidden");
+    VoiceInput.setVisible(false);
+    $("question").textContent = card.question;
     CodeEditor.clear();
     await CodeEditor.show(card.language || "typescript");
+    $("answer-label").textContent = card.is_live_code
+      ? "Редактор кода — напишите решение"
+      : "Редактор кода — исправьте или дополните";
+    $("status").textContent =
+      `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`;
   } else {
     CodeEditor.hide();
+    MathEditor.hide();
     $("answer-text").classList.remove("hidden");
     $("answer-text").value = "";
+    $("question").textContent = card.question;
     VoiceInput.setVisible(true);
+    $("answer-label").textContent = "Ваш ответ (своими словами)";
+    $("status").textContent =
+      `лучший ${card.best_score} · попыток ${card.attempts} · 🎤 — ответ голосом`;
   }
-  $("answer-label").textContent = needsCode
-    ? (card.is_live_code ? "Редактор кода — напишите решение" : "Редактор кода — исправьте или дополните")
-    : "Ваш ответ (своими словами)";
+
   $("btn-submit").disabled = false;
   $("btn-next").disabled = true;
   $("btn-hint").disabled = false;
   $("feedback").textContent = "";
-  $("status").textContent = needsCode
-    ? `лучший ${card.best_score} · попыток ${card.attempts} · Ctrl+Space — подсказки · Ctrl+Enter — проверить`
-    : `лучший ${card.best_score} · попыток ${card.attempts} · 🎤 — ответ голосом`;
 }
 
 function getAnswer() {
-  return needsCode ? CodeEditor.getValue().trim() : $("answer-text").value.trim();
+  if (needsCode) return CodeEditor.getValue().trim();
+  if (needsMath) return MathEditor.getValue().trim();
+  return $("answer-text").value.trim();
 }
 
 function clearAnswer() {
   if (needsCode) CodeEditor.clear();
+  else if (needsMath) MathEditor.clear();
   else $("answer-text").value = "";
 }
 
@@ -202,7 +231,7 @@ async function submitAnswer() {
   if (!sessionId) return;
   $("btn-submit").disabled = true;
   $("btn-hint").disabled = true;
-  if (!needsCode) $("btn-voice").disabled = true;
+  if (!usesEditor()) $("btn-voice").disabled = true;
   $("status").textContent = "Ollama думает…";
   try {
     const r = await api(`/api/session/${sessionId}/answer`, {
@@ -214,8 +243,8 @@ async function submitAnswer() {
     $("btn-next").disabled = false;
     $("btn-submit").disabled = !r.can_submit;
     $("btn-hint").disabled = false;
-    if (!needsCode) $("btn-voice").disabled = false;
-    if (r.clear_answer && !needsCode) {
+    if (!usesEditor()) $("btn-voice").disabled = false;
+    if (r.clear_answer && !usesEditor()) {
       $("answer-text").value = "";
     } else if (r.finalize) {
       clearAnswer();
@@ -226,7 +255,9 @@ async function submitAnswer() {
     } else if (!r.can_submit) {
       $("status").textContent = r.clear_answer
         ? "Ответьте на уточняющий вопрос (можно голосом)."
-        : "Внесите правки и отправьте снова или нажмите «Следующая →».";
+        : needsMath
+          ? "Внесите правки в формулу и отправьте снова или нажмите «Следующая →»."
+          : "Внесите правки и отправьте снова или нажмите «Следующая →».";
     } else {
       $("status").textContent = "";
     }
@@ -234,7 +265,7 @@ async function submitAnswer() {
     $("feedback").textContent = "❌ " + e.message;
     $("btn-submit").disabled = false;
     $("btn-hint").disabled = false;
-    if (!needsCode) $("btn-voice").disabled = false;
+    if (!usesEditor()) $("btn-voice").disabled = false;
     $("status").textContent = "";
   }
 }
@@ -294,11 +325,15 @@ $("btn-next").onclick = nextCard;
 $("btn-hint").onclick = showHint;
 
 document.addEventListener("keydown", (e) => {
-  if (e.ctrlKey && e.key === "Enter" && !needsCode) submitAnswer();
+  if (e.ctrlKey && e.key === "Enter" && !usesEditor()) submitAnswer();
 });
 
 document.getElementById("code-editor-host").addEventListener("code-submit", () => {
   if (needsCode) submitAnswer();
+});
+
+document.getElementById("math-editor-wrap").addEventListener("math-submit", () => {
+  if (needsMath) submitAnswer();
 });
 
 VoiceInput.bind($("btn-voice"), $("answer-text"), (text) => {

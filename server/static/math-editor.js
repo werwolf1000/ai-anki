@@ -1,5 +1,6 @@
 /* MathLive editor + KaTeX preview for LaTeX answers */
 (function () {
+  const wrapId = "math-editor-wrap";
   const hostId = "math-editor-host";
   const previewId = "math-preview";
   let field = null;
@@ -41,8 +42,9 @@
   }
 
   function renderLatex(el, text) {
-    if (!el || !text) {
-      if (el) el.textContent = "";
+    if (!el) return;
+    if (!text) {
+      el.textContent = "";
       return;
     }
     el.textContent = text;
@@ -61,11 +63,11 @@
 
   async function show(starter) {
     await ensureReady();
+    const wrap = document.getElementById(wrapId);
     const host = document.getElementById(hostId);
     const preview = document.getElementById(previewId);
-    if (!host) return;
-    host.classList.remove("hidden");
-    if (preview) preview.classList.remove("hidden");
+    if (!wrap || !host) return;
+    wrap.classList.remove("hidden");
 
     if (!field) {
       host.innerHTML = "";
@@ -81,7 +83,7 @@
       field.addEventListener("keydown", (ev) => {
         if (ev.ctrlKey && ev.key === "Enter") {
           ev.preventDefault();
-          host.dispatchEvent(new CustomEvent("math-submit"));
+          wrap.dispatchEvent(new CustomEvent("math-submit"));
         }
       });
     }
@@ -92,10 +94,8 @@
   }
 
   function hide() {
-    const host = document.getElementById(hostId);
-    const preview = document.getElementById(previewId);
-    if (host) host.classList.add("hidden");
-    if (preview) preview.classList.add("hidden");
+    const wrap = document.getElementById(wrapId);
+    if (wrap) wrap.classList.add("hidden");
   }
 
   function getValue() {
@@ -104,13 +104,12 @@
 
   function clear() {
     if (field) field.setValue("", { format: "latex" });
-    const preview = document.getElementById(previewId);
-    renderLatex(preview, "");
+    renderLatex(document.getElementById(previewId), "");
   }
 
-  function renderQuestion(el, text) {
-    if (!el) return;
-    renderLatex(el, text);
+  async function renderQuestion(el, text) {
+    await ensureReady();
+    renderLatex(el, text || "");
   }
 
   window.MathEditor = { show, hide, getValue, clear, renderQuestion, ensureReady };

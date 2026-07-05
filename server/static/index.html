@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>AI Anki</title>
-  <link rel="stylesheet" href="/static/style.css?v=10">
+  <link rel="stylesheet" href="/static/style.css?v=11">
 </head>
 <body>
   <header>
@@ -79,6 +79,11 @@
         <h2 id="answer-label">Ваш ответ</h2>
         <textarea id="answer-text"></textarea>
         <div id="code-editor-host" class="code-editor hidden" aria-label="Редактор кода"></div>
+        <div id="math-editor-wrap" class="math-wrap hidden">
+          <div id="math-editor-host" class="math-editor" aria-label="Редактор формул LaTeX"></div>
+          <div class="math-preview-label muted">Предпросмотр</div>
+          <div id="math-preview" class="math-preview"></div>
+        </div>
         <div class="btn-row">
           <button type="button" id="btn-submit">Проверить ответ</button>
           <button type="button" class="secondary hidden" id="btn-voice">🎤 Голосом</button>
@@ -93,8 +98,9 @@
       </section>
     </div>
   </main>
-  <script src="/static/code-editor.js?v=10"></script>
-  <script src="/static/voice-input.js?v=10"></script>
-  <script src="/static/app.js?v=10"></script>
+  <script src="/static/code-editor.js?v=11"></script>
+  <script src="/static/math-editor.js?v=11"></script>
+  <script src="/static/voice-input.js?v=11"></script>
+  <script src="/static/app.js?v=11"></script>
 </body>
 </html>
