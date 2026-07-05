@@ -313,7 +313,6 @@ def _build_hint_body(card: Card, deck_name: str, user_draft: str) -> str:
         body = (
             prefix
             + f"Задание (live-coding): {card.question}\n"
-            + (f"Описание задания: {card.task}\n" if card.task else "")
             + ref_note
         )
         if draft:
@@ -466,7 +465,6 @@ class AnswerEvaluator:
             prefix = (
                 f"Язык карточки: {label}\n"
                 f"Задание (live-coding): {card.question}\n"
-                f"{('Подсказка: ' + card.task) if card.task else ''}\n"
                 f"Эталонное решение:\n```{fence}\n{card.reference}\n```\n\n"
             )
             if is_follow_up:

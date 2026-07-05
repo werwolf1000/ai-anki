@@ -186,7 +186,7 @@ def live(
     return {
         "card_type": "live_code",
         "question": question,
-        "task": assignment_body.strip(),
+        "task": "",
         "reference": reference.strip(),
         "language": lang,
         "topic": topic,

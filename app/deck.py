@@ -27,7 +27,11 @@ class Card:
 
     def __post_init__(self) -> None:
         if not self.id:
-            self.id = stable_card_id(self.question, self.code, self.task)
+            if self.is_live_code and self.reference.strip():
+                # id не зависит от формулировки question — только от эталона
+                self.id = stable_card_id("", "", self.reference.strip())
+            else:
+                self.id = stable_card_id(self.question, self.code, self.task)
 
     @property
     def is_live_code(self) -> bool:
@@ -58,12 +62,9 @@ class Card:
         return self.is_math
 
     def display_text(self) -> str:
-        parts = [self.question.strip()]
         if self.is_live_code:
-            task = self.task.strip()
-            if task and task not in self.question:
-                parts.extend(["", f"Задание: {task}"])
-            return "\n".join(parts)
+            return self.question.strip()
+        parts = [self.question.strip()]
         if self.code.strip():
             parts.extend(["", "── Код ──", self.code.strip()])
         if self.task.strip():
