@@ -5,6 +5,7 @@ from pathlib import Path
 from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtGui import QFont, QColor
 from PyQt6.QtWidgets import (
+    QComboBox,
     QFileDialog,
     QFormLayout,
     QGroupBox,
@@ -27,6 +28,7 @@ from app.config_store import (
     SESSION_LIMIT_MAX,
     auto_advance_seconds,
     clamp_session_limit,
+    normalize_code_editor_theme,
     save_config,
 )
 from app.ollama_client import OllamaClient
@@ -70,6 +72,10 @@ class WelcomeScreen(QWidget):
         self.ollama_url.setText(self.config.get("ollama_url", ""))
         self.ollama_model.setText(self.config.get("model", ""))
         self.ollama_timeout.setValue(int(self.config.get("timeout", 120)))
+        theme = normalize_code_editor_theme(self.config.get("code_editor_theme"))
+        idx = self.code_editor_theme.findData(theme)
+        if idx >= 0:
+            self.code_editor_theme.setCurrentIndex(idx)
 
     def _build_ui(self) -> None:
         layout = QVBoxLayout(self)
@@ -117,6 +123,12 @@ class WelcomeScreen(QWidget):
             f"Пауза перед автопереходом после зачёта (0 — выключено, макс. {AUTO_ADVANCE_MAX_SEC} с)"
         )
         left_form.addRow("Автопереход", self.auto_advance)
+
+        self.code_editor_theme = QComboBox()
+        self.code_editor_theme.addItem("Светлая", "light")
+        self.code_editor_theme.addItem("Тёмная", "dark")
+        self.code_editor_theme.setToolTip("Тема редактора кода для live-coding и code-карточек")
+        left_form.addRow("Тема редактора", self.code_editor_theme)
 
         right_form = QFormLayout()
         self.ollama_url = QLineEdit()
@@ -198,6 +210,7 @@ class WelcomeScreen(QWidget):
             "ollama_url": self.ollama_url.text().strip(),
             "model": self.ollama_model.text().strip(),
             "timeout": self.ollama_timeout.value(),
+            "code_editor_theme": self.code_editor_theme.currentData(),
         })
         save_config(self.config_path, self.config)
         self.sync_from_config()

@@ -584,6 +584,304 @@ final class HttpResponse
     }
 }""",
         ),
+        live(
+            "Interface Logger",
+            "Interface Logger с методом log(string $message): void; класс EchoLogger реализует его.",
+            """<?php
+declare(strict_types=1);
+
+interface Logger
+{
+    public function log(string $message): void;
+}
+
+final class EchoLogger implements Logger
+{
+    public function log(string $message): void
+    {
+        echo $message, PHP_EOL;
+    }
+}""",
+        ),
+        live(
+            "Abstract Animal",
+            "Abstract class Animal с abstract name(): string; class Dog extends и возвращает 'dog'.",
+            """<?php
+declare(strict_types=1);
+
+abstract class Animal
+{
+    abstract public function name(): string;
+}
+
+final class Dog extends Animal
+{
+    public function name(): string
+    {
+        return 'dog';
+    }
+}""",
+        ),
+        live(
+            "DateTimeImmutable add",
+            "Функция addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable.",
+            """<?php
+declare(strict_types=1);
+
+function addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable
+{
+    return $dt->modify(sprintf('%+d days', $days));
+}""",
+        ),
+        live(
+            "JSON encode decode",
+            "Функции toJson(array $data): string и fromJson(string $raw): array через json_encode/json_decode.",
+            """<?php
+declare(strict_types=1);
+
+function toJson(array $data): string
+{
+    return json_encode($data, JSON_THROW_ON_ERROR);
+}
+
+function fromJson(string $raw): array
+{
+    $data = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);
+    return is_array($data) ? $data : [];
+}""",
+        ),
+        live(
+            "Array map filter",
+            "Функция activeEmails(array $users): array — map email, filter non-empty (array_column + array_filter).",
+            """<?php
+declare(strict_types=1);
+
+function activeEmails(array $users): array
+{
+    $emails = array_column($users, 'email');
+    return array_values(array_filter($emails, fn(string $e) => $e !== ''));
+}""",
+        ),
+        live(
+            "IteratorAggregate Range",
+            "Класс NumberRange implements IteratorAggregate для int $from..$to.",
+            """<?php
+declare(strict_types=1);
+
+final class NumberRange implements IteratorAggregate
+{
+    public function __construct(private int $from, private int $to)
+    {
+    }
+
+    public function getIterator(): Traversable
+    {
+        for ($i = $this->from; $i <= $this->to; $i++) {
+            yield $i;
+        }
+    }
+}""",
+        ),
+        live(
+            "Named arguments greet",
+            "Функция greet(string $name, string $greeting = 'Hello'): string с named args в вызове в комментарии не нужно — просто реализуй.",
+            """<?php
+declare(strict_types=1);
+
+function greet(string $name, string $greeting = 'Hello'): string
+{
+    return "{$greeting}, {$name}!";
+}""",
+        ),
+        live(
+            "str_starts_with helper",
+            "Функция startsWith(string $haystack, string $prefix): bool через str_starts_with.",
+            """<?php
+declare(strict_types=1);
+
+function startsWith(string $haystack, string $prefix): bool
+{
+    return str_starts_with($haystack, $prefix);
+}""",
+        ),
+        live(
+            "str_contains helper",
+            "Функция contains(string $haystack, string $needle): bool через str_contains.",
+            """<?php
+declare(strict_types=1);
+
+function contains(string $haystack, string $needle): bool
+{
+    return str_contains($haystack, $needle);
+}""",
+        ),
+        live(
+            "Array find key",
+            "Функция findKey(array $items, callable $predicate): int|string|null.",
+            """<?php
+declare(strict_types=1);
+
+function findKey(array $items, callable $predicate): int|string|null
+{
+    foreach ($items as $key => $value) {
+        if ($predicate($value, $key)) {
+            return $key;
+        }
+    }
+    return null;
+}""",
+        ),
+        live(
+            "Class __toString",
+            "Класс Point с promoted int $x, $y и __toString(): string как '(x,y)'.",
+            """<?php
+declare(strict_types=1);
+
+final class Point
+{
+    public function __construct(public int $x, public int $y)
+    {
+    }
+
+    public function __toString(): string
+    {
+        return "({$this->x},{$this->y})";
+    }
+}""",
+        ),
+        live(
+            "Union types parseId",
+            "Функция parseId(int|string $value): int — если string, (int)$value.",
+            """<?php
+declare(strict_types=1);
+
+function parseId(int|string $value): int
+{
+    return is_int($value) ? $value : (int) $value;
+}""",
+        ),
+        live(
+            "never type abort",
+            "Функция abort(string $message): never бросает RuntimeException.",
+            """<?php
+declare(strict_types=1);
+
+function abort(string $message): never
+{
+    throw new RuntimeException($message);
+}""",
+        ),
+        live(
+            "First class callable",
+            "Класс Greeter с методом hello(string $name): string; переменная $fn = $greeter->hello(...).",
+            """<?php
+declare(strict_types=1);
+
+final class Greeter
+{
+    public function hello(string $name): string
+    {
+        return "Hi, {$name}";
+    }
+}
+
+$greeter = new Greeter();
+$fn = $greeter->hello(...);""",
+        ),
+        live(
+            "array_chunk",
+            "Функция chunk(array $items, int $size): array через array_chunk.",
+            """<?php
+declare(strict_types=1);
+
+function chunk(array $items, int $size): array
+{
+    return array_chunk($items, $size);
+}""",
+        ),
+        live(
+            "array_column",
+            "Функция pluck(array $rows, string $field): array через array_column.",
+            """<?php
+declare(strict_types=1);
+
+function pluck(array $rows, string $field): array
+{
+    return array_column($rows, $field);
+}""",
+        ),
+        live(
+            "usort by length",
+            "Функция sortByLength(array $words): array через usort по strlen.",
+            """<?php
+declare(strict_types=1);
+
+function sortByLength(array $words): array
+{
+    usort($words, fn(string $a, string $b) => strlen($a) <=> strlen($b));
+    return $words;
+}""",
+        ),
+        live(
+            "DTO from array",
+            "Readonly class UserDto с id, email; static fromArray(array $row): self.",
+            """<?php
+declare(strict_types=1);
+
+readonly class UserDto
+{
+    public function __construct(public int $id, public string $email)
+    {
+    }
+
+    public static function fromArray(array $row): self
+    {
+        return new self((int) $row['id'], (string) $row['email']);
+    }
+}""",
+        ),
+        live(
+            "SplQueue BFS stub",
+            "Функция bfsLevels(array $tree): int — заглушка: вернуть count($tree) через SplQueue (положить корни, dequeue один).",
+            """<?php
+declare(strict_types=1);
+
+function bfsLevels(array $tree): int
+{
+    $queue = new SplQueue();
+    foreach ($tree as $node) {
+        $queue->enqueue($node);
+    }
+    if ($queue->isEmpty()) {
+        return 0;
+    }
+    $queue->dequeue();
+    return count($tree);
+}""",
+        ),
+        live(
+            "Attributes Route",
+            "PHP 8 Attribute Route(string $path); повесь на метод контроллера index().",
+            """<?php
+declare(strict_types=1);
+
+#[Attribute(Attribute::TARGET_METHOD)]
+final class Route
+{
+    public function __construct(public string $path)
+    {
+    }
+}
+
+final class HomeController
+{
+    #[Route('/')]
+    public function index(): string
+    {
+        return 'ok';
+    }
+}""",
+        ),
     ]
 
 

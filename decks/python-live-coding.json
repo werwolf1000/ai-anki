@@ -273,6 +273,153 @@
       "task": "Dataclass HttpResponse(status: int, body: str) и метод is_ok() -> bool (200 <= status < 300).",
       "reference": "from dataclasses import dataclass\n\n\n@dataclass\nclass HttpResponse:\n    status: int\n    body: str\n\n    def is_ok(self) -> bool:\n        return 200 <= self.status < 300",
       "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "bisect search",
+      "task": "Функция index_of(sorted_items: list[int], target: int) -> int через bisect (индекс или -1).",
+      "reference": "import bisect\n\n\ndef index_of(sorted_items: list[int], target: int) -> int:\n    pos = bisect.bisect_left(sorted_items, target)\n    if pos < len(sorted_items) and sorted_items[pos] == target:\n        return pos\n    return -1",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "lru_cache factorial",
+      "task": "Функция factorial(n: int) -> int с @functools.lru_cache (n >= 0).",
+      "reference": "from functools import lru_cache\n\n\n@lru_cache(maxsize=None)\ndef factorial(n: int) -> int:\n    if n < 2:\n        return 1\n    return n * factorial(n - 1)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "contextmanager timer",
+      "task": "Context manager timer() печатает elapsed seconds при выходе (time.perf_counter).",
+      "reference": "from contextlib import contextmanager\nimport time\n\n\n@contextmanager\ndef timer():\n    start = time.perf_counter()\n    try:\n        yield\n    finally:\n        print(time.perf_counter() - start)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "itertools chain flatten",
+      "task": "Функция flatten(groups: list[list[int]]) -> list[int] через itertools.chain.from_iterable.",
+      "reference": "from itertools import chain\n\n\ndef flatten(groups: list[list[int]]) -> list[int]:\n    return list(chain.from_iterable(groups))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "pathlib list py files",
+      "task": "Функция list_py_files(folder: Path) -> list[Path] — только *.py в каталоге (без рекурсии).",
+      "reference": "from pathlib import Path\n\n\ndef list_py_files(folder: Path) -> list[Path]:\n    return sorted(folder.glob('*.py'))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "json safe loads",
+      "task": "Функция safe_json_loads(raw: str) -> dict | None — None при JSONDecodeError.",
+      "reference": "import json\n\n\ndef safe_json_loads(raw: str) -> dict | None:\n    try:\n        data = json.loads(raw)\n    except json.JSONDecodeError:\n        return None\n    return data if isinstance(data, dict) else None",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "tempfile write text",
+      "task": "Функция write_temp(text: str) -> Path создаёт NamedTemporaryFile delete=False и пишет text.",
+      "reference": "from pathlib import Path\nimport tempfile\n\n\ndef write_temp(text: str) -> Path:\n    with tempfile.NamedTemporaryFile('w', encoding='utf-8', delete=False, suffix='.txt') as fh:\n        fh.write(text)\n        return Path(fh.name)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "zip pairs to dict",
+      "task": "Функция pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int].",
+      "reference": "def pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int]:\n    return dict(zip(keys, values, strict=True))",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "set intersection size",
+      "task": "Функция overlap(a: set[int], b: set[int]) -> int — размер пересечения.",
+      "reference": "def overlap(a: set[int], b: set[int]) -> int:\n    return len(a & b)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "sorted by length",
+      "task": "Функция sort_by_length(words: list[str]) -> list[str] по len без изменения исходного списка.",
+      "reference": "def sort_by_length(words: list[str]) -> list[str]:\n    return sorted(words, key=len)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "all positive",
+      "task": "Функция all_positive(numbers: list[int]) -> bool через all().",
+      "reference": "def all_positive(numbers: list[int]) -> bool:\n    return all(n > 0 for n in numbers)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "join words",
+      "task": "Функция join_words(words: list[str], sep: str = ', ') -> str.",
+      "reference": "def join_words(words: list[str], sep: str = ', ') -> str:\n    return sep.join(words)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "partition evens odds",
+      "task": "Функция partition(numbers: list[int]) -> tuple[list[int], list[int]] — чётные и нечётные.",
+      "reference": "def partition(numbers: list[int]) -> tuple[list[int], list[int]]:\n    evens = [n for n in numbers if n % 2 == 0]\n    odds = [n for n in numbers if n % 2 != 0]\n    return evens, odds",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "groupby lengths",
+      "task": "Функция group_lengths(words: list[str]) -> dict[int, list[str]] через itertools.groupby (предварительно sort by len).",
+      "reference": "from itertools import groupby\n\n\ndef group_lengths(words: list[str]) -> dict[int, list[str]]:\n    sorted_words = sorted(words, key=len)\n    return {length: list(group) for length, group in groupby(sorted_words, key=len)}",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Counter top",
+      "task": "Функция most_common(items: list[str], n: int = 3) -> list[tuple[str, int]] через Counter.",
+      "reference": "from collections import Counter\n\n\ndef most_common(items: list[str], n: int = 3) -> list[tuple[str, int]]:\n    return Counter(items).most_common(n)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "defaultdict groups",
+      "task": "Функция group_by_first_letter(words: list[str]) -> dict[str, list[str]] через defaultdict(list).",
+      "reference": "from collections import defaultdict\n\n\ndef group_by_first_letter(words: list[str]) -> dict[str, list[str]]:\n    groups: defaultdict[str, list[str]] = defaultdict(list)\n    for word in words:\n        if word:\n            groups[word[0].lower()].append(word)\n    return dict(groups)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "partial multiply",
+      "task": "Функция make_multiplier(factor: int) возвращает callable умножающий на factor (functools.partial).",
+      "reference": "from functools import partial\n\n\ndef make_multiplier(factor: int):\n    return partial(lambda x, k: x * k, k=factor)",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "TypedDict User",
+      "task": "TypedDict User с полями id: int, name: str; функция user_label(u: User) -> str.",
+      "reference": "from typing import TypedDict\n\n\nclass User(TypedDict):\n    id: int\n    name: str\n\n\ndef user_label(u: User) -> str:\n    return f\"{u['name']} (#{u['id']})",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Protocol closable",
+      "task": "Protocol Closable с методом close() -> None; функция safe_close(obj: Closable) -> None.",
+      "reference": "from typing import Protocol\n\n\nclass Closable(Protocol):\n    def close(self) -> None: ...\n\n\ndef safe_close(obj: Closable) -> None:\n    obj.close()",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "walrus read line",
+      "task": "Функция first_non_empty(lines: list[str]) -> str | None — первая непустая строка (можно walrus).",
+      "reference": "def first_non_empty(lines: list[str]) -> str | None:\n    for line in lines:\n        if (stripped := line.strip()):\n            return stripped\n    return None",
+      "language": "python"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Enum Color hex",
+      "task": "Enum Color(str, Enum) с Red='red', Green='green' и методом is_warm() -> bool (Red).",
+      "reference": "from enum import Enum\n\n\nclass Color(str, Enum):\n    Red = 'red'\n    Green = 'green'\n\n    def is_warm(self) -> bool:\n        return self is Color.Red",
+      "language": "python"
     }
   ]
 }

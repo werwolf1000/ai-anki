@@ -416,6 +416,216 @@ class HttpResponse:
     def is_ok(self) -> bool:
         return 200 <= self.status < 300""",
         ),
+        live(
+            "bisect search",
+            "Функция index_of(sorted_items: list[int], target: int) -> int через bisect (индекс или -1).",
+            """import bisect
+
+
+def index_of(sorted_items: list[int], target: int) -> int:
+    pos = bisect.bisect_left(sorted_items, target)
+    if pos < len(sorted_items) and sorted_items[pos] == target:
+        return pos
+    return -1""",
+        ),
+        live(
+            "lru_cache factorial",
+            "Функция factorial(n: int) -> int с @functools.lru_cache (n >= 0).",
+            """from functools import lru_cache
+
+
+@lru_cache(maxsize=None)
+def factorial(n: int) -> int:
+    if n < 2:
+        return 1
+    return n * factorial(n - 1)""",
+        ),
+        live(
+            "contextmanager timer",
+            "Context manager timer() печатает elapsed seconds при выходе (time.perf_counter).",
+            """from contextlib import contextmanager
+import time
+
+
+@contextmanager
+def timer():
+    start = time.perf_counter()
+    try:
+        yield
+    finally:
+        print(time.perf_counter() - start)""",
+        ),
+        live(
+            "itertools chain flatten",
+            "Функция flatten(groups: list[list[int]]) -> list[int] через itertools.chain.from_iterable.",
+            """from itertools import chain
+
+
+def flatten(groups: list[list[int]]) -> list[int]:
+    return list(chain.from_iterable(groups))""",
+        ),
+        live(
+            "pathlib list py files",
+            "Функция list_py_files(folder: Path) -> list[Path] — только *.py в каталоге (без рекурсии).",
+            """from pathlib import Path
+
+
+def list_py_files(folder: Path) -> list[Path]:
+    return sorted(folder.glob('*.py'))""",
+        ),
+        live(
+            "json safe loads",
+            "Функция safe_json_loads(raw: str) -> dict | None — None при JSONDecodeError.",
+            """import json
+
+
+def safe_json_loads(raw: str) -> dict | None:
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return None
+    return data if isinstance(data, dict) else None""",
+        ),
+        live(
+            "tempfile write text",
+            "Функция write_temp(text: str) -> Path создаёт NamedTemporaryFile delete=False и пишет text.",
+            """from pathlib import Path
+import tempfile
+
+
+def write_temp(text: str) -> Path:
+    with tempfile.NamedTemporaryFile('w', encoding='utf-8', delete=False, suffix='.txt') as fh:
+        fh.write(text)
+        return Path(fh.name)""",
+        ),
+        live(
+            "zip pairs to dict",
+            "Функция pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int].",
+            """def pairs_to_dict(keys: list[str], values: list[int]) -> dict[str, int]:
+    return dict(zip(keys, values, strict=True))""",
+        ),
+        live(
+            "set intersection size",
+            "Функция overlap(a: set[int], b: set[int]) -> int — размер пересечения.",
+            """def overlap(a: set[int], b: set[int]) -> int:
+    return len(a & b)""",
+        ),
+        live(
+            "sorted by length",
+            "Функция sort_by_length(words: list[str]) -> list[str] по len без изменения исходного списка.",
+            """def sort_by_length(words: list[str]) -> list[str]:
+    return sorted(words, key=len)""",
+        ),
+        live(
+            "all positive",
+            "Функция all_positive(numbers: list[int]) -> bool через all().",
+            """def all_positive(numbers: list[int]) -> bool:
+    return all(n > 0 for n in numbers)""",
+        ),
+        live(
+            "join words",
+            "Функция join_words(words: list[str], sep: str = ', ') -> str.",
+            """def join_words(words: list[str], sep: str = ', ') -> str:
+    return sep.join(words)""",
+        ),
+        live(
+            "partition evens odds",
+            "Функция partition(numbers: list[int]) -> tuple[list[int], list[int]] — чётные и нечётные.",
+            """def partition(numbers: list[int]) -> tuple[list[int], list[int]]:
+    evens = [n for n in numbers if n % 2 == 0]
+    odds = [n for n in numbers if n % 2 != 0]
+    return evens, odds""",
+        ),
+        live(
+            "groupby lengths",
+            "Функция group_lengths(words: list[str]) -> dict[int, list[str]] через itertools.groupby (предварительно sort by len).",
+            """from itertools import groupby
+
+
+def group_lengths(words: list[str]) -> dict[int, list[str]]:
+    sorted_words = sorted(words, key=len)
+    return {length: list(group) for length, group in groupby(sorted_words, key=len)}""",
+        ),
+        live(
+            "Counter top",
+            "Функция most_common(items: list[str], n: int = 3) -> list[tuple[str, int]] через Counter.",
+            """from collections import Counter
+
+
+def most_common(items: list[str], n: int = 3) -> list[tuple[str, int]]:
+    return Counter(items).most_common(n)""",
+        ),
+        live(
+            "defaultdict groups",
+            "Функция group_by_first_letter(words: list[str]) -> dict[str, list[str]] через defaultdict(list).",
+            """from collections import defaultdict
+
+
+def group_by_first_letter(words: list[str]) -> dict[str, list[str]]:
+    groups: defaultdict[str, list[str]] = defaultdict(list)
+    for word in words:
+        if word:
+            groups[word[0].lower()].append(word)
+    return dict(groups)""",
+        ),
+        live(
+            "partial multiply",
+            "Функция make_multiplier(factor: int) возвращает callable умножающий на factor (functools.partial).",
+            """from functools import partial
+
+
+def make_multiplier(factor: int):
+    return partial(lambda x, k: x * k, k=factor)""",
+        ),
+        live(
+            "TypedDict User",
+            "TypedDict User с полями id: int, name: str; функция user_label(u: User) -> str.",
+            """from typing import TypedDict
+
+
+class User(TypedDict):
+    id: int
+    name: str
+
+
+def user_label(u: User) -> str:
+    return f"{u['name']} (#{u['id']})""",
+        ),
+        live(
+            "Protocol closable",
+            "Protocol Closable с методом close() -> None; функция safe_close(obj: Closable) -> None.",
+            """from typing import Protocol
+
+
+class Closable(Protocol):
+    def close(self) -> None: ...
+
+
+def safe_close(obj: Closable) -> None:
+    obj.close()""",
+        ),
+        live(
+            "walrus read line",
+            "Функция first_non_empty(lines: list[str]) -> str | None — первая непустая строка (можно walrus).",
+            """def first_non_empty(lines: list[str]) -> str | None:
+    for line in lines:
+        if (stripped := line.strip()):
+            return stripped
+    return None""",
+        ),
+        live(
+            "Enum Color hex",
+            "Enum Color(str, Enum) с Red='red', Green='green' и методом is_warm() -> bool (Red).",
+            """from enum import Enum
+
+
+class Color(str, Enum):
+    Red = 'red'
+    Green = 'green'
+
+    def is_warm(self) -> bool:
+        return self is Color.Red""",
+        ),
     ]
 
 

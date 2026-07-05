@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
+from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, normalize_code_editor_theme, save_config
 
 from PyQt6.QtCore import Qt, QThread, QTimer, pyqtSignal
 from PyQt6.QtGui import QFont, QKeySequence, QShortcut
@@ -173,6 +173,10 @@ class StudyScreen(QWidget):
     def _pass_score(self) -> int:
         return int(self.config.get("pass_score", 75))
 
+    def apply_config(self, config: dict) -> None:
+        self.config = config
+        self.code_panel.set_theme(config.get("code_editor_theme", "light"))
+
     def _build_ui(self) -> None:
         layout = QVBoxLayout(self)
 
@@ -216,6 +220,7 @@ class StudyScreen(QWidget):
         self.code_panel = CodeEditorPanel()
         self.code_panel.setMinimumHeight(160)
         self.code_panel.setMaximumHeight(360)
+        self.code_panel.set_theme(self.config.get("code_editor_theme", "light"))
         self.code_panel.submit_requested.connect(self._submit_answer)
         self.code_panel.hide()
         a_layout.addWidget(self.code_panel)
@@ -403,6 +408,7 @@ class StudyScreen(QWidget):
                 self.answer_box.setTitle("Редактор кода — напишите решение")
             else:
                 self.answer_box.setTitle("Редактор кода — исправьте или дополните")
+            self.code_panel.set_theme(self.config.get("code_editor_theme", "light"))
             self.code_panel.set_language_hint(card.language)
             self.code_panel.set_focus()
         else:
@@ -703,6 +709,8 @@ class MainWindow(QMainWindow):
     def _reload_config(self) -> None:
         base = Path(__file__).resolve().parent.parent
         self.config, self.config_path = load_config(base)
+        if self.study_screen is not None:
+            self.study_screen.apply_config(self.config)
 
     def _open_study(self, entry: DeckEntry, mode_value: str) -> None:
         try:

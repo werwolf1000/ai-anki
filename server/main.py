@@ -37,6 +37,7 @@ class SettingsIn(BaseModel):
     model: str | None = None
     api_key: str | None = None
     timeout: int | None = None
+    code_editor_theme: str | None = None
     asr_url: str | None = None
     asr_user: str | None = None
     asr_password: str | None = None
@@ -95,6 +96,7 @@ def get_config() -> dict:
         "asr_user": c.get("asr_user", ""),
         "asr_password": c.get("asr_password", ""),
         "asr_language": c.get("asr_language", "ru"),
+        "code_editor_theme": c.get("code_editor_theme", "light"),
     }
 
 

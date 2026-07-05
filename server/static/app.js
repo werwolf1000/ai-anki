@@ -3,6 +3,7 @@ let sessionId = null;
 let autoAdvanceTimer = null;
 let needsCode = false;
 let needsMath = false;
+let codeEditorTheme = "light";
 
 const $ = (id) => document.getElementById(id);
 
@@ -51,6 +52,9 @@ async function loadConfig() {
   $("asr_user").value = c.asr_user || "";
   $("asr_password").value = c.asr_password || "";
   $("asr_language").value = c.asr_language || "ru";
+  codeEditorTheme = c.code_editor_theme === "dark" ? "dark" : "light";
+  $("code_editor_theme").value = codeEditorTheme;
+  CodeEditor.setTheme(codeEditorTheme);
 }
 
 async function saveConfig() {
@@ -69,8 +73,11 @@ async function saveConfig() {
       asr_user: $("asr_user").value.trim(),
       asr_password: $("asr_password").value.trim(),
       asr_language: $("asr_language").value.trim() || "ru",
+      code_editor_theme: $("code_editor_theme").value,
     }),
   });
+  codeEditorTheme = $("code_editor_theme").value === "dark" ? "dark" : "light";
+  CodeEditor.setTheme(codeEditorTheme);
   $("settings-msg").textContent = "Сохранено";
   setTimeout(() => ($("settings-msg").textContent = ""), 2000);
 }
@@ -173,7 +180,7 @@ async function showCard(card) {
     VoiceInput.setVisible(false);
     $("question").textContent = card.question;
     CodeEditor.clear();
-    await CodeEditor.show(card.language || "typescript");
+    await CodeEditor.show(card.language || "typescript", codeEditorTheme);
     $("answer-label").textContent = card.is_live_code
       ? "Редактор кода — напишите решение"
       : "Редактор кода — исправьте или дополните";

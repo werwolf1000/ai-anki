@@ -13,6 +13,28 @@ from PyQt6.QtGui import QColor, QFont, QKeySequence
 from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget
 
 from app.code_completions import completion_items, normalize_editor_language
+from app.config_store import normalize_code_editor_theme
+
+_EDITOR_THEMES: dict[str, dict[str, str]] = {
+    "light": {
+        "paper": "#ffffff",
+        "foreground": "#1a1a1a",
+        "margin_fg": "#888888",
+        "margin_bg": "#f0f0f0",
+        "caret": "#111111",
+        "selection": "#cce5ff",
+        "hint": "#666666",
+    },
+    "dark": {
+        "paper": "#1e1e1e",
+        "foreground": "#d4d4d4",
+        "margin_fg": "#858585",
+        "margin_bg": "#252526",
+        "caret": "#aeafad",
+        "selection": "#264f78",
+        "hint": "#aaaaaa",
+    },
+}
 
 
 class CodeEditor(QsciScintilla):
@@ -23,6 +45,7 @@ class CodeEditor(QsciScintilla):
         self._apis: QsciAPIs | None = None
         self._lexer = None
         self._language = "typescript"
+        self._theme = "light"
         self._configure_base()
         self.set_language("typescript")
 
@@ -45,17 +68,30 @@ class CodeEditor(QsciScintilla):
 
         self.setMarginType(0, QsciScintilla.MarginType.NumberMargin)
         self.setMarginWidth(0, "0000")
-        self.setMarginsForegroundColor(QColor("#888888"))
-        self.setMarginsBackgroundColor(QColor("#f0f0f0"))
-
-        self.setCaretForegroundColor(QColor("#111111"))
-        self.setSelectionBackgroundColor(QColor("#cce5ff"))
 
         self.setAutoCompletionSource(QsciScintilla.AutoCompletionSource.AcsAll)
         self.setAutoCompletionThreshold(2)
         self.setAutoCompletionCaseSensitivity(False)
         self.setAutoCompletionReplaceWord(True)
         self.setAutoCompletionUseSingle(QsciScintilla.AutoCompletionUseSingle.AcusNever)
+        self._apply_theme()
+
+    def _apply_theme(self) -> None:
+        colors = _EDITOR_THEMES[self._theme]
+        self.setPaper(QColor(colors["paper"]))
+        self.setColor(QColor(colors["foreground"]))
+        self.setMarginsForegroundColor(QColor(colors["margin_fg"]))
+        self.setMarginsBackgroundColor(QColor(colors["margin_bg"]))
+        self.setCaretForegroundColor(QColor(colors["caret"]))
+        self.setSelectionBackgroundColor(QColor(colors["selection"]))
+        if self._lexer is not None:
+            self._lexer.setDefaultPaper(QColor(colors["paper"]))
+            self._lexer.setDefaultColor(QColor(colors["foreground"]))
+            self._lexer.setPaper(QColor(colors["paper"]))
+
+    def set_theme(self, theme: str) -> None:
+        self._theme = normalize_code_editor_theme(theme)
+        self._apply_theme()
 
     def _make_lexer(self, language: str, font: QFont):
         lang = normalize_editor_language(language)
@@ -92,7 +128,7 @@ class CodeEditor(QsciScintilla):
             return
         self.setLexer(lexer)
         self._apply_apis(lexer)
-        self.setPaper(QColor("#ffffff"))
+        self._apply_theme()
 
     def keyPressEvent(self, event) -> None:  # noqa: N802
         if event.matches(QKeySequence.StandardKey.InsertParagraphSeparator):
@@ -116,12 +152,17 @@ class CodeEditorPanel(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(4)
         self.hint_label = QLabel()
-        self.hint_label.setStyleSheet("color: #666666;")
         self.hint_label.setWordWrap(True)
         layout.addWidget(self.hint_label)
         self.editor = CodeEditor()
         self.editor.submit_requested.connect(self.submit_requested.emit)
         layout.addWidget(self.editor)
+
+    def set_theme(self, theme: str) -> None:
+        self._theme = normalize_code_editor_theme(theme)
+        self.editor.set_theme(self._theme)
+        colors = _EDITOR_THEMES[self._theme]
+        self.hint_label.setStyleSheet(f"color: {colors['hint']};")
 
     def set_placeholder(self, text: str) -> None:
         self.hint_label.setText(text)

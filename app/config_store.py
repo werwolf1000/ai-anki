@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 
 SESSION_LIMIT_MAX = 50
+CODE_EDITOR_THEMES = ("light", "dark")
 
 DEFAULTS: dict = {
     "ollama_url": "http://ollama.webmastermsk.ru:30068",
@@ -19,7 +20,18 @@ DEFAULTS: dict = {
     "asr_user": "",
     "asr_password": "",
     "asr_language": "ru",
+    "code_editor_theme": "light",
 }
+
+
+def normalize_code_editor_theme(value: str | None) -> str:
+    if value in CODE_EDITOR_THEMES:
+        return value
+    return str(DEFAULTS["code_editor_theme"])
+
+
+def monaco_theme_name(theme: str | None) -> str:
+    return "vs-dark" if normalize_code_editor_theme(theme) == "dark" else "vs"
 
 # Старое значение по умолчанию (1.5 с → в UI показывалось как «1 с»)
 LEGACY_AUTO_ADVANCE_MS = 1500
@@ -55,6 +67,7 @@ def load_config(project_dir: Path) -> tuple[dict, Path]:
         save_config(path, config)
     config["session_limit"] = clamp_session_limit(config.get("session_limit", DEFAULTS["session_limit"]))
     config["auto_advance_ms"] = clamp_auto_advance_ms(config.get("auto_advance_ms", DEFAULTS["auto_advance_ms"]))
+    config["code_editor_theme"] = normalize_code_editor_theme(config.get("code_editor_theme"))
     return config, path
 
 
@@ -97,5 +110,6 @@ def save_config(path: Path, config: dict) -> None:
     data = {**DEFAULTS, **config}
     data["session_limit"] = clamp_session_limit(data["session_limit"])
     data["auto_advance_ms"] = clamp_auto_advance_ms(data["auto_advance_ms"])
+    data["code_editor_theme"] = normalize_code_editor_theme(data.get("code_editor_theme"))
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
     config.update(data)

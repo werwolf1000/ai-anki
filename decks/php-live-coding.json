@@ -266,6 +266,146 @@
       "task": "Класс HttpResponse с promoted int $status, string $body и методом isSuccessful(): bool.",
       "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class HttpResponse\n{\n    public function __construct(\n        public int $status,\n        public string $body,\n    ) {\n    }\n\n    public function isSuccessful(): bool\n    {\n        return $this->status >= 200 && $this->status < 300;\n    }\n}",
       "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Interface Logger",
+      "task": "Interface Logger с методом log(string $message): void; класс EchoLogger реализует его.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface Logger\n{\n    public function log(string $message): void;\n}\n\nfinal class EchoLogger implements Logger\n{\n    public function log(string $message): void\n    {\n        echo $message, PHP_EOL;\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Abstract Animal",
+      "task": "Abstract class Animal с abstract name(): string; class Dog extends и возвращает 'dog'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nabstract class Animal\n{\n    abstract public function name(): string;\n}\n\nfinal class Dog extends Animal\n{\n    public function name(): string\n    {\n        return 'dog';\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "DateTimeImmutable add",
+      "task": "Функция addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction addDays(DateTimeImmutable $dt, int $days): DateTimeImmutable\n{\n    return $dt->modify(sprintf('%+d days', $days));\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "JSON encode decode",
+      "task": "Функции toJson(array $data): string и fromJson(string $raw): array через json_encode/json_decode.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction toJson(array $data): string\n{\n    return json_encode($data, JSON_THROW_ON_ERROR);\n}\n\nfunction fromJson(string $raw): array\n{\n    $data = json_decode($raw, true, 512, JSON_THROW_ON_ERROR);\n    return is_array($data) ? $data : [];\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Array map filter",
+      "task": "Функция activeEmails(array $users): array — map email, filter non-empty (array_column + array_filter).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction activeEmails(array $users): array\n{\n    $emails = array_column($users, 'email');\n    return array_values(array_filter($emails, fn(string $e) => $e !== ''));\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "IteratorAggregate Range",
+      "task": "Класс NumberRange implements IteratorAggregate для int $from..$to.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class NumberRange implements IteratorAggregate\n{\n    public function __construct(private int $from, private int $to)\n    {\n    }\n\n    public function getIterator(): Traversable\n    {\n        for ($i = $this->from; $i <= $this->to; $i++) {\n            yield $i;\n        }\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Named arguments greet",
+      "task": "Функция greet(string $name, string $greeting = 'Hello'): string с named args в вызове в комментарии не нужно — просто реализуй.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction greet(string $name, string $greeting = 'Hello'): string\n{\n    return \"{$greeting}, {$name}!\";\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "str_starts_with helper",
+      "task": "Функция startsWith(string $haystack, string $prefix): bool через str_starts_with.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction startsWith(string $haystack, string $prefix): bool\n{\n    return str_starts_with($haystack, $prefix);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "str_contains helper",
+      "task": "Функция contains(string $haystack, string $needle): bool через str_contains.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction contains(string $haystack, string $needle): bool\n{\n    return str_contains($haystack, $needle);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Array find key",
+      "task": "Функция findKey(array $items, callable $predicate): int|string|null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction findKey(array $items, callable $predicate): int|string|null\n{\n    foreach ($items as $key => $value) {\n        if ($predicate($value, $key)) {\n            return $key;\n        }\n    }\n    return null;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Class __toString",
+      "task": "Класс Point с promoted int $x, $y и __toString(): string как '(x,y)'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Point\n{\n    public function __construct(public int $x, public int $y)\n    {\n    }\n\n    public function __toString(): string\n    {\n        return \"({$this->x},{$this->y})\";\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Union types parseId",
+      "task": "Функция parseId(int|string $value): int — если string, (int)$value.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction parseId(int|string $value): int\n{\n    return is_int($value) ? $value : (int) $value;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "never type abort",
+      "task": "Функция abort(string $message): never бросает RuntimeException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction abort(string $message): never\n{\n    throw new RuntimeException($message);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "First class callable",
+      "task": "Класс Greeter с методом hello(string $name): string; переменная $fn = $greeter->hello(...).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfinal class Greeter\n{\n    public function hello(string $name): string\n    {\n        return \"Hi, {$name}\";\n    }\n}\n\n$greeter = new Greeter();\n$fn = $greeter->hello(...);",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "array_chunk",
+      "task": "Функция chunk(array $items, int $size): array через array_chunk.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction chunk(array $items, int $size): array\n{\n    return array_chunk($items, $size);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "array_column",
+      "task": "Функция pluck(array $rows, string $field): array через array_column.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction pluck(array $rows, string $field): array\n{\n    return array_column($rows, $field);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "usort by length",
+      "task": "Функция sortByLength(array $words): array через usort по strlen.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction sortByLength(array $words): array\n{\n    usort($words, fn(string $a, string $b) => strlen($a) <=> strlen($b));\n    return $words;\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "DTO from array",
+      "task": "Readonly class UserDto с id, email; static fromArray(array $row): self.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nreadonly class UserDto\n{\n    public function __construct(public int $id, public string $email)\n    {\n    }\n\n    public static function fromArray(array $row): self\n    {\n        return new self((int) $row['id'], (string) $row['email']);\n    }\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "SplQueue BFS stub",
+      "task": "Функция bfsLevels(array $tree): int — заглушка: вернуть count($tree) через SplQueue (положить корни, dequeue один).",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction bfsLevels(array $tree): int\n{\n    $queue = new SplQueue();\n    foreach ($tree as $node) {\n        $queue->enqueue($node);\n    }\n    if ($queue->isEmpty()) {\n        return 0;\n    }\n    $queue->dequeue();\n    return count($tree);\n}",
+      "language": "php"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Attributes Route",
+      "task": "PHP 8 Attribute Route(string $path); повесь на метод контроллера index().",
+      "reference": "<?php\ndeclare(strict_types=1);\n\n#[Attribute(Attribute::TARGET_METHOD)]\nfinal class Route\n{\n    public function __construct(public string $path)\n    {\n    }\n}\n\nfinal class HomeController\n{\n    #[Route('/')]\n    public function index(): string\n    {\n        return 'ok';\n    }\n}",
+      "language": "php"
     }
   ]
 }

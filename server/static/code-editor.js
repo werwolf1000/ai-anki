@@ -5,6 +5,18 @@
   let editor = null;
   let initPromise = null;
   let vsBase = CDN_VS;
+  let currentTheme = "light";
+
+  function monacoThemeName(theme) {
+    return theme === "dark" ? "vs-dark" : "vs";
+  }
+
+  function applyTheme(theme) {
+    currentTheme = theme === "dark" ? "dark" : "light";
+    if (editor && window.monaco) {
+      monaco.editor.setTheme(monacoThemeName(currentTheme));
+    }
+  }
 
   function mapLanguage(lang) {
     const l = (lang || "typescript").toLowerCase();
@@ -290,7 +302,7 @@ declare module 'rxjs' {
       editor = monaco.editor.create(host, {
         value: "",
         language: "typescript",
-        theme: "vs",
+        theme: monacoThemeName(currentTheme),
         automaticLayout: true,
         minimap: { enabled: false },
         fontSize: 14,
@@ -340,7 +352,12 @@ declare module 'rxjs' {
   }
 
   window.CodeEditor = {
-    async show(language) {
+    setTheme(theme) {
+      applyTheme(theme);
+    },
+
+    async show(language, theme) {
+      if (theme) applyTheme(theme);
       const host = document.getElementById("code-editor-host");
       host.classList.remove("hidden");
       await ensureEditor();

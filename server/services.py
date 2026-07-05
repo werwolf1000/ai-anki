@@ -292,6 +292,7 @@ class AppServices:
             "session_limit", "pass_score", "max_follow_ups", "auto_advance_ms",
             "ollama_url", "model", "api_key", "timeout",
             "asr_url", "asr_user", "asr_password", "asr_language",
+            "code_editor_theme",
         )
         for key in allowed:
             if key in payload:

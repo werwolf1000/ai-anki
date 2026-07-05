@@ -875,6 +875,308 @@ describe('CounterComponent', () => {
   });
 });""",
         ),
+        live(
+            "ngFor trackBy",
+            "Standalone компонент ListComponent: @for (item of items; track item.id) в шаблоне inline.",
+            """import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-list',
+  standalone: true,
+  template: `@for (item of items; track item.id) { <span>{{ item.label }}</span> }`,
+})
+export class ListComponent {
+  items = [{ id: 1, label: 'A' }];
+}""",
+        ),
+        live(
+            "ngStyle binding",
+            "Компонент BoxComponent с [ngStyle]=\"{ color: active ? 'green' : 'gray' }\".",
+            """import { Component } from '@angular/core';
+import { NgStyle } from '@angular/common';
+
+@Component({
+  selector: 'app-box',
+  standalone: true,
+  imports: [NgStyle],
+  template: `<div [ngStyle]="{ color: active ? 'green' : 'gray' }">Box</div>`,
+})
+export class BoxComponent {
+  active = true;
+}""",
+        ),
+        live(
+            "ngClass object",
+            "Компонент PillComponent: [ngClass]=\"{ active: isActive, disabled: isDisabled }\".",
+            """import { Component } from '@angular/core';
+import { NgClass } from '@angular/common';
+
+@Component({
+  selector: 'app-pill',
+  standalone: true,
+  imports: [NgClass],
+  template: `<span [ngClass]="{ active: isActive, disabled: isDisabled }">Pill</span>`,
+})
+export class PillComponent {
+  isActive = true;
+  isDisabled = false;
+}""",
+        ),
+        live(
+            "HostListener click",
+            "Комponent с @HostListener('document:click') onDocumentClick().",
+            """import { Component, HostListener } from '@angular/core';
+
+@Component({
+  selector: 'app-click-tracker',
+  standalone: true,
+  template: `<p>Clicks: {{ count }}</p>`,
+})
+export class ClickTrackerComponent {
+  count = 0;
+
+  @HostListener('document:click')
+  onDocumentClick(): void {
+    this.count++;
+  }
+}""",
+        ),
+        live(
+            "HostBinding class",
+            "Компонент с @HostBinding('class.active') get isActive() { return true; }.",
+            """import { Component, HostBinding } from '@angular/core';
+
+@Component({
+  selector: 'app-host-active',
+  standalone: true,
+  template: `Host`,
+})
+export class HostActiveComponent {
+  @HostBinding('class.active')
+  get isActive(): boolean {
+    return true;
+  }
+}""",
+        ),
+        live(
+            "Async pipe",
+            "Компонент с observable count$ = of(1) и шаблоном {{ count$ | async }}.",
+            """import { Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { of } from 'rxjs';
+
+@Component({
+  selector: 'app-async-count',
+  standalone: true,
+  imports: [AsyncPipe],
+  template: `<p>{{ count$ | async }}</p>`,
+})
+export class AsyncCountComponent {
+  count$ = of(42);
+}""",
+        ),
+        live(
+            "RouterLinkActive",
+            "Шаблон с a routerLink=\"/home\" routerLinkActive=\"active\".",
+            """import { Component } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
+@Component({
+  selector: 'app-nav',
+  standalone: true,
+  imports: [RouterLink, RouterLinkActive],
+  template: `<a routerLink="/home" routerLinkActive="active">Home</a>`,
+})
+export class NavComponent {}""",
+        ),
+        live(
+            "FormArray push",
+            "Reactive form: FormArray с одним FormControl; метод addItem().",
+            """import { Component } from '@angular/core';
+import { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-tags',
+  standalone: true,
+  imports: [ReactiveFormsModule],
+  template: `<div [formArray]="tags"><input *ngFor=\"let c of tags.controls\" [formControl]=\"c\" /></div>`,
+})
+export class TagsComponent {
+  tags = new FormArray<FormControl<string>>([new FormControl('', { nonNullable: true })]);
+
+  addItem(): void {
+    this.tags.push(new FormControl('', { nonNullable: true }));
+  }
+}""",
+        ),
+        live(
+            "Custom validator",
+            "Validator forbiddenName(name: string): ValidatorFn запрещает exact match.",
+            """import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
+export function forbiddenName(name: string): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    return control.value === name ? { forbiddenName: { value: control.value } } : null;
+  };
+}""",
+        ),
+        live(
+            "CanDeactivate guard",
+            "Functional guard canDeactivate: CanDeactivateFn возвращает true если !component.isDirty().",
+            """import { CanDeactivateFn } from '@angular/router';
+
+export interface DirtyCheck {
+  isDirty(): boolean;
+}
+
+export const canDeactivateDirty: CanDeactivateFn<DirtyCheck> = (component) => {
+  return component.isDirty() ? confirm('Leave?') : true;
+};""",
+        ),
+        live(
+            "InjectionToken factory",
+            "InjectionToken API_URL и factory provider useValue 'https://api.example.com'.",
+            """import { InjectionToken } from '@angular/core';
+
+export const API_URL = new InjectionToken<string>('API_URL');
+
+export const apiUrlProvider = {
+  provide: API_URL,
+  useValue: 'https://api.example.com',
+};""",
+        ),
+        live(
+            "HttpInterceptorFn",
+            "Functional interceptor добавляет header X-App: ai-anki.",
+            """import { HttpInterceptorFn } from '@angular/common/http';
+
+export const appInterceptor: HttpInterceptorFn = (req, next) => {
+  return next(req.clone({ setHeaders: { 'X-App': 'ai-anki' } }));
+};""",
+        ),
+        live(
+            "toSignal",
+            "Комponent с count = toSignal(of(0), { initialValue: 0 }).",
+            """import { Component } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { of } from 'rxjs';
+
+@Component({
+  selector: 'app-signal-count',
+  standalone: true,
+  template: `<p>{{ count() }}</p>`,
+})
+export class SignalCountComponent {
+  count = toSignal(of(5), { initialValue: 0 });
+}""",
+        ),
+        live(
+            "computed signal",
+            "Signals first/last и computed fullName = `${first()} ${last()}`.",
+            """import { Component, computed, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-full-name',
+  standalone: true,
+  template: `<p>{{ fullName() }}</p>`,
+})
+export class FullNameComponent {
+  first = signal('Ada');
+  last = signal('Lovelace');
+  fullName = computed(() => `${this.first()} ${this.last()}`);
+}""",
+        ),
+        live(
+            "effect log",
+            "Signal value + effect(() => console.log(value())).",
+            """import { Component, effect, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-effect-demo',
+  standalone: true,
+  template: `<button (click)="inc()">{{ value() }}</button>`,
+})
+export class EffectDemoComponent {
+  value = signal(0);
+
+  constructor() {
+    effect(() => {
+      console.log(this.value());
+    });
+  }
+
+  inc(): void {
+    this.value.update((v) => v + 1);
+  }
+}""",
+        ),
+        live(
+            "OnPush component",
+            "Standalone component с changeDetection: ChangeDetectionStrategy.OnPush.",
+            """import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+@Component({
+  selector: 'app-on-push',
+  standalone: true,
+  template: `<p>{{ title }}</p>`,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class OnPushComponent {
+  title = 'OnPush';
+}""",
+        ),
+        live(
+            "ViewChild input",
+            "Комponent с @ViewChild('box') box!: ElementRef<HTMLDivElement>.",
+            """import { Component, ElementRef, ViewChild } from '@angular/core';
+
+@Component({
+  selector: 'app-view-child',
+  standalone: true,
+  template: `<div #box>Hello</div>`,
+})
+export class ViewChildComponent {
+  @ViewChild('box') box!: ElementRef<HTMLDivElement>;
+}""",
+        ),
+        live(
+            "ContentChild template",
+            "Комponent с ng-content и @ContentChild('ref') ref!: ElementRef.",
+            """import { Component, ContentChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-wrapper',
+  standalone: true,
+  template: `<ng-content select=\"[slot]\"></ng-content>`,
+})
+export class WrapperComponent {
+  @ContentChild('ref') ref!: ElementRef<HTMLElement>;
+}""",
+        ),
+        live(
+            "provideRouter",
+            "Routes config с path '' redirectTo 'home'.",
+            """import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'home', loadComponent: () => import('./home.component').then((m) => m.HomeComponent) },
+];""",
+        ),
+        live(
+            "input() required",
+            "Комponent с label = input.required<string>() и шаблоном {{ label() }}.",
+            """import { Component, input } from '@angular/core';
+
+@Component({
+  selector: 'app-label',
+  standalone: true,
+  template: `<span>{{ label() }}</span>`,
+})
+export class LabelComponent {
+  label = input.required<string>();
+}""",
+        ),
     ]
 
 

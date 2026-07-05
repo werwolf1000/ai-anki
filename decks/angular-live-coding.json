@@ -315,6 +315,146 @@
       "task": "Минимальный spec: TestBed.configureTestingModule({ imports: [CounterComponent] }); createComponent; click increment.",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { CounterComponent } from './counter.component';\n\ndescribe('CounterComponent', () => {\n  let fixture: ComponentFixture<CounterComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [CounterComponent] }).compileComponents();\n    fixture = TestBed.createComponent(CounterComponent);\n    fixture.detectChanges();\n  });\n\n  it('increments', () => {\n    fixture.nativeElement.querySelector('button').click();\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('1');\n  });\n});",
       "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ngFor trackBy",
+      "task": "Standalone компонент ListComponent: @for (item of items; track item.id) в шаблоне inline.",
+      "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-list',\n  standalone: true,\n  template: `@for (item of items; track item.id) { <span>{{ item.label }}</span> }`,\n})\nexport class ListComponent {\n  items = [{ id: 1, label: 'A' }];\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ngStyle binding",
+      "task": "Компонент BoxComponent с [ngStyle]=\"{ color: active ? 'green' : 'gray' }\".",
+      "reference": "import { Component } from '@angular/core';\nimport { NgStyle } from '@angular/common';\n\n@Component({\n  selector: 'app-box',\n  standalone: true,\n  imports: [NgStyle],\n  template: `<div [ngStyle]=\"{ color: active ? 'green' : 'gray' }\">Box</div>`,\n})\nexport class BoxComponent {\n  active = true;\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ngClass object",
+      "task": "Компонент PillComponent: [ngClass]=\"{ active: isActive, disabled: isDisabled }\".",
+      "reference": "import { Component } from '@angular/core';\nimport { NgClass } from '@angular/common';\n\n@Component({\n  selector: 'app-pill',\n  standalone: true,\n  imports: [NgClass],\n  template: `<span [ngClass]=\"{ active: isActive, disabled: isDisabled }\">Pill</span>`,\n})\nexport class PillComponent {\n  isActive = true;\n  isDisabled = false;\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HostListener click",
+      "task": "Комponent с @HostListener('document:click') onDocumentClick().",
+      "reference": "import { Component, HostListener } from '@angular/core';\n\n@Component({\n  selector: 'app-click-tracker',\n  standalone: true,\n  template: `<p>Clicks: {{ count }}</p>`,\n})\nexport class ClickTrackerComponent {\n  count = 0;\n\n  @HostListener('document:click')\n  onDocumentClick(): void {\n    this.count++;\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HostBinding class",
+      "task": "Компонент с @HostBinding('class.active') get isActive() { return true; }.",
+      "reference": "import { Component, HostBinding } from '@angular/core';\n\n@Component({\n  selector: 'app-host-active',\n  standalone: true,\n  template: `Host`,\n})\nexport class HostActiveComponent {\n  @HostBinding('class.active')\n  get isActive(): boolean {\n    return true;\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Async pipe",
+      "task": "Компонент с observable count$ = of(1) и шаблоном {{ count$ | async }}.",
+      "reference": "import { Component } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { of } from 'rxjs';\n\n@Component({\n  selector: 'app-async-count',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `<p>{{ count$ | async }}</p>`,\n})\nexport class AsyncCountComponent {\n  count$ = of(42);\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "RouterLinkActive",
+      "task": "Шаблон с a routerLink=\"/home\" routerLinkActive=\"active\".",
+      "reference": "import { Component } from '@angular/core';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\n\n@Component({\n  selector: 'app-nav',\n  standalone: true,\n  imports: [RouterLink, RouterLinkActive],\n  template: `<a routerLink=\"/home\" routerLinkActive=\"active\">Home</a>`,\n})\nexport class NavComponent {}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "FormArray push",
+      "task": "Reactive form: FormArray с одним FormControl; метод addItem().",
+      "reference": "import { Component } from '@angular/core';\nimport { FormArray, FormControl, ReactiveFormsModule } from '@angular/forms';\n\n@Component({\n  selector: 'app-tags',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `<div [formArray]=\"tags\"><input *ngFor=\"let c of tags.controls\" [formControl]=\"c\" /></div>`,\n})\nexport class TagsComponent {\n  tags = new FormArray<FormControl<string>>([new FormControl('', { nonNullable: true })]);\n\n  addItem(): void {\n    this.tags.push(new FormControl('', { nonNullable: true }));\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Custom validator",
+      "task": "Validator forbiddenName(name: string): ValidatorFn запрещает exact match.",
+      "reference": "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\nexport function forbiddenName(name: string): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    return control.value === name ? { forbiddenName: { value: control.value } } : null;\n  };\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "CanDeactivate guard",
+      "task": "Functional guard canDeactivate: CanDeactivateFn возвращает true если !component.isDirty().",
+      "reference": "import { CanDeactivateFn } from '@angular/router';\n\nexport interface DirtyCheck {\n  isDirty(): boolean;\n}\n\nexport const canDeactivateDirty: CanDeactivateFn<DirtyCheck> = (component) => {\n  return component.isDirty() ? confirm('Leave?') : true;\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "InjectionToken factory",
+      "task": "InjectionToken API_URL и factory provider useValue 'https://api.example.com'.",
+      "reference": "import { InjectionToken } from '@angular/core';\n\nexport const API_URL = new InjectionToken<string>('API_URL');\n\nexport const apiUrlProvider = {\n  provide: API_URL,\n  useValue: 'https://api.example.com',\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "HttpInterceptorFn",
+      "task": "Functional interceptor добавляет header X-App: ai-anki.",
+      "reference": "import { HttpInterceptorFn } from '@angular/common/http';\n\nexport const appInterceptor: HttpInterceptorFn = (req, next) => {\n  return next(req.clone({ setHeaders: { 'X-App': 'ai-anki' } }));\n};",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "toSignal",
+      "task": "Комponent с count = toSignal(of(0), { initialValue: 0 }).",
+      "reference": "import { Component } from '@angular/core';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { of } from 'rxjs';\n\n@Component({\n  selector: 'app-signal-count',\n  standalone: true,\n  template: `<p>{{ count() }}</p>`,\n})\nexport class SignalCountComponent {\n  count = toSignal(of(5), { initialValue: 0 });\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "computed signal",
+      "task": "Signals first/last и computed fullName = `${first()} ${last()}`.",
+      "reference": "import { Component, computed, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-full-name',\n  standalone: true,\n  template: `<p>{{ fullName() }}</p>`,\n})\nexport class FullNameComponent {\n  first = signal('Ada');\n  last = signal('Lovelace');\n  fullName = computed(() => `${this.first()} ${this.last()}`);\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "effect log",
+      "task": "Signal value + effect(() => console.log(value())).",
+      "reference": "import { Component, effect, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-effect-demo',\n  standalone: true,\n  template: `<button (click)=\"inc()\">{{ value() }}</button>`,\n})\nexport class EffectDemoComponent {\n  value = signal(0);\n\n  constructor() {\n    effect(() => {\n      console.log(this.value());\n    });\n  }\n\n  inc(): void {\n    this.value.update((v) => v + 1);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "OnPush component",
+      "task": "Standalone component с changeDetection: ChangeDetectionStrategy.OnPush.",
+      "reference": "import { ChangeDetectionStrategy, Component } from '@angular/core';\n\n@Component({\n  selector: 'app-on-push',\n  standalone: true,\n  template: `<p>{{ title }}</p>`,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OnPushComponent {\n  title = 'OnPush';\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ViewChild input",
+      "task": "Комponent с @ViewChild('box') box!: ElementRef<HTMLDivElement>.",
+      "reference": "import { Component, ElementRef, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'app-view-child',\n  standalone: true,\n  template: `<div #box>Hello</div>`,\n})\nexport class ViewChildComponent {\n  @ViewChild('box') box!: ElementRef<HTMLDivElement>;\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "ContentChild template",
+      "task": "Комponent с ng-content и @ContentChild('ref') ref!: ElementRef.",
+      "reference": "import { Component, ContentChild, ElementRef } from '@angular/core';\n\n@Component({\n  selector: 'app-wrapper',\n  standalone: true,\n  template: `<ng-content select=\"[slot]\"></ng-content>`,\n})\nexport class WrapperComponent {\n  @ContentChild('ref') ref!: ElementRef<HTMLElement>;\n}",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "provideRouter",
+      "task": "Routes config с path '' redirectTo 'home'.",
+      "reference": "import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  { path: '', pathMatch: 'full', redirectTo: 'home' },\n  { path: 'home', loadComponent: () => import('./home.component').then((m) => m.HomeComponent) },\n];",
+      "language": "typescript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "input() required",
+      "task": "Комponent с label = input.required<string>() и шаблоном {{ label() }}.",
+      "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-label',\n  standalone: true,\n  template: `<span>{{ label() }}</span>`,\n})\nexport class LabelComponent {\n  label = input.required<string>();\n}",
+      "language": "typescript"
     }
   ]
 }
