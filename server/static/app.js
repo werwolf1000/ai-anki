@@ -106,6 +106,26 @@ async function testOllama() {
   $("settings-msg").className = r.ok ? "muted" : "error";
 }
 
+function startDueStudy() {
+  requestStudy("due").catch((e) => alert(e.message));
+}
+
+function bindDeckRow(tr, deckId) {
+  tr.onclick = () => selectDeck(deckId);
+  tr.ondblclick = () => {
+    selectDeck(deckId);
+    startDueStudy();
+  };
+}
+
+function bindDeckCard(card, deckId) {
+  card.onclick = () => selectDeck(deckId);
+  card.ondblclick = () => {
+    selectDeck(deckId);
+    startDueStudy();
+  };
+}
+
 function selectDeck(deckId) {
   selectedDeckId = deckId;
   selectedDeckHasTopics = !!(decksById[deckId]?.has_topics);
@@ -139,7 +159,7 @@ async function loadDecks() {
         <td>${d.name}</td><td>${d.total}</td><td>${d.mastered}</td><td>${d.passed_today}</td>
         <td>${d.due}</td><td>${d.new}</td><td>${d.weak}</td>
         <td>${d.studied ? d.avg_score : "—"}</td>`;
-      tr.onclick = () => selectDeck(d.deck_id);
+      bindDeckRow(tr, d.deck_id);
 
       const card = document.createElement("div");
       card.className = "deck-card";
@@ -155,7 +175,7 @@ async function loadDecks() {
           <span>Слабые ${d.weak}</span>
           <span>Ср. ${d.studied ? d.avg_score : "—"}</span>
         </div>`;
-      card.onclick = () => selectDeck(d.deck_id);
+      bindDeckCard(card, d.deck_id);
       list.appendChild(card);
     }
     tbody.appendChild(tr);
@@ -388,7 +408,7 @@ function fbHasReview(text) {
 
 $("btn-save").onclick = () => saveConfig().catch((e) => alert(e.message));
 $("btn-test").onclick = () => testOllama().catch((e) => alert(e.message));
-$("btn-due").onclick = () => requestStudy("due").catch((e) => alert(e.message));
+$("btn-due").onclick = startDueStudy;
 $("btn-new").onclick = () => requestStudy("new").catch((e) => alert(e.message));
 $("btn-weak").onclick = () => requestStudy("weak").catch((e) => alert(e.message));
 $("btn-all").onclick = () => requestStudy("all").catch((e) => alert(e.message));
