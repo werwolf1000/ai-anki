@@ -5,7 +5,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from live_coding_card import live
+from live_coding_card import live as _live
+
+
+def live(*args, **kwargs):
+    kwargs.setdefault("lang", "python")
+    return _live(*args, **kwargs)
 def build_cards() -> list[dict]:
     return [
         live(
