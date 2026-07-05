@@ -246,6 +246,7 @@ tr:hover { cursor: pointer; background: #f8fafc; }
   border-radius: 8px;
   padding: 0.75rem 1rem;
   background: #fff;
+  color: var(--text);
   cursor: pointer;
   text-align: left;
   font: inherit;
@@ -255,11 +256,14 @@ tr:hover { cursor: pointer; background: #f8fafc; }
 .topic-card:hover {
   background: #f8fafc;
   border-color: var(--accent);
+  color: var(--text);
 }
 
 .topic-card-title {
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+  color: var(--text);
 }
 
 .topic-card-stats {
