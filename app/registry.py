@@ -41,6 +41,7 @@ BUILTIN_DISPLAY_NAMES: dict[str, str] = {
     "higher-math.json": "Высшая математика",
     "laravel-basics.json": "Laravel",
     "laravel-live-coding.json": "Laravel Live-coding",
+    "anatomy.json": "Анатомия",
 }
 
 SKIP_STANDALONE: set[str] = {"angular-code.json"}

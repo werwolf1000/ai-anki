@@ -1,0 +1,4245 @@
+{
+  "name": "Анатомия",
+  "cards": [
+    {
+      "card_type": "anatomy",
+      "question": "Что такое анатомия?",
+      "reference": "Наука о форме и строении тела человека и животных; делится на макро- и микроскопическую.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Сагittal plane?",
+      "reference": "Сагittalная плоскость делит тело на правую и левую части.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Frontal (coronal) plane?",
+      "reference": "Фронтальная плоскость делит тело на переднюю и заднюю части.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Transverse plane?",
+      "reference": "Поперечная (горизонтальная) плоскость делит тело на верхнюю и нижнюю части.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что означает cranial / superior?",
+      "reference": "К голове, выше (верхнее положение).",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Caudal / inferior?",
+      "reference": "К хвосту/ногам, ниже.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Anterior / ventral?",
+      "reference": "Передняя (ventral — животная сторона).",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Posterior / dorsal?",
+      "reference": "Задняя (dorsal — спинная сторона).",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Medial vs lateral?",
+      "reference": "Medial — ближе к срединной линии; lateral — дальше от неё.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Proximal vs distal?",
+      "reference": "Proximal — ближе к туловищу; distal — дальше от туловища (для конечностей).",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Superficial vs deep?",
+      "reference": "Поверхностный vs глубокий слой.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое анатомическое положение?",
+      "reference": "Стандартная поза: стоя, ладони вперёд, большие пальцы наружу.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Terms of movement: flexion?",
+      "reference": "Сгибание — уменьшение угла в суставе.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Extension?",
+      "reference": "Разгибание — увеличение угла в суставе.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Abduction / adduction?",
+      "reference": "Отведение от срединной линии / приведение к ней.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Rotation?",
+      "reference": "Вращение вокруг продольной оси кости или органа.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое fascia?",
+      "reference": "Соединительнотканная оболочка, окружающая мышцы и органы.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Сerosa / adventitia?",
+      "reference": "Сerosa — у органов в полостях; adventitia — у органов вне полостей.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое visceral vs parietal?",
+      "reference": "Visceral — покрывает орган; parietal — выстилает стенку полости.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Homeostasis в контексте анатомии?",
+      "reference": "Согласованная работа систем для стабильности внутренней среды.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Сколько костей у взрослого человека?",
+      "reference": "Около 206 (вариабельно — сесамовидные, слияния).",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Диафиз и эпифиз?",
+      "reference": "Диафиз — ствол кости; эпифиз — концевые части с суставными поверхностями.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Костный мозг?",
+      "reference": "В полостях костей (красный — кроветворение, жёлтый — жир).",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Типы костей по форме?",
+      "reference": "Длинные, короткие, плоские, нерегулярные, сесамовидные.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Синдесмоз / симфиз / синостоз?",
+      "reference": "Сочленение соединительной тканью / хрящом / костью.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Synovial joint components?",
+      "reference": "Суставная полость, синовиальная жидкость, суставной хрящ, кapsula.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ball-and-socket joint пример?",
+      "reference": "Плечевой и тазобедренный суставы.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hinge joint пример?",
+      "reference": "Локтевой, коленный.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pivot joint?",
+      "reference": "Атланто-аксиальный (C1–C2) — вращение головы.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Axial skeleton?",
+      "reference": "Череп, позвоночник, грудная клетка.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Appendicular skeleton?",
+      "reference": "Кости плечевого пояса, свободные конечности, таз.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Clavicle и scapula?",
+      "reference": "Ключица и лопатка — пояс верхней конечности.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pelvis?",
+      "reference": "Подвздошные, седалищные, лобковые кости + крестец.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Fontanelles?",
+      "reference": "«Мягкие точки» черепа новорождённого до окостенения.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Osteoblast / osteoclast?",
+      "reference": "Клетки формирования / резорбции костной ткани.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Типы мышечной тissue?",
+      "reference": "Поперечнополосатая (скелетная), гладкая, сердечная.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Origin vs insertion?",
+      "reference": "Начало (проксимальнее, обычно неподвижнее) vs место прикрепления (движется).",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Agonist / antagonist?",
+      "reference": "Мышца, выполняющая движение / противодействующая ему.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Synergist?",
+      "reference": "Помогает agonist, стабилизирует сустав.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Fascicle arrangements?",
+      "reference": "Параллельные, круговые, одноперистые, двуперистые, многоперистые.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Tendon?",
+      "reference": "Плотное сухожилие — прикрепление мышцы к кости.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Aponeurosis?",
+      "reference": "Широкое плоское сухожильное листовидное прикрепление.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Motor unit?",
+      "reference": "Мотонейрон + все иннервируемые им мышечные волокна.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое sarcomere?",
+      "reference": "Функциональная единица поперечнополосатой мышцы между Z-линиями.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Actin и myosin?",
+      "reference": "Белки, обеспечивающие скольжение и сокращение.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Isometric vs isotonic?",
+      "reference": "Сокращение без изменения длины / с укорочением.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Slow-twitch vs fast-twitch fibers?",
+      "reference": "Type I (выносливость) vs Type II (сила, скорость).",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое motor end plate?",
+      "reference": "Нервно-мышечное соединение — синапс на мышечном волокне.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Delayed onset muscle soreness?",
+      "reference": "DOMS — микроповреждения после непривычной нагрузки.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Rotator cuff?",
+      "reference": "Группа мышц стабилизирующих плечевой сустав (supraspinatus и др.).",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Камеры сердца?",
+      "reference": "Правое и левое предсердия; правый и левый желудочки.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Клапаны сердца?",
+      "reference": "Трicuspid, mitral (bicuspid), pulmonary, aortic.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Systole / diastole?",
+      "reference": "Систола — сокращение; диастола — расслабление/наполнение.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Малый круг кровообращения?",
+      "reference": "Правый желудочек → лёгочная артерия → лёгкие → лёгочные veins → левое предсердие.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Большой круг?",
+      "reference": "Левый желудочек → аорта → органы → vena cava → правое предсердие.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Arteries vs veins?",
+      "reference": "Артерии несут кровь от сердца (обычно богаты кислородом в большом круге); veins — к сердцу.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое capillaries?",
+      "reference": "Капилляры — обмен газов и питательных веществ с тканями.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Sinoatrial node?",
+      "reference": "SA-узел — «пейсмeker» сердца в правом предсердии.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "AV node и bundle of His?",
+      "reference": "Проведение импульса предсердия → желудочки.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Coronary circulation?",
+      "reference": "Коронарные артерии питают миокард.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Blood pressure systolic/diastolic?",
+      "reference": "Давление при систоле / диастоле.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Что такое stroke volume?",
+      "reference": "Объём крови, выбрасываемый желудочком за одно сокращение.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Atherosclerosis?",
+      "reference": "Отложение бляшек в артериях — риск ишемии.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymph return role?",
+      "reference": "Часть жидкости возвращается через лимфатическую систему в вены.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Portal circulation?",
+      "reference": "Портальная система печени — вена из ЖКТ → печень → vena cava.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Upper vs lower respiratory tract?",
+      "reference": "Верхние: нос, глотка, гортань; нижние: трахея, бронхи, лёгкие.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Alveoli function?",
+      "reference": "Газообмен: O₂ и CO₂ через alveolar-capillary membrane.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Diaphragm role?",
+      "reference": "Главная мышца вдоха — опускается, увеличивая объём грудной полости.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "External intercostals?",
+      "reference": "Поднимают рёбра при вдохе.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pleura?",
+      "reference": "Visceral и parietal pleura с pleural cavity и fluid.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Conducting vs respiratory zone?",
+      "reference": "Проведение воздуха без газообмена vs зона alveoli.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Surfactant?",
+      "reference": "Снижает surface tension в alveoli — предотвращает collapse.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Vital capacity?",
+      "reference": "Максимальный объём выдоха после максимального вдоха.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Anatomical dead space?",
+      "reference": "Объём дыхательных путей без участия в газообмене.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Carina?",
+      "reference": "Разветвление трахеи на главные bronchi.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Larynx и vocal cords?",
+      "reference": "Гортань — голосовые связки, защита трахеи при глотании.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Epiglottis?",
+      "reference": "Закрывает glottis при глотании.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Bronchi vs bronchioles?",
+      "reference": "Проводящие пути с хрящом → без хряща, с smooth muscle.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Mediastinum?",
+      "reference": "Средостение — сердце, крупные сосуды, трахея, пищевод.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cough reflex anatomy?",
+      "reference": "Раздражение receptors в airways → expiratory muscles.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Oral cavity role?",
+      "reference": "Механическая обработка, salivary amylase, bolus formation.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Esophagus?",
+      "reference": "Перistalsis доставляет пищу в stomach.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Stomach regions?",
+      "reference": "Cardia, fundus, body, pylorus; gastric mucosa, glands.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Small intestine parts?",
+      "reference": "Duodenum, jejunum, ileum — основное всасывание.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Large intestine?",
+      "reference": "Cecum, colon, rectum — вода, electrolytes, microbiota.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Liver lobes?",
+      "reference": "Печень — detox, bile production; left/right lobes, caudate, quadrate.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Gallbladder?",
+      "reference": "Хранение и концентрация bile.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pancreas exocrine/endocrine?",
+      "reference": "Digestive enzymes (exocrine) + insulin/glucagon (islets of Langerhans).",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Villi и microvilli?",
+      "reference": "Увеличивают surface area тонкой кишки.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hepatic portal vein?",
+      "reference": "Кровь из ЖКТ → печень перед systemic circulation.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Sphincter of Oddi?",
+      "reference": "Кontrol bile/pancreatic juice entry в duodenum.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Appendix?",
+      "reference": "Придаток cecum — lymphoid tissue.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Greater omentum?",
+      "reference": "Жировая «фартук»-складка — защита и immmune role.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Mesentery?",
+      "reference": "Прикрепление intestines к posterior abdominal wall.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Peristalsis mechanism?",
+      "reference": "Coordinated smooth muscle contraction waves.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Kidney structure?",
+      "reference": "Cortex, medulla, renal pyramids, pelvis.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Nephron?",
+      "reference": "Функциональная единица: glomerulus + tubules (PCT, loop of Henle, DCT).",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Glomerular filtration?",
+      "reference": "Фильтрация plasma в Bowman's capsule.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ureter, bladder, urethra?",
+      "reference": "Проведение и хранение urine до выведения.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Detrusor muscle?",
+      "reference": "Мышца стенки мочевого пузыря.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Internal vs external urethral sphincter?",
+      "reference": "Involuntary smooth vs voluntary skeletal (perineum).",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Renal artery/vein?",
+      "reference": "Кровоснабжение почки (~20% cardiac output).",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "ADH effect on kidney?",
+      "reference": "Увеличивает reabsorption воды в collecting ducts.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Aldosterone?",
+      "reference": "Reabsorption Na⁺ в distal nephron.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Juxtaglomerular apparatus?",
+      "reference": "Regulation renin release.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Micturition reflex?",
+      "reference": "Bladder stretch → parasympathetic contraction; voluntary control external sphincter.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Renal calyces?",
+      "reference": "Collect urine from pyramids into pelvis.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Countercurrent multiplier?",
+      "reference": "Loop of Henle concentrates urine in medulla.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Prostate (male)?",
+      "reference": "Surrounds urethra — secretions in semen.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Female urethra length?",
+      "reference": "Короче — выше риск UTI.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "CNS vs PNS?",
+      "reference": "Central (brain, spinal cord) vs peripheral nerves, ganglia.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Neuron parts?",
+      "reference": "Soma, dendrites, axon, synaptic terminals.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Myelin?",
+      "reference": "Schwann cells (PNS) / oligodendrocytes (CNS) — saltatory conduction.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Synapse?",
+      "reference": "Presynaptic neuron → synaptic cleft → postsynaptic neuron.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Grey vs white matter?",
+      "reference": "Grey — cell bodies; white — myelinated tracts.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Spinal cord cross-section?",
+      "reference": "Grey H-shape (horns), white columns, central canal.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Dorsal root vs ventral root?",
+      "reference": "Sensory afferent vs motor efferent.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Reflex arc?",
+      "reference": "Receptor → sensory neuron → interneuron → motor neuron → effector.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Autonomic sympathetic vs parasympathetic?",
+      "reference": "Fight-or-flight vs rest-and-digest.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cranial nerves count?",
+      "reference": "12 пар (I–XII) — olfactory, optic, oculomotor, …).",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Blood-brain barrier?",
+      "reference": "Tight junctions capillaries CNS — selective permeability.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "CSF circulation?",
+      "reference": "Choroid plexus → ventricles → subarachnoid space → absorption.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Meninges layers?",
+      "reference": "Dura, arachnoid, pia mater.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ganglion?",
+      "reference": "Cluster of neuron cell bodies in PNS.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Tract vs nerve?",
+      "reference": "CNS bundle of axons vs PNS bundle.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Endocrine vs exocrine?",
+      "reference": "Hormones в blood vs ducts наружу.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hypothalamus-pituitary axis?",
+      "reference": "Hypothalamus releasing hormones → anterior pituitary.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Thyroid hormones?",
+      "reference": "T3/T4 — metabolism regulation; iodine needed.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Parathyroid?",
+      "reference": "PTH — calcium homeostasis с костями и kidneys.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Adrenal cortex zones?",
+      "reference": "Mineralocorticoids (aldosterone), glucocorticoids (cortisol), androgens.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Adrenal medulla?",
+      "reference": "Epinephrine/norepinephrine — sympathetic response.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pancreatic islets?",
+      "reference": "Insulin (beta), glucagon (alpha).",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pineal gland?",
+      "reference": "Melatonin — circadian rhythm.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Negative feedback?",
+      "reference": "Hormone уровень подавляет дальнейшую секрецию.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Target cell receptors?",
+      "reference": "Cell-surface или intracellular (steroid hormones).",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Growth hormone source?",
+      "reference": "Anterior pituitary — somatotrophs.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Oxytocin / ADH storage?",
+      "reference": "Posterior pituitary releases hormones made in hypothalamus.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Thymus role?",
+      "reference": "T-cell maturation ( prominent in children).",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Gonads endocrine?",
+      "reference": "Testosterone / estrogen-progesterone.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Diabetes types anatomy link?",
+      "reference": "Type 1 — beta cell destruction; type 2 — insulin resistance.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Eye layers?",
+      "reference": "Fibrous (sclera/cornea), vascular (choroid/ciliary/iris), retina.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cornea vs lens?",
+      "reference": "Cornea — фиксированная преломляющая поверхность; lens — accommodation.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Retina photoreceptors?",
+      "reference": "Rods (dim light) vs cones (color, detail).",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Fovea centralis?",
+      "reference": "Центральная ямка — максимальная acuity.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Optic nerve?",
+      "reference": "CN II — axons ganglion cells → brain.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ear outer/middle/inner?",
+      "reference": "Pinna/ canal; ossicles; cochlea/vestibule.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Tympanic membrane?",
+      "reference": "Eardrum — vibration to ossicles.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cochlea function?",
+      "reference": "Organ of Corti — hearing transduction.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Semicircular canals?",
+      "reference": "Balance — rotational acceleration.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Taste buds location?",
+      "reference": "Papillae tongue primarily; also soft palate, pharynx.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Olfactory epithelium?",
+      "reference": "Upper nasal cavity — smell receptors.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lacrimal apparatus?",
+      "reference": "Tear production and drainage.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Extraocular muscles?",
+      "reference": "Six muscles move each eye (CN III, IV, VI).",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pupillary reflex?",
+      "reference": "Light → CN II → midbrain → CN III constriction.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Presbyopia?",
+      "reference": "Age-related lens stiffening — loss accommodation.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Skin layers?",
+      "reference": "Epidermis, dermis, hypodermis (subcutaneous).",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Epidermis strata?",
+      "reference": "Stratum corneum → basale (keratinocytes).",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Melanocytes?",
+      "reference": "Melanin production — UV protection.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Dermis components?",
+      "reference": "Collagen, elastin, blood vessels, nerves, appendages.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hair follicle?",
+      "reference": "Epithelial root sheath, dermal papilla, arrector pili.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Sebaceous glands?",
+      "reference": "Sebum — lubrication skin/hair.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Eccrine vs apocrine sweat?",
+      "reference": "Thermoregulation widespread vs body odor areas.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Nails structure?",
+      "reference": "Nail plate, matrix, bed, lunula.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Pacinian corpuscles?",
+      "reference": "Deep pressure/vibration mechanoreceptors in dermis.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Free nerve endings?",
+      "reference": "Pain and temperature.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Barrier function?",
+      "reference": "Prevents water loss and pathogen entry.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Vitamin D synthesis?",
+      "reference": "UV in epidermis converts cholesterol derivatives.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Blister anatomy?",
+      "reference": "Separation epidermis from dermis — fluid-filled.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Burn degrees?",
+      "reference": "1st epidermis; 2nd partial dermis; 3rd full thickness.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Skin graft?",
+      "reference": "Transplant epidermis/dermis for wound coverage.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymph composition?",
+      "reference": "Interstitial fluid, lymphocytes, proteins returned to blood.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymph capillaries?",
+      "reference": "Highly permeable — pick up excess tissue fluid.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymph nodes function?",
+      "reference": "Filter lymph, immune activation (B/T cells).",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Major lymph node groups?",
+      "reference": "Cervical, axillary, inguinal, mesenteric.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Thoracic duct?",
+      "reference": "Largest lymph vessel — drains most body into left subclavian vein.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Right lymphatic duct?",
+      "reference": "Drains right upper quadrant.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Spleen functions?",
+      "reference": "Blood filtration, immune response, platelet storage.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Tonsils?",
+      "reference": "Mucosa-associated lymphoid tissue — first defense pathogens.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Peyer's patches?",
+      "reference": "Lymphoid follicles in ileum.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymphatic vs blood capillaries?",
+      "reference": "One-way valves, no RBC, blind-ended.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Edema cause?",
+      "reference": "Excess interstitial fluid when lymph/blood flow impaired.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymphedema?",
+      "reference": "Chronic swelling from lymph obstruction.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Macrophages in nodes?",
+      "reference": "Phagocytose pathogens and debris.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Adaptive immunity in nodes?",
+      "reference": "Antigen presentation to lymphocytes.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lymphatic role in fat absorption?",
+      "reference": "Lacteals in villi transport chylomicrons.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Testes structure?",
+      "reference": "Seminiferous tubules — spermatogenesis; interstitial Leydig cells — testosterone.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Epididymis / vas deferens?",
+      "reference": "Sperm maturation and transport.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Prostate, seminal vesicles?",
+      "reference": "Accessory glands — seminal fluid components.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Penis erectile tissue?",
+      "reference": "Corpora cavernosa and spongiosum.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ovaries?",
+      "reference": "Oogenesis, estrogen/progesterone production.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Uterine tubes (fallopian)?",
+      "reference": "Fertilization site; cilia move ovum.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Uterus layers?",
+      "reference": "Endometrium, myometrium, perimetrium.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Menstrual cycle anatomy?",
+      "reference": "Endometrial proliferation and shedding.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Placenta?",
+      "reference": "Fetal-maternal exchange organ.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Breast (mammary) anatomy?",
+      "reference": "Glandular lobules, ducts, adipose; lactiferous sinuses.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Puberty changes?",
+      "reference": "Secondary sex characteristics via gonadal hormones.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Scrotum thermoregulation?",
+      "reference": "Maintains optimal testicular temperature.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cervix?",
+      "reference": "Lower uterus — canal between uterus and vagina.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Broad ligament?",
+      "reference": "Supports uterus and tubes in pelvis.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "External genitalia homologues?",
+      "reference": "Embryologic origin paired structures male/female.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Brain major regions?",
+      "reference": "Cerebrum, cerebellum, brainstem (midbrain, pons, medulla).",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cerebral lobes?",
+      "reference": "Frontal, parietal, temporal, occipital.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Primary motor cortex?",
+      "reference": "Precentral gyrus — voluntary movement.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Somatosensory cortex?",
+      "reference": "Postcentral gyrus — touch, pain, temperature.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Visual cortex?",
+      "reference": "Occipital lobe — primary visual area.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Broca vs Wernicke areas?",
+      "reference": "Speech production (frontal) vs comprehension (temporal).",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Basal ganglia?",
+      "reference": "Caudate, putamen, globus pallidus — motor control.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Thalamus?",
+      "reference": "Relay sensory/motor signals to cortex.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hypothalamus functions?",
+      "reference": "Homeostasis: temperature, hunger, hormones, circadian.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Hippocampus?",
+      "reference": "Memory formation and spatial navigation.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Amygdala?",
+      "reference": "Emotion processing, especially fear.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Corpus callosum?",
+      "reference": "Commissural fibers connecting hemispheres.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Lateral ventricles?",
+      "reference": "CSF-filled cavities in cerebrum.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cerebellum function?",
+      "reference": "Coordination, balance, motor learning.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Medulla vital centers?",
+      "reference": "Breathing, heart rate, blood pressure reflexes.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Vertebral regions?",
+      "reference": "Cervical (7), thoracic (12), lumbar (5), sacral (5 fused), coccyx.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Typical vertebra parts?",
+      "reference": "Body, vertebral arch, spinous process, transverse processes, foramen.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Intervertebral disc?",
+      "reference": "Nucleus pulposus (gel) + annulus fibrosus (fibrocartilage).",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "C1 (atlas) / C2 (axis)?",
+      "reference": "Atlas supports skull; axis has dens for rotation.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Spinal curvatures?",
+      "reference": "Cervical/lumbar lordosis; thoracic/sacral kyphosis.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Ligamentum flavum?",
+      "reference": "Elastic ligament between laminae — aids extension.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Spinal nerves count?",
+      "reference": "31 pairs — exit via intervertebral foramina.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Cauda equina?",
+      "reference": "Lumbar/sacral nerve roots below L2 in subarachnoid space.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Epidural space?",
+      "reference": "Fat and veins outside dura — site epidural anesthesia.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Herniated disc?",
+      "reference": "Nucleus protrudes through annulus — may compress nerve root.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Scoliosis?",
+      "reference": "Lateral curvature spine.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Spinous process palpation?",
+      "reference": "Landmarks C7, T3/T7, L4 (iliac crest level).",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Facet joints?",
+      "reference": "Zygapophyseal — guide motion between vertebrae.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Vertebral canal?",
+      "reference": "Houses spinal cord (upper) and cauda equina (lower).",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Whiplash injury?",
+      "reference": "Hyperextension/flexion cervical spine — soft tissue trauma.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: плоскости — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «плоскости» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: плоскости — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «плоскости» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: плоскости — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «плоскости» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: плоскости — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «плоскости» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: плоскости — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «плоскости» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: направления — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «направления» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: направления — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «направления» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: направления — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «направления» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: направления — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «направления» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: направления — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «направления» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: движения — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «движения» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: движения — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «движения» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: движения — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «движения» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: движения — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «движения» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: движения — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «движения» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: положение тела — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «положение тела» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: положение тела — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «положение тела» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: положение тела — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «положение тела» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: положение тела — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «положение тела» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-directions.svg",
+      "image_alt": "Терминология и основы: terminology directions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Терминология и основы]: положение тела — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «положение тела» в разделе Терминология и основы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Терминология и основы",
+      "image": "anatomy-assets/terminology-planes.svg",
+      "image_alt": "Терминология и основы: terminology planes"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: кости — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «кости» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: кости — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «кости» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: кости — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «кости» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: кости — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «кости» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: кости — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «кости» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: суставы — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «суставы» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: суставы — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «суставы» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: суставы — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «суставы» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: суставы — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «суставы» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: суставы — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «суставы» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: череп — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «череп» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: череп — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «череп» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: череп — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «череп» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: череп — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «череп» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: череп — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «череп» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: таз — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «таз» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: таз — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «таз» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: таз — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «таз» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/skeleton-overview.svg",
+      "image_alt": "Опорно-двигательная: skeleton overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: таз — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «таз» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/bone-structure.svg",
+      "image_alt": "Опорно-двигательная: bone structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Опорно-двигательная]: таз — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «таз» в разделе Опорно-двигательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Опорно-двигательная",
+      "image": "anatomy-assets/joint-types.svg",
+      "image_alt": "Опорно-двигательная: joint types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сокращение — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «сокращение» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сокращение — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «сокращение» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сокращение — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «сокращение» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сокращение — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «сокращение» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сокращение — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «сокращение» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: прикрепление — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «прикрепление» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: прикрепление — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «прикрепление» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: прикрепление — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «прикрепление» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: прикрепление — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «прикрепление» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: прикрепление — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «прикрепление» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: типы волокон — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «типы волокон» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: типы волокон — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «типы волокон» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: типы волокон — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «типы волокон» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: типы волокон — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «типы волокон» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: типы волокон — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «типы волокон» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сухожилия — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «сухожилия» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сухожилия — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «сухожилия» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сухожилия — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «сухожилия» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сухожилия — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «сухожилия» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-types.svg",
+      "image_alt": "Мышцы: muscle types"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мышцы]: сухожилия — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «сухожилия» в разделе Мышцы. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мышцы",
+      "image": "anatomy-assets/muscle-structure.svg",
+      "image_alt": "Мышцы: muscle structure"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сердце — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «сердце» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сердце — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «сердце» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сердце — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «сердце» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сердце — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «сердце» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сердце — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «сердце» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: клапаны — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «клапаны» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: клапаны — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «клапаны» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: клапаны — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «клапаны» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: клапаны — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «клапаны» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: клапаны — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «клапаны» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: круги кровообращения — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «круги кровообращения» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: круги кровообращения — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «круги кровообращения» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: круги кровообращения — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «круги кровообращения» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: круги кровообращения — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «круги кровообращения» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: круги кровообращения — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «круги кровообращения» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сосуды — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «сосуды» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сосуды — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «сосуды» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сосуды — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «сосуды» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/heart.svg",
+      "image_alt": "Сердечно-сосудистая: heart"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сосуды — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «сосуды» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/circulation.svg",
+      "image_alt": "Сердечно-сосудистая: circulation"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Сердечно-сосудистая]: сосуды — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «сосуды» в разделе Сердечно-сосудистая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Сердечно-сосудистая",
+      "image": "anatomy-assets/blood-vessels.svg",
+      "image_alt": "Сердечно-сосудистая: blood vessels"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: лёгкие — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «лёгкие» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: лёгкие — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «лёгкие» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: лёгкие — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «лёгкие» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: лёгкие — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «лёгкие» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: лёгкие — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «лёгкие» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: альвеолы — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «альвеолы» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: альвеолы — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «альвеолы» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: альвеолы — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «альвеолы» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: альвеолы — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «альвеолы» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: альвеолы — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «альвеолы» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: диафрагма — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «диафрагма» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: диафрагма — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «диафрагма» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: диафрагма — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «диафрагма» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: диафрагма — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «диафрагма» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: диафрагма — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «диафрагма» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: бронхи — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «бронхи» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: бронхи — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «бронхи» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: бронхи — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «бронхи» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: бронхи — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «бронхи» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/respiratory-tract.svg",
+      "image_alt": "Дыхательная: respiratory tract"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Дыхательная]: бронхи — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «бронхи» в разделе Дыхательная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Дыхательная",
+      "image": "anatomy-assets/lungs.svg",
+      "image_alt": "Дыхательная: lungs"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: ЖКТ — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «ЖКТ» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: ЖКТ — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «ЖКТ» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: ЖКТ — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «ЖКТ» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: ЖКТ — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «ЖКТ» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: ЖКТ — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «ЖКТ» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: печень — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «печень» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: печень — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «печень» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: печень — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «печень» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: печень — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «печень» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: печень — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «печень» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: поджелудочная — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «поджелудочная» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: поджелудочная — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «поджелудочная» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: поджелудочная — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «поджелудочная» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: поджелудочная — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «поджелудочная» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: поджелудочная — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «поджелудочная» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: всасывание — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «всасывание» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: всасывание — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «всасывание» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: всасывание — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «всасывание» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: всасывание — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «всасывание» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/liver-gall.svg",
+      "image_alt": "Пищеварительная: liver gall"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Пищеварительная]: всасывание — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «всасывание» в разделе Пищеварительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Пищеварительная",
+      "image": "anatomy-assets/digestive.svg",
+      "image_alt": "Пищеварительная: digestive"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: нефрон — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «нефрон» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: нефрон — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «нефрон» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: нефрон — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «нефрон» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: нефрон — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «нефрон» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: нефрон — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «нефрон» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: почка — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «почка» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: почка — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «почка» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: почка — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «почка» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: почка — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «почка» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: почка — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «почка» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: мочевой пузырь — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «мочевой пузырь» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: мочевой пузырь — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «мочевой пузырь» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: мочевой пузырь — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «мочевой пузырь» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: мочевой пузырь — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «мочевой пузырь» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: мочевой пузырь — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «мочевой пузырь» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: фильтрация — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «фильтрация» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: фильтрация — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «фильтрация» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: фильтрация — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «фильтрация» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: фильтрация — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «фильтрация» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/urinary.svg",
+      "image_alt": "Мочевыделительная: urinary"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Мочевыделительная]: фильтрация — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «фильтрация» в разделе Мочевыделительная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Мочевыделительная",
+      "image": "anatomy-assets/kidney.svg",
+      "image_alt": "Мочевыделительная: kidney"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: нейрон — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «нейрон» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: нейрон — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «нейрон» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: нейрон — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «нейрон» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: нейрон — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «нейрон» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: нейрон — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «нейрон» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: синапс — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «синапс» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: синапс — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «синапс» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: синапс — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «синапс» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: синапс — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «синапс» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: синапс — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «синапс» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: спинной мозг — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «спинной мозг» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: спинной мозг — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «спинной мозг» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: спинной мозг — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «спинной мозг» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: спинной мозг — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «спинной мозг» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: спинной мозг — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «спинной мозг» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: ЧМН — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «ЧМН» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: ЧМН — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «ЧМН» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: ЧМН — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «ЧМН» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: ЧМН — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «ЧМН» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/cns-overview.svg",
+      "image_alt": "Нервная система: cns overview"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Нервная система]: ЧМН — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «ЧМН» в разделе Нервная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Нервная система",
+      "image": "anatomy-assets/neuron.svg",
+      "image_alt": "Нервная система: neuron"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гормоны — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «гормоны» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гормоны — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «гормоны» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гормоны — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «гормоны» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гормоны — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «гормоны» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гормоны — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «гормоны» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гипофиз — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «гипофиз» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гипофиз — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «гипофиз» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гипофиз — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «гипофиз» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гипофиз — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «гипофиз» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: гипофиз — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «гипофиз» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: щитовидная — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «щитовидная» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: щитовидная — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «щитовидная» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: щитовидная — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «щитовидная» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: щитовидная — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «щитовидная» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: щитовидная — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «щитовидная» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: надпочечники — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «надпочечники» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: надпочечники — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «надпочечники» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: надпочечники — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «надпочечники» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: надпочечники — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «надпочечники» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Эндокринная]: надпочечники — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «надпочечники» в разделе Эндокринная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Эндокринная",
+      "image": "anatomy-assets/endocrine.svg",
+      "image_alt": "Эндокринная: endocrine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: глаз — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «глаз» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: глаз — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «глаз» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: глаз — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «глаз» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: глаз — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «глаз» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: глаз — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «глаз» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: ухо — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «ухо» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: ухо — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «ухо» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: ухо — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «ухо» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: ухо — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «ухо» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: ухо — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «ухо» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: сетчатка — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «сетчатка» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: сетчатка — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «сетчатка» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: сетчатка — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «сетчатка» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: сетчатка — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «сетчатка» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: сетчатка — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «сетчатка» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: равновесие — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «равновесие» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: равновесие — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «равновесие» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: равновесие — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «равновесие» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: равновесие — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «равновесие» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/ear.svg",
+      "image_alt": "Органы чувств: ear"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Органы чувств]: равновесие — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «равновесие» в разделе Органы чувств. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Органы чувств",
+      "image": "anatomy-assets/eye.svg",
+      "image_alt": "Органы чувств: eye"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: кожа — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «кожа» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: кожа — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «кожа» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: кожа — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «кожа» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: кожа — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «кожа» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: кожа — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «кожа» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: эpidermis — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «эpidermis» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: эpidermis — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «эpidermis» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: эpidermis — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «эpidermis» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: эpidermis — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «эpidermis» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: эpidermis — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «эpidermis» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: волосы — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «волосы» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: волосы — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «волосы» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: волосы — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «волосы» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: волосы — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «волосы» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: волосы — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «волосы» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: реceptors — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «реceptors» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: реceptors — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «реceptors» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: реceptors — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «реceptors» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: реceptors — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «реceptors» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Покровная система]: реceptors — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «реceptors» в разделе Покровная система. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Покровная система",
+      "image": "anatomy-assets/skin.svg",
+      "image_alt": "Покровная система: skin"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: лимфа — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «лимфа» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: лимфа — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «лимфа» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: лимфа — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «лимфа» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: лимфа — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «лимфа» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: лимфа — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «лимфа» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: узлы — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «узлы» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: узлы — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «узлы» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: узлы — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «узлы» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: узлы — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «узлы» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: узлы — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «узлы» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: селезёнка — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «селезёнка» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: селезёнка — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «селезёнка» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: селезёнка — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «селезёнка» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: селезёнка — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «селезёнка» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: селезёнка — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «селезёнка» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: тимус — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «тимус» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: тимус — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «тимус» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: тимус — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «тимус» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: тимус — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «тимус» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Лимфатическая]: тимус — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «тимус» в разделе Лимфатическая. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Лимфатическая",
+      "image": "anatomy-assets/lymphatic.svg",
+      "image_alt": "Лимфатическая: lymphatic"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яичники — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «яичники» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яичники — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «яичники» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яичники — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «яичники» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яичники — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «яичники» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яичники — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «яичники» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: матка — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «матка» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: матка — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «матка» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: матка — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «матка» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: матка — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «матка» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: матка — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «матка» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яички — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «яички» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яички — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «яички» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яички — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «яички» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яички — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «яички» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: яички — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «яички» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: плацента — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «плацента» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: плацента — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «плацента» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: плацента — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «плацента» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: плацента — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «плацента» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-f.svg",
+      "image_alt": "Репродуктивная: reproductive f"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Репродуктивная]: плацента — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «плацента» в разделе Репродуктивная. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Репродуктивная",
+      "image": "anatomy-assets/reproductive-m.svg",
+      "image_alt": "Репродуктивная: reproductive m"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: кора — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «кора» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: кора — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «кора» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: кора — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «кора» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: кора — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «кора» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: кора — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «кора» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: доли — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «доли» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: доли — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «доли» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: доли — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «доли» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: доли — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «доли» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: доли — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «доли» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: мозжечок — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «мозжечок» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: мозжечок — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «мозжечок» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: мозжечок — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «мозжечок» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: мозжечок — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «мозжечок» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: мозжечок — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «мозжечок» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: таламус — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «таламус» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: таламус — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «таламус» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: таламус — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «таламус» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: таламус — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «таламус» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain-cortex.svg",
+      "image_alt": "Головной мозг: brain cortex"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Головной мозг]: таламус — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «таламус» в разделе Головной мозг. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Головной мозг",
+      "image": "anatomy-assets/brain.svg",
+      "image_alt": "Головной мозг: brain"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: диск — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «диск» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: диск — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «диск» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: диск — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «диск» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: диск — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «диск» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: диск — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «диск» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: шейный отдел — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «шейный отдел» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: шейный отдел — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «шейный отдел» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: шейный отдел — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «шейный отдел» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: шейный отдел — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «шейный отдел» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: шейный отдел — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «шейный отдел» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: поясничный — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «поясничный» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: поясничный — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «поясничный» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: поясничный — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «поясничный» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: поясничный — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «поясничный» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: поясничный — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «поясничный» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: корешки — вопрос #1",
+      "reference": "Дай развёрнутый ответ по теме «корешки» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: корешки — вопрос #2",
+      "reference": "Дай развёрнутый ответ по теме «корешки» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: корешки — вопрос #3",
+      "reference": "Дай развёрнутый ответ по теме «корешки» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: корешки — вопрос #4",
+      "reference": "Дай развёрнутый ответ по теме «корешки» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine-regions.svg",
+      "image_alt": "Позвоночник: spine regions"
+    },
+    {
+      "card_type": "anatomy",
+      "question": "Анатомия [Позвоночник]: корешки — вопрос #5",
+      "reference": "Дай развёрнутый ответ по теме «корешки» в разделе Позвоночник. Укажи ключевые структуры, функции и взаимосвязи.",
+      "topic": "Позвоночник",
+      "image": "anatomy-assets/spine.svg",
+      "image_alt": "Позвоночник: spine"
+    }
+  ]
+}

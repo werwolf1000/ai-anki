@@ -271,6 +271,22 @@ tr:hover { cursor: pointer; background: #f8fafc; }
   color: var(--muted);
 }
 
+.question-image-wrap {
+  margin-bottom: 0.75rem;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+
+.question-image {
+  max-width: 100%;
+  max-height: 280px;
+  height: auto;
+  object-fit: contain;
+}
+
 #study-view .question {
   white-space: pre-wrap;
   overflow-wrap: anywhere;

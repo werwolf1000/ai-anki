@@ -24,6 +24,8 @@ class Card:
     language: str = ""
     answer_mode: str = ""
     topic: str = ""
+    image: str = ""
+    image_alt: str = ""
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -46,8 +48,12 @@ class Card:
         return self.card_type == "math" or self.answer_mode == "math"
 
     @property
+    def is_anatomy(self) -> bool:
+        return self.card_type == "anatomy" or bool(self.image.strip())
+
+    @property
     def needs_code_editor(self) -> bool:
-        if self.is_math:
+        if self.is_math or self.is_anatomy:
             return False
         if self.answer_mode == "text":
             return False
@@ -57,6 +63,8 @@ class Card:
 
     @property
     def needs_math_editor(self) -> bool:
+        if self.is_anatomy:
+            return False
         if self.answer_mode == "text" or self.answer_mode == "code":
             return False
         return self.is_math
@@ -101,6 +109,8 @@ def infer_language_from_name(name: str) -> str:
         return "latex"
     if "laravel" in n:
         return "php"
+    if "anatom" in n:
+        return ""
     return ""
 
 
@@ -152,12 +162,14 @@ class Deck:
 
 
 def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
-    known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode", "topic"}
+    known = {"question", "reference", "id", "card_type", "code", "task", "language", "answer_mode", "topic", "image", "image_alt"}
     item = {k: v for k, v in item.items() if k in known}
     card_type = item.get("card_type")
     if not card_type:
         if item.get("answer_mode") == "math":
             card_type = "math"
+        elif item.get("image"):
+            card_type = "anatomy"
         else:
             card_type = "code" if item.get("code") else "text"
     return Card(
@@ -170,6 +182,8 @@ def _card_from_dict(item: dict, *, default_language: str = "") -> Card:
         language=item.get("language") or default_language,
         answer_mode=item.get("answer_mode", ""),
         topic=str(item.get("topic", "") or ""),
+        image=str(item.get("image", "") or ""),
+        image_alt=str(item.get("image_alt", "") or ""),
     )
 
 

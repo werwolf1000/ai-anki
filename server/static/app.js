@@ -231,9 +231,25 @@ function updateStats(stats) {
     `к повтору ${stats.due} · сессия ${stats.index}/${stats.queue}`;
 }
 
+function showQuestionImage(card) {
+  const wrap = $("question-image-wrap");
+  const img = $("question-image");
+  if (!card?.image) {
+    wrap.classList.add("hidden");
+    img.removeAttribute("src");
+    img.alt = "";
+    return;
+  }
+  const path = card.image.startsWith("http") ? card.image : `/deck-assets/${card.image.replace(/^\//, "")}`;
+  img.src = path;
+  img.alt = card.image_alt || card.topic || "Схема";
+  wrap.classList.remove("hidden");
+}
+
 async function showCard(card) {
   if (!card) {
     $("question").textContent = "Нет карточек для выбранного режима.";
+    showQuestionImage(null);
     CodeEditor.hide();
     MathEditor.hide();
     VoiceInput.setVisible(false);
@@ -244,6 +260,7 @@ async function showCard(card) {
 
   needsCode = card.needs_code;
   needsMath = card.needs_math;
+  showQuestionImage(card);
 
   if (needsMath) {
     $("answer-text").classList.add("hidden");
@@ -263,6 +280,7 @@ async function showCard(card) {
     const qParts = [card.question];
     if (card.topic) qParts.unshift(`[${card.topic}]`);
     $("question").textContent = qParts.join("\n");
+    showQuestionImage(card);
     CodeEditor.clear();
     await CodeEditor.show(card.language || "typescript", codeEditorTheme);
     $("answer-label").textContent = card.is_live_code
@@ -275,9 +293,13 @@ async function showCard(card) {
     MathEditor.hide();
     $("answer-text").classList.remove("hidden");
     $("answer-text").value = "";
-    $("question").textContent = card.question;
+    const qParts = [card.question];
+    if (card.topic) qParts.unshift(`[${card.topic}]`);
+    $("question").textContent = qParts.join("\n");
     VoiceInput.setVisible(true);
-    $("answer-label").textContent = "Ваш ответ (своими словами)";
+    $("answer-label").textContent = card.is_anatomy
+      ? "Ваш ответ (ориентируйтесь на схему)"
+      : "Ваш ответ (своими словами)";
     $("status").textContent =
       `лучший ${card.best_score} · попыток ${card.attempts} · 🎤 — ответ голосом`;
   }

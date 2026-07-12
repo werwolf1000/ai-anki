@@ -58,6 +58,16 @@ class HintIn(BaseModel):
     draft: str = ""
 
 
+@app.get("/deck-assets/{asset_path:path}")
+def deck_asset(asset_path: str) -> FileResponse:
+    assets_root = (ROOT / "decks" / "anatomy-assets").resolve()
+    full = (ROOT / "decks" / asset_path).resolve()
+    if not str(full).startswith(str(assets_root)) or not full.is_file():
+        raise HTTPException(404, "Изображение не найдено")
+    media = "image/svg+xml" if full.suffix.lower() == ".svg" else "application/octet-stream"
+    return FileResponse(full, media_type=media)
+
+
 @app.get("/")
 def index() -> FileResponse:
     return FileResponse(

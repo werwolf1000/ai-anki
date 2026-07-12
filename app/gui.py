@@ -24,6 +24,7 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+from app.anatomy_view import AnatomyImageView
 from app.code_editor import CodeEditorPanel
 from app.math_editor import create_math_editor_panel, create_math_question_view
 from app.deck import Card, ChatMessage, Deck
@@ -201,6 +202,9 @@ class StudyScreen(QWidget):
 
         q_box = QGroupBox("Вопрос")
         q_layout = QVBoxLayout(q_box)
+        self.anatomy_image_view = AnatomyImageView()
+        self.anatomy_image_view.hide()
+        q_layout.addWidget(self.anatomy_image_view)
         self.question_view = QTextEdit()
         self.question_view.setReadOnly(True)
         self.question_view.setMinimumHeight(120)
@@ -385,6 +389,13 @@ class StudyScreen(QWidget):
         text = self.current_card.display_text()
         if self.current_card.topic.strip():
             text = f"[{self.current_card.topic.strip()}]\n\n{text}"
+        if self.current_card.image.strip():
+            self.anatomy_image_view.set_image(
+                self.current_card.image,
+                alt=self.current_card.image_alt or self.current_card.topic,
+            )
+        else:
+            self.anatomy_image_view.clear()
         if self.current_card.needs_math_editor:
             self.question_view.hide()
             self.math_question_view.show()

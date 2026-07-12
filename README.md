@@ -169,6 +169,21 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 Поле **`topic`** опционально; при двух и более различных темах в колоде включается выбор темы перед сессией.
 
+**Анатомия** — текстовый ответ со схемой на каждой карточке:
+
+```json
+{
+  "card_type": "anatomy",
+  "question": "Назовите камеры сердца",
+  "reference": "Правое и левое предсердия; правый и левый желудочки.",
+  "topic": "Сердечно-сосудистая",
+  "image": "anatomy-assets/heart.svg",
+  "image_alt": "Сердце и камеры"
+}
+```
+
+Перегенерация: `python3 decks/generate_anatomy.py` (создаёт SVG в `decks/anatomy-assets/`).
+
 ---
 
 ### 4. Прогресс и повторения
@@ -204,6 +219,7 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | PHP 8+ | `decks/php8-plus.json` |
 | **Laravel** | `decks/laravel-basics.json` |
 | **Laravel Live-coding** | `decks/laravel-live-coding.json` |
+| **Анатомия** (схемы) | `decks/anatomy.json` + `decks/anatomy-assets/` |
 | Python — основы | `decks/python-basics.json` |
 | tkinter.ttk | `decks/ttk-widgets.json` |
 | PyTorch | `decks/pytorch-basics.json` |

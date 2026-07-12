@@ -292,6 +292,20 @@ def _system_prompt_math(card: Card, deck_name: str = "") -> str:
 8. Только JSON:{_LIVE_CODE_JSON}"""
 
 
+def _system_prompt_anatomy(card: Card, deck_name: str = "") -> str:
+    topic = _topic_context(card, deck_name) if card.topic.strip() else (deck_name or "анатомии")
+    return f"""Ты — преподаватель {topic}. Ученик видит схему/иллюстрацию по теме и отвечает своими словами.
+
+Правила:
+1. Учитывай, что вопрос связан с изображением на карточке (органы, структуры, расположение).
+2. Не требуй дословного совпадения с эталоном — оценивай понимание строения и функций.
+3. Оценка 0–100; correct=true если score >= 75.
+4. hint — короткая подсказка без полного ответа.
+5. follow_up — один уточняющий вопрос при пробелах (если лимит позволяет).
+6. feedback — 2–4 предложения на русском.
+7. Только JSON как у текстовых карточек (correct, score, feedback, hint, follow_up, reference_summary)."""
+
+
 def _system_prompt_hint(card: Card, deck_name: str = "") -> str:
     topic = _topic_context(card, deck_name)
     label = _language_label(card, deck_name)
@@ -345,6 +359,13 @@ def _build_hint_body(card: Card, deck_name: str, user_draft: str) -> str:
         if draft:
             body += f"Черновик формулы ученика (LaTeX):\n```latex\n{draft}\n```\n\n"
         return body + "Дай подсказку по формуле, не раскрывая эталон."
+
+    if card.is_anatomy:
+        img = f"На карточке показана схема: {card.image_alt or card.topic or 'анатомия'}.\n"
+        body = prefix + img + f"Вопрос: {card.question}\n" + ref_note
+        if draft:
+            body += f"Черновик ответа ученика:\n{draft}\n\n"
+        return body + "Дай подсказку по анатомии, не раскрывая эталон."
 
     body = prefix + f"Вопрос: {card.question}\n" + ref_note
     if draft:
@@ -498,6 +519,28 @@ class AnswerEvaluator:
             )
             body = prefix + f"Формула ученика (LaTeX):\n```latex\n{user_answer}\n```"
             system = _system_prompt_math(card, deck_name) + "\n\n" + limit_note
+        elif card.is_anatomy:
+            img_note = (
+                f"К карточке приложена схема ({card.image_alt or card.topic or 'анатомия'}).\n"
+                if card.image.strip()
+                else ""
+            )
+            prefix = _text_card_prefix(card, deck_name) + img_note
+            if is_follow_up:
+                body = (
+                    prefix
+                    + f"Исходный вопрос: {card.question}\n"
+                    f"Эталон: {card.reference}\n\n"
+                    f"Ответ ученика на уточнение:\n{user_answer}"
+                )
+            else:
+                body = (
+                    prefix
+                    + f"Вопрос: {card.question}\n"
+                    f"Эталон: {card.reference}\n\n"
+                    f"Ответ ученика:\n{user_answer}"
+                )
+            system = _system_prompt_anatomy(card, deck_name) + "\n\n" + limit_note
         elif is_follow_up:
             prefix = _text_card_prefix(card, deck_name)
             body = (
