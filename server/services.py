@@ -6,6 +6,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from app.config_store import clamp_session_limit, custom_decks_dir, data_dir, load_config, save_config
+from app.anatomy_image import anatomy_image_url
 from app.live_coding import has_topic_picker_deck, topic_summaries
 from app.deck import Card, ChatMessage, Deck
 from app.ollama_client import AnswerEvaluator, OllamaClient
@@ -163,7 +164,7 @@ class AppServices:
             "needs_code": card.needs_code_editor,
             "needs_math": card.needs_math_editor,
             "is_anatomy": card.is_anatomy,
-            "image": card.image,
+            "image": anatomy_image_url(card.image) if card.image.strip() else "",
             "image_alt": card.image_alt,
             "language": card.language,
             "is_live_code": card.is_live_code,

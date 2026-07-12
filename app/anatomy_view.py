@@ -4,7 +4,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QLabel, QSizePolicy, QVBoxLayout, QWidget
 
-from app.anatomy_image import resolve_anatomy_image_path
+from app.anatomy_image import fetch_anatomy_image_bytes, is_remote_image, resolve_anatomy_image_path
 
 
 class AnatomyImageView(QWidget):
@@ -31,9 +31,10 @@ class AnatomyImageView(QWidget):
         if not rel:
             self.clear()
             return
-        if rel.startswith("http://") or rel.startswith("https://"):
-            pix = QPixmap()
-            if not pix.load(rel):
+        pix = QPixmap()
+        if is_remote_image(rel):
+            data = fetch_anatomy_image_bytes(rel)
+            if not data or not pix.loadFromData(data):
                 self.clear()
                 return
         else:

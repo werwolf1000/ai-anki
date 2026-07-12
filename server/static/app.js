@@ -240,7 +240,9 @@ function showQuestionImage(card) {
     img.alt = "";
     return;
   }
-  const path = card.image.startsWith("http") ? card.image : `/deck-assets/${card.image.replace(/^\//, "")}`;
+  const path = card.image.startsWith("http") || card.image.startsWith("/api/image-proxy")
+    ? card.image
+    : `/deck-assets/${card.image.replace(/^\//, "")}`;
   img.src = path;
   img.alt = card.image_alt || card.topic || "Схема";
   wrap.classList.remove("hidden");

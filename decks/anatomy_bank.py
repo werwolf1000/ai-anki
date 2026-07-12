@@ -1,6 +1,10 @@
 """Anatomy flashcard bank — each card has topic + diagram image."""
 from __future__ import annotations
 
+import re
+
+from anatomy_photo_urls import TOPIC_PHOTO_URLS
+
 TOPICS: tuple[str, ...] = (
     "Терминология и основы",
     "Опорно-двигательная",
@@ -19,7 +23,10 @@ TOPICS: tuple[str, ...] = (
     "Позвоночник",
 )
 
-TOPIC_IMAGES: dict[str, list[str]] = {
+TOPIC_IMAGES: dict[str, list[str]] = TOPIC_PHOTO_URLS
+
+# Local SVG fallbacks (offline mode: python3 generate_anatomy.py --local-svg)
+TOPIC_SVG_IMAGES: dict[str, list[str]] = {
     "Терминология и основы": ["terminology-planes.svg", "terminology-directions.svg"],
     "Опорно-двигательная": ["skeleton-overview.svg", "bone-structure.svg", "joint-types.svg"],
     "Мышцы": ["muscle-structure.svg", "muscle-types.svg"],
@@ -321,13 +328,28 @@ REVISION_HINTS: dict[str, list[str]] = {
 
 def _image_for(topic: str, index: int) -> str:
     images = TOPIC_IMAGES[topic]
-    return f"anatomy-assets/{images[index % len(images)]}"
+    item = images[index % len(images)]
+    if item.startswith("http://") or item.startswith("https://"):
+        return item
+    return f"anatomy-assets/{item}"
 
 
 def _alt_for(topic: str, index: int) -> str:
     images = TOPIC_IMAGES[topic]
-    name = images[index % len(images)].replace(".svg", "").replace("-", " ")
+    item = images[index % len(images)]
+    if item.startswith("http://") or item.startswith("https://"):
+        name = item.rstrip("/").split("/")[-1]
+        name = re.sub(r"^\d+px-", "", name.split("?", 1)[0])
+        name = name.rsplit(".", 1)[0].replace("_", " ").replace("-", " ")
+    else:
+        name = item.replace(".svg", "").replace("-", " ")
     return f"{topic}: {name}"
+
+
+def use_local_svg_images() -> None:
+    """Switch to bundled SVG diagrams (offline)."""
+    global TOPIC_IMAGES
+    TOPIC_IMAGES = TOPIC_SVG_IMAGES
 
 
 def anatomy_card(question: str, reference: str, topic: str, image_index: int = 0) -> dict:

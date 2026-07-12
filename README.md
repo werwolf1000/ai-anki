@@ -169,7 +169,7 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 Поле **`topic`** опционально; при двух и более различных темах в колоде включается выбор темы перед сессией.
 
-**Анатомия** — текстовый ответ со схемой на каждой карточке:
+**Анатомия** — текстовый ответ с иллюстрацией на каждой карточке. Поле `image` — локальный путь или **HTTPS-ссылка** (Wikimedia Commons, OpenStax и т.п.):
 
 ```json
 {
@@ -177,12 +177,13 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
   "question": "Назовите камеры сердца",
   "reference": "Правое и левое предсердия; правый и левый желудочки.",
   "topic": "Сердечно-сосудистая",
-  "image": "anatomy-assets/heart.svg",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/2000_Human_Heart_Photo.jpg/960px-2000_Human_Heart_Photo.jpg",
   "image_alt": "Сердце и камеры"
 }
 ```
 
-Перегенерация: `python3 decks/generate_anatomy.py` (создаёт SVG в `decks/anatomy-assets/`).
+Перегенерация колоды с фото OpenStax (по умолчанию): `python3 decks/generate_anatomy.py`.  
+Офлайн SVG: `python3 decks/generate_anatomy.py --local-svg`.
 
 ---
 
@@ -219,7 +220,7 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | PHP 8+ | `decks/php8-plus.json` |
 | **Laravel** | `decks/laravel-basics.json` |
 | **Laravel Live-coding** | `decks/laravel-live-coding.json` |
-| **Анатомия** (схемы) | `decks/anatomy.json` + `decks/anatomy-assets/` |
+| **Анатомия** (фото/схемы) | `decks/anatomy.json` (+ опционально `decks/anatomy-assets/`) |
 | Python — основы | `decks/python-basics.json` |
 | tkinter.ttk | `decks/ttk-widgets.json` |
 | PyTorch | `decks/pytorch-basics.json` |

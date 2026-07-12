@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from pathlib import Path
+from urllib.parse import unquote, urlparse
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from starlette.staticfiles import StaticFiles
 from pydantic import BaseModel
+import requests
 
+from app.anatomy_image import _ALLOWED_IMAGE_HOSTS, _USER_AGENT
 from app.config_store import AUTO_ADVANCE_MAX_SEC, SESSION_LIMIT_MAX, auto_advance_seconds
 from server.services import AppServices
 
@@ -66,6 +69,28 @@ def deck_asset(asset_path: str) -> FileResponse:
         raise HTTPException(404, "Изображение не найдено")
     media = "image/svg+xml" if full.suffix.lower() == ".svg" else "application/octet-stream"
     return FileResponse(full, media_type=media)
+
+
+@app.get("/api/image-proxy")
+def image_proxy(url: str) -> Response:
+    """Proxy whitelisted remote anatomy images (User-Agent, caching)."""
+    target = unquote(url).strip()
+    parsed = urlparse(target)
+    if parsed.scheme != "https" or parsed.hostname not in _ALLOWED_IMAGE_HOSTS:
+        raise HTTPException(400, "URL изображения не разрешён")
+    try:
+        resp = requests.get(target, headers={"User-Agent": _USER_AGENT}, timeout=20)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        raise HTTPException(502, f"Не удалось загрузить изображение: {exc}") from exc
+    content_type = resp.headers.get("content-type", "application/octet-stream")
+    if not content_type.startswith("image/"):
+        raise HTTPException(502, "Ответ не является изображением")
+    return Response(
+        content=resp.content,
+        media_type=content_type,
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 @app.get("/")
