@@ -39,6 +39,8 @@ BUILTIN_DISPLAY_NAMES: dict[str, str] = {
     "kanban-method.json": "Kanban",
     "safe-scaled-agile.json": "SAFe",
     "higher-math.json": "Высшая математика",
+    "laravel-basics.json": "Laravel",
+    "laravel-live-coding.json": "Laravel Live-coding",
 }
 
 SKIP_STANDALONE: set[str] = {"angular-code.json"}

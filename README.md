@@ -202,6 +202,8 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 | Колода | Файл |
 |--------|------|
 | PHP 8+ | `decks/php8-plus.json` |
+| **Laravel** | `decks/laravel-basics.json` |
+| **Laravel Live-coding** | `decks/laravel-live-coding.json` |
 | Python — основы | `decks/python-basics.json` |
 | tkinter.ttk | `decks/ttk-widgets.json` |
 | PyTorch | `decks/pytorch-basics.json` |
@@ -218,7 +220,7 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 Составная колода **Angular (полная)** объединяет `decks/anki-angular.txt` и `decks/angular-code.json`.
 
-Перегенерация: скрипты `decks/generate_*.py` (из каталога `decks/`). Темы для обычных колод — `decks/live_coding_topics.py` + `assign_topics()`.
+Перегенерация: скрипты `decks/generate_*.py` (из каталога `decks/`). Laravel: `generate_laravel_deck.py`, `generate_laravel_live_coding.py`. Темы — `laravel_topics.py`, `live_coding_topics.py` (`assign_laravel_topic`).
 
 ---
 

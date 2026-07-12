@@ -213,11 +213,58 @@ def assign_safe_topic(card: dict) -> str:
     return "Основы"
 
 
+def assign_laravel_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "Route::", "Route ", "routing", "middleware('auth')", "resource routes", "api.php", "web.php"):
+        return "Роутинг"
+    if _has(text, "Controller", "Form Request", "StorePostRequest", "invokable", "redirect()->"):
+        return "Контроллеры"
+    if _has(
+        text,
+        "Eloquent",
+        "belongsTo",
+        "hasMany",
+        "Model",
+        "fillable",
+        "SoftDeletes",
+        "with(",
+        "scope",
+        "Observer",
+    ):
+        return "Eloquent"
+    if _has(text, "Schema::", "migration", "Blueprint", "foreignId", "Seeder", "Factory"):
+        return "Миграции"
+    if _has(text, "Blade", "@extends", "@section", "@csrf", "<x-", "view(", "components"):
+        return "Blade"
+    if _has(text, "Middleware", "middleware", "handle(Request", "Terminate"):
+        return "Middleware"
+    if _has(text, "validate", "Validator", "Rule::", "Form Request", "rules()"):
+        return "Валидация"
+    if _has(text, "Sanctum", "Auth::", "Policy", "Gate::", "authorize", "guard", "password", "Breeze", "Fortify"):
+        return "Аутентификация"
+    if _has(text, "ShouldQueue", "dispatch(", "Job", "queue:work", "Horizon", "Bus::"):
+        return "Очереди"
+    if _has(text, "Event", "Listener", "Observer", "broadcast", "ShouldBroadcast"):
+        return "События"
+    if _has(text, "PHPUnit", "Pest", "assertDatabase", "actingAs", "RefreshDatabase", "test("):
+        return "Тестирование"
+    if _has(text, "Resource", "ApiResource", "Sanctum token", "JSON API", "apiResource"):
+        return "API"
+    if _has(text, "ServiceProvider", "App::bind", "singleton", "container", "IoC", "resolve"):
+        return "Service Container"
+    if _has(text, "collect(", "Collection", "pluck", "groupBy", "LazyCollection", "Str::"):
+        return "Collections"
+    if _has(text, "artisan", ".env", "config(", "Vite", "provider", "Laravel"):
+        return "Основы"
+    return "Основы"
+
+
 def assign_topics(cards: list[dict], deck_kind: str) -> list[dict]:
     assigners = {
         "angular": assign_angular_topic,
         "python": assign_python_topic,
         "php": assign_php_topic,
+        "laravel": assign_laravel_topic,
         "pytorch": assign_pytorch_topic,
         "ttk": assign_ttk_topic,
         "agile": assign_agile_topic,

@@ -99,6 +99,8 @@ def infer_language_from_name(name: str) -> str:
         return "typescript"
     if "math" in n or "матем" in n:
         return "latex"
+    if "laravel" in n:
+        return "php"
     return ""
 
 
