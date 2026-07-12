@@ -131,6 +131,29 @@ def assign_php_topic(card: dict) -> str:
     return "Основы"
 
 
+def assign_go_topic(card: dict) -> str:
+    text = _blob(card)
+    if _has(text, "goroutine", "go func", "chan ", "channel", "select ", "WaitGroup", "Mutex", "RWMutex", "sync.", "context.Context", "ctx.Done"):
+        return "Goroutines и каналы"
+    if _has(text, "interface ", "implements", "type switch", "io.Reader", "io.Writer", "Stringer", "ServeHTTP", "method ", "receiver"):
+        return "Методы и интерфейсы"
+    if _has(text, "error", "errors.", "fmt.Errorf", "panic", "recover", "ErrNotFound", "%w"):
+        return "Ошибки"
+    if _has(text, "[T", "comparable", "cmp.Ordered", "generic", "~map", "type parameters"):
+        return "Generics"
+    if _has(text, "testing.", "t.Run", "Benchmark", "httptest", "t.Helper", "t.Parallel", "TestMain"):
+        return "Тестирование"
+    if _has(text, "go.mod", "module ", "internal/", "cmd/", "go:build", "package config", "GOPROXY", "go get"):
+        return "Модули и пакеты"
+    if _has(text, "json.", "http.", "context.", "time.", "os.", "bufio", "sort.", "slog.", "template.", "url.Parse", "net/http"):
+        return "Stdlib"
+    if _has(text, "defer ", "func ", "closure", "variadic", "named return", "panic", "recover"):
+        return "Функции и defer"
+    if _has(text, "struct ", "slice", "map[", "append(", "make(", "[]int", "pointer", "embed"):
+        return "Типы и структуры"
+    return "Основы"
+
+
 def assign_pytorch_topic(card: dict) -> str:
     text = _blob(card)
     if _has(text, "DataLoader", "Dataset", "collate_fn", "num_workers", "pin_memory", "__getitem__"):
@@ -264,6 +287,7 @@ def assign_topics(cards: list[dict], deck_kind: str) -> list[dict]:
         "angular": assign_angular_topic,
         "python": assign_python_topic,
         "php": assign_php_topic,
+        "go": assign_go_topic,
         "laravel": assign_laravel_topic,
         "pytorch": assign_pytorch_topic,
         "ttk": assign_ttk_topic,

@@ -41,6 +41,8 @@ BUILTIN_DISPLAY_NAMES: dict[str, str] = {
     "higher-math.json": "Высшая математика",
     "laravel-basics.json": "Laravel",
     "laravel-live-coding.json": "Laravel Live-coding",
+    "go-basics.json": "Go — основы",
+    "go-live-coding.json": "Go Live-coding",
     "anatomy.json": "Анатомия",
 }
 

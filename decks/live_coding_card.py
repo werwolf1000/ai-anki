@@ -6,6 +6,7 @@ import re
 
 _LANG_LABEL = {
     "php": "PHP",
+    "go": "Go",
     "python": "Python",
     "typescript": "TypeScript/Angular",
     "ts": "TypeScript/Angular",

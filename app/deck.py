@@ -109,6 +109,8 @@ def infer_language_from_name(name: str) -> str:
         return "latex"
     if "laravel" in n:
         return "php"
+    if "golang" in n or n.startswith("go") or "-go" in n or "go-" in n:
+        return "go"
     if "anatom" in n:
         return ""
     return ""

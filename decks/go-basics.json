@@ -1,0 +1,4224 @@
+{
+  "name": "Go — основы",
+  "language": "go",
+  "cards": [
+    {
+      "question": "Что такое Go (Golang)?",
+      "reference": "Компилируемый статически типизированный язык от Google: простой синтаксис, сборщик мусора, встроенная конкурентность через goroutines.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Как объявить package?",
+      "reference": "Первая строка файла: package main для исполняемого, package foo для библиотеки. Имя пакета совпадает с каталогом модуля (обычно).",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Точка входа main?",
+      "reference": "func main() в пакете main — единственная точка входа программы.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Как импортировать пакеты?",
+      "reference": "import \"fmt\" или блок import ( ... ). Неиспользуемый импорт — ошибка компиляции.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Короткое объявление переменной :=",
+      "reference": "x := 10 — тип выводится компилятором. Только внутри функций.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "var vs :=",
+      "reference": "var x int = 10 — явный тип; var x = 10 — вывод типа; := — короткая форма в функции.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Нулевые значения (zero values)?",
+      "reference": "int→0, string→\"\", bool→false, pointer/slice/map/channel/func/interface→nil.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Константы const?",
+      "reference": "const Pi = 3.14; const (A=1; B=2). Без явного типа — untyped constant.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "iota?",
+      "reference": "Генератор последовательных untyped int констант в блоке const: const (A=iota; B; C) → 0,1,2.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "if с коротким объявлением?",
+      "reference": "if err := f(); err != nil { ... } — переменная в scope только if/else.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "for — единственный цикл?",
+      "reference": "Да: for {}, for i:=0; i<n; i++, for range. while через for condition.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "switch в Go?",
+      "reference": "Автоматический break; case может быть несколько значений; switch без выражения — как if-else chain.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "switch с типом (type switch)?",
+      "reference": "switch v := x.(type) { case int: ... } для проверки динамического типа interface{}.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "fallthrough?",
+      "reference": "Явный переход к следующему case в switch (редко, обычно не нужен).",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "goto?",
+      "reference": "Есть, но не рекомендуется; используется в generated code и редких low-level случаях.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Порядок инициализации?",
+      "reference": "Пакеты: init() всех imported пакетов → init() текущего → main().",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "fmt.Println vs Print?",
+      "reference": "Println добавляет пробелы между аргументами и перевод строки.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "fmt.Printf и verb %v?",
+      "reference": "%v — default format; %+v struct с полями; %#v Go-syntax; %T тип.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Строки в Go?",
+      "reference": "Immutable byte sequence (UTF-8). string ↔ []byte через []byte(s) и string(b).",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "rune?",
+      "reference": "Alias для int32 — кодовая точка Unicode. range по string даёт rune и index.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "byte?",
+      "reference": "Alias для uint8.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Арифметика int?",
+      "reference": "int размер зависит от платформы (32/64 bit). Явно int32/int64 для переносимости.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Приведение типов?",
+      "reference": "T(v) — явное; между числовыми типами только явно; нет implicit numeric promotion как в C.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Сравнение struct?",
+      "reference": "Можно если все поля comparable. Slice/map/func нельзя сравнивать через ==.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Короткое объявление := и shadowing?",
+      "reference": ":= создаёт новую переменную если хотя бы одно имя новое в блоке; иначе присваивание.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Blank identifier _?",
+      "reference": "Игнорирует значение: _, err := f(). Импорт _ для side-effect init.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "go fmt (gofmt)?",
+      "reference": "Стандартный форматтер — обязательная практика; go fmt ./...",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "go vet?",
+      "reference": "Статический анализ подозрительных конструкций.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Комментарии // и /* */?",
+      "reference": "Стандартные; godoc парсит комментарии перед exported symbols.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Exported vs unexported?",
+      "reference": "Имя с большой буквы — exported (public), с маленькой — package-private.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "array vs slice?",
+      "reference": "Array [N]T — фиксированный размер, value type. Slice []T — descriptor (ptr,len,cap), reference view.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Как создать slice?",
+      "reference": "[]int{}, make([]int, len), make([]int, len, cap), slice literal, arr[:] из array.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "append?",
+      "reference": "append(s, x) может реалллоцировать; нужно s = append(s, x). Variadic: append(s, others...).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "len vs cap slice?",
+      "reference": "len — длина элементов; cap — ёмкость underlying array от offset.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "slice s[low:high]?",
+      "reference": "Half-open [low, high). Max high = cap(s). s[:0] — zero len, сохраняет cap.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "copy?",
+      "reference": "copy(dst, src) — копирует min(len(dst), len(src)) элементов, возвращает count.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "map?",
+      "reference": "make(map[K]V). Запись m[k]=v. Чтение v, ok := m[k]. delete(m,k). Nil map нельзя писать.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "struct?",
+      "reference": "type User struct { ID int; Name string }. Literal User{ID:1, Name:\"a\"} или positional.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Embedded struct (composition)?",
+      "reference": "type Admin struct { User; Role string } — promotion полей User.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Указатели *T?",
+      "reference": "&x — адрес, *p — dereference. new(T) — allocate zero value, возвращает *T.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "new vs make?",
+      "reference": "new(T) — *T zero value. make — только slice, map, channel; возвращает initialized value (not pointer).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Pointer receiver и nil?",
+      "reference": "Метод с pointer receiver можно вызвать на nil pointer (если метод проверяет nil).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Comparable types?",
+      "reference": "Можно использовать как map key: numbers, string, pointer, array (if elements comparable), struct (if fields comparable).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Slice как map value?",
+      "reference": "Да, но изменение slice in-place видно всем, кто держит тот же backing array.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "strings.Builder?",
+      "reference": "Эффективная конкатенация строк без лишних аллокаций.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "strings.Split / Join?",
+      "reference": "Split(s, sep) → []string; strings.Join(parts, sep).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "strconv.Itoa / Atoi?",
+      "reference": "Конвертация int ↔ string. ParseInt, FormatInt для base/size.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "byte slice и string sharing?",
+      "reference": "[]byte(s) копирует; unsafe conversion возможна но не recommended без care.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "struct tags?",
+      "reference": "`json:\"name,omitempty\"` — metadata для encoding/json через reflection.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "JSON marshal struct?",
+      "reference": "encoding/json Marshal/Unmarshal. Exported fields only. json tag controls names.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Type alias vs type definition?",
+      "reference": "type Alias = T — alias. type New T — новый distinct type с тем же underlying.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "runes in string length?",
+      "reference": "len(string) — bytes, not runes. utf8.RuneCountInString(s).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Clear slice?",
+      "reference": "s = s[:0] сохраняет cap; s = nil — discard. clear(s) Go 1.21+ для maps/slices.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "maps iteration order?",
+      "reference": "Randomized — не полагаться на порядок.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "struct padding?",
+      "reference": "Компилятор выравнивает поля; порядок полей влияет на размер struct.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Empty struct struct{}?",
+      "reference": "Zero-size; используется как set member или signal в channel.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Slice tricks delete element?",
+      "reference": "s = append(s[:i], s[i+1:]...) — O(n); для частых delete лучше другая структура.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "2D slice?",
+      "reference": "[][]int — slice of slices; rows могут иметь разную длину (jagged).",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Heap vs stack в Go?",
+      "reference": "Escape analysis решает; compiler may allocate on heap if escapes.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Объявление func?",
+      "reference": "func name(params) returnType { }. Multiple returns: (int, error). Named returns allowed.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Multiple return values?",
+      "reference": "Идиоматично (result, err). Caller: v, err := f().",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Variadic functions?",
+      "reference": "func sum(nums ...int) — nums is []int inside. Call: sum(1,2,3).",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "defer?",
+      "reference": "Откладывает вызов до return функции; аргументы вычисляются сразу при defer statement.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Порядок defer?",
+      "reference": "LIFO — последний defer выполняется первым.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "defer и return?",
+      "reference": "Deferred func видит named return values после их установки; может modify named returns.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "defer для close?",
+      "reference": "defer f.Close() — стандарт для files, bodies, rows.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "defer recover?",
+      "reference": "recover() только внутри deferred func — ловит panic.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "panic?",
+      "reference": "Немедленная остановка goroutine; unwinds stack running defers; если не recovered — crash program.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "recover?",
+      "reference": "Возвращает value passed to panic; nil если нет panic.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Когда panic vs error?",
+      "reference": "error для expected failures; panic для programmer bugs / unrecoverable invariants.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Function as value?",
+      "reference": "Functions are first-class: var fn func(int) int = square.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Closures?",
+      "reference": "Anonymous func захватывает переменные из enclosing scope by reference.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Loop variable in closure trap?",
+      "reference": "Go 1.22+ per-iteration vars; до 1.21 копируй i := i в loop body перед goroutine/closure.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "init function?",
+      "reference": "func init() — автоматический вызов при load пакета; нельзя вызвать явно.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "main без args?",
+      "reference": "os.Args через import \"os\" — не параметры main как в C.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Recursive functions?",
+      "reference": "Allowed; watch stack overflow on deep recursion — prefer iteration or trampoline.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Method value?",
+      "reference": "f := obj.Method — bound method value; later f(args) without receiver.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Method expression?",
+      "reference": "f := Type.Method — needs receiver as first arg: f(obj, args).",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Blank return?",
+      "reference": "return без значений при named returns — returns current named vars.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Function type alias?",
+      "reference": "type Handler func(http.ResponseWriter, *http.Request)",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Inlining?",
+      "reference": "Compiler inlines small functions; не полагаться для side effects order across packages.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "go:noinline directive?",
+      "reference": "//go:noinline — для benchmarking/debug (advanced).",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "defer performance?",
+      "reference": "Small overhead; в hot paths иногда explicit close, обычно defer ok.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Higher-order functions?",
+      "reference": "Передача func как параметр: sort.Slice, http.HandlerFunc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "IIFE in Go?",
+      "reference": "func(){ ... }() — immediately invoked func literal.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Return early pattern?",
+      "reference": "if err != nil { return ..., err } — guard clauses, flat code.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Function documentation?",
+      "reference": "Comment before func starting with func name — godoc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Method syntax?",
+      "reference": "func (r Receiver) Name(args) return { } — receiver like parameter.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Pointer vs value receiver?",
+      "reference": "Pointer — mutate state, avoid copy large struct, consistency. Value — small immutable types.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Interface?",
+      "reference": "type Reader interface { Read(p []byte) (n int, err error) } — implicit satisfaction.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Implicit interfaces?",
+      "reference": "No implements keyword — type satisfies interface if has all methods.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Empty interface any?",
+      "reference": "interface{} / any — любой тип. Использовать sparingly; prefer generics/concrete types.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Type assertion?",
+      "reference": "v := x.(T) panic if fail; v, ok := x.(T) safe.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Type switch?",
+      "reference": "switch t := x.(type) { case int: ... default: ... }",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Interface nil gotcha?",
+      "reference": "Interface nil only if type AND value nil. var p *T=nil; var i interface{}=p → i!=nil (typed nil).",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "io.Reader / io.Writer?",
+      "reference": "Core abstractions для streaming I/O; compose через wrappers.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "fmt.Stringer?",
+      "reference": "String() string — fmt prints it automatically.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "error interface?",
+      "reference": "type error interface { Error() string } — universal error type.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Comparable interface constraints?",
+      "reference": "Go 1.18+ constraints for generics: comparable for ==.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Embedding interface?",
+      "reference": "type ReadWriter interface { Reader; Writer } — embed other interfaces.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Method set pointer receiver?",
+      "reference": "T satisfies interface with pointer methods only if *T used (or T addressable).",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Interface value representation?",
+      "reference": "(type, data) pair — dynamic type + value pointer.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Polymorphism in Go?",
+      "reference": "Through interfaces, not inheritance.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Composition over inheritance?",
+      "reference": "Embed structs/interfaces instead of class hierarchies.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Small interfaces?",
+      "reference": "Idiom: io.Reader one method — easier mocks and reuse (accept interfaces, return structs).",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Adapter pattern?",
+      "reference": "type Logger interface; wrap third-party type with methods matching interface.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Mocking via interface?",
+      "reference": "Define interface at consumer; test inject fake implementation.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "errors.As / errors.Is?",
+      "reference": "Unwrap error chains; check wrapped types and sentinel values.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "io.Closer?",
+      "reference": "Close() error — defer close pattern.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "sort.Interface?",
+      "reference": "Len, Less, Swap — legacy; prefer sort.Slice.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "http.Handler?",
+      "reference": "ServeHTTP(ResponseWriter, *Request) — net/http core interface.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Context interface?",
+      "reference": "context.Context — Done, Err, Deadline, Value for cancellation/timeouts.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Unexported interface in package?",
+      "reference": "Private interface for internal abstraction — can't be satisfied from outside accidentally.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Generics with interface constraint?",
+      "reference": "type Stringer interface { String() string }; func F[T Stringer](v T)",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Satisfying interface compile-time check?",
+      "reference": "var _ MyInterface = (*MyType)(nil) — assert *MyType implements MyInterface.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Method on non-local type?",
+      "reference": "Cannot add methods to types from other packages — wrap type locally.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Goroutine?",
+      "reference": "go f() — lightweight thread, multiplexed on OS threads by runtime.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "GOMAXPROCS?",
+      "reference": "Controls OS threads for Go code execution; default NumCPU.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Channel?",
+      "reference": "make(chan T), make(chan T, buf). Send ch<-v, receive <-ch. Close closes channel.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Unbuffered channel?",
+      "reference": "Synchronizes — send blocks until receive ready (handoff).",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Buffered channel?",
+      "reference": "Send blocks when buffer full; receive when empty.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "close channel?",
+      "reference": "close(ch) — receivers get zero value + ok=false. Sender closes, not receiver.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Range over channel?",
+      "reference": "for v := range ch { } until closed and drained.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "select?",
+      "reference": "select { case v:=<-ch1: case ch2<-x: default: } — multiplex; default non-blocking.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "select with timeout?",
+      "reference": "case <-time.After(d): ... or context cancellation.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Worker pool pattern?",
+      "reference": "Fixed N goroutines reading jobs from channel.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Fan-in / fan-out?",
+      "reference": "Merge multiple channels into one / distribute work from one to many.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Done channel pattern?",
+      "reference": "close(done) broadcast shutdown to workers.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "context.Context cancellation?",
+      "reference": "ctx, cancel := context.WithCancel(parent); defer cancel(); <-ctx.Done().",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "WaitGroup?",
+      "reference": "wg.Add(n); go func(){ defer wg.Done(); ...}(); wg.Wait().",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Mutex sync.Mutex?",
+      "reference": "Lock/Unlock protect shared memory; defer mu.Unlock().",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "RWMutex?",
+      "reference": "RLock for reads, Lock for writes.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "sync.Once?",
+      "reference": "once.Do(func()) — exactly once initialization (thread-safe).",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "atomic package?",
+      "reference": "atomic.AddInt64 etc. — lock-free primitives for simple counters/flags.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Race detector?",
+      "reference": "go run -race — detects data races at runtime (testing/dev).",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Goroutine leak?",
+      "reference": "Blocked forever on send/receive — use context, buffer, or ensure consumer.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Pipeline pattern?",
+      "reference": "Stages connected by channels — each stage goroutine.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Buffered vs unbuffered tradeoff?",
+      "reference": "Buffer decouples timing but hides backpressure; choose consciously.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "nil channel behavior?",
+      "reference": "Send/receive on nil channel block forever — sometimes used in select tricks.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Directional channel types?",
+      "reference": "chan<- T send-only, <-chan T receive-only in function signatures.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "time.Ticker / Timer?",
+      "reference": "Ticker periodic; Timer one-shot; stop to release resources.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "sync.Map?",
+      "reference": "Concurrent map optimized for read-heavy caches; not default choice vs mutex+map.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "errgroup?",
+      "reference": "golang.org/x/sync/errgroup — goroutine group with first error cancel.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Semaphore via buffered channel?",
+      "reference": "sem := make(chan struct{}, N); acquire sem<-struct{}{}; release <-sem.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Don't communicate by sharing memory?",
+      "reference": "Go proverb — prefer channels; but mutex ok for simple shared state.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "error — built-in interface?",
+      "reference": "Error() string — return errors, don't throw (except panic for bugs).",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "if err != nil?",
+      "reference": "Universal idiom after calls returning error.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "fmt.Errorf?",
+      "reference": "Create error; %w wraps: fmt.Errorf(\"context: %w\", err) for unwrap chain.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.New?",
+      "reference": "Simple static error: errors.New(\"not found\").",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Sentinel errors?",
+      "reference": "var ErrNotFound = errors.New(\"not found\") — compare with errors.Is.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.Is?",
+      "reference": "errors.Is(err, ErrNotFound) — works through wrapped errors.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.As?",
+      "reference": "errors.As(err, &target) — find typed error in chain.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.Unwrap?",
+      "reference": "Returns wrapped error from fmt.Errorf %w or custom Unwrap().",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Custom error type?",
+      "reference": "type MyError struct { Code int }; func (e *MyError) Error() string",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Return error as last value?",
+      "reference": "Convention: (T, error) or just error.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "panic vs error in library?",
+      "reference": "Library returns error; panic only for impossible internal state.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "log.Fatal?",
+      "reference": "Log and os.Exit(1) — not defer-friendly; avoid in libraries.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Multierror?",
+      "reference": "errors.Join (Go 1.20+) combines multiple errors.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.Is vs ==",
+      "reference": "Use Is for sentinel; == breaks with wrapping.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Handling HTTP errors?",
+      "reference": "Check status code; decode body; wrap with context.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "io.EOF?",
+      "reference": "Not failure — end of stream; handle separately from real errors.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Context.Canceled / DeadlineExceeded?",
+      "reference": "Standard context errors from ctx.Err().",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Error string capitalization?",
+      "reference": "No trailing period; lowercase start unless proper noun (Go style guide).",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Don't ignore errors?",
+      "reference": "_ = f() discouraged; handle or explicitly document why ignored.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors in init?",
+      "reference": "init can panic on misconfiguration; libraries prefer returning error from constructor.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Must functions?",
+      "reference": "template.Must, regexp.MustCompile — panic on compile error at init.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Compare wrapped error messages?",
+      "reference": "Avoid; use Is/As on sentinel/types.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "errors.Join use case?",
+      "reference": "Aggregate validation failures from multiple fields.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Temporary / timeout errors?",
+      "reference": "net.Error Timeout(); os.IsTimeout(err) helpers.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Error handling in defer?",
+      "reference": "Named return err; defer func(){ if e!=nil { err=...}}()",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "os.Open / ReadFile?",
+      "reference": "os.Open for streaming; os.ReadFile reads all bytes (Go 1.16+).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "io.Copy?",
+      "reference": "Stream copy between Reader and Writer efficiently.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "bufio.Scanner?",
+      "reference": "Line/token scanning; Scan loop; Err() after false Scan.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "path/filepath?",
+      "reference": "Join, Clean, Base — OS-aware paths (not path for URLs).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "encoding/json?",
+      "reference": "Marshal, Unmarshal, NewEncoder(w).Encode(v).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "net/http server?",
+      "reference": "http.HandleFunc, http.ListenAndServe. Handler interface.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "http.Client?",
+      "reference": "client.Get(url); customize Timeout, Transport.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "context in HTTP?",
+      "reference": "r.Context(); pass to downstream; server shutdown with Server.Shutdown.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "time package?",
+      "reference": "time.Now(), Parse, Format layout reference Mon Jan 2 15:04:05 MST 2006.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "time.Duration?",
+      "reference": "time.Second, time.Millisecond; d := 5 * time.Second.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "sort.Slice?",
+      "reference": "sort.Slice(items, func(i,j int) bool { return items[i]<items[j] })",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "slices package Go 1.21+?",
+      "reference": "slices.Sort, Contains, Clone — generic slice helpers.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "maps package Go 1.21+?",
+      "reference": "maps.Clone, maps.Keys, maps.Values.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "bytes.Buffer?",
+      "reference": "In-memory buffer implementing Writer/Reader for building bytes.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "regexp?",
+      "reference": "Compile pattern; MatchString; FindStringSubmatch.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "flag package?",
+      "reference": "CLI flags for simple tools; flag.Parse().",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "log package?",
+      "reference": "log.Println; log.SetFlags; structured logging often via slog (Go 1.21+).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "log/slog?",
+      "reference": "Structured leveled logging: slog.Info(\"msg\", \"key\", value).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "embed package?",
+      "reference": "//go:embed files — compile-time embed FS in binary.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "crypto/sha256?",
+      "reference": "Hash data: sha256.Sum256(b) or New()+Write.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "database/sql?",
+      "reference": "sql.Open, db.Query, db.Exec, rows.Scan — generic SQL API.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "html/template vs text/template?",
+      "reference": "html/template auto-escapes — use for HTML output.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "os.Getenv / LookupEnv?",
+      "reference": "Environment variables; prefer explicit config injection in apps.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "io/ioutil deprecated?",
+      "reference": "Functions moved to io and os packages in Go 1.16.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "net/url?",
+      "reference": "Parse URLs; Query encoding/decoding.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "strconv.ParseBool?",
+      "reference": "Parse CLI/config string to bool with error handling.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "testing/quick?",
+      "reference": "Property-based random testing helper (legacy niche).",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "runtime package?",
+      "reference": "NumCPU, MemStats, Caller — introspection; rarely in app code.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Generics since Go version?",
+      "reference": "Go 1.18 — type parameters in functions and types.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic function syntax?",
+      "reference": "func Map[T, U any](in []T, f func(T) U) []U { ... }",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Type parameter constraint?",
+      "reference": "[T comparable] or interface constraint listing methods/types.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "any constraint?",
+      "reference": "any means no constraint — equivalent unrestricted (interface{}).",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "comparable?",
+      "reference": "Built-in constraint for == and != — needed for map keys in generic code.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic type definition?",
+      "reference": "type Stack[T any] struct { items []T }",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Methods on generic types?",
+      "reference": "Methods can use receiver type parameters (Go 1.18+).",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Type inference?",
+      "reference": "Compiler infers T from arguments: Map([]int{1}, fn) without explicit T.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "~ in constraints?",
+      "reference": "T ~int means underlying type int — allows defined types based on int.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Union constraints?",
+      "reference": "interface { int | float64 } — type must be one of (Go 1.18).",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "constraints package?",
+      "reference": "golang.org/x/exp/constraints — Integer, Ordered etc. (often copy locally).",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic slice helpers?",
+      "reference": "Use slices package or write Min[T cmp.Ordered](a,b T) T with cmp package Go 1.21.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "When NOT to use generics?",
+      "reference": "Simple concrete code; premature abstraction; readability loss.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Type list in interface?",
+      "reference": "interface { ~int | ~float64 } for union underlying types.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic map keys?",
+      "reference": "Constraint must include comparable.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Instantiate generic type?",
+      "reference": "var s Stack[int] — explicit type args when needed.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic interfaces?",
+      "reference": "type Serializer[T any] interface { Serialize(T) []byte }",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Performance of generics?",
+      "reference": "Monomorphization — specialized at compile time; no runtime boxing for type params in most cases.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic linked list example?",
+      "reference": "type Node[T any] struct { Value T; Next *Node[T] }",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Compare with interface{}?",
+      "reference": "Generics preserve type safety without type assertions.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Type parameters on methods?",
+      "reference": "func (s *Stack[T]) Push(v T) — T from receiver definition.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "constraints.Ordered?",
+      "reference": "cmp.Ordered in std (Go 1.21) for < > on ordered types.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Generic min/max?",
+      "reference": "Use built-in min/max Go 1.21+ or generic function with cmp.Ordered.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Limitations?",
+      "reference": "No generic methods on non-generic types (historical); no specialization syntax; no default type params yet.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Testing generics?",
+      "reference": "Same as normal functions — table tests with multiple type instantiations if needed.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "testing package?",
+      "reference": "import \"testing\"; func TestX(t *testing.T) { } in _test.go files.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "File naming _test.go?",
+      "reference": "Same package (white-box) or package_test (black-box external test).",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "go test?",
+      "reference": "go test ./... runs tests; -v verbose; -run regex filter.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "t.Error vs t.Fatal?",
+      "reference": "Error continues test; Fatal stops immediately.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Table-driven tests?",
+      "reference": "cases := []struct{ name, in, want ...}{}; for _, tc := range cases { t.Run(...) }",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "t.Run subtests?",
+      "reference": "Subtests and parallel subtests t.Parallel() in subtest func.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Benchmark?",
+      "reference": "func BenchmarkX(b *testing.B) { for i:=0; i<b.N; i++ { } }",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Example functions?",
+      "reference": "func ExampleFoo() — documented by output // Output: comment.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "httptest?",
+      "reference": "net/http/httptest ResponseRecorder and test server for HTTP handlers.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "TestMain?",
+      "reference": "func TestMain(m *testing.M) { setup(); os.Exit(m.Run()) }",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Coverage?",
+      "reference": "go test -cover; go test -coverprofile=c.out; go tool cover -html=c.out.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Race in tests?",
+      "reference": "go test -race catches data races.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Temporary files in tests?",
+      "reference": "t.TempDir() auto cleanup; os.CreateTemp deprecated pattern replaced.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Mocking?",
+      "reference": "Interfaces + fake implementations; no built-in mock framework in stdlib.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Fuzz testing?",
+      "reference": "func FuzzX(f *testing.F) — Go 1.18+ native fuzzing.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Skip test?",
+      "reference": "t.Skip(\"reason\") or t.SkipNow().",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Helper?",
+      "reference": "t.Helper() marks function as test helper for accurate line numbers.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Parallel tests?",
+      "reference": "t.Parallel() — run concurrently; watch shared state.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Golden files?",
+      "reference": "Compare output totestdata/expected.out — common pattern.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Integration vs unit?",
+      "reference": "Unit fast isolated; integration needs DB/network — separate tags build tags.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Build tags in tests?",
+      "reference": "//go:build integration at top of file.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "assert libraries?",
+      "reference": "testify/assert popular; stdlib prefers explicit if got != want { t.Errorf }. ",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Cleanup?",
+      "reference": "t.Cleanup(func(){ ... }) registers teardown like defer per subtest.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Benchmark memory?",
+      "reference": "b.ReportAllocs() report allocations per op.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Testing unexported?",
+      "reference": "Same package _test or export_test.go for alias.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go modules?",
+      "reference": "go mod init module/path — dependency management via go.mod go.sum.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go.mod contents?",
+      "reference": "module path, go version, require directives, replace/exclude.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go get?",
+      "reference": "Add/update dependency: go get pkg@version.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go mod tidy?",
+      "reference": "Add missing, remove unused modules in go.mod/sum.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Vendor?",
+      "reference": "go mod vendor — copy deps to vendor/ for reproducible offline builds.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Minimum version selection?",
+      "reference": "MVS algorithm picks minimum compatible versions satisfying all requires.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Package vs module?",
+      "reference": "Module — deployable unit with go.mod; package — directory of .go files sharing package name.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Internal packages?",
+      "reference": "directory internal/ — importable only from parent tree.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go.work workspace?",
+      "reference": "Multi-module local development — go work init.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Semantic import versioning?",
+      "reference": "v2+ module path includes /v2 suffix in import path.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Init side effects?",
+      "reference": "import _ \"driver\" registers driver via init — explicit side-effect import.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Build constraints?",
+      "reference": "//go:build linux at top (modern) vs old // +build comment.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Cross compile?",
+      "reference": "GOOS=linux GOARCH=amd64 go build — easy cross compilation.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go install?",
+      "reference": "Build and install binary to GOBIN/GOPATH/bin.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Module proxy?",
+      "reference": "GOPROXY=https://proxy.golang.org default — module download cache.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Private modules?",
+      "reference": "GOPRIVATE env skip proxy for private repos.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Replace directive?",
+      "reference": "replace example.com/mod => ../localmod for local dev.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Sum verification?",
+      "reference": "go.sum hashes ensure integrity of downloaded modules.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Package naming?",
+      "reference": "Short, lowercase, no underscores; last element of import path often matches dir name.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Document exported API?",
+      "reference": "All exported names need doc comment — godoc and linters.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Circular imports?",
+      "reference": "Forbidden — refactor to third package or interfaces.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Main package location?",
+      "reference": "cmd/myapp/main.go common layout pattern.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Standard project layout?",
+      "reference": "Not official but cmd/, internal/, pkg/ conventions widely used.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "go version in go.mod?",
+      "reference": "Sets language version; toolchain directive Go 1.21+ for reproducible toolchain.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Retracted versions?",
+      "reference": "Module retraction in go.mod protects from bad published versions.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "card_type": "code",
+      "question": "Slice append без присваивания",
+      "task": "Исправь — append должен сохраняться в s.",
+      "code": "package main\n\nfunc addItem(s []int, v int) []int {\n    append(s, v)\n    return s\n}",
+      "reference": "package main\n\nfunc addItem(s []int, v int) []int {\n    return append(s, v)\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "Nil map write",
+      "task": "Исправь — map нужно инициализировать перед записью.",
+      "code": "package main\n\nfunc setScore(scores map[string]int, user string, score int) {\n    scores[user] = score\n}",
+      "reference": "package main\n\nfunc setScore(scores map[string]int, user string, score int) {\n    if scores == nil {\n        scores = make(map[string]int)\n    }\n    scores[user] = score\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "Range loop goroutine capture",
+      "task": "Исправь — каждая goroutine должна печатать своё значение v (Go 1.21 style).",
+      "code": "package main\n\nimport \"fmt\"\n\nfunc printAll(vals []int) {\n    for _, v := range vals {\n        go fmt.Println(v)\n    }\n}",
+      "reference": "package main\n\nimport \"fmt\"\n\nfunc printAll(vals []int) {\n    for _, v := range vals {\n        go func(n int) {\n            fmt.Println(n)\n        }(v)\n    }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "Defer закрывает не тот ресурс",
+      "task": "Исправь — defer должен закрывать f, а не переиспользовать err переменную неправильно.",
+      "code": "package main\n\nimport \"os\"\n\nfunc readPath(path string) ([]byte, error) {\n    f, err := os.Open(path)\n    if err != nil {\n        return nil, err\n    }\n    defer os.Close(f)\n    return os.ReadFile(path)\n}",
+      "reference": "package main\n\nimport \"io\"\nimport \"os\"\n\nfunc readPath(path string) ([]byte, error) {\n    f, err := os.Open(path)\n    if err != nil {\n        return nil, err\n    }\n    defer f.Close()\n    return io.ReadAll(f)\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "Pointer receiver copy",
+      "task": "Исправь Increment — счётчик должен увеличиваться на receiver.",
+      "code": "package main\n\ntype Counter struct{ n int }\n\nfunc (c Counter) Increment() {\n    c.n++\n}",
+      "reference": "package main\n\ntype Counter struct{ n int }\n\nfunc (c *Counter) Increment() {\n    c.n++\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "Shadowing err",
+      "task": "Исправь — не теряй ошибку Open при повторном :=.",
+      "code": "package main\n\nimport \"os\"\n\nfunc openBoth(a, b string) error {\n    f1, err := os.Open(a)\n    if err != nil {\n        return err\n    }\n    defer f1.Close()\n    f2, err := os.Open(b)\n    if err != nil {\n        return err\n    }\n    defer f2.Close()\n    return nil\n}",
+      "reference": "package main\n\nimport \"os\"\n\nfunc openBoth(a, b string) error {\n    f1, err := os.Open(a)\n    if err != nil {\n        return err\n    }\n    defer f1.Close()\n    f2, err2 := os.Open(b)\n    if err2 != nil {\n        return err2\n    }\n    defer f2.Close()\n    return nil\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "Interface nil check wrong",
+      "task": "Исправь isEmpty — typed nil pointer не должен считаться non-empty interface.",
+      "code": "package main\n\ntype Node struct{}\n\nfunc isEmpty(v interface{}) bool {\n    return v == nil\n}",
+      "reference": "package main\n\nimport \"reflect\"\n\nfunc isEmpty(v interface{}) bool {\n    if v == nil {\n        return true\n    }\n    rv := reflect.ValueOf(v)\n    return rv.Kind() == reflect.Ptr && rv.IsNil()\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "Channel send без goroutine deadlock",
+      "task": "Исправь — unbuffered send блокирует main; используй buffer или goroutine.",
+      "code": "package main\n\nfunc ping(ch chan string) {\n    ch <- \"ping\"\n}",
+      "reference": "package main\n\nfunc ping(ch chan string) {\n    ch <- \"ping\"\n}\n\nfunc start() string {\n    ch := make(chan string, 1)\n    go ping(ch)\n    return <-ch\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "WaitGroup Add после Wait",
+      "task": "Исправь порядок WaitGroup.",
+      "code": "package main\n\nimport \"sync\"\n\nfunc run(tasks []func()) {\n    var wg sync.WaitGroup\n    for _, task := range tasks {\n        go func(fn func()) {\n            fn()\n            wg.Done()\n        }(task)\n    }\n    wg.Add(len(tasks))\n    wg.Wait()\n}",
+      "reference": "package main\n\nimport \"sync\"\n\nfunc run(tasks []func()) {\n    var wg sync.WaitGroup\n    wg.Add(len(tasks))\n    for _, task := range tasks {\n        go func(fn func()) {\n            defer wg.Done()\n            fn()\n        }(task)\n    }\n    wg.Wait()\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "JSON unexported fields",
+      "task": "Исправь — JSON должен сериализовать Name (export field).",
+      "code": "package main\n\ntype User struct {\n    name string\n    ID   int\n}",
+      "reference": "package main\n\ntype User struct {\n    Name string `json:\"name\"`\n    ID   int    `json:\"id\"`\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "String concat in loop",
+      "task": "Исправь — используй strings.Builder для эффективности.",
+      "code": "package main\n\nfunc join(words []string) string {\n    var s string\n    for _, w := range words {\n        s += w\n    }\n    return s\n}",
+      "reference": "package main\n\nimport \"strings\"\n\nfunc join(words []string) string {\n    var b strings.Builder\n    for _, w := range words {\n        b.WriteString(w)\n    }\n    return b.String()\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "Compare slices with ==",
+      "task": "Исправь equal — slices нельзя сравнивать через ==.",
+      "code": "package main\n\nfunc equal(a, b []int) bool {\n    return a == b\n}",
+      "reference": "package main\n\nimport \"bytes\"\n\nfunc equal(a, b []int) bool {\n    if len(a) != len(b) {\n        return false\n    }\n    for i := range a {\n        if a[i] != b[i] {\n            return false\n        }\n    }\n    return true\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "Missing comma in composite literal",
+      "task": "Исправь multiline slice literal — trailing comma.",
+      "code": "package main\n\nfunc nums() []int {\n    return []int{\n        1\n        2\n    }\n}",
+      "reference": "package main\n\nfunc nums() []int {\n    return []int{\n        1,\n        2,\n    }\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "Error wrap without %w",
+      "task": "Исправь wrap — используй %w для unwrap.",
+      "code": "package main\n\nimport \"fmt\"\n\nfunc load() error {\n    err := fmt.Errorf(\"disk\")\n    return fmt.Errorf(\"load failed: %v\", err)\n}",
+      "reference": "package main\n\nimport \"fmt\"\n\nfunc load() error {\n    err := fmt.Errorf(\"disk\")\n    return fmt.Errorf(\"load failed: %w\", err)\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "Context not passed",
+      "task": "Исправь fetch — передай ctx в http.NewRequestWithContext.",
+      "code": "package main\n\nimport (\n    \"context\"\n    \"net/http\"\n)\n\nfunc fetch(ctx context.Context, url string) (*http.Response, error) {\n    req, err := http.NewRequest(http.MethodGet, url, nil)\n    if err != nil {\n        return nil, err\n    }\n    return http.DefaultClient.Do(req)\n}",
+      "reference": "package main\n\nimport (\n    \"context\"\n    \"net/http\"\n)\n\nfunc fetch(ctx context.Context, url string) (*http.Response, error) {\n    req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)\n    if err != nil {\n        return nil, err\n    }\n    return http.DefaultClient.Do(req)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "Mutex unlock without defer",
+      "task": "Исправь — Unlock через defer, избегай забыть при return.",
+      "code": "package main\n\nimport \"sync\"\n\ntype Safe struct {\n    mu sync.Mutex\n    v  int\n}\n\nfunc (s *Safe) Add(n int) {\n    s.mu.Lock()\n    if n < 0 {\n        return\n    }\n    s.v += n\n    s.mu.Unlock()\n}",
+      "reference": "package main\n\nimport \"sync\"\n\ntype Safe struct {\n    mu sync.Mutex\n    v  int\n}\n\nfunc (s *Safe) Add(n int) {\n    s.mu.Lock()\n    defer s.mu.Unlock()\n    if n < 0 {\n        return\n    }\n    s.v += n\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "Generic min wrong constraint",
+      "task": "Исправь Min — используй cmp.Ordered (Go 1.21+).",
+      "code": "package main\n\nfunc Min[T any](a, b T) T {\n    if a < b {\n        return a\n    }\n    return b\n}",
+      "reference": "package main\n\nimport \"cmp\"\n\nfunc Min[T cmp.Ordered](a, b T) T {\n    if a < b {\n        return a\n    }\n    return b\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "Test comparison with ==",
+      "task": "Исправь TestSum — сравни got/want с понятным сообщением.",
+      "code": "package main\n\nimport \"testing\"\n\nfunc TestSum(t *testing.T) {\n    got := sum(2, 2)\n    if got != 4 {\n        t.Fail()\n    }\n}",
+      "reference": "package main\n\nimport \"testing\"\n\nfunc TestSum(t *testing.T) {\n    got := sum(2, 2)\n    want := 4\n    if got != want {\n        t.Errorf(\"sum() = %d, want %d\", got, want)\n    }\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "Import cycle hint package main",
+      "task": "Исправь — вынеси общий тип в отдельный пакет (комментарий в reference).",
+      "code": "package main\n\ntype Config struct {\n    Host string\n}",
+      "reference": "// Move shared types to a non-main package, e.g. package config:\n\npackage config\n\ntype Config struct {\n    Host string\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "card_type": "code",
+      "question": "Close body leak",
+      "task": "Исправь — закрой resp.Body.",
+      "code": "package main\n\nimport \"net/http\"\n\nfunc getURL(url string) error {\n    resp, err := http.Get(url)\n    if err != nil {\n        return err\n    }\n    _ = resp.StatusCode\n    return nil\n}",
+      "reference": "package main\n\nimport (\n    \"io\"\n    \"net/http\"\n)\n\nfunc getURL(url string) error {\n    resp, err := http.Get(url)\n    if err != nil {\n        return err\n    }\n    defer resp.Body.Close()\n    _, _ = io.Copy(io.Discard, resp.Body)\n    return nil\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "switch без default #1",
+      "task": "Добавь default в switch.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    switch day := 0; day { case 1: return \"Mon\" }\n}",
+      "reference": "package main\n\nfunc example() {\n    switch day := 0; day {\ncase 1:\n    return \"Mon\"\ndefault:\n    return \"Unknown\"\n}\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "slice copy length #1",
+      "task": "copy должен учитывать длину dst.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    copy(dst, src)\n}",
+      "reference": "package main\n\nfunc example() {\n    n := copy(dst, src)\n_ = n\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "named return shadow #1",
+      "task": "Используй named return err корректно.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func f() error { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    func f() (err error) {\n    defer func() { _ = err }()\n    return nil\n}\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "missing interface method #1",
+      "task": "Добавь Read для *Buffer.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    type Buffer struct{ data []byte }\n}",
+      "reference": "package main\n\nfunc example() {\n    type Buffer struct{ data []byte }\nfunc (b *Buffer) Read(p []byte) (int, error) { n := copy(p, b.data); return n, nil }\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "select default busy loop #1",
+      "task": "Убери busy loop — блокируй на receive.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    for { select { default: } }\n}",
+      "reference": "package main\n\nfunc example() {\n    for range ch { }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "log and return #1",
+      "task": "Не глотай err — return после log.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    if err != nil { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    if err != nil {\n    return nil, err\n}\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "filepath.Base #1",
+      "task": "Используй filepath.Base для имени файла.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    parts := strings.Split(path, \"/\"); return parts[len(parts)-1]\n}",
+      "reference": "package main\n\nfunc example() {\n    return filepath.Base(path)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "missing constraint #1",
+      "task": "Добавь comparable для map key.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func Keys[M map[K]V, K, V any](m M) []K\n}",
+      "reference": "package main\n\nfunc example() {\n    func Keys[M ~map[K]V, K comparable, V any](m M) []K\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "parallel without setup #1",
+      "task": "Вызови t.Parallel() в начале subtest.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func TestX(t *testing.T) { }\n}",
+      "reference": "package main\n\nfunc example() {\n    func TestX(t *testing.T) {\n    t.Parallel()\n}\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "wrong module path import #1",
+      "task": "Импорт должен совпадать с go.mod module path.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    import \"myapp/internal/foo\"\n}",
+      "reference": "package main\n\nfunc example() {\n    import \"github.com/org/myapp/internal/foo\"\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "card_type": "code",
+      "question": "switch без default #2",
+      "task": "Добавь default в switch.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    switch day := 0; day { case 1: return \"Mon\" }\n}",
+      "reference": "package main\n\nfunc example() {\n    switch day := 0; day {\ncase 1:\n    return \"Mon\"\ndefault:\n    return \"Unknown\"\n}\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "slice copy length #2",
+      "task": "copy должен учитывать длину dst.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    copy(dst, src)\n}",
+      "reference": "package main\n\nfunc example() {\n    n := copy(dst, src)\n_ = n\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "named return shadow #2",
+      "task": "Используй named return err корректно.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func f() error { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    func f() (err error) {\n    defer func() { _ = err }()\n    return nil\n}\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "missing interface method #2",
+      "task": "Добавь Read для *Buffer.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    type Buffer struct{ data []byte }\n}",
+      "reference": "package main\n\nfunc example() {\n    type Buffer struct{ data []byte }\nfunc (b *Buffer) Read(p []byte) (int, error) { n := copy(p, b.data); return n, nil }\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "select default busy loop #2",
+      "task": "Убери busy loop — блокируй на receive.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    for { select { default: } }\n}",
+      "reference": "package main\n\nfunc example() {\n    for range ch { }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "log and return #2",
+      "task": "Не глотай err — return после log.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    if err != nil { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    if err != nil {\n    return nil, err\n}\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "filepath.Base #2",
+      "task": "Используй filepath.Base для имени файла.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    parts := strings.Split(path, \"/\"); return parts[len(parts)-1]\n}",
+      "reference": "package main\n\nfunc example() {\n    return filepath.Base(path)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "missing constraint #2",
+      "task": "Добавь comparable для map key.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func Keys[M map[K]V, K, V any](m M) []K\n}",
+      "reference": "package main\n\nfunc example() {\n    func Keys[M ~map[K]V, K comparable, V any](m M) []K\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "parallel without setup #2",
+      "task": "Вызови t.Parallel() в начале subtest.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func TestX(t *testing.T) { }\n}",
+      "reference": "package main\n\nfunc example() {\n    func TestX(t *testing.T) {\n    t.Parallel()\n}\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "wrong module path import #2",
+      "task": "Импорт должен совпадать с go.mod module path.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    import \"myapp/internal/foo\"\n}",
+      "reference": "package main\n\nfunc example() {\n    import \"github.com/org/myapp/internal/foo\"\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "card_type": "code",
+      "question": "switch без default #3",
+      "task": "Добавь default в switch.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    switch day := 0; day { case 1: return \"Mon\" }\n}",
+      "reference": "package main\n\nfunc example() {\n    switch day := 0; day {\ncase 1:\n    return \"Mon\"\ndefault:\n    return \"Unknown\"\n}\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "slice copy length #3",
+      "task": "copy должен учитывать длину dst.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    copy(dst, src)\n}",
+      "reference": "package main\n\nfunc example() {\n    n := copy(dst, src)\n_ = n\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "named return shadow #3",
+      "task": "Используй named return err корректно.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func f() error { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    func f() (err error) {\n    defer func() { _ = err }()\n    return nil\n}\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "missing interface method #3",
+      "task": "Добавь Read для *Buffer.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    type Buffer struct{ data []byte }\n}",
+      "reference": "package main\n\nfunc example() {\n    type Buffer struct{ data []byte }\nfunc (b *Buffer) Read(p []byte) (int, error) { n := copy(p, b.data); return n, nil }\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "select default busy loop #3",
+      "task": "Убери busy loop — блокируй на receive.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    for { select { default: } }\n}",
+      "reference": "package main\n\nfunc example() {\n    for range ch { }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "log and return #3",
+      "task": "Не глотай err — return после log.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    if err != nil { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    if err != nil {\n    return nil, err\n}\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "filepath.Base #3",
+      "task": "Используй filepath.Base для имени файла.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    parts := strings.Split(path, \"/\"); return parts[len(parts)-1]\n}",
+      "reference": "package main\n\nfunc example() {\n    return filepath.Base(path)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "missing constraint #3",
+      "task": "Добавь comparable для map key.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func Keys[M map[K]V, K, V any](m M) []K\n}",
+      "reference": "package main\n\nfunc example() {\n    func Keys[M ~map[K]V, K comparable, V any](m M) []K\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "parallel without setup #3",
+      "task": "Вызови t.Parallel() в начале subtest.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func TestX(t *testing.T) { }\n}",
+      "reference": "package main\n\nfunc example() {\n    func TestX(t *testing.T) {\n    t.Parallel()\n}\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "wrong module path import #3",
+      "task": "Импорт должен совпадать с go.mod module path.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    import \"myapp/internal/foo\"\n}",
+      "reference": "package main\n\nfunc example() {\n    import \"github.com/org/myapp/internal/foo\"\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "card_type": "code",
+      "question": "switch без default #4",
+      "task": "Добавь default в switch.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    switch day := 0; day { case 1: return \"Mon\" }\n}",
+      "reference": "package main\n\nfunc example() {\n    switch day := 0; day {\ncase 1:\n    return \"Mon\"\ndefault:\n    return \"Unknown\"\n}\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "slice copy length #4",
+      "task": "copy должен учитывать длину dst.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    copy(dst, src)\n}",
+      "reference": "package main\n\nfunc example() {\n    n := copy(dst, src)\n_ = n\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "named return shadow #4",
+      "task": "Используй named return err корректно.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func f() error { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    func f() (err error) {\n    defer func() { _ = err }()\n    return nil\n}\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "missing interface method #4",
+      "task": "Добавь Read для *Buffer.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    type Buffer struct{ data []byte }\n}",
+      "reference": "package main\n\nfunc example() {\n    type Buffer struct{ data []byte }\nfunc (b *Buffer) Read(p []byte) (int, error) { n := copy(p, b.data); return n, nil }\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "select default busy loop #4",
+      "task": "Убери busy loop — блокируй на receive.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    for { select { default: } }\n}",
+      "reference": "package main\n\nfunc example() {\n    for range ch { }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "log and return #4",
+      "task": "Не глотай err — return после log.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    if err != nil { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    if err != nil {\n    return nil, err\n}\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "filepath.Base #4",
+      "task": "Используй filepath.Base для имени файла.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    parts := strings.Split(path, \"/\"); return parts[len(parts)-1]\n}",
+      "reference": "package main\n\nfunc example() {\n    return filepath.Base(path)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "missing constraint #4",
+      "task": "Добавь comparable для map key.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func Keys[M map[K]V, K, V any](m M) []K\n}",
+      "reference": "package main\n\nfunc example() {\n    func Keys[M ~map[K]V, K comparable, V any](m M) []K\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "parallel without setup #4",
+      "task": "Вызови t.Parallel() в начале subtest.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func TestX(t *testing.T) { }\n}",
+      "reference": "package main\n\nfunc example() {\n    func TestX(t *testing.T) {\n    t.Parallel()\n}\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "wrong module path import #4",
+      "task": "Импорт должен совпадать с go.mod module path.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    import \"myapp/internal/foo\"\n}",
+      "reference": "package main\n\nfunc example() {\n    import \"github.com/org/myapp/internal/foo\"\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "card_type": "code",
+      "question": "switch без default #5",
+      "task": "Добавь default в switch.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    switch day := 0; day { case 1: return \"Mon\" }\n}",
+      "reference": "package main\n\nfunc example() {\n    switch day := 0; day {\ncase 1:\n    return \"Mon\"\ndefault:\n    return \"Unknown\"\n}\n}",
+      "language": "go",
+      "topic": "Основы"
+    },
+    {
+      "card_type": "code",
+      "question": "slice copy length #5",
+      "task": "copy должен учитывать длину dst.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    copy(dst, src)\n}",
+      "reference": "package main\n\nfunc example() {\n    n := copy(dst, src)\n_ = n\n}",
+      "language": "go",
+      "topic": "Типы и структуры"
+    },
+    {
+      "card_type": "code",
+      "question": "named return shadow #5",
+      "task": "Используй named return err корректно.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func f() error { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    func f() (err error) {\n    defer func() { _ = err }()\n    return nil\n}\n}",
+      "language": "go",
+      "topic": "Функции и defer"
+    },
+    {
+      "card_type": "code",
+      "question": "missing interface method #5",
+      "task": "Добавь Read для *Buffer.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    type Buffer struct{ data []byte }\n}",
+      "reference": "package main\n\nfunc example() {\n    type Buffer struct{ data []byte }\nfunc (b *Buffer) Read(p []byte) (int, error) { n := copy(p, b.data); return n, nil }\n}",
+      "language": "go",
+      "topic": "Методы и интерфейсы"
+    },
+    {
+      "card_type": "code",
+      "question": "select default busy loop #5",
+      "task": "Убери busy loop — блокируй на receive.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    for { select { default: } }\n}",
+      "reference": "package main\n\nfunc example() {\n    for range ch { }\n}",
+      "language": "go",
+      "topic": "Goroutines и каналы"
+    },
+    {
+      "card_type": "code",
+      "question": "log and return #5",
+      "task": "Не глотай err — return после log.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    if err != nil { return nil }\n}",
+      "reference": "package main\n\nfunc example() {\n    if err != nil {\n    return nil, err\n}\n}",
+      "language": "go",
+      "topic": "Ошибки"
+    },
+    {
+      "card_type": "code",
+      "question": "filepath.Base #5",
+      "task": "Используй filepath.Base для имени файла.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    parts := strings.Split(path, \"/\"); return parts[len(parts)-1]\n}",
+      "reference": "package main\n\nfunc example() {\n    return filepath.Base(path)\n}",
+      "language": "go",
+      "topic": "Stdlib"
+    },
+    {
+      "card_type": "code",
+      "question": "missing constraint #5",
+      "task": "Добавь comparable для map key.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func Keys[M map[K]V, K, V any](m M) []K\n}",
+      "reference": "package main\n\nfunc example() {\n    func Keys[M ~map[K]V, K comparable, V any](m M) []K\n}",
+      "language": "go",
+      "topic": "Generics"
+    },
+    {
+      "card_type": "code",
+      "question": "parallel without setup #5",
+      "task": "Вызови t.Parallel() в начале subtest.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    func TestX(t *testing.T) { }\n}",
+      "reference": "package main\n\nfunc example() {\n    func TestX(t *testing.T) {\n    t.Parallel()\n}\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "code",
+      "question": "wrong module path import #5",
+      "task": "Импорт должен совпадать с go.mod module path.",
+      "code": "package main\n\n// fix me\nfunc example() {\n    import \"myapp/internal/foo\"\n}",
+      "reference": "package main\n\nfunc example() {\n    import \"github.com/org/myapp/internal/foo\"\n}",
+      "language": "go",
+      "topic": "Модули и пакеты"
+    },
+    {
+      "question": "Go [Основы]: package main — контрольный вопрос #1",
+      "reference": "Объясните package main в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: package main — контрольный вопрос #2",
+      "reference": "Объясните package main в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: package main — контрольный вопрос #3",
+      "reference": "Объясните package main в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: package main — контрольный вопрос #4",
+      "reference": "Объясните package main в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: package main — контрольный вопрос #5",
+      "reference": "Объясните package main в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: iota — контрольный вопрос #1",
+      "reference": "Объясните iota в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: iota — контрольный вопрос #2",
+      "reference": "Объясните iota в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: iota — контрольный вопрос #3",
+      "reference": "Объясните iota в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: iota — контрольный вопрос #4",
+      "reference": "Объясните iota в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: iota — контрольный вопрос #5",
+      "reference": "Объясните iota в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: gofmt — контрольный вопрос #1",
+      "reference": "Объясните gofmt в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: gofmt — контрольный вопрос #2",
+      "reference": "Объясните gofmt в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: gofmt — контрольный вопрос #3",
+      "reference": "Объясните gofmt в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: gofmt — контрольный вопрос #4",
+      "reference": "Объясните gofmt в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: gofmt — контрольный вопрос #5",
+      "reference": "Объясните gofmt в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: zero value — контрольный вопрос #1",
+      "reference": "Объясните zero value в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: zero value — контрольный вопрос #2",
+      "reference": "Объясните zero value в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: zero value — контрольный вопрос #3",
+      "reference": "Объясните zero value в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: zero value — контрольный вопрос #4",
+      "reference": "Объясните zero value в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: zero value — контрольный вопрос #5",
+      "reference": "Объясните zero value в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: exported names — контрольный вопрос #1",
+      "reference": "Объясните exported names в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: exported names — контрольный вопрос #2",
+      "reference": "Объясните exported names в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: exported names — контрольный вопрос #3",
+      "reference": "Объясните exported names в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: exported names — контрольный вопрос #4",
+      "reference": "Объясните exported names в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: exported names — контрольный вопрос #5",
+      "reference": "Объясните exported names в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: short variable declaration — контрольный вопрос #1",
+      "reference": "Объясните short variable declaration в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: short variable declaration — контрольный вопрос #2",
+      "reference": "Объясните short variable declaration в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: short variable declaration — контрольный вопрос #3",
+      "reference": "Объясните short variable declaration в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: short variable declaration — контрольный вопрос #4",
+      "reference": "Объясните short variable declaration в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: short variable declaration — контрольный вопрос #5",
+      "reference": "Объясните short variable declaration в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: range loop — контрольный вопрос #1",
+      "reference": "Объясните range loop в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: range loop — контрольный вопрос #2",
+      "reference": "Объясните range loop в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: range loop — контрольный вопрос #3",
+      "reference": "Объясните range loop в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: range loop — контрольный вопрос #4",
+      "reference": "Объясните range loop в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Основы]: range loop — контрольный вопрос #5",
+      "reference": "Объясните range loop в контексте Go (Основы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Основы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: slice append — контрольный вопрос #1",
+      "reference": "Объясните slice append в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: slice append — контрольный вопрос #2",
+      "reference": "Объясните slice append в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: slice append — контрольный вопрос #3",
+      "reference": "Объясните slice append в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: slice append — контрольный вопрос #4",
+      "reference": "Объясните slice append в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: slice append — контрольный вопрос #5",
+      "reference": "Объясните slice append в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: map initialization — контрольный вопрос #1",
+      "reference": "Объясните map initialization в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: map initialization — контрольный вопрос #2",
+      "reference": "Объясните map initialization в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: map initialization — контрольный вопрос #3",
+      "reference": "Объясните map initialization в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: map initialization — контрольный вопрос #4",
+      "reference": "Объясните map initialization в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: map initialization — контрольный вопрос #5",
+      "reference": "Объясните map initialization в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: struct embedding — контрольный вопрос #1",
+      "reference": "Объясните struct embedding в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: struct embedding — контрольный вопрос #2",
+      "reference": "Объясните struct embedding в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: struct embedding — контрольный вопрос #3",
+      "reference": "Объясните struct embedding в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: struct embedding — контрольный вопрос #4",
+      "reference": "Объясните struct embedding в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: struct embedding — контрольный вопрос #5",
+      "reference": "Объясните struct embedding в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: pointer vs value — контрольный вопрос #1",
+      "reference": "Объясните pointer vs value в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: pointer vs value — контрольный вопрос #2",
+      "reference": "Объясните pointer vs value в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: pointer vs value — контрольный вопрос #3",
+      "reference": "Объясните pointer vs value в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: pointer vs value — контрольный вопрос #4",
+      "reference": "Объясните pointer vs value в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: pointer vs value — контрольный вопрос #5",
+      "reference": "Объясните pointer vs value в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: json tags — контрольный вопрос #1",
+      "reference": "Объясните json tags в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: json tags — контрольный вопрос #2",
+      "reference": "Объясните json tags в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: json tags — контрольный вопрос #3",
+      "reference": "Объясните json tags в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: json tags — контрольный вопрос #4",
+      "reference": "Объясните json tags в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: json tags — контрольный вопрос #5",
+      "reference": "Объясните json tags в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: make vs new — контрольный вопрос #1",
+      "reference": "Объясните make vs new в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: make vs new — контрольный вопрос #2",
+      "reference": "Объясните make vs new в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: make vs new — контрольный вопрос #3",
+      "reference": "Объясните make vs new в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: make vs new — контрольный вопрос #4",
+      "reference": "Объясните make vs new в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: make vs new — контрольный вопрос #5",
+      "reference": "Объясните make vs new в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: len and cap — контрольный вопрос #1",
+      "reference": "Объясните len and cap в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: len and cap — контрольный вопрос #2",
+      "reference": "Объясните len and cap в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: len and cap — контрольный вопрос #3",
+      "reference": "Объясните len and cap в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: len and cap — контрольный вопрос #4",
+      "reference": "Объясните len and cap в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Типы и структуры]: len and cap — контрольный вопрос #5",
+      "reference": "Объясните len and cap в контексте Go (Типы и структуры). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Типы и структуры",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: defer LIFO — контрольный вопрос #1",
+      "reference": "Объясните defer LIFO в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: defer LIFO — контрольный вопрос #2",
+      "reference": "Объясните defer LIFO в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: defer LIFO — контрольный вопрос #3",
+      "reference": "Объясните defer LIFO в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: defer LIFO — контрольный вопрос #4",
+      "reference": "Объясните defer LIFO в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: defer LIFO — контрольный вопрос #5",
+      "reference": "Объясните defer LIFO в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: panic recover — контрольный вопрос #1",
+      "reference": "Объясните panic recover в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: panic recover — контрольный вопрос #2",
+      "reference": "Объясните panic recover в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: panic recover — контрольный вопрос #3",
+      "reference": "Объясните panic recover в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: panic recover — контрольный вопрос #4",
+      "reference": "Объясните panic recover в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: panic recover — контрольный вопрос #5",
+      "reference": "Объясните panic recover в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: variadic functions — контрольный вопрос #1",
+      "reference": "Объясните variadic functions в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: variadic functions — контрольный вопрос #2",
+      "reference": "Объясните variadic functions в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: variadic functions — контрольный вопрос #3",
+      "reference": "Объясните variadic functions в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: variadic functions — контрольный вопрос #4",
+      "reference": "Объясните variadic functions в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: variadic functions — контрольный вопрос #5",
+      "reference": "Объясните variadic functions в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: named returns — контрольный вопрос #1",
+      "reference": "Объясните named returns в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: named returns — контрольный вопрос #2",
+      "reference": "Объясните named returns в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: named returns — контрольный вопрос #3",
+      "reference": "Объясните named returns в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: named returns — контрольный вопрос #4",
+      "reference": "Объясните named returns в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: named returns — контрольный вопрос #5",
+      "reference": "Объясните named returns в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: function closures — контрольный вопрос #1",
+      "reference": "Объясните function closures в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: function closures — контрольный вопрос #2",
+      "reference": "Объясните function closures в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: function closures — контрольный вопрос #3",
+      "reference": "Объясните function closures в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: function closures — контрольный вопрос #4",
+      "reference": "Объясните function closures в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: function closures — контрольный вопрос #5",
+      "reference": "Объясните function closures в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: init order — контрольный вопрос #1",
+      "reference": "Объясните init order в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: init order — контрольный вопрос #2",
+      "reference": "Объясните init order в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: init order — контрольный вопрос #3",
+      "reference": "Объясните init order в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: init order — контрольный вопрос #4",
+      "reference": "Объясните init order в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Функции и defer]: init order — контрольный вопрос #5",
+      "reference": "Объясните init order в контексте Go (Функции и defer). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Функции и defer",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: implicit interfaces — контрольный вопрос #1",
+      "reference": "Объясните implicit interfaces в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: implicit interfaces — контрольный вопрос #2",
+      "reference": "Объясните implicit interfaces в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: implicit interfaces — контрольный вопрос #3",
+      "reference": "Объясните implicit interfaces в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: implicit interfaces — контрольный вопрос #4",
+      "reference": "Объясните implicit interfaces в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: implicit interfaces — контрольный вопрос #5",
+      "reference": "Объясните implicit interfaces в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: type assertion — контрольный вопрос #1",
+      "reference": "Объясните type assertion в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: type assertion — контрольный вопрос #2",
+      "reference": "Объясните type assertion в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: type assertion — контрольный вопрос #3",
+      "reference": "Объясните type assertion в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: type assertion — контрольный вопрос #4",
+      "reference": "Объясните type assertion в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: type assertion — контрольный вопрос #5",
+      "reference": "Объясните type assertion в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: pointer receiver — контрольный вопрос #1",
+      "reference": "Объясните pointer receiver в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: pointer receiver — контрольный вопрос #2",
+      "reference": "Объясните pointer receiver в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: pointer receiver — контрольный вопрос #3",
+      "reference": "Объясните pointer receiver в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: pointer receiver — контрольный вопрос #4",
+      "reference": "Объясните pointer receiver в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: pointer receiver — контрольный вопрос #5",
+      "reference": "Объясните pointer receiver в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: io.Reader — контрольный вопрос #1",
+      "reference": "Объясните io.Reader в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: io.Reader — контрольный вопрос #2",
+      "reference": "Объясните io.Reader в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: io.Reader — контрольный вопрос #3",
+      "reference": "Объясните io.Reader в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: io.Reader — контрольный вопрос #4",
+      "reference": "Объясните io.Reader в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: io.Reader — контрольный вопрос #5",
+      "reference": "Объясните io.Reader в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: empty interface nil — контрольный вопрос #1",
+      "reference": "Объясните empty interface nil в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: empty interface nil — контрольный вопрос #2",
+      "reference": "Объясните empty interface nil в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: empty interface nil — контрольный вопрос #3",
+      "reference": "Объясните empty interface nil в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: empty interface nil — контрольный вопрос #4",
+      "reference": "Объясните empty interface nil в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: empty interface nil — контрольный вопрос #5",
+      "reference": "Объясните empty interface nil в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: composition — контрольный вопрос #1",
+      "reference": "Объясните composition в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: composition — контрольный вопрос #2",
+      "reference": "Объясните composition в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: composition — контрольный вопрос #3",
+      "reference": "Объясните composition в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: composition — контрольный вопрос #4",
+      "reference": "Объясните composition в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Методы и интерфейсы]: composition — контрольный вопрос #5",
+      "reference": "Объясните composition в контексте Go (Методы и интерфейсы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Методы и интерфейсы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: goroutine — контрольный вопрос #1",
+      "reference": "Объясните goroutine в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: goroutine — контрольный вопрос #2",
+      "reference": "Объясните goroutine в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: goroutine — контрольный вопрос #3",
+      "reference": "Объясните goroutine в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: goroutine — контрольный вопрос #4",
+      "reference": "Объясните goroutine в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: goroutine — контрольный вопрос #5",
+      "reference": "Объясните goroutine в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: channel buffer — контрольный вопрос #1",
+      "reference": "Объясните channel buffer в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: channel buffer — контрольный вопрос #2",
+      "reference": "Объясните channel buffer в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: channel buffer — контрольный вопрос #3",
+      "reference": "Объясните channel buffer в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: channel buffer — контрольный вопрос #4",
+      "reference": "Объясните channel buffer в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: channel buffer — контрольный вопрос #5",
+      "reference": "Объясните channel buffer в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: select — контрольный вопрос #1",
+      "reference": "Объясните select в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: select — контрольный вопрос #2",
+      "reference": "Объясните select в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: select — контрольный вопрос #3",
+      "reference": "Объясните select в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: select — контрольный вопрос #4",
+      "reference": "Объясните select в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: select — контрольный вопрос #5",
+      "reference": "Объясните select в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: WaitGroup — контрольный вопрос #1",
+      "reference": "Объясните WaitGroup в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: WaitGroup — контрольный вопрос #2",
+      "reference": "Объясните WaitGroup в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: WaitGroup — контрольный вопрос #3",
+      "reference": "Объясните WaitGroup в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: WaitGroup — контрольный вопрос #4",
+      "reference": "Объясните WaitGroup в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: WaitGroup — контрольный вопрос #5",
+      "reference": "Объясните WaitGroup в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: Mutex — контрольный вопрос #1",
+      "reference": "Объясните Mutex в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: Mutex — контрольный вопрос #2",
+      "reference": "Объясните Mutex в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: Mutex — контрольный вопрос #3",
+      "reference": "Объясните Mutex в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: Mutex — контрольный вопрос #4",
+      "reference": "Объясните Mutex в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: Mutex — контрольный вопрос #5",
+      "reference": "Объясните Mutex в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: context cancellation — контрольный вопрос #1",
+      "reference": "Объясните context cancellation в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: context cancellation — контрольный вопрос #2",
+      "reference": "Объясните context cancellation в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: context cancellation — контрольный вопрос #3",
+      "reference": "Объясните context cancellation в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: context cancellation — контрольный вопрос #4",
+      "reference": "Объясните context cancellation в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: context cancellation — контрольный вопрос #5",
+      "reference": "Объясните context cancellation в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: race detector — контрольный вопрос #1",
+      "reference": "Объясните race detector в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: race detector — контрольный вопрос #2",
+      "reference": "Объясните race detector в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: race detector — контрольный вопрос #3",
+      "reference": "Объясните race detector в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: race detector — контрольный вопрос #4",
+      "reference": "Объясните race detector в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Goroutines и каналы]: race detector — контрольный вопрос #5",
+      "reference": "Объясните race detector в контексте Go (Goroutines и каналы). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Goroutines и каналы",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.Is — контрольный вопрос #1",
+      "reference": "Объясните errors.Is в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.Is — контрольный вопрос #2",
+      "reference": "Объясните errors.Is в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.Is — контрольный вопрос #3",
+      "reference": "Объясните errors.Is в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.Is — контрольный вопрос #4",
+      "reference": "Объясните errors.Is в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.Is — контрольный вопрос #5",
+      "reference": "Объясните errors.Is в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.As — контрольный вопрос #1",
+      "reference": "Объясните errors.As в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.As — контрольный вопрос #2",
+      "reference": "Объясните errors.As в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.As — контрольный вопрос #3",
+      "reference": "Объясните errors.As в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.As — контрольный вопрос #4",
+      "reference": "Объясните errors.As в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: errors.As — контрольный вопрос #5",
+      "reference": "Объясните errors.As в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: fmt.Errorf %w — контрольный вопрос #1",
+      "reference": "Объясните fmt.Errorf %w в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: fmt.Errorf %w — контрольный вопрос #2",
+      "reference": "Объясните fmt.Errorf %w в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: fmt.Errorf %w — контрольный вопрос #3",
+      "reference": "Объясните fmt.Errorf %w в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: fmt.Errorf %w — контрольный вопрос #4",
+      "reference": "Объясните fmt.Errorf %w в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: fmt.Errorf %w — контрольный вопрос #5",
+      "reference": "Объясните fmt.Errorf %w в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: sentinel errors — контрольный вопрос #1",
+      "reference": "Объясните sentinel errors в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: sentinel errors — контрольный вопрос #2",
+      "reference": "Объясните sentinel errors в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: sentinel errors — контрольный вопрос #3",
+      "reference": "Объясните sentinel errors в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: sentinel errors — контрольный вопрос #4",
+      "reference": "Объясните sentinel errors в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: sentinel errors — контрольный вопрос #5",
+      "reference": "Объясните sentinel errors в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: error wrapping — контрольный вопрос #1",
+      "reference": "Объясните error wrapping в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: error wrapping — контрольный вопрос #2",
+      "reference": "Объясните error wrapping в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: error wrapping — контрольный вопрос #3",
+      "reference": "Объясните error wrapping в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: error wrapping — контрольный вопрос #4",
+      "reference": "Объясните error wrapping в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: error wrapping — контрольный вопрос #5",
+      "reference": "Объясните error wrapping в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: guard clauses — контрольный вопрос #1",
+      "reference": "Объясните guard clauses в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: guard clauses — контрольный вопрос #2",
+      "reference": "Объясните guard clauses в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: guard clauses — контрольный вопрос #3",
+      "reference": "Объясните guard clauses в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: guard clauses — контрольный вопрос #4",
+      "reference": "Объясните guard clauses в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Ошибки]: guard clauses — контрольный вопрос #5",
+      "reference": "Объясните guard clauses в контексте Go (Ошибки). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Ошибки",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: encoding/json — контрольный вопрос #1",
+      "reference": "Объясните encoding/json в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: encoding/json — контрольный вопрос #2",
+      "reference": "Объясните encoding/json в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: encoding/json — контрольный вопрос #3",
+      "reference": "Объясните encoding/json в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: encoding/json — контрольный вопрос #4",
+      "reference": "Объясните encoding/json в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: encoding/json — контрольный вопрос #5",
+      "reference": "Объясните encoding/json в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: net/http — контрольный вопрос #1",
+      "reference": "Объясните net/http в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: net/http — контрольный вопрос #2",
+      "reference": "Объясните net/http в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: net/http — контрольный вопрос #3",
+      "reference": "Объясните net/http в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: net/http — контрольный вопрос #4",
+      "reference": "Объясните net/http в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: net/http — контрольный вопрос #5",
+      "reference": "Объясните net/http в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: context — контрольный вопрос #1",
+      "reference": "Объясните context в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: context — контрольный вопрос #2",
+      "reference": "Объясните context в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: context — контрольный вопрос #3",
+      "reference": "Объясните context в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: context — контрольный вопрос #4",
+      "reference": "Объясните context в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: context — контрольный вопрос #5",
+      "reference": "Объясните context в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: time formatting — контрольный вопрос #1",
+      "reference": "Объясните time formatting в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: time formatting — контрольный вопрос #2",
+      "reference": "Объясните time formatting в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: time formatting — контрольный вопрос #3",
+      "reference": "Объясните time formatting в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: time formatting — контрольный вопрос #4",
+      "reference": "Объясните time formatting в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: time formatting — контрольный вопрос #5",
+      "reference": "Объясните time formatting в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: os.ReadFile — контрольный вопрос #1",
+      "reference": "Объясните os.ReadFile в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: os.ReadFile — контрольный вопрос #2",
+      "reference": "Объясните os.ReadFile в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: os.ReadFile — контрольный вопрос #3",
+      "reference": "Объясните os.ReadFile в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: os.ReadFile — контрольный вопрос #4",
+      "reference": "Объясните os.ReadFile в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: os.ReadFile — контрольный вопрос #5",
+      "reference": "Объясните os.ReadFile в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: sort.Slice — контрольный вопрос #1",
+      "reference": "Объясните sort.Slice в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: sort.Slice — контрольный вопрос #2",
+      "reference": "Объясните sort.Slice в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: sort.Slice — контрольный вопрос #3",
+      "reference": "Объясните sort.Slice в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: sort.Slice — контрольный вопрос #4",
+      "reference": "Объясните sort.Slice в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: sort.Slice — контрольный вопрос #5",
+      "reference": "Объясните sort.Slice в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: log/slog — контрольный вопрос #1",
+      "reference": "Объясните log/slog в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: log/slog — контрольный вопрос #2",
+      "reference": "Объясните log/slog в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: log/slog — контрольный вопрос #3",
+      "reference": "Объясните log/slog в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: log/slog — контрольный вопрос #4",
+      "reference": "Объясните log/slog в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Stdlib]: log/slog — контрольный вопрос #5",
+      "reference": "Объясните log/slog в контексте Go (Stdlib). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Stdlib",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type parameters — контрольный вопрос #1",
+      "reference": "Объясните type parameters в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type parameters — контрольный вопрос #2",
+      "reference": "Объясните type parameters в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type parameters — контрольный вопрос #3",
+      "reference": "Объясните type parameters в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type parameters — контрольный вопрос #4",
+      "reference": "Объясните type parameters в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type parameters — контрольный вопрос #5",
+      "reference": "Объясните type parameters в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: constraints — контрольный вопрос #1",
+      "reference": "Объясните constraints в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: constraints — контрольный вопрос #2",
+      "reference": "Объясните constraints в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: constraints — контрольный вопрос #3",
+      "reference": "Объясните constraints в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: constraints — контрольный вопрос #4",
+      "reference": "Объясните constraints в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: constraints — контрольный вопрос #5",
+      "reference": "Объясните constraints в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: comparable — контрольный вопрос #1",
+      "reference": "Объясните comparable в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: comparable — контрольный вопрос #2",
+      "reference": "Объясните comparable в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: comparable — контрольный вопрос #3",
+      "reference": "Объясните comparable в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: comparable — контрольный вопрос #4",
+      "reference": "Объясните comparable в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: comparable — контрольный вопрос #5",
+      "reference": "Объясните comparable в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type inference — контрольный вопрос #1",
+      "reference": "Объясните type inference в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type inference — контрольный вопрос #2",
+      "reference": "Объясните type inference в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type inference — контрольный вопрос #3",
+      "reference": "Объясните type inference в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type inference — контрольный вопрос #4",
+      "reference": "Объясните type inference в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: type inference — контрольный вопрос #5",
+      "reference": "Объясните type inference в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: generic structs — контрольный вопрос #1",
+      "reference": "Объясните generic structs в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: generic structs — контрольный вопрос #2",
+      "reference": "Объясните generic structs в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: generic structs — контрольный вопрос #3",
+      "reference": "Объясните generic structs в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: generic structs — контрольный вопрос #4",
+      "reference": "Объясните generic structs в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: generic structs — контрольный вопрос #5",
+      "reference": "Объясните generic structs в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: cmp.Ordered — контрольный вопрос #1",
+      "reference": "Объясните cmp.Ordered в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: cmp.Ordered — контрольный вопрос #2",
+      "reference": "Объясните cmp.Ordered в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: cmp.Ordered — контрольный вопрос #3",
+      "reference": "Объясните cmp.Ordered в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: cmp.Ordered — контрольный вопрос #4",
+      "reference": "Объясните cmp.Ordered в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Generics]: cmp.Ordered — контрольный вопрос #5",
+      "reference": "Объясните cmp.Ordered в контексте Go (Generics). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Generics",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: table-driven tests — контрольный вопрос #1",
+      "reference": "Объясните table-driven tests в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: table-driven tests — контрольный вопрос #2",
+      "reference": "Объясните table-driven tests в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: table-driven tests — контрольный вопрос #3",
+      "reference": "Объясните table-driven tests в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: table-driven tests — контрольный вопрос #4",
+      "reference": "Объясните table-driven tests в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: table-driven tests — контрольный вопрос #5",
+      "reference": "Объясните table-driven tests в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Run — контрольный вопрос #1",
+      "reference": "Объясните t.Run в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Run — контрольный вопрос #2",
+      "reference": "Объясните t.Run в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Run — контрольный вопрос #3",
+      "reference": "Объясните t.Run в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Run — контрольный вопрос #4",
+      "reference": "Объясните t.Run в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Run — контрольный вопрос #5",
+      "reference": "Объясните t.Run в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: benchmarks — контрольный вопрос #1",
+      "reference": "Объясните benchmarks в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: benchmarks — контрольный вопрос #2",
+      "reference": "Объясните benchmarks в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: benchmarks — контрольный вопрос #3",
+      "reference": "Объясните benchmarks в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: benchmarks — контрольный вопрос #4",
+      "reference": "Объясните benchmarks в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: benchmarks — контрольный вопрос #5",
+      "reference": "Объясните benchmarks в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: httptest — контрольный вопрос #1",
+      "reference": "Объясните httptest в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: httptest — контрольный вопрос #2",
+      "reference": "Объясните httptest в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: httptest — контрольный вопрос #3",
+      "reference": "Объясните httptest в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: httptest — контрольный вопрос #4",
+      "reference": "Объясните httptest в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: httptest — контрольный вопрос #5",
+      "reference": "Объясните httptest в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: coverage — контрольный вопрос #1",
+      "reference": "Объясните coverage в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: coverage — контрольный вопрос #2",
+      "reference": "Объясните coverage в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: coverage — контрольный вопрос #3",
+      "reference": "Объясните coverage в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: coverage — контрольный вопрос #4",
+      "reference": "Объясните coverage в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: coverage — контрольный вопрос #5",
+      "reference": "Объясните coverage в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Helper — контрольный вопрос #1",
+      "reference": "Объясните t.Helper в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Helper — контрольный вопрос #2",
+      "reference": "Объясните t.Helper в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Helper — контрольный вопрос #3",
+      "reference": "Объясните t.Helper в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Helper — контрольный вопрос #4",
+      "reference": "Объясните t.Helper в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: t.Helper — контрольный вопрос #5",
+      "reference": "Объясните t.Helper в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: fuzzing — контрольный вопрос #1",
+      "reference": "Объясните fuzzing в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: fuzzing — контрольный вопрос #2",
+      "reference": "Объясните fuzzing в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: fuzzing — контрольный вопрос #3",
+      "reference": "Объясните fuzzing в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: fuzzing — контрольный вопрос #4",
+      "reference": "Объясните fuzzing в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Тестирование]: fuzzing — контрольный вопрос #5",
+      "reference": "Объясните fuzzing в контексте Go (Тестирование). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Тестирование",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go.mod — контрольный вопрос #1",
+      "reference": "Объясните go.mod в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go.mod — контрольный вопрос #2",
+      "reference": "Объясните go.mod в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go.mod — контрольный вопрос #3",
+      "reference": "Объясните go.mod в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go.mod — контрольный вопрос #4",
+      "reference": "Объясните go.mod в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go.mod — контрольный вопрос #5",
+      "reference": "Объясните go.mod в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go test ./... — контрольный вопрос #1",
+      "reference": "Объясните go test ./... в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go test ./... — контрольный вопрос #2",
+      "reference": "Объясните go test ./... в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go test ./... — контрольный вопрос #3",
+      "reference": "Объясните go test ./... в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go test ./... — контрольный вопрос #4",
+      "reference": "Объясните go test ./... в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go test ./... — контрольный вопрос #5",
+      "reference": "Объясните go test ./... в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: internal packages — контрольный вопрос #1",
+      "reference": "Объясните internal packages в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: internal packages — контрольный вопрос #2",
+      "reference": "Объясните internal packages в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: internal packages — контрольный вопрос #3",
+      "reference": "Объясните internal packages в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: internal packages — контрольный вопрос #4",
+      "reference": "Объясните internal packages в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: internal packages — контрольный вопрос #5",
+      "reference": "Объясните internal packages в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: semantic versioning — контрольный вопрос #1",
+      "reference": "Объясните semantic versioning в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: semantic versioning — контрольный вопрос #2",
+      "reference": "Объясните semantic versioning в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: semantic versioning — контрольный вопрос #3",
+      "reference": "Объясните semantic versioning в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: semantic versioning — контрольный вопрос #4",
+      "reference": "Объясните semantic versioning в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: semantic versioning — контрольный вопрос #5",
+      "reference": "Объясните semantic versioning в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go mod tidy — контрольный вопрос #1",
+      "reference": "Объясните go mod tidy в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go mod tidy — контрольный вопрос #2",
+      "reference": "Объясните go mod tidy в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go mod tidy — контрольный вопрос #3",
+      "reference": "Объясните go mod tidy в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go mod tidy — контрольный вопрос #4",
+      "reference": "Объясните go mod tidy в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: go mod tidy — контрольный вопрос #5",
+      "reference": "Объясните go mod tidy в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: cmd layout — контрольный вопрос #1",
+      "reference": "Объясните cmd layout в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: cmd layout — контрольный вопрос #2",
+      "reference": "Объясните cmd layout в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: cmd layout — контрольный вопрос #3",
+      "reference": "Объясните cmd layout в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: cmd layout — контрольный вопрос #4",
+      "reference": "Объясните cmd layout в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    },
+    {
+      "question": "Go [Модули и пакеты]: cmd layout — контрольный вопрос #5",
+      "reference": "Объясните cmd layout в контексте Go (Модули и пакеты). Приведите примеры кода и ссылки на go.dev/doc.",
+      "topic": "Модули и пакеты",
+      "language": "go"
+    }
+  ]
+}
