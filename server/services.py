@@ -35,6 +35,7 @@ USER_KEYS = (
     "auto_advance_ms",
     "code_editor_theme",
     "asr_language",
+    "asr_correct",
 )
 # Общие настройки сервера — меняет только администратор
 GLOBAL_KEYS = (
@@ -175,6 +176,7 @@ class AppServices:
             "auto_advance_max_sec": AUTO_ADVANCE_MAX_SEC,
             "code_editor_theme": c.get("code_editor_theme", "dark"),
             "asr_language": c.get("asr_language", "ru"),
+            "asr_correct": bool(c.get("asr_correct", True)),
             "model": c.get("model", ""),
             "asr_enabled": bool(str(c.get("asr_url", "")).strip()),
             "is_admin": ctx.user.is_admin,
@@ -594,18 +596,54 @@ class AppServices:
             "stats": self.session_stats(ctx, session),
         }
 
-    def transcribe_audio(self, ctx: UserContext, content: bytes, filename: str) -> str:
-        from app.asr_client import transcribe_whisper
+    def transcribe_audio(self, ctx: UserContext, content: bytes, filename: str, context: str = "") -> dict:
+        from app.asr_client import build_initial_prompt, transcribe_whisper
 
         cfg = self.effective_config(ctx)
-        return transcribe_whisper(
+        raw = transcribe_whisper(
             cfg.get("asr_url", ""),
             content,
             filename,
             language=str(cfg.get("asr_language", "ru")),
             login=str(cfg.get("asr_user", "")),
             password=str(cfg.get("asr_password", "")),
+            initial_prompt=build_initial_prompt(context),
         )
+        text = raw
+        corrected = False
+        if raw and cfg.get("asr_correct", True):
+            fixed = self.correct_transcript(raw, context)
+            if fixed and fixed != raw:
+                text, corrected = fixed, True
+        return {"text": text, "raw": raw, "corrected": corrected}
+
+    def correct_transcript(self, raw: str, context: str) -> str:
+        """ИИ-корректура распознанной речи: только ошибки распознавания, без изменения смысла."""
+        import re
+
+        system = (
+            "Ты исправляешь ошибки автоматического распознавания русской речи в ответе студента на учебный вопрос.\n"
+            "Исправь: неверно распознанные слова и технические термины (например «эсквель» → «SQL», "
+            "«база донных» → «база данных», «пэхапэ» → «PHP», «джейсон» → «JSON»), склеенные или разорванные слова, "
+            "пунктуацию и регистр.\n"
+            "НЕЛЬЗЯ: добавлять новые мысли, исправлять фактические ошибки студента, отвечать на вопрос, "
+            "менять порядок изложения. Если текст уже корректен — верни его без изменений.\n"
+            "Верни ТОЛЬКО исправленный текст, без кавычек и комментариев."
+        )
+        user = f"Вопрос: {context.strip()[:800] or '—'}\n\nРаспознанный текст:\n{raw}"
+        try:
+            # свой короткий таймаут: если модель занята, отдаём распознанный текст без задержки
+            client = OllamaClient(
+                self.config["ollama_url"], self.config["model"], timeout=25, api_key=self.config.get("api_key", "")
+            )
+            out = client.chat([ChatMessage("system", system), ChatMessage("user", user)])
+        except Exception:  # noqa: BLE001 — без корректуры, но с распознанным текстом
+            return raw
+        out = re.sub(r"<think>[\s\S]*?</think>", "", out).strip().strip("«»\"'").strip()
+        # защита от «ответа вместо исправления»: длина не должна сильно меняться
+        if not out or len(out) > len(raw) * 1.6 + 40 or len(out) < len(raw) * 0.5:
+            return raw
+        return out
 
     def request_hint(self, session: StudySession, draft: str = "") -> str:
         card = session.current

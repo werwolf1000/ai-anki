@@ -42,6 +42,7 @@ export default function Study({ session, config, onExit }) {
   const [auto, setAuto] = useState(null); // { ms, key }
   const [done, setDone] = useState(false);
   const [cardKey, setCardKey] = useState(0);
+  const [voice, setVoice] = useState(null); // { raw, text } — последнее распознавание с ИИ-правками
   const [feedRef] = useAutoAnimate({ duration: 240 });
   const autoTimer = useRef(null);
   const textRef = useRef(null);
@@ -54,6 +55,7 @@ export default function Study({ session, config, onExit }) {
     setHints([]);
     setCanSubmit(true);
     setAnsweredOnce(false);
+    setVoice(null);
     setCardKey((k) => k + 1);
   }, []);
 
@@ -238,7 +240,15 @@ export default function Study({ session, config, onExit }) {
                       {busy === "submit" ? "Модель думает…" : lastReview?.status === "revise" ? "Отправить снова" : "Проверить"}
                     </motion.button>
                     {!card.needs_code && !card.needs_math && config?.asr_enabled && (
-                      <VoiceButton disabled={!canSubmit || !!busy} onText={(t) => setAnswer(t)} onStatus={(m, k) => toast(m, k)} />
+                      <VoiceButton
+                        disabled={!canSubmit || !!busy}
+                        context={card.prompt || card.question}
+                        onText={(t, r) => {
+                          setAnswer(t);
+                          setVoice(r?.corrected ? { raw: r.raw, text: t } : null);
+                        }}
+                        onStatus={(m, k) => toast(m, k)}
+                      />
                     )}
                     <button className="btn-ghost" onClick={hint} disabled={!!busy}>
                       {busy === "hint" ? <Spinner /> : <Lightbulb className="h-4 w-4" />} Подсказка
@@ -247,6 +257,14 @@ export default function Study({ session, config, onExit }) {
                       {answeredOnce ? "Следующая" : "Пропустить"} <ArrowRight className="h-4 w-4" />
                     </button>
                   </div>
+                  {voice && answer === voice.text && (
+                    <div className="mt-3 rounded-lg border border-violet-500/20 bg-violet-500/[0.06] px-3 py-2 text-xs text-zinc-400">
+                      <span className="text-violet-200">Исправлено ИИ.</span> Распознано было: «{voice.raw}»{" "}
+                      <button className="font-semibold text-violet-300 hover:text-violet-200" onClick={() => setAnswer(voice.raw)}>
+                        вернуть
+                      </button>
+                    </div>
+                  )}
                   <div className="mt-3 flex items-center gap-1.5 text-[11px] text-zinc-500">
                     <CornerDownLeft className="h-3 w-3" /> Ctrl+Enter — проверить{answeredOnce ? " · Ctrl+→ — следующая" : ""}
                   </div>

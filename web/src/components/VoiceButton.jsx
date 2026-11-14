@@ -12,7 +12,7 @@ function pickMime() {
   return "";
 }
 
-export default function VoiceButton({ onText, onStatus, disabled }) {
+export default function VoiceButton({ onText, onStatus, disabled, context = "", compact = false }) {
   const [state, setState] = useState("idle"); // idle | rec | busy
   const rec = useRef(null);
   const stream = useRef(null);
@@ -26,13 +26,17 @@ export default function VoiceButton({ onText, onStatus, disabled }) {
       return;
     }
     try {
-      stream.current = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // моно + шумо/эхоподавление и автоусиление — заметно улучшают распознавание
+      stream.current = await navigator.mediaDevices.getUserMedia({
+        audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+      });
     } catch (e) {
       onStatus?.(`Нет доступа к микрофону: ${e.message}`, "error");
       return;
     }
     const mime = pickMime();
-    const mr = mime ? new MediaRecorder(stream.current, { mimeType: mime }) : new MediaRecorder(stream.current);
+    const opts = { audioBitsPerSecond: 128000, ...(mime ? { mimeType: mime } : {}) };
+    const mr = new MediaRecorder(stream.current, opts);
     chunks.current = [];
     mr.ondataavailable = (e) => e.data?.size && chunks.current.push(e.data);
     mr.onstop = async () => {
@@ -48,9 +52,10 @@ export default function VoiceButton({ onText, onStatus, disabled }) {
         const ext = blob.type.includes("ogg") ? "ogg" : blob.type.includes("mp4") ? "mp4" : "webm";
         const form = new FormData();
         form.append("audio", blob, `recording.${ext}`);
+        if (context) form.append("context", context.slice(0, 1500));
         const r = await api("/api/asr/transcribe", { method: "POST", form });
-        onText(r.text || "");
-        onStatus?.("Текст распознан — проверьте и отправьте", "success");
+        onText(r.text || "", r);
+        onStatus?.(r.corrected ? "Текст распознан и исправлен ИИ — проверьте и отправьте" : "Текст распознан — проверьте и отправьте", "success");
       } catch (e) {
         onStatus?.(e.message, "error");
       } finally {
@@ -83,7 +88,7 @@ export default function VoiceButton({ onText, onStatus, disabled }) {
         />
       )}
       {state === "busy" ? <Spinner /> : state === "rec" ? <Square className="h-4 w-4 fill-current" /> : <Mic className="h-4 w-4" />}
-      <span className="hidden sm:inline">{state === "rec" ? "Стоп" : state === "busy" ? "Распознаём…" : "Голосом"}</span>
+      {!compact && <span className="hidden sm:inline">{state === "rec" ? "Стоп" : state === "busy" ? "Распознаём…" : "Голосом"}</span>}
     </motion.button>
   );
 }

@@ -38,6 +38,7 @@ def transcribe_whisper(
     login: str = "",
     password: str = "",
     timeout: int | None = None,
+    initial_prompt: str = "",
 ) -> str:
     if not audio_bytes:
         raise ValueError("Пустой аудиофайл")
@@ -62,6 +63,11 @@ def transcribe_whisper(
         },
     ]
 
+    if initial_prompt.strip():
+        # подсказка Whisper: контекст и термины, чтобы «SQL» не превращался в «эсквель»
+        for params in params_variants:
+            params["initial_prompt"] = initial_prompt.strip()[:600]
+
     last_error: Exception | None = None
     safe_name = re.sub(r"[^\w.\-]+", "_", filename or "recording.webm") or "recording.webm"
 
@@ -85,3 +91,22 @@ def transcribe_whisper(
             last_error = exc
 
     raise RuntimeError(f"Ошибка распознавания речи: {last_error}")
+
+
+_TERM_RE = re.compile(r"[A-Za-z][A-Za-z0-9_.+#/-]*[A-Za-z0-9+#]|[A-Z]{2,}")
+
+
+def build_initial_prompt(context: str, max_chars: int = 500) -> str:
+    """Подсказка для Whisper: начало вопроса и латинские термины из него."""
+    context = " ".join((context or "").split())
+    if not context:
+        return ""
+    terms = []
+    for t in _TERM_RE.findall(context):
+        if t.lower() not in {x.lower() for x in terms} and len(terms) < 25:
+            terms.append(t)
+    head = context[:300]
+    prompt = f"Ответ на вопрос: {head}"
+    if terms:
+        prompt += f" Термины: {', '.join(terms)}."
+    return prompt[:max_chars]

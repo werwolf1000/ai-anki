@@ -7,6 +7,7 @@ import { RichText } from "../lib/richtext";
 import { trackStyle } from "../lib/tracks";
 import { CountUp, Ring, Spinner, useToast } from "../components/ui";
 import Certificate from "../components/Certificate";
+import VoiceButton from "../components/VoiceButton";
 
 const CodeEditor = lazy(() => import("../components/CodeEditor"));
 
@@ -119,9 +120,19 @@ export default function Interview({ interview, config, user, onExit }) {
               <span className="flex items-center gap-1.5 text-[11px] text-zinc-500">
                 <CornerDownLeft className="h-3 w-3" /> {meta.input === "code" ? "Ctrl+Enter — отправить" : "Enter — отправить, Shift+Enter — новая строка"}
               </span>
-              <motion.button whileTap={{ scale: 0.96 }} className="btn-primary" onClick={send} disabled={busy || !answer.trim()}>
-                {busy ? <Spinner /> : <Send className="h-4 w-4" />} Ответить
-              </motion.button>
+              <div className="flex gap-2">
+                {meta.input !== "code" && config?.asr_enabled && (
+                  <VoiceButton
+                    disabled={busy}
+                    context={[...messages].reverse().find((m) => m.role === "interviewer")?.text || ""}
+                    onText={(t) => setAnswer((a) => (a.trim() ? `${a.trim()} ${t}` : t))}
+                    onStatus={(m, k) => toast(m, k)}
+                  />
+                )}
+                <motion.button whileTap={{ scale: 0.96 }} className="btn-primary" onClick={send} disabled={busy || !answer.trim()}>
+                  {busy ? <Spinner /> : <Send className="h-4 w-4" />} Ответить
+                </motion.button>
+              </div>
             </div>
           </div>
         </div>

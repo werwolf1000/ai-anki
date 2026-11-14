@@ -7,6 +7,7 @@ import { CodeBlock, RichText } from "../lib/richtext";
 import { trackStyle } from "../lib/tracks";
 import { CountUp, Modal, Ring, Spinner, useToast } from "../components/ui";
 import Certificate from "../components/Certificate";
+import VoiceButton from "../components/VoiceButton";
 
 const CodeEditor = lazy(() => import("../components/CodeEditor"));
 
@@ -180,6 +181,14 @@ export default function Exam({ exam, config, onExit }) {
                 <motion.button whileTap={{ scale: 0.97 }} className="btn-primary" onClick={() => save(true)} disabled={busy || !drafts[index].trim()}>
                   {busy ? <Spinner /> : <Save className="h-4 w-4" />} Сохранить и дальше
                 </motion.button>
+                {!q.needs_code && config?.asr_enabled && (
+                  <VoiceButton
+                    compact
+                    context={q.question}
+                    onText={(t) => setDraft(drafts[index].trim() ? `${drafts[index].trim()} ${t}` : t)}
+                    onStatus={(m, k) => toast(m, k)}
+                  />
+                )}
                 <button className="btn-ghost px-3" disabled={index === exam.questions.length - 1} onClick={() => setIndex(index + 1)}>
                   <ArrowRight className="h-4 w-4" />
                 </button>

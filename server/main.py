@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 import requests
-from fastapi import Depends, FastAPI, File, Header, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, Response
 from pydantic import BaseModel
@@ -83,6 +83,7 @@ class SettingsIn(BaseModel):
     auto_advance_sec: int | None = None
     code_editor_theme: str | None = None
     asr_language: str | None = None
+    asr_correct: bool | None = None
     ollama_url: str | None = None
     model: str | None = None
     api_key: str | None = None
@@ -340,17 +341,22 @@ def show_hint(session_id: str, body: HintIn | None = None, ctx: UserContext = De
 
 
 @app.post("/api/asr/transcribe")
-async def transcribe_audio(audio: UploadFile = File(...), ctx: UserContext = Depends(current_ctx)) -> dict:
+def transcribe_audio(
+    audio: UploadFile = File(...),
+    context: str = Form(""),
+    ctx: UserContext = Depends(current_ctx),
+) -> dict:
+    """Распознать речь. context — текст вопроса: подсказка Whisper и ИИ-корректура терминов."""
     try:
-        content = await audio.read()
-        text = services.transcribe_audio(ctx, content, audio.filename or "recording.webm")
+        content = audio.file.read()
+        result = services.transcribe_audio(ctx, content, audio.filename or "recording.webm", context)
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(502, f"ASR: {exc}") from exc
-    if not text:
+    if not result["text"]:
         raise HTTPException(502, "ASR вернул пустой текст")
-    return {"text": text}
+    return result
 
 
 from server.textbook import build_router  # noqa: E402

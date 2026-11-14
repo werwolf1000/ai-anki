@@ -41,7 +41,7 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
   async function save() {
     setSaving(true);
     try {
-      const body = { code_editor_theme: form.code_editor_theme, asr_language: form.asr_language };
+      const body = { code_editor_theme: form.code_editor_theme, asr_language: form.asr_language, asr_correct: form.asr_correct !== false };
       STUDY_FIELDS.forEach((f) => (body[f.key] = Math.max(f.min, Math.min(f.max, Number(form[f.key]) || 0))));
       if (user.is_admin) ADMIN_FIELDS.forEach((f) => (body[f.key] = f.type === "number" ? Number(form[f.key]) : String(form[f.key] ?? "").trim()));
       const r = await api("/api/config", { method: "POST", body });
@@ -118,6 +118,20 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
             <label className="label" htmlFor="asr_language">Язык распознавания речи</label>
             <input id="asr_language" className="input" value={form.asr_language || ""} onChange={set("asr_language")} placeholder="ru" />
           </div>
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 sm:col-span-2">
+            <input
+              type="checkbox"
+              className="mt-0.5 h-4 w-4 accent-violet-500"
+              checked={form.asr_correct !== false}
+              onChange={(e) => setForm((f) => ({ ...f, asr_correct: e.target.checked }))}
+            />
+            <span>
+              <span className="block text-sm font-medium text-zinc-200">Исправлять распознанную речь с помощью ИИ</span>
+              <span className="block text-xs text-zinc-500">
+                Модель поправит неверно услышанные термины («эсквель» → SQL, «база донных» → база данных) и пунктуацию, не меняя смысл ответа. Добавляет несколько секунд.
+              </span>
+            </span>
+          </label>
         </div>
       </Section>
 
