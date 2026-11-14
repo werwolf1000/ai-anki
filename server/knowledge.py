@@ -350,6 +350,12 @@ class KnowledgeStore:
             self._version += 1
             return reused
 
+    def delete_source(self, source_id: str) -> None:
+        self.replace_source(source_id, 0, [])
+        with self._lock, self._db:
+            self._db.execute("DELETE FROM sources WHERE id = ?", (source_id,))
+            self._version += 1
+
     def missing_embeddings(self, source_id: str, limit: int) -> list[tuple[int, str]]:
         with self._lock:
             rows = self._db.execute(
@@ -707,7 +713,11 @@ ARTICLE_SYSTEM = """Ты — автор интерактивного учебн�
    ## Как это работает — объяснение с примерами кода (можно подзаголовки ###).
    ## Типичные ошибки и подводные камни
    ## Проверьте себя — 3–5 вопросов в стиле карточек (без ответов).
-6. Объём — 500–1000 слов. Без вступлений вроде «Конечно!» и без заключительных фраз."""
+6. Объём — 500–1000 слов. Без вступлений вроде «Конечно!» и без заключительных фраз.
+7. Источники с пометкой ВИДЕО — расшифровки видеоуроков (устная речь, возможны ошибки распознавания терминов).
+   Цитируй их так же, сносками [n]. Если видеофрагмент хорошо показывает тему раздела, вставь после абзаца
+   отдельной строкой маркер [[video:n]] (n — номер этого видеоисточника) — там появится плеер. Не больше двух
+   маркеров на статью и только для источников с пометкой ВИДЕО."""
 
 ASK_SYSTEM = """Ты — помощник в интерактивном учебнике. Отвечай на русском, кратко (до 200 слов), в Markdown.
 Опирайся на приведённые ИСТОЧНИКИ и отмечай факты ссылками [n]. Если в источниках нет ответа — скажи об этом
@@ -719,8 +729,14 @@ def format_context(chunks: list[dict], cards: list[dict], *, card_limit: int = 2
     parts = []
     for i, c in enumerate(chunks, 1):
         label = c["title"] if c["section"] in ("", c["title"]) else f"{c['title']} › {c['section']}"
-        sources.append({"n": i, "title": label, "url": c["url"], "source": c["source"]})
-        parts.append(f"[{i}] {label}\n{c['text'][:1800]}")
+        src = {"n": i, "title": label, "url": c["url"], "source": c["source"]}
+        if c["source"].startswith("vid:"):
+            m = re.search(r"#t=(\d+)", c["url"])
+            src |= {"video": c["source"][4:], "start": int(m[1]) if m else 0, "title": f"Видео: {label}"}
+            parts.append(f"[{i}] ВИДЕО «{c['title']}», {c['section']} (расшифровка)\n{c['text'][:1800]}")
+        else:
+            parts.append(f"[{i}] {label}\n{c['text'][:1800]}")
+        sources.append(src)
     card_lines = []
     for c in cards[:card_limit]:
         q = c["question"].strip().replace("\n", " ")[:300]

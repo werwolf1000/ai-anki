@@ -110,3 +110,41 @@ def build_initial_prompt(context: str, max_chars: int = 500) -> str:
     if terms:
         prompt += f" Термины: {', '.join(terms)}."
     return prompt[:max_chars]
+
+
+def transcribe_segments(
+    base_url: str,
+    audio_bytes: bytes,
+    filename: str,
+    *,
+    language: str = "",
+    login: str = "",
+    password: str = "",
+    initial_prompt: str = "",
+    timeout: int = 1800,
+) -> tuple[list[dict], str]:
+    """Расшифровка с таймкодами: ([{start, end, text}], язык). Пустой language — автоопределение."""
+    params = {"encode": "true", "task": "transcribe", "output": "json"}
+    if language.strip():
+        params["language"] = language.strip()
+    if initial_prompt.strip():
+        params["initial_prompt"] = initial_prompt.strip()[:600]
+    safe_name = re.sub(r"[^\w.\-]+", "_", filename or "audio.mp3") or "audio.mp3"
+    response = requests.post(
+        f"{normalize_asr_url(base_url)}/asr",
+        params=params,
+        files={"audio_file": (safe_name, audio_bytes)},
+        timeout=timeout,
+        auth=_auth(login, password),
+    )
+    if response.status_code != 200:
+        raise RuntimeError(f"ASR HTTP {response.status_code}: {response.text[:200]}")
+    data = response.json()
+    segments = []
+    for seg in data.get("segments") or []:
+        text = str(seg.get("text", "")).strip()
+        if text:
+            segments.append({"start": float(seg.get("start", 0)), "end": float(seg.get("end", 0)), "text": text})
+    if not segments and str(data.get("text", "")).strip():
+        segments.append({"start": 0.0, "end": 0.0, "text": str(data["text"]).strip()})
+    return segments, str(data.get("language") or language or "")

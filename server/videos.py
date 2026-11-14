@@ -1,0 +1,463 @@
+"""Видеотека учебника: видеоуроки → звук → Whisper → фрагменты с таймкодами в базе знаний.
+
+Видео лежат в каталогах из AI_ANKI_VIDEO_DIRS (через «,» или «;», например смонтированная папка NAS)
+и в <data>/videos (загрузки через веб). Новые файлы находятся сканированием — по кнопке и автоматически
+раз в AI_ANKI_VIDEO_SCAN_MINUTES минут (0 — выключить).
+
+Каждое видео — отдельный источник базы знаний `vid:<id>`; к учебнику (программе) его привязывает поле
+book: по папке/названию, иначе по словам расшифровки. Статьи цитируют фрагменты и встраивают плеер.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+import os
+import re
+import shutil
+import sqlite3
+import subprocess
+import tempfile
+import threading
+import time
+from collections import Counter
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Callable
+
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi.responses import FileResponse
+from pydantic import BaseModel
+
+from server.knowledge import Chunk, KnowledgeStore
+from server.syllabus import all_syllabi, stems
+
+MEDIA_EXT = {".mp4", ".m4v", ".mkv", ".webm", ".mov", ".avi", ".wmv", ".flv", ".mpg", ".mpeg", ".ts",
+             ".mp3", ".m4a", ".wav", ".ogg", ".opus", ".flac", ".aac"}
+SEGMENT_SECONDS = 600  # звук режется на куски по 10 минут: прогресс и устойчивость к обрывам
+CHUNK_CHARS = 1100
+EMBED_BATCH = 16
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def ffmpeg_exe() -> str | None:
+    exe = os.environ.get("AI_ANKI_FFMPEG") or shutil.which("ffmpeg")
+    if exe:
+        return exe
+    try:  # для разработки: pip install imageio-ffmpeg
+        import imageio_ffmpeg
+
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def fmt_time(sec: float) -> str:
+    sec = int(sec)
+    h, m, s = sec // 3600, sec % 3600 // 60, sec % 60
+    return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+
+def nice_title(stem: str) -> str:
+    t = re.sub(r"[_\.]+", " ", stem)
+    return " ".join(t.split()) or stem
+
+
+# ── привязка к учебнику ─────────────────────────────────────────────
+
+
+def guess_book(folder: str, title: str, text: str = "") -> str:
+    """Программа учебника для видео: сначала по папке и названию, потом по словам расшифровки."""
+    books = all_syllabi()
+    for hay in (folder.lower(), f"{folder} {title}".lower()):
+        for part in [hay, *re.split(r"[/\\]", hay)]:
+            part = part.strip()
+            if not part:
+                continue
+            for sy in books:
+                if re.search(sy.match, part, re.I) or sy.title.lower() in part or part == sy.id:
+                    return sy.id
+    if not text:
+        return ""
+    words = Counter(w for w in (m[:6] for m in re.findall(r"[a-zа-яё0-9_]{3,}", text.lower())))
+    best, best_score = "", 0.0
+    for sy in books:
+        vocab = set()
+        for ch in sy.chapters:
+            vocab |= stems(ch.title)
+            for ls in ch.lessons:
+                vocab |= stems(ls)
+        if not vocab:
+            continue
+        score = sum(min(words[s], 5) for s in vocab) / math.sqrt(len(vocab))
+        if score > best_score:
+            best, best_score = sy.id, score
+    return best if best_score >= 3.0 else ""
+
+
+def segments_to_chunks(video_id: str, title: str, segments: list[dict]) -> list[Chunk]:
+    chunks: list[Chunk] = []
+    buf: list[str] = []
+    start = end = 0.0
+    size = 0
+
+    def flush() -> None:
+        nonlocal buf, size
+        text = " ".join(buf).strip()
+        if len(text) >= 40:
+            chunks.append(Chunk(
+                page=f"vid:{video_id}", url=f"/api/videos/{video_id}/file#t={int(start)}", title=title,
+                section=f"{fmt_time(start)}–{fmt_time(end)}", text=text, ord=len(chunks),
+            ))
+        buf, size = [], 0
+
+    for seg in segments:
+        if not buf:
+            start = seg["start"]
+        buf.append(seg["text"])
+        size += len(seg["text"]) + 1
+        end = seg["end"] or seg["start"]
+        if size >= CHUNK_CHARS:
+            flush()
+    flush()
+    return chunks
+
+
+# ── хранилище ───────────────────────────────────────────────────────
+
+
+class VideoLibrary:
+    def __init__(self, data_dir: Path, knowledge: KnowledgeStore, services) -> None:
+        self.services = services
+        self.knowledge = knowledge
+        self.upload_dir = data_dir / "videos"
+        self.upload_dir.mkdir(parents=True, exist_ok=True)
+        env = os.environ.get("AI_ANKI_VIDEO_DIRS", "")
+        self.roots = [Path(p.strip()) for p in re.split(r"[;,]", env) if p.strip()] + [self.upload_dir]
+        self._db = sqlite3.connect(str(data_dir / "videos.db"), check_same_thread=False)
+        self._db.row_factory = sqlite3.Row
+        self._lock = threading.RLock()
+        with self._lock, self._db:
+            self._db.execute("PRAGMA journal_mode=WAL")
+            self._db.execute(
+                """CREATE TABLE IF NOT EXISTS videos (
+                    id TEXT PRIMARY KEY, path TEXT UNIQUE NOT NULL, root TEXT NOT NULL, folder TEXT NOT NULL,
+                    title TEXT NOT NULL, size INTEGER, mtime REAL, duration REAL DEFAULT 0,
+                    book TEXT DEFAULT '', book_manual INTEGER DEFAULT 0, status TEXT NOT NULL,
+                    error TEXT DEFAULT '', progress REAL DEFAULT 0, language TEXT DEFAULT '',
+                    segments TEXT DEFAULT '', chunks INTEGER DEFAULT 0, added_at TEXT, indexed_at TEXT
+                )"""
+            )
+            # прерванная перезапуском обработка — в очередь заново
+            self._db.execute("UPDATE videos SET status='queued', progress=0 WHERE status='processing'")
+        self.current = ""
+        self.log: list[str] = []
+        self._wake = threading.Event()
+        threading.Thread(target=self._worker, daemon=True, name="video-worker").start()
+        minutes = float(os.environ.get("AI_ANKI_VIDEO_SCAN_MINUTES", "30") or 0)
+        if minutes > 0:
+            threading.Thread(target=self._autoscan, args=(minutes,), daemon=True, name="video-scan").start()
+
+    def say(self, msg: str) -> None:
+        self.log.append(f"{datetime.now().strftime('%H:%M:%S')} {msg}")
+        del self.log[:-40]
+
+    # — сканирование —
+
+    def scan(self) -> dict:
+        added = changed = missing = 0
+        seen: set[str] = set()
+        with self._lock:
+            known = {r["path"]: r for r in self._db.execute("SELECT id, path, size, mtime, status FROM videos")}
+        for root in self.roots:
+            if not root.is_dir():
+                continue
+            for path in sorted(root.rglob("*")):
+                if path.suffix.lower() not in MEDIA_EXT or not path.is_file() or any(p.startswith(".") for p in path.parts):
+                    continue
+                key = str(path.resolve())
+                seen.add(key)
+                st = path.stat()
+                row = known.get(key)
+                folder = str(path.parent.relative_to(root)).replace("\\", "/")
+                folder = "" if folder == "." else folder
+                with self._lock, self._db:
+                    if row is None:
+                        vid = hashlib.sha1(key.encode("utf-8")).hexdigest()[:12]
+                        title = nice_title(path.stem)
+                        self._db.execute(
+                            "INSERT OR IGNORE INTO videos (id, path, root, folder, title, size, mtime, book, status, added_at)"
+                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'queued', ?)",
+                            (vid, key, str(root), folder, title, st.st_size, st.st_mtime, guess_book(folder, title), _now()),
+                        )
+                        added += 1
+                    elif row["status"] == "missing" or (row["status"] != "skipped" and (row["size"] != st.st_size or abs((row["mtime"] or 0) - st.st_mtime) > 1)):
+                        self._db.execute(
+                            "UPDATE videos SET size=?, mtime=?, status='queued', progress=0, error='' WHERE id=?",
+                            (st.st_size, st.st_mtime, row["id"]),
+                        )
+                        changed += 1
+        for key, row in known.items():
+            if key not in seen and row["status"] != "missing" and any(key.startswith(str(r.resolve())) for r in self.roots if r.is_dir()):
+                self.knowledge.delete_source(f"vid:{row['id']}")
+                with self._lock, self._db:
+                    self._db.execute("UPDATE videos SET status='missing', chunks=0 WHERE id=?", (row["id"],))
+                missing += 1
+        if added or changed:
+            self.say(f"Найдено новых видео: {added}, изменённых: {changed}")
+            self._wake.set()
+        return {"added": added, "changed": changed, "missing": missing}
+
+    def _autoscan(self, minutes: float) -> None:
+        time.sleep(20)
+        while True:
+            try:
+                self.scan()
+            except Exception as exc:  # noqa: BLE001
+                self.say(f"Ошибка сканирования: {exc}")
+            time.sleep(minutes * 60)
+
+    # — обработка —
+
+    def _next(self) -> sqlite3.Row | None:
+        with self._lock:
+            return self._db.execute(
+                "SELECT * FROM videos WHERE status='queued' ORDER BY added_at, path LIMIT 1"
+            ).fetchone()
+
+    def _set(self, vid: str, **fields) -> None:
+        cols = ", ".join(f"{k}=?" for k in fields)
+        with self._lock, self._db:
+            self._db.execute(f"UPDATE videos SET {cols} WHERE id=?", (*fields.values(), vid))
+
+    def _worker(self) -> None:
+        while True:
+            row = self._next()
+            if row is None:
+                self._wake.wait(timeout=60)
+                self._wake.clear()
+                continue
+            self.current = row["id"]
+            try:
+                self._process(row)
+            except Exception as exc:  # noqa: BLE001
+                self._set(row["id"], status="error", error=str(exc)[:500])
+                self.say(f"Ошибка «{row['title']}»: {exc}")
+                time.sleep(5)
+            finally:
+                self.current = ""
+
+    def _process(self, row: sqlite3.Row) -> None:
+        from app.asr_client import transcribe_segments
+
+        vid, title = row["id"], row["title"]
+        cfg = self.services.config
+        if not str(cfg.get("asr_url", "")).strip():
+            raise RuntimeError("не задан адрес Whisper (Настройки → Распознавание речи)")
+        ffmpeg = ffmpeg_exe()
+        if not ffmpeg:
+            raise RuntimeError("не найден ffmpeg")
+        self._set(vid, status="processing", progress=0.01, error="")
+        self.say(f"Обработка: {row['folder'] + ' / ' if row['folder'] else ''}{title}")
+        book_title = next((s.title for s in all_syllabi() if s.id == row["book"]), "")
+        prompt = ". ".join(x for x in (book_title, row["folder"].replace("/", ". "), title) if x) + "."
+        segments: list[dict] = []
+        language = ""
+        with tempfile.TemporaryDirectory(prefix="aianki-video-") as tmp:
+            proc = subprocess.run(
+                [ffmpeg, "-nostdin", "-hide_banner", "-y", "-i", row["path"], "-vn", "-ac", "1", "-ar", "16000",
+                 "-c:a", "libmp3lame", "-b:a", "48k", "-f", "segment", "-segment_time", str(SEGMENT_SECONDS),
+                 "-reset_timestamps", "1", str(Path(tmp) / "part%04d.mp3")],
+                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=6 * 3600,
+            )
+            m = re.search(r"Duration: (\d+):(\d+):(\d+(?:\.\d+)?)", proc.stderr)
+            duration = int(m[1]) * 3600 + int(m[2]) * 60 + float(m[3]) if m else 0.0
+            parts = sorted(Path(tmp).glob("part*.mp3"))
+            if proc.returncode != 0 or not parts:
+                tail = proc.stderr.strip().splitlines()[-1:] or ["?"]
+                raise RuntimeError(f"ffmpeg не извлёк звук: {tail[0][:200]}")
+            self._set(vid, duration=duration)
+            for i, part in enumerate(parts):
+                offset = i * SEGMENT_SECONDS
+                last: Exception | None = None
+                for attempt in range(3):
+                    try:
+                        segs, lang = transcribe_segments(
+                            cfg.get("asr_url", ""), part.read_bytes(), part.name,
+                            language=str(cfg.get("video_language", "") or ""),
+                            login=str(cfg.get("asr_user", "")), password=str(cfg.get("asr_password", "")),
+                            initial_prompt=prompt,
+                        )
+                        break
+                    except Exception as exc:  # noqa: BLE001
+                        last = exc
+                        time.sleep(10 * (attempt + 1))
+                else:
+                    raise RuntimeError(f"Whisper: {last}")
+                language = language or lang
+                segments.extend({"start": s["start"] + offset, "end": s["end"] + offset, "text": s["text"]} for s in segs)
+                self._set(vid, progress=round((i + 1) / len(parts) * 0.9, 3))
+        if not segments:
+            raise RuntimeError("в записи не распознано речи")
+        text = " ".join(s["text"] for s in segments)
+        book = row["book"] if row["book_manual"] or row["book"] else guess_book(row["folder"], title, text)
+        chunks = segments_to_chunks(vid, title, segments)
+        self.knowledge.replace_source(f"vid:{vid}", 1, chunks)
+        self._set(vid, segments=json.dumps(segments, ensure_ascii=False), language=language, book=book,
+                  chunks=len(chunks), progress=0.92)
+        err = ""
+        try:
+            self._embed(f"vid:{vid}")
+        except Exception as exc:  # noqa: BLE001 — без векторов работает поиск по словам
+            err = f"векторы не построены: {exc}"
+        self._set(vid, status="done", progress=1.0, error=err, indexed_at=_now())
+        self.say(f"Готово: {title} — {fmt_time(duration)}, фрагментов {len(chunks)}"
+                 + (f", учебник: {book}" if book else ", учебник не определён"))
+
+    def _embed(self, source_id: str) -> None:
+        ollama = self.services.rag_client()
+        model = self.services.embed_model()
+        while True:
+            batch = self.knowledge.missing_embeddings(source_id, EMBED_BATCH)
+            if not batch:
+                return
+            vecs = ollama.embed(model, [t for _, t in batch])
+            self.knowledge.save_embeddings([(cid, vecs[i]) for i, (cid, _) in enumerate(batch)])
+
+    # — чтение —
+
+    def get(self, vid: str) -> sqlite3.Row | None:
+        with self._lock:
+            return self._db.execute("SELECT * FROM videos WHERE id=?", (vid,)).fetchone()
+
+    def sources_for_book(self, book: str) -> list[str]:
+        if not book:
+            return []
+        with self._lock:
+            rows = self._db.execute("SELECT id FROM videos WHERE book=? AND status='done' AND chunks>0", (book,)).fetchall()
+        return [f"vid:{r['id']}" for r in rows]
+
+    def public(self) -> list[dict]:
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT id, path, root, folder, title, size, duration, book, book_manual, status, error, progress,"
+                " language, chunks, added_at, indexed_at FROM videos ORDER BY folder, title"
+            ).fetchall()
+        up = str(self.upload_dir.resolve())
+        return [dict(r) | {"uploaded": r["path"].startswith(up), "path": None} for r in rows]
+
+    # — изменения —
+
+    def update(self, vid: str, *, book: str | None = None, title: str | None = None) -> None:
+        if book is not None:
+            self._set(vid, book=book, book_manual=1)
+        if title is not None and title.strip():
+            self._set(vid, title=title.strip())
+
+    def requeue(self, vid: str) -> None:
+        self._set(vid, status="queued", progress=0, error="")
+        self._wake.set()
+
+    def remove(self, vid: str) -> None:
+        row = self.get(vid)
+        if row is None:
+            return
+        self.knowledge.delete_source(f"vid:{vid}")
+        up = str(self.upload_dir.resolve())
+        if row["path"].startswith(up):
+            try:
+                Path(row["path"]).unlink()
+            except OSError:
+                pass
+            with self._lock, self._db:
+                self._db.execute("DELETE FROM videos WHERE id=?", (vid,))
+        else:  # чужую папку не трогаем — просто не индексируем
+            self._set(vid, status="skipped", chunks=0, segments="")
+
+
+# ── API ─────────────────────────────────────────────────────────────
+
+
+class VideoPatch(BaseModel):
+    book: str | None = None
+    title: str | None = None
+
+
+def build_router(services, current_ctx: Callable, user_for_token: Callable[[str], object]) -> APIRouter:
+    r = APIRouter()
+    lib: VideoLibrary = services.videos
+
+    def admin(ctx=Depends(current_ctx)):
+        if not ctx.user.is_admin:
+            raise HTTPException(403, "Только для администратора")
+        return ctx
+
+    @r.get("/api/videos")
+    def list_videos(ctx=Depends(admin)) -> dict:
+        return {
+            "roots": [{"path": str(p), "exists": p.is_dir(), "uploads": p == lib.upload_dir} for p in lib.roots],
+            "ffmpeg": bool(ffmpeg_exe()),
+            "asr": bool(str(services.config.get("asr_url", "")).strip()),
+            "current": lib.current,
+            "log": lib.log[-8:],
+            "books": [{"id": s.id, "title": s.title} for s in all_syllabi()],
+            "videos": lib.public(),
+        }
+
+    @r.post("/api/videos/scan")
+    def scan(ctx=Depends(admin)) -> dict:
+        return lib.scan()
+
+    @r.post("/api/videos/upload")
+    def upload(file: UploadFile = File(...), folder: str = Form(""), ctx=Depends(admin)) -> dict:
+        name = Path(file.filename or "video").name
+        if Path(name).suffix.lower() not in MEDIA_EXT:
+            raise HTTPException(400, "Неподдерживаемый формат файла")
+        parts = [re.sub(r'[<>:"|?*\\]+', "_", p).strip(" .") for p in folder.replace("\\", "/").split("/")]
+        target_dir = lib.upload_dir.joinpath(*[p for p in parts if p and p != ".."])
+        target_dir.mkdir(parents=True, exist_ok=True)
+        target = target_dir / name
+        with target.open("wb") as out:
+            shutil.copyfileobj(file.file, out, length=4 * 1024 * 1024)
+        return {"ok": True, **lib.scan()}
+
+    @r.patch("/api/videos/{vid}")
+    def patch(vid: str, body: VideoPatch, ctx=Depends(admin)) -> dict:
+        if lib.get(vid) is None:
+            raise HTTPException(404, "Видео не найдено")
+        lib.update(vid, book=body.book, title=body.title)
+        return {"ok": True}
+
+    @r.post("/api/videos/{vid}/reindex")
+    def reindex(vid: str, ctx=Depends(admin)) -> dict:
+        if lib.get(vid) is None:
+            raise HTTPException(404, "Видео не найдено")
+        lib.requeue(vid)
+        return {"ok": True}
+
+    @r.delete("/api/videos/{vid}")
+    def delete(vid: str, ctx=Depends(admin)) -> dict:
+        lib.remove(vid)
+        return {"ok": True}
+
+    @r.get("/api/videos/{vid}/transcript")
+    def transcript(vid: str, ctx=Depends(current_ctx)) -> dict:
+        row = lib.get(vid)
+        if row is None:
+            raise HTTPException(404, "Видео не найдено")
+        return {"id": vid, "title": row["title"], "segments": json.loads(row["segments"] or "[]")}
+
+    @r.get("/api/videos/{vid}/file")
+    def video_file(vid: str, token: str = Query("")):
+        # <video src> не умеет заголовки — токен передаётся параметром
+        if user_for_token(token) is None:
+            raise HTTPException(401, "Требуется вход в аккаунт")
+        row = lib.get(vid)
+        if row is None or not Path(row["path"]).is_file():
+            raise HTTPException(404, "Видео не найдено")
+        return FileResponse(row["path"], filename=Path(row["path"]).name, content_disposition_type="inline")
+
+    return r

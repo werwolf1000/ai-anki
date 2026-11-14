@@ -363,6 +363,12 @@ from server.textbook import build_router  # noqa: E402
 
 app.include_router(build_router(services, current_ctx))
 
+from server.videos import VideoLibrary  # noqa: E402
+from server.videos import build_router as build_videos_router  # noqa: E402
+
+services.videos = VideoLibrary(services.data_dir, services.knowledge, services)  # type: ignore[attr-defined]
+app.include_router(build_videos_router(services, current_ctx, users.user_for_token))
+
 from server.tracks import build_router as build_tracks_router  # noqa: E402
 
 app.include_router(build_tracks_router(services, current_ctx))

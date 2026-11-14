@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 import threading
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -78,6 +79,24 @@ def strip_title(content: str, topic: str) -> str:
     return content
 
 
+_VIDEO_MARK = re.compile(r"^[ \t]*\[\[video:(\d+)\]\][ \t]*\n?", re.M)
+
+
+def clean_video_markers(content: str, sources: list[dict]) -> str:
+    """Оставить маркеры [[video:n]] только для видеоисточников, каждое видео — один раз."""
+    videos = {s["n"]: s.get("video") for s in sources if s.get("video")}
+    used: set[str] = set()
+
+    def keep(m: re.Match) -> str:
+        vid = videos.get(int(m[1]))
+        if not vid or vid in used:
+            return ""
+        used.add(vid)
+        return m[0]
+
+    return re.sub(r"\n{3,}", "\n\n", _VIDEO_MARK.sub(keep, content))
+
+
 def _ndjson(obj: dict) -> str:
     return json.dumps(obj, ensure_ascii=False) + "\n"
 
@@ -145,7 +164,10 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
 
     def deck_sources(entry, deck) -> list[str]:
         stats = services.knowledge.stats()
-        return [s for s in sources_for_deck(entry.deck_id, entry.name, deck.language) if stats.get(s, {}).get("chunks")]
+        docs = [s for s in sources_for_deck(entry.deck_id, entry.name, deck.language) if stats.get(s, {}).get("chunks")]
+        sy = book_of(entry)
+        videos = getattr(services, "videos", None)
+        return docs + (videos.sources_for_book(sy.id) if sy and videos else [])
 
     def all_deck_topics(with_vocab: bool = False) -> list[dict]:
         out = []
@@ -246,7 +268,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             "name": entry.name,
             "book": {"id": sy.id, "title": sy.title} if sy else None,
             "topics": topics,
-            "sources": [{"id": s, "title": SOURCES[s].title, "url": SOURCES[s].homepage} for s in srcs],
+            "sources": [{"id": s, "title": SOURCES[s].title, "url": SOURCES[s].homepage} for s in srcs if s in SOURCES],
+            "videos": sum(1 for s in srcs if s.startswith("vid:")),
         }
 
     @r.get("/api/textbook/{deck_id}/article")
@@ -327,7 +350,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         system, user_prompt, sources, mode = article_prompt(entry, deck, topic, cards)
 
         def save(content: str) -> None:
-            content = strip_title(content, topic)
+            content = clean_video_markers(strip_title(content, topic), sources)
             services.knowledge.save_article(key, topic, content, sources, services.textbook_model())
 
         return StreamingResponse(stream_answer(system, user_prompt, sources, mode, save), media_type="application/x-ndjson")
@@ -366,7 +389,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             if batch.stop:
                 return False
         parts.append(filt.flush())
-        content = strip_title("".join(parts).strip(), topic)
+        content = clean_video_markers(strip_title("".join(parts).strip(), topic), sources)
         if len(content) < 200:
             raise RuntimeError("модель вернула слишком короткий текст")
         services.knowledge.save_article(book_key(entry), topic, content, sources, services.textbook_model())

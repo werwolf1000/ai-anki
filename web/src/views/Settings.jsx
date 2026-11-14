@@ -4,6 +4,7 @@ import { Activity, Database, DownloadCloud, KeyRound, LogOut, Monitor, Save, Ser
 import { api, getServer } from "../lib/api";
 import { isDesktop } from "../lib/desktop";
 import { Spinner, useToast } from "../components/ui";
+import VideoLibrary from "../components/VideoLibrary";
 
 const STUDY_FIELDS = [
   { key: "session_limit", label: "Карточек за сессию", min: 1, max: 50 },
@@ -181,6 +182,7 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
       </div>
 
       <KnowledgePanel isAdmin={user.is_admin} />
+      {user.is_admin && <VideoLibrary />}
 
       {isDesktop && (
         <Section icon={Monitor} title="Приложение" delay={0.2}>

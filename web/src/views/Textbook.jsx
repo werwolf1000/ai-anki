@@ -3,12 +3,13 @@ import { AnimatePresence, motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
   BookMarked, BookOpenText, Check, ChevronDown, ExternalLink, GraduationCap, Library, MessageCircleQuestion,
-  RefreshCw, Search, Send, Sparkles,
+  PlayCircle, RefreshCw, Search, Send, Sparkles, X,
 } from "lucide-react";
 import { api, apiStream } from "../lib/api";
 import { kindOf } from "../lib/decks";
 import { extractHeadings, RichText } from "../lib/richtext";
 import { EmptyState, Spinner, useToast } from "../components/ui";
+import { fmtTime, videoFileUrl } from "../components/VideoLibrary";
 
 export default function Textbook({ user, decks, initial, onStart }) {
   const toast = useToast();
@@ -167,6 +168,9 @@ export default function Textbook({ user, decks, initial, onStart }) {
                 </>
               ) : (
                 <>База знаний для этой колоды ещё не загружена — статьи строятся по материалам карточек.</>
+              )}
+              {book.videos > 0 && (
+                <div className="mt-1.5"><PlayCircle className="mr-1 inline h-3 w-3" /> Видеоуроков в базе: {book.videos}</div>
               )}
               {user.is_admin && book.topics.some((t) => !t.has_article) && (
                 <button className="btn-ghost mt-3 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
@@ -355,6 +359,25 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
     return m && m[1].trim().toLowerCase() === topic.trim().toLowerCase() ? content.slice(m[0].length) : content;
   }, [content, topic]);
   const headings = useMemo(() => (status === "done" ? extractHeadings(body) : []), [body, status]);
+  // [[video:n]] на отдельной строке — плеер видеофрагмента n
+  const pieces = useMemo(() => {
+    const out = [];
+    let last = 0;
+    const re = /^[ \t]*\[\[video:(\d+)\]\][ \t]*$/gm;
+    for (const m of body.matchAll(re)) {
+      if (m.index > last) out.push({ text: body.slice(last, m.index) });
+      const src = sources.find((s) => s.n === Number(m[1]) && s.video);
+      if (src) out.push({ video: src });
+      last = m.index + m[0].length;
+    }
+    out.push({ text: body.slice(last) });
+    return out.filter((p) => p.video || p.text.trim());
+  }, [body, sources]);
+  const restVideos = useMemo(() => {
+    const embedded = new Set(pieces.filter((p) => p.video).map((p) => p.video.video));
+    const seen = new Set();
+    return sources.filter((s) => s.video && !embedded.has(s.video) && !seen.has(s.video) && seen.add(s.video));
+  }, [pieces, sources]);
   const k = kindOf(deck);
   const lang = deck?.language;
 
@@ -397,7 +420,23 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
             )}
             {content && (
               <div className={`article-body ${status === "writing" ? "stream-caret" : ""}`}>
-                <RichText text={body} sources={sources} codeLanguage={lang} />
+                {pieces.map((p, i) =>
+                  p.video ? (
+                    <VideoEmbed key={i} src={p.video} />
+                  ) : (
+                    <RichText key={i} text={p.text} sources={sources} codeLanguage={lang} />
+                  ),
+                )}
+              </div>
+            )}
+            {status === "done" && restVideos.length > 0 && (
+              <div className="mt-8">
+                <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-zinc-500">
+                  <PlayCircle className="h-3.5 w-3.5" /> Видео по теме
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {restVideos.map((s) => <VideoEmbed key={s.n} src={s} compact />)}
+                </div>
               </div>
             )}
           </div>
@@ -436,12 +475,91 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
 
         {status === "done" && <AskBox deckId={deckId} topic={topic} lang={lang} />}
       </div>
+      <FloatingPlayer />
 
       {/* оглавление */}
       <nav className="hidden 2xl:block">
         {headings.length > 0 && <Toc headings={headings} />}
       </nav>
     </div>
+  );
+}
+
+function VideoEmbed({ src, compact = false }) {
+  const ref = useRef(null);
+  const [failed, setFailed] = useState(false);
+  const label = (src.title || "").replace(/^Видео:\s*/, "");
+  return (
+    <figure className={`overflow-hidden rounded-2xl border border-white/[0.08] bg-black/40 ${compact ? "" : "my-6"}`}>
+      {failed ? (
+        <div className="flex aspect-video items-center justify-center p-6 text-center text-sm text-zinc-400">
+          Браузер не может воспроизвести этот формат видео (например, MKV/AVI). Расшифровка фрагмента учтена в статье.
+        </div>
+      ) : (
+        <video
+          ref={ref}
+          className="aspect-video w-full bg-black"
+          controls
+          preload="metadata"
+          src={`${videoFileUrl(src.video)}#t=${src.start || 0}`}
+          onError={() => setFailed(true)}
+        />
+      )}
+      <figcaption className="flex items-center justify-between gap-3 px-4 py-2.5 text-xs text-zinc-400">
+        <span className="min-w-0 truncate" title={label}>
+          <span className="cite mr-1.5">{src.n}</span>
+          {label}
+        </span>
+        <button
+          className="shrink-0 rounded-md px-2 py-1 text-violet-200 hover:bg-white/[0.06]"
+          onClick={() => {
+            const v = ref.current;
+            if (!v) return;
+            v.currentTime = src.start || 0;
+            v.play().catch(() => {});
+          }}
+        >
+          ▶ с {fmtTime(src.start)}
+        </button>
+      </figcaption>
+    </figure>
+  );
+}
+
+/** Плеер, который открывают сноски на видео (в статье и в ответах «Спросить учебник»). */
+function FloatingPlayer() {
+  const [src, setSrc] = useState(null);
+  useEffect(() => {
+    const open = (e) => setSrc({ ...e.detail, key: Date.now() });
+    window.addEventListener("textbook:video", open);
+    return () => window.removeEventListener("textbook:video", open);
+  }, []);
+  return (
+    <AnimatePresence>
+      {src && (
+        <motion.div
+          key="fp"
+          initial={{ opacity: 0, y: 30, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 30, scale: 0.96 }}
+          className="fixed bottom-4 right-4 z-50 w-[min(440px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-white/10 bg-ink-900 shadow-2xl"
+        >
+          <video
+            key={src.key}
+            className="aspect-video w-full bg-black"
+            controls
+            autoPlay
+            src={`${videoFileUrl(src.video)}#t=${src.start || 0}`}
+          />
+          <div className="flex items-center gap-2 px-3 py-2 text-xs text-zinc-400">
+            <span className="min-w-0 flex-1 truncate">{(src.title || "").replace(/^Видео:\s*/, "")}</span>
+            <button className="rounded-md p-1 hover:bg-white/[0.08] hover:text-white" onClick={() => setSrc(null)} aria-label="Закрыть">
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 

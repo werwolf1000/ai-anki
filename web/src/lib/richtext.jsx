@@ -70,6 +70,18 @@ function Citation({ nums, sources }) {
     <span className="whitespace-nowrap">
       {nums.map((n) => {
         const src = sources?.find((x) => x.n === n);
+        if (src?.video)
+          return (
+            <button
+              key={n}
+              type="button"
+              className="cite cite-video"
+              title={src.title}
+              onClick={() => window.dispatchEvent(new CustomEvent("textbook:video", { detail: src }))}
+            >
+              {n}
+            </button>
+          );
         return src ? (
           <a key={n} href={src.url} target="_blank" rel="noreferrer" className="cite" title={src.title}>
             {n}

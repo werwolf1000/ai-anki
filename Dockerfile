@@ -14,8 +14,12 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     AI_ANKI_DATA_DIR=/data \
+    AI_ANKI_VIDEO_DIRS=/videos \
     AI_ANKI_WEB_DIST=/app/web/dist \
     PYTHONPATH=/app
+
+# ffmpeg — извлечение звука из видеоуроков для расшифровки
+RUN apt-get update && apt-get install -y --no-install-recommends ffmpeg && rm -rf /var/lib/apt/lists/*
 
 COPY requirements-server.txt .
 RUN pip install --no-cache-dir -r requirements-server.txt
