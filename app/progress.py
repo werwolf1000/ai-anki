@@ -402,7 +402,8 @@ class ProgressStore:
             return False
 
         deck_card_ids = {c.id for c in deck.cards}
-        orphan_ids = [cid for cid in list(deck_map) if cid not in deck_card_ids]
+        retired = getattr(deck, "retired_ids", set())
+        orphan_ids = [cid for cid in list(deck_map) if cid not in deck_card_ids and cid not in retired]
         if not orphan_ids:
             return False
 

@@ -17,84 +17,100 @@
       "topic": "Тензоры"
     },
     {
-      "question": "dtype float32 vs float64?",
+      "question": "В чём разница между dtype float32 и float64?",
       "reference": "float32 (torch.float) — стандарт DL; float64 реже, больше памяти.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4707429"
     },
     {
-      "question": "device cpu vs cuda?",
+      "question": "В чём разница между device cpu и cuda?",
       "reference": "tensor.to('cuda') или .cuda() — GPU; 'cpu' — хост. torch.cuda.is_available().",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "5572009"
     },
     {
-      "question": "requires_grad?",
+      "question": "Что такое requires_grad?",
       "reference": "True — отслеживать операции для backward; leaf tensor накапливает .grad.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4271499"
     },
     {
-      "question": "with torch.no_grad()?",
+      "question": "Что делает with torch.no_grad()?",
       "reference": "Отключить autograd — inference, eval, экономия памяти.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9675810"
     },
     {
-      "question": "torch.inference_mode()?",
+      "question": "Что делает torch.inference_mode()?",
       "reference": "Строже no_grad — быстрее inference, Python 3.7+ / recent PyTorch.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2711113"
     },
     {
-      "question": "backward()?",
+      "question": "Что делает backward()?",
       "reference": "Вычисляет градиенты от scalar loss назад по графу; loss.backward().",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "6037702"
     },
     {
-      "question": "optimizer.zero_grad()?",
+      "question": "Что делает optimizer.zero_grad()?",
       "reference": "Обнулить .grad перед новым backward — иначе градиенты накапливаются.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "533643"
     },
     {
-      "question": "optimizer.step()?",
+      "question": "Что делает optimizer.step()?",
       "reference": "Обновить параметры по градиентам: w -= lr * grad.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4282525"
     },
     {
-      "question": "nn.Module?",
+      "question": "Что такое nn.Module?",
       "reference": "Базовый класс моделей: forward(), parameters(), train()/eval().",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5205176"
     },
     {
-      "question": "model.train() vs eval()?",
+      "question": "В чём разница между model.train() и eval()?",
       "reference": "train — dropout/batchnorm training mode; eval — inference поведение.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5243474"
     },
     {
-      "question": "nn.Linear?",
+      "question": "Что такое nn.Linear?",
       "reference": "y = x @ W.T + b — полносвязный слой; in_features, out_features.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5791950"
     },
     {
-      "question": "nn.Conv2d?",
+      "question": "Что такое nn.Conv2d?",
       "reference": "Свёртка для изображений: in_channels, out_channels, kernel_size, stride, padding.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "4383426"
     },
     {
-      "question": "nn.ReLU / GELU?",
+      "question": "Поясните: nn.ReLU / GELU.",
       "reference": "Нелинейности; F.relu или nn.ReLU(inplace=False).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "819888"
     },
     {
-      "question": "nn.Dropout?",
+      "question": "Что такое nn.Dropout?",
       "reference": "Regularization — обнуляет случайные элементы в train mode.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "2263164"
     },
     {
-      "question": "nn.BatchNorm2d?",
+      "question": "Что такое nn.BatchNorm2d?",
       "reference": "Нормализация по batch/channel; running stats в eval.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "1082795"
     },
     {
-      "question": "nn.Sequential?",
+      "question": "Что такое nn.Sequential?",
       "reference": "Контейнер слоёв по порядку: nn.Sequential(Linear, ReLU, Linear).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "3751019"
     },
     {
       "question": "nn.ModuleList vs Sequential?",
@@ -102,39 +118,46 @@
       "topic": "Модули nn"
     },
     {
-      "question": "CrossEntropyLoss?",
+      "question": "Что такое CrossEntropyLoss?",
       "reference": "LogSoftmax + NLL для multiclass; input (N,C), target (N,) class indices long.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "8614451"
     },
     {
-      "question": "BCEWithLogitsLoss?",
+      "question": "Что такое BCEWithLogitsLoss?",
       "reference": "Binary classification — один logit на sample.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "7034413"
     },
     {
-      "question": "MSELoss?",
+      "question": "Что такое MSELoss?",
       "reference": "Regression L2 между prediction и target.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4734235"
     },
     {
-      "question": "torch.optim.SGD?",
+      "question": "Что такое torch.optim.SGD?",
       "reference": "sgd = optim.SGD(model.parameters(), lr=0.01, momentum=0.9).",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "9812874"
     },
     {
-      "question": "torch.optim.Adam?",
+      "question": "Что такое torch.optim.Adam?",
       "reference": "Adaptive lr per-parameter; популярен default lr 1e-3.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "8216606"
     },
     {
-      "question": "AdamW?",
+      "question": "Что такое AdamW?",
       "reference": "Adam с decoupled weight decay — transformers training.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "8717225"
     },
     {
-      "question": "learning rate scheduler?",
+      "question": "Поясните: learning rate scheduler.",
       "reference": "StepLR, CosineAnnealingLR, ReduceLROnPlateau — меняют lr по эпохам.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "2919521"
     },
     {
       "question": "Dataset __len__ __getitem__?",
@@ -142,224 +165,268 @@
       "topic": "DataLoader"
     },
     {
-      "question": "DataLoader?",
+      "question": "Что такое DataLoader?",
       "reference": "Batch, shuffle, num_workers, pin_memory — итерация по Dataset.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "1601704"
     },
     {
-      "question": "collate_fn?",
+      "question": "Что такое collate_fn?",
       "reference": "Кастомная сборка batch для variable-length sequences.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "551198"
     },
     {
-      "question": "pin_memory?",
+      "question": "Что такое pin_memory?",
       "reference": "True при GPU — быстрее host→device copy с page-locked memory.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "7475036"
     },
     {
-      "question": "num_workers?",
+      "question": "Что такое num_workers?",
       "reference": "Параллельная загрузка данных в subprocess; 0 — main process only.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "1814680"
     },
     {
-      "question": "torch.save / load?",
+      "question": "Поясните: torch.save / load.",
       "reference": "torch.save(state_dict, path); load с map_location для CPU.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7461823"
     },
     {
-      "question": "state_dict?",
+      "question": "Что такое state_dict?",
       "reference": "OrderedDict весов model.state_dict() — без architecture.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "848624"
     },
     {
-      "question": "load_state_dict strict?",
+      "question": "Поясните: load_state_dict strict.",
       "reference": "strict=False — частичная загрузка; missing/unexpected keys.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3295236"
     },
     {
-      "question": "torch.nn.functional?",
+      "question": "Что такое torch.nn.functional?",
       "reference": "F.conv2d, F.relu — functional API без Module state.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5255566"
     },
     {
-      "question": "view vs reshape?",
+      "question": "В чём разница между view и reshape?",
       "reference": "view требует contiguous; reshape может copy; .contiguous() после permute.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "8163065"
     },
     {
-      "question": "permute / transpose?",
+      "question": "Поясните: permute / transpose.",
       "reference": "permute(0,2,3,1) меняет порядок осей; transpose dims.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "1724273"
     },
     {
-      "question": "squeeze / unsqueeze?",
+      "question": "Поясните: squeeze / unsqueeze.",
       "reference": "Убрать/добавить dim size 1: x.unsqueeze(0) batch dim.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3184314"
     },
     {
-      "question": "torch.stack vs cat?",
+      "question": "В чём разница между torch.stack и cat?",
       "reference": "stack — новая ось; cat — concat по существующей dim.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2735296"
     },
     {
-      "question": "detach()?",
+      "question": "Что делает detach()?",
       "reference": "Tensor без grad history — для фиксации значений в графе.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "2776367"
     },
     {
-      "question": "item()?",
+      "question": "Что делает item()?",
       "reference": "Scalar Python number из one-element tensor.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "3549257"
     },
     {
-      "question": "cpu().numpy()?",
+      "question": "Что делает cpu().numpy()?",
       "reference": "Экспорт на CPU в NumPy; .numpy() только detached cpu tensor.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "6715697"
     },
     {
-      "question": "torch.manual_seed?",
+      "question": "Что такое torch.manual_seed?",
       "reference": "Reproducibility: manual_seed, cuda.manual_seed_all.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "1348901"
     },
     {
-      "question": "deterministic algorithms?",
+      "question": "Поясните: deterministic algorithms.",
       "reference": "torch.use_deterministic_algorithms(True) — может быть медленнее.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9407972"
     },
     {
-      "question": "CUDA OOM?",
+      "question": "Поясните: CUDA OOM.",
       "reference": "Out of memory — уменьшить batch, gradient checkpointing, mixed precision.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "7455923"
     },
     {
-      "question": "mixed precision autocast?",
+      "question": "Поясните: mixed precision autocast.",
       "reference": "torch.cuda.amp.autocast + GradScaler — fp16/bf16 training.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "4517149"
     },
     {
-      "question": "GradScaler?",
+      "question": "Что такое GradScaler?",
       "reference": "Масштаб loss против underflow в fp16; scaler.step(optimizer).",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "8712551"
     },
     {
-      "question": "nn.Parameter?",
+      "question": "Что такое nn.Parameter?",
       "reference": "Обучаемый tensor registered в Module.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "3896181"
     },
     {
-      "question": "register_buffer?",
+      "question": "Что такое register_buffer?",
       "reference": "Tensor state не trainable (BatchNorm running_mean).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "8934015"
     },
     {
-      "question": "named_parameters()?",
+      "question": "Что делает named_parameters()?",
       "reference": "Итерация (name, param) для fine-grained optimizers.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "1300804"
     },
     {
-      "question": "hook forward/backward?",
+      "question": "Поясните: hook forward/backward.",
       "reference": "Отладка градиентов tensor.register_hook.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4310848"
     },
     {
-      "question": "torch.compile?",
+      "question": "Что такое torch.compile?",
       "reference": "PyTorch 2.x graph optimization model = torch.compile(model).",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5356398"
     },
     {
-      "question": "torchvision?",
+      "question": "Что такое torchvision?",
       "reference": "datasets, models, transforms для CV.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "3970687"
     },
     {
-      "question": "transforms Compose?",
+      "question": "Поясните: transforms Compose.",
       "reference": "transforms.Compose([Resize, ToTensor, Normalize(mean,std)]).",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "2575630"
     },
     {
-      "question": "Normalize ImageNet?",
+      "question": "Поясните: Normalize ImageNet.",
       "reference": "mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225] для pretrained.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "897827"
     },
     {
-      "question": "ToTensor?",
+      "question": "Что такое ToTensor?",
       "reference": "PIL/ndarray HWC uint8 → CHW float [0,1].",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "4511263"
     },
     {
-      "question": "pretrained weights?",
+      "question": "Поясните: pretrained weights.",
       "reference": "models.resnet18(weights=ResNet18_Weights.DEFAULT).",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4055885"
     },
     {
-      "question": "fine-tuning?",
+      "question": "Что такое fine-tuning?",
       "reference": "Заморозить backbone requires_grad=False; train только head.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "1101299"
     },
     {
-      "question": "transfer learning?",
+      "question": "Поясните: transfer learning.",
       "reference": "Pretrained features + новый classifier на своих данных.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1890405"
     },
     {
-      "question": "epoch vs iteration?",
+      "question": "В чём разница между epoch и iteration?",
       "reference": "Epoch — полный проход dataset; iteration — один batch step.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "9834559"
     },
     {
-      "question": "batch size tradeoff?",
+      "question": "Поясните: batch size tradeoff.",
       "reference": "Больше batch — стабильнее grad, больше памяти; меньше — шумнее.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1822795"
     },
     {
-      "question": "weight decay?",
+      "question": "Поясните: weight decay.",
       "reference": "L2 regularization в optimizer; AdamW отдельно от adaptive steps.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "6894826"
     },
     {
-      "question": "gradient clipping?",
+      "question": "Поясните: gradient clipping.",
       "reference": "torch.nn.utils.clip_grad_norm_(params, max_norm) — RNN/transformers.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "2692805"
     },
     {
-      "question": "nn.Embedding?",
+      "question": "Что такое nn.Embedding?",
       "reference": "Lookup table indices → vectors; NLP tokens.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "8395253"
     },
     {
-      "question": "nn.LSTM / GRU?",
+      "question": "Поясните: nn.LSTM / GRU.",
       "reference": "RNN layers: input (seq, batch, feat); packed sequences pack_padded_sequence.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5746440"
     },
     {
-      "question": "nn.Transformer?",
+      "question": "Что такое nn.Transformer?",
       "reference": "Multi-head attention encoder/decoder; nn.MultiheadAttention.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "4260453"
     },
     {
-      "question": "attention mechanism?",
+      "question": "Поясните: attention mechanism.",
       "reference": "Q,K,V softmax(QK^T/sqrt(d))V — long-range dependencies.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4102335"
     },
     {
-      "question": "LayerNorm vs BatchNorm?",
+      "question": "В чём разница между LayerNorm и BatchNorm?",
       "reference": "LayerNorm по features; BatchNorm по batch spatial — transformers vs CNN.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "2749362"
     },
     {
-      "question": "softmax dim?",
+      "question": "Поясните: softmax dim.",
       "reference": "F.softmax(logits, dim=-1) — вероятности по классам.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4928120"
     },
     {
-      "question": "argmax vs max?",
+      "question": "В чём разница между argmax и max?",
       "reference": "pred = logits.argmax(dim=1) — класс с max logit.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8676394"
     },
     {
-      "question": "one-hot?",
+      "question": "Что такое one-hot?",
       "reference": "F.one_hot(target, num_classes) — для некоторых losses/metrics.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "1037808"
     },
     {
       "question": "torchmetrics / manual accuracy?",
@@ -367,304 +434,364 @@
       "topic": "Основы"
     },
     {
-      "question": "validation loop?",
+      "question": "Поясните: validation loop.",
       "reference": "model.eval(); no_grad; отдельный val_loader; early stopping.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1662466"
     },
     {
-      "question": "early stopping?",
+      "question": "Поясните: early stopping.",
       "reference": "Останов если val loss не улучшается N epochs.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "191578"
     },
     {
-      "question": "checkpointing?",
+      "question": "Что такое checkpointing?",
       "reference": "Сохранять model+optimizer+epoch для resume training.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "9999334"
     },
     {
-      "question": "DistributedDataParallel?",
+      "question": "Что такое DistributedDataParallel?",
       "reference": "torch.nn.parallel.DistributedDataParallel multi-GPU training.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "6419166"
     },
     {
-      "question": "DataParallel?",
+      "question": "Что такое DataParallel?",
       "reference": "Старый DP — одна процесс multi-GPU; DDP предпочтительнее.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "19674"
     },
     {
-      "question": "TensorBoard SummaryWriter?",
+      "question": "Поясните: TensorBoard SummaryWriter.",
       "reference": "from torch.utils.tensorboard import SummaryWriter — log scalars.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "1545871"
     },
     {
-      "question": "ONNX export?",
+      "question": "Поясните: ONNX export.",
       "reference": "torch.onnx.export(model, dummy_input, 'model.onnx') — deployment.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1778417"
     },
     {
-      "question": "TorchScript?",
+      "question": "Что такое TorchScript?",
       "reference": "torch.jit.trace/script — C++ runtime inference.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9546986"
     },
     {
-      "question": "hub?",
+      "question": "Что такое hub?",
       "reference": "torch.hub.load repo model — pretrained from GitHub.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8225644"
     },
     {
-      "question": "einops?",
+      "question": "Что такое einops?",
       "reference": "Сторонняя lib rearrange для readable tensor ops (optional).",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "8580819"
     },
     {
-      "question": "device mismatch error?",
+      "question": "Поясните: device mismatch error.",
       "reference": "Все tensors и model на одном device перед forward.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "205568"
     },
     {
-      "question": "shape mismatch matmul?",
+      "question": "Поясните: shape mismatch matmul.",
       "reference": "Проверять .shape; Linear expects (N, in_features).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "7083087"
     },
     {
-      "question": "long dtype target?",
+      "question": "Поясните: long dtype target.",
       "reference": "CrossEntropyLoss target dtype torch.long class indices not one-hot.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "8932309"
     },
     {
-      "question": "logits vs probabilities?",
+      "question": "В чём разница между logits и probabilities?",
       "reference": "Loss functions часто принимают raw logits; softmax внутри CE.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "9639551"
     },
     {
-      "question": "sigmoid vs softmax?",
+      "question": "В чём разница между sigmoid и softmax?",
       "reference": "sigmoid multi-label independent; softmax multiclass exclusive.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7255272"
     },
     {
-      "question": "F.cross_entropy?",
+      "question": "Что такое F.cross_entropy?",
       "reference": "Functional CE — ignore_index для padding tokens.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "974840"
     },
     {
-      "question": "padding_idx Embedding?",
+      "question": "Поясните: padding_idx Embedding.",
       "reference": "nn.Embedding(vocab, dim, padding_idx=0) — zero grad pad.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "5152397"
     },
     {
-      "question": "DataLoader drop_last?",
+      "question": "Поясните: DataLoader drop_last.",
       "reference": "drop_last=True — отбросить неполный batch для BatchNorm stability.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "7468641"
     },
     {
-      "question": "random_split?",
+      "question": "Что такое random_split?",
       "reference": "torch.utils.data.random_split(dataset, [train_len, val_len]).",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "3038409"
     },
     {
-      "question": "Subset?",
+      "question": "Что такое Subset?",
       "reference": "Subset(dataset, indices) — train/val split indices.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "1460960"
     },
     {
-      "question": "WeightedRandomSampler?",
+      "question": "Что такое WeightedRandomSampler?",
       "reference": "Balanced sampling при class imbalance.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "6964458"
     },
     {
-      "question": "class weights loss?",
+      "question": "Поясните: class weights loss.",
       "reference": "CrossEntropyLoss(weight=class_weights_tensor) для imbalance.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "461654"
     },
     {
-      "question": "confusion matrix?",
+      "question": "Поясните: confusion matrix.",
       "reference": " sklearn или manual bincount pred vs target analysis.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "231939"
     },
     {
-      "question": "learning rate finder?",
+      "question": "Поясните: learning rate finder.",
       "reference": "Эмпирический подбор lr — постепенное увеличение.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8249109"
     },
     {
-      "question": "warmup scheduler?",
+      "question": "Поясните: warmup scheduler.",
       "reference": "Linear warmup lr первые N steps transformers training.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "8141386"
     },
     {
-      "question": "cosine schedule?",
+      "question": "Поясните: cosine schedule.",
       "reference": "CosineAnnealingLR decay lr по cosine до eta_min.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6001358"
     },
     {
-      "question": "model.parameters()?",
+      "question": "Что делает model.parameters()?",
       "reference": "Iterator всех Parameter для optimizer.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "2634631"
     },
     {
-      "question": "freeze layers?",
+      "question": "Поясните: freeze layers.",
       "reference": "for p in layer.parameters(): p.requires_grad = False",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "96381"
     },
     {
-      "question": "unfreeze?",
+      "question": "Что такое unfreeze?",
       "reference": "requires_grad=True для fine-tune последних blocks.",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "5926501"
     },
     {
-      "question": "nn.Identity?",
+      "question": "Что такое nn.Identity?",
       "reference": "Placeholder pass-through в Sequential при ablation.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "3483418"
     },
     {
-      "question": "custom forward?",
+      "question": "Поясните: custom forward.",
       "reference": "def forward(self, x): ... — define computation graph.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3036214"
     },
     {
-      "question": "__call__ vs forward?",
+      "question": "В чём разница между __call__ и forward?",
       "reference": "model(x) вызывает __call__ hooks; не вызывать forward напрямую если hooks нужны.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5884844"
     },
     {
-      "question": "torch.linalg?",
+      "question": "Что такое torch.linalg?",
       "reference": "matrix ops solve, svd — linear algebra submodule.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "2469716"
     },
     {
-      "question": "einsum?",
+      "question": "Что такое einsum?",
       "reference": "torch.einsum('bij,jk->bik', A, B) — Einstein summation.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7436711"
     },
     {
-      "question": "broadcasting?",
+      "question": "Что такое broadcasting?",
       "reference": "PyTorch как NumPy broadcasting rules для binops.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5664215"
     },
     {
-      "question": "in-place ops risk?",
+      "question": "Поясните: in-place ops risk.",
       "reference": "inplace ReLU может break autograd if aliasing; осторожно с x.relu_().",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7127856"
     },
     {
-      "question": "retain_graph?",
+      "question": "Что такое retain_graph?",
       "reference": "backward(retain_graph=True) — несколько backward на один graph.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "2296113"
     },
     {
-      "question": "create_graph?",
+      "question": "Что такое create_graph?",
       "reference": "backward(create_graph=True) — higher-order derivatives.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "1787531"
     },
     {
-      "question": "torch.autograd.grad?",
+      "question": "Что такое torch.autograd.grad?",
       "reference": "Functional grad outputs w.r.t inputs без .backward accumulation.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "6428143"
     },
     {
-      "question": "Module.to(device)?",
+      "question": "Что делает Module.to(device)?",
       "reference": "model.to('cuda') — рекурсивно все parameters/buffers.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "5977605"
     },
     {
-      "question": "tensor.cuda()?",
+      "question": "Что делает tensor.cuda()?",
       "reference": "Перенос tensor на default GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "8625973"
     },
     {
-      "question": "empty_cache?",
+      "question": "Что такое empty_cache?",
       "reference": "torch.cuda.empty_cache() — освободить cached GPU memory (fragmentation).",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "7583597"
     },
     {
-      "question": "cudnn benchmark?",
+      "question": "Поясните: cudnn benchmark.",
       "reference": "torch.backends.cudnn.benchmark=True — faster fixed input sizes.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "4593832"
     },
     {
-      "question": "reproducibility cudnn?",
+      "question": "Поясните: reproducibility cudnn.",
       "reference": "deterministic=True может замедлить convolutions.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7122150"
     },
     {
-      "question": "jit errors?",
+      "question": "Поясните: jit errors.",
       "reference": "Script requires type-friendly Python subset.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3830209"
     },
     {
-      "question": "hub security?",
+      "question": "Поясните: hub security.",
       "reference": "Доверять только known repos при torch.hub.load.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5864778"
     },
     {
-      "question": "pt vs pth checkpoint?",
+      "question": "В чём разница между pt и pth checkpoint?",
       "reference": "Convention .pt/.pth — torch.save pickle-based format.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7540300"
     },
     {
-      "question": "safe_load map_location?",
+      "question": "Поясните: safe_load map_location.",
       "reference": "map_location='cpu' при load на машине без GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "912110"
     },
     {
-      "question": "nn.init?",
+      "question": "Что такое nn.init?",
       "reference": "init.xavier_uniform_, kaiming_normal_ для weight initialization.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "1849820"
     },
     {
-      "question": "bias init zeros?",
+      "question": "Поясните: bias init zeros.",
       "reference": "nn.init.zeros_(layer.bias) common default.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "2156280"
     },
     {
-      "question": "BatchNorm affine?",
+      "question": "Поясните: BatchNorm affine.",
       "reference": "affine=True learnable scale/shift gamma beta.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "7511241"
     },
     {
-      "question": "GroupNorm?",
+      "question": "Что такое GroupNorm?",
       "reference": "Alternative BN для small batch: nn.GroupNorm(num_groups, channels).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "6144589"
     },
     {
-      "question": "InstanceNorm?",
+      "question": "Что такое InstanceNorm?",
       "reference": "Style transfer per-instance normalization.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4564451"
     },
     {
-      "question": "AdaptiveAvgPool2d?",
+      "question": "Что такое AdaptiveAvgPool2d?",
       "reference": "Global average pool любой spatial → 1x1 per channel.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6712238"
     },
     {
-      "question": "Flatten?",
+      "question": "Что такое Flatten?",
       "reference": "nn.Flatten() перед Linear после conv layers.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "8276831"
     },
     {
-      "question": "torchvision.models?",
+      "question": "Что такое torchvision.models?",
       "reference": "resnet, efficientnet, vit — pretrained backbones.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5648318"
     },
     {
-      "question": "segmentation models?",
+      "question": "Поясните: segmentation models.",
       "reference": "torchvision FCN, DeepLab — или segmentation_models_pytorch lib.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1325634"
     },
     {
-      "question": "detection?",
+      "question": "Что такое detection?",
       "reference": "torchvision Faster R-CNN, RetinaNet — detection API.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4405204"
     },
     {
-      "question": "audio torchaudio?",
+      "question": "Поясните: audio torchaudio.",
       "reference": "Companion lib spectrogram, datasets speech.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "5793108"
     },
     {
-      "question": "text torchtext?",
+      "question": "Поясните: text torchtext.",
       "reference": "Legacy; HF transformers доминирует NLP now.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4560186"
     },
     {
       "question": "HF transformers + PyTorch?",
@@ -677,54 +804,64 @@
       "topic": "DataLoader"
     },
     {
-      "question": "custom loss?",
+      "question": "Поясните: custom loss.",
       "reference": "Subclass nn.Module loss или функция на tensors with grad.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4138333"
     },
     {
-      "question": "multi-GPU single machine?",
+      "question": "Поясните: multi-GPU single machine.",
       "reference": "DDP torchrun или Accelerate library.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "7863040"
     },
     {
-      "question": "CPU training?",
+      "question": "Поясните: CPU training.",
       "reference": "Valid for small models; torch.set_num_threads for MKL.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7563735"
     },
     {
-      "question": "MPS Apple Silicon?",
+      "question": "Поясните: MPS Apple Silicon.",
       "reference": "device='mps' Metal Performance Shaders backend.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "2417999"
     },
     {
-      "question": "torch.float16?",
+      "question": "Что такое torch.float16?",
       "reference": "Half precision tensors; GradScaler on CUDA.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "1669675"
     },
     {
-      "question": "bfloat16?",
+      "question": "Что такое bfloat16?",
       "reference": "bf16 training Ampere+ GPUs transformers.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "1697915"
     },
     {
-      "question": "channels last?",
+      "question": "Поясните: channels last.",
       "reference": "memory_format=torch.channels_last conv optimization NVIDIA.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1033846"
     },
     {
-      "question": "profiler?",
+      "question": "Что такое profiler?",
       "reference": "torch.profiler profile activities CPU CUDA.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "4356671"
     },
     {
-      "question": "FLOPs estimate?",
+      "question": "Поясните: FLOPs estimate.",
       "reference": "fvcore or manual — model complexity.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "748866"
     },
     {
-      "question": "model.eval dropout?",
+      "question": "Поясните: model.eval dropout.",
       "reference": "Dropout disabled — deterministic forward (except BN running stats).",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "1843617"
     },
     {
       "question": "BatchNorm train small batch?",
@@ -732,69 +869,82 @@
       "topic": "Модули nn"
     },
     {
-      "question": "LayerNorm shape?",
+      "question": "Поясните: LayerNorm shape.",
       "reference": "nn.LayerNorm(normalized_shape) last dims.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "6241636"
     },
     {
-      "question": "RNN batch_first?",
+      "question": "Поясните: RNN batch_first.",
       "reference": "batch_first=True input (batch, seq, feat).",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "520076"
     },
     {
-      "question": "pack_padded_sequence?",
+      "question": "Что такое pack_padded_sequence?",
       "reference": "Variable length RNN without pad steps.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "573743"
     },
     {
-      "question": "CTC loss?",
+      "question": "Поясните: CTC loss.",
       "reference": "nn.CTCloss speech recognition sequence alignment.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "3852515"
     },
     {
-      "question": "triplet loss?",
+      "question": "Поясните: triplet loss.",
       "reference": "Metric learning anchor positive negative.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "1706123"
     },
     {
-      "question": "contrastive loss?",
+      "question": "Поясните: contrastive loss.",
       "reference": "Self-supervised SimCLR style.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "386860"
     },
     {
-      "question": "KL divergence?",
+      "question": "Поясните: KL divergence.",
       "reference": "F.kl_div log_probs vs target distribution.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8871177"
     },
     {
-      "question": "negative log likelihood?",
+      "question": "Поясните: negative log likelihood.",
       "reference": "F.nll_loss после log_softmax.",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "672944"
     },
     {
-      "question": "label smoothing?",
+      "question": "Поясните: label smoothing.",
       "reference": "Soft targets regularization CE.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8716541"
     },
     {
-      "question": "mixup cutmix?",
+      "question": "Поясните: mixup cutmix.",
       "reference": "Augmentation mixing samples CV training.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "6651268"
     },
     {
-      "question": "random seed worker?",
+      "question": "Поясните: random seed worker.",
       "reference": "worker_init_fn in DataLoader reproducibility.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "2829783"
     },
     {
-      "question": "persistent_workers?",
+      "question": "Что такое persistent_workers?",
       "reference": "DataLoader keep workers alive between epochs PyTorch 1.7+.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "8545351"
     },
     {
-      "question": "prefetch_factor?",
+      "question": "Что такое prefetch_factor?",
       "reference": "DataLoader batches prefetched per worker.",
-      "topic": "DataLoader"
+      "topic": "DataLoader",
+      "id": "3628587"
     },
     {
       "card_type": "code",
@@ -1002,28 +1152,13 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: torch.nn?",
       "reference": "Модуль/библиотека torch.nn в стеке PyTorch — см. официальную документацию.",
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch.nn?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.nn.",
-      "topic": "Модули nn"
-    },
-    {
       "question": "PyTorch экосистема: torch.nn.functional?",
       "reference": "Модуль/библиотека torch.nn.functional в стеке PyTorch — см. официальную документацию.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Когда использовать torch.nn.functional?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.nn.functional.",
       "topic": "Модули nn"
     },
     {
@@ -1032,18 +1167,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch.optim?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.optim.",
-      "topic": "Обучение"
-    },
-    {
       "question": "PyTorch экосистема: torch.utils.data?",
       "reference": "Модуль/библиотека torch.utils.data в стеке PyTorch — см. официальную документацию.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Когда использовать torch.utils.data?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.utils.data.",
       "topic": "Основы"
     },
     {
@@ -1052,18 +1177,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torchvision?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: torchvision.transforms?",
       "reference": "Модуль/библиотека torchvision.transforms в стеке PyTorch — см. официальную документацию.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Когда использовать torchvision.transforms?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision.transforms.",
       "topic": "Основы"
     },
     {
@@ -1072,18 +1187,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torchvision.models?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchvision.models.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: torch.cuda.amp?",
       "reference": "Модуль/библиотека torch.cuda.amp в стеке PyTorch — см. официальную документацию.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Когда использовать torch.cuda.amp?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.cuda.amp.",
       "topic": "GPU и производительность"
     },
     {
@@ -1092,18 +1197,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch.distributed?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.distributed.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: torch.jit?",
       "reference": "Модуль/библиотека torch.jit в стеке PyTorch — см. официальную документацию.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Когда использовать torch.jit?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.jit.",
       "topic": "Основы"
     },
     {
@@ -1112,18 +1207,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch.onnx?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.onnx.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: torch.linalg?",
       "reference": "Модуль/библиотека torch.linalg в стеке PyTorch — см. официальную документацию.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Когда использовать torch.linalg?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.linalg.",
       "topic": "Основы"
     },
     {
@@ -1132,18 +1217,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torch.fft?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torch.fft.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: TensorBoard?",
       "reference": "Модуль/библиотека TensorBoard в стеке PyTorch — см. официальную документацию.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "Когда использовать TensorBoard?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от TensorBoard.",
       "topic": "Тензоры"
     },
     {
@@ -1152,18 +1227,8 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать torchmetrics?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от torchmetrics.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: lightning?",
       "reference": "Модуль/библиотека lightning в стеке PyTorch — см. официальную документацию.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Когда использовать lightning?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от lightning.",
       "topic": "Основы"
     },
     {
@@ -1172,1594 +1237,601 @@
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать accelerate?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от accelerate.",
-      "topic": "Основы"
-    },
-    {
       "question": "PyTorch экосистема: timm?",
       "reference": "Модуль/библиотека timm в стеке PyTorch — см. официальную документацию.",
       "topic": "Основы"
     },
     {
-      "question": "Когда использовать timm?",
-      "reference": "Типичные задачи: training, inference, data, deployment — зависит от timm.",
-      "topic": "Основы"
-    },
-    {
-      "question": "nn.Conv1d — назначение?",
-      "reference": "Слой torch.nn.Conv1d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Conv2d — назначение?",
-      "reference": "Слой torch.nn.Conv2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Conv3d — назначение?",
-      "reference": "Слой torch.nn.Conv3d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.ConvTranspose2d — назначение?",
-      "reference": "Слой torch.nn.ConvTranspose2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.MaxPool2d — назначение?",
-      "reference": "Слой torch.nn.MaxPool2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.AvgPool2d — назначение?",
-      "reference": "Слой torch.nn.AvgPool2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.AdaptiveAvgPool2d — назначение?",
-      "reference": "Слой torch.nn.AdaptiveAvgPool2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Linear — назначение?",
-      "reference": "Слой torch.nn.Linear — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Dropout — назначение?",
-      "reference": "Слой torch.nn.Dropout — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.BatchNorm1d — назначение?",
-      "reference": "Слой torch.nn.BatchNorm1d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.BatchNorm2d — назначение?",
-      "reference": "Слой torch.nn.BatchNorm2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.LayerNorm — назначение?",
-      "reference": "Слой torch.nn.LayerNorm — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.GroupNorm — назначение?",
-      "reference": "Слой torch.nn.GroupNorm — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.InstanceNorm2d — назначение?",
-      "reference": "Слой torch.nn.InstanceNorm2d — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Embedding — назначение?",
-      "reference": "Слой torch.nn.Embedding — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.LSTM — назначение?",
-      "reference": "Слой torch.nn.LSTM — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.GRU — назначение?",
-      "reference": "Слой torch.nn.GRU — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.MultiheadAttention — назначение?",
-      "reference": "Слой torch.nn.MultiheadAttention — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.TransformerEncoder — назначение?",
-      "reference": "Слой torch.nn.TransformerEncoder — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.TransformerDecoder — назначение?",
-      "reference": "Слой torch.nn.TransformerDecoder — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.PReLU — назначение?",
-      "reference": "Слой torch.nn.PReLU — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.LeakyReLU — назначение?",
-      "reference": "Слой torch.nn.LeakyReLU — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Sigmoid — назначение?",
-      "reference": "Слой torch.nn.Sigmoid — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Tanh — назначение?",
-      "reference": "Слой torch.nn.Tanh — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.Softmax — назначение?",
-      "reference": "Слой torch.nn.Softmax — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.LogSoftmax — назначение?",
-      "reference": "Слой torch.nn.LogSoftmax — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "nn.BCELoss — назначение?",
-      "reference": "Слой torch.nn.BCELoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.BCEWithLogitsLoss — назначение?",
-      "reference": "Слой torch.nn.BCEWithLogitsLoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.CrossEntropyLoss — назначение?",
-      "reference": "Слой torch.nn.CrossEntropyLoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.MSELoss — назначение?",
-      "reference": "Слой torch.nn.MSELoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.L1Loss — назначение?",
-      "reference": "Слой torch.nn.L1Loss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.SmoothL1Loss — назначение?",
-      "reference": "Слой torch.nn.SmoothL1Loss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.NLLLoss — назначение?",
-      "reference": "Слой torch.nn.NLLLoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.CTCLoss — назначение?",
-      "reference": "Слой torch.nn.CTCLoss — см. docs для input/output shape и типичного use case.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "nn.Upsample — назначение?",
-      "reference": "Слой torch.nn.Upsample — см. docs для input/output shape и типичного use case.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.PixelShuffle — назначение?",
-      "reference": "Слой torch.nn.PixelShuffle — см. docs для input/output shape и типичного use case.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "torch / F.matmul?",
-      "reference": "Tensor operation matmul — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.bmm?",
-      "reference": "Tensor operation bmm — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.einsum?",
-      "reference": "Tensor operation einsum — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.cat?",
-      "reference": "Tensor operation cat — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.stack?",
-      "reference": "Tensor operation stack — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.split?",
-      "reference": "Tensor operation split — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.chunk?",
-      "reference": "Tensor operation chunk — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.gather?",
-      "reference": "Tensor operation gather — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.scatter?",
-      "reference": "Tensor operation scatter — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.where?",
-      "reference": "Tensor operation where — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.masked_fill?",
-      "reference": "Tensor operation masked_fill — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.clamp?",
-      "reference": "Tensor operation clamp — shape rules и autograd support в PyTorch.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "torch / F.sigmoid?",
-      "reference": "Tensor operation sigmoid — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.log_softmax?",
-      "reference": "Tensor operation log_softmax — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.softmax?",
-      "reference": "Tensor operation softmax — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.max?",
-      "reference": "Tensor operation max — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.min?",
-      "reference": "Tensor operation min — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.sum?",
-      "reference": "Tensor operation sum — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.mean?",
-      "reference": "Tensor operation mean — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.std?",
-      "reference": "Tensor operation std — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.norm?",
-      "reference": "Tensor operation norm — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.addmm?",
-      "reference": "Tensor operation addmm — shape rules и autograd support в PyTorch.",
-      "topic": "Тензоры"
-    },
-    {
-      "question": "torch / F.conv2d?",
-      "reference": "Tensor operation conv2d — shape rules и autograd support в PyTorch.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "PyTorch training [overfitting] #1",
+      "question": "Тема «overfitting»: напишите решение.",
       "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9621206"
     },
     {
-      "question": "PyTorch training [overfitting] #2",
-      "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [overfitting] #3",
-      "reference": "Концепция overfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [underfitting] #1",
+      "question": "Тема «underfitting»: напишите решение.",
       "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9569374"
     },
     {
-      "question": "PyTorch training [underfitting] #2",
-      "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [underfitting] #3",
-      "reference": "Концепция underfitting при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [regularization] #1",
+      "question": "Тема «regularization»: напишите решение.",
       "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6242454"
     },
     {
-      "question": "PyTorch training [regularization] #2",
-      "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [regularization] #3",
-      "reference": "Концепция regularization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [dropout] #1",
+      "question": "Тема «dropout»: напишите решение.",
       "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Модули nn"
+      "topic": "Модули nn",
+      "id": "6648446"
     },
     {
-      "question": "PyTorch training [dropout] #2",
-      "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "PyTorch training [dropout] #3",
-      "reference": "Концепция dropout при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "PyTorch training [data augmentation] #1",
+      "question": "Тема «data augmentation»: напишите решение.",
       "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9739795"
     },
     {
-      "question": "PyTorch training [data augmentation] #2",
-      "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [data augmentation] #3",
-      "reference": "Концепция data augmentation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch normalization] #1",
+      "question": "Тема «batch normalization»: напишите решение.",
       "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2739069"
     },
     {
-      "question": "PyTorch training [batch normalization] #2",
-      "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch normalization] #3",
-      "reference": "Концепция batch normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [learning rate] #1",
+      "question": "Тема «learning rate»: напишите решение.",
       "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2948218"
     },
     {
-      "question": "PyTorch training [learning rate] #2",
-      "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [learning rate] #3",
-      "reference": "Концепция learning rate при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [momentum] #1",
+      "question": "Тема «momentum»: напишите решение.",
       "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9456041"
     },
     {
-      "question": "PyTorch training [momentum] #2",
-      "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [momentum] #3",
-      "reference": "Концепция momentum при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [weight initialization] #1",
+      "question": "Тема «weight initialization»: напишите решение.",
       "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7795083"
     },
     {
-      "question": "PyTorch training [weight initialization] #2",
-      "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [weight initialization] #3",
-      "reference": "Концепция weight initialization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [vanishing gradients] #1",
+      "question": "Тема «vanishing gradients»: напишите решение.",
       "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9498878"
     },
     {
-      "question": "PyTorch training [vanishing gradients] #2",
-      "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [vanishing gradients] #3",
-      "reference": "Концепция vanishing gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [exploding gradients] #1",
+      "question": "Тема «exploding gradients»: напишите решение.",
       "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7769841"
     },
     {
-      "question": "PyTorch training [exploding gradients] #2",
-      "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [exploding gradients] #3",
-      "reference": "Концепция exploding gradients при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch size] #1",
+      "question": "Тема «batch size»: напишите решение.",
       "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2856292"
     },
     {
-      "question": "PyTorch training [batch size] #2",
-      "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch size] #3",
-      "reference": "Концепция batch size при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [epoch count] #1",
+      "question": "Тема «epoch count»: напишите решение.",
       "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1724807"
     },
     {
-      "question": "PyTorch training [epoch count] #2",
-      "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [epoch count] #3",
-      "reference": "Концепция epoch count при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [train val split] #1",
+      "question": "Тема «train val split»: напишите решение.",
       "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6116755"
     },
     {
-      "question": "PyTorch training [train val split] #2",
-      "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [train val split] #3",
-      "reference": "Концепция train val split при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [test set] #1",
+      "question": "Тема «test set»: напишите решение.",
       "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3491477"
     },
     {
-      "question": "PyTorch training [test set] #2",
-      "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [test set] #3",
-      "reference": "Концепция test set при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [data leakage] #1",
+      "question": "Тема «data leakage»: напишите решение.",
       "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7480336"
     },
     {
-      "question": "PyTorch training [data leakage] #2",
-      "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [data leakage] #3",
-      "reference": "Концепция data leakage при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [normalization] #1",
+      "question": "Тема «normalization»: напишите решение.",
       "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8285418"
     },
     {
-      "question": "PyTorch training [normalization] #2",
-      "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [normalization] #3",
-      "reference": "Концепция normalization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [standardization] #1",
+      "question": "Тема «standardization»: напишите решение.",
       "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8724143"
     },
     {
-      "question": "PyTorch training [standardization] #2",
-      "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [standardization] #3",
-      "reference": "Концепция standardization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [imbalanced classes] #1",
+      "question": "Тема «imbalanced classes»: напишите решение.",
       "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7377569"
     },
     {
-      "question": "PyTorch training [imbalanced classes] #2",
-      "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [imbalanced classes] #3",
-      "reference": "Концепция imbalanced classes при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric accuracy] #1",
+      "question": "Тема «metric accuracy»: напишите решение.",
       "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1566627"
     },
     {
-      "question": "PyTorch training [metric accuracy] #2",
-      "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric accuracy] #3",
-      "reference": "Концепция metric accuracy при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric F1] #1",
+      "question": "Тема «metric F1»: напишите решение.",
       "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3510485"
     },
     {
-      "question": "PyTorch training [metric F1] #2",
-      "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric F1] #3",
-      "reference": "Концепция metric F1 при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric AUC] #1",
+      "question": "Тема «metric AUC»: напишите решение.",
       "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6436299"
     },
     {
-      "question": "PyTorch training [metric AUC] #2",
-      "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [metric AUC] #3",
-      "reference": "Концепция metric AUC при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [hyperparameter tuning] #1",
+      "question": "Тема «hyperparameter tuning»: напишите решение.",
       "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5743518"
     },
     {
-      "question": "PyTorch training [hyperparameter tuning] #2",
-      "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [hyperparameter tuning] #3",
-      "reference": "Концепция hyperparameter tuning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [grid search] #1",
+      "question": "Тема «grid search»: напишите решение.",
       "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9782714"
     },
     {
-      "question": "PyTorch training [grid search] #2",
-      "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [grid search] #3",
-      "reference": "Концепция grid search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [random search] #1",
+      "question": "Тема «random search»: напишите решение.",
       "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3006779"
     },
     {
-      "question": "PyTorch training [random search] #2",
-      "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [random search] #3",
-      "reference": "Концепция random search при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [Bayesian optimization] #1",
+      "question": "Тема «Bayesian optimization»: напишите решение.",
       "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2744176"
     },
     {
-      "question": "PyTorch training [Bayesian optimization] #2",
-      "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [Bayesian optimization] #3",
-      "reference": "Концепция Bayesian optimization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [model ensemble] #1",
+      "question": "Тема «model ensemble»: напишите решение.",
       "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4546686"
     },
     {
-      "question": "PyTorch training [model ensemble] #2",
-      "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [model ensemble] #3",
-      "reference": "Концепция model ensemble при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [knowledge distillation] #1",
+      "question": "Тема «knowledge distillation»: напишите решение.",
       "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2309931"
     },
     {
-      "question": "PyTorch training [knowledge distillation] #2",
-      "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [knowledge distillation] #3",
-      "reference": "Концепция knowledge distillation при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [quantization] #1",
+      "question": "Тема «quantization»: напишите решение.",
       "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9088570"
     },
     {
-      "question": "PyTorch training [quantization] #2",
-      "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [quantization] #3",
-      "reference": "Концепция quantization при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [pruning] #1",
+      "question": "Тема «pruning»: напишите решение.",
       "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9061841"
     },
     {
-      "question": "PyTorch training [pruning] #2",
-      "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [pruning] #3",
-      "reference": "Концепция pruning при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [deployment edge] #1",
+      "question": "Тема «deployment edge»: напишите решение.",
       "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7959162"
     },
     {
-      "question": "PyTorch training [deployment edge] #2",
-      "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [deployment edge] #3",
-      "reference": "Концепция deployment edge при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [latency inference] #1",
+      "question": "Тема «latency inference»: напишите решение.",
       "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "475549"
     },
     {
-      "question": "PyTorch training [latency inference] #2",
-      "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [latency inference] #3",
-      "reference": "Концепция latency inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch inference] #1",
+      "question": "Тема «batch inference»: напишите решение.",
       "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8405390"
     },
     {
-      "question": "PyTorch training [batch inference] #2",
-      "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [batch inference] #3",
-      "reference": "Концепция batch inference при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [TorchServe] #1",
+      "question": "Тема «TorchServe»: напишите решение.",
       "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [TorchServe] #2",
-      "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
-    },
-    {
-      "question": "PyTorch training [TorchServe] #3",
-      "reference": "Концепция TorchServe при обучении моделей PyTorch — практика и типичные приёмы.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9652766"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [requires_grad False] #0-0",
+      "question": "Inference tensor. Исправьте или допишите код.",
       "task": "inference tensor",
       "code": "x = torch.randn(3, requires_grad=True)",
       "reference": "x = torch.randn(3, requires_grad=False)",
-      "topic": "Тензоры"
+      "topic": "Тензоры",
+      "id": "1897514"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [requires_grad False] #0-1",
-      "task": "inference tensor",
-      "code": "x = torch.randn(3, requires_grad=True)",
-      "reference": "x = torch.randn(3, requires_grad=False)",
-      "topic": "Тензоры"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [requires_grad False] #0-2",
-      "task": "inference tensor",
-      "code": "x = torch.randn(3, requires_grad=True)",
-      "reference": "x = torch.randn(3, requires_grad=False)",
-      "topic": "Тензоры"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [requires_grad False] #0-3",
-      "task": "inference tensor",
-      "code": "x = torch.randn(3, requires_grad=True)",
-      "reference": "x = torch.randn(3, requires_grad=False)",
-      "topic": "Тензоры"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [zero grad] #1-0",
+      "question": "Zero_grad. Исправьте или допишите код.",
       "task": "zero_grad",
       "code": "optimizer.step() first",
       "reference": "optimizer.zero_grad(set_to_none=True)",
-      "topic": "Обучение"
+      "topic": "Обучение",
+      "id": "4099575"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [zero grad] #1-1",
-      "task": "zero_grad",
-      "code": "optimizer.step() first",
-      "reference": "optimizer.zero_grad(set_to_none=True)",
-      "topic": "Обучение"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [zero grad] #1-2",
-      "task": "zero_grad",
-      "code": "optimizer.step() first",
-      "reference": "optimizer.zero_grad(set_to_none=True)",
-      "topic": "Обучение"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [zero grad] #1-3",
-      "task": "zero_grad",
-      "code": "optimizer.step() first",
-      "reference": "optimizer.zero_grad(set_to_none=True)",
-      "topic": "Обучение"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [model device] #2-0",
+      "question": "To device. Исправьте или допишите код.",
       "task": "to device",
       "code": "model(x.cuda())",
       "reference": "model.to(device); x.to(device)",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "7917748"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [model device] #2-1",
-      "task": "to device",
-      "code": "model(x.cuda())",
-      "reference": "model.to(device); x.to(device)",
-      "topic": "GPU и производительность"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [model device] #2-2",
-      "task": "to device",
-      "code": "model(x.cuda())",
-      "reference": "model.to(device); x.to(device)",
-      "topic": "GPU и производительность"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [model device] #2-3",
-      "task": "to device",
-      "code": "model(x.cuda())",
-      "reference": "model.to(device); x.to(device)",
-      "topic": "GPU и производительность"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [long target] #3-0",
+      "question": "Y.long(). Исправьте или допишите код.",
       "task": "y.long()",
       "code": "y.float()",
       "reference": "y.long()",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "461455"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [long target] #3-1",
-      "task": "y.long()",
-      "code": "y.float()",
-      "reference": "y.long()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [long target] #3-2",
-      "task": "y.long()",
-      "code": "y.float()",
-      "reference": "y.long()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [long target] #3-3",
-      "task": "y.long()",
-      "code": "y.float()",
-      "reference": "y.long()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [eval mode] #4-0",
+      "question": "Model.eval(). Исправьте или допишите код.",
       "task": "model.eval()",
       "code": "model.train() always",
       "reference": "model.eval() before val",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "445309"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [eval mode] #4-1",
-      "task": "model.eval()",
-      "code": "model.train() always",
-      "reference": "model.eval() before val",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [eval mode] #4-2",
-      "task": "model.eval()",
-      "code": "model.train() always",
-      "reference": "model.eval() before val",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [eval mode] #4-3",
-      "task": "model.eval()",
-      "code": "model.train() always",
-      "reference": "model.eval() before val",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [no grad val] #5-0",
+      "question": "Inference_mode. Исправьте или допишите код.",
       "task": "inference_mode",
       "code": "with no_grad(): pass",
       "reference": "with torch.inference_mode(): ...",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "470263"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [no grad val] #5-1",
-      "task": "inference_mode",
-      "code": "with no_grad(): pass",
-      "reference": "with torch.inference_mode(): ...",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [no grad val] #5-2",
-      "task": "inference_mode",
-      "code": "with no_grad(): pass",
-      "reference": "with torch.inference_mode(): ...",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [no grad val] #5-3",
-      "task": "inference_mode",
-      "code": "with no_grad(): pass",
-      "reference": "with torch.inference_mode(): ...",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [state dict] #6-0",
+      "question": "Save weights. Исправьте или допишите код.",
       "task": "save weights",
       "code": "torch.save(model)",
       "reference": "torch.save(model.state_dict())",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2246384"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [state dict] #6-1",
-      "task": "save weights",
-      "code": "torch.save(model)",
-      "reference": "torch.save(model.state_dict())",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [state dict] #6-2",
-      "task": "save weights",
-      "code": "torch.save(model)",
-      "reference": "torch.save(model.state_dict())",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [state dict] #6-3",
-      "task": "save weights",
-      "code": "torch.save(model)",
-      "reference": "torch.save(model.state_dict())",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [load map] #7-0",
+      "question": "Cpu load. Исправьте или допишите код.",
       "task": "cpu load",
       "code": "torch.load(path)",
       "reference": "torch.load(path, map_location='cpu')",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1362457"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [load map] #7-1",
-      "task": "cpu load",
-      "code": "torch.load(path)",
-      "reference": "torch.load(path, map_location='cpu')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [load map] #7-2",
-      "task": "cpu load",
-      "code": "torch.load(path)",
-      "reference": "torch.load(path, map_location='cpu')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [load map] #7-3",
-      "task": "cpu load",
-      "code": "torch.load(path)",
-      "reference": "torch.load(path, map_location='cpu')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [squeeze batch] #8-0",
+      "question": "Unsqueeze. Исправьте или допишите код.",
       "task": "unsqueeze",
       "code": "model(x)",
       "reference": "model(x.unsqueeze(0))",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3669652"
     },
     {
       "card_type": "code",
-      "question": "PyTorch [squeeze batch] #8-1",
-      "task": "unsqueeze",
-      "code": "model(x)",
-      "reference": "model(x.unsqueeze(0))",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [squeeze batch] #8-2",
-      "task": "unsqueeze",
-      "code": "model(x)",
-      "reference": "model(x.unsqueeze(0))",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [squeeze batch] #8-3",
-      "task": "unsqueeze",
-      "code": "model(x)",
-      "reference": "model(x.unsqueeze(0))",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [cat dim] #9-0",
+      "question": "Cat dim 0. Исправьте или допишите код.",
       "task": "cat dim 0",
       "code": "torch.cat(a,b)",
       "reference": "torch.cat((a,b), dim=0)",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2155565"
     },
     {
-      "card_type": "code",
-      "question": "PyTorch [cat dim] #9-1",
-      "task": "cat dim 0",
-      "code": "torch.cat(a,b)",
-      "reference": "torch.cat((a,b), dim=0)",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [cat dim] #9-2",
-      "task": "cat dim 0",
-      "code": "torch.cat(a,b)",
-      "reference": "torch.cat((a,b), dim=0)",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "PyTorch [cat dim] #9-3",
-      "task": "cat dim 0",
-      "code": "torch.cat(a,b)",
-      "reference": "torch.cat((a,b), dim=0)",
-      "topic": "Основы"
-    },
-    {
-      "question": "nn.Conv1d — типичный input shape?",
-      "reference": "Слой nn.Conv1d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Conv1d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv1d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Conv2d — типичный input shape?",
-      "reference": "Слой nn.Conv2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Conv2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Conv3d — типичный input shape?",
-      "reference": "Слой nn.Conv3d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Conv3d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Conv3d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.ConvTranspose2d — типичный input shape?",
-      "reference": "Слой nn.ConvTranspose2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.ConvTranspose2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для ConvTranspose2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.MaxPool2d — типичный input shape?",
-      "reference": "Слой nn.MaxPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.MaxPool2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MaxPool2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.AvgPool2d — типичный input shape?",
-      "reference": "Слой nn.AvgPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.AvgPool2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для AvgPool2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.AdaptiveAvgPool2d — типичный input shape?",
-      "reference": "Слой nn.AdaptiveAvgPool2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.AdaptiveAvgPool2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для AdaptiveAvgPool2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Linear — типичный input shape?",
-      "reference": "Слой nn.Linear — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Linear?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Linear.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Dropout — типичный input shape?",
-      "reference": "Слой nn.Dropout — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Dropout?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Dropout.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.BatchNorm1d — типичный input shape?",
-      "reference": "Слой nn.BatchNorm1d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.BatchNorm1d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BatchNorm1d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.BatchNorm2d — типичный input shape?",
-      "reference": "Слой nn.BatchNorm2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.BatchNorm2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BatchNorm2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.LayerNorm — типичный input shape?",
-      "reference": "Слой nn.LayerNorm — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.LayerNorm?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LayerNorm.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.GroupNorm — типичный input shape?",
-      "reference": "Слой nn.GroupNorm — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.GroupNorm?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для GroupNorm.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.InstanceNorm2d — типичный input shape?",
-      "reference": "Слой nn.InstanceNorm2d — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.InstanceNorm2d?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для InstanceNorm2d.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Embedding — типичный input shape?",
-      "reference": "Слой nn.Embedding — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Embedding?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Embedding.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.LSTM — типичный input shape?",
-      "reference": "Слой nn.LSTM — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.LSTM?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LSTM.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.GRU — типичный input shape?",
-      "reference": "Слой nn.GRU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.GRU?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для GRU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.MultiheadAttention — типичный input shape?",
-      "reference": "Слой nn.MultiheadAttention — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.MultiheadAttention?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MultiheadAttention.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.TransformerEncoder — типичный input shape?",
-      "reference": "Слой nn.TransformerEncoder — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.TransformerEncoder?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для TransformerEncoder.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.TransformerDecoder — типичный input shape?",
-      "reference": "Слой nn.TransformerDecoder — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.TransformerDecoder?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для TransformerDecoder.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.PReLU — типичный input shape?",
-      "reference": "Слой nn.PReLU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.PReLU?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для PReLU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.LeakyReLU — типичный input shape?",
-      "reference": "Слой nn.LeakyReLU — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.LeakyReLU?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LeakyReLU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Sigmoid — типичный input shape?",
-      "reference": "Слой nn.Sigmoid — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Sigmoid?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Sigmoid.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Tanh — типичный input shape?",
-      "reference": "Слой nn.Tanh — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Tanh?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Tanh.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Softmax — типичный input shape?",
-      "reference": "Слой nn.Softmax — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.Softmax?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Softmax.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.LogSoftmax — типичный input shape?",
-      "reference": "Слой nn.LogSoftmax — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.LogSoftmax?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для LogSoftmax.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.BCELoss — типичный input shape?",
-      "reference": "Слой nn.BCELoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.BCELoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BCELoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.BCEWithLogitsLoss — типичный input shape?",
-      "reference": "Слой nn.BCEWithLogitsLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.BCEWithLogitsLoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для BCEWithLogitsLoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.CrossEntropyLoss — типичный input shape?",
-      "reference": "Слой nn.CrossEntropyLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.CrossEntropyLoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для CrossEntropyLoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.MSELoss — типичный input shape?",
-      "reference": "Слой nn.MSELoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.MSELoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для MSELoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.L1Loss — типичный input shape?",
-      "reference": "Слой nn.L1Loss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.L1Loss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для L1Loss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.SmoothL1Loss — типичный input shape?",
-      "reference": "Слой nn.SmoothL1Loss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.SmoothL1Loss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для SmoothL1Loss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.NLLLoss — типичный input shape?",
-      "reference": "Слой nn.NLLLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.NLLLoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для NLLLoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.CTCLoss — типичный input shape?",
-      "reference": "Слой nn.CTCLoss — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Обучение"
-    },
-    {
-      "question": "Ошибки при использовании nn.CTCLoss?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для CTCLoss.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.Upsample — типичный input shape?",
-      "reference": "Слой nn.Upsample — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Ошибки при использовании nn.Upsample?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для Upsample.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "nn.PixelShuffle — типичный input shape?",
-      "reference": "Слой nn.PixelShuffle — проверь docs: NCHW для Conv2d, (N,C) для Linear и т.д.",
-      "topic": "Модули nn"
-    },
-    {
-      "question": "Ошибки при использовании nn.PixelShuffle?",
-      "reference": "Частые ошибки: неверный shape, dtype, device, train/eval mode для PixelShuffle.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [autocast] #1?",
+      "question": "Тема «autocast»: напишите решение.",
       "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "8144630"
     },
     {
-      "question": "Mixed precision [autocast] #2?",
-      "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [autocast] #3?",
-      "reference": "torch.cuda.amp — autocast: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [GradScaler] #1?",
+      "question": "Тема «GradScaler»: напишите решение.",
       "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "4279046"
     },
     {
-      "question": "Mixed precision [GradScaler] #2?",
-      "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [GradScaler] #3?",
-      "reference": "torch.cuda.amp — GradScaler: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [bf16] #1?",
+      "question": "Тема «bf16»: напишите решение.",
       "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "1362351"
     },
     {
-      "question": "Mixed precision [bf16] #2?",
-      "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [bf16] #3?",
-      "reference": "torch.cuda.amp — bf16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [fp16] #1?",
+      "question": "Тема «fp16»: напишите решение.",
       "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "9342175"
     },
     {
-      "question": "Mixed precision [fp16] #2?",
-      "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [fp16] #3?",
-      "reference": "torch.cuda.amp — fp16: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [loss scaling] #1?",
+      "question": "Тема «loss scaling»: напишите решение.",
       "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "8837801"
     },
     {
-      "question": "Mixed precision [loss scaling] #2?",
-      "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [loss scaling] #3?",
-      "reference": "torch.cuda.amp — loss scaling: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [inf grad skip] #1?",
+      "question": "Тема «inf grad skip»: напишите решение.",
       "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [inf grad skip] #2?",
-      "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
-    },
-    {
-      "question": "Mixed precision [inf grad skip] #3?",
-      "reference": "torch.cuda.amp — inf grad skip: ускорение и экономия VRAM на NVIDIA GPU.",
-      "topic": "GPU и производительность"
+      "topic": "GPU и производительность",
+      "id": "4851369"
     }
+  ],
+  "retired_ids": [
+    "1007051",
+    "1018201",
+    "1031243",
+    "1045382",
+    "1057952",
+    "109457",
+    "1111165",
+    "1153695",
+    "1156703",
+    "1171498",
+    "1183729",
+    "1200977",
+    "1207476",
+    "1215009",
+    "1241392",
+    "131785",
+    "1322244",
+    "1380525",
+    "1399496",
+    "1401432",
+    "1468967",
+    "1496112",
+    "152469",
+    "154737",
+    "1572428",
+    "1592028",
+    "1665500",
+    "1734880",
+    "1764273",
+    "1768194",
+    "1768791",
+    "182248",
+    "1836055",
+    "1867070",
+    "1896971",
+    "1944375",
+    "1963155",
+    "2073933",
+    "207744",
+    "2197971",
+    "2260198",
+    "2266041",
+    "2315929",
+    "2331349",
+    "2523809",
+    "252793",
+    "2535677",
+    "2583691",
+    "2600024",
+    "2647890",
+    "2686450",
+    "2725111",
+    "2766942",
+    "2777994",
+    "2790936",
+    "2840033",
+    "2916591",
+    "2925129",
+    "297582",
+    "2991024",
+    "2992529",
+    "3002849",
+    "300465",
+    "3059883",
+    "3102550",
+    "3104677",
+    "3165418",
+    "3170975",
+    "3267607",
+    "331818",
+    "3374975",
+    "339344",
+    "3424666",
+    "3451724",
+    "3479809",
+    "3534736",
+    "35556",
+    "3593588",
+    "3629409",
+    "3647223",
+    "3653748",
+    "3661404",
+    "3680195",
+    "3685139",
+    "371618",
+    "3718536",
+    "374039",
+    "3783716",
+    "3794262",
+    "3829881",
+    "3896432",
+    "3962381",
+    "4087625",
+    "4106290",
+    "4107744",
+    "4114944",
+    "4119084",
+    "4174064",
+    "4198054",
+    "4206026",
+    "4208397",
+    "4239429",
+    "4257991",
+    "4352868",
+    "4416555",
+    "4452297",
+    "4507442",
+    "4521668",
+    "455558",
+    "4568240",
+    "4581742",
+    "4623907",
+    "4651363",
+    "4681056",
+    "4715928",
+    "4725038",
+    "4730712",
+    "475065",
+    "4812811",
+    "4813924",
+    "4885477",
+    "4928432",
+    "5033583",
+    "5107423",
+    "513045",
+    "515276",
+    "5189687",
+    "5214379",
+    "5242713",
+    "5335527",
+    "5337242",
+    "5374647",
+    "5414179",
+    "5486627",
+    "5538653",
+    "5541262",
+    "5576620",
+    "5580913",
+    "5605316",
+    "5661851",
+    "5667790",
+    "569710",
+    "5748267",
+    "5786683",
+    "5822587",
+    "5825758",
+    "5871806",
+    "5905750",
+    "5921454",
+    "5975884",
+    "5980008",
+    "598136",
+    "6022141",
+    "6029953",
+    "6031570",
+    "6123388",
+    "6128730",
+    "6161076",
+    "6243813",
+    "6260927",
+    "6270503",
+    "6441119",
+    "6449479",
+    "6450274",
+    "6465017",
+    "656446",
+    "6594834",
+    "6604059",
+    "6649499",
+    "6750505",
+    "6760744",
+    "6867478",
+    "6867531",
+    "6909020",
+    "6994757",
+    "7019643",
+    "7122897",
+    "7201768",
+    "7206377",
+    "7239808",
+    "7252498",
+    "7270975",
+    "7313131",
+    "7363660",
+    "7440009",
+    "7456141",
+    "7456571",
+    "7496770",
+    "7502694",
+    "75145",
+    "7521709",
+    "7564498",
+    "7602828",
+    "761286",
+    "7621772",
+    "7651047",
+    "7717157",
+    "7724214",
+    "7724556",
+    "7770359",
+    "7772036",
+    "7816951",
+    "7839700",
+    "7880952",
+    "789613",
+    "7972920",
+    "7984266",
+    "8039473",
+    "8073375",
+    "8147666",
+    "8172222",
+    "8231067",
+    "8246327",
+    "8264615",
+    "8308162",
+    "8308862",
+    "8326605",
+    "8448786",
+    "8504293",
+    "8513104",
+    "8554364",
+    "8611279",
+    "8657125",
+    "8671178",
+    "8814039",
+    "8849727",
+    "8855358",
+    "8869321",
+    "8872114",
+    "8880390",
+    "8942461",
+    "8982254",
+    "9019483",
+    "9053716",
+    "9070554",
+    "9086477",
+    "9176057",
+    "9216103",
+    "9260248",
+    "9262315",
+    "9262907",
+    "9277266",
+    "9327712",
+    "9395719",
+    "941114",
+    "9416416",
+    "9468562",
+    "9485794",
+    "9495396",
+    "9567907",
+    "9581114",
+    "963308",
+    "9655995",
+    "977234",
+    "9844152",
+    "9899808",
+    "9916767",
+    "9941825",
+    "9943192",
+    "9983054"
   ]
 }

@@ -57,5 +57,6 @@
       "code": "@Component({\n  selector: 'app-rating',\n  standalone: true,\n  template: `\n    @for (star of [1,2,3,4,5]; track star) {\n      <button type=\"button\" (click)=\"pick(star)\">{{ star }}</button>\n    }\n  `\n})\nexport class RatingComponent {\n  pick(star: number) {}\n}",
       "reference": "@Component({\n  selector: 'app-rating',\n  standalone: true,\n  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingComponent), multi: true }],\n  ...\n})\nexport class RatingComponent implements ControlValueAccessor {\n  private onChange: (v: number) => void = () => {};\n  writeValue(value: number): void {}\n  registerOnChange(fn: (v: number) => void): void { this.onChange = fn; }\n  registerOnTouched(fn: () => void): void {}\n  pick(star: number) { this.onChange(star); }\n}"
     }
-  ]
+  ],
+  "retired_ids": []
 }

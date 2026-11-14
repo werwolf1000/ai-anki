@@ -37,9 +37,10 @@
       "topic": "Backlog и stories"
     },
     {
-      "question": "MVP vs MMF?",
+      "question": "В чём разница между MVP и MMF?",
       "reference": "MVP — эксперимент/проверка гипотезы. MMF (Minimum Marketable Feature) — минимальный набор, который уже можно продавать или выпускать на рынок.",
-      "topic": "Backlog и stories"
+      "topic": "Backlog и stories",
+      "id": "4901017"
     },
     {
       "question": "Что такое user story?",
@@ -82,9 +83,10 @@
       "topic": "Backlog и stories"
     },
     {
-      "question": "DoR vs DoD?",
+      "question": "В чём разница между DoR и DoD?",
       "reference": "DoR — можно начинать работу; DoD — работа действительно завершена и пригодна для релиза/инкремента.",
-      "topic": "Backlog и stories"
+      "topic": "Backlog и stories",
+      "id": "1311495"
     },
     {
       "question": "Что такое story points?",
@@ -112,9 +114,10 @@
       "topic": "Основы"
     },
     {
-      "question": "CI vs CD?",
+      "question": "В чём разница между CI и CD?",
       "reference": "CI — частая интеграция и автоматические проверки. CD — доставка до staging/production по pipeline.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5652309"
     },
     {
       "question": "Что такое technical debt?",
@@ -157,9 +160,10 @@
       "topic": "Backlog и stories"
     },
     {
-      "question": "Pivot vs persevere?",
+      "question": "В чём разница между Pivot и persevere?",
       "reference": "Pivot — смена гипотезы/направления на основе данных; persevere — продолжать текущую стратегию.",
-      "topic": "Lean"
+      "topic": "Lean",
+      "id": "2159770"
     },
     {
       "question": "Что такое Lean?",
@@ -182,14 +186,16 @@
       "topic": "Командные практики"
     },
     {
-      "question": "Start-Stop-Continue?",
+      "question": "Что такое Start-Stop-Continue?",
       "reference": "Формат ретро: что начать, что прекратить, что продолжить.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "786632"
     },
     {
-      "question": "4L retrospective?",
+      "question": "Поясните: 4L retrospective.",
       "reference": "Liked, Learned, Lacked, Longed for.",
-      "topic": "Командные практики"
+      "topic": "Командные практики",
+      "id": "9732988"
     },
     {
       "question": "Что такое impediment?",
@@ -212,9 +218,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Empirical process control?",
+      "question": "Поясните: Empirical process control.",
       "reference": "Прозрачность, инспекция, адаптация — управление через наблюдение реальности, а не только план.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5974309"
     },
     {
       "question": "Transparency в Agile?",
@@ -222,14 +229,16 @@
       "topic": "Backlog и stories"
     },
     {
-      "question": "Inspection?",
+      "question": "Что такое Inspection?",
       "reference": "Регулярный пересмотр артеfactов и процесса (review, retro, daily sync).",
-      "topic": "Командные практики"
+      "topic": "Командные практики",
+      "id": "1358274"
     },
     {
-      "question": "Adaptation?",
+      "question": "Что такое Adaptation?",
       "reference": "Корректировка планов, backlog, процесса по результатам inspection.",
-      "topic": "Backlog и stories"
+      "topic": "Backlog и stories",
+      "id": "7367244"
     },
     {
       "question": "Что такое servant leadership?",
@@ -237,9 +246,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Psychological safety?",
+      "question": "Поясните: Psychological safety.",
       "reference": "Уверенность, что можно ошибаться, задавать вопросы и не соглашаться без наказания — основа обучения.",
-      "topic": "Фреймворки"
+      "topic": "Фреймворки",
+      "id": "7461735"
     },
     {
       "question": "Что такое pair programming?",
@@ -247,9 +257,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Mob programming?",
+      "question": "Поясните: Mob programming.",
       "reference": "Вся команда работает над одной задачей одновременно.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1422782"
     },
     {
       "question": "TDD в Agile?",
@@ -277,9 +288,10 @@
       "topic": "Фреймворки"
     },
     {
-      "question": "Outcome vs output?",
+      "question": "В чём разница между Outcome и output?",
       "reference": "Output — сколько сделали; outcome — какой результат для пользователя/бизнеса. Agile фокусируется на outcome.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9402236"
     },
     {
       "question": "OKR и Agile?",
@@ -302,9 +314,10 @@
       "topic": "Метрики и поток"
     },
     {
-      "question": "Monte Carlo forecasting?",
+      "question": "Поясните: Monte Carlo forecasting.",
       "reference": "Статистический прогноз сроков по историческому throughput и оставшемуся объёму.",
-      "topic": "Метрики и поток"
+      "topic": "Метрики и поток",
+      "id": "4930299"
     },
     {
       "question": "#NoEstimates — идея?",
@@ -317,9 +330,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Dual-track Agile?",
+      "question": "Поясните: Dual-track Agile.",
       "reference": "Параллельные discovery и delivery tracks с постоянной связью.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1785389"
     },
     {
       "question": "Что такое design thinking в связке с Agile?",
@@ -855,14 +869,16 @@
       "topic": "Основы"
     },
     {
-      "question": "Three Amigos?",
+      "question": "Поясните: Three Amigos.",
       "reference": "PO + dev + tester обсуждают story до sprint — shared understanding.",
-      "topic": "Backlog и stories"
+      "topic": "Backlog и stories",
+      "id": "5429270"
     },
     {
-      "question": "Definition of Awesome?",
+      "question": "Поясните: Definition of Awesome.",
       "reference": "Расширенная команда vision качества beyond минимального DoD.",
-      "topic": "Backlog и stories"
+      "topic": "Backlog и stories",
+      "id": "205660"
     },
     {
       "question": "Shu-Ha-Ri в Agile?",
@@ -894,5 +910,6 @@
       "reference": "«Max 3 items в Code Review», «Ready = AC + no blockers».",
       "topic": "Фреймворки"
     }
-  ]
+  ],
+  "retired_ids": []
 }

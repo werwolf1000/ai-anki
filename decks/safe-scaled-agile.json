@@ -22,9 +22,10 @@
       "topic": "PI Planning"
     },
     {
-      "question": "System Architect/Engineer?",
+      "question": "Поясните: System Architect/Engineer.",
       "reference": "Техническое направление, enablers, NFRs, архитектурный runway на ART.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "9387032"
     },
     {
       "question": "Product Management в SAFe?",
@@ -32,9 +33,10 @@
       "topic": "Backlog SAFe"
     },
     {
-      "question": "Business Owners?",
+      "question": "Поясните: Business Owners.",
       "reference": "Ключевые stakeholders train; assign value на PI objectives; go/no-go на ROI.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "1573163"
     },
     {
       "question": "Что такое PI (Program Increment)?",
@@ -47,14 +49,16 @@
       "topic": "PI Planning"
     },
     {
-      "question": "PI Objectives?",
+      "question": "Поясните: PI Objectives.",
       "reference": "Business + team objectives на PI; SMART, measurable; used in Inspect & Adapt.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "2823669"
     },
     {
-      "question": "Stretch objectives?",
+      "question": "Поясните: Stretch objectives.",
       "reference": "Дополнительные цели при избытке capacity — явно optional.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "3957188"
     },
     {
       "question": "Team PI Objectives vs Program?",
@@ -72,14 +76,16 @@
       "topic": "Основы"
     },
     {
-      "question": "WSJF?",
+      "question": "Что такое WSJF?",
       "reference": "Weighted Shortest Job First: Cost of Delay / Job Size — prioritization на program/portfolio.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "6601981"
     },
     {
-      "question": "Cost of Delay?",
+      "question": "Поясните: Cost of Delay.",
       "reference": "Экономическая цена задержки: value, time criticality, risk reduction/opportunity enablement.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5670987"
     },
     {
       "question": "Feature в SAFe?",
@@ -87,14 +93,16 @@
       "topic": "Backlog SAFe"
     },
     {
-      "question": "Enabler features?",
+      "question": "Поясните: Enabler features.",
       "reference": "Infrastructure, architecture, exploration — поддерживают future features.",
-      "topic": "Backlog SAFe"
+      "topic": "Backlog SAFe",
+      "id": "401748"
     },
     {
-      "question": "Architectural runway?",
+      "question": "Поясните: Architectural runway.",
       "reference": "Техническая подготовка на 2–3 PI вперёд для upcoming features.",
-      "topic": "Backlog SAFe"
+      "topic": "Backlog SAFe",
+      "id": "7524718"
     },
     {
       "question": "NFRs (Nonfunctional Requirements)?",
@@ -102,14 +110,16 @@
       "topic": "Backlog SAFe"
     },
     {
-      "question": "Solution Train?",
+      "question": "Поясните: Solution Train.",
       "reference": "Для large solutions: несколько ARTs + suppliers, synchronized PI.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "9172775"
     },
     {
-      "question": "Portfolio SAFe?",
+      "question": "Поясните: Portfolio SAFe.",
       "reference": "Strategy & investment funding, lean portfolio management, value streams.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "4506882"
     },
     {
       "question": "Value stream identification?",
@@ -117,9 +127,10 @@
       "topic": "Portfolio и потоки"
     },
     {
-      "question": "Lean Portfolio Management?",
+      "question": "Поясните: Lean Portfolio Management.",
       "reference": "Funding value streams, not projects; guardrails; portfolio kanban.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "149242"
     },
     {
       "question": "Epic в SAFe?",
@@ -132,9 +143,10 @@
       "topic": "Backlog SAFe"
     },
     {
-      "question": "Guardrails?",
+      "question": "Что такое Guardrails?",
       "reference": "Budget, WIP limits, DoD на portfolio — decentralize decisions within boundaries.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "6300681"
     },
     {
       "question": "Continuous Learning Culture?",
@@ -142,9 +154,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Lean-Agile Leadership?",
+      "question": "Поясните: Lean-Agile Leadership.",
       "reference": "Leaders model behaviors, empower teams, drive change.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3951847"
     },
     {
       "question": "Team and Technical Agility?",
@@ -152,9 +165,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Agile Product Delivery?",
+      "question": "Поясните: Agile Product Delivery.",
       "reference": "Customer centricity, design thinking, continuous delivery on ART.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "1911379"
     },
     {
       "question": "Enterprise Solution Delivery?",
@@ -167,9 +181,10 @@
       "topic": "Portfolio и потоки"
     },
     {
-      "question": "Organizational Agility?",
+      "question": "Поясните: Organizational Agility.",
       "reference": "Flexible org design, lean thinking across business.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6729483"
     },
     {
       "question": "Continuous Learning Culture competency?",
@@ -177,19 +192,22 @@
       "topic": "Основы"
     },
     {
-      "question": "Built-in Quality?",
+      "question": "Поясните: Built-in Quality.",
       "reference": "TDD, CI, pair work, architecture as code — quality не «phase at end».",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7439859"
     },
     {
-      "question": "Program backlog?",
+      "question": "Поясните: Program backlog.",
       "reference": "Prioritized features/enablers для ART; owned by Product Management.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "764639"
     },
     {
-      "question": "Team backlog?",
+      "question": "Поясните: Team backlog.",
       "reference": "Stories для одной Agile team в текущем PI.",
-      "topic": "Backlog SAFe"
+      "topic": "Backlog SAFe",
+      "id": "6940272"
     },
     {
       "question": "Iteration (Sprint) в SAFe?",
@@ -197,14 +215,16 @@
       "topic": "Основы"
     },
     {
-      "question": "System Demo?",
+      "question": "Поясните: System Demo.",
       "reference": "End-of-iteration integrated demo across ART — real system, not team silos.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "3179738"
     },
     {
-      "question": "PO Sync?",
+      "question": "Поясните: PO Sync.",
       "reference": "Regular PO/PM sync dependencies и priorities across teams.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9911860"
     },
     {
       "question": "Scrum of Scrums в SAFe?",
@@ -212,9 +232,10 @@
       "topic": "PI Planning"
     },
     {
-      "question": "ART sync?",
+      "question": "Поясните: ART sync.",
       "reference": "Weekly RTE-led: progress, risks, dependencies на train.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "3177210"
     },
     {
       "question": "Чем PI Planning отличается от big upfront planning?",
@@ -275,24 +296,28 @@
       "topic": "Основы"
     },
     {
-      "question": "WSJF: User/business value?",
+      "question": "Поясните: WSJF: User/business value.",
       "reference": "WSJF numerator component",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5921977"
     },
     {
-      "question": "WSJF: Time criticality?",
+      "question": "Поясните: WSJF: Time criticality.",
       "reference": "deadline/market window",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "307884"
     },
     {
-      "question": "WSJF: RR/OE?",
+      "question": "Поясните: WSJF: RR/OE.",
       "reference": "Risk Reduction / Opportunity Enablement",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9684564"
     },
     {
-      "question": "WSJF: Job size?",
+      "question": "Поясните: WSJF: Job size.",
       "reference": "WSJF denominator — estimate effort",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2836841"
     },
     {
       "question": "Когда проводится PI Planning?",
@@ -715,14 +740,16 @@
       "topic": "PI Planning"
     },
     {
-      "question": "SPC?",
+      "question": "Что такое SPC?",
       "reference": "SAFe Program Consultant — certified change agent for SAFe adoption.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2448248"
     },
     {
-      "question": "LACE?",
+      "question": "Что такое LACE?",
       "reference": "Lean Agile Center of Excellence — coaching and tooling support.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2438696"
     },
     {
       "question": "Value stream mapping in SAFe?",
@@ -730,34 +757,41 @@
       "topic": "Portfolio и потоки"
     },
     {
-      "question": "Capacity allocation PI?",
+      "question": "Поясните: Capacity allocation PI.",
       "reference": "Percent capacity for features, enablers, maintenance, innovation.",
-      "topic": "Backlog SAFe"
+      "topic": "Backlog SAFe",
+      "id": "7416659"
     },
     {
-      "question": "Program KPI?",
+      "question": "Поясните: Program KPI.",
       "reference": "Predictability measure, PI objectives achievement, flow metrics.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "7406140"
     },
     {
-      "question": "Predictability Measure?",
+      "question": "Поясните: Predictability Measure.",
       "reference": "Actual business value delivered vs planned PI objectives.",
-      "topic": "PI Planning"
+      "topic": "PI Planning",
+      "id": "7995357"
     },
     {
-      "question": "Compliance in SAFe?",
+      "question": "Поясните: Compliance in SAFe.",
       "reference": "Built-in quality, documented workflows, approval enablers in backlog.",
-      "topic": "Backlog SAFe"
+      "topic": "Backlog SAFe",
+      "id": "3660919"
     },
     {
-      "question": "Supplier integration?",
+      "question": "Поясните: Supplier integration.",
       "reference": "Solution train coordinates external vendors on same PI cadence.",
-      "topic": "Portfolio и потоки"
+      "topic": "Portfolio и потоки",
+      "id": "8664180"
     },
     {
-      "question": "SAFe vs Spotify model?",
+      "question": "В чём разница между SAFe и Spotify model?",
       "reference": "SAFe prescriptive; Spotify squads/tribes/chapters — organizational pattern, not full framework.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8169957"
     }
-  ]
+  ],
+  "retired_ids": []
 }

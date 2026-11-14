@@ -217,9 +217,10 @@
       "topic": "Функциональное"
     },
     {
-      "question": "yield from?",
+      "question": "Поясните: yield from.",
       "reference": "Делегирование другому generator/iterable.",
-      "topic": "Функциональное"
+      "topic": "Функциональное",
+      "id": "2049639"
     },
     {
       "question": "Что такое iterator?",
@@ -242,9 +243,10 @@
       "topic": "Функциональное"
     },
     {
-      "question": "nonlocal vs global?",
+      "question": "В чём разница между nonlocal и global?",
       "reference": "nonlocal — изменить переменную enclosing; global — модульная.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8067888"
     },
     {
       "question": "Что такое context manager?",
@@ -257,14 +259,16 @@
       "topic": "Основы"
     },
     {
-      "question": "dict comprehension?",
+      "question": "Поясните: dict comprehension.",
       "reference": "{k: v for k, v in pairs}.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3338356"
     },
     {
-      "question": "set comprehension?",
+      "question": "Поясните: set comprehension.",
       "reference": "{x for x in items}.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6404566"
     },
     {
       "question": "Что такое lambda?",
@@ -272,84 +276,100 @@
       "topic": "Основы"
     },
     {
-      "question": "map/filter/zip?",
+      "question": "Что такое map/filter/zip?",
       "reference": "map(fn, iter), filter(pred, iter), zip(a,b) — итераторы; часто заменяются comprehensions.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3251677"
     },
     {
-      "question": "enumerate?",
+      "question": "Что такое enumerate?",
       "reference": "for i, val in enumerate(items): — индекс + значение.",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "3761626"
     },
     {
-      "question": "range?",
+      "question": "Что такое range?",
       "reference": "range(stop) или range(start, stop, step) — lazy последовательность int.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8214882"
     },
     {
-      "question": "sorted vs list.sort?",
+      "question": "В чём разница между sorted и list.sort?",
       "reference": "sorted возвращает новый list; .sort() in-place.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5512659"
     },
     {
-      "question": "copy vs deepcopy?",
+      "question": "В чём разница между copy и deepcopy?",
       "reference": "copy.copy — shallow; copy.deepcopy — рекурсивная копия вложенных mutable.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "430443"
     },
     {
-      "question": "defaultdict?",
+      "question": "Что такое defaultdict?",
       "reference": "collections.defaultdict(factory) — auto default для missing keys.",
-      "topic": "Collections"
+      "topic": "Collections",
+      "id": "8504487"
     },
     {
-      "question": "Counter?",
+      "question": "Что такое Counter?",
       "reference": "collections.Counter — подсчёт элементов, most_common().",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "8132329"
     },
     {
-      "question": "namedtuple?",
+      "question": "Что такое namedtuple?",
       "reference": "collections.namedtuple — tuple с именованными полями.",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "6160105"
     },
     {
-      "question": "deque?",
+      "question": "Что такое deque?",
       "reference": "collections.deque — быстрые append/pop с обоих концов.",
-      "topic": "Collections"
+      "topic": "Collections",
+      "id": "2226136"
     },
     {
-      "question": "dataclass?",
+      "question": "Что такое dataclass?",
       "reference": "@dataclass — автогенерация __init__, __repr__, сравнений.",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "9123652"
     },
     {
-      "question": "Enum?",
+      "question": "Что такое Enum?",
       "reference": "enum.Enum — именованные константы class Color(Enum): RED=1.",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "5739411"
     },
     {
-      "question": "pathlib Path?",
+      "question": "Поясните: pathlib Path.",
       "reference": "OOP пути: Path('a/b') / 'c.txt', .read_text(), .exists().",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "7083330"
     },
     {
-      "question": "json.loads/dumps?",
+      "question": "Что такое json.loads/dumps?",
       "reference": "Сериализация JSON; default=str для non-serializable.",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "7232808"
     },
     {
-      "question": "datetime vs date?",
+      "question": "В чём разница между datetime и date?",
       "reference": "datetime — дата+время; date — только дата; timezone-aware vs naive.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4956205"
     },
     {
-      "question": "logging vs print?",
+      "question": "В чём разница между logging и print?",
       "reference": "logging — уровни, handlers, production; print — отладка.",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "1507409"
     },
     {
-      "question": "unittest vs pytest?",
+      "question": "В чём разница между unittest и pytest?",
       "reference": "unittest — stdlib; pytest — fixtures, parametrize, популярнее.",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "5284673"
     },
     {
       "question": "Что такое GIL?",
@@ -362,34 +382,40 @@
       "topic": "Stdlib"
     },
     {
-      "question": "asyncio?",
+      "question": "Что такое asyncio?",
       "reference": "async/await cooperative concurrency для I/O; event loop.",
-      "topic": "Async"
+      "topic": "Async",
+      "id": "1764584"
     },
     {
-      "question": "async def?",
+      "question": "Поясните: async def.",
       "reference": "Корутина — await на awaitable; asyncio.run(main()).",
-      "topic": "Async"
+      "topic": "Async",
+      "id": "4853205"
     },
     {
-      "question": "__all__?",
+      "question": "Что такое __all__?",
       "reference": "Список public API при from module import *.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8414762"
     },
     {
-      "question": "__slots__?",
+      "question": "Что такое __slots__?",
       "reference": "Ограничение атрибутов экземпляра — экономия памяти, фиксированные поля.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6312738"
     },
     {
-      "question": "ABC abstractmethod?",
+      "question": "Поясните: ABC abstractmethod.",
       "reference": "abc.ABC + @abstractmethod — интерфейс с обязательной реализацией.",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "353605"
     },
     {
-      "question": "Protocol typing?",
+      "question": "Поясните: Protocol typing.",
       "reference": "Structural subtyping — typing.Protocol для duck typing статически.",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "7257287"
     },
     {
       "question": "Optional и Union?",
@@ -397,64 +423,76 @@
       "topic": "Typing"
     },
     {
-      "question": "list vs List typing?",
+      "question": "В чём разница между list и List typing?",
       "reference": "list[int] Python 3.9+; раньше List[int] from typing.",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "2563689"
     },
     {
-      "question": "TypeVar generics?",
+      "question": "Поясните: TypeVar generics.",
       "reference": "T = TypeVar('T') для generic функций/классов.",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "5207989"
     },
     {
-      "question": "isinstance vs type?",
+      "question": "В чём разница между isinstance и type?",
       "reference": "isinstance учитывает наследование; type(x) is int — exact type.",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "1226729"
     },
     {
-      "question": "getattr/setattr/hasattr?",
+      "question": "Что такое getattr/setattr/hasattr?",
       "reference": "Динамический доступ к атрибутам по строковому имени.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1554894"
     },
     {
-      "question": "callable?",
+      "question": "Что такое callable?",
       "reference": "callable(x) — можно ли вызвать x().",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3392220"
     },
     {
-      "question": "any/all?",
+      "question": "Что такое any/all?",
       "reference": "any(iter) — хотя бы один True; all(iter) — все True.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8641159"
     },
     {
-      "question": "min/max/sum?",
+      "question": "Что такое min/max/sum?",
       "reference": "Агрегации; key= для custom compare.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7894596"
     },
     {
-      "question": "re module?",
+      "question": "Поясните: re module.",
       "reference": "regex: re.search, re.match, re.sub, raw strings r'\\d+'.",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "583964"
     },
     {
-      "question": "os vs sys?",
+      "question": "В чём разница между os и sys?",
       "reference": "os — файловая система, env; sys — interpreter argv, path, exit.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3655160"
     },
     {
-      "question": "subprocess?",
+      "question": "Что такое subprocess?",
       "reference": "Запуск внешних команд без shell когда возможно.",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "8186011"
     },
     {
-      "question": "pickle?",
+      "question": "Что такое pickle?",
       "reference": "Сериализация Python objects — не безопасно для untrusted data.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4384610"
     },
     {
-      "question": "with open encoding?",
+      "question": "Поясните: with open encoding.",
       "reference": "open(path, encoding='utf-8') — явная кодировка текстовых файлов.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9519733"
     },
     {
       "question": "if __name__ guard зачем?",
@@ -1916,1383 +1954,183 @@
     },
     {
       "card_type": "code",
-      "question": "Python основы [list comp filter] #0-0",
+      "question": "Список квадратов x>0. Исправьте или допишите код.",
       "task": "Список квадратов x>0",
       "code": "[x*x for x in nums if x > 0]",
       "reference": "[x**2 for x in nums if x > 0]",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9026891"
     },
     {
       "card_type": "code",
-      "question": "Python основы [list comp filter] #0-1",
-      "task": "Список квадратов x>0",
-      "code": "[x*x for x in nums if x > 0]",
-      "reference": "[x**2 for x in nums if x > 0]",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [list comp filter] #0-2",
-      "task": "Список квадратов x>0",
-      "code": "[x*x for x in nums if x > 0]",
-      "reference": "[x**2 for x in nums if x > 0]",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [dict get default] #1-0",
+      "question": "Get с default. Исправьте или допишите код.",
       "task": "get с default",
       "code": "d['k']",
       "reference": "d.get('k', 0)",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3956429"
     },
     {
       "card_type": "code",
-      "question": "Python основы [dict get default] #1-1",
-      "task": "get с default",
-      "code": "d['k']",
-      "reference": "d.get('k', 0)",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [dict get default] #1-2",
-      "task": "get с default",
-      "code": "d['k']",
-      "reference": "d.get('k', 0)",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [strip input] #2-0",
+      "question": "Strip input. Исправьте или допишите код.",
       "task": "strip input",
       "code": "name = input()",
       "reference": "name = input().strip()",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6139907"
     },
     {
       "card_type": "code",
-      "question": "Python основы [strip input] #2-1",
-      "task": "strip input",
-      "code": "name = input()",
-      "reference": "name = input().strip()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [strip input] #2-2",
-      "task": "strip input",
-      "code": "name = input()",
-      "reference": "name = input().strip()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [main guard] #3-0",
+      "question": "Main guard. Исправьте или допишите код.",
       "task": "main guard",
       "code": "run()",
       "reference": "if __name__ == '__main__': run()",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "1155756"
     },
     {
       "card_type": "code",
-      "question": "Python основы [main guard] #3-1",
-      "task": "main guard",
-      "code": "run()",
-      "reference": "if __name__ == '__main__': run()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [main guard] #3-2",
-      "task": "main guard",
-      "code": "run()",
-      "reference": "if __name__ == '__main__': run()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [enum member] #4-0",
+      "question": "Enum member. Исправьте или допишите код.",
       "task": "Enum member",
       "code": "STATUS = 'active'",
       "reference": "class S(Enum): ACTIVE='active'",
-      "topic": "ООП"
+      "topic": "ООП",
+      "id": "9159653"
     },
     {
       "card_type": "code",
-      "question": "Python основы [enum member] #4-1",
-      "task": "Enum member",
-      "code": "STATUS = 'active'",
-      "reference": "class S(Enum): ACTIVE='active'",
-      "topic": "ООП"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [enum member] #4-2",
-      "task": "Enum member",
-      "code": "STATUS = 'active'",
-      "reference": "class S(Enum): ACTIVE='active'",
-      "topic": "ООП"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [path exists] #5-0",
+      "question": "Path exists. Исправьте или допишите код.",
       "task": "Path exists",
       "code": "os.path.exists(p)",
       "reference": "Path(p).exists()",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8378997"
     },
     {
       "card_type": "code",
-      "question": "Python основы [path exists] #5-1",
-      "task": "Path exists",
-      "code": "os.path.exists(p)",
-      "reference": "Path(p).exists()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [path exists] #5-2",
-      "task": "Path exists",
-      "code": "os.path.exists(p)",
-      "reference": "Path(p).exists()",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [join paths] #6-0",
+      "question": "Path join. Исправьте или допишите код.",
       "task": "Path join",
       "code": "os.path.join(a,b)",
       "reference": "Path(a) / b",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9060905"
     },
     {
       "card_type": "code",
-      "question": "Python основы [join paths] #6-1",
-      "task": "Path join",
-      "code": "os.path.join(a,b)",
-      "reference": "Path(a) / b",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [join paths] #6-2",
-      "task": "Path join",
-      "code": "os.path.join(a,b)",
-      "reference": "Path(a) / b",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [read utf8] #7-0",
+      "question": "Encoding utf-8. Исправьте или допишите код.",
       "task": "encoding utf-8",
       "code": "open(f)",
       "reference": "open(f, encoding='utf-8')",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6671916"
     },
     {
       "card_type": "code",
-      "question": "Python основы [read utf8] #7-1",
-      "task": "encoding utf-8",
-      "code": "open(f)",
-      "reference": "open(f, encoding='utf-8')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [read utf8] #7-2",
-      "task": "encoding utf-8",
-      "code": "open(f)",
-      "reference": "open(f, encoding='utf-8')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [except chain] #8-0",
+      "question": "Raise from. Исправьте или допишите код.",
       "task": "raise from",
       "code": "raise e2",
       "reference": "raise e2 from e1",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6765232"
     },
     {
       "card_type": "code",
-      "question": "Python основы [except chain] #8-1",
-      "task": "raise from",
-      "code": "raise e2",
-      "reference": "raise e2 from e1",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [except chain] #8-2",
-      "task": "raise from",
-      "code": "raise e2",
-      "reference": "raise e2 from e1",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [lru cache] #9-0",
+      "question": "Functools cache. Исправьте или допишите код.",
       "task": "functools cache",
       "code": "def f(): pass",
       "reference": "@lru_cache\\ndef f(): pass",
-      "topic": "Функциональное"
+      "topic": "Функциональное",
+      "id": "8672488"
     },
     {
       "card_type": "code",
-      "question": "Python основы [lru cache] #9-1",
-      "task": "functools cache",
-      "code": "def f(): pass",
-      "reference": "@lru_cache\\ndef f(): pass",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [lru cache] #9-2",
-      "task": "functools cache",
-      "code": "def f(): pass",
-      "reference": "@lru_cache\\ndef f(): pass",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [partial] #10-0",
+      "question": "Partial apply. Исправьте или допишите код.",
       "task": "partial apply",
       "code": "lambda x: add(1,x)",
       "reference": "partial(add, 1)",
-      "topic": "Функциональное"
+      "topic": "Функциональное",
+      "id": "6875918"
     },
     {
       "card_type": "code",
-      "question": "Python основы [partial] #10-1",
-      "task": "partial apply",
-      "code": "lambda x: add(1,x)",
-      "reference": "partial(add, 1)",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [partial] #10-2",
-      "task": "partial apply",
-      "code": "lambda x: add(1,x)",
-      "reference": "partial(add, 1)",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [deque popleft] #11-0",
+      "question": "Queue BFS. Исправьте или допишите код.",
       "task": "queue BFS",
       "code": "list.pop(0)",
       "reference": "deque.popleft()",
-      "topic": "Collections"
+      "topic": "Collections",
+      "id": "9419823"
     },
     {
       "card_type": "code",
-      "question": "Python основы [deque popleft] #11-1",
-      "task": "queue BFS",
-      "code": "list.pop(0)",
-      "reference": "deque.popleft()",
-      "topic": "Collections"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [deque popleft] #11-2",
-      "task": "queue BFS",
-      "code": "list.pop(0)",
-      "reference": "deque.popleft()",
-      "topic": "Collections"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [set lookup] #12-0",
+      "question": "Membership O(1). Исправьте или допишите код.",
       "task": "membership O(1)",
       "code": "if x in list_big",
       "reference": "if x in set_big",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7558668"
     },
     {
       "card_type": "code",
-      "question": "Python основы [set lookup] #12-1",
-      "task": "membership O(1)",
-      "code": "if x in list_big",
-      "reference": "if x in set_big",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [set lookup] #12-2",
-      "task": "membership O(1)",
-      "code": "if x in list_big",
-      "reference": "if x in set_big",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [tuple unpack] #13-0",
+      "question": "Swap. Исправьте или допишите код.",
       "task": "swap",
       "code": "t=(a,b); a=t[1]; b=t[0]",
       "reference": "a, b = b, a",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8460769"
     },
     {
       "card_type": "code",
-      "question": "Python основы [tuple unpack] #13-1",
-      "task": "swap",
-      "code": "t=(a,b); a=t[1]; b=t[0]",
-      "reference": "a, b = b, a",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [tuple unpack] #13-2",
-      "task": "swap",
-      "code": "t=(a,b); a=t[1]; b=t[0]",
-      "reference": "a, b = b, a",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [chain lists] #14-0",
+      "question": "Extend flat. Исправьте или допишите код.",
       "task": "extend flat",
       "code": "for l in lists: for x in l",
       "reference": "from itertools import chain; list(chain.from_iterable(lists))",
-      "topic": "Stdlib"
+      "topic": "Stdlib",
+      "id": "8837228"
     },
     {
       "card_type": "code",
-      "question": "Python основы [chain lists] #14-1",
-      "task": "extend flat",
-      "code": "for l in lists: for x in l",
-      "reference": "from itertools import chain; list(chain.from_iterable(lists))",
-      "topic": "Stdlib"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [chain lists] #14-2",
-      "task": "extend flat",
-      "code": "for l in lists: for x in l",
-      "reference": "from itertools import chain; list(chain.from_iterable(lists))",
-      "topic": "Stdlib"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [groupby sorted] #15-0",
+      "question": "Group consecutive. Исправьте или допишите код.",
       "task": "group consecutive",
       "code": "manual groups",
       "reference": "from itertools import groupby",
-      "topic": "Функциональное"
+      "topic": "Функциональное",
+      "id": "8003019"
     },
     {
       "card_type": "code",
-      "question": "Python основы [groupby sorted] #15-1",
-      "task": "group consecutive",
-      "code": "manual groups",
-      "reference": "from itertools import groupby",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [groupby sorted] #15-2",
-      "task": "group consecutive",
-      "code": "manual groups",
-      "reference": "from itertools import groupby",
-      "topic": "Функциональное"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [typed dict] #16-0",
+      "question": "TypedDict. Исправьте или допишите код.",
       "task": "TypedDict",
       "code": "d: dict",
       "reference": "class D(TypedDict): name: str",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "2381889"
     },
     {
       "card_type": "code",
-      "question": "Python основы [typed dict] #16-1",
-      "task": "TypedDict",
-      "code": "d: dict",
-      "reference": "class D(TypedDict): name: str",
-      "topic": "Typing"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [typed dict] #16-2",
-      "task": "TypedDict",
-      "code": "d: dict",
-      "reference": "class D(TypedDict): name: str",
-      "topic": "Typing"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [optional arg] #17-0",
+      "question": "None default. Исправьте или допишите код.",
       "task": "None default",
       "code": "def f(x=[]):",
       "reference": "def f(x=None):",
-      "topic": "Typing"
+      "topic": "Typing",
+      "id": "229791"
     },
     {
       "card_type": "code",
-      "question": "Python основы [optional arg] #17-1",
-      "task": "None default",
-      "code": "def f(x=[]):",
-      "reference": "def f(x=None):",
-      "topic": "Typing"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [optional arg] #17-2",
-      "task": "None default",
-      "code": "def f(x=[]):",
-      "reference": "def f(x=None):",
-      "topic": "Typing"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [str methods] #18-0",
+      "question": "Startswith. Исправьте или допишите код.",
       "task": "startswith",
       "code": "s[:5]=='hello'",
       "reference": "s.startswith('hello')",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7710978"
     },
     {
       "card_type": "code",
-      "question": "Python основы [str methods] #18-1",
-      "task": "startswith",
-      "code": "s[:5]=='hello'",
-      "reference": "s.startswith('hello')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [str methods] #18-2",
-      "task": "startswith",
-      "code": "s[:5]=='hello'",
-      "reference": "s.startswith('hello')",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [format spec] #19-0",
+      "question": "Width pad. Исправьте или допишите код.",
       "task": "width pad",
       "code": "'%5d' % n",
       "reference": "f'{n:5d}'",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [format spec] #19-1",
-      "task": "width pad",
-      "code": "'%5d' % n",
-      "reference": "f'{n:5d}'",
-      "topic": "Основы"
-    },
-    {
-      "card_type": "code",
-      "question": "Python основы [format spec] #19-2",
-      "task": "width pad",
-      "code": "'%5d' % n",
-      "reference": "f'{n:5d}'",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [типы данных]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [типы данных]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [типы данных]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [типы данных]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [типы данных]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «типы данных» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [операторы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [операторы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [операторы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [операторы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [операторы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «операторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [условия]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [условия]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [условия]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [условия]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [условия]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «условия» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [циклы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [циклы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [циклы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [циклы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [циклы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «циклы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [функции]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [функции]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [функции]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [функции]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [функции]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «функции» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [args kwargs]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [args kwargs]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [args kwargs]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [args kwargs]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [args kwargs]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «args kwargs» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [списки]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [списки]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [списки]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [списки]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [списки]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «списки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [словари]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [словари]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [словари]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [словари]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [словари]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «словари» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [множества]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [множества]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [множества]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [множества]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [множества]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «множества» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [кортежи]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [кортежи]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [кортежи]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [кортежи]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [кортежи]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «кортежи» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [строки]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [строки]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [строки]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [строки]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [строки]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «строки» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [файлы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [файлы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [файлы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [файлы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [файлы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «файлы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [исключения]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [исключения]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [исключения]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [исключения]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [исключения]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «исключения» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [классы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [классы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [классы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [классы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [классы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «классы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [наследование]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "ООП"
-    },
-    {
-      "question": "Python основы [наследование]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "ООП"
-    },
-    {
-      "question": "Python основы [наследование]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "ООП"
-    },
-    {
-      "question": "Python основы [наследование]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "ООП"
-    },
-    {
-      "question": "Python основы [наследование]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «наследование» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "ООП"
-    },
-    {
-      "question": "Python основы [декораторы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [декораторы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [декораторы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [декораторы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [декораторы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «декораторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [генераторы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [генераторы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [генераторы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [генераторы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [генераторы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «генераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [итераторы]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [итераторы]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [итераторы]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [итераторы]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [итераторы]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «итераторы» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [comprehensions]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [comprehensions]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [comprehensions]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [comprehensions]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [comprehensions]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «comprehensions» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [модули]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [модули]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [модули]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [модули]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [модули]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «модули» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [venv]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [venv]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [venv]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [venv]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [venv]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «venv» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pip]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pip]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pip]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pip]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pip]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «pip» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [typing]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Typing"
-    },
-    {
-      "question": "Python основы [typing]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Typing"
-    },
-    {
-      "question": "Python основы [typing]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Typing"
-    },
-    {
-      "question": "Python основы [typing]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Typing"
-    },
-    {
-      "question": "Python основы [typing]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «typing» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Typing"
-    },
-    {
-      "question": "Python основы [dataclass]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dataclass]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dataclass]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dataclass]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dataclass]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «dataclass» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [asyncio]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Async"
-    },
-    {
-      "question": "Python основы [asyncio]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Async"
-    },
-    {
-      "question": "Python основы [asyncio]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Async"
-    },
-    {
-      "question": "Python основы [asyncio]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Async"
-    },
-    {
-      "question": "Python основы [asyncio]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «asyncio» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Async"
-    },
-    {
-      "question": "Python основы [threading]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [threading]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [threading]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [threading]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [threading]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «threading» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [collections]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [collections]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [collections]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [collections]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [collections]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «collections» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [pathlib]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pathlib]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pathlib]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pathlib]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pathlib]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «pathlib» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [json]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [json]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [json]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [json]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [json]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «json» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [datetime]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [datetime]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [datetime]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [datetime]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [datetime]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «datetime» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [logging]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [logging]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [logging]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [logging]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [logging]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «logging» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pytest]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pytest]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pytest]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pytest]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [pytest]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «pytest» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Stdlib"
-    },
-    {
-      "question": "Python основы [list methods]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [list methods]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [list methods]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [list methods]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [list methods]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «list methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dict methods]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dict methods]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dict methods]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dict methods]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [dict methods]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «dict methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [set methods]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [set methods]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [set methods]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [set methods]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [set methods]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «set methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [str methods]: вопрос #1",
-      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [str methods]: вопрос #2",
-      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [str methods]: вопрос #3",
-      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [str methods]: вопрос #4",
-      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
-    },
-    {
-      "question": "Python основы [str methods]: вопрос #5",
-      "reference": "Повторите ключевые идеи темы «str methods» в Python 3. Практикуйте на маленьких примерах в REPL.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "4797109"
     },
     {
       "question": "Python 3.8: walrus :=?",
@@ -3335,14 +2173,16 @@
       "topic": "Основы"
     },
     {
-      "question": "Python 3.10: ParamSpec?",
+      "question": "Поясните: Python 3.10: ParamSpec.",
       "reference": "Нововведение Python 3.10: ParamSpec.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3798778"
     },
     {
-      "question": "Python 3.11: tomllib?",
+      "question": "Поясните: Python 3.11: tomllib.",
       "reference": "Нововведение Python 3.11: tomllib.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "759367"
     },
     {
       "question": "Python 3.11: Exception groups?",
@@ -3350,9 +2190,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Python 3.11: speedup?",
+      "question": "Поясните: Python 3.11: speedup.",
       "reference": "Нововведение Python 3.11: speedup.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8259016"
     },
     {
       "question": "Python 3.12: f-string improvements?",
@@ -3544,5 +2385,227 @@
       "reference": "Строковый метод str.removesuffix — типичные задачи обработки текста.",
       "topic": "Основы"
     }
+  ],
+  "retired_ids": [
+    "1002033",
+    "1021006",
+    "1038262",
+    "104754",
+    "1048832",
+    "1097930",
+    "1204263",
+    "1206714",
+    "1236337",
+    "1242300",
+    "1274867",
+    "1290707",
+    "1311457",
+    "1334473",
+    "1335076",
+    "1377245",
+    "1444798",
+    "1549331",
+    "1591959",
+    "1653851",
+    "1688564",
+    "1766131",
+    "180147",
+    "1865001",
+    "1919550",
+    "1965969",
+    "1969533",
+    "1998845",
+    "2013506",
+    "2053051",
+    "2079330",
+    "2093657",
+    "2124926",
+    "2125040",
+    "2187952",
+    "2273216",
+    "2322913",
+    "2381618",
+    "2398785",
+    "2501161",
+    "254137",
+    "2603412",
+    "2697368",
+    "2703306",
+    "2730963",
+    "282163",
+    "2839103",
+    "2908984",
+    "3021038",
+    "3122032",
+    "3172151",
+    "319890",
+    "3265965",
+    "3328110",
+    "3351922",
+    "3436475",
+    "3451835",
+    "3512775",
+    "3541163",
+    "3605436",
+    "3647849",
+    "3654237",
+    "3666803",
+    "3801243",
+    "3887540",
+    "3936702",
+    "4081824",
+    "4115082",
+    "4161780",
+    "4193183",
+    "4246688",
+    "4291421",
+    "4385312",
+    "4388529",
+    "4400557",
+    "4449780",
+    "4493133",
+    "4496025",
+    "4544539",
+    "4618398",
+    "467042",
+    "473351",
+    "4770827",
+    "4875174",
+    "4899345",
+    "4922939",
+    "4926539",
+    "5005051",
+    "5028427",
+    "5046629",
+    "5057305",
+    "5071473",
+    "507296",
+    "5111667",
+    "5121570",
+    "5140570",
+    "5228282",
+    "5243099",
+    "5262470",
+    "5498943",
+    "5516090",
+    "5525984",
+    "5570757",
+    "560684",
+    "5744707",
+    "5796042",
+    "5813779",
+    "5836260",
+    "583658",
+    "5839819",
+    "6031913",
+    "6041245",
+    "6116789",
+    "6118827",
+    "617642",
+    "6239746",
+    "6343164",
+    "6365129",
+    "6440696",
+    "6455821",
+    "6458114",
+    "6477799",
+    "6580801",
+    "6608117",
+    "6625271",
+    "667263",
+    "670315",
+    "6740289",
+    "6745878",
+    "6766094",
+    "6789226",
+    "6819668",
+    "6823500",
+    "6864864",
+    "6873093",
+    "6873206",
+    "6914096",
+    "6961366",
+    "6969744",
+    "6983825",
+    "7044341",
+    "7063171",
+    "7079132",
+    "7207656",
+    "7208503",
+    "7234950",
+    "7316494",
+    "7380002",
+    "7406484",
+    "740667",
+    "7437549",
+    "7457519",
+    "7562100",
+    "7594013",
+    "7645241",
+    "7666500",
+    "7705309",
+    "7788511",
+    "7969983",
+    "8031076",
+    "8059970",
+    "8063870",
+    "8074724",
+    "8104027",
+    "8208685",
+    "8230569",
+    "8235055",
+    "8235957",
+    "8313204",
+    "8342489",
+    "8350043",
+    "8367505",
+    "841337",
+    "8422428",
+    "8437789",
+    "8445151",
+    "8470793",
+    "8473258",
+    "8600460",
+    "8699328",
+    "8706878",
+    "8723155",
+    "8750974",
+    "8751041",
+    "8768197",
+    "8783530",
+    "878786",
+    "8880181",
+    "8886621",
+    "8944936",
+    "8987480",
+    "8994083",
+    "8994440",
+    "9022456",
+    "9156681",
+    "9158916",
+    "9214266",
+    "9262895",
+    "9277531",
+    "9285790",
+    "9298168",
+    "9303381",
+    "9314918",
+    "9386029",
+    "9417086",
+    "943115",
+    "9445143",
+    "9662448",
+    "9690347",
+    "9756014",
+    "9766891",
+    "9807010",
+    "9852070",
+    "9879804",
+    "9922333",
+    "9959278",
+    "9959435",
+    "9972793",
+    "9973193",
+    "9975266"
   ]
 }

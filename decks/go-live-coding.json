@@ -4,7 +4,7 @@
   "cards": [
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию greet(name string) string, возвращающую \"Hello, \" + name + \"!\".\n\nРезультат работы: \"Hello, \" + name + \"!\".\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию greet(name string) string, возвращающую \"Hello, \" + name + \"!\".",
       "task": "",
       "reference": "package main\n\nfunc greet(name string) string {\n    return \"Hello, \" + name + \"!\"\n}",
       "language": "go",
@@ -12,7 +12,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию sum(nums []int) int — сумма элементов без использования встроенных reduce.\n\nсумма элементов без использования встроенных reduce.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию sum(nums []int) int — сумма элементов без использования встроенных reduce.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc sum(nums []int) int {\n    total := 0\n    for _, n := range nums {\n        total += n\n    }\n    return total\n}",
       "language": "go",
@@ -20,7 +20,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию evens(nums []int) []int возвращает только чётные числа, сохраняя порядок.\n\nРезультат работы: только чётные числа, сохраняя порядок.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: evens([1, 2, 3, 4]) → [2, 4]",
+      "question": "Реализовать Go-функцию evens(nums []int) []int возвращает только чётные числа, сохраняя порядок.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n\nПример: evens([1, 2, 3, 4]) → [2, 4]",
       "task": "",
       "reference": "package main\n\nfunc evens(nums []int) []int {\n    out := make([]int, 0, len(nums))\n    for _, n := range nums {\n        if n%2 == 0 {\n            out = append(out, n)\n        }\n    }\n    return out\n}",
       "language": "go",
@@ -28,7 +28,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию wordCount(words []string) map[string]int считает частоту каждого слова.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию wordCount(words []string) map[string]int считает частоту каждого слова.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc wordCount(words []string) map[string]int {\n    counts := make(map[string]int)\n    for _, w := range words {\n        counts[w]++\n    }\n    return counts\n}",
       "language": "go",
@@ -36,7 +36,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Тип User с полями ID int и Name string; конструктор NewUser(id int, name string) User.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Тип User с полями ID int и Name string; конструктор NewUser(id int, name string) User.",
       "task": "",
       "reference": "package main\n\ntype User struct {\n    ID   int\n    Name string\n}\n\nfunc NewUser(id int, name string) User {\n    return User{ID: id, Name: name}\n}",
       "language": "go",
@@ -44,7 +44,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию readAll(r io.Reader) ([]byte, error) читает через io.ReadAll (defer не нужен для ReadAll, но обработай err).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию readAll(r io.Reader) ([]byte, error) читает через io.ReadAll (defer не нужен для ReadAll, но обработай err).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nimport \"io\"\n\nfunc readAll(r io.Reader) ([]byte, error) {\n    return io.ReadAll(r)\n}",
       "language": "go",
@@ -52,7 +52,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию fib(n int) int возвращает n-ое число Фибоначчи (n >= 0), итеративно.\n\nРезультат работы: n-ое число Фибоначчи (n >= 0), итеративно.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию fib(n int) int возвращает n-ое число Фибоначчи (n >= 0), итеративно.",
       "task": "",
       "reference": "package main\n\nfunc fib(n int) int {\n    if n < 2 {\n        return n\n    }\n    a, b := 0, 1\n    for i := 2; i <= n; i++ {\n        a, b = b, a+b\n    }\n    return b\n}",
       "language": "go",
@@ -60,7 +60,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Struct Point { X, Y int } с методом String() string формата \"(x,y)\" для fmt.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Struct Point { X, Y int } с методом String() string формата \"(x,y)\" для fmt.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API",
       "task": "",
       "reference": "package main\n\nimport \"fmt\"\n\ntype Point struct {\n    X, Y int\n}\n\nfunc (p Point) String() string {\n    return fmt.Sprintf(\"(%d,%d)\", p.X, p.Y)\n}",
       "language": "go",
@@ -68,7 +68,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Interface Greeter с Hello(name string) string; struct EnglishGreeter реализует его.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Interface Greeter с Hello(name string) string; struct EnglishGreeter реализует его.",
       "task": "",
       "reference": "package main\n\ntype Greeter interface {\n    Hello(name string) string\n}\n\ntype EnglishGreeter struct{}\n\nfunc (EnglishGreeter) Hello(name string) string {\n    return \"Hello, \" + name\n}",
       "language": "go",
@@ -76,7 +76,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию describe(v any) string: int→\"int\", string→\"string\", default→\"other\".\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: Функция describe(v any) string: int → \"int\", string→\"string\", default→\"other\"",
+      "question": "Реализовать Go-функцию describe(v any) string: int→\"int\", string→\"string\", default→\"other\".\n\nПример: Функция describe(v any) string: int → \"int\", string→\"string\", default→\"other\"",
       "task": "",
       "reference": "package main\n\nfunc describe(v any) string {\n    switch v.(type) {\n    case int:\n        return \"int\"\n    case string:\n        return \"string\"\n    default:\n        return \"other\"\n    }\n}",
       "language": "go",
@@ -84,7 +84,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию ping() string: goroutine отправляет \"pong\" в канал, main получает.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию ping() string: goroutine отправляет \"pong\" в канал, main получает.",
       "task": "",
       "reference": "package main\n\nfunc ping() string {\n    ch := make(chan string, 1)\n    go func() { ch <- \"pong\" }()\n    return <-ch\n}",
       "language": "go",
@@ -92,7 +92,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию parallelSum(nums []int, workers int) int: workers goroutines суммируют части slice через канал.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию parallelSum(nums []int, workers int) int: workers goroutines суммируют части slice через канал.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc parallelSum(nums []int, workers int) int {\n    if workers < 1 {\n        workers = 1\n    }\n    chunk := (len(nums) + workers - 1) / workers\n    out := make(chan int, workers)\n    for w := 0; w < workers; w++ {\n        start := w * chunk\n        end := start + chunk\n        if start >= len(nums) {\n            break\n        }\n        if end > len(nums) {\n            end = len(nums)\n        }\n        part := nums[start:end]\n        go func(p []int) {\n            s := 0\n            for _, n := range p {\n                s += n\n            }\n            out <- s\n        }(part)\n    }\n    total := 0\n    for i := 0; i < workers && i*chunk < len(nums); i++ {\n        total += <-out\n    }\n    return total\n}",
       "language": "go",
@@ -100,7 +100,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию withTimeout(ch <-chan int, d time.Duration) (int, bool) — select с time.After.\n\nselect с time.After.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию withTimeout(ch <-chan int, d time.Duration) (int, bool) — select с time.After.",
       "task": "",
       "reference": "package main\n\nimport \"time\"\n\nfunc withTimeout(ch <-chan int, d time.Duration) (int, bool) {\n    select {\n    case v := <-ch:\n        return v, true\n    case <-time.After(d):\n        return 0, false\n    }\n}",
       "language": "go",
@@ -108,7 +108,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию loadConfig(path string) error читает файл и оборачивает ошибку fmt.Errorf(\"config: %w\", err).\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию loadConfig(path string) error читает файл и оборачивает ошибку fmt.Errorf(\"config: %w\", err).",
       "task": "",
       "reference": "package main\n\nimport (\n    \"fmt\"\n    \"os\"\n)\n\nfunc loadConfig(path string) error {\n    _, err := os.ReadFile(path)\n    if err != nil {\n        return fmt.Errorf(\"config: %w\", err)\n    }\n    return nil\n}",
       "language": "go",
@@ -116,7 +116,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "var ErrNotFound = errors.New(\"not found\"); функция find(id int) error возвращает ErrNotFound при id < 0.\n\nРезультат работы: ErrNotFound при id < 0.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "var ErrNotFound = errors.New(\"not found\"); функция find(id int) error возвращает ErrNotFound при id < 0.",
       "task": "",
       "reference": "package main\n\nimport \"errors\"\n\nvar ErrNotFound = errors.New(\"not found\")\n\nfunc find(id int) error {\n    if id < 0 {\n        return ErrNotFound\n    }\n    return nil\n}",
       "language": "go",
@@ -124,7 +124,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Struct User { Name string `json:\"name\"`; Age int `json:\"age\"` }; toJSON(u User) (string, error).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Struct User { Name string `json:\"name\"`; Age int `json:\"age\"` }; toJSON(u User) (string, error).",
       "task": "",
       "reference": "package main\n\nimport \"encoding/json\"\n\ntype User struct {\n    Name string `json:\"name\"`\n    Age  int    `json:\"age\"`\n}\n\nfunc toJSON(u User) (string, error) {\n    b, err := json.Marshal(u)\n    return string(b), err\n}",
       "language": "go",
@@ -132,7 +132,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: http.HandlerFunc health возвращает 200 и тело \"ok\".\n\nРезультат работы: 200 и тело \"ok\".\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: http.HandlerFunc health возвращает 200 и тело \"ok\".",
       "task": "",
       "reference": "package main\n\nimport \"net/http\"\n\nfunc health(w http.ResponseWriter, r *http.Request) {\n    w.WriteHeader(http.StatusOK)\n    _, _ = w.Write([]byte(\"ok\"))\n}",
       "language": "go",
@@ -140,7 +140,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию sleepUntilCancel(ctx context.Context) error ждёт ctx.Done() и возвращает ctx.Err().\n\nРезультат работы: ctx.Err().\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию sleepUntilCancel(ctx context.Context) error ждёт ctx.Done() и возвращает ctx.Err().",
       "task": "",
       "reference": "package main\n\nimport \"context\"\n\nfunc sleepUntilCancel(ctx context.Context) error {\n    <-ctx.Done()\n    return ctx.Err()\n}",
       "language": "go",
@@ -148,7 +148,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию Contains[T comparable](slice []T, value T) bool.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию Contains[T comparable](slice []T, value T) bool.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc Contains[T comparable](slice []T, value T) bool {\n    for _, v := range slice {\n        if v == value {\n            return true\n        }\n    }\n    return false\n}",
       "language": "go",
@@ -156,7 +156,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию Map[T, U any](in []T, f func(T) U) []U.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию Map[T, U any](in []T, f func(T) U) []U.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc Map[T, U any](in []T, f func(T) U) []U {\n    out := make([]U, len(in))\n    for i, v := range in {\n        out[i] = f(v)\n    }\n    return out\n}",
       "language": "go",
@@ -164,7 +164,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "TestAdd с table-driven cases: (1,1,2), (2,3,5).\n\nФункция add(a,b int) int.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "TestAdd с table-driven cases: (1,1,2), (2,3,5).\n\nФункция add(a,b int) int.",
       "task": "",
       "reference": "package main\n\nimport \"testing\"\n\nfunc add(a, b int) int { return a + b }\n\nfunc TestAdd(t *testing.T) {\n    cases := []struct {\n        a, b, want int\n    }{\n        {1, 1, 2},\n        {2, 3, 5},\n    }\n    for _, tc := range cases {\n        if got := add(tc.a, tc.b); got != tc.want {\n            t.Errorf(\"add(%d,%d)=%d want %d\", tc.a, tc.b, got, tc.want)\n        }\n    }\n}",
       "language": "go",
@@ -172,7 +172,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: BenchmarkReverse для функции reverse(s []byte) reversing in-place.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: BenchmarkReverse для функции reverse(s []byte) reversing in-place.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nimport \"testing\"\n\nfunc reverse(s []byte) {\n    for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {\n        s[i], s[j] = s[j], s[i]\n    }\n}\n\nfunc BenchmarkReverse(b *testing.B) {\n    data := []byte(\"hello world benchmark\")\n    for i := 0; i < b.N; i++ {\n        buf := append([]byte(nil), data...)\n        reverse(buf)\n    }\n}",
       "language": "go",
@@ -180,7 +180,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Package config (не main): type Settings struct { Port int }; Default() Settings с Port 8080.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Package config (не main): type Settings struct { Port int }; Default() Settings с Port 8080.",
       "task": "",
       "reference": "package config\n\ntype Settings struct {\n    Port int\n}\n\nfunc Default() Settings {\n    return Settings{Port: 8080}\n}",
       "language": "go",
@@ -188,7 +188,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Package util (в module app): функция Ptr[T any](v T) *T возвращает указатель на копию v.\n\nРезультат работы: указатель на копию v.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Package util (в module app): функция Ptr[T any](v T) *T возвращает указатель на копию v.",
       "task": "",
       "reference": "package util\n\nfunc Ptr[T any](v T) *T {\n    return &v\n}",
       "language": "go",
@@ -196,7 +196,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Type SafeCounter с Inc() и Value(); защита sync.Mutex.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Type SafeCounter с Inc() и Value(); защита sync.Mutex.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API",
       "task": "",
       "reference": "package main\n\nimport \"sync\"\n\ntype SafeCounter struct {\n    mu sync.Mutex\n    n  int\n}\n\nfunc (c *SafeCounter) Inc() {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    c.n++\n}\n\nfunc (c *SafeCounter) Value() int {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    return c.n\n}",
       "language": "go",
@@ -204,7 +204,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию join(words []string, sep string) string через strings.Builder.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию join(words []string, sep string) string через strings.Builder.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nimport \"strings\"\n\nfunc join(words []string, sep string) string {\n    var b strings.Builder\n    for i, w := range words {\n        if i > 0 {\n            b.WriteString(sep)\n        }\n        b.WriteString(w)\n    }\n    return b.String()\n}",
       "language": "go",
@@ -212,7 +212,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию parseSeconds(raw string) (time.Duration, error) парсит \"1500ms\" через time.ParseDuration.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию parseSeconds(raw string) (time.Duration, error) парсит \"1500ms\" через time.ParseDuration.",
       "task": "",
       "reference": "package main\n\nimport \"time\"\n\nfunc parseSeconds(raw string) (time.Duration, error) {\n    return time.ParseDuration(raw)\n}",
       "language": "go",
@@ -220,7 +220,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go-функцию safeCall(fn func()) (recovered bool) — defer recover, true если был panic.\n\ndefer recover, true если был panic.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go-функцию safeCall(fn func()) (recovered bool) — defer recover, true если был panic.",
       "task": "",
       "reference": "package main\n\nfunc safeCall(fn func()) (recovered bool) {\n    defer func() {\n        if recover() != nil {\n            recovered = true\n        }\n    }()\n    fn()\n    return false\n}",
       "language": "go",
@@ -228,7 +228,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Generic Keys[M ~map[K]V, K comparable, V any](m M) []K возвращает ключи map (порядок random).\n\nРезультат работы: ключи map (порядок random).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Generic Keys[M ~map[K]V, K comparable, V any](m M) []K возвращает ключи map (порядок random).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "package main\n\nfunc Keys[M ~map[K]V, K comparable, V any](m M) []K {\n    keys := make([]K, 0, len(m))\n    for k := range m {\n        keys = append(keys, k)\n    }\n    return keys\n}",
       "language": "go",
@@ -236,7 +236,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Max(a, b int) int возвращает большее.\n\nРезультат работы: большее.\n\nНеобходимо предусмотреть:\n- Граничные значения и краевые случаи\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Max(a, b int) int возвращает большее.\n\nНеобходимо предусмотреть:\n- Граничные значения и краевые случаи",
       "task": "",
       "reference": "func Max(a, b int) int {\n    if a > b {\n        return a\n    }\n    return b\n}",
       "language": "go",
@@ -244,7 +244,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Abs(n int) int — модуль числа.\n\nмодуль числа.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Abs(n int) int — модуль числа.",
       "task": "",
       "reference": "func Abs(n int) int {\n    if n < 0 {\n        return -n\n    }\n    return n\n}",
       "language": "go",
@@ -252,7 +252,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func IsEmpty(s string) bool.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func IsEmpty(s string) bool.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func IsEmpty(s string) bool {\n    return s == \"\"\n}",
       "language": "go",
@@ -260,7 +260,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Repeat(s string, n int) string — повтор s n раз.\n\nповтор s n раз.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Repeat(s string, n int) string — повтор s n раз.",
       "task": "",
       "reference": "func Repeat(s string, n int) string {\n    if n <= 0 {\n        return \"\"\n    }\n    out := \"\"\n    for i := 0; i < n; i++ {\n        out += s\n    }\n    return out\n}",
       "language": "go",
@@ -268,7 +268,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "func weekdayName(d int) string через switch: 1→Mon .\n\n7→Sun, default Unknown.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: func weekdayName(d int) string через switch: 1 → Mon ... 7→Sun, default Unknown",
+      "question": "func weekdayName(d int) string через switch: 1→Mon .\n\n7→Sun, default Unknown.",
       "task": "",
       "reference": "func weekdayName(d int) string {\n    switch d {\n    case 1:\n        return \"Mon\"\n    case 2:\n        return \"Tue\"\n    case 3:\n        return \"Wed\"\n    case 4:\n        return \"Thu\"\n    case 5:\n        return \"Fri\"\n    case 6:\n        return \"Sat\"\n    case 7:\n        return \"Sun\"\n    default:\n        return \"Unknown\"\n    }\n}",
       "language": "go",
@@ -276,7 +276,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: const (KB=1<<(10*iota); MB; GB) — объявить KB, MB, GB.\n\nобъявить KB, MB, GB.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: const (KB=1<<(10*iota); MB; GB) — объявить KB, MB, GB.",
       "task": "",
       "reference": "const (\n    _  = iota\n    KB = 1 << (10 * iota)\n    MB\n    GB\n)",
       "language": "go",
@@ -284,7 +284,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func countTo(n int) []int возвращает [1..n].\n\nРезультат работы: [1..n].\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func countTo(n int) []int возвращает [1..n].\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func countTo(n int) []int {\n    out := make([]int, n)\n    for i := range out {\n        out[i] = i + 1\n    }\n    return out\n}",
       "language": "go",
@@ -292,7 +292,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func lastRune(s string) rune — последний rune строки (assume non-empty).\n\nпоследний rune строки (assume non-empty).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func lastRune(s string) rune — последний rune строки (assume non-empty).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func lastRune(s string) rune {\n    r, _ := utf8.DecodeLastRuneInString(s)\n    return r\n}",
       "language": "go",
@@ -300,7 +300,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func reverseInts(nums []int) — reverse in-place.\n\nreverse in-place.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func reverseInts(nums []int) — reverse in-place.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func reverseInts(nums []int) {\n    for i, j := 0, len(nums)-1; i < j; i, j = i+1, j-1 {\n        nums[i], nums[j] = nums[j], nums[i]\n    }\n}",
       "language": "go",
@@ -308,7 +308,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func unique(in []string) []string сохраняет порядок первого вхождения.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func unique(in []string) []string сохраняет порядок первого вхождения.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func unique(in []string) []string {\n    seen := make(map[string]struct{})\n    out := make([]string, 0, len(in))\n    for _, s := range in {\n        if _, ok := seen[s]; ok {\n            continue\n        }\n        seen[s] = struct{}{}\n        out = append(out, s)\n    }\n    return out\n}",
       "language": "go",
@@ -316,7 +316,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Rectangle struct { W, H float64 }; метод Area() float64.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Rectangle struct { W, H float64 }; метод Area() float64.\n\nНеобходимо предусмотреть:\n- Инкапсуляция состояния и публичный API",
       "task": "",
       "reference": "type Rectangle struct {\n    W, H float64\n}\n\nfunc (r Rectangle) Area() float64 {\n    return r.W * r.H\n}",
       "language": "go",
@@ -324,7 +324,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Person struct { Name string }; type Employee struct { Person; ID int }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Person struct { Name string }; type Employee struct { Person; ID int }.",
       "task": "",
       "reference": "type Person struct {\n    Name string\n}\n\ntype Employee struct {\n    Person\n    ID int\n}",
       "language": "go",
@@ -332,7 +332,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func cloneMap(m map[string]int) map[string]int.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func cloneMap(m map[string]int) map[string]int.",
       "task": "",
       "reference": "func cloneMap(m map[string]int) map[string]int {\n    out := make(map[string]int, len(m))\n    for k, v := range m {\n        out[k] = v\n    }\n    return out\n}",
       "language": "go",
@@ -340,7 +340,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Stack struct { items []int }; Push(v int); Pop() (int, bool).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Stack struct { items []int }; Push(v int); Pop() (int, bool).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "type Stack struct {\n    items []int\n}\n\nfunc (s *Stack) Push(v int) {\n    s.items = append(s.items, v)\n}\n\nfunc (s *Stack) Pop() (int, bool) {\n    if len(s.items) == 0 {\n        return 0, false\n    }\n    v := s.items[len(s.items)-1]\n    s.items = s.items[:len(s.items)-1]\n    return v, true\n}",
       "language": "go",
@@ -348,7 +348,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func swap(a, b *int) меняет значения по указателям.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func swap(a, b *int) меняет значения по указателям.",
       "task": "",
       "reference": "func swap(a, b *int) {\n    *a, *b = *b, *a\n}",
       "language": "go",
@@ -356,7 +356,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func newMatrix(rows, cols int) [][]int инициализирует 2D slice нулями.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func newMatrix(rows, cols int) [][]int инициализирует 2D slice нулями.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func newMatrix(rows, cols int) [][]int {\n    m := make([][]int, rows)\n    for i := range m {\n        m[i] = make([]int, cols)\n    }\n    return m\n}",
       "language": "go",
@@ -364,7 +364,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func makeCounter() func() int.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func makeCounter() func() int.",
       "task": "",
       "reference": "func makeCounter() func() int {\n    n := 0\n    return func() int {\n        n++\n        return n\n    }\n}",
       "language": "go",
@@ -372,7 +372,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func deferOrder() int демонстрирует LIFO defers, return 3.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func deferOrder() int демонстрирует LIFO defers, return 3.",
       "task": "",
       "reference": "func deferOrder() int {\n    defer func() {}\n    defer func() {}\n    return 3\n}",
       "language": "go",
@@ -380,7 +380,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func splitSum(nums []int) (sum int, count int).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func splitSum(nums []int) (sum int, count int).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func splitSum(nums []int) (sum int, count int) {\n    for _, n := range nums {\n        sum += n\n        count++\n    }\n    return\n}",
       "language": "go",
@@ -388,7 +388,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func sumAll(nums ...int) int.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func sumAll(nums ...int) int.",
       "task": "",
       "reference": "func sumAll(nums ...int) int {\n    s := 0\n    for _, n := range nums {\n        s += n\n    }\n    return s\n}",
       "language": "go",
@@ -396,7 +396,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func runSafe(fn func()) (panicked bool).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func runSafe(fn func()) (panicked bool).",
       "task": "",
       "reference": "func runSafe(fn func()) (panicked bool) {\n    defer func() {\n        if recover() != nil {\n            panicked = true\n        }\n    }()\n    fn()\n    return false\n}",
       "language": "go",
@@ -404,7 +404,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Handler func(); func chain(h Handler, wrappers ...func(Handler) Handler) Handler.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Handler func(); func chain(h Handler, wrappers ...func(Handler) Handler) Handler.",
       "task": "",
       "reference": "func chain(h func(), wrappers ...func(func()) func()) func() {\n    wrapped := h\n    for i := len(wrappers) - 1; i >= 0; i-- {\n        wrapped = wrappers[i](wrapped)\n    }\n    return wrapped\n}",
       "language": "go",
@@ -412,7 +412,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type stringReader struct { s string; i int }; Read(p []byte) (int, error).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type stringReader struct { s string; i int }; Read(p []byte) (int, error).\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "type stringReader struct {\n    s string\n    i int\n}\n\nfunc (r *stringReader) Read(p []byte) (int, error) {\n    if r.i >= len(r.s) {\n        return 0, io.EOF\n    }\n    n := copy(p, r.s[r.i:])\n    r.i += n\n    return n, nil\n}",
       "language": "go",
@@ -420,7 +420,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: interface Shape { Area() float64 }; Circle с Radius float64.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: interface Shape { Area() float64 }; Circle с Radius float64.",
       "task": "",
       "reference": "type Shape interface {\n    Area() float64\n}\n\ntype Circle struct {\n    Radius float64\n}\n\nfunc (c Circle) Area() float64 {\n    return math.Pi * c.Radius * c.Radius\n}",
       "language": "go",
@@ -428,7 +428,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func printString(v any) string использует fmt.Stringer если есть.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func printString(v any) string использует fmt.Stringer если есть.",
       "task": "",
       "reference": "func printString(v any) string {\n    if s, ok := v.(fmt.Stringer); ok {\n        return s.String()\n    }\n    return fmt.Sprint(v)\n}",
       "language": "go",
@@ -436,7 +436,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type multiReader — упрощённо concat двух []byte в Read.\n\nупрощённо concat двух []byte в Read.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type multiReader — упрощённо concat двух []byte в Read.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "type byteReader struct {\n    data []byte\n}\n\nfunc (b *byteReader) Read(p []byte) (int, error) {\n    if len(b.data) == 0 {\n        return 0, io.EOF\n    }\n    n := copy(p, b.data)\n    b.data = b.data[n:]\n    return n, nil\n}",
       "language": "go",
@@ -444,7 +444,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Validator interface { Validate() error }; Email struct.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Валидация обязательных полей и сообщений об ошибках\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Validator interface { Validate() error }; Email struct.\n\nНеобходимо предусмотреть:\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "type Validator interface {\n    Validate() error\n}\n\ntype Email struct {\n    Value string\n}\n\nfunc (e Email) Validate() error {\n    if e.Value == \"\" {\n        return errors.New(\"empty email\")\n    }\n    return nil\n}",
       "language": "go",
@@ -452,7 +452,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: var _ http.Handler = (*handler)(nil) pattern for type handler struct{}.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: var _ http.Handler = (*handler)(nil) pattern for type handler struct{}.",
       "task": "",
       "reference": "type handler struct{}\n\nfunc (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {\n    w.WriteHeader(http.StatusOK)\n}\n\nvar _ http.Handler = (*handler)(nil)",
       "language": "go",
@@ -460,7 +460,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func fanIn(chs ...<-chan int) <-chan int merge.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func fanIn(chs ...<-chan int) <-chan int merge.",
       "task": "",
       "reference": "func fanIn(chs ...<-chan int) <-chan int {\n    out := make(chan int)\n    var wg sync.WaitGroup\n    wg.Add(len(chs))\n    for _, ch := range chs {\n        go func(c <-chan int) {\n            defer wg.Done()\n            for v := range c {\n                out <- v\n            }\n        }(ch)\n    }\n    go func() {\n        wg.Wait()\n        close(out)\n    }()\n    return out\n}",
       "language": "go",
@@ -468,7 +468,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Sem struct { ch chan struct{} }; Acquire/Release.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Sem struct { ch chan struct{} }; Acquire/Release.",
       "task": "",
       "reference": "type Sem struct {\n    ch chan struct{}\n}\n\nfunc NewSem(n int) *Sem {\n    return &Sem{ch: make(chan struct{}, n)}\n}\n\nfunc (s *Sem) Acquire() { s.ch <- struct{}{} }\nfunc (s *Sem) Release() { <-s.ch }",
       "language": "go",
@@ -476,7 +476,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: var once sync.Once; func initConfig() *Config lazy.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: var once sync.Once; func initConfig() *Config lazy.",
       "task": "",
       "reference": "var (\n    cfg  *Config\n    once sync.Once\n)\n\nfunc getConfig() *Config {\n    once.Do(func() {\n        cfg = &Config{Port: 8080}\n    })\n    return cfg\n}",
       "language": "go",
@@ -484,7 +484,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func double(in <-chan int) <-chan int stage.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func double(in <-chan int) <-chan int stage.",
       "task": "",
       "reference": "func double(in <-chan int) <-chan int {\n    out := make(chan int)\n    go func() {\n        defer close(out)\n        for v := range in {\n            out <- v * 2\n        }\n    }()\n    return out\n}",
       "language": "go",
@@ -492,7 +492,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Cache struct { mu sync.RWMutex; m map[string]string }; Get/Set.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Cache struct { mu sync.RWMutex; m map[string]string }; Get/Set.",
       "task": "",
       "reference": "type Cache struct {\n    mu sync.RWMutex\n    m  map[string]string\n}\n\nfunc (c *Cache) Get(k string) (string, bool) {\n    c.mu.RLock()\n    defer c.mu.RUnlock()\n    v, ok := c.m[k]\n    return v, ok\n}\n\nfunc (c *Cache) Set(k, v string) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if c.m == nil {\n        c.m = make(map[string]string)\n    }\n    c.m[k] = v\n}",
       "language": "go",
@@ -500,7 +500,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func worker(ctx context.Context, jobs <-chan int, out chan<- int).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func worker(ctx context.Context, jobs <-chan int, out chan<- int).",
       "task": "",
       "reference": "func worker(ctx context.Context, jobs <-chan int, out chan<- int) {\n    for {\n        select {\n        case <-ctx.Done():\n            return\n        case j, ok := <-jobs:\n            if !ok {\n                return\n            }\n            out <- j * j\n        }\n    }\n}",
       "language": "go",
@@ -508,7 +508,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func validateAll(errs ...error) error через errors.Join (Go 1.20).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func validateAll(errs ...error) error через errors.Join (Go 1.20).",
       "task": "",
       "reference": "func validateAll(errs ...error) error {\n    return errors.Join(errs...)\n}",
       "language": "go",
@@ -516,7 +516,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func isNotFound(err error) bool через errors.Is(ErrNotFound).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func isNotFound(err error) bool через errors.Is(ErrNotFound).",
       "task": "",
       "reference": "func isNotFound(err error) bool {\n    return errors.Is(err, ErrNotFound)\n}",
       "language": "go",
@@ -524,7 +524,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type OpError struct { Op string }; func asOpError(err error) (*OpError, bool).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type OpError struct { Op string }; func asOpError(err error) (*OpError, bool).",
       "task": "",
       "reference": "type OpError struct {\n    Op string\n}\n\nfunc (e *OpError) Error() string { return e.Op }\n\nfunc asOpError(err error) (*OpError, bool) {\n    var target *OpError\n    ok := errors.As(err, &target)\n    return target, ok\n}",
       "language": "go",
@@ -532,7 +532,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func step() error возвращает fmt.Errorf wrap на каждом шаге.\n\nРезультат работы: fmt.Errorf wrap на каждом шаге.\n\nНеобходимо предусмотреть:\n- Поддержку положительного и отрицательного шага\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func step() error возвращает fmt.Errorf wrap на каждом шаге.\n\nНеобходимо предусмотреть:\n- Поддержку положительного и отрицательного шага",
       "task": "",
       "reference": "func step() error {\n    if err := do(); err != nil {\n        return fmt.Errorf(\"step: %w\", err)\n    }\n    return nil\n}",
       "language": "go",
@@ -540,7 +540,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func requireNonEmpty(field, value string) error.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func requireNonEmpty(field, value string) error.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Безопасная обработка None / null / optional значений",
       "task": "",
       "reference": "func requireNonEmpty(field, value string) error {\n    if strings.TrimSpace(value) == \"\" {\n        return fmt.Errorf(\"%s must not be empty\", field)\n    }\n    return nil\n}",
       "language": "go",
@@ -548,7 +548,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func readLines(path string) ([]string, error) bufio.Scanner.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func readLines(path string) ([]string, error) bufio.Scanner.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func readLines(path string) ([]string, error) {\n    f, err := os.Open(path)\n    if err != nil {\n        return nil, err\n    }\n    defer f.Close()\n    var lines []string\n    sc := bufio.NewScanner(f)\n    for sc.Scan() {\n        lines = append(lines, sc.Text())\n    }\n    return lines, sc.Err()\n}",
       "language": "go",
@@ -556,7 +556,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func getQuery(u, key string) string через url.Parse.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func getQuery(u, key string) string через url.Parse.",
       "task": "",
       "reference": "func getQuery(raw, key string) string {\n    u, err := url.Parse(raw)\n    if err != nil {\n        return \"\"\n    }\n    return u.Query().Get(key)\n}",
       "language": "go",
@@ -564,7 +564,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func sortInts(nums []int) { sort.Ints(nums) }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func sortInts(nums []int) { sort.Ints(nums) }.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func sortInts(nums []int) {\n    sort.Ints(nums)\n}",
       "language": "go",
@@ -572,7 +572,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func render(name string) (string, error) простейший text/template.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func render(name string) (string, error) простейший text/template.",
       "task": "",
       "reference": "func render(name string) (string, error) {\n    var b strings.Builder\n    tpl := template.Must(template.New(\"t\").Parse(\"Hello, {{.}}!\"))\n    if err := tpl.Execute(&b, name); err != nil {\n        return \"\", err\n    }\n    return b.String(), nil\n}",
       "language": "go",
@@ -580,7 +580,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func logUser(id int) { slog.Info(\\\"user\\\", \\\"id\\\", id) }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func logUser(id int) { slog.Info(\\\"user\\\", \\\"id\\\", id) }.",
       "task": "",
       "reference": "func logUser(id int) {\n    slog.Info(\"user\", \"id\", id)\n}",
       "language": "go",
@@ -588,7 +588,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func decodeJSON(r io.Reader, v any) error json.NewDecoder.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func decodeJSON(r io.Reader, v any) error json.NewDecoder.",
       "task": "",
       "reference": "func decodeJSON(r io.Reader, v any) error {\n    return json.NewDecoder(r).Decode(v)\n}",
       "language": "go",
@@ -596,7 +596,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Filter[T any](in []T, pred func(T) bool) []T.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Filter[T any](in []T, pred func(T) bool) []T.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func Filter[T any](in []T, pred func(T) bool) []T {\n    out := make([]T, 0)\n    for _, v := range in {\n        if pred(v) {\n            out = append(out, v)\n        }\n    }\n    return out\n}",
       "language": "go",
@@ -604,7 +604,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Reduce[T any](in []T, init T, fn func(T, T) T) T.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Reduce[T any](in []T, init T, fn func(T, T) T) T.\n\nНеобходимо предусмотреть:\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "func Reduce[T any](in []T, init T, fn func(T, T) T) T {\n    acc := init\n    for _, v := range in {\n        acc = fn(acc, v)\n    }\n    return acc\n}",
       "language": "go",
@@ -612,7 +612,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Pair[A, B any] struct { First A; Second B }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Pair[A, B any] struct { First A; Second B }.",
       "task": "",
       "reference": "type Pair[A, B any] struct {\n    First  A\n    Second B\n}",
       "language": "go",
@@ -620,7 +620,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: func Min[T cmp.Ordered](a, b T) T.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: func Min[T cmp.Ordered](a, b T) T.",
       "task": "",
       "reference": "func Min[T cmp.Ordered](a, b T) T {\n    if a < b {\n        return a\n    }\n    return b\n}",
       "language": "go",
@@ -628,7 +628,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: type Set[T comparable] map[T]struct{}; Add/Has.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: type Set[T comparable] map[T]struct{}; Add/Has.",
       "task": "",
       "reference": "type Set[T comparable] map[T]struct{}\n\nfunc (s Set[T]) Add(v T) {\n    s[v] = struct{}{}\n}\n\nfunc (s Set[T]) Has(v T) bool {\n    _, ok := s[v]\n    return ok\n}",
       "language": "go",
@@ -636,7 +636,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: TestParse с t.Run subtests.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: TestParse с t.Run subtests.",
       "task": "",
       "reference": "func TestParse(t *testing.T) {\n    tests := []struct{ in, want string }{{\"a\", \"a\"}}\n    for _, tc := range tests {\n        t.Run(tc.in, func(t *testing.T) {\n            if got := parse(tc.in); got != tc.want {\n                t.Fatalf(\"got %q want %q\", got, tc.want)\n            }\n        })\n    }\n}",
       "language": "go",
@@ -644,7 +644,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: TestHealth проверяет handler health через httptest.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: TestHealth проверяет handler health через httptest.",
       "task": "",
       "reference": "func TestHealth(t *testing.T) {\n    rr := httptest.NewRecorder()\n    health(rr, httptest.NewRequest(http.MethodGet, \"/health\", nil))\n    if rr.Code != http.StatusOK {\n        t.Fatalf(\"status %d\", rr.Code)\n    }\n}",
       "language": "go",
@@ -652,7 +652,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Пример t.Cleanup closing resource.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Пример t.Cleanup closing resource.",
       "task": "",
       "reference": "func TestResource(t *testing.T) {\n    r := acquire()\n    t.Cleanup(func() { r.Close() })\n}",
       "language": "go",
@@ -660,7 +660,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "func assertEqual(t *testing.T, got, want int) { t.Helper(); .\n\n}.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "func assertEqual(t *testing.T, got, want int) { t.Helper(); .\n\n}.",
       "task": "",
       "reference": "func assertEqual(t *testing.T, got, want int) {\n    t.Helper()\n    if got != want {\n        t.Errorf(\"got %d want %d\", got, want)\n    }\n}",
       "language": "go",
@@ -668,7 +668,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: package main in cmd/app/main.go calling config.Default().\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: package main in cmd/app/main.go calling config.Default().",
       "task": "",
       "reference": "package main\n\nimport \"example.com/app/config\"\n\nfunc main() {\n    _ = config.Default()\n}",
       "language": "go",
@@ -676,7 +676,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: package internal/auth PasswordHash(password string) string stub.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: package internal/auth PasswordHash(password string) string stub.",
       "task": "",
       "reference": "package auth\n\nfunc PasswordHash(password string) string {\n    return password\n}",
       "language": "go",
@@ -684,7 +684,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Комментарий //go:build linux в начале файла.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Комментарий //go:build linux в начале файла.",
       "task": "",
       "reference": "//go:build linux\n\npackage main",
       "language": "go",
@@ -692,7 +692,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Объяви module github.com/acme/widget в go.mod (комментарий в reference).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Объяви module github.com/acme/widget в go.mod (комментарий в reference).",
       "task": "",
       "reference": "module github.com/acme/widget\n\ngo 1.22",
       "language": "go",
@@ -700,7 +700,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Комментарий replace example.com/lib => ../lib в go.mod для локальной разработки.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Комментарий replace example.com/lib => ../lib в go.mod для локальной разработки.",
       "task": "",
       "reference": "replace example.com/lib => ../lib",
       "language": "go",
@@ -708,11 +708,12 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать Go: Exported функция Parse с godoc комментарием Parse reads config.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать Go: Exported функция Parse с godoc комментарием Parse reads config.",
       "task": "",
       "reference": "// Parse reads config from raw string.\nfunc Parse(raw string) (Config, error) {\n    return Config{}, nil\n}",
       "language": "go",
       "topic": "Модули и пакеты"
     }
-  ]
+  ],
+  "retired_ids": []
 }

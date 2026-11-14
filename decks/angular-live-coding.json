@@ -11,7 +11,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Напиши injectable-сервис CounterService с методами increment(): number и value(): number (внутренний счётчик).\n\nInjectable-сервис инкапсулирует логику для DI в компонентах.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: increment() → 1, increment() → 2, value() → 2",
+      "question": "Напиши injectable-сервис CounterService с методами increment(): number и value(): number (внутренний счётчик).\n\nInjectable-сервис инкапсулирует логику для DI в компонентах.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Инкапсуляция состояния и публичный API\n\nПример: increment() → 1, increment() → 2, value() → 2",
       "task": "",
       "reference": "import { Injectable } from '@angular/core';\n\n@Injectable({ providedIn: 'root' })\nexport class CounterService {\n  private count = 0;\n\n  increment(): number {\n    return ++this.count;\n  }\n\n  value(): number {\n    return this.count;\n  }\n}",
       "language": "typescript",
@@ -43,7 +43,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Standalone UsersListComponent: users$ из UserApi, шаблон @for по users$ | async.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n- Standalone-компонент с корректным imports в декораторе\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
+      "question": "Реализовать TypeScript/Angular: Standalone UsersListComponent: users$ из UserApi, шаблон @for по users$ | async.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n- Standalone-компонент с корректным imports в декораторе\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { UserApi } from './user-api';\n\n@Component({\n  selector: 'app-users-list',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    @for (user of users$ | async; track user.id) {\n      <p>{{ user.name }}</p>\n    }\n  `,\n})\nexport class UsersListComponent {\n  private api = inject(UserApi);\n  users$ = this.api.getUsers();\n}",
       "language": "typescript",
@@ -51,7 +51,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Дочерний компонент Rating с @Output() rated = new EventEmitter<number>() и кнопками 1–5.\n\nКомпонент эмитит событие родителю при действии пользователя.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректные @Input/@Output или signal inputs/outputs\n- Читаемость кода без лишней сложности\n\nПример: клик «3» → rated.emit(3)",
+      "question": "Реализовать TypeScript/Angular: Дочерний компонент Rating с @Output() rated = new EventEmitter<number>() и кнопками 1–5.\n\nКомпонент эмитит событие родителю при действии пользователя.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректные @Input/@Output или signal inputs/outputs\n\nПример: клик «3» → rated.emit(3)",
       "task": "",
       "reference": "import { Component, EventEmitter, Output } from '@angular/core';\n\n@Component({\n  selector: 'app-rating',\n  standalone: true,\n  template: `\n    @for (n of [1, 2, 3, 4, 5]; track n) {\n      <button type=\"button\" (click)=\"pick(n)\">{{ n }}</button>\n    }\n  `,\n})\nexport class RatingComponent {\n  @Output() rated = new EventEmitter<number>();\n\n  pick(value: number) {\n    this.rated.emit(value);\n  }\n}",
       "language": "typescript",
@@ -59,7 +59,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: NavComponent: ссылки /home и /about с routerLinkActive=\"active\".\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n- Читаемость кода без лишней сложности\n\nПример: routerLinkActive=\"active\" на текущем маршруте",
+      "question": "Реализовать TypeScript/Angular: NavComponent: ссылки /home и /about с routerLinkActive=\"active\".\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n\nПример: routerLinkActive=\"active\" на текущем маршруте",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\n\n@Component({\n  selector: 'app-nav',\n  standalone: true,\n  imports: [RouterLink, RouterLinkActive],\n  template: `\n    <a routerLink=\"/home\" routerLinkActive=\"active\">Home</a>\n    <a routerLink=\"/about\" routerLinkActive=\"active\">About</a>\n  `,\n})\nexport class NavComponent {}",
       "language": "typescript",
@@ -67,7 +67,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Маршрут path 'admin' с loadComponent для AdminPage.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: path 'admin' → lazy load AdminPage",
+      "question": "Реализовать TypeScript/Angular: Маршрут path 'admin' с loadComponent для AdminPage.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: path 'admin' → lazy load AdminPage",
       "task": "",
       "reference": "import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  {\n    path: 'admin',\n    loadComponent: () => import('./admin/admin.page').then(m => m.AdminPage),\n  },\n];",
       "language": "typescript",
@@ -75,7 +75,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular-функцию authGuard: inject AuthService, return router.parseUrl('/login') если !isLoggedIn(), иначе true.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n- Читаемость кода без лишней сложности\n\nПример: !isLoggedIn() → parseUrl('/login'); иначе true",
+      "question": "Реализовать TypeScript/Angular-функцию authGuard: inject AuthService, return router.parseUrl('/login') если !isLoggedIn(), иначе true.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n\nПример: !isLoggedIn() → parseUrl('/login'); иначе true",
       "task": "",
       "reference": "import { inject } from '@angular/core';\nimport { CanActivateFn, Router } from '@angular/router';\nimport { AuthService } from './auth.service';\n\nexport const authGuard: CanActivateFn = () => {\n  const auth = inject(AuthService);\n  const router = inject(Router);\n  return auth.isLoggedIn() ? true : router.parseUrl('/login');\n};",
       "language": "typescript",
@@ -91,7 +91,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Компонент с signal items: string[] и computed totalLength — сумма длин строк.\n\nсумма длин строк.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная обработка пустого входа\n- Signals API: signal, computed, effect — по заданию\n\nПример: [1, 2, 3] → 6",
+      "question": "Реализовать TypeScript/Angular: Компонент с signal items: string[] и computed totalLength — сумма длин строк.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная обработка пустого входа\n- Signals API: signal, computed, effect — по заданию\n\nПример: [1, 2, 3] → 6",
       "task": "",
       "reference": "import { Component, computed, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-stats',\n  standalone: true,\n  template: `<p>Total: {{ totalLength() }}</p>`,\n})\nexport class StatsComponent {\n  items = signal(['a', 'bb', 'ccc']);\n  totalLength = computed(() => this.items().reduce((sum, s) => sum + s.length, 0));\n}",
       "language": "typescript",
@@ -99,7 +99,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с signal query и effect в constructor, который console.log при изменении query.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию\n- Читаемость кода без лишней сложности\n\nПример: effect срабатывает при изменении signal query",
+      "question": "Реализовать TypeScript/Angular: Комponent с signal query и effect в constructor, который console.log при изменении query.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию\n\nПример: effect срабатывает при изменении signal query",
       "task": "",
       "reference": "import { Component, effect, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-search-log',\n  standalone: true,\n  template: `<input [value]=\"query()\" (input)=\"onInput($event)\" />`,\n})\nexport class SearchLogComponent {\n  query = signal('');\n\n  constructor() {\n    effect(() => console.log('query:', this.query()));\n  }\n\n  onInput(event: Event) {\n    this.query.set((event.target as HTMLInputElement).value);\n  }\n}",
       "language": "typescript",
@@ -107,7 +107,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Pipe truncate с @Pipe name truncate, transform(value: string, limit = 20): string.\n\nPipe преобразует значение в шаблоне через transform().\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: 'abcdefghij' | truncate:5 → 'abcde…'",
+      "question": "Реализовать TypeScript/Angular: Pipe truncate с @Pipe name truncate, transform(value: string, limit = 20): string.\n\nPipe преобразует значение в шаблоне через transform().\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: 'abcdefghij' | truncate:5 → 'abcde…'",
       "task": "",
       "reference": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({ name: 'truncate', standalone: true })\nexport class TruncatePipe implements PipeTransform {\n  transform(value: string, limit = 20): string {\n    if (!value) return '';\n    return value.length <= limit ? value : value.slice(0, limit) + '…';\n  }\n}",
       "language": "typescript",
@@ -123,7 +123,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Минимальный ToggleComponent с NG_VALUE_ACCESSOR, writeValue/registerOnChange, клик переключает boolean.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Граничные значения и краевые случаи\n- Читаемость кода без лишней сложности\n\nПример: несколько VALIDATORS объединяются в форме",
+      "question": "Минимальный ToggleComponent с NG_VALUE_ACCESSOR, writeValue/registerOnChange, клик переключает boolean.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Граничные значения и краевые случаи\n\nПример: несколько VALIDATORS объединяются в форме",
       "task": "",
       "reference": "import { Component, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'app-toggle',\n  standalone: true,\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => ToggleComponent),\n    multi: true,\n  }],\n  template: `<button type=\"button\" (click)=\"toggle()\">{{ on ? 'ON' : 'OFF' }}</button>`,\n})\nexport class ToggleComponent implements ControlValueAccessor {\n  on = false;\n  private onChange: (v: boolean) => void = () => {};\n\n  writeValue(value: boolean): void {\n    this.on = !!value;\n  }\n\n  registerOnChange(fn: (v: boolean) => void): void {\n    this.onChange = fn;\n  }\n\n  registerOnTouched(_fn: () => void): void {}\n\n  toggle() {\n    this.on = !this.on;\n    this.onChange(this.on);\n  }\n}",
       "language": "typescript",
@@ -131,7 +131,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: interceptor authInterceptor: clone request с Authorization Bearer token из AuthService.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
+      "question": "Реализовать TypeScript/Angular: interceptor authInterceptor: clone request с Authorization Bearer token из AuthService.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
       "task": "",
       "reference": "import { HttpInterceptorFn } from '@angular/common/http';\nimport { inject } from '@angular/core';\nimport { AuthService } from './auth.service';\n\nexport const authInterceptor: HttpInterceptorFn = (req, next) => {\n  const token = inject(AuthService).token();\n  if (!token) return next(req);\n  return next(req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }));\n};",
       "language": "typescript",
@@ -139,7 +139,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: userResolver: inject UserApi, return getUserById(route.paramMap.get('id')!).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: route param id → данные пользователя до открытия страницы",
+      "question": "Реализовать TypeScript/Angular: userResolver: inject UserApi, return getUserById(route.paramMap.get('id')!).\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: route param id → данные пользователя до открытия страницы",
       "task": "",
       "reference": "import { inject } from '@angular/core';\nimport { ResolveFn } from '@angular/router';\nimport { UserApi, User } from './user-api';\n\nexport const userResolver: ResolveFn<User> = route => {\n  const id = route.paramMap.get('id')!;\n  return inject(UserApi).getUserById(id);\n};",
       "language": "typescript",
@@ -147,7 +147,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Шаблон с @defer (on viewport) для тяжёлого HeavyChartComponent и @placeholder «Loading…».\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-dashboard /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Шаблон с @defer (on viewport) для тяжёлого HeavyChartComponent и @placeholder «Loading…».\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { HeavyChartComponent } from './heavy-chart.component';\n\n@Component({\n  selector: 'app-dashboard',\n  standalone: true,\n  imports: [HeavyChartComponent],\n  template: `\n    @defer (on viewport) {\n      <app-heavy-chart />\n    } @placeholder {\n      <p>Loading…</p>\n    }\n  `,\n})\nexport class DashboardComponent {}",
       "language": "typescript",
@@ -155,7 +155,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent использует private api = inject(ProductApi) без constructor DI.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Реализовать вручную, без использования constructor\n- Читаемость кода без лишней сложности\n\nПример: <app-products /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent использует private api = inject(ProductApi) без constructor DI.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Реализовать вручную, без использования constructor",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { ProductApi } from './product-api';\n\n@Component({\n  selector: 'app-products',\n  standalone: true,\n  template: `@for (p of api.list(); track p.id) { <p>{{ p.name }}</p> }`,\n})\nexport class ProductsComponent {\n  protected api = inject(ProductApi);\n}",
       "language": "typescript",
@@ -163,7 +163,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с input.required<string>() для title и шаблоном h1.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности\n\nПример: <app-heading /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с input.required<string>() для title и шаблоном h1.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-heading',\n  standalone: true,\n  template: `<h1>{{ title() }}</h1>`,\n})\nexport class HeadingComponent {\n  title = input.required<string>();\n}",
       "language": "typescript",
@@ -171,7 +171,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Child с output<number>() saved и кнопка emit(42).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-save-btn /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Child с output<number>() saved и кнопка emit(42).\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, output } from '@angular/core';\n\n@Component({\n  selector: 'app-save-btn',\n  standalone: true,\n  template: `<button type=\"button\" (click)=\"save.emit(42)\">Save</button>`,\n})\nexport class SaveBtnComponent {\n  save = output<number>();\n}",
       "language": "typescript",
@@ -179,7 +179,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Reactive field search: FormControl default '', input [formControl] и valueChanges subscribe в ngOnInit.\n\nReactive-форма с валидацией полей; submit недоступен при invalid.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Reactive Forms: FormGroup, FormControl, Validators\n- Читаемость кода без лишней сложности\n\nПример: <app-search /> — рендер шаблона компонента",
+      "question": "Reactive field search: FormControl default '', input [formControl] и valueChanges subscribe в ngOnInit.\n\nReactive-форма с валидацией полей; submit недоступен при invalid.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Reactive Forms: FormGroup, FormControl, Validators",
       "task": "",
       "reference": "import { Component, OnInit, inject } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { debounceTime } from 'rxjs';\n\n@Component({\n  selector: 'app-search',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `<input [formControl]=\"search\" placeholder=\"Search\" />`,\n})\nexport class SearchComponent implements OnInit {\n  search = new FormControl('', { nonNullable: true });\n\n  ngOnInit() {\n    this.search.valueChanges.pipe(debounceTime(300)).subscribe(v => console.log(v));\n  }\n}",
       "language": "typescript",
@@ -187,7 +187,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "SearchService.search(term): Observable<Item[]> — в компоненте search.valueChanges pipe switchMap к search.\n\nв компоненте search.valueChanges pipe switchMap к search.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная обработка пустого входа\n- Корректное использование async/await или Observable\n\nПример: <app-live-search /> — рендер шаблона компонента",
+      "question": "SearchService.search(term): Observable<Item[]> — в компоненте search.valueChanges pipe switchMap к search.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная обработка пустого входа\n- Корректное использование async/await или Observable",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { AsyncPipe } from '@angular/common';\nimport { switchMap, debounceTime, distinctUntilChanged } from 'rxjs';\nimport { SearchService } from './search.service';\n\n@Component({\n  selector: 'app-live-search',\n  standalone: true,\n  imports: [ReactiveFormsModule, AsyncPipe],\n  template: `\n    <input [formControl]=\"q\" />\n    @for (item of results$ | async; track item.id) {\n      <div>{{ item.name }}</div>\n    }\n  `,\n})\nexport class LiveSearchComponent {\n  private search = inject(SearchService);\n  q = new FormControl('', { nonNullable: true });\n  results$ = this.q.valueChanges.pipe(\n    debounceTime(300),\n    distinctUntilChanged(),\n    switchMap(term => this.search.search(term)),\n  );\n}",
       "language": "typescript",
@@ -195,7 +195,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с NgOptimizedImage, img ngSrc=\"/hero.jpg\" width height priority.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-hero /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с NgOptimizedImage, img ngSrc=\"/hero.jpg\" width height priority.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-hero',\n  standalone: true,\n  imports: [NgOptimizedImage],\n  template: `\n    <img ngSrc=\"/hero.jpg\" width=\"800\" height=\"400\" priority alt=\"Hero\" />\n  `,\n})\nexport class HeroComponent {}",
       "language": "typescript",
@@ -203,7 +203,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent *ngFor trackById для items с id (class Item { id, name }).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-list /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent *ngFor trackById для items с id (class Item { id, name }).\n\nКласс с требуемыми полями, методами и инкапсуляцией состояния.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgFor } from '@angular/common';\n\ninterface Item {\n  id: number;\n  name: string;\n}\n\n@Component({\n  selector: 'app-list',\n  standalone: true,\n  imports: [NgFor],\n  template: `\n    <div *ngFor=\"let item of items; trackBy: trackById\">{{ item.name }}</div>\n  `,\n})\nexport class ListComponent {\n  items: Item[] = [];\n\n  trackById(_index: number, item: Item) {\n    return item.id;\n  }\n}",
       "language": "typescript",
@@ -211,7 +211,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent слушает @HostListener('document:keydown.escape') и закрывает modal flag.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-modal /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent слушает @HostListener('document:keydown.escape') и закрывает modal flag.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, HostListener, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-modal',\n  standalone: true,\n  template: `\n    @if (open()) {\n      <div class=\"modal\">Press Esc to close</div>\n    }\n  `,\n})\nexport class ModalComponent {\n  open = signal(true);\n\n  @HostListener('document:keydown.escape')\n  onEsc() {\n    this.open.set(false);\n  }\n}",
       "language": "typescript",
@@ -219,7 +219,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: CardComponent с ng-content select=\"[card-title]\" и default ng-content.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-card /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: CardComponent с ng-content select=\"[card-title]\" и default ng-content.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-card',\n  standalone: true,\n  template: `\n    <header><ng-content select=\"[card-title]\"></ng-content></header>\n    <section><ng-content></ng-content></section>\n  `,\n})\nexport class CardComponent {}",
       "language": "typescript",
@@ -227,7 +227,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Parent с TemplateRef #tpl и ngTemplateOutlet с context { $implicit: name }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: name=\"Alice\" → шаблон «Hello, Alice!»",
+      "question": "Реализовать TypeScript/Angular: Parent с TemplateRef #tpl и ngTemplateOutlet с context { $implicit: name }.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: name=\"Alice\" → шаблон «Hello, Alice!»",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgTemplateOutlet } from '@angular/common';\n\n@Component({\n  selector: 'app-parent',\n  standalone: true,\n  imports: [NgTemplateOutlet],\n  template: `\n    <ng-template #hello let-name>\n      <p>Hi, {{ name }}</p>\n    </ng-template>\n    <ng-container *ngTemplateOutlet=\"hello; context: { $implicit: 'Anna' }\" />\n  `,\n})\nexport class ParentComponent {}",
       "language": "typescript",
@@ -235,7 +235,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: canDeactivate: если form.dirty — confirm('Leave?').\n\nconfirm('Leave?').\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: form.dirty → confirm('Leave?') перед уходом",
+      "question": "Реализовать TypeScript/Angular: canDeactivate: если form.dirty — confirm('Leave?').\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: form.dirty → confirm('Leave?') перед уходом",
       "task": "",
       "reference": "import { CanDeactivateFn } from '@angular/router';\n\nexport interface HasDirtyForm {\n  isDirty(): boolean;\n}\n\nexport const dirtyFormGuard: CanDeactivateFn<HasDirtyForm> = component => {\n  if (!component.isDirty()) return true;\n  return confirm('Leave without saving?');\n};",
       "language": "typescript",
@@ -243,7 +243,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Сервис DialogService openConfirm(): Observable<boolean> — open ConfirmDialogComponent, afterClosed.\n\nopen ConfirmDialogComponent, afterClosed.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: openConfirm(\"Delete?\") → Observable<boolean>",
+      "question": "Реализовать TypeScript/Angular: Сервис DialogService openConfirm(): Observable<boolean> — open ConfirmDialogComponent, afterClosed.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n\nПример: openConfirm(\"Delete?\") → Observable<boolean>",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { MatDialog } from '@angular/material/dialog';\nimport { ConfirmDialogComponent } from './confirm-dialog.component';\n\n@Injectable({ providedIn: 'root' })\nexport class DialogService {\n  private dialog = inject(MatDialog);\n\n  openConfirm(message: string) {\n    return this.dialog\n      .open(ConfirmDialogComponent, { data: { message } })\n      .afterClosed();\n  }\n}",
       "language": "typescript",
@@ -251,7 +251,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: ChangeDetection OnPush component с input signal user и @if (user()) show email.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию\n- Читаемость кода без лишней сложности\n\nПример: <app-user-chip /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: ChangeDetection OnPush component с input signal user и @if (user()) show email.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию",
       "task": "",
       "reference": "import { ChangeDetectionStrategy, Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-user-chip',\n  standalone: true,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n  template: `\n    @if (user(); as u) {\n      <span>{{ u.email }}</span>\n    }\n  `,\n})\nexport class UserChipComponent {\n  user = input<{ email: string } | null>(null);\n}",
       "language": "typescript",
@@ -259,7 +259,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Псевдо: rxResource или signal + toSignal(http.get) для products.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- HttpClient и типизация ответа API\n- Signals API: signal, computed, effect — по заданию\n\nПример: <app-product-grid /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Псевдо: rxResource или signal + toSignal(http.get) для products.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- HttpClient и типизация ответа API\n- Signals API: signal, computed, effect — по заданию",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { toSignal } from '@angular/core/rxjs-interop';\n\n@Component({\n  selector: 'app-product-grid',\n  standalone: true,\n  template: `@for (p of products(); track p.id) { <article>{{ p.name }}</article> }`,\n})\nexport class ProductGridComponent {\n  private http = inject(HttpClient);\n  products = toSignal(this.http.get<Product[]>('/api/products'), { initialValue: [] });\n}\n\ninterface Product {\n  id: number;\n  name: string;\n}",
       "language": "typescript",
@@ -275,7 +275,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "provideAppInitializer или ErrorHandler — class GlobalHandler implements ErrorHandler handleError console.error.\n\nclass GlobalHandler implements ErrorHandler handleError console.error.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: handleError(err) → console.error(err)",
+      "question": "provideAppInitializer или ErrorHandler — class GlobalHandler implements ErrorHandler handleError console.error.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: handleError(err) → console.error(err)",
       "task": "",
       "reference": "import { ErrorHandler, Injectable } from '@angular/core';\n\n@Injectable()\nexport class GlobalErrorHandler implements ErrorHandler {\n  handleError(error: unknown): void {\n    console.error('Unhandled error:', error);\n  }\n}\n\n// providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }]",
       "language": "typescript",
@@ -283,7 +283,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Route с title: 'Products' и data: { animation: 'ProductsPage' }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: route title и data доступны через ActivatedRoute",
+      "question": "Реализовать TypeScript/Angular: Route с title: 'Products' и data: { animation: 'ProductsPage' }.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: route title и data доступны через ActivatedRoute",
       "task": "",
       "reference": "import { Routes } from '@angular/router';\nimport { ProductsPage } from './products.page';\n\nexport const routes: Routes = [\n  {\n    path: 'products',\n    component: ProductsPage,\n    title: 'Products',\n    data: { animation: 'ProductsPage' },\n  },\n];",
       "language": "typescript",
@@ -291,7 +291,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Component с viewChild.required<ElementRef>('box') и ngAfterViewInit log nativeElement.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности\n\nПример: <app-box-host /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Component с viewChild.required<ElementRef>('box') и ngAfterViewInit log nativeElement.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';\n\n@Component({\n  selector: 'app-box-host',\n  standalone: true,\n  template: `<div #box>Box</div>`,\n})\nexport class BoxHostComponent implements AfterViewInit {\n  box = viewChild.required<ElementRef<HTMLElement>>('box');\n\n  ngAfterViewInit() {\n    console.log(this.box().nativeElement);\n  }\n}",
       "language": "typescript",
@@ -299,7 +299,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Component подписка interval pipe takeUntilDestroyed() без manual unsubscribe.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Реализовать вручную, без использования manual\n- Читаемость кода без лишней сложности\n\nПример: <app-ticker /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Component подписка interval pipe takeUntilDestroyed() без manual unsubscribe.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Реализовать вручную, без использования manual",
       "task": "",
       "reference": "import { Component, DestroyRef, inject } from '@angular/core';\nimport { takeUntilDestroyed } from '@angular/core/rxjs-interop';\nimport { interval } from 'rxjs';\n\n@Component({\n  selector: 'app-ticker',\n  standalone: true,\n  template: `<p>{{ tick }}</p>`,\n})\nexport class TickerComponent {\n  private destroyRef = inject(DestroyRef);\n  tick = 0;\n\n  constructor() {\n    interval(1000)\n      .pipe(takeUntilDestroyed(this.destroyRef))\n      .subscribe(n => (this.tick = n));\n  }\n}",
       "language": "typescript",
@@ -307,7 +307,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: ValidatorFn emailPattern: return { email: true } если нет @.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности\n\nПример: невалидный email → { email: true }",
+      "question": "Реализовать TypeScript/Angular: ValidatorFn emailPattern: return { email: true } если нет @.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках\n\nПример: невалидный email → { email: true }",
       "task": "",
       "reference": "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\nexport const simpleEmailValidator: ValidatorFn = (\n  control: AbstractControl\n): ValidationErrors | null => {\n  const value = String(control.value ?? '');\n  return value.includes('@') ? null : { email: true };\n};",
       "language": "typescript",
@@ -315,7 +315,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: FormBuilder group с FormArray phones, метод addPhone(), template @for control of phones.controls.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная работа с пустым массивом или списком\n- Инкапсуляция состояния и публичный API\n\nПример: users$ | async → список в шаблоне через @for",
+      "question": "Реализовать TypeScript/Angular: FormBuilder group с FormArray phones, метод addPhone(), template @for control of phones.controls.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректная работа с пустым массивом или списком\n- Инкапсуляция состояния и публичный API\n\nПример: users$ | async → список в шаблоне через @for",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';\n\n@Component({\n  selector: 'app-phones',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `\n    <div [formGroup]=\"form\">\n      <div formArrayName=\"phones\">\n        @for (ctrl of phones.controls; track $index) {\n          <input [formControlName]=\"$index\" />\n        }\n      </div>\n      <button type=\"button\" (click)=\"addPhone()\">Add</button>\n    </div>\n  `,\n})\nexport class PhonesComponent {\n  form = this.fb.group({ phones: this.fb.array([]) });\n\n  constructor(private fb: FormBuilder) {\n    this.addPhone();\n  }\n\n  get phones() {\n    return this.form.get('phones') as FormArray;\n  }\n\n  addPhone() {\n    this.phones.push(this.fb.control('', Validators.required));\n  }\n}",
       "language": "typescript",
@@ -323,7 +323,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Шаблон @let user = users$ | async; @if (user) { .\n\n}.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
+      "question": "Шаблон @let user = users$ | async; @if (user) { .\n\n}.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { UserApi } from './user-api';\n\n@Component({\n  selector: 'app-profile-link',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    @let user = users$ | async;\n    @if (user) {\n      <a [routerLink]=\"['/users', user.id]\">{{ user.name }}</a>\n    }\n  `,\n})\nexport class ProfileLinkComponent {\n  users$ = inject(UserApi).getUsers();\n}",
       "language": "typescript",
@@ -331,7 +331,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Шаблон *ngIf=\"loggedIn(); else guest\" с ng-template #guest.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-auth-banner /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Шаблон *ngIf=\"loggedIn(); else guest\" с ng-template #guest.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { NgIf } from '@angular/common';\n\n@Component({\n  selector: 'app-auth-banner',\n  standalone: true,\n  imports: [NgIf],\n  template: `\n    <div *ngIf=\"loggedIn(); else guest\">Welcome back</div>\n    <ng-template #guest><div>Please log in</div></ng-template>\n  `,\n})\nexport class AuthBannerComponent {\n  loggedIn = signal(false);\n}",
       "language": "typescript",
@@ -339,7 +339,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Parent с router-outlet и children routes path '' -> List, ':id' -> Detail.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n- Читаемость кода без лишней сложности\n\nПример: ':id' → Detail",
+      "question": "Реализовать TypeScript/Angular: Parent с router-outlet и children routes path '' -> List, ':id' -> Detail.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n\nПример: ':id' → Detail",
       "task": "",
       "reference": "import { Routes } from '@angular/router';\nimport { ShellComponent } from './shell.component';\n\nexport const routes: Routes = [\n  {\n    path: 'items',\n    component: ShellComponent,\n    children: [\n      { path: '', loadComponent: () => import('./list').then(m => m.ListComponent) },\n      { path: ':id', loadComponent: () => import('./detail').then(m => m.DetailComponent) },\n    ],\n  },\n];",
       "language": "typescript",
@@ -347,7 +347,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: InjectionToken API_URL и useValue в providers из environment.apiUrl.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Реализовать TypeScript/Angular: InjectionToken API_URL и useValue в providers из environment.apiUrl.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { InjectionToken, inject } from '@angular/core';\n\nexport const API_URL = new InjectionToken<string>('API_URL');\n\nexport class ApiClient {\n  private base = inject(API_URL);\n\n  url(path: string) {\n    return `${this.base}${path}`;\n  }\n}\n\n// providers: [{ provide: API_URL, useValue: environment.apiUrl }]",
       "language": "typescript",
@@ -355,7 +355,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Минимальный spec: TestBed.configureTestingModule({ imports: [CounterComponent] }); createComponent; click increment.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Граничные значения и краевые случаи\n- Инкапсуляция состояния и публичный API\n- Корректное использование async/await или Observable\n\nПример: increment() → 1, increment() → 2, value() → 2",
+      "question": "Минимальный spec: TestBed.configureTestingModule({ imports: [CounterComponent] }); createComponent; click increment.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Граничные значения и краевые случаи\n- Инкапсуляция состояния и публичный API\n- Корректное использование async/await или Observable\n\nПример: increment() → 1, increment() → 2, value() → 2",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { CounterComponent } from './counter.component';\n\ndescribe('CounterComponent', () => {\n  let fixture: ComponentFixture<CounterComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [CounterComponent] }).compileComponents();\n    fixture = TestBed.createComponent(CounterComponent);\n    fixture.detectChanges();\n  });\n\n  it('increments', () => {\n    fixture.nativeElement.querySelector('button').click();\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('1');\n  });\n});",
       "language": "typescript",
@@ -363,7 +363,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Standalone компонент ListComponent: @for (item of items; track item.id) в шаблоне inline.\n\nStandalone-компонент отображает данные в шаблоне по входным параметрам.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Standalone-компонент с корректным imports в декораторе\n- Читаемость кода без лишней сложности\n\nПример: users$ | async → список в шаблоне через @for",
+      "question": "Реализовать TypeScript/Angular: Standalone компонент ListComponent: @for (item of items; track item.id) в шаблоне inline.\n\nStandalone-компонент отображает данные в шаблоне по входным параметрам.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Standalone-компонент с корректным imports в декораторе\n\nПример: users$ | async → список в шаблоне через @for",
       "task": "",
       "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-list',\n  standalone: true,\n  template: `@for (item of items; track item.id) { <span>{{ item.label }}</span> }`,\n})\nexport class ListComponent {\n  items = [{ id: 1, label: 'A' }];\n}",
       "language": "typescript",
@@ -371,7 +371,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Компонент BoxComponent с [ngStyle]=\"{ color: active ?.\n\n'green' : 'gray' }\".\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-box /> — рендер шаблона компонента",
+      "question": "Компонент BoxComponent с [ngStyle]=\"{ color: active ?.\n\n'green' : 'gray' }\".\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgStyle } from '@angular/common';\n\n@Component({\n  selector: 'app-box',\n  standalone: true,\n  imports: [NgStyle],\n  template: `<div [ngStyle]=\"{ color: active ? 'green' : 'gray' }\">Box</div>`,\n})\nexport class BoxComponent {\n  active = true;\n}",
       "language": "typescript",
@@ -379,7 +379,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Компонент PillComponent: [ngClass]=\"{ active: isActive, disabled: isDisabled }\".\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-pill /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Компонент PillComponent: [ngClass]=\"{ active: isActive, disabled: isDisabled }\".\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgClass } from '@angular/common';\n\n@Component({\n  selector: 'app-pill',\n  standalone: true,\n  imports: [NgClass],\n  template: `<span [ngClass]=\"{ active: isActive, disabled: isDisabled }\">Pill</span>`,\n})\nexport class PillComponent {\n  isActive = true;\n  isDisabled = false;\n}",
       "language": "typescript",
@@ -387,7 +387,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с @HostListener('document:click') onDocumentClick().\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-click-tracker /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с @HostListener('document:click') onDocumentClick().\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, HostListener } from '@angular/core';\n\n@Component({\n  selector: 'app-click-tracker',\n  standalone: true,\n  template: `<p>Clicks: {{ count }}</p>`,\n})\nexport class ClickTrackerComponent {\n  count = 0;\n\n  @HostListener('document:click')\n  onDocumentClick(): void {\n    this.count++;\n  }\n}",
       "language": "typescript",
@@ -395,7 +395,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Компонент с @HostBinding('class.active') get isActive() { return true; }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-host-active /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Компонент с @HostBinding('class.active') get isActive() { return true; }.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, HostBinding } from '@angular/core';\n\n@Component({\n  selector: 'app-host-active',\n  standalone: true,\n  template: `Host`,\n})\nexport class HostActiveComponent {\n  @HostBinding('class.active')\n  get isActive(): boolean {\n    return true;\n  }\n}",
       "language": "typescript",
@@ -403,7 +403,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Компонент с observable count$ = of(1) и шаблоном {{ count$ | async }}.\n\nСервис выполняет HTTP-запрос и возвращает типизированный Observable.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: <app-async-count /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Компонент с observable count$ = of(1) и шаблоном {{ count$ | async }}.\n\nСервис выполняет HTTP-запрос и возвращает типизированный Observable.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Корректное использование async/await или Observable",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { of } from 'rxjs';\n\n@Component({\n  selector: 'app-async-count',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `<p>{{ count$ | async }}</p>`,\n})\nexport class AsyncCountComponent {\n  count$ = of(42);\n}",
       "language": "typescript",
@@ -411,7 +411,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Шаблон с a routerLink=\"/home\" routerLinkActive=\"active\".\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n- Читаемость кода без лишней сложности\n\nПример: routerLinkActive=\"active\" на текущем маршруте",
+      "question": "Реализовать TypeScript/Angular: Шаблон с a routerLink=\"/home\" routerLinkActive=\"active\".\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Маршрутизация: RouterLink, RouterOutlet или loadComponent\n\nПример: routerLinkActive=\"active\" на текущем маршруте",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { RouterLink, RouterLinkActive } from '@angular/router';\n\n@Component({\n  selector: 'app-nav',\n  standalone: true,\n  imports: [RouterLink, RouterLinkActive],\n  template: `<a routerLink=\"/home\" routerLinkActive=\"active\">Home</a>`,\n})\nexport class NavComponent {}",
       "language": "typescript",
@@ -427,7 +427,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Validator forbiddenName(name: string): ValidatorFn запрещает exact match.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Покрытие всех указанных веток / case и значение по умолчанию\n- Валидация обязательных полей и сообщений об ошибках\n\nПример: невалидный email → { email: true }",
+      "question": "Реализовать TypeScript/Angular: Validator forbiddenName(name: string): ValidatorFn запрещает exact match.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Покрытие всех указанных веток / case и значение по умолчанию\n- Валидация обязательных полей и сообщений об ошибках\n\nПример: невалидный email → { email: true }",
       "task": "",
       "reference": "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\nexport function forbiddenName(name: string): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    return control.value === name ? { forbiddenName: { value: control.value } } : null;\n  };\n}",
       "language": "typescript",
@@ -435,7 +435,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Functional guard canDeactivate: CanDeactivateFn возвращает true если !component.isDirty().\n\nРезультат работы: true если !component.isDirty().\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: form.dirty → confirm('Leave?') перед уходом",
+      "question": "Реализовать TypeScript/Angular: Functional guard canDeactivate: CanDeactivateFn возвращает true если !component.isDirty().\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: form.dirty → confirm('Leave?') перед уходом",
       "task": "",
       "reference": "import { CanDeactivateFn } from '@angular/router';\n\nexport interface DirtyCheck {\n  isDirty(): boolean;\n}\n\nexport const canDeactivateDirty: CanDeactivateFn<DirtyCheck> = (component) => {\n  return component.isDirty() ? confirm('Leave?') : true;\n};",
       "language": "typescript",
@@ -443,7 +443,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: InjectionToken API_URL и factory provider useValue 'https://api.example.com'.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- HttpClient и типизация ответа API\n- Читаемость кода без лишней сложности\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Реализовать TypeScript/Angular: InjectionToken API_URL и factory provider useValue 'https://api.example.com'.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- HttpClient и типизация ответа API\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { InjectionToken } from '@angular/core';\n\nexport const API_URL = new InjectionToken<string>('API_URL');\n\nexport const apiUrlProvider = {\n  provide: API_URL,\n  useValue: 'https://api.example.com',\n};",
       "language": "typescript",
@@ -451,7 +451,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Functional interceptor добавляет header X-App: ai-anki.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
+      "question": "Реализовать TypeScript/Angular: Functional interceptor добавляет header X-App: ai-anki.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
       "task": "",
       "reference": "import { HttpInterceptorFn } from '@angular/common/http';\n\nexport const appInterceptor: HttpInterceptorFn = (req, next) => {\n  return next(req.clone({ setHeaders: { 'X-App': 'ai-anki' } }));\n};",
       "language": "typescript",
@@ -459,7 +459,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с count = toSignal(of(0), { initialValue: 0 }).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию\n- Читаемость кода без лишней сложности\n\nПример: <app-signal-count /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с count = toSignal(of(0), { initialValue: 0 }).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { of } from 'rxjs';\n\n@Component({\n  selector: 'app-signal-count',\n  standalone: true,\n  template: `<p>{{ count() }}</p>`,\n})\nexport class SignalCountComponent {\n  count = toSignal(of(5), { initialValue: 0 });\n}",
       "language": "typescript",
@@ -467,7 +467,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Signals first/last и computed fullName = `${first()} ${last()}`.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию\n- Читаемость кода без лишней сложности\n\nПример: <app-full-name /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Signals first/last и computed fullName = `${first()} ${last()}`.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Signals API: signal, computed, effect — по заданию",
       "task": "",
       "reference": "import { Component, computed, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-full-name',\n  standalone: true,\n  template: `<p>{{ fullName() }}</p>`,\n})\nexport class FullNameComponent {\n  first = signal('Ada');\n  last = signal('Lovelace');\n  fullName = computed(() => `${this.first()} ${this.last()}`);\n}",
       "language": "typescript",
@@ -483,7 +483,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Standalone component с changeDetection: ChangeDetectionStrategy.OnPush.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Standalone-компонент с корректным imports в декораторе\n- Читаемость кода без лишней сложности\n\nПример: <app-on-push /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Standalone component с changeDetection: ChangeDetectionStrategy.OnPush.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Standalone-компонент с корректным imports в декораторе",
       "task": "",
       "reference": "import { ChangeDetectionStrategy, Component } from '@angular/core';\n\n@Component({\n  selector: 'app-on-push',\n  standalone: true,\n  template: `<p>{{ title }}</p>`,\n  changeDetection: ChangeDetectionStrategy.OnPush,\n})\nexport class OnPushComponent {\n  title = 'OnPush';\n}",
       "language": "typescript",
@@ -491,7 +491,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с @ViewChild('box') box!: ElementRef<HTMLDivElement>.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: name=\"Alice\" → шаблон «Hello, Alice!»",
+      "question": "Реализовать TypeScript/Angular: Комponent с @ViewChild('box') box!: ElementRef<HTMLDivElement>.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: name=\"Alice\" → шаблон «Hello, Alice!»",
       "task": "",
       "reference": "import { Component, ElementRef, ViewChild } from '@angular/core';\n\n@Component({\n  selector: 'app-view-child',\n  standalone: true,\n  template: `<div #box>Hello</div>`,\n})\nexport class ViewChildComponent {\n  @ViewChild('box') box!: ElementRef<HTMLDivElement>;\n}",
       "language": "typescript",
@@ -499,7 +499,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с ng-content и @ContentChild('ref') ref!: ElementRef.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: <app-wrapper /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с ng-content и @ContentChild('ref') ref!: ElementRef.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular",
       "task": "",
       "reference": "import { Component, ContentChild, ElementRef } from '@angular/core';\n\n@Component({\n  selector: 'app-wrapper',\n  standalone: true,\n  template: `<ng-content select=\"[slot]\"></ng-content>`,\n})\nexport class WrapperComponent {\n  @ContentChild('ref') ref!: ElementRef<HTMLElement>;\n}",
       "language": "typescript",
@@ -507,7 +507,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Routes config с path '' redirectTo 'home'.\n\nОписание маршрутов приложения: path, component, guards.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: path 'admin' → lazy load AdminPage",
+      "question": "Реализовать TypeScript/Angular: Routes config с path '' redirectTo 'home'.\n\nОписание маршрутов приложения: path, component, guards.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n\nПример: path 'admin' → lazy load AdminPage",
       "task": "",
       "reference": "import { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  { path: '', pathMatch: 'full', redirectTo: 'home' },\n  { path: 'home', loadComponent: () => import('./home.component').then((m) => m.HomeComponent) },\n];",
       "language": "typescript",
@@ -515,7 +515,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Комponent с label = input.required<string>() и шаблоном {{ label() }}.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности\n\nПример: <app-label /> — рендер шаблона компонента",
+      "question": "Реализовать TypeScript/Angular: Комponent с label = input.required<string>() и шаблоном {{ label() }}.\n\nНеобходимо предусмотреть:\n- Корректные imports и декораторы Angular\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-label',\n  standalone: true,\n  template: `<span>{{ label() }}</span>`,\n})\nexport class LabelComponent {\n  label = input.required<string>();\n}",
       "language": "typescript",
@@ -523,7 +523,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте standalone-компонент CardComponent с selector app-card.\n\nВ шаблоне используйте ng-content с select=\"[card-header]\" для заголовка и второй ng-content без select для основного содержимого. Компонент не должен содержать бизнес-логики — только разметку.\n\nНеобходимо предусмотреть:\n- standalone: true\n- Два слота ng-content\n- Selector app-card\n\nПример: <app-card /> — рендер шаблона компонента",
+      "question": "Создайте standalone-компонент CardComponent с selector app-card.\n\nВ шаблоне используйте ng-content с select=\"[card-header]\" для заголовка и второй ng-content без select для основного содержимого. Компонент не должен содержать бизнес-логики — только разметку.\n\nНеобходимо предусмотреть:\n- standalone: true\n- Два слота ng-content\n- Selector app-card",
       "task": "",
       "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-card',\n  standalone: true,\n  template: `\n    <article class=\"card\">\n      <header><ng-content select=\"[card-header]\"></ng-content></header>\n      <div class=\"body\"><ng-content></ng-content></div>\n    </article>\n  `,\n})\nexport class CardComponent {}",
       "language": "typescript",
@@ -531,7 +531,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализуйте standalone-компонент StarRatingComponent с selector app-star-rating.\n\nИспользуйте model<number>() для рейтинга от 1 до 5. В шаблоне выведите кнопки 1–5; клик обновляет модель через rating.set(n).\n\nНеобходимо предусмотреть:\n- model() вместо @Input/@Output\n- Standalone\n- 5 кнопок рейтинга\n\nПример: <app-star-rating /> — рендер шаблона компонента",
+      "question": "Реализуйте standalone-компонент StarRatingComponent с selector app-star-rating.\n\nИспользуйте model<number>() для рейтинга от 1 до 5. В шаблоне выведите кнопки 1–5; клик обновляет модель через rating.set(n).\n\nНеобходимо предусмотреть:\n- model() вместо @Input/@Output\n- Standalone\n- 5 кнопок рейтинга",
       "task": "",
       "reference": "import { Component, model } from '@angular/core';\n\n@Component({\n  selector: 'app-star-rating',\n  standalone: true,\n  template: `\n    @for (n of [1, 2, 3, 4, 5]; track n) {\n      <button type=\"button\" [class.active]=\"n <= rating()\" (click)=\"rating.set(n)\">\n        {{ n }}\n      </button>\n    }\n  `,\n})\nexport class StarRatingComponent {\n  rating = model(0);\n}",
       "language": "typescript",
@@ -539,7 +539,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте BadgeComponent с host: { class: 'badge', '[attr.data-count]': 'count()' }.\n\nИспользуйте signal count с начальным значением 0 и кнопку increment. Шаблон выводит {{ count() }}.\n\nНеобходимо предусмотреть:\n- host metadata\n- signal count\n- data-count атрибут\n\nПример: <app-badge /> — рендер шаблона компонента",
+      "question": "Создайте BadgeComponent с host: { class: 'badge', '[attr.data-count]': 'count()' }.\n\nИспользуйте signal count с начальным значением 0 и кнопку increment. Шаблон выводит {{ count() }}.\n\nНеобходимо предусмотреть:\n- host metadata\n- signal count\n- data-count атрибут",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-badge',\n  standalone: true,\n  host: {\n    class: 'badge',\n    '[attr.data-count]': 'count()',\n  },\n  template: `\n    <span>{{ count() }}</span>\n    <button type=\"button\" (click)=\"increment()\">+</button>\n  `,\n})\nexport class BadgeComponent {\n  count = signal(0);\n\n  increment() {\n    this.count.update(v => v + 1);\n  }\n}",
       "language": "typescript",
@@ -547,7 +547,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте LabelComponent с input transform: label = input('', { transform: (v: string | number) => String(v).toUpperCase() }).\n\nШаблон: <label>{{ label() }}</label>. Standalone, selector app-label.\n\nНеобходимо предусмотреть:\n- input() с transform\n- Uppercase преобразование\n- Standalone\n\nПример: <app-label /> — рендер шаблона компонента",
+      "question": "Создайте LabelComponent с input transform: label = input('', { transform: (v: string | number) => String(v).toUpperCase() }).\n\nШаблон: <label>{{ label() }}</label>. Standalone, selector app-label.\n\nНеобходимо предусмотреть:\n- input() с transform\n- Uppercase преобразование\n- Standalone",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-label',\n  standalone: true,\n  template: `<label>{{ label() }}</label>`,\n})\nexport class LabelComponent {\n  label = input('', { transform: (v: string | number) => String(v).toUpperCase() });\n}",
       "language": "typescript",
@@ -555,7 +555,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FilePickerComponent: скрытый input type=file и кнопка «Выбрать».\n\nПри change эмитьте output<File | null>() selected. Standalone, selector app-file-picker.\n\nНеобходимо предусмотреть:\n- output<File | null>()\n- Hidden file input\n- Standalone\n\nПример: <app-file-picker /> — рендер шаблона компонента",
+      "question": "Создайте FilePickerComponent: скрытый input type=file и кнопка «Выбрать».\n\nПри change эмитьте output<File | null>() selected. Standalone, selector app-file-picker.\n\nНеобходимо предусмотреть:\n- output<File | null>()\n- Hidden file input\n- Standalone",
       "task": "",
       "reference": "import { Component, output } from '@angular/core';\n\n@Component({\n  selector: 'app-file-picker',\n  standalone: true,\n  template: `\n    <input #fileInput type=\"file\" hidden (change)=\"onChange($event)\" />\n    <button type=\"button\" (click)=\"fileInput.click()\">Выбрать</button>\n  `,\n})\nexport class FilePickerComponent {\n  selected = output<File | null>();\n\n  onChange(event: Event) {\n    const input = event.target as HTMLInputElement;\n    this.selected.emit(input.files?.[0] ?? null);\n  }\n}",
       "language": "typescript",
@@ -571,7 +571,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте GlobalStylesComponent с encapsulation: ViewEncapsulation.None и styles: ['p { margin: 0; }'].\n\nШаблон <p>Global</p>. Standalone.\n\nНеобходимо предусмотреть:\n- ViewEncapsulation.None\n- Inline styles\n- Standalone\n\nПример: <app-global-styles /> — рендер шаблона компонента",
+      "question": "Создайте GlobalStylesComponent с encapsulation: ViewEncapsulation.None и styles: ['p { margin: 0; }'].\n\nШаблон <p>Global</p>. Standalone.\n\nНеобходимо предусмотреть:\n- ViewEncapsulation.None\n- Inline styles\n- Standalone",
       "task": "",
       "reference": "import { Component, ViewEncapsulation } from '@angular/core';\n\n@Component({\n  selector: 'app-global-styles',\n  standalone: true,\n  encapsulation: ViewEncapsulation.None,\n  styles: ['p { margin: 0; }'],\n  template: `<p>Global</p>`,\n})\nexport class GlobalStylesComponent {}",
       "language": "typescript",
@@ -579,7 +579,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ProfileComponent, inject ProfileService, в ngOnInit вызовите load().\n\nprofile = signal<Profile | null>(null). ProfileService.load() возвращает Observable<Profile>. Подпишитесь и установите profile через set.\n\nНеобходимо предусмотреть:\n- ngOnInit\n- inject()\n- signal для profile\n\nПример: <app-profile /> — рендер шаблона компонента",
+      "question": "Создайте ProfileComponent, inject ProfileService, в ngOnInit вызовите load().\n\nprofile = signal<Profile | null>(null). ProfileService.load() возвращает Observable<Profile>. Подпишитесь и установите profile через set.\n\nНеобходимо предусмотреть:\n- ngOnInit\n- inject()\n- signal для profile",
       "task": "",
       "reference": "import { Component, OnInit, inject, signal } from '@angular/core';\nimport { ProfileService, Profile } from './profile.service';\n\n@Component({\n  selector: 'app-profile',\n  standalone: true,\n  template: `@if (profile(); as p) { <h2>{{ p.name }}</h2> }`,\n})\nexport class ProfileComponent implements OnInit {\n  private api = inject(ProfileService);\n  profile = signal<Profile | null>(null);\n\n  ngOnInit() {\n    this.api.load().subscribe(p => this.profile.set(p));\n  }\n}",
       "language": "typescript",
@@ -587,7 +587,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте IconComponent: @Input({ alias: 'iconName' }) name = 'home'.\n\nШаблон <i [class]=\"'icon-' + name\"></i>. Standalone, selector app-icon.\n\nНеобходимо предусмотреть:\n- @Input с alias\n- Default value\n- Standalone\n\nПример: <app-icon /> — рендер шаблона компонента",
+      "question": "Создайте IconComponent: @Input({ alias: 'iconName' }) name = 'home'.\n\nШаблон <i [class]=\"'icon-' + name\"></i>. Standalone, selector app-icon.\n\nНеобходимо предусмотреть:\n- @Input с alias\n- Default value\n- Standalone",
       "task": "",
       "reference": "import { Component, Input } from '@angular/core';\n\n@Component({\n  selector: 'app-icon',\n  standalone: true,\n  template: `<i [class]=\"'icon-' + name\"></i>`,\n})\nexport class IconComponent {\n  @Input({ alias: 'iconName' }) name = 'home';\n}",
       "language": "typescript",
@@ -595,7 +595,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте LazyHostComponent: flag = signal(false), метод open() устанавливает true.\n\nВ шаблоне @if (flag()) { @defer { <app-modal /> } }. Импортируйте ModalComponent в imports.\n\nНеобходимо предусмотреть:\n- @defer в шаблоне\n- signal flag\n- ModalComponent import\n\nПример: <app-lazy-host /> — рендер шаблона компонента",
+      "question": "Создайте LazyHostComponent: flag = signal(false), метод open() устанавливает true.\n\nВ шаблоне @if (flag()) { @defer { <app-modal /> } }. Импортируйте ModalComponent в imports.\n\nНеобходимо предусмотреть:\n- @defer в шаблоне\n- signal flag\n- ModalComponent import",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { ModalComponent } from './modal.component';\n\n@Component({\n  selector: 'app-lazy-host',\n  standalone: true,\n  imports: [ModalComponent],\n  template: `\n    <button type=\"button\" (click)=\"open()\">Open</button>\n    @if (openFlag()) {\n      @defer {\n        <app-modal />\n      }\n    }\n  `,\n})\nexport class LazyHostComponent {\n  openFlag = signal(false);\n\n  open() {\n    this.openFlag.set(true);\n  }\n}",
       "language": "typescript",
@@ -603,7 +603,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте DialogActionsComponent с output<void>() confirm и cancel.\n\nДве кнопки вызывают confirm.emit() и cancel.emit(). Standalone.\n\nНеобходимо предусмотреть:\n- Два output<void>()\n- Standalone\n- Две кнопки\n\nПример: <app-dialog-actions /> — рендер шаблона компонента",
+      "question": "Создайте DialogActionsComponent с output<void>() confirm и cancel.\n\nДве кнопки вызывают confirm.emit() и cancel.emit(). Standalone.\n\nНеобходимо предусмотреть:\n- Два output<void>()\n- Standalone\n- Две кнопки",
       "task": "",
       "reference": "import { Component, output } from '@angular/core';\n\n@Component({\n  selector: 'app-dialog-actions',\n  standalone: true,\n  template: `\n    <button type=\"button\" (click)=\"confirm.emit()\">OK</button>\n    <button type=\"button\" (click)=\"cancel.emit()\">Cancel</button>\n  `,\n})\nexport class DialogActionsComponent {\n  confirm = output<void>();\n  cancel = output<void>();\n}",
       "language": "typescript",
@@ -611,7 +611,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FooterComponent с template содержащим текущий год через getter year.\n\nStandalone, selector app-footer, шаблон <footer>&copy; {{ year }}</footer>.\n\nНеобходимо предусмотреть:\n- Getter year\n- Inline template\n- Standalone\n\nПример: <app-footer /> — рендер шаблона компонента",
+      "question": "Создайте FooterComponent с template содержащим текущий год через getter year.\n\nStandalone, selector app-footer, шаблон <footer>&copy; {{ year }}</footer>.\n\nНеобходимо предусмотреть:\n- Getter year\n- Inline template\n- Standalone",
       "task": "",
       "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-footer',\n  standalone: true,\n  template: `<footer>&copy; {{ year }}</footer>`,\n})\nexport class FooterComponent {\n  get year() {\n    return new Date().getFullYear();\n  }\n}",
       "language": "typescript",
@@ -619,7 +619,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ChipComponent с styles: ':host { display: inline-block; } :host(.selected) { font-weight: bold; }'.\n\nInput selected через signal input<boolean>. HostBinding class selected.\n\nНеобходимо предусмотреть:\n- host class binding\n- input() signals\n- :host styles\n\nПример: <app-chip /> — рендер шаблона компонента",
+      "question": "Создайте ChipComponent с styles: ':host { display: inline-block; } :host(.selected) { font-weight: bold; }'.\n\nInput selected через signal input<boolean>. HostBinding class selected.\n\nНеобходимо предусмотреть:\n- host class binding\n- input() signals\n- :host styles",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\n\n@Component({\n  selector: 'app-chip',\n  standalone: true,\n  host: { '[class.selected]': 'selected()' },\n  styles: [':host { display: inline-block; } :host(.selected) { font-weight: bold; }'],\n  template: `<span>{{ label() }}</span>`,\n})\nexport class ChipComponent {\n  label = input('Chip');\n  selected = input(false);\n}",
       "language": "typescript",
@@ -627,7 +627,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте PanelComponent: ng-content для body, если пусто — показать «No content».\n\nИспользуйте @if и флаг hasContent через ContentChild или простой ng-content с ng-template #empty.\n\nНеобходимо предусмотреть:\n- ng-content\n- Standalone\n- Section wrapper\n\nПример: <app-panel /> — рендер шаблона компонента",
+      "question": "Создайте PanelComponent: ng-content для body, если пусто — показать «No content».\n\nИспользуйте @if и флаг hasContent через ContentChild или простой ng-content с ng-template #empty.\n\nНеобходимо предусмотреть:\n- ng-content\n- Standalone\n- Section wrapper",
       "task": "",
       "reference": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-panel',\n  standalone: true,\n  template: `\n    <section class=\"panel\">\n      <ng-content></ng-content>\n    </section>\n  `,\n})\nexport class PanelComponent {}",
       "language": "typescript",
@@ -635,7 +635,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте SearchBoxComponent с exportAs: 'searchBox', FormControl search, метод clear() сбрасывает search.\n\nStandalone с ReactiveFormsModule.\n\nНеобходимо предусмотреть:\n- exportAs: 'searchBox'\n- FormControl\n- Метод clear()\n\nПример: <app-search-box /> — рендер шаблона компонента",
+      "question": "Создайте SearchBoxComponent с exportAs: 'searchBox', FormControl search, метод clear() сбрасывает search.\n\nStandalone с ReactiveFormsModule.\n\nНеобходимо предусмотреть:\n- exportAs: 'searchBox'\n- FormControl\n- Метод clear()",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\n\n@Component({\n  selector: 'app-search-box',\n  standalone: true,\n  exportAs: 'searchBox',\n  imports: [ReactiveFormsModule],\n  template: `\n    <input [formControl]=\"search\" />\n    <button type=\"button\" (click)=\"clear()\">Clear</button>\n  `,\n})\nexport class SearchBoxComponent {\n  search = new FormControl('', { nonNullable: true });\n\n  clear() {\n    this.search.reset('');\n  }\n}",
       "language": "typescript",
@@ -643,7 +643,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте StatusBannerComponent со signal status: 'ok' | 'warn' | 'error'.\n\nВ шаблоне используйте @if / @else if / @else для трёх разных сообщений. Кнопки меняют status через set.\n\nНеобходимо предусмотреть:\n- @if @else if @else\n- signal union type\n- Три кнопки\n\nПример: <app-status-banner /> — рендер шаблона компонента",
+      "question": "Создайте StatusBannerComponent со signal status: 'ok' | 'warn' | 'error'.\n\nВ шаблоне используйте @if / @else if / @else для трёх разных сообщений. Кнопки меняют status через set.\n\nНеобходимо предусмотреть:\n- @if @else if @else\n- signal union type\n- Три кнопки",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-status-banner',\n  standalone: true,\n  template: `\n    @if (status() === 'ok') {\n      <p class=\"ok\">All good</p>\n    } @else if (status() === 'warn') {\n      <p class=\"warn\">Warning</p>\n    } @else {\n      <p class=\"error\">Error</p>\n    }\n    <button (click)=\"status.set('ok')\">OK</button>\n    <button (click)=\"status.set('warn')\">Warn</button>\n    <button (click)=\"status.set('error')\">Error</button>\n  `,\n})\nexport class StatusBannerComponent {\n  status = signal<'ok' | 'warn' | 'error'>('ok');\n}",
       "language": "typescript",
@@ -659,7 +659,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ThemeSwitcherComponent: theme = signal<'light' | 'dark' | 'system'>('light').\n\nШаблон @switch (theme()) с @case для каждой темы и @default.\n\nНеобходимо предусмотреть:\n- @switch @case @default\n- signal theme\n- Standalone\n\nПример: <app-theme-switcher /> — рендер шаблона компонента",
+      "question": "Создайте ThemeSwitcherComponent: theme = signal<'light' | 'dark' | 'system'>('light').\n\nШаблон @switch (theme()) с @case для каждой темы и @default.\n\nНеобходимо предусмотреть:\n- @switch @case @default\n- signal theme\n- Standalone",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-theme-switcher',\n  standalone: true,\n  template: `\n    @switch (theme()) {\n      @case ('light') { <p>Light mode</p> }\n      @case ('dark') { <p>Dark mode</p> }\n      @case ('system') { <p>System mode</p> }\n      @default { <p>Unknown</p> }\n    }\n  `,\n})\nexport class ThemeSwitcherComponent {\n  theme = signal<'light' | 'dark' | 'system'>('light');\n}",
       "language": "typescript",
@@ -667,7 +667,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте HomeComponent с @defer (on idle) для HeavyWidgetComponent.\n\n@placeholder — «Waiting…». Импортируйте HeavyWidgetComponent.\n\nНеобходимо предусмотреть:\n- @defer (on idle)\n- @placeholder\n- HeavyWidget import\n\nПример: <app-home /> — рендер шаблона компонента",
+      "question": "Создайте HomeComponent с @defer (on idle) для HeavyWidgetComponent.\n\n@placeholder — «Waiting…». Импортируйте HeavyWidgetComponent.\n\nНеобходимо предусмотреть:\n- @defer (on idle)\n- @placeholder\n- HeavyWidget import",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { HeavyWidgetComponent } from './heavy-widget.component';\n\n@Component({\n  selector: 'app-home',\n  standalone: true,\n  imports: [HeavyWidgetComponent],\n  template: `\n    <h1>Home</h1>\n    @defer (on idle) {\n      <app-heavy-widget />\n    } @placeholder {\n      <p>Waiting…</p>\n    }\n  `,\n})\nexport class HomeComponent {}",
       "language": "typescript",
@@ -675,7 +675,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ChartHostComponent: @defer (on interaction) при клике на #trigger.\n\nКнопка #trigger «Load chart», внутри defer — ChartComponent.\n\nНеобходимо предусмотреть:\n- @defer (on interaction)\n- #trigger placeholder\n- ChartComponent\n\nПример: <app-chart-host /> — рендер шаблона компонента",
+      "question": "Создайте ChartHostComponent: @defer (on interaction) при клике на #trigger.\n\nКнопка #trigger «Load chart», внутри defer — ChartComponent.\n\nНеобходимо предусмотреть:\n- @defer (on interaction)\n- #trigger placeholder\n- ChartComponent",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { ChartComponent } from './chart.component';\n\n@Component({\n  selector: 'app-chart-host',\n  standalone: true,\n  imports: [ChartComponent],\n  template: `\n    @defer (on interaction) {\n      <app-chart />\n    } @placeholder {\n      <button #trigger type=\"button\">Load chart</button>\n    }\n  `,\n})\nexport class ChartHostComponent {}",
       "language": "typescript",
@@ -683,7 +683,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте PromoComponent: @defer (on timer(2s)) для PromoBannerComponent.\n\n@loading (minimum 500ms) — spinner. @placeholder — «Soon».\n\nНеобходимо предусмотреть:\n- @defer (on timer(2s))\n- @loading minimum\n- @placeholder\n\nПример: <app-promo /> — рендер шаблона компонента",
+      "question": "Создайте PromoComponent: @defer (on timer(2s)) для PromoBannerComponent.\n\n@loading (minimum 500ms) — spinner. @placeholder — «Soon».\n\nНеобходимо предусмотреть:\n- @defer (on timer(2s))\n- @loading minimum\n- @placeholder",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { PromoBannerComponent } from './promo-banner.component';\n\n@Component({\n  selector: 'app-promo',\n  standalone: true,\n  imports: [PromoBannerComponent],\n  template: `\n    @defer (on timer(2s)) {\n      <app-promo-banner />\n    } @loading (minimum 500ms) {\n      <p>Loading…</p>\n    } @placeholder {\n      <p>Soon</p>\n    }\n  `,\n})\nexport class PromoComponent {}",
       "language": "typescript",
@@ -691,7 +691,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FeedComponent: @defer (on viewport) для FeedListComponent.\n\n@error — «Failed to load». @placeholder — skeleton.\n\nНеобходимо предусмотреть:\n- @defer (on viewport)\n- @error блок\n- @placeholder skeleton\n\nПример: <app-feed /> — рендер шаблона компонента",
+      "question": "Создайте FeedComponent: @defer (on viewport) для FeedListComponent.\n\n@error — «Failed to load». @placeholder — skeleton.\n\nНеобходимо предусмотреть:\n- @defer (on viewport)\n- @error блок\n- @placeholder skeleton",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { FeedListComponent } from './feed-list.component';\n\n@Component({\n  selector: 'app-feed',\n  standalone: true,\n  imports: [FeedListComponent],\n  template: `\n    @defer (on viewport) {\n      <app-feed-list />\n    } @placeholder {\n      <div class=\"skeleton\">…</div>\n    } @error {\n      <p>Failed to load</p>\n    }\n  `,\n})\nexport class FeedComponent {}",
       "language": "typescript",
@@ -731,7 +731,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте SplitViewComponent: ng-container с @if для left/right панелей.\n\nactive = signal<'left' | 'right'>('left'). Кнопки переключают.\n\nНеобходимо предусмотреть:\n- ng-container\n- @if внутри\n- signal active\n\nПример: <app-split-view /> — рендер шаблона компонента",
+      "question": "Создайте SplitViewComponent: ng-container с @if для left/right панелей.\n\nactive = signal<'left' | 'right'>('left'). Кнопки переключают.\n\nНеобходимо предусмотреть:\n- ng-container\n- @if внутри\n- signal active",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\n\n@Component({\n  selector: 'app-split-view',\n  standalone: true,\n  template: `\n    <ng-container>\n      @if (active() === 'left') {\n        <aside>Left panel</aside>\n      } @else {\n        <aside>Right panel</aside>\n      }\n    </ng-container>\n    <button (click)=\"active.set('left')\">Left</button>\n    <button (click)=\"active.set('right')\">Right</button>\n  `,\n})\nexport class SplitViewComponent {\n  active = signal<'left' | 'right'>('left');\n}",
       "language": "typescript",
@@ -739,7 +739,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте UserRowComponent: ng-template #row let-user, ngTemplateOutlet с context { $implicit: user, index: 0 }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- NgTemplateOutlet\n- context $implicit\n- let-idx=\"index\"\n\nПример: <app-user-row /> — рендер шаблона компонента",
+      "question": "Создайте UserRowComponent: ng-template #row let-user, ngTemplateOutlet с context { $implicit: user, index: 0 }.\n\nНеобходимо предусмотреть:\n- NgTemplateOutlet\n- context $implicit\n- let-idx=\"index\"",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { NgTemplateOutlet } from '@angular/common';\n\n@Component({\n  selector: 'app-user-row',\n  standalone: true,\n  imports: [NgTemplateOutlet],\n  template: `\n    <ng-template #row let-user let-idx=\"index\">\n      <p>{{ idx }}: {{ user.name }}</p>\n    </ng-template>\n    <ng-container\n      *ngTemplateOutlet=\"row; context: { $implicit: { name: 'Anna' }, index: 0 }\"\n    />\n  `,\n})\nexport class UserRowComponent {}",
       "language": "typescript",
@@ -747,7 +747,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте PillComponent: isActive, isDisabled — signals.\n\n[ngClass]=\"{ active: isActive(), disabled: isDisabled() }\".\n\nНеобходимо предусмотреть:\n- NgClass object\n- signal bindings\n- Standalone\n\nПример: <app-pill /> — рендер шаблона компонента",
+      "question": "Создайте PillComponent: isActive, isDisabled — signals.\n\n[ngClass]=\"{ active: isActive(), disabled: isDisabled() }\".\n\nНеобходимо предусмотреть:\n- NgClass object\n- signal bindings\n- Standalone",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { NgClass } from '@angular/common';\n\n@Component({\n  selector: 'app-pill',\n  standalone: true,\n  imports: [NgClass],\n  template: `<span [ngClass]=\"{ active: isActive(), disabled: isDisabled() }\">Pill</span>`,\n})\nexport class PillComponent {\n  isActive = signal(true);\n  isDisabled = signal(false);\n}",
       "language": "typescript",
@@ -755,7 +755,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ProgressBarComponent: progress = signal(0).\n\n[ngStyle]=\"{ width: progress() + '%', background: progress() > 50 ?. 'green' : 'orange' }\".\n\nНеобходимо предусмотреть:\n- NgStyle\n- signal progress\n- Условный background\n\nПример: <app-progress-bar /> — рендер шаблона компонента",
+      "question": "Создайте ProgressBarComponent: progress = signal(0).\n\n[ngStyle]=\"{ width: progress() + '%', background: progress() > 50 ?. 'green' : 'orange' }\".\n\nНеобходимо предусмотреть:\n- NgStyle\n- signal progress\n- Условный background",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { NgStyle } from '@angular/common';\n\n@Component({\n  selector: 'app-progress-bar',\n  standalone: true,\n  imports: [NgStyle],\n  template: `<div [ngStyle]=\"{ width: progress() + '%', background: progress() > 50 ? 'green' : 'orange' }\"></div>`,\n})\nexport class ProgressBarComponent {\n  progress = signal(35);\n}",
       "language": "typescript",
@@ -795,7 +795,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте UsernameComponent: FormControl с updateOn: 'blur'.\n\nПоказывайте control.dirty и control.valid в шаблоне.\n\nНеобходимо предусмотреть:\n- updateOn: 'blur'\n- Validators.required\n- dirty/valid в шаблоне\n\nПример: <app-username /> — рендер шаблона компонента",
+      "question": "Создайте UsernameComponent: FormControl с updateOn: 'blur'.\n\nПоказывайте control.dirty и control.valid в шаблоне.\n\nНеобходимо предусмотреть:\n- updateOn: 'blur'\n- Validators.required\n- dirty/valid в шаблоне",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';\n\n@Component({\n  selector: 'app-username',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `\n    <input [formControl]=\"username\" />\n    <p>Dirty: {{ username.dirty }} Valid: {{ username.valid }}</p>\n  `,\n})\nexport class UsernameComponent {\n  username = new FormControl('', {\n    nonNullable: true,\n    validators: Validators.required,\n    updateOn: 'blur',\n  });\n}",
       "language": "typescript",
@@ -811,7 +811,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FilterComponent: filter FormControl, filtered$ = valueChanges.pipe(startWith(''), map).\n\nitems signal, computed filtered по filter value.\n\nНеобходимо предусмотреть:\n- startWith('')\n- toSignal + computed\n- FormControl filter\n\nПример: <app-filter /> — рендер шаблона компонента",
+      "question": "Создайте FilterComponent: filter FormControl, filtered$ = valueChanges.pipe(startWith(''), map).\n\nitems signal, computed filtered по filter value.\n\nНеобходимо предусмотреть:\n- startWith('')\n- toSignal + computed\n- FormControl filter",
       "task": "",
       "reference": "import { Component, computed, signal } from '@angular/core';\nimport { FormControl, ReactiveFormsModule } from '@angular/forms';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { map, startWith } from 'rxjs';\n\n@Component({\n  selector: 'app-filter',\n  standalone: true,\n  imports: [ReactiveFormsModule],\n  template: `\n    <input [formControl]=\"filter\" />\n    @for (item of filtered(); track item) { <span>{{ item }}</span> }\n  `,\n})\nexport class FilterComponent {\n  items = signal(['apple', 'banana', 'apricot']);\n  filter = new FormControl('', { nonNullable: true });\n  private filterValue = toSignal(\n    this.filter.valueChanges.pipe(startWith('')),\n    { initialValue: '' }\n  );\n  filtered = computed(() => {\n    const q = this.filterValue().toLowerCase();\n    return this.items().filter(i => i.toLowerCase().includes(q));\n  });\n}",
       "language": "typescript",
@@ -891,7 +891,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте authChildGuard: CanActivateChildFn — проверяет isLoggedIn для всех child routes.\n\nпроверяет isLoggedIn для всех child routes.\n\nНеобходимо предусмотреть:\n- CanActivateChildFn\n- parseUrl redirect\n- inject pattern\n\nПример: дочерний маршрут без login → redirect /login",
+      "question": "Создайте authChildGuard: CanActivateChildFn — проверяет isLoggedIn для всех child routes.\n\nНеобходимо предусмотреть:\n- CanActivateChildFn\n- parseUrl redirect\n- inject pattern\n\nПример: дочерний маршрут без login → redirect /login",
       "task": "",
       "reference": "import { inject } from '@angular/core';\nimport { CanActivateChildFn, Router } from '@angular/router';\nimport { AuthService } from './auth.service';\n\nexport const authChildGuard: CanActivateChildFn = () => {\n  const auth = inject(AuthService);\n  const router = inject(Router);\n  return auth.isLoggedIn() ? true : router.parseUrl('/login');\n};",
       "language": "typescript",
@@ -899,7 +899,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте dashboardResolver: ResolveFn — forkJoin user + stats, return { user, stats }.\n\nforkJoin user + stats, return { user, stats }.\n\nНеобходимо предусмотреть:\n- ResolveFn\n- forkJoin\n- inject APIs\n\nПример: route param id → данные пользователя до открытия страницы",
+      "question": "Создайте dashboardResolver: ResolveFn — forkJoin user + stats, return { user, stats }.\n\nНеобходимо предусмотреть:\n- ResolveFn\n- forkJoin\n- inject APIs\n\nПример: route param id → данные пользователя до открытия страницы",
       "task": "",
       "reference": "import { inject } from '@angular/core';\nimport { ResolveFn } from '@angular/router';\nimport { forkJoin, map } from 'rxjs';\nimport { UserApi } from './user-api';\nimport { StatsApi } from './stats-api';\n\nexport const dashboardResolver: ResolveFn<{ user: unknown; stats: unknown }> = () => {\n  const users = inject(UserApi);\n  const stats = inject(StatsApi);\n  return forkJoin({ user: users.me(), stats: stats.summary() });\n};",
       "language": "typescript",
@@ -931,7 +931,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте SearchPageComponent: inject ActivatedRoute, queryParams pipe map q => q['q'].\n\nquery = toSignal(..., { initialValue: '' }).\n\nНеобходимо предусмотреть:\n- ActivatedRoute queryParams\n- toSignal\n- map q param\n\nПример: <app-search-page /> — рендер шаблона компонента",
+      "question": "Создайте SearchPageComponent: inject ActivatedRoute, queryParams pipe map q => q['q'].\n\nquery = toSignal(..., { initialValue: '' }).\n\nНеобходимо предусмотреть:\n- ActivatedRoute queryParams\n- toSignal\n- map q param",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { ActivatedRoute } from '@angular/router';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { map } from 'rxjs';\n\n@Component({\n  selector: 'app-search-page',\n  standalone: true,\n  template: `<p>Query: {{ query() }}</p>`,\n})\nexport class SearchPageComponent {\n  private route = inject(ActivatedRoute);\n  query = toSignal(\n    this.route.queryParams.pipe(map(p => p['q'] ?? '')),\n    { initialValue: '' }\n  );\n}",
       "language": "typescript",
@@ -939,7 +939,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте DocsComponent: scrollTo(section) вызывает router.navigate([], { fragment: section }).\n\ninject Router.\n\nНеобходимо предусмотреть:\n- router.navigate fragment\n- inject Router\n- empty path array\n\nПример: <app-docs /> — рендер шаблона компонента",
+      "question": "Создайте DocsComponent: scrollTo(section) вызывает router.navigate([], { fragment: section }).\n\ninject Router.\n\nНеобходимо предусмотреть:\n- router.navigate fragment\n- inject Router\n- empty path array",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { Router } from '@angular/router';\n\n@Component({\n  selector: 'app-docs',\n  standalone: true,\n  template: `\n    <button type=\"button\" (click)=\"scrollTo('intro')\">Intro</button>\n    <button type=\"button\" (click)=\"scrollTo('api')\">API</button>\n  `,\n})\nexport class DocsComponent {\n  private router = inject(Router);\n\n  scrollTo(section: string) {\n    this.router.navigate([], { fragment: section });\n  }\n}",
       "language": "typescript",
@@ -979,7 +979,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте pendingChangesGuard: CanDeactivateFn возвращает dialog.confirm() как Observable<boolean>.\n\nРезультат работы: dialog.confirm() как Observable<boolean>.\n\nНеобходимо предусмотреть:\n- CanDeactivateFn\n- Observable confirm\n- hasPendingChanges interface\n\nПример: form.dirty → confirm('Leave?') перед уходом",
+      "question": "Создайте pendingChangesGuard: CanDeactivateFn возвращает dialog.confirm() как Observable<boolean>.\n\nНеобходимо предусмотреть:\n- CanDeactivateFn\n- Observable confirm\n- hasPendingChanges interface\n\nПример: form.dirty → confirm('Leave?') перед уходом",
       "task": "",
       "reference": "import { inject } from '@angular/core';\nimport { CanDeactivateFn } from '@angular/router';\nimport { DialogService } from './dialog.service';\n\nexport interface ConfirmLeave {\n  hasPendingChanges(): boolean;\n}\n\nexport const pendingChangesGuard: CanDeactivateFn<ConfirmLeave> = component => {\n  if (!component.hasPendingChanges()) return true;\n  return inject(DialogService).confirm('Leave without saving?');\n};",
       "language": "typescript",
@@ -987,7 +987,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте CustomPreloadStrategy implements PreloadingStrategy: preload route если data.preload === true.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- PreloadingStrategy\n- route.data preload flag\n- providedIn root\n\nПример: inject(CustomPreloadStrategy) в компоненте или сервисе",
+      "question": "Создайте CustomPreloadStrategy implements PreloadingStrategy: preload route если data.preload === true.\n\nНеобходимо предусмотреть:\n- PreloadingStrategy\n- route.data preload flag\n- providedIn root\n\nПример: inject(CustomPreloadStrategy) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable } from '@angular/core';\nimport { PreloadingStrategy, Route } from '@angular/router';\nimport { Observable, of } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class CustomPreloadStrategy implements PreloadingStrategy {\n  preload(route: Route, load: () => Observable<unknown>): Observable<unknown> {\n    return route.data?.['preload'] ? load() : of(null);\n  }\n}",
       "language": "typescript",
@@ -995,7 +995,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте AnalyticsComponent: inject Router, filter events NavigationEnd, toSignal для url после NavigationEnd.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- NavigationEnd filter\n- toSignal url\n- urlAfterRedirects\n\nПример: <app-analytics /> — рендер шаблона компонента",
+      "question": "Создайте AnalyticsComponent: inject Router, filter events NavigationEnd, toSignal для url после NavigationEnd.\n\nКонфигурация маршрута с lazy load компонента по указанному path.\n\nНеобходимо предусмотреть:\n- NavigationEnd filter\n- toSignal url\n- urlAfterRedirects",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { NavigationEnd, Router } from '@angular/router';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { filter, map } from 'rxjs';\n\n@Component({\n  selector: 'app-analytics',\n  standalone: true,\n  template: `<p>Current: {{ url() }}</p>`,\n})\nexport class AnalyticsComponent {\n  private router = inject(Router);\n  url = toSignal(\n    this.router.events.pipe(\n      filter((e): e is NavigationEnd => e instanceof NavigationEnd),\n      map(e => e.urlAfterRedirects)\n    ),\n    { initialValue: '/' }\n  );\n}",
       "language": "typescript",
@@ -1003,7 +1003,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте DashboardComponent: combineLatest([user$, settings$]) pipe map(([user, settings]) => ({ user, settings })).\n\nОтобразите через async pipe или toSignal.\n\nНеобходимо предусмотреть:\n- combineLatest\n- map tuple\n- toSignal vm\n\nПример: <app-dashboard /> — рендер шаблона компонента",
+      "question": "Создайте DashboardComponent: combineLatest([user$, settings$]) pipe map(([user, settings]) => ({ user, settings })).\n\nОтобразите через async pipe или toSignal.\n\nНеобходимо предусмотреть:\n- combineLatest\n- map tuple\n- toSignal vm",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { combineLatest, map } from 'rxjs';\nimport { UserApi } from './user-api';\nimport { SettingsApi } from './settings-api';\n\n@Component({\n  selector: 'app-dashboard',\n  standalone: true,\n  template: `@if (vm(); as d) { <p>{{ d.user.name }} / {{ d.settings.theme }}</p> }`,\n})\nexport class DashboardComponent {\n  private users = inject(UserApi);\n  private settings = inject(SettingsApi);\n  vm = toSignal(\n    combineLatest([this.users.me(), this.settings.get()]).pipe(\n      map(([user, settings]) => ({ user, settings }))\n    ),\n    { initialValue: null }\n  );\n}",
       "language": "typescript",
@@ -1019,7 +1019,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте OrderSummaryService load(orderId): forkJoin items + customer, map в OrderSummary.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- forkJoin\n- HttpClient GET\n- map to summary\n\nПример: inject(OrderSummaryService) в компоненте или сервисе",
+      "question": "Создайте OrderSummaryService load(orderId): forkJoin items + customer, map в OrderSummary.\n\nНеобходимо предусмотреть:\n- forkJoin\n- HttpClient GET\n- map to summary\n\nПример: inject(OrderSummaryService) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { forkJoin, map } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class OrderSummaryService {\n  private http = inject(HttpClient);\n\n  load(orderId: string) {\n    return forkJoin({\n      items: this.http.get<Item[]>(`/api/orders/${orderId}/items`),\n      customer: this.http.get<Customer>(`/api/orders/${orderId}/customer`),\n    }).pipe(map(({ items, customer }) => ({ orderId, items, customer })));\n  }\n}\n\ninterface Item { id: string; name: string }\ninterface Customer { id: string; name: string }",
       "language": "typescript",
@@ -1027,7 +1027,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте UploadService uploadAll(files: File[]): from(files) pipe mergeMap(f => upload(f)).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- from(files)\n- mergeMap\n- HttpClient POST\n\nПример: inject(UploadService) в компоненте или сервисе",
+      "question": "Создайте UploadService uploadAll(files: File[]): from(files) pipe mergeMap(f => upload(f)).\n\nНеобходимо предусмотреть:\n- from(files)\n- mergeMap\n- HttpClient POST\n\nПример: inject(UploadService) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { from, mergeMap } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class UploadService {\n  private http = inject(HttpClient);\n\n  uploadAll(files: File[]) {\n    return from(files).pipe(\n      mergeMap(file => this.http.post<{ id: string }>('/api/upload', file))\n    );\n  }\n}",
       "language": "typescript",
@@ -1035,7 +1035,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте SubmitComponent: submit$ Subject, results$ = submit$.pipe(exhaustMap(() => api.save())).\n\nКнопка (click)=\"submit$.next()\".\n\nНеобходимо предусмотреть:\n- Subject trigger\n- exhaustMap\n- AsyncPipe result\n\nПример: <app-submit /> — рендер шаблона компонента",
+      "question": "Создайте SubmitComponent: submit$ Subject, results$ = submit$.pipe(exhaustMap(() => api.save())).\n\nКнопка (click)=\"submit$.next()\".\n\nНеобходимо предусмотреть:\n- Subject trigger\n- exhaustMap\n- AsyncPipe result",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { Subject, exhaustMap } from 'rxjs';\nimport { SaveApi } from './save-api';\n\n@Component({\n  selector: 'app-submit',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    <button type=\"button\" (click)=\"submit$.next()\">Save</button>\n    @if (result$ | async; as r) { <p>Saved {{ r.id }}</p> }\n  `,\n})\nexport class SubmitComponent {\n  private api = inject(SaveApi);\n  submit$ = new Subject<void>();\n  result$ = this.submit$.pipe(exhaustMap(() => this.api.save()));\n}",
       "language": "typescript",
@@ -1051,7 +1051,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ResilientApi get(): http.get pipe retry({ count: 3, delay: 1000 }).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- retry count/delay\n- HttpClient get\n- Generic T\n\nПример: inject(ResilientApi) в компоненте или сервисе",
+      "question": "Создайте ResilientApi get(): http.get pipe retry({ count: 3, delay: 1000 }).\n\nНеобходимо предусмотреть:\n- retry count/delay\n- HttpClient get\n- Generic T\n\nПример: inject(ResilientApi) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { retry } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class ResilientApi {\n  private http = inject(HttpClient);\n\n  get<T>(url: string) {\n    return this.http.get<T>(url).pipe(retry({ count: 3, delay: 1000 }));\n  }\n}",
       "language": "typescript",
@@ -1067,7 +1067,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте EventBus<T>: private subject = new BehaviorSubject<T | null>(null), emit(value), on$() возвращает asObservable().\n\nРезультат работы: asObservable().\n\nНеобходимо предусмотреть:\n- BehaviorSubject\n- emit/on$\n- Generic EventBus\n\nПример: inject(EventBus) в компоненте или сервисе",
+      "question": "Создайте EventBus<T>: private subject = new BehaviorSubject<T | null>(null), emit(value), on$() возвращает asObservable().\n\nНеобходимо предусмотреть:\n- BehaviorSubject\n- emit/on$\n- Generic EventBus\n\nПример: inject(EventBus) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable } from '@angular/core';\nimport { BehaviorSubject } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class EventBus<T> {\n  private subject = new BehaviorSubject<T | null>(null);\n\n  emit(value: T) {\n    this.subject.next(value);\n  }\n\n  on$() {\n    return this.subject.asObservable();\n  }\n}",
       "language": "typescript",
@@ -1075,7 +1075,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ArticleApi list(page, q): HttpParams set page и q, GET /api/articles.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- HttpParams\n- GET with params\n- list(page, q)\n\nПример: inject(ArticleApi) в компоненте или сервисе",
+      "question": "Создайте ArticleApi list(page, q): HttpParams set page и q, GET /api/articles.\n\nНеобходимо предусмотреть:\n- HttpParams\n- GET with params\n- list(page, q)\n\nПример: inject(ArticleApi) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient, HttpParams } from '@angular/common/http';\n\n@Injectable({ providedIn: 'root' })\nexport class ArticleApi {\n  private http = inject(HttpClient);\n\n  list(page: number, q: string) {\n    const params = new HttpParams().set('page', page).set('q', q);\n    return this.http.get<Article[]>('/api/articles', { params });\n  }\n}\n\ninterface Article { id: number; title: string }",
       "language": "typescript",
@@ -1083,7 +1083,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте DownloadApi fetchMeta(url): observe 'response', map res => ({ body: res.body, etag: res.headers.get('ETag') }).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- observe: 'response'\n- headers.get ETag\n- map response\n\nПример: inject(DownloadApi) в компоненте или сервисе",
+      "question": "Создайте DownloadApi fetchMeta(url): observe 'response', map res => ({ body: res.body, etag: res.headers.get('ETag') }).\n\nНеобходимо предусмотреть:\n- observe: 'response'\n- headers.get ETag\n- map response\n\nПример: inject(DownloadApi) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { map } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class DownloadApi {\n  private http = inject(HttpClient);\n\n  fetchMeta(url: string) {\n    return this.http.get(url, { observe: 'response' }).pipe(\n      map(res => ({\n        body: res.body,\n        etag: res.headers.get('ETag'),\n      }))\n    );\n  }\n}",
       "language": "typescript",
@@ -1091,7 +1091,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте QuickApi load(): http.get pipe timeout(5000), catchError throw user-friendly error.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- timeout(5000)\n- catchError throwError\n- HttpClient GET\n\nПример: inject(QuickApi) в компоненте или сервисе",
+      "question": "Создайте QuickApi load(): http.get pipe timeout(5000), catchError throw user-friendly error.\n\nНеобходимо предусмотреть:\n- timeout(5000)\n- catchError throwError\n- HttpClient GET\n\nПример: inject(QuickApi) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { catchError, timeout, throwError } from 'rxjs';\n\n@Injectable({ providedIn: 'root' })\nexport class QuickApi {\n  private http = inject(HttpClient);\n\n  load() {\n    return this.http.get<Data[]>('/api/data').pipe(\n      timeout(5000),\n      catchError(err => throwError(() => new Error('Request timed out')))\n    );\n  }\n}\n\ninterface Data { id: number }",
       "language": "typescript",
@@ -1099,7 +1099,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ActiveUsersComponent: users$ = api.getUsers().pipe(map(list => list.filter(u => u.active))).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- map + filter\n- AsyncPipe\n- UserApi\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
+      "question": "Создайте ActiveUsersComponent: users$ = api.getUsers().pipe(map(list => list.filter(u => u.active))).\n\nНеобходимо предусмотреть:\n- map + filter\n- AsyncPipe\n- UserApi\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { map } from 'rxjs';\nimport { UserApi, User } from './user-api';\n\n@Component({\n  selector: 'app-active-users',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `@for (u of active$ | async; track u.id) { <p>{{ u.name }}</p> }`,\n})\nexport class ActiveUsersComponent {\n  private api = inject(UserApi);\n  active$ = this.api.getUsers().pipe(map((list: User[]) => list.filter(u => u.active)));\n}",
       "language": "typescript",
@@ -1107,7 +1107,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте loggingInterceptor: console.log method url, return next(req).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- HttpInterceptorFn\n- Log method/url\n- next(req)\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
+      "question": "Создайте loggingInterceptor: console.log method url, return next(req).\n\nНеобходимо предусмотреть:\n- HttpInterceptorFn\n- Log method/url\n- next(req)\n\nПример: исходящий запрос получает заголовок Authorization: Bearer …",
       "task": "",
       "reference": "import { HttpInterceptorFn } from '@angular/common/http';\n\nexport const loggingInterceptor: HttpInterceptorFn = (req, next) => {\n  console.log(`${req.method} ${req.url}`);\n  return next(req);\n};",
       "language": "typescript",
@@ -1123,7 +1123,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте BreadcrumbComponent: items = input<string[]>([]), trail = linkedSignal(() => this.items().join(' › ')).\n\nШаблон {{ trail() }}.\n\nНеобходимо предусмотреть:\n- linkedSignal\n- input items\n- join trail\n\nПример: <app-breadcrumb /> — рендер шаблона компонента",
+      "question": "Создайте BreadcrumbComponent: items = input<string[]>([]), trail = linkedSignal(() => this.items().join(' › ')).\n\nШаблон {{ trail() }}.\n\nНеобходимо предусмотреть:\n- linkedSignal\n- input items\n- join trail",
       "task": "",
       "reference": "import { Component, input, linkedSignal } from '@angular/core';\n\n@Component({\n  selector: 'app-breadcrumb',\n  standalone: true,\n  template: `<nav>{{ trail() }}</nav>`,\n})\nexport class BreadcrumbComponent {\n  items = input<string[]>([]);\n  trail = linkedSignal(() => this.items().join(' › '));\n}",
       "language": "typescript",
@@ -1131,7 +1131,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте AccumulatorComponent: value input, total = linkedSignal({ source: value, computation: (v, prev) => (prev?.value ??.\n\n0) + v }). Концептуальный stub linkedSignal API.\n\nНеобходимо предусмотреть:\n- linkedSignal source/computation\n- Previous value\n- input number\n\nПример: <app-accumulator /> — рендер шаблона компонента",
+      "question": "Создайте AccumulatorComponent: value input, total = linkedSignal({ source: value, computation: (v, prev) => (prev?.value ?? 0) + v }). Концептуальный stub linkedSignal API.\n\nНеобходимо предусмотреть:\n- linkedSignal source/computation\n- Previous value\n- input number",
       "task": "",
       "reference": "import { Component, input, linkedSignal } from '@angular/core';\n\n@Component({\n  selector: 'app-accumulator',\n  standalone: true,\n  template: `<p>Total: {{ total() }}</p>`,\n})\nexport class AccumulatorComponent {\n  value = input(0);\n  total = linkedSignal({\n    source: this.value,\n    computation: (v, prev) => (prev?.value ?? 0) + v,\n  });\n}",
       "language": "typescript",
@@ -1139,7 +1139,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте CartComponent: items = signal<CartItem[]>([]), total = computed(() => items().reduce((s, i) => s + i.price * i.qty, 0)).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- computed reduce\n- signal CartItem[]\n- total price*qty\n\nПример: <app-cart /> — рендер шаблона компонента",
+      "question": "Создайте CartComponent: items = signal<CartItem[]>([]), total = computed(() => items().reduce((s, i) => s + i.price * i.qty, 0)).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- computed reduce\n- signal CartItem[]\n- total price*qty",
       "task": "",
       "reference": "import { Component, computed, signal } from '@angular/core';\n\ninterface CartItem {\n  id: number;\n  price: number;\n  qty: number;\n}\n\n@Component({\n  selector: 'app-cart',\n  standalone: true,\n  template: `<p>Total: {{ total() }}</p>`,\n})\nexport class CartComponent {\n  items = signal<CartItem[]>([{ id: 1, price: 10, qty: 2 }]);\n  total = computed(() => this.items().reduce((s, i) => s + i.price * i.qty, 0));\n}",
       "language": "typescript",
@@ -1163,7 +1163,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте SignalBridgeComponent: term = signal(''), term$ = toObservable(term).\n\nПодписка pipe debounceTime в constructor.\n\nНеобходимо предусмотреть:\n- toObservable(signal)\n- debounceTime\n- takeUntilDestroyed\n\nПример: <app-signal-bridge /> — рендер шаблона компонента",
+      "question": "Создайте SignalBridgeComponent: term = signal(''), term$ = toObservable(term).\n\nПодписка pipe debounceTime в constructor.\n\nНеобходимо предусмотреть:\n- toObservable(signal)\n- debounceTime\n- takeUntilDestroyed",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { toObservable } from '@angular/core/rxjs-interop';\nimport { debounceTime } from 'rxjs';\nimport { takeUntilDestroyed } from '@angular/core/rxjs-interop';\n\n@Component({\n  selector: 'app-signal-bridge',\n  standalone: true,\n  template: `<input [value]=\"term()\" (input)=\"term.set($any($event.target).value)\" />`,\n})\nexport class SignalBridgeComponent {\n  term = signal('');\n  term$ = toObservable(this.term);\n\n  constructor() {\n    this.term$.pipe(debounceTime(300), takeUntilDestroyed()).subscribe(v => console.log(v));\n  }\n}",
       "language": "typescript",
@@ -1171,7 +1171,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ClockComponent: now = toSignal(interval(1000).pipe(map(() => new Date())), { initialValue: new Date() }).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- toSignal interval\n- initialValue Date\n- DatePipe in template\n\nПример: <app-clock /> — рендер шаблона компонента",
+      "question": "Создайте ClockComponent: now = toSignal(interval(1000).pipe(map(() => new Date())), { initialValue: new Date() }).\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- toSignal interval\n- initialValue Date\n- DatePipe in template",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { toSignal } from '@angular/core/rxjs-interop';\nimport { interval, map } from 'rxjs';\n\n@Component({\n  selector: 'app-clock',\n  standalone: true,\n  template: `<time>{{ now() | date: 'mediumTime' }}</time>`,\n})\nexport class ClockComponent {\n  now = toSignal(interval(1000).pipe(map(() => new Date())), { initialValue: new Date() });\n}",
       "language": "typescript",
@@ -1179,7 +1179,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FocusHostComponent: input = viewChild.required<ElementRef>('input').\n\nngAfterViewInit — input().nativeElement.focus().\n\nНеобходимо предусмотреть:\n- viewChild.required\n- ElementRef focus\n- AfterViewInit\n\nПример: <app-focus-host /> — рендер шаблона компонента",
+      "question": "Создайте FocusHostComponent: input = viewChild.required<ElementRef>('input').\n\nngAfterViewInit — input().nativeElement.focus().\n\nНеобходимо предусмотреть:\n- viewChild.required\n- ElementRef focus\n- AfterViewInit",
       "task": "",
       "reference": "import { AfterViewInit, Component, ElementRef, viewChild } from '@angular/core';\n\n@Component({\n  selector: 'app-focus-host',\n  standalone: true,\n  template: `<input #input type=\"text\" />`,\n})\nexport class FocusHostComponent implements AfterViewInit {\n  input = viewChild.required<ElementRef<HTMLInputElement>>('input');\n\n  ngAfterViewInit() {\n    this.input().nativeElement.focus();\n  }\n}",
       "language": "typescript",
@@ -1187,7 +1187,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте TabsComponent: activeTab = contentChild(TabComponent).\n\nStub TabComponent selector app-tab.\n\nНеобходимо предусмотреть:\n- contentChild signal\n- TabComponent\n- ng-content\n\nПример: <app-tabs /> — рендер шаблона компонента",
+      "question": "Создайте TabsComponent: activeTab = contentChild(TabComponent).\n\nStub TabComponent selector app-tab.\n\nНеобходимо предусмотреть:\n- contentChild signal\n- TabComponent\n- ng-content",
       "task": "",
       "reference": "import { Component, contentChild } from '@angular/core';\nimport { TabComponent } from './tab.component';\n\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [TabComponent],\n  template: `<ng-content></ng-content>`,\n})\nexport class TabsComponent {\n  activeTab = contentChild(TabComponent);\n}",
       "language": "typescript",
@@ -1195,7 +1195,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте UserResourceComponent: user = resource({ loader: () => fetch('/api/me').then(r => r.json()) }).\n\nШаблон @if (user.hasValue()) { user.value().name }.\n\nНеобходимо предусмотреть:\n- resource() loader\n- hasValue/isLoading\n- Angular 19+ API\n\nПример: <app-user-resource /> — рендер шаблона компонента",
+      "question": "Создайте UserResourceComponent: user = resource({ loader: () => fetch('/api/me').then(r => r.json()) }).\n\nШаблон @if (user.hasValue()) { user.value().name }.\n\nНеобходимо предусмотреть:\n- resource() loader\n- hasValue/isLoading\n- Angular 19+ API",
       "task": "",
       "reference": "import { Component, resource } from '@angular/core';\n\n@Component({\n  selector: 'app-user-resource',\n  standalone: true,\n  template: `\n    @if (user.hasValue()) {\n      <p>{{ user.value().name }}</p>\n    } @else if (user.isLoading()) {\n      <p>Loading…</p>\n    }\n  `,\n})\nexport class UserResourceComponent {\n  user = resource({\n    loader: () => fetch('/api/me').then(r => r.json() as Promise<{ name: string }>),\n  });\n}",
       "language": "typescript",
@@ -1203,7 +1203,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ProductsResource: products = rxResource({ request: () => ({}), loader: () => http.get('/api/products') }).\n\nКонцептуальный Angular 19 stub.\n\nНеобходимо предусмотреть:\n- rxResource\n- HttpClient loader\n- value() in template\n\nПример: <app-products-resource /> — рендер шаблона компонента",
+      "question": "Создайте ProductsResource: products = rxResource({ request: () => ({}), loader: () => http.get('/api/products') }).\n\nКонцептуальный Angular 19 stub.\n\nНеобходимо предусмотреть:\n- rxResource\n- HttpClient loader\n- value() in template",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { HttpClient } from '@angular/common/http';\nimport { rxResource } from '@angular/core/rxjs-interop';\n\n@Component({\n  selector: 'app-products-resource',\n  standalone: true,\n  template: `@for (p of products.value() ?? []; track p.id) { <p>{{ p.name }}</p> }`,\n})\nexport class ProductsResourceComponent {\n  private http = inject(HttpClient);\n  products = rxResource({\n    request: () => ({}),\n    loader: () => this.http.get<Product[]>('/api/products'),\n  });\n}\n\ninterface Product { id: number; name: string }",
       "language": "typescript",
@@ -1227,7 +1227,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте PriceComponent: amount = input.required({ transform: (v: string | number) => Number(v) }).\n\ncomputed formatted = computed(() => amount().toFixed(2)).\n\nНеобходимо предусмотреть:\n- input.required transform\n- computed toFixed\n- Number coercion\n\nПример: <app-price /> — рендер шаблона компонента",
+      "question": "Создайте PriceComponent: amount = input.required({ transform: (v: string | number) => Number(v) }).\n\ncomputed formatted = computed(() => amount().toFixed(2)).\n\nНеобходимо предусмотреть:\n- input.required transform\n- computed toFixed\n- Number coercion",
       "task": "",
       "reference": "import { Component, computed, input } from '@angular/core';\n\n@Component({\n  selector: 'app-price',\n  standalone: true,\n  template: `<span>{{ formatted() }}</span>`,\n})\nexport class PriceComponent {\n  amount = input.required({ transform: (v: string | number) => Number(v) });\n  formatted = computed(() => this.amount().toFixed(2));\n}",
       "language": "typescript",
@@ -1235,7 +1235,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте HeroImageComponent: src = input('/hero.webp'), шаблон img ngSrc=\"src()\" width height priority.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- NgOptimizedImage\n- input src signal\n- priority flag\n\nПример: <app-hero-image /> — рендер шаблона компонента",
+      "question": "Создайте HeroImageComponent: src = input('/hero.webp'), шаблон img ngSrc=\"src()\" width height priority.\n\nНеобходимо предусмотреть:\n- NgOptimizedImage\n- input src signal\n- priority flag",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\nimport { NgOptimizedImage } from '@angular/common';\n\n@Component({\n  selector: 'app-hero-image',\n  standalone: true,\n  imports: [NgOptimizedImage],\n  template: `\n    <img [ngSrc]=\"src()\" width=\"1200\" height=\"600\" priority alt=\"Hero\" />\n  `,\n})\nexport class HeroImageComponent {\n  src = input('/hero.webp');\n}",
       "language": "typescript",
@@ -1243,7 +1243,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте Logger interface, ConsoleLogger implements, providers: [{ provide: Logger, useClass: ConsoleLogger }].\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- InjectionToken\n- useClass\n- ConsoleLogger\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Создайте Logger interface, ConsoleLogger implements, providers: [{ provide: Logger, useClass: ConsoleLogger }].\n\nНеобходимо предусмотреть:\n- InjectionToken\n- useClass\n- ConsoleLogger\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { Injectable, InjectionToken, inject } from '@angular/core';\n\nexport abstract class Logger {\n  abstract log(msg: string): void;\n}\n\n@Injectable()\nexport class ConsoleLogger implements Logger {\n  log(msg: string) {\n    console.log(msg);\n  }\n}\n\nexport const LOGGER = new InjectionToken<Logger>('Logger');\n\n// providers: [{ provide: LOGGER, useClass: ConsoleLogger }]",
       "language": "typescript",
@@ -1251,7 +1251,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте API_URL token, factory (config: AppConfig) => config.apiBase, deps: [AppConfig].\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- useFactory\n- deps: [AppConfig]\n- InjectionToken API_URL\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Создайте API_URL token, factory (config: AppConfig) => config.apiBase, deps: [AppConfig].\n\nНеобходимо предусмотреть:\n- useFactory\n- deps: [AppConfig]\n- InjectionToken API_URL\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { InjectionToken } from '@angular/core';\nimport { AppConfig } from './app-config';\n\nexport const API_URL = new InjectionToken<string>('API_URL');\n\nexport const apiUrlProvider = {\n  provide: API_URL,\n  useFactory: (config: AppConfig) => config.apiBase,\n  deps: [AppConfig],\n};",
       "language": "typescript",
@@ -1259,7 +1259,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте AliasedLogger: provide LOGGER useExisting ConsoleLogger — оба указывают на один instance.\n\nоба указывают на один instance.\n\nНеобходимо предусмотреть:\n- useExisting\n- Same instance\n- Two tokens\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Создайте AliasedLogger: provide LOGGER useExisting ConsoleLogger — оба указывают на один instance.\n\nНеобходимо предусмотреть:\n- useExisting\n- Same instance\n- Two tokens\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { Injectable, InjectionToken } from '@angular/core';\n\nexport const LOGGER = new InjectionToken<Logger>('Logger');\nexport const LEGACY_LOGGER = new InjectionToken<Logger>('LegacyLogger');\n\n@Injectable()\nexport class ConsoleLogger implements Logger {\n  log(msg: string) { console.log(msg); }\n}\n\nexport interface Logger { log(msg: string): void }\n\nexport const loggerProviders = [\n  ConsoleLogger,\n  { provide: LOGGER, useExisting: ConsoleLogger },\n  { provide: LEGACY_LOGGER, useExisting: ConsoleLogger },\n];",
       "language": "typescript",
@@ -1267,7 +1267,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FeatureComponent: theme = inject(THEME, { optional: true }) ??.\n\n'light'. THEME InjectionToken<string>.\n\nНеобходимо предусмотреть:\n- inject optional\n- Nullish coalescing default\n- InjectionToken\n\nПример: inject(API_URL) → базовый URL API из providers",
+      "question": "Создайте FeatureComponent: theme = inject(THEME, { optional: true }) ?? 'light'. THEME InjectionToken<string>.\n\nНеобходимо предусмотреть:\n- inject optional\n- Nullish coalescing default\n- InjectionToken\n\nПример: inject(API_URL) → базовый URL API из providers",
       "task": "",
       "reference": "import { Component, InjectionToken, inject } from '@angular/core';\n\nexport const THEME = new InjectionToken<string>('THEME');\n\n@Component({\n  selector: 'app-feature',\n  standalone: true,\n  template: `<div [attr.data-theme]=\"theme\">Feature</div>`,\n})\nexport class FeatureComponent {\n  theme = inject(THEME, { optional: true }) ?? 'light';\n}",
       "language": "typescript",
@@ -1275,7 +1275,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ParentComponent providers: [ValueService], ChildComponent inject(ValueService, { skipSelf: true, optional: true }).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- skipSelf: true\n- Component providers\n- optional inject\n\nПример: <app-child /> — рендер шаблона компонента",
+      "question": "Создайте ParentComponent providers: [ValueService], ChildComponent inject(ValueService, { skipSelf: true, optional: true }).\n\nНеобходимо предусмотреть:\n- skipSelf: true\n- Component providers\n- optional inject",
       "task": "",
       "reference": "import { Component, Injectable, inject } from '@angular/core';\n\n@Injectable()\nexport class ValueService {\n  value = 'local';\n}\n\n@Component({\n  selector: 'app-child',\n  standalone: true,\n  template: `<p>{{ parentValue ?? 'none' }}</p>`,\n})\nexport class ChildComponent {\n  parentValue = inject(ValueService, { skipSelf: true, optional: true })?.value;\n}\n\n@Component({\n  selector: 'app-parent',\n  standalone: true,\n  imports: [ChildComponent],\n  providers: [ValueService],\n  template: `<app-child />`,\n})\nexport class ParentComponent {}",
       "language": "typescript",
@@ -1283,7 +1283,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте multi: true provide VALIDATORS useValue fn1 и fn2.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- multi: true\n- InjectionToken array\n- Two useValue\n\nПример: невалидный email → { email: true }",
+      "question": "Создайте multi: true provide VALIDATORS useValue fn1 и fn2.\n\nНеобходимо предусмотреть:\n- multi: true\n- InjectionToken array\n- Two useValue\n\nПример: невалидный email → { email: true }",
       "task": "",
       "reference": "import { InjectionToken } from '@angular/core';\n\nexport type ValidatorFn = (value: string) => string | null;\n\nexport const VALIDATORS = new InjectionToken<ValidatorFn[]>('VALIDATORS');\n\nexport const validatorProviders = [\n  { provide: VALIDATORS, useValue: (v: string) => (v.length ? null : 'Required'), multi: true },\n  { provide: VALIDATORS, useValue: (v: string) => (v.length >= 3 ? null : 'Too short'), multi: true },\n];",
       "language": "typescript",
@@ -1299,7 +1299,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте app.config.ts с provideAnimations() из @angular/platform-browser/animations.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- provideAnimations()\n- ApplicationConfig\n- provideRouter\n\nПример: provideAnimations() в app.config.ts включает анимации",
+      "question": "Создайте app.config.ts с provideAnimations() из @angular/platform-browser/animations.\n\nНеобходимо предусмотреть:\n- provideAnimations()\n- ApplicationConfig\n- provideRouter\n\nПример: provideAnimations() в app.config.ts включает анимации",
       "task": "",
       "reference": "import { ApplicationConfig } from '@angular/core';\nimport { provideAnimations } from '@angular/platform-browser/animations';\nimport { provideRouter } from '@angular/router';\nimport { routes } from './app.routes';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [provideRouter(routes), provideAnimations()],\n};",
       "language": "typescript",
@@ -1315,7 +1315,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте runWithApi(): runInInjectionContext(envInjector, () => inject(ApiClient).ping()).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- runInInjectionContext\n- EnvironmentInjector param\n- inject ApiClient\n\nПример: runWithApi(...) — поведение согласно описанию",
+      "question": "Создайте runWithApi(): runInInjectionContext(envInjector, () => inject(ApiClient).ping()).\n\nНеобходимо предусмотреть:\n- runInInjectionContext\n- EnvironmentInjector param\n- inject ApiClient",
       "task": "",
       "reference": "import { EnvironmentInjector, inject, runInInjectionContext } from '@angular/core';\nimport { ApiClient } from './api-client';\n\nexport function runWithApi(envInjector: EnvironmentInjector) {\n  return runInInjectionContext(envInjector, () => inject(ApiClient).ping());\n}",
       "language": "typescript",
@@ -1331,7 +1331,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте TreeComponent providers: [TreeStateService], дочерние узлы inject TreeStateService.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Component providers\n- TreeStateService\n- inject in component\n\nПример: <app-tree /> — рендер шаблона компонента",
+      "question": "Создайте TreeComponent providers: [TreeStateService], дочерние узлы inject TreeStateService.\n\nНеобходимо предусмотреть:\n- Component providers\n- TreeStateService\n- inject in component",
       "task": "",
       "reference": "import { Component, Injectable, inject } from '@angular/core';\n\n@Injectable()\nexport class TreeStateService {\n  expanded = new Set<string>();\n  toggle(id: string) {\n    this.expanded.has(id) ? this.expanded.delete(id) : this.expanded.add(id);\n  }\n}\n\n@Component({\n  selector: 'app-tree',\n  standalone: true,\n  providers: [TreeStateService],\n  template: `<app-tree-node />`,\n})\nexport class TreeComponent {\n  state = inject(TreeStateService);\n}",
       "language": "typescript",
@@ -1339,7 +1339,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ParentService inject(forwardRef(() => ChildService)), ChildService inject(ParentService).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- forwardRef(() => ...)\n- Circular DI\n- Two services\n\nПример: inject(ChildService) в компоненте или сервисе",
+      "question": "Создайте ParentService inject(forwardRef(() => ChildService)), ChildService inject(ParentService).\n\nНеобходимо предусмотреть:\n- forwardRef(() => ...)\n- Circular DI\n- Two services\n\nПример: inject(ChildService) в компоненте или сервисе",
       "task": "",
       "reference": "import { Injectable, forwardRef, inject } from '@angular/core';\n\n@Injectable()\nexport class ChildService {\n  parent = inject(forwardRef(() => ParentService));\n}\n\n@Injectable()\nexport class ParentService {\n  child = inject(ChildService);\n  ping() {\n    return 'pong';\n  }\n}",
       "language": "typescript",
@@ -1347,7 +1347,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте app.config providers: { provide: LOCALE_ID, useValue: 'ru-RU' }.\n\nКомпонент inject LOCALE_ID.\n\nНеобходимо предусмотреть:\n- LOCALE_ID token\n- useValue ru-RU\n- inject in component\n\nПример: <app-locale-info /> — рендер шаблона компонента",
+      "question": "Создайте app.config providers: { provide: LOCALE_ID, useValue: 'ru-RU' }.\n\nКомпонент inject LOCALE_ID.\n\nНеобходимо предусмотреть:\n- LOCALE_ID token\n- useValue ru-RU\n- inject in component",
       "task": "",
       "reference": "import { Component, LOCALE_ID, inject } from '@angular/core';\n\n@Component({\n  selector: 'app-locale-info',\n  standalone: true,\n  template: `<p>Locale: {{ locale }}</p>`,\n})\nexport class LocaleInfoComponent {\n  locale = inject(LOCALE_ID);\n}\n\n// providers: [{ provide: LOCALE_ID, useValue: 'ru-RU' }]",
       "language": "typescript",
@@ -1355,7 +1355,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте CapitalizePipe standalone: transform(value: string): string — первая буква uppercase.\n\nпервая буква uppercase.\n\nНеобходимо предусмотреть:\n- standalone Pipe\n- PipeTransform\n- Capitalize first letter\n\nПример: | capitalize применяет transform в шаблоне",
+      "question": "Создайте CapitalizePipe standalone: transform(value: string): string — первая буква uppercase.\n\nНеобходимо предусмотреть:\n- standalone Pipe\n- PipeTransform\n- Capitalize first letter\n\nПример: | capitalize применяет transform в шаблоне",
       "task": "",
       "reference": "import { Pipe, PipeTransform } from '@angular/core';\n\n@Pipe({ name: 'capitalize', standalone: true })\nexport class CapitalizePipe implements PipeTransform {\n  transform(value: string): string {\n    if (!value) return '';\n    return value.charAt(0).toUpperCase() + value.slice(1);\n  }\n}",
       "language": "typescript",
@@ -1371,7 +1371,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте EventComponent: date = signal(new Date()), шаблон {{ date() | date:'fullDate':'':'ru-RU' }}.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- DatePipe import\n- fullDate format\n- ru-RU locale\n\nПример: <app-event /> — рендер шаблона компонента",
+      "question": "Создайте EventComponent: date = signal(new Date()), шаблон {{ date() | date:'fullDate':'':'ru-RU' }}.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- DatePipe import\n- fullDate format\n- ru-RU locale",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { DatePipe } from '@angular/common';\n\n@Component({\n  selector: 'app-event',\n  standalone: true,\n  imports: [DatePipe],\n  template: `<p>{{ date() | date: 'fullDate' : '' : 'ru-RU' }}</p>`,\n})\nexport class EventComponent {\n  date = signal(new Date());\n}",
       "language": "typescript",
@@ -1379,7 +1379,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте PriceTagComponent: price = input(19.99), template {{ price() | currency:'EUR':'symbol':'1.2-2' }}.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- CurrencyPipe\n- EUR symbol\n- input price\n\nПример: <app-price-tag /> — рендер шаблона компонента",
+      "question": "Создайте PriceTagComponent: price = input(19.99), template {{ price() | currency:'EUR':'symbol':'1.2-2' }}.\n\nНеобходимо предусмотреть:\n- CurrencyPipe\n- EUR symbol\n- input price",
       "task": "",
       "reference": "import { Component, input } from '@angular/core';\nimport { CurrencyPipe } from '@angular/common';\n\n@Component({\n  selector: 'app-price-tag',\n  standalone: true,\n  imports: [CurrencyPipe],\n  template: `<span>{{ price() | currency: 'EUR' : 'symbol' : '1.2-2' }}</span>`,\n})\nexport class PriceTagComponent {\n  price = input(19.99);\n}",
       "language": "typescript",
@@ -1387,7 +1387,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте RatioComponent: value = 0.756, template {{ value | number:'1.0-1' }} and {{ value | percent:'1.0-1' }}.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- DecimalPipe\n- PercentPipe\n- Format 1.0-1\n\nПример: <app-ratio /> — рендер шаблона компонента",
+      "question": "Создайте RatioComponent: value = 0.756, template {{ value | number:'1.0-1' }} and {{ value | percent:'1.0-1' }}.\n\nНеобходимо предусмотреть:\n- DecimalPipe\n- PercentPipe\n- Format 1.0-1",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { DecimalPipe, PercentPipe } from '@angular/common';\n\n@Component({\n  selector: 'app-ratio',\n  standalone: true,\n  imports: [DecimalPipe, PercentPipe],\n  template: `\n    <p>{{ value | number: '1.0-1' }}</p>\n    <p>{{ value | percent: '1.0-1' }}</p>\n  `,\n})\nexport class RatioComponent {\n  value = 0.756;\n}",
       "language": "typescript",
@@ -1395,7 +1395,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте DebugComponent: data = signal({ ok: true, n: 1 }), pre {{ data() | json }}.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- JsonPipe\n- pre template\n- signal object\n\nПример: <app-debug /> — рендер шаблона компонента",
+      "question": "Создайте DebugComponent: data = signal({ ok: true, n: 1 }), pre {{ data() | json }}.\n\nSignals/effect для реактивного состояния и побочных эффектов.\n\nНеобходимо предусмотреть:\n- JsonPipe\n- pre template\n- signal object",
       "task": "",
       "reference": "import { Component, signal } from '@angular/core';\nimport { JsonPipe } from '@angular/common';\n\n@Component({\n  selector: 'app-debug',\n  standalone: true,\n  imports: [JsonPipe],\n  template: `<pre>{{ data() | json }}</pre>`,\n})\nexport class DebugComponent {\n  data = signal({ ok: true, n: 1 });\n}",
       "language": "typescript",
@@ -1419,7 +1419,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте HeadlineComponent: title = 'hello world', template {{ title | titlecase }}.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- TitleCasePipe\n- titlecase pipe\n- Standalone import\n\nПример: name=\"Alice\" → \"Hello, Alice!\"",
+      "question": "Создайте HeadlineComponent: title = 'hello world', template {{ title | titlecase }}.\n\nНеобходимо предусмотреть:\n- TitleCasePipe\n- titlecase pipe\n- Standalone import\n\nПример: name=\"Alice\" → \"Hello, Alice!\"",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { TitleCasePipe } from '@angular/common';\n\n@Component({\n  selector: 'app-headline',\n  standalone: true,\n  imports: [TitleCasePipe],\n  template: `<h1>{{ title | titlecase }}</h1>`,\n})\nexport class HeadlineComponent {\n  title = 'hello world';\n}",
       "language": "typescript",
@@ -1427,7 +1427,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте ToggleSwitchComponent implements ControlValueAccessor с setDisabledState(isDisabled).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- setDisabledState\n- NG_VALUE_ACCESSOR\n- disabled button\n\nПример: несколько VALIDATORS объединяются в форме",
+      "question": "Создайте ToggleSwitchComponent implements ControlValueAccessor с setDisabledState(isDisabled).\n\nНеобходимо предусмотреть:\n- setDisabledState\n- NG_VALUE_ACCESSOR\n- disabled button\n\nПример: несколько VALIDATORS объединяются в форме",
       "task": "",
       "reference": "import { Component, forwardRef } from '@angular/core';\nimport { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';\n\n@Component({\n  selector: 'app-toggle-switch',\n  standalone: true,\n  providers: [{\n    provide: NG_VALUE_ACCESSOR,\n    useExisting: forwardRef(() => ToggleSwitchComponent),\n    multi: true,\n  }],\n  template: `<button type=\"button\" [disabled]=\"disabled\" (click)=\"toggle()\">{{ on ? 'ON' : 'OFF' }}</button>`,\n})\nexport class ToggleSwitchComponent implements ControlValueAccessor {\n  on = false;\n  disabled = false;\n  private onChange: (v: boolean) => void = () => {};\n\n  writeValue(value: boolean) { this.on = !!value; }\n  registerOnChange(fn: (v: boolean) => void) { this.onChange = fn; }\n  registerOnTouched(_fn: () => void) {}\n  setDisabledState(isDisabled: boolean) { this.disabled = isDisabled; }\n\n  toggle() {\n    if (this.disabled) return;\n    this.on = !this.on;\n    this.onChange(this.on);\n  }\n}",
       "language": "typescript",
@@ -1435,7 +1435,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте RatingCvaComponent с validate(): ValidationErrors | null если value < 1.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- NG_VALIDATORS\n- validate() method\n- ControlValueAccessor\n\nПример: несколько VALIDATORS объединяются в форме",
+      "question": "Создайте RatingCvaComponent с validate(): ValidationErrors | null если value < 1.\n\nНеобходимо предусмотреть:\n- NG_VALIDATORS\n- validate() method\n- ControlValueAccessor\n\nПример: несколько VALIDATORS объединяются в форме",
       "task": "",
       "reference": "import { Component, forwardRef } from '@angular/core';\nimport {\n  AbstractControl,\n  ControlValueAccessor,\n  NG_VALIDATORS,\n  NG_VALUE_ACCESSOR,\n  ValidationErrors,\n  Validator,\n} from '@angular/forms';\n\n@Component({\n  selector: 'app-rating-cva',\n  standalone: true,\n  providers: [\n    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => RatingCvaComponent), multi: true },\n    { provide: NG_VALIDATORS, useExisting: forwardRef(() => RatingCvaComponent), multi: true },\n  ],\n  template: `<input type=\"number\" [value]=\"value\" (input)=\"onInput($event)\" />`,\n})\nexport class RatingCvaComponent implements ControlValueAccessor, Validator {\n  value = 0;\n  private onChange: (v: number) => void = () => {};\n\n  writeValue(v: number) { this.value = v ?? 0; }\n  registerOnChange(fn: (v: number) => void) { this.onChange = fn; }\n  registerOnTouched(_fn: () => void) {}\n  validate(_control: AbstractControl): ValidationErrors | null {\n    return this.value < 1 ? { minRating: true } : null;\n  }\n\n  onInput(event: Event) {\n    this.value = Number((event.target as HTMLInputElement).value);\n    this.onChange(this.value);\n  }\n}",
       "language": "typescript",
@@ -1451,7 +1451,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте OrderStatusComponent: status$ = api.status(), @let s = status$ | async; @if (s) { {{ s }} }.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- @let with async\n- AsyncPipe\n- @if guard\n\nПример: <app-order-status /> — рендер шаблона компонента",
+      "question": "Создайте OrderStatusComponent: status$ = api.status(), @let s = status$ | async; @if (s) { {{ s }} }.\n\nНеобходимо предусмотреть:\n- @let with async\n- AsyncPipe\n- @if guard",
       "task": "",
       "reference": "import { Component, inject } from '@angular/core';\nimport { AsyncPipe } from '@angular/common';\nimport { OrderApi } from './order-api';\n\n@Component({\n  selector: 'app-order-status',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    @let s = status$ | async;\n    @if (s) { <p>Status: {{ s }}</p> }\n  `,\n})\nexport class OrderStatusComponent {\n  status$ = inject(OrderApi).status();\n}",
       "language": "typescript",
@@ -1459,7 +1459,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Создайте FadeComponent с animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate('200ms')])])].\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- trigger :enter\n- animate 200ms\n- @fade in template\n\nПример: <app-fade /> — рендер шаблона компонента",
+      "question": "Создайте FadeComponent с animations: [trigger('fade', [transition(':enter', [style({ opacity: 0 }), animate('200ms')])])].\n\nНеобходимо предусмотреть:\n- trigger :enter\n- animate 200ms\n- @fade in template",
       "task": "",
       "reference": "import { Component } from '@angular/core';\nimport { animate, style, transition, trigger } from '@angular/animations';\n\n@Component({\n  selector: 'app-fade',\n  standalone: true,\n  animations: [\n    trigger('fade', [\n      transition(':enter', [style({ opacity: 0 }), animate('200ms', style({ opacity: 1 }))]),\n    ]),\n  ],\n  template: `@if (show) { <p @fade>Visible</p> }`,\n})\nexport class FadeComponent {\n  show = true;\n}",
       "language": "typescript",
@@ -1467,7 +1467,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Напишите spec для CounterComponent: configureTestingModule imports [CounterComponent], click button, expect text contains '1'.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- TestBed.configureTestingModule\n- imports standalone\n- click + detectChanges\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Напишите spec для CounterComponent: configureTestingModule imports [CounterComponent], click button, expect text contains '1'.\n\nНеобходимо предусмотреть:\n- TestBed.configureTestingModule\n- imports standalone\n- click + detectChanges\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { CounterComponent } from './counter.component';\n\ndescribe('CounterComponent', () => {\n  let fixture: ComponentFixture<CounterComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [CounterComponent] }).compileComponents();\n    fixture = TestBed.createComponent(CounterComponent);\n    fixture.detectChanges();\n  });\n\n  it('increments on click', () => {\n    fixture.nativeElement.querySelector('button').click();\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('1');\n  });\n});",
       "language": "typescript",
@@ -1475,7 +1475,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec UserApi: HttpTestingController expectOne GET /api/users, flush mock data.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- HttpTestingController\n- expectOne + flush\n- afterEach verify\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
+      "question": "Реализовать TypeScript/Angular: Напишите spec UserApi: HttpTestingController expectOne GET /api/users, flush mock data.\n\nНеобходимо предусмотреть:\n- HttpTestingController\n- expectOne + flush\n- afterEach verify\n\nПример: getUsers() → Observable<User[]> (GET /api/users)",
       "task": "",
       "reference": "import { TestBed } from '@angular/core/testing';\nimport { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';\nimport { UserApi } from './user-api';\n\ndescribe('UserApi', () => {\n  let api: UserApi;\n  let httpMock: HttpTestingController;\n\n  beforeEach(() => {\n    TestBed.configureTestingModule({ imports: [HttpClientTestingModule], providers: [UserApi] });\n    api = TestBed.inject(UserApi);\n    httpMock = TestBed.inject(HttpTestingController);\n  });\n\n  afterEach(() => httpMock.verify());\n\n  it('loads users', () => {\n    api.getUsers().subscribe(users => expect(users.length).toBe(1));\n    const req = httpMock.expectOne('/api/users');\n    expect(req.request.method).toBe('GET');\n    req.flush([{ id: 1, name: 'Ada' }]);\n  });\n});",
       "language": "typescript",
@@ -1483,7 +1483,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec с overrideProvider LOGGER useValue mockLogger.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- overrideProvider\n- useValue mock\n- compileComponents\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec с overrideProvider LOGGER useValue mockLogger.\n\nНеобходимо предусмотреть:\n- overrideProvider\n- useValue mock\n- compileComponents\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { TestBed } from '@angular/core/testing';\nimport { LOGGER, Logger } from './logger';\nimport { AppComponent } from './app.component';\n\ndescribe('AppComponent', () => {\n  const mockLogger: Logger = { log: jasmine.createSpy('log') };\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [AppComponent] })\n      .overrideProvider(LOGGER, { useValue: mockLogger })\n      .compileComponents();\n  });\n\n  it('uses mock logger', () => {\n    expect(mockLogger.log).toBeDefined();\n  });\n});",
       "language": "typescript",
@@ -1491,7 +1491,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec: spyOn(api, 'getUser').and.returnValue(of({ id: 1, name: 'Test' })).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- jasmine.createSpyObj\n- and.returnValue(of(...))\n- Provider override\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec: spyOn(api, 'getUser').and.returnValue(of({ id: 1, name: 'Test' })).\n\nНеобходимо предусмотреть:\n- jasmine.createSpyObj\n- and.returnValue(of(...))\n- Provider override\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { of } from 'rxjs';\nimport { ProfileComponent } from './profile.component';\nimport { UserApi } from './user-api';\n\ndescribe('ProfileComponent', () => {\n  let fixture: ComponentFixture<ProfileComponent>;\n  let api: jasmine.SpyObj<UserApi>;\n\n  beforeEach(async () => {\n    api = jasmine.createSpyObj('UserApi', ['getUser']);\n    api.getUser.and.returnValue(of({ id: 1, name: 'Test' }));\n\n    await TestBed.configureTestingModule({\n      imports: [ProfileComponent],\n      providers: [{ provide: UserApi, useValue: api }],\n    }).compileComponents();\n\n    fixture = TestBed.createComponent(ProfileComponent);\n    fixture.detectChanges();\n  });\n\n  it('renders user name', () => {\n    expect(fixture.nativeElement.textContent).toContain('Test');\n  });\n});",
       "language": "typescript",
@@ -1499,7 +1499,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec с fakeAsync, tick(1000), проверьте async результат.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- fakeAsync\n- tick(1000)\n- delay observable\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec с fakeAsync, tick(1000), проверьте async результат.\n\nНеобходимо предусмотреть:\n- fakeAsync\n- tick(1000)\n- delay observable\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { fakeAsync, tick } from '@angular/core/testing';\nimport { delay, of } from 'rxjs';\n\ndescribe('DelayedLoader', () => {\n  it('resolves after delay', fakeAsync(() => {\n    let value = '';\n    of('done').pipe(delay(1000)).subscribe(v => (value = v));\n    tick(1000);\n    expect(value).toBe('done');\n  }));\n});",
       "language": "typescript",
@@ -1507,7 +1507,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec: By.css('button.submit'), debugElement.nativeElement.click().\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- By.css\n- debugElement.query\n- nativeElement.click\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec: By.css('button.submit'), debugElement.nativeElement.click().\n\nНеобходимо предусмотреть:\n- By.css\n- debugElement.query\n- nativeElement.click\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { By } from '@angular/platform-browser';\nimport { FormComponent } from './form.component';\n\ndescribe('FormComponent', () => {\n  let fixture: ComponentFixture<FormComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [FormComponent] }).compileComponents();\n    fixture = TestBed.createComponent(FormComponent);\n    fixture.detectChanges();\n  });\n\n  it('submits via submit button', () => {\n    const btn = fixture.debugElement.query(By.css('button.submit'));\n    btn.nativeElement.click();\n    fixture.detectChanges();\n    expect(fixture.componentInstance.submitted).toBeTrue();\n  });\n});",
       "language": "typescript",
@@ -1515,7 +1515,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec: debugElement.triggerEventHandler('click', null).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- triggerEventHandler('click')\n- By.css button\n- signal liked\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec: debugElement.triggerEventHandler('click', null).\n\nНеобходимо предусмотреть:\n- triggerEventHandler('click')\n- By.css button\n- signal liked\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { By } from '@angular/platform-browser';\nimport { LikeButtonComponent } from './like-button.component';\n\ndescribe('LikeButtonComponent', () => {\n  let fixture: ComponentFixture<LikeButtonComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [LikeButtonComponent] }).compileComponents();\n    fixture = TestBed.createComponent(LikeButtonComponent);\n    fixture.detectChanges();\n  });\n\n  it('likes on click', () => {\n    const btn = fixture.debugElement.query(By.css('button'));\n    btn.triggerEventHandler('click', null);\n    fixture.detectChanges();\n    expect(fixture.componentInstance.liked()).toBeTrue();\n  });\n});",
       "language": "typescript",
@@ -1523,7 +1523,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec RatingComponent: subscribe to rated output, click star, expect emitted value.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- Subscribe to @Output\n- Emit on click\n- expect values array\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec RatingComponent: subscribe to rated output, click star, expect emitted value.\n\nНеобходимо предусмотреть:\n- Subscribe to @Output\n- Emit on click\n- expect values array\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { RatingComponent } from './rating.component';\n\ndescribe('RatingComponent', () => {\n  let fixture: ComponentFixture<RatingComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [RatingComponent] }).compileComponents();\n    fixture = TestBed.createComponent(RatingComponent);\n    fixture.detectChanges();\n  });\n\n  it('emits rating', () => {\n    const values: number[] = [];\n    fixture.componentInstance.rated.subscribe(v => values.push(v));\n    fixture.nativeElement.querySelectorAll('button')[2].click();\n    expect(values).toEqual([3]);\n  });\n});",
       "language": "typescript",
@@ -1531,7 +1531,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Напишите spec HeadingComponent: fixture.componentRef.setInput('title', 'Hi'); detectChanges; expect text.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- componentRef.setInput\n- input.required title\n- detectChanges\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Напишите spec HeadingComponent: fixture.componentRef.setInput('title', 'Hi'); detectChanges; expect text.\n\nНеобходимо предусмотреть:\n- componentRef.setInput\n- input.required title\n- detectChanges\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { HeadingComponent } from './heading.component';\n\ndescribe('HeadingComponent', () => {\n  let fixture: ComponentFixture<HeadingComponent>;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({ imports: [HeadingComponent] }).compileComponents();\n    fixture = TestBed.createComponent(HeadingComponent);\n  });\n\n  it('renders input title', () => {\n    fixture.componentRef.setInput('title', 'Hi');\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('Hi');\n  });\n});",
       "language": "typescript",
@@ -1571,11 +1571,12 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать TypeScript/Angular: Напишите spec async: await fixture.whenStable() после HTTP load в ngOnInit.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- whenStable()\n- flush after detectChanges\n- Async HTTP load\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
+      "question": "Реализовать TypeScript/Angular: Напишите spec async: await fixture.whenStable() после HTTP load в ngOnInit.\n\nНеобходимо предусмотреть:\n- whenStable()\n- flush after detectChanges\n- Async HTTP load\n\nПример: TestBed.createComponent → detectChanges → проверка DOM",
       "task": "",
       "reference": "import { ComponentFixture, TestBed } from '@angular/core/testing';\nimport { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';\nimport { UserListComponent } from './user-list.component';\n\ndescribe('UserListComponent', () => {\n  let fixture: ComponentFixture<UserListComponent>;\n  let httpMock: HttpTestingController;\n\n  beforeEach(async () => {\n    await TestBed.configureTestingModule({\n      imports: [UserListComponent, HttpClientTestingModule],\n    }).compileComponents();\n    fixture = TestBed.createComponent(UserListComponent);\n    httpMock = TestBed.inject(HttpTestingController);\n  });\n\n  it('loads users async', async () => {\n    fixture.detectChanges();\n    httpMock.expectOne('/api/users').flush([{ id: 1, name: 'Ada' }]);\n    await fixture.whenStable();\n    fixture.detectChanges();\n    expect(fixture.nativeElement.textContent).toContain('Ada');\n  });\n});",
       "language": "typescript",
       "topic": "Тестирование"
     }
-  ]
+  ],
+  "retired_ids": []
 }

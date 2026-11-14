@@ -122,9 +122,12 @@ class Deck:
     cards: list[Card] = field(default_factory=list)
     deck_id: str = ""
     language: str = ""
+    # id удалённых из колоды карточек: их прогресс не переносится на другие карточки
+    retired_ids: set[str] = field(default_factory=set)
 
     def merge(self, other: Deck, *, suffix_name: bool = True) -> None:
         self.cards.extend(other.cards)
+        self.retired_ids |= other.retired_ids
         if suffix_name and other.name:
             self.name = f"{self.name} + {other.name}"
 
@@ -142,7 +145,8 @@ class Deck:
             ]
             return cls(name=Path(path).stem, cards=cards, language=default_language)
         cards = [_card_from_dict(c, default_language=default_language) for c in data.get("cards", [])]
-        return cls(name=name, cards=cards, language=default_language)
+        retired = {str(x) for x in data.get("retired_ids", [])}
+        return cls(name=name, cards=cards, language=default_language, retired_ids=retired)
 
     @classmethod
     def load_anki_txt(cls, path: str | Path) -> Deck:

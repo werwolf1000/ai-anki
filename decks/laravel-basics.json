@@ -33,10 +33,11 @@
       "language": "php"
     },
     {
-      "question": "config() vs env()?",
+      "question": "В чём разница между config() и env()?",
       "reference": "config() — из config/*.php с кэшем; env() только в config-файлах, не в коде приложения (иначе null после config:cache).",
       "topic": "Основы",
-      "language": "php"
+      "language": "php",
+      "id": "3631105"
     },
     {
       "question": "bootstrap/app.php (Laravel 11+)?",
@@ -57,10 +58,11 @@
       "language": "php"
     },
     {
-      "question": "Homestead / Sail?",
+      "question": "Поясните: Homestead / Sail.",
       "reference": "Laravel Sail — Docker-окружение для dev; официальные образы PHP, MySQL, Redis, Mailpit.",
       "topic": "Основы",
-      "language": "php"
+      "language": "php",
+      "id": "7908536"
     },
     {
       "question": "Mix / Vite в Laravel?",
@@ -75,16 +77,18 @@
       "language": "php"
     },
     {
-      "question": "php artisan about?",
+      "question": "Поясните: php artisan about.",
       "reference": "Сводка версий Laravel, PHP, drivers cache/queue/session/database.",
       "topic": "Основы",
-      "language": "php"
+      "language": "php",
+      "id": "3486089"
     },
     {
-      "question": "Maintenance mode?",
+      "question": "Поясните: Maintenance mode.",
       "reference": "php artisan down / up; secret bypass token; prerender страница 503.",
       "topic": "Основы",
-      "language": "php"
+      "language": "php",
+      "id": "7223957"
     },
     {
       "question": "Named routes и URL generation?",
@@ -105,28 +109,32 @@
       "language": "php"
     },
     {
-      "question": "Route parameters {id}?",
+      "question": "Поясните: Route parameters {id}.",
       "reference": "Route::get('/posts/{id}', ...); constraint Route::pattern('id', '[0-9]+').",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "4072440"
     },
     {
-      "question": "Optional parameters?",
+      "question": "Поясните: Optional parameters.",
       "reference": "{slug?} с default в closure/controller: function ($slug = null).",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "8610025"
     },
     {
-      "question": "Route groups?",
+      "question": "Поясните: Route groups.",
       "reference": "Route::prefix('admin')->middleware('auth')->group(function () { ... }); name(), domain(), namespace().",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "4963585"
     },
     {
-      "question": "Route model binding?",
+      "question": "Поясните: Route model binding.",
       "reference": "Type-hint Post $post — Laravel resolve по id; custom binding в RouteServiceProvider/boot.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "5165034"
     },
     {
       "question": "Implicit vs explicit binding?",
@@ -135,70 +143,81 @@
       "language": "php"
     },
     {
-      "question": "Fallback routes?",
+      "question": "Поясните: Fallback routes.",
       "reference": "Route::fallback(fn () => view('404')) — catch-all в конце.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "7525546"
     },
     {
-      "question": "Rate limiting routes?",
+      "question": "Поясните: Rate limiting routes.",
       "reference": "Route::middleware('throttle:api'); RateLimiter::for in AppServiceProvider.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "3192806"
     },
     {
-      "question": "Signed URLs?",
+      "question": "Поясните: Signed URLs.",
       "reference": "URL::temporarySignedRoute('unsubscribe', now()->addDays(7), ['user' => 1]); middleware signed.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "3387535"
     },
     {
-      "question": "Route caching?",
+      "question": "Поясните: Route caching.",
       "reference": "php artisan route:cache — production; route:clear при изменении маршрутов.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "124693"
     },
     {
-      "question": "Subdomain routing?",
+      "question": "Поясните: Subdomain routing.",
       "reference": "Route::domain('{account}.example.com')->group(...).",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "4335045"
     },
     {
-      "question": "Resource routes?",
+      "question": "Поясните: Resource routes.",
       "reference": "Route::resource('photos', PhotoController::class) — index, create, store, show, edit, update, destroy.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "9125182"
     },
     {
-      "question": "apiResource vs resource?",
+      "question": "В чём разница между apiResource и resource?",
       "reference": "apiResource без create/edit — JSON API CRUD.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "4385800"
     },
     {
-      "question": "Route::redirect?",
+      "question": "Что такое Route::redirect?",
       "reference": "Route::redirect('/here', '/there', 301) без controller.",
       "topic": "Роутинг",
-      "language": "php"
+      "language": "php",
+      "id": "2462698"
     },
     {
-      "question": "Single action controllers?",
+      "question": "Поясните: Single action controllers.",
       "reference": "php artisan make:controller ShowProfileController --invokable — один __invoke.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "6940189"
     },
     {
-      "question": "Controller middleware?",
+      "question": "Поясните: Controller middleware.",
       "reference": "$this->middleware('auth')->only('store'); или в конструкторе — attribute Middleware в Laravel 11.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "8092018"
     },
     {
-      "question": "Form Request?",
+      "question": "Поясните: Form Request.",
       "reference": "php artisan make:request StorePostRequest — authorize() + rules(); type-hint в controller method.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "5741291"
     },
     {
       "question": "authorize() в Form Request?",
@@ -219,10 +238,11 @@
       "language": "php"
     },
     {
-      "question": "API controller JSON?",
+      "question": "Поясните: API controller JSON.",
       "reference": "return PostResource::collection($posts) или response()->json($data).",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "9818384"
     },
     {
       "question": "Controller vs Closure routes?",
@@ -231,16 +251,18 @@
       "language": "php"
     },
     {
-      "question": "Route::controller()?",
+      "question": "Что делает Route::controller()?",
       "reference": "Группировка [Controller::class, 'method'] строками — legacy style.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "121792"
     },
     {
-      "question": "Invokable controllers?",
+      "question": "Поясните: Invokable controllers.",
       "reference": "Route::get('/profile', ProfileController::class) — один entry point.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "3301912"
     },
     {
       "question": "abort() и abort_if()?",
@@ -249,28 +271,32 @@
       "language": "php"
     },
     {
-      "question": "redirect()->with()?",
+      "question": "Что делает redirect()->with()?",
       "reference": "Flash data в session: redirect()->route('home')->with('status', 'Saved!').",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "757287"
     },
     {
-      "question": "back() helper?",
+      "question": "Поясните: back() helper.",
       "reference": "redirect()->back() с input old() после validation errors.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "5347626"
     },
     {
-      "question": "old() helper?",
+      "question": "Поясните: old() helper.",
       "reference": "old('email') — repopulate form после failed validation.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "8269002"
     },
     {
-      "question": "View composers?",
+      "question": "Поясните: View composers.",
       "reference": "View::composer('profile', fn ($view) => ...) — shared view data.",
       "topic": "Контроллеры",
-      "language": "php"
+      "language": "php",
+      "id": "5131641"
     },
     {
       "question": "Active Record в Eloquent?",
@@ -291,58 +317,67 @@
       "language": "php"
     },
     {
-      "question": "hasMany / hasOne?",
+      "question": "Поясните: hasMany / hasOne.",
       "reference": "User hasMany Post::class; hasOne Profile::class — foreign key на child.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "8331426"
     },
     {
-      "question": "belongsToMany pivot?",
+      "question": "Поясните: belongsToMany pivot.",
       "reference": "attach, detach, sync; withPivot('expires_at'); timestamps на pivot.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "9310879"
     },
     {
-      "question": "Eager loading N+1?",
+      "question": "Поясните: Eager loading N+1.",
       "reference": "Post::with('user')->get(); — один запрос для relation вместо N.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "1231708"
     },
     {
-      "question": "Lazy eager load?",
+      "question": "Поясните: Lazy eager load.",
       "reference": "$posts->load('comments'); после получения коллекции.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "182877"
     },
     {
-      "question": "withCount?",
+      "question": "Что такое withCount?",
       "reference": "User::withCount('posts')->get(); — posts_count без загрузки posts.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "7551755"
     },
     {
-      "question": "Scopes local?",
+      "question": "Поясните: Scopes local.",
       "reference": "scopePublished($query) { return $query->where('published', true); } Post::published()->get();",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "1522524"
     },
     {
-      "question": "Global scopes?",
+      "question": "Поясните: Global scopes.",
       "reference": "booted() { static::addGlobalScope('active', fn ($q) => $q->where('active', 1)); }",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "4769844"
     },
     {
-      "question": "Soft deletes?",
+      "question": "Поясните: Soft deletes.",
       "reference": "use SoftDeletes; deleted_at; withTrashed(), onlyTrashed(), restore(), forceDelete().",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "7137012"
     },
     {
-      "question": "Casts attribute?",
+      "question": "Поясните: Casts attribute.",
       "reference": "protected $casts = ['options' => 'array', 'published_at' => 'datetime'];",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "6805244"
     },
     {
       "question": "Accessors / mutators (Laravel 9+)?",
@@ -351,10 +386,11 @@
       "language": "php"
     },
     {
-      "question": "Query builder vs Eloquent?",
+      "question": "В чём разница между Query builder и Eloquent?",
       "reference": "DB::table('users') — без model events; User::query() — Eloquent builder с scopes.",
       "topic": "Eloquent",
-      "language": "php"
+      "language": "php",
+      "id": "3817399"
     },
     {
       "question": "chunk() и cursor()?",
@@ -369,16 +405,18 @@
       "language": "php"
     },
     {
-      "question": "Schema::create blueprint?",
+      "question": "Поясните: Schema::create blueprint.",
       "reference": "Schema::create('posts', function (Blueprint $table) { $table->id(); $table->string('title'); $table->timestamps(); });",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "5298298"
     },
     {
-      "question": "Foreign keys?",
+      "question": "Поясните: Foreign keys.",
       "reference": "$table->foreignId('user_id')->constrained()->cascadeOnDelete();",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "8693295"
     },
     {
       "question": "Индексы?",
@@ -393,16 +431,18 @@
       "language": "php"
     },
     {
-      "question": "rename column?",
+      "question": "Поясните: rename column.",
       "reference": "$table->renameColumn('from', 'to'); doctrine/dbal historically required.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "9363764"
     },
     {
-      "question": "migrate / rollback?",
+      "question": "Поясните: migrate / rollback.",
       "reference": "php artisan migrate; migrate:rollback --step=1; migrate:fresh --seed (dev only!).",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "8867060"
     },
     {
       "question": "Seeds и factories?",
@@ -411,46 +451,53 @@
       "language": "php"
     },
     {
-      "question": "Factory states?",
+      "question": "Поясните: Factory states.",
       "reference": "User::factory()->admin()->create(); definition() + state methods.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "172554"
     },
     {
-      "question": "Migration naming order?",
+      "question": "Поясните: Migration naming order.",
       "reference": "Timestamp prefix ensures order; не редактировать applied migrations в prod.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "8754030"
     },
     {
-      "question": "Schema::hasTable?",
+      "question": "Что такое Schema::hasTable?",
       "reference": "Условная migration logic для совместимости.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "2718881"
     },
     {
-      "question": "JSON columns?",
+      "question": "Поясните: JSON columns.",
       "reference": "$table->json('meta'); cast array в model.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "7473681"
     },
     {
-      "question": "Enum column?",
+      "question": "Поясните: Enum column.",
       "reference": "$table->enum('status', ['draft','published']); или string + PHP enum cast Laravel 9+.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "4743101"
     },
     {
-      "question": "Soft delete column?",
+      "question": "Поясните: Soft delete column.",
       "reference": "$table->softDeletes(); adds deleted_at nullable.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "308219"
     },
     {
-      "question": "down() method?",
+      "question": "Поясните: down() method.",
       "reference": "Schema::dropIfExists('posts'); — reverse migration.",
       "topic": "Миграции",
-      "language": "php"
+      "language": "php",
+      "id": "6498027"
     },
     {
       "question": "Расширение .blade.php?",
@@ -471,10 +518,11 @@
       "language": "php"
     },
     {
-      "question": "Components <x-alert>?",
+      "question": "Поясните: Components <x-alert>.",
       "reference": "php artisan make:component Alert; class + view resources/views/components/alert.blade.php.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "8820406"
     },
     {
       "question": "Slot и attributes?",
@@ -489,16 +537,18 @@
       "language": "php"
     },
     {
-      "question": "Blade stacks?",
+      "question": "Поясните: Blade stacks.",
       "reference": "@push('scripts') ... @endpush; @stack('scripts') в layout.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "5891064"
     },
     {
-      "question": "@once directive?",
+      "question": "Поясните: @once directive.",
       "reference": "Include/push один раз за render — assets dedup.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "1702589"
     },
     {
       "question": "@csrf в forms?",
@@ -507,10 +557,11 @@
       "language": "php"
     },
     {
-      "question": "@method('PUT')?",
+      "question": "Что такое @method('PUT')?",
       "reference": "Spoof HTTP method для HTML forms: PUT/PATCH/DELETE.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "1299418"
     },
     {
       "question": "Blade escaping {{ }}?",
@@ -519,28 +570,32 @@
       "language": "php"
     },
     {
-      "question": "@verbatim?",
+      "question": "Что такое @verbatim?",
       "reference": "Отключить Blade parsing для @{{ vue }} шаблонов.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "6508410"
     },
     {
-      "question": "Custom Blade directives?",
+      "question": "Поясните: Custom Blade directives.",
       "reference": "Blade::directive('datetime', fn ($expr) => ...); в AppServiceProvider.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "8017399"
     },
     {
-      "question": "View exists check?",
+      "question": "Поясните: View exists check.",
       "reference": "view()->exists('emails.welcome'); View::share global data.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "580048"
     },
     {
-      "question": "Mail markdown templates?",
+      "question": "Поясните: Mail markdown templates.",
       "reference": "php artisan make:mail OrderShipped --markdown=emails.orders.shipped.",
       "topic": "Blade",
-      "language": "php"
+      "language": "php",
+      "id": "1531784"
     },
     {
       "question": "Что такое middleware?",
@@ -567,10 +622,11 @@
       "language": "php"
     },
     {
-      "question": "Middleware parameters?",
+      "question": "Поясните: Middleware parameters.",
       "reference": "middleware('role:admin') — третий аргумент $role в handle после $next.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "8168261"
     },
     {
       "question": "Before vs after middleware?",
@@ -579,16 +635,18 @@
       "language": "php"
     },
     {
-      "question": "SubstituteBindings?",
+      "question": "Что такое SubstituteBindings?",
       "reference": "Route model binding middleware в группе web/api.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "3454229"
     },
     {
-      "question": "TrustProxies?",
+      "question": "Что такое TrustProxies?",
       "reference": "Correct HTTPS behind load balancer — X-Forwarded-* headers.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "9922142"
     },
     {
       "question": "PreventRequestsDuringMaintenance?",
@@ -597,22 +655,25 @@
       "language": "php"
     },
     {
-      "question": "ValidateSignature?",
+      "question": "Что такое ValidateSignature?",
       "reference": "Signed URL middleware 'signed'.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "6071246"
     },
     {
-      "question": "ThrottleRequests?",
+      "question": "Что такое ThrottleRequests?",
       "reference": "Rate limit by key — user id or IP.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "3322061"
     },
     {
-      "question": "Priority middleware?",
+      "question": "Поясните: Priority middleware.",
       "reference": "$middleware->priority([...]) порядок при конфликте.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "8226274"
     },
     {
       "question": "Middleware в Laravel 11?",
@@ -621,40 +682,46 @@
       "language": "php"
     },
     {
-      "question": "Terminate middleware?",
+      "question": "Поясните: Terminate middleware.",
       "reference": "Middleware с terminate() — после отправки response (logging).",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "3628563"
     },
     {
-      "question": "RedirectIfAuthenticated?",
+      "question": "Что такое RedirectIfAuthenticated?",
       "reference": "Guest routes — redirect logged-in users from login/register.",
       "topic": "Middleware",
-      "language": "php"
+      "language": "php",
+      "id": "3456374"
     },
     {
-      "question": "Validator facade?",
+      "question": "Поясните: Validator facade.",
       "reference": "Validator::make($data, $rules, $messages); $validator->fails() / validated().",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "8122134"
     },
     {
-      "question": "Form Request rules()?",
+      "question": "Что делает Form Request rules()?",
       "reference": "return ['email' => 'required|email|unique:users', 'password' => 'required|min:8|confirmed'];",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "8718839"
     },
     {
-      "question": "Rule objects?",
+      "question": "Поясните: Rule objects.",
       "reference": "Rule::unique('users')->ignore($user->id); Rule::in(['active','pending']);",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "2712222"
     },
     {
-      "question": "Custom validation rule?",
+      "question": "Поясните: Custom validation rule.",
       "reference": "php artisan make:rule Uppercase; implements ValidationRule invoke method.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "6323072"
     },
     {
       "question": "sometimes и nullable?",
@@ -663,22 +730,25 @@
       "language": "php"
     },
     {
-      "question": "confirmed rule?",
+      "question": "Поясните: confirmed rule.",
       "reference": "password + password_confirmation fields.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "3678915"
     },
     {
-      "question": "array validation?",
+      "question": "Поясните: array validation.",
       "reference": "'items.*.id' => 'required|integer' — nested arrays.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "9219344"
     },
     {
-      "question": "after:date / before?",
+      "question": "Поясните: after:date / before.",
       "reference": "Date comparison rules; after_or_equal:today.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "9298543"
     },
     {
       "question": "exists и unique?",
@@ -687,40 +757,46 @@
       "language": "php"
     },
     {
-      "question": "Validation attributes?",
+      "question": "Поясните: Validation attributes.",
       "reference": "attributes() human names для error messages.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "2575492"
     },
     {
-      "question": "messages() custom?",
+      "question": "Поясните: messages() custom.",
       "reference": "Override default 'required' => 'Email обязателен'.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "5246458"
     },
     {
-      "question": "stopOnFirstFailure?",
+      "question": "Что такое stopOnFirstFailure?",
       "reference": "Validator::stopOnFirstFailure() — одна ошибка на field batch.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "8711996"
     },
     {
-      "question": "validateWithBag?",
+      "question": "Что такое validateWithBag?",
       "reference": "Multiple error bags: $validator->validateWithBag('shipping').",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "8285049"
     },
     {
-      "question": "prepareForValidation?",
+      "question": "Что такое prepareForValidation?",
       "reference": "FormRequest hook normalize input before rules.",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "91804"
     },
     {
-      "question": "withValidator after hook?",
+      "question": "Поясните: withValidator after hook.",
       "reference": "withValidator(fn ($v) => $v->after(function ($v) { ... }));",
       "topic": "Валидация",
-      "language": "php"
+      "language": "php",
+      "id": "641227"
     },
     {
       "question": "Laravel Breeze / Jetstream / Fortify?",
@@ -729,16 +805,18 @@
       "language": "php"
     },
     {
-      "question": "Sanctum SPA vs token?",
+      "question": "В чём разница между Sanctum SPA и token?",
       "reference": "SPA cookie session + CSRF; API tokens HasApiTokens personal access tokens.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "7425989"
     },
     {
-      "question": "auth middleware?",
+      "question": "Поясните: auth middleware.",
       "reference": "Route::middleware('auth'); guard web default config/auth.php.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "9904272"
     },
     {
       "question": "Guards и providers?",
@@ -747,70 +825,81 @@
       "language": "php"
     },
     {
-      "question": "Policy authorization?",
+      "question": "Поясните: Policy authorization.",
       "reference": "php artisan make:policy PostPolicy; $this->authorize('update', $post); Gate::authorize.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "8198799"
     },
     {
-      "question": "Gates?",
+      "question": "Что такое Gates?",
       "reference": "Gate::define('edit-settings', fn (User $u) => $u->isAdmin); @can blade.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "5999542"
     },
     {
-      "question": "Password hashing?",
+      "question": "Поясните: Password hashing.",
       "reference": "Hash::make / bcrypt; cast 'password' => 'hashed' auto on set Laravel 10+.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "3036278"
     },
     {
-      "question": "Password reset flow?",
+      "question": "Поясните: Password reset flow.",
       "reference": "Notifications + tokens table password_reset_tokens; Password::sendResetLink.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "3774672"
     },
     {
-      "question": "Email verification?",
+      "question": "Поясните: Email verification.",
       "reference": "MustVerifyEmail contract; middleware verified; signed verification URL.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "2622128"
     },
     {
-      "question": "Auth::attempt?",
+      "question": "Что такое Auth::attempt?",
       "reference": "Auth::attempt(['email'=>$e,'password'=>$p], $remember); session regenerate.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "423398"
     },
     {
-      "question": "Session fixation?",
+      "question": "Поясните: Session fixation.",
       "reference": "Session::regenerate() after login.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "2370725"
     },
     {
-      "question": "Multi-auth guards?",
+      "question": "Поясните: Multi-auth guards.",
       "reference": "Auth::guard('admin')->attempt(...); separate provider model.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "2766221"
     },
     {
-      "question": "Socialite?",
+      "question": "Что такое Socialite?",
       "reference": "OAuth GitHub/Google via laravel/socialite package.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "2328469"
     },
     {
-      "question": "Rate limit login?",
+      "question": "Поясните: Rate limit login.",
       "reference": "Fortify/Breeze throttle; LoginRateLimiter.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "63587"
     },
     {
-      "question": "can middleware?",
+      "question": "Поясните: can middleware.",
       "reference": "Route::middleware('can:update,post') — policy check on route.",
       "topic": "Аутентификация",
-      "language": "php"
+      "language": "php",
+      "id": "8987348"
     },
     {
       "question": "Зачем queues?",
@@ -819,88 +908,102 @@
       "language": "php"
     },
     {
-      "question": "Job class?",
+      "question": "Поясните: Job class.",
       "reference": "php artisan make:job ProcessPodcast; implements ShouldQueue; handle() method.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "2205273"
     },
     {
-      "question": "dispatch()?",
+      "question": "Что делает dispatch()?",
       "reference": "ProcessPodcast::dispatch($podcast); dispatch(new ProcessPodcast(...)); Queue::push.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "7806194"
     },
     {
-      "question": "Queue drivers?",
+      "question": "Поясните: Queue drivers.",
       "reference": "sync (dev), database, redis, sqs — config/queue.php QUEUE_CONNECTION.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "6656533"
     },
     {
-      "question": "queue:work?",
+      "question": "Что такое queue:work?",
       "reference": "php artisan queue:work redis --tries=3 --timeout=90; supervisor in production.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "5533812"
     },
     {
-      "question": "Failed jobs?",
+      "question": "Поясните: Failed jobs.",
       "reference": "failed_jobs table; queue:failed, retry, flush; FailedJob event.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "899298"
     },
     {
-      "question": "ShouldQueue interface?",
+      "question": "Поясните: ShouldQueue interface.",
       "reference": "Job queued; без него — sync execution even if dispatched to queue.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "6882903"
     },
     {
-      "question": "SerializesModels trait?",
+      "question": "Поясните: SerializesModels trait.",
       "reference": "Eloquent models in jobs serialized by id; re-fetch on handle.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "2130601"
     },
     {
-      "question": "Job middleware?",
+      "question": "Поясните: Job middleware.",
       "reference": "RateLimited, WithoutOverlapping — job pipeline.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "5146547"
     },
     {
-      "question": "Delayed dispatch?",
+      "question": "Поясните: Delayed dispatch.",
       "reference": "ProcessPodcast::dispatch()->delay(now()->addMinutes(10));",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "8836900"
     },
     {
-      "question": "Queue batches?",
+      "question": "Поясните: Queue batches.",
       "reference": "Bus::batch([...])->then()->catch()->finally(); progress tracking.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "3251593"
     },
     {
-      "question": "Chain jobs?",
+      "question": "Поясните: Chain jobs.",
       "reference": "Bus::chain([new A, new B, new C])->dispatch(); sequential.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "2005694"
     },
     {
-      "question": "Horizon?",
+      "question": "Что такое Horizon?",
       "reference": "Redis queue dashboard for Laravel — metrics, workers, failed jobs UI.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "8193616"
     },
     {
-      "question": "Unique jobs?",
+      "question": "Поясните: Unique jobs.",
       "reference": "ShouldBeUnique — prevent duplicate same job queued.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "4918290"
     },
     {
-      "question": "afterCommit dispatch?",
+      "question": "Поясните: afterCommit dispatch.",
       "reference": "dispatch()->afterCommit() — только после DB transaction commit.",
       "topic": "Очереди",
-      "language": "php"
+      "language": "php",
+      "id": "4037278"
     },
     {
       "question": "Event / Listener pattern?",
@@ -909,46 +1012,53 @@
       "language": "php"
     },
     {
-      "question": "Event discovery?",
+      "question": "Поясните: Event discovery.",
       "reference": "app/Listeners auto-register if type-hint handle(OrderShipped $event).",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "2499200"
     },
     {
-      "question": "ShouldBroadcast?",
+      "question": "Что такое ShouldBroadcast?",
       "reference": "Real-time Echo/Pusher — broadcastOn() channels.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "219082"
     },
     {
-      "question": "Queued listeners?",
+      "question": "Поясните: Queued listeners.",
       "reference": "Listener implements ShouldQueue — async handle.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "3249386"
     },
     {
-      "question": "Subscriber class?",
+      "question": "Поясните: Subscriber class.",
       "reference": "subscribe() returns event=>method map — multiple events one class.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "8854082"
     },
     {
-      "question": "Model events?",
+      "question": "Поясните: Model events.",
       "reference": "creating, created, updating, updated, deleting — boot() callbacks or Observers.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "2727767"
     },
     {
-      "question": "Observer?",
+      "question": "Что такое Observer?",
       "reference": "php artisan make:observer UserObserver --model=User; register in AppServiceProvider.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "2724886"
     },
     {
-      "question": "dispatch helper?",
+      "question": "Поясните: dispatch helper.",
       "reference": "OrderShipped::dispatch($order) if event uses Dispatchable trait.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "304667"
     },
     {
       "question": "Event fake in tests?",
@@ -957,16 +1067,18 @@
       "language": "php"
     },
     {
-      "question": "Wildcard listeners?",
+      "question": "Поясните: Wildcard listeners.",
       "reference": "Event::listen('order.*', ...); pattern matching.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "3788438"
     },
     {
-      "question": "Synchronous default?",
+      "question": "Поясните: Synchronous default.",
       "reference": "Listeners sync unless ShouldQueue — order matters.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "3368727"
     },
     {
       "question": "Prevent duplicate listeners?",
@@ -975,58 +1087,67 @@
       "language": "php"
     },
     {
-      "question": "Notification vs Event?",
+      "question": "В чём разница между Notification и Event?",
       "reference": "Notifications user-facing channels; Events internal domain decoupling.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "5323635"
     },
     {
-      "question": "Event sourcing note?",
+      "question": "Поясните: Event sourcing note.",
       "reference": "Laravel events not full event sourcing — use packages for audit log.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "6980589"
     },
     {
-      "question": "Closure listeners?",
+      "question": "Поясните: Closure listeners.",
       "reference": "Event::listen(fn (OrderShipped $e) => ...); quick prototyping.",
       "topic": "События",
-      "language": "php"
+      "language": "php",
+      "id": "5765017"
     },
     {
-      "question": "PHPUnit / Pest?",
+      "question": "Поясните: PHPUnit / Pest.",
       "reference": "tests/Feature и tests/Unit; php artisan test; Pest expressive syntax optional.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "9466735"
     },
     {
-      "question": "RefreshDatabase trait?",
+      "question": "Поясните: RefreshDatabase trait.",
       "reference": "Migrate fresh each test — isolated DB state.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "6897060"
     },
     {
-      "question": "actingAs user?",
+      "question": "Поясните: actingAs user.",
       "reference": "$this->actingAs($user)->get('/dashboard')->assertOk();",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "140275"
     },
     {
-      "question": "HTTP tests?",
+      "question": "Поясните: HTTP tests.",
       "reference": "$this->post('/posts', $data)->assertRedirect(); assertSessionHasErrors.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "6034555"
     },
     {
-      "question": "assertJsonStructure?",
+      "question": "Что такое assertJsonStructure?",
       "reference": "API testing JSON shape and values assertJson(['id' => 1]).",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "6841089"
     },
     {
-      "question": "Database assertions?",
+      "question": "Поясните: Database assertions.",
       "reference": "assertDatabaseHas('users', ['email' => 'a@b.c']); assertDatabaseMissing.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "1317305"
     },
     {
       "question": "Model factories in tests?",
@@ -1035,40 +1156,46 @@
       "language": "php"
     },
     {
-      "question": "Mocking facades?",
+      "question": "Поясните: Mocking facades.",
       "reference": "Mail::fake(); Mail::assertSent(OrderShipped::class); Queue::fake().",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "4185493"
     },
     {
-      "question": "Http::fake?",
+      "question": "Что такое Http::fake?",
       "reference": "Http::fake(['api/*' => Http::response(['ok'], 200)]); outbound HTTP mock.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "3217335"
     },
     {
-      "question": "Livewire testing?",
+      "question": "Поясните: Livewire testing.",
       "reference": "Livewire::test(Counter::class)->set('count', 1)->call('increment').",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "9924711"
     },
     {
-      "question": "Coverage?",
+      "question": "Что такое Coverage?",
       "reference": "php artisan test --coverage; Xdebug/pcov required.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "2646528"
     },
     {
-      "question": "Parallel testing?",
+      "question": "Поясните: Parallel testing.",
       "reference": "php artisan test --parallel — paratest package.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "6415955"
     },
     {
-      "question": "Dusk browser tests?",
+      "question": "Поясните: Dusk browser tests.",
       "reference": "Laravel Dusk — ChromeDriver E2E (legacy for many teams).",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "9373530"
     },
     {
       "question": "Test environment .env.testing?",
@@ -1077,112 +1204,130 @@
       "language": "php"
     },
     {
-      "question": "WithoutMiddleware trait?",
+      "question": "Поясните: WithoutMiddleware trait.",
       "reference": "Disable middleware for isolated controller test — use cautiously.",
       "topic": "Тестирование",
-      "language": "php"
+      "language": "php",
+      "id": "7106925"
     },
     {
-      "question": "API routes prefix?",
+      "question": "Поясните: API routes prefix.",
       "reference": "routes/api.php — /api/*; default throttle:api; no CSRF session.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "7201573"
     },
     {
-      "question": "API Resources?",
+      "question": "Поясните: API Resources.",
       "reference": "php artisan make:resource PostResource; toArray(Request $request) transform output.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "8175671"
     },
     {
-      "question": "Resource collections?",
+      "question": "Поясните: Resource collections.",
       "reference": "PostResource::collection($posts); pagination preserve meta.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "7508177"
     },
     {
-      "question": "API versioning?",
+      "question": "Поясните: API versioning.",
       "reference": "Route::prefix('v1')->group(...); or Accept header versioning custom.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "217650"
     },
     {
-      "question": "Sanctum token abilities?",
+      "question": "Поясните: Sanctum token abilities.",
       "reference": "Token abilities/scopes $token->can('server:update').",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "6163433"
     },
     {
-      "question": "Rate limiting API?",
+      "question": "Поясните: Rate limiting API.",
       "reference": "RateLimiter::for('api', fn ($req) => Limit::perMinute(60)->by($req->user()?->id ?: $req->ip()));",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "9385098"
     },
     {
-      "question": "CORS?",
+      "question": "Что такое CORS?",
       "reference": "config/cors.php; fruitcake/laravel-cors or built-in HandleCors middleware.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "4909305"
     },
     {
-      "question": "API authentication 401?",
+      "question": "Поясните: API authentication 401.",
       "reference": "Unauthenticated JSON { message: 'Unauthenticated.' } — Accept application/json.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "8388827"
     },
     {
-      "question": "Conditional requests?",
+      "question": "Поясните: Conditional requests.",
       "reference": "ETag / Last-Modified — optional middleware packages or custom.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "6211278"
     },
     {
-      "question": "Pagination API?",
+      "question": "Поясните: Pagination API.",
       "reference": "Post::paginate(15); ResourceCollection with links meta.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "3180907"
     },
     {
-      "question": "API exception handling?",
+      "question": "Поясните: API exception handling.",
       "reference": "Handler render JSON for ValidationException 422 unified errors.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "4627838"
     },
     {
-      "question": "Scribe / OpenAPI?",
+      "question": "Поясните: Scribe / OpenAPI.",
       "reference": "Documentation generators from routes and FormRequests.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "8658605"
     },
     {
-      "question": "HATEOAS in Laravel?",
+      "question": "Поясните: HATEOAS in Laravel.",
       "reference": "Not built-in — add links in API Resources manually.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "3868100"
     },
     {
-      "question": "JSON:API spec?",
+      "question": "Поясните: JSON:API spec.",
       "reference": "Packages spatie/laravel-json-api or custom Resource structure.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "4988538"
     },
     {
-      "question": "Postman collection?",
+      "question": "Поясните: Postman collection.",
       "reference": "Export from Scribe or OpenAPI for QA.",
       "topic": "API",
-      "language": "php"
+      "language": "php",
+      "id": "6924516"
     },
     {
-      "question": "IoC container Laravel?",
+      "question": "Поясните: IoC container Laravel.",
       "reference": "Resolve class dependencies automatically — bind interfaces to implementations.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "1368638"
     },
     {
-      "question": "App::bind vs singleton?",
+      "question": "В чём разница между App::bind и singleton?",
       "reference": "bind — new instance each resolve; singleton — shared instance app lifecycle.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "3037789"
     },
     {
       "question": "Service provider register vs boot?",
@@ -1191,46 +1336,53 @@
       "language": "php"
     },
     {
-      "question": "Concrete auto-resolution?",
+      "question": "Поясните: Concrete auto-resolution.",
       "reference": "No binding needed if class concrete and dependencies resolvable.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "6290900"
     },
     {
-      "question": "Contextual binding?",
+      "question": "Поясните: Contextual binding.",
       "reference": "$this->app->when(PhotoController::class)->needs('$variable')->give(...);",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "1234847"
     },
     {
-      "question": "Instance binding?",
+      "question": "Поясните: Instance binding.",
       "reference": "App::instance('stripe', $client) — pre-built object.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "1528288"
     },
     {
-      "question": "Deferred providers?",
+      "question": "Поясните: Deferred providers.",
       "reference": "Defer loading until service first requested — performance.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "7291661"
     },
     {
-      "question": "Contract binding?",
+      "question": "Поясните: Contract binding.",
       "reference": "bind(PaymentGateway::class, StripeGateway::class); type-hint interface.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "966458"
     },
     {
-      "question": "Closure binding?",
+      "question": "Поясните: Closure binding.",
       "reference": "App::bind('config.custom', fn ($app) => new Custom(...));",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "8425758"
     },
     {
-      "question": "Method injection?",
+      "question": "Поясните: Method injection.",
       "reference": "Route/controller method params resolved from container.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "5908370"
     },
     {
       "question": "Contextual attributes Laravel 11?",
@@ -1239,10 +1391,11 @@
       "language": "php"
     },
     {
-      "question": "Tagged bindings?",
+      "question": "Поясните: Tagged bindings.",
       "reference": "bind tag collections for multiple implementations strategy pattern.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "7308366"
     },
     {
       "question": "Container make() with params?",
@@ -1251,28 +1404,32 @@
       "language": "php"
     },
     {
-      "question": "Service container facades?",
+      "question": "Поясните: Service container facades.",
       "reference": "Facade root accessor resolves from container singleton.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "3842959"
     },
     {
-      "question": "Octane note?",
+      "question": "Поясните: Octane note.",
       "reference": "Singleton state persists between requests — avoid mutable state in bindings.",
       "topic": "Service Container",
-      "language": "php"
+      "language": "php",
+      "id": "9934279"
     },
     {
-      "question": "collect() helper?",
+      "question": "Поясните: collect() helper.",
       "reference": "collect([1,2,3]) — Illuminate\\Support\\Collection wrapper array.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "7386347"
     },
     {
-      "question": "map filter reduce?",
+      "question": "Поясните: map filter reduce.",
       "reference": "$collection->map(fn ($i) => $i*2)->filter()->reduce(fn ($c,$i) => $c+$i, 0);",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "8883719"
     },
     {
       "question": "pluck и keyBy?",
@@ -1281,10 +1438,11 @@
       "language": "php"
     },
     {
-      "question": "groupBy?",
+      "question": "Что такое groupBy?",
       "reference": "$users->groupBy('role'); nested grouping callback.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "9515235"
     },
     {
       "question": "Collection vs Eloquent Collection?",
@@ -1293,64 +1451,74 @@
       "language": "php"
     },
     {
-      "question": "LazyCollection?",
+      "question": "Что такое LazyCollection?",
       "reference": "stream large datasets — LazyCollection::make(function () { yield ...);",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "5237672"
     },
     {
-      "question": "Higher order messages?",
+      "question": "Поясните: Higher order messages.",
       "reference": "$users->each->markAsActive(); map spread operator.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "8160777"
     },
     {
-      "question": "pipe method?",
+      "question": "Поясните: pipe method.",
       "reference": "Pass collection through closure: ->pipe(fn ($c) => $c->sort())->all();",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "3903468"
     },
     {
-      "question": "when/unless?",
+      "question": "Что такое when/unless?",
       "reference": "Conditional chaining: ->when($condition, fn ($c) => $c->where(...)).",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "17998"
     },
     {
-      "question": "toArray vs all?",
+      "question": "В чём разница между toArray и all?",
       "reference": "all() internal items; toArray() recursive array conversion.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "5949773"
     },
     {
-      "question": "Collection macros?",
+      "question": "Поясните: Collection macros.",
       "reference": "Collection::macro('toUpper', fn () => ...); extend in ServiceProvider.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "3517270"
     },
     {
-      "question": "Arr helper vs Collection?",
+      "question": "В чём разница между Arr helper и Collection?",
       "reference": "Arr::get, Arr::wrap — static array utils; collect for chaining.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "5740121"
     },
     {
-      "question": "data_get / data_set?",
+      "question": "Поясните: data_get / data_set.",
       "reference": "Dot notation nested array/object access.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "822018"
     },
     {
-      "question": "Str helper?",
+      "question": "Поясните: Str helper.",
       "reference": "Str::slug, Str::uuid, Str::of('foo')->append('bar') fluent strings.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "3887900"
     },
     {
-      "question": "Enumerable contract?",
+      "question": "Поясните: Enumerable contract.",
       "reference": "Common interface Collection and LazyCollection — consistent API.",
       "topic": "Collections",
-      "language": "php"
+      "language": "php",
+      "id": "1835655"
     },
     {
       "card_type": "code",
@@ -1531,2286 +1699,388 @@
       "reference": "<x-alert :message=\"$message\" />",
       "language": "php",
       "topic": "Blade"
-    },
-    {
-      "question": "Laravel [Основы]: artisan — контрольный вопрос #1",
-      "reference": "Объясните artisan в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: artisan — контрольный вопрос #2",
-      "reference": "Объясните artisan в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: artisan — контрольный вопрос #3",
-      "reference": "Объясните artisan в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: artisan — контрольный вопрос #4",
-      "reference": "Объясните artisan в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: artisan — контрольный вопрос #5",
-      "reference": "Объясните artisan в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: service provider — контрольный вопрос #1",
-      "reference": "Объясните service provider в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: service provider — контрольный вопрос #2",
-      "reference": "Объясните service provider в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: service provider — контрольный вопрос #3",
-      "reference": "Объясните service provider в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: service provider — контрольный вопрос #4",
-      "reference": "Объясните service provider в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: service provider — контрольный вопрос #5",
-      "reference": "Объясните service provider в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: config cache — контрольный вопрос #1",
-      "reference": "Объясните config cache в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: config cache — контрольный вопрос #2",
-      "reference": "Объясните config cache в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: config cache — контрольный вопрос #3",
-      "reference": "Объясните config cache в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: config cache — контрольный вопрос #4",
-      "reference": "Объясните config cache в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: config cache — контрольный вопрос #5",
-      "reference": "Объясните config cache в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: env — контрольный вопрос #1",
-      "reference": "Объясните env в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: env — контрольный вопрос #2",
-      "reference": "Объясните env в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: env — контрольный вопрос #3",
-      "reference": "Объясните env в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: env — контрольный вопрос #4",
-      "reference": "Объясните env в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: env — контрольный вопрос #5",
-      "reference": "Объясните env в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: Vite — контрольный вопрос #1",
-      "reference": "Объясните Vite в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: Vite — контрольный вопрос #2",
-      "reference": "Объясните Vite в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: Vite — контрольный вопрос #3",
-      "reference": "Объясните Vite в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: Vite — контрольный вопрос #4",
-      "reference": "Объясните Vite в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: Vite — контрольный вопрос #5",
-      "reference": "Объясните Vite в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: maintenance mode — контрольный вопрос #1",
-      "reference": "Объясните maintenance mode в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: maintenance mode — контрольный вопрос #2",
-      "reference": "Объясните maintenance mode в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: maintenance mode — контрольный вопрос #3",
-      "reference": "Объясните maintenance mode в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: maintenance mode — контрольный вопрос #4",
-      "reference": "Объясните maintenance mode в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Основы]: maintenance mode — контрольный вопрос #5",
-      "reference": "Объясните maintenance mode в контексте Laravel (Основы). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Основы",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: route groups — контрольный вопрос #1",
-      "reference": "Объясните route groups в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: route groups — контрольный вопрос #2",
-      "reference": "Объясните route groups в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: route groups — контрольный вопрос #3",
-      "reference": "Объясните route groups в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: route groups — контрольный вопрос #4",
-      "reference": "Объясните route groups в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: route groups — контрольный вопрос #5",
-      "reference": "Объясните route groups в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: model binding — контрольный вопрос #1",
-      "reference": "Объясните model binding в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: model binding — контрольный вопрос #2",
-      "reference": "Объясните model binding в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: model binding — контрольный вопрос #3",
-      "reference": "Объясните model binding в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: model binding — контрольный вопрос #4",
-      "reference": "Объясните model binding в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: model binding — контрольный вопрос #5",
-      "reference": "Объясните model binding в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: resource routes — контрольный вопрос #1",
-      "reference": "Объясните resource routes в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: resource routes — контрольный вопрос #2",
-      "reference": "Объясните resource routes в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: resource routes — контрольный вопрос #3",
-      "reference": "Объясните resource routes в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: resource routes — контрольный вопрос #4",
-      "reference": "Объясните resource routes в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: resource routes — контрольный вопрос #5",
-      "reference": "Объясните resource routes в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: rate limiting — контрольный вопрос #1",
-      "reference": "Объясните rate limiting в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: rate limiting — контрольный вопрос #2",
-      "reference": "Объясните rate limiting в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: rate limiting — контрольный вопрос #3",
-      "reference": "Объясните rate limiting в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: rate limiting — контрольный вопрос #4",
-      "reference": "Объясните rate limiting в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: rate limiting — контрольный вопрос #5",
-      "reference": "Объясните rate limiting в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: signed URLs — контрольный вопрос #1",
-      "reference": "Объясните signed URLs в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: signed URLs — контрольный вопрос #2",
-      "reference": "Объясните signed URLs в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: signed URLs — контрольный вопрос #3",
-      "reference": "Объясните signed URLs в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: signed URLs — контрольный вопрос #4",
-      "reference": "Объясните signed URLs в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Роутинг]: signed URLs — контрольный вопрос #5",
-      "reference": "Объясните signed URLs в контексте Laravel (Роутинг). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Роутинг",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: Form Request — контрольный вопрос #1",
-      "reference": "Объясните Form Request в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: Form Request — контрольный вопрос #2",
-      "reference": "Объясните Form Request в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: Form Request — контрольный вопрос #3",
-      "reference": "Объясните Form Request в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: Form Request — контрольный вопрос #4",
-      "reference": "Объясните Form Request в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: Form Request — контрольный вопрос #5",
-      "reference": "Объясните Form Request в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: DI — контрольный вопрос #1",
-      "reference": "Объясните DI в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: DI — контрольный вопрос #2",
-      "reference": "Объясните DI в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: DI — контрольный вопрос #3",
-      "reference": "Объясните DI в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: DI — контрольный вопрос #4",
-      "reference": "Объясните DI в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: DI — контрольный вопрос #5",
-      "reference": "Объясните DI в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: single action — контрольный вопрос #1",
-      "reference": "Объясните single action в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: single action — контрольный вопрос #2",
-      "reference": "Объясните single action в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: single action — контрольный вопрос #3",
-      "reference": "Объясните single action в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: single action — контрольный вопрос #4",
-      "reference": "Объясните single action в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: single action — контрольный вопрос #5",
-      "reference": "Объясните single action в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: resource controller — контрольный вопрос #1",
-      "reference": "Объясните resource controller в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: resource controller — контрольный вопрос #2",
-      "reference": "Объясните resource controller в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: resource controller — контрольный вопрос #3",
-      "reference": "Объясните resource controller в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: resource controller — контрольный вопрос #4",
-      "reference": "Объясните resource controller в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: resource controller — контрольный вопрос #5",
-      "reference": "Объясните resource controller в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: flash session — контрольный вопрос #1",
-      "reference": "Объясните flash session в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: flash session — контрольный вопрос #2",
-      "reference": "Объясните flash session в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: flash session — контрольный вопрос #3",
-      "reference": "Объясните flash session в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: flash session — контрольный вопрос #4",
-      "reference": "Объясните flash session в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Контроллеры]: flash session — контрольный вопрос #5",
-      "reference": "Объясните flash session в контексте Laravel (Контроллеры). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Контроллеры",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: relationships — контрольный вопрос #1",
-      "reference": "Объясните relationships в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: relationships — контрольный вопрос #2",
-      "reference": "Объясните relationships в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: relationships — контрольный вопрос #3",
-      "reference": "Объясните relationships в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: relationships — контрольный вопрос #4",
-      "reference": "Объясните relationships в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: relationships — контрольный вопрос #5",
-      "reference": "Объясните relationships в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: eager loading — контрольный вопрос #1",
-      "reference": "Объясните eager loading в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: eager loading — контрольный вопрос #2",
-      "reference": "Объясните eager loading в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: eager loading — контрольный вопрос #3",
-      "reference": "Объясните eager loading в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: eager loading — контрольный вопрос #4",
-      "reference": "Объясните eager loading в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: eager loading — контрольный вопрос #5",
-      "reference": "Объясните eager loading в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: scopes — контрольный вопрос #1",
-      "reference": "Объясните scopes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: scopes — контрольный вопрос #2",
-      "reference": "Объясните scopes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: scopes — контрольный вопрос #3",
-      "reference": "Объясните scopes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: scopes — контрольный вопрос #4",
-      "reference": "Объясните scopes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: scopes — контрольный вопрос #5",
-      "reference": "Объясните scopes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: soft deletes — контрольный вопрос #1",
-      "reference": "Объясните soft deletes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: soft deletes — контрольный вопрос #2",
-      "reference": "Объясните soft deletes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: soft deletes — контрольный вопрос #3",
-      "reference": "Объясните soft deletes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: soft deletes — контрольный вопрос #4",
-      "reference": "Объясните soft deletes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: soft deletes — контрольный вопрос #5",
-      "reference": "Объясните soft deletes в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: casts — контрольный вопрос #1",
-      "reference": "Объясните casts в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: casts — контрольный вопрос #2",
-      "reference": "Объясните casts в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: casts — контрольный вопрос #3",
-      "reference": "Объясните casts в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: casts — контрольный вопрос #4",
-      "reference": "Объясните casts в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Eloquent]: casts — контрольный вопрос #5",
-      "reference": "Объясните casts в контексте Laravel (Eloquent). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Eloquent",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: foreign keys — контрольный вопрос #1",
-      "reference": "Объясните foreign keys в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: foreign keys — контрольный вопрос #2",
-      "reference": "Объясните foreign keys в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: foreign keys — контрольный вопрос #3",
-      "reference": "Объясните foreign keys в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: foreign keys — контрольный вопрос #4",
-      "reference": "Объясните foreign keys в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: foreign keys — контрольный вопрос #5",
-      "reference": "Объясните foreign keys в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: factories — контрольный вопрос #1",
-      "reference": "Объясните factories в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: factories — контрольный вопрос #2",
-      "reference": "Объясните factories в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: factories — контрольный вопрос #3",
-      "reference": "Объясните factories в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: factories — контрольный вопрос #4",
-      "reference": "Объясните factories в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: factories — контрольный вопрос #5",
-      "reference": "Объясните factories в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: seeders — контрольный вопрос #1",
-      "reference": "Объясните seeders в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: seeders — контрольный вопрос #2",
-      "reference": "Объясните seeders в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: seeders — контрольный вопрос #3",
-      "reference": "Объясните seeders в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: seeders — контрольный вопрос #4",
-      "reference": "Объясните seeders в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: seeders — контрольный вопрос #5",
-      "reference": "Объясните seeders в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: rollback — контрольный вопрос #1",
-      "reference": "Объясните rollback в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: rollback — контрольный вопрос #2",
-      "reference": "Объясните rollback в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: rollback — контрольный вопрос #3",
-      "reference": "Объясните rollback в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: rollback — контрольный вопрос #4",
-      "reference": "Объясните rollback в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: rollback — контрольный вопрос #5",
-      "reference": "Объясните rollback в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: indexes — контрольный вопрос #1",
-      "reference": "Объясните indexes в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: indexes — контрольный вопрос #2",
-      "reference": "Объясните indexes в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: indexes — контрольный вопрос #3",
-      "reference": "Объясните indexes в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: indexes — контрольный вопрос #4",
-      "reference": "Объясните indexes в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Миграции]: indexes — контрольный вопрос #5",
-      "reference": "Объясните indexes в контексте Laravel (Миграции). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Миграции",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: components — контрольный вопрос #1",
-      "reference": "Объясните components в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: components — контрольный вопрос #2",
-      "reference": "Объясните components в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: components — контрольный вопрос #3",
-      "reference": "Объясните components в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: components — контрольный вопрос #4",
-      "reference": "Объясните components в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: components — контрольный вопрос #5",
-      "reference": "Объясните components в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: layouts — контрольный вопрос #1",
-      "reference": "Объясните layouts в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: layouts — контрольный вопрос #2",
-      "reference": "Объясните layouts в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: layouts — контрольный вопрос #3",
-      "reference": "Объясните layouts в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: layouts — контрольный вопрос #4",
-      "reference": "Объясните layouts в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: layouts — контрольный вопрос #5",
-      "reference": "Объясните layouts в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: stacks — контрольный вопрос #1",
-      "reference": "Объясните stacks в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: stacks — контрольный вопрос #2",
-      "reference": "Объясните stacks в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: stacks — контрольный вопрос #3",
-      "reference": "Объясните stacks в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: stacks — контрольный вопрос #4",
-      "reference": "Объясните stacks в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: stacks — контрольный вопрос #5",
-      "reference": "Объясните stacks в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: CSRF — контрольный вопрос #1",
-      "reference": "Объясните CSRF в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: CSRF — контрольный вопрос #2",
-      "reference": "Объясните CSRF в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: CSRF — контрольный вопрос #3",
-      "reference": "Объясните CSRF в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: CSRF — контрольный вопрос #4",
-      "reference": "Объясните CSRF в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: CSRF — контрольный вопрос #5",
-      "reference": "Объясните CSRF в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: directives — контрольный вопрос #1",
-      "reference": "Объясните directives в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: directives — контрольный вопрос #2",
-      "reference": "Объясните directives в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: directives — контрольный вопрос #3",
-      "reference": "Объясните directives в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: directives — контрольный вопрос #4",
-      "reference": "Объясните directives в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Blade]: directives — контрольный вопрос #5",
-      "reference": "Объясните directives в контексте Laravel (Blade). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Blade",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: auth — контрольный вопрос #1",
-      "reference": "Объясните auth в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: auth — контрольный вопрос #2",
-      "reference": "Объясните auth в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: auth — контрольный вопрос #3",
-      "reference": "Объясните auth в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: auth — контрольный вопрос #4",
-      "reference": "Объясните auth в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: auth — контрольный вопрос #5",
-      "reference": "Объясните auth в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: guest — контрольный вопрос #1",
-      "reference": "Объясните guest в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: guest — контрольный вопрос #2",
-      "reference": "Объясните guest в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: guest — контрольный вопрос #3",
-      "reference": "Объясните guest в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: guest — контрольный вопрос #4",
-      "reference": "Объясните guest в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: guest — контрольный вопрос #5",
-      "reference": "Объясните guest в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: throttle — контрольный вопрос #1",
-      "reference": "Объясните throttle в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: throttle — контрольный вопрос #2",
-      "reference": "Объясните throttle в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: throttle — контрольный вопрос #3",
-      "reference": "Объясните throttle в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: throttle — контрольный вопрос #4",
-      "reference": "Объясните throttle в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: throttle — контрольный вопрос #5",
-      "reference": "Объясните throttle в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: signed — контрольный вопрос #1",
-      "reference": "Объясните signed в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: signed — контрольный вопрос #2",
-      "reference": "Объясните signed в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: signed — контрольный вопрос #3",
-      "reference": "Объясните signed в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: signed — контрольный вопрос #4",
-      "reference": "Объясните signed в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: signed — контрольный вопрос #5",
-      "reference": "Объясните signed в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: middleware groups — контрольный вопрос #1",
-      "reference": "Объясните middleware groups в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: middleware groups — контрольный вопрос #2",
-      "reference": "Объясните middleware groups в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: middleware groups — контрольный вопрос #3",
-      "reference": "Объясните middleware groups в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: middleware groups — контрольный вопрос #4",
-      "reference": "Объясните middleware groups в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Middleware]: middleware groups — контрольный вопрос #5",
-      "reference": "Объясните middleware groups в контексте Laravel (Middleware). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Middleware",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Form Request — контрольный вопрос #1",
-      "reference": "Объясните Form Request в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Form Request — контрольный вопрос #2",
-      "reference": "Объясните Form Request в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Form Request — контрольный вопрос #3",
-      "reference": "Объясните Form Request в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Form Request — контрольный вопрос #4",
-      "reference": "Объясните Form Request в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Form Request — контрольный вопрос #5",
-      "reference": "Объясните Form Request в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: custom rules — контрольный вопрос #1",
-      "reference": "Объясните custom rules в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: custom rules — контрольный вопрос #2",
-      "reference": "Объясните custom rules в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: custom rules — контрольный вопрос #3",
-      "reference": "Объясните custom rules в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: custom rules — контрольный вопрос #4",
-      "reference": "Объясните custom rules в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: custom rules — контрольный вопрос #5",
-      "reference": "Объясните custom rules в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Rule objects — контрольный вопрос #1",
-      "reference": "Объясните Rule objects в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Rule objects — контрольный вопрос #2",
-      "reference": "Объясните Rule objects в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Rule objects — контрольный вопрос #3",
-      "reference": "Объясните Rule objects в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Rule objects — контрольный вопрос #4",
-      "reference": "Объясните Rule objects в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: Rule objects — контрольный вопрос #5",
-      "reference": "Объясните Rule objects в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: nested arrays — контрольный вопрос #1",
-      "reference": "Объясните nested arrays в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: nested arrays — контрольный вопрос #2",
-      "reference": "Объясните nested arrays в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: nested arrays — контрольный вопрос #3",
-      "reference": "Объясните nested arrays в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: nested arrays — контрольный вопрос #4",
-      "reference": "Объясните nested arrays в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: nested arrays — контрольный вопрос #5",
-      "reference": "Объясните nested arrays в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: messages — контрольный вопрос #1",
-      "reference": "Объясните messages в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: messages — контрольный вопрос #2",
-      "reference": "Объясните messages в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: messages — контрольный вопрос #3",
-      "reference": "Объясните messages в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: messages — контрольный вопрос #4",
-      "reference": "Объясните messages в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Валидация]: messages — контрольный вопрос #5",
-      "reference": "Объясните messages в контексте Laravel (Валидация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Валидация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: Sanctum — контрольный вопрос #1",
-      "reference": "Объясните Sanctum в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: Sanctum — контрольный вопрос #2",
-      "reference": "Объясните Sanctum в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: Sanctum — контрольный вопрос #3",
-      "reference": "Объясните Sanctum в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: Sanctum — контрольный вопрос #4",
-      "reference": "Объясните Sanctum в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: Sanctum — контрольный вопрос #5",
-      "reference": "Объясните Sanctum в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: policies — контрольный вопрос #1",
-      "reference": "Объясните policies в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: policies — контрольный вопрос #2",
-      "reference": "Объясните policies в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: policies — контрольный вопрос #3",
-      "reference": "Объясните policies в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: policies — контрольный вопрос #4",
-      "reference": "Объясните policies в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: policies — контрольный вопрос #5",
-      "reference": "Объясните policies в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: gates — контрольный вопрос #1",
-      "reference": "Объясните gates в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: gates — контрольный вопрос #2",
-      "reference": "Объясните gates в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: gates — контрольный вопрос #3",
-      "reference": "Объясните gates в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: gates — контрольный вопрос #4",
-      "reference": "Объясните gates в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: gates — контрольный вопрос #5",
-      "reference": "Объясните gates в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: guards — контрольный вопрос #1",
-      "reference": "Объясните guards в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: guards — контрольный вопрос #2",
-      "reference": "Объясните guards в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: guards — контрольный вопрос #3",
-      "reference": "Объясните guards в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: guards — контрольный вопрос #4",
-      "reference": "Объясните guards в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: guards — контрольный вопрос #5",
-      "reference": "Объясните guards в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: password reset — контрольный вопрос #1",
-      "reference": "Объясните password reset в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: password reset — контрольный вопрос #2",
-      "reference": "Объясните password reset в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: password reset — контрольный вопрос #3",
-      "reference": "Объясните password reset в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: password reset — контрольный вопрос #4",
-      "reference": "Объясните password reset в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Аутентификация]: password reset — контрольный вопрос #5",
-      "reference": "Объясните password reset в контексте Laravel (Аутентификация). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Аутентификация",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: ShouldQueue — контрольный вопрос #1",
-      "reference": "Объясните ShouldQueue в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: ShouldQueue — контрольный вопрос #2",
-      "reference": "Объясните ShouldQueue в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: ShouldQueue — контрольный вопрос #3",
-      "reference": "Объясните ShouldQueue в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: ShouldQueue — контрольный вопрос #4",
-      "reference": "Объясните ShouldQueue в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: ShouldQueue — контрольный вопрос #5",
-      "reference": "Объясните ShouldQueue в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: failed jobs — контрольный вопрос #1",
-      "reference": "Объясните failed jobs в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: failed jobs — контрольный вопрос #2",
-      "reference": "Объясните failed jobs в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: failed jobs — контрольный вопрос #3",
-      "reference": "Объясните failed jobs в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: failed jobs — контрольный вопрос #4",
-      "reference": "Объясните failed jobs в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: failed jobs — контрольный вопрос #5",
-      "reference": "Объясните failed jobs в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: Horizon — контрольный вопрос #1",
-      "reference": "Объясните Horizon в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: Horizon — контрольный вопрос #2",
-      "reference": "Объясните Horizon в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: Horizon — контрольный вопрос #3",
-      "reference": "Объясните Horizon в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: Horizon — контрольный вопрос #4",
-      "reference": "Объясните Horizon в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: Horizon — контрольный вопрос #5",
-      "reference": "Объясните Horizon в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: batch — контрольный вопрос #1",
-      "reference": "Объясните batch в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: batch — контрольный вопрос #2",
-      "reference": "Объясните batch в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: batch — контрольный вопрос #3",
-      "reference": "Объясните batch в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: batch — контрольный вопрос #4",
-      "reference": "Объясните batch в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: batch — контрольный вопрос #5",
-      "reference": "Объясните batch в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: delay — контрольный вопрос #1",
-      "reference": "Объясните delay в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: delay — контрольный вопрос #2",
-      "reference": "Объясните delay в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: delay — контрольный вопрос #3",
-      "reference": "Объясните delay в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: delay — контрольный вопрос #4",
-      "reference": "Объясните delay в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Очереди]: delay — контрольный вопрос #5",
-      "reference": "Объясните delay в контексте Laravel (Очереди). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Очереди",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: listeners — контрольный вопрос #1",
-      "reference": "Объясните listeners в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: listeners — контрольный вопрос #2",
-      "reference": "Объясните listeners в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: listeners — контрольный вопрос #3",
-      "reference": "Объясните listeners в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: listeners — контрольный вопрос #4",
-      "reference": "Объясните listeners в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: listeners — контрольный вопрос #5",
-      "reference": "Объясните listeners в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: observers — контрольный вопрос #1",
-      "reference": "Объясните observers в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: observers — контрольный вопрос #2",
-      "reference": "Объясните observers в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: observers — контрольный вопрос #3",
-      "reference": "Объясните observers в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: observers — контрольный вопрос #4",
-      "reference": "Объясните observers в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: observers — контрольный вопрос #5",
-      "reference": "Объясните observers в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: broadcast — контрольный вопрос #1",
-      "reference": "Объясните broadcast в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: broadcast — контрольный вопрос #2",
-      "reference": "Объясните broadcast в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: broadcast — контрольный вопрос #3",
-      "reference": "Объясните broadcast в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: broadcast — контрольный вопрос #4",
-      "reference": "Объясните broadcast в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: broadcast — контрольный вопрос #5",
-      "reference": "Объясните broadcast в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: ShouldQueue listener — контрольный вопрос #1",
-      "reference": "Объясните ShouldQueue listener в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: ShouldQueue listener — контрольный вопрос #2",
-      "reference": "Объясните ShouldQueue listener в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: ShouldQueue listener — контрольный вопрос #3",
-      "reference": "Объясните ShouldQueue listener в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: ShouldQueue listener — контрольный вопрос #4",
-      "reference": "Объясните ShouldQueue listener в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: ShouldQueue listener — контрольный вопрос #5",
-      "reference": "Объясните ShouldQueue listener в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: fake — контрольный вопрос #1",
-      "reference": "Объясните fake в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: fake — контрольный вопрос #2",
-      "reference": "Объясните fake в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: fake — контрольный вопрос #3",
-      "reference": "Объясните fake в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: fake — контрольный вопрос #4",
-      "reference": "Объясните fake в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [События]: fake — контрольный вопрос #5",
-      "reference": "Объясните fake в контексте Laravel (События). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "События",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: RefreshDatabase — контрольный вопрос #1",
-      "reference": "Объясните RefreshDatabase в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: RefreshDatabase — контрольный вопрос #2",
-      "reference": "Объясните RefreshDatabase в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: RefreshDatabase — контрольный вопрос #3",
-      "reference": "Объясните RefreshDatabase в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: RefreshDatabase — контрольный вопрос #4",
-      "reference": "Объясните RefreshDatabase в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: RefreshDatabase — контрольный вопрос #5",
-      "reference": "Объясните RefreshDatabase в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: actingAs — контрольный вопрос #1",
-      "reference": "Объясните actingAs в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: actingAs — контрольный вопрос #2",
-      "reference": "Объясните actingAs в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: actingAs — контрольный вопрос #3",
-      "reference": "Объясните actingAs в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: actingAs — контрольный вопрос #4",
-      "reference": "Объясните actingAs в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: actingAs — контрольный вопрос #5",
-      "reference": "Объясните actingAs в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: Http::fake — контрольный вопрос #1",
-      "reference": "Объясните Http::fake в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: Http::fake — контрольный вопрос #2",
-      "reference": "Объясните Http::fake в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: Http::fake — контрольный вопрос #3",
-      "reference": "Объясните Http::fake в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: Http::fake — контрольный вопрос #4",
-      "reference": "Объясните Http::fake в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: Http::fake — контрольный вопрос #5",
-      "reference": "Объясните Http::fake в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: assertJson — контрольный вопрос #1",
-      "reference": "Объясните assertJson в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: assertJson — контрольный вопрос #2",
-      "reference": "Объясните assertJson в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: assertJson — контрольный вопрос #3",
-      "reference": "Объясните assertJson в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: assertJson — контрольный вопрос #4",
-      "reference": "Объясните assertJson в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: assertJson — контрольный вопрос #5",
-      "reference": "Объясните assertJson в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: factories — контрольный вопрос #1",
-      "reference": "Объясните factories в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: factories — контрольный вопрос #2",
-      "reference": "Объясните factories в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: factories — контрольный вопрос #3",
-      "reference": "Объясните factories в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: factories — контрольный вопрос #4",
-      "reference": "Объясните factories в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Тестирование]: factories — контрольный вопрос #5",
-      "reference": "Объясните factories в контексте Laravel (Тестирование). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Тестирование",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: API Resources — контрольный вопрос #1",
-      "reference": "Объясните API Resources в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: API Resources — контрольный вопрос #2",
-      "reference": "Объясните API Resources в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: API Resources — контрольный вопрос #3",
-      "reference": "Объясните API Resources в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: API Resources — контрольный вопрос #4",
-      "reference": "Объясните API Resources в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: API Resources — контрольный вопрос #5",
-      "reference": "Объясните API Resources в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: Sanctum tokens — контрольный вопрос #1",
-      "reference": "Объясните Sanctum tokens в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: Sanctum tokens — контрольный вопрос #2",
-      "reference": "Объясните Sanctum tokens в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: Sanctum tokens — контрольный вопрос #3",
-      "reference": "Объясните Sanctum tokens в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: Sanctum tokens — контрольный вопрос #4",
-      "reference": "Объясните Sanctum tokens в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: Sanctum tokens — контрольный вопрос #5",
-      "reference": "Объясните Sanctum tokens в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: pagination — контрольный вопрос #1",
-      "reference": "Объясните pagination в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: pagination — контрольный вопрос #2",
-      "reference": "Объясните pagination в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: pagination — контрольный вопрос #3",
-      "reference": "Объясните pagination в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: pagination — контрольный вопрос #4",
-      "reference": "Объясните pagination в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: pagination — контрольный вопрос #5",
-      "reference": "Объясните pagination в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: CORS — контрольный вопрос #1",
-      "reference": "Объясните CORS в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: CORS — контрольный вопрос #2",
-      "reference": "Объясните CORS в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: CORS — контрольный вопрос #3",
-      "reference": "Объясните CORS в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: CORS — контрольный вопрос #4",
-      "reference": "Объясните CORS в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: CORS — контрольный вопрос #5",
-      "reference": "Объясните CORS в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: versioning — контрольный вопрос #1",
-      "reference": "Объясните versioning в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: versioning — контрольный вопрос #2",
-      "reference": "Объясните versioning в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: versioning — контрольный вопрос #3",
-      "reference": "Объясните versioning в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: versioning — контрольный вопрос #4",
-      "reference": "Объясните versioning в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [API]: versioning — контрольный вопрос #5",
-      "reference": "Объясните versioning в контексте Laravel (API). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "API",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: bind — контрольный вопрос #1",
-      "reference": "Объясните bind в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: bind — контрольный вопрос #2",
-      "reference": "Объясните bind в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: bind — контрольный вопрос #3",
-      "reference": "Объясните bind в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: bind — контрольный вопрос #4",
-      "reference": "Объясните bind в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: bind — контрольный вопрос #5",
-      "reference": "Объясните bind в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: singleton — контрольный вопрос #1",
-      "reference": "Объясните singleton в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: singleton — контрольный вопрос #2",
-      "reference": "Объясните singleton в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: singleton — контрольный вопрос #3",
-      "reference": "Объясните singleton в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: singleton — контрольный вопрос #4",
-      "reference": "Объясните singleton в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: singleton — контрольный вопрос #5",
-      "reference": "Объясните singleton в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: provider — контрольный вопрос #1",
-      "reference": "Объясните provider в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: provider — контрольный вопрос #2",
-      "reference": "Объясните provider в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: provider — контрольный вопрос #3",
-      "reference": "Объясните provider в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: provider — контрольный вопрос #4",
-      "reference": "Объясните provider в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: provider — контрольный вопрос #5",
-      "reference": "Объясните provider в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: contract — контрольный вопрос #1",
-      "reference": "Объясните contract в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: contract — контрольный вопрос #2",
-      "reference": "Объясните contract в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: contract — контрольный вопрос #3",
-      "reference": "Объясните contract в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: contract — контрольный вопрос #4",
-      "reference": "Объясните contract в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: contract — контрольный вопрос #5",
-      "reference": "Объясните contract в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: resolve — контрольный вопрос #1",
-      "reference": "Объясните resolve в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: resolve — контрольный вопрос #2",
-      "reference": "Объясните resolve в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: resolve — контрольный вопрос #3",
-      "reference": "Объясните resolve в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: resolve — контрольный вопрос #4",
-      "reference": "Объясните resolve в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Service Container]: resolve — контрольный вопрос #5",
-      "reference": "Объясните resolve в контексте Laravel (Service Container). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Service Container",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: map — контрольный вопрос #1",
-      "reference": "Объясните map в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: map — контрольный вопрос #2",
-      "reference": "Объясните map в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: map — контрольный вопрос #3",
-      "reference": "Объясните map в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: map — контрольный вопрос #4",
-      "reference": "Объясните map в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: map — контрольный вопрос #5",
-      "reference": "Объясните map в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: filter — контрольный вопрос #1",
-      "reference": "Объясните filter в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: filter — контрольный вопрос #2",
-      "reference": "Объясните filter в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: filter — контрольный вопрос #3",
-      "reference": "Объясните filter в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: filter — контрольный вопрос #4",
-      "reference": "Объясните filter в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: filter — контрольный вопрос #5",
-      "reference": "Объясните filter в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: pluck — контрольный вопрос #1",
-      "reference": "Объясните pluck в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: pluck — контрольный вопрос #2",
-      "reference": "Объясните pluck в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: pluck — контрольный вопрос #3",
-      "reference": "Объясните pluck в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: pluck — контрольный вопрос #4",
-      "reference": "Объясните pluck в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: pluck — контрольный вопрос #5",
-      "reference": "Объясните pluck в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: groupBy — контрольный вопрос #1",
-      "reference": "Объясните groupBy в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: groupBy — контрольный вопрос #2",
-      "reference": "Объясните groupBy в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: groupBy — контрольный вопрос #3",
-      "reference": "Объясните groupBy в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: groupBy — контрольный вопрос #4",
-      "reference": "Объясните groupBy в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: groupBy — контрольный вопрос #5",
-      "reference": "Объясните groupBy в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: LazyCollection — контрольный вопрос #1",
-      "reference": "Объясните LazyCollection в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: LazyCollection — контрольный вопрос #2",
-      "reference": "Объясните LazyCollection в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: LazyCollection — контрольный вопрос #3",
-      "reference": "Объясните LazyCollection в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: LazyCollection — контрольный вопрос #4",
-      "reference": "Объясните LazyCollection в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
-    },
-    {
-      "question": "Laravel [Collections]: LazyCollection — контрольный вопрос #5",
-      "reference": "Объясните LazyCollection в контексте Laravel (Collections). Приведите типичный API/artisan-команды и best practices из документации laravel.com.",
-      "topic": "Collections",
-      "language": "php"
     }
+  ],
+  "retired_ids": [
+    "1025520",
+    "1044499",
+    "1050240",
+    "1061074",
+    "1071428",
+    "1086958",
+    "1093566",
+    "1118040",
+    "1166978",
+    "1178719",
+    "1243735",
+    "124765",
+    "1263413",
+    "1359816",
+    "1364212",
+    "1382960",
+    "1383851",
+    "1384617",
+    "1429585",
+    "1495560",
+    "1495680",
+    "1535646",
+    "1548773",
+    "1566467",
+    "1571576",
+    "1586590",
+    "1591798",
+    "1592738",
+    "1610684",
+    "1617519",
+    "163237",
+    "1649551",
+    "1660508",
+    "1663596",
+    "173341",
+    "1765750",
+    "1802723",
+    "1803357",
+    "1818429",
+    "1825795",
+    "1854428",
+    "1863178",
+    "1873022",
+    "1912261",
+    "1952418",
+    "1957525",
+    "1972223",
+    "1975655",
+    "200583",
+    "2007607",
+    "2018157",
+    "2032887",
+    "205655",
+    "2136818",
+    "2147568",
+    "2155782",
+    "2178027",
+    "2193689",
+    "2221294",
+    "2257878",
+    "2294826",
+    "2320573",
+    "232984",
+    "2360169",
+    "2370051",
+    "2405826",
+    "2414814",
+    "2463815",
+    "2467906",
+    "247193",
+    "2564497",
+    "2568178",
+    "2602679",
+    "2612843",
+    "2617375",
+    "2661105",
+    "2664360",
+    "2732105",
+    "2769967",
+    "2802370",
+    "2841354",
+    "2934896",
+    "2964839",
+    "3026723",
+    "305346",
+    "3071304",
+    "3106361",
+    "3122690",
+    "3148554",
+    "3171150",
+    "3190495",
+    "3256441",
+    "3296385",
+    "3319364",
+    "3367497",
+    "3410959",
+    "3414867",
+    "3433439",
+    "3488018",
+    "3515735",
+    "352728",
+    "3548174",
+    "3557328",
+    "3564551",
+    "3566603",
+    "3618884",
+    "3629733",
+    "3633704",
+    "3645830",
+    "3655991",
+    "3662398",
+    "3677141",
+    "3730682",
+    "3775244",
+    "3783973",
+    "3793226",
+    "3823541",
+    "3826724",
+    "3846994",
+    "3880095",
+    "3882573",
+    "3905514",
+    "3987196",
+    "4040806",
+    "4103659",
+    "4138230",
+    "4140825",
+    "4164801",
+    "4181825",
+    "4196108",
+    "4213218",
+    "4217462",
+    "4262931",
+    "4263051",
+    "4285119",
+    "4286012",
+    "4291354",
+    "432171",
+    "4333042",
+    "4372137",
+    "4394556",
+    "4418470",
+    "4431202",
+    "4432457",
+    "445976",
+    "4465305",
+    "4513044",
+    "4523849",
+    "4524238",
+    "4532180",
+    "4557612",
+    "4567988",
+    "4583442",
+    "460612",
+    "4620983",
+    "4644202",
+    "4721263",
+    "474709",
+    "4757459",
+    "4882768",
+    "4910143",
+    "495735",
+    "4966401",
+    "4992463",
+    "4998715",
+    "5003293",
+    "504048",
+    "5049437",
+    "5070357",
+    "5097866",
+    "5105868",
+    "510664",
+    "511574",
+    "5145878",
+    "5191113",
+    "5191609",
+    "5198807",
+    "5242407",
+    "5259754",
+    "5291857",
+    "531050",
+    "5312837",
+    "5343376",
+    "5346234",
+    "5350829",
+    "5375673",
+    "5394816",
+    "5435500",
+    "5443893",
+    "5490586",
+    "549889",
+    "5504535",
+    "5511635",
+    "5544742",
+    "5594581",
+    "5645002",
+    "5667311",
+    "5720308",
+    "5756574",
+    "5758435",
+    "5794103",
+    "581270",
+    "5829365",
+    "5846861",
+    "5852998",
+    "5854373",
+    "5879278",
+    "5893956",
+    "5914621",
+    "5920130",
+    "5948564",
+    "6002319",
+    "6088798",
+    "6114788",
+    "6121310",
+    "6147199",
+    "6160947",
+    "6167316",
+    "6172233",
+    "6188129",
+    "6208606",
+    "6216614",
+    "6231415",
+    "623195",
+    "6251034",
+    "6255971",
+    "6392767",
+    "6407310",
+    "6409029",
+    "6409563",
+    "6428190",
+    "6456346",
+    "6479835",
+    "6486834",
+    "6510287",
+    "6519136",
+    "6525053",
+    "6538217",
+    "6554925",
+    "6568991",
+    "6622190",
+    "6639461",
+    "6751564",
+    "6758818",
+    "6766292",
+    "6809025",
+    "6828297",
+    "6846380",
+    "6849632",
+    "6870003",
+    "6870686",
+    "6871199",
+    "6882880",
+    "6883060",
+    "6886894",
+    "6890901",
+    "6926813",
+    "6939014",
+    "6939977",
+    "6956547",
+    "6993257",
+    "7052282",
+    "7053569",
+    "7093758",
+    "7155728",
+    "7187472",
+    "7194377",
+    "7230742",
+    "7240767",
+    "7292221",
+    "7319577",
+    "7356086",
+    "741961",
+    "7439557",
+    "7442623",
+    "7456573",
+    "7462866",
+    "7479820",
+    "74818",
+    "7491071",
+    "7492151",
+    "7501804",
+    "7529227",
+    "7542934",
+    "7543476",
+    "7601322",
+    "7607823",
+    "7649912",
+    "7660627",
+    "771681",
+    "7723555",
+    "772891",
+    "7747012",
+    "7767312",
+    "7774891",
+    "7785196",
+    "7804152",
+    "7816125",
+    "7860751",
+    "7864475",
+    "7869219",
+    "7887132",
+    "7928605",
+    "8015235",
+    "8050166",
+    "8061141",
+    "80688",
+    "8082418",
+    "8171204",
+    "8171444",
+    "8177059",
+    "8190497",
+    "8267480",
+    "8280666",
+    "829562",
+    "8301865",
+    "8386623",
+    "8427752",
+    "8447386",
+    "845321",
+    "8486092",
+    "8523618",
+    "8524232",
+    "8533236",
+    "8546631",
+    "8568623",
+    "856994",
+    "8604168",
+    "8716205",
+    "8733455",
+    "8746956",
+    "8775998",
+    "8813161",
+    "8825693",
+    "8843377",
+    "892436",
+    "8939730",
+    "8953946",
+    "8957602",
+    "899252",
+    "8994816",
+    "902546",
+    "9037267",
+    "9070765",
+    "9088545",
+    "909913",
+    "9133394",
+    "9151764",
+    "9208924",
+    "9237168",
+    "9274100",
+    "9323986",
+    "9338516",
+    "9347829",
+    "9364392",
+    "9366888",
+    "9435401",
+    "9447250",
+    "9450685",
+    "9468242",
+    "948676",
+    "9504684",
+    "9520511",
+    "9550300",
+    "9554210",
+    "964978",
+    "9652415",
+    "9728576",
+    "9750121",
+    "975221",
+    "9799270",
+    "9834923",
+    "9849533",
+    "9855019",
+    "9870045",
+    "9877386",
+    "9909883",
+    "9923095",
+    "9925449",
+    "9985243"
   ]
 }

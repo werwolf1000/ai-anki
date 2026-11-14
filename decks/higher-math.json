@@ -1652,5 +1652,6 @@
       "reference": "\\det\\begin{pmatrix}1&1\\\\1&-1\\end{pmatrix}=-2",
       "topic": "Многомерный анализ"
     }
-  ]
+  ],
+  "retired_ids": []
 }

@@ -7,9 +7,10 @@
       "topic": "WIP и политики"
     },
     {
-      "question": "Kanban vs Kanban board?",
+      "question": "В чём разница между Kanban и Kanban board?",
       "reference": "Board — инструмент визуализации. Kanban Method — система управления знанием работы (David J. Anderson).",
-      "topic": "Визуализация"
+      "topic": "Визуализация",
+      "id": "6640854"
     },
     {
       "question": "Шесть практик Kanban?",
@@ -17,14 +18,16 @@
       "topic": "WIP и политики"
     },
     {
-      "question": "Pull system?",
+      "question": "Поясните: Pull system.",
       "reference": "Работа начинается, когда есть capacity downstream — сигнал «взять следующее», а не push сверху.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6879219"
     },
     {
-      "question": "Push vs pull?",
+      "question": "В чём разница между Push и pull?",
       "reference": "Push — назначают работу независимо от capacity. Pull — следующая задача при освобождении слота/WIP.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "2206270"
     },
     {
       "question": "WIP limit — зачем?",
@@ -37,24 +40,28 @@
       "topic": "WIP и политики"
     },
     {
-      "question": "Classes of Service?",
+      "question": "Поясните: Classes of Service.",
       "reference": "Expedite, Fixed Date, Standard, Intangible — разные правила приоритета и WIP для типов работы.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "2753754"
     },
     {
-      "question": "Expedite lane?",
+      "question": "Поясните: Expedite lane.",
       "reference": "Срочный класс с отдельным WIP (often 1); злоупотребление разрушает predictability.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "239627"
     },
     {
-      "question": "Fixed Date CoS?",
+      "question": "Поясните: Fixed Date CoS.",
       "reference": "Работа с дедлайном — планирование backward от даты, может обгонять standard.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9221084"
     },
     {
-      "question": "Intangible class?",
+      "question": "Поясните: Intangible class.",
       "reference": "Техдолг, улучшения — часто без жёсткого SLA, но критично для long-term flow.",
-      "topic": "Метрики потока"
+      "topic": "Метрики потока",
+      "id": "928746"
     },
     {
       "question": "Cumulative Flow Diagram (CFD)?",
@@ -62,14 +69,16 @@
       "topic": "WIP и политики"
     },
     {
-      "question": "Cycle time chart?",
+      "question": "Поясните: Cycle time chart.",
       "reference": "Распределение времени от start до done; для SLA и predictability.",
-      "topic": "Метрики потока"
+      "topic": "Метрики потока",
+      "id": "8180606"
     },
     {
-      "question": "Throughput?",
+      "question": "Что такое Throughput?",
       "reference": "Количество завершённых items за период (week/month).",
-      "topic": "Метрики потока"
+      "topic": "Метрики потока",
+      "id": "1273799"
     },
     {
       "question": "Lead time в Kanban?",
@@ -92,19 +101,22 @@
       "topic": "Визуализация"
     },
     {
-      "question": "Swimlanes?",
+      "question": "Что такое Swimlanes?",
       "reference": "Горизонтальные дорожки по классу работы, команде, продукту — для clarity.",
-      "topic": "Визуализация"
+      "topic": "Визуализация",
+      "id": "3514730"
     },
     {
-      "question": "Columns vs states?",
+      "question": "В чём разница между Columns и states?",
       "reference": "Column — визуал; state — реальное правило перехода (может быть sub-columns).",
-      "topic": "Визуализация"
+      "topic": "Визуализация",
+      "id": "9560162"
     },
     {
-      "question": "Definition of Workflow?",
+      "question": "Поясните: Definition of Workflow.",
       "reference": "Kanban equivalent policies: когда item ready, что значит each column, WIP per column.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "3821576"
     },
     {
       "question": "STATIK — что это?",
@@ -112,34 +124,40 @@
       "topic": "Основы"
     },
     {
-      "question": "Service Delivery Manager?",
+      "question": "Поясните: Service Delivery Manager.",
       "reference": "Роль фокуса на flow metrics, policies, predictability (аналог SM в Kanban context).",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "5599443"
     },
     {
-      "question": "Replenishment meeting?",
+      "question": "Поясните: Replenishment meeting.",
       "reference": "Populating ready queue — когда и сколько items pull в систему.",
-      "topic": "Поток работы"
+      "topic": "Поток работы",
+      "id": "6298490"
     },
     {
-      "question": "Kanban meeting (standup)?",
+      "question": "Поясните: Kanban meeting (standup).",
       "reference": "Обход board справа налево: finish, help, flow — не round-robin people.",
-      "topic": "Визуализация"
+      "topic": "Визуализация",
+      "id": "6069482"
     },
     {
-      "question": "Risk review?",
+      "question": "Поясните: Risk review.",
       "reference": "Анализ aging items, blockers, классов service.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2946282"
     },
     {
-      "question": "Operations review?",
+      "question": "Поясните: Operations review.",
       "reference": "Метрики между teams/services — throughput, lead time trends.",
-      "topic": "Метрики потока"
+      "topic": "Метрики потока",
+      "id": "5625346"
     },
     {
-      "question": "Strategy review?",
+      "question": "Поясните: Strategy review.",
       "reference": "Связь portfolio и Kanban system на верхнем уровне.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "3651975"
     },
     {
       "question": "Evolutionary change vs transformation?",
@@ -147,9 +165,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Scrumban?",
+      "question": "Что такое Scrumban?",
       "reference": "Scrum events + Kanban flow/WIP; гибкий hybrid для зрелых команд.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "9224596"
     },
     {
       "question": "Чем Kanban отличается от Scrum?",
@@ -570,14 +589,16 @@
       "topic": "Поток работы"
     },
     {
-      "question": "Kanban: Kanban cadences?",
+      "question": "Поясните: Kanban: Kanban cadences.",
       "reference": "Daily Kanban, Replenishment, Delivery Planning, Service Delivery Review, Operations/Strategy reviews.",
-      "topic": "Поток работы"
+      "topic": "Поток работы",
+      "id": "2832935"
     },
     {
-      "question": "Kanban: Two-tier board?",
+      "question": "Поясните: Kanban: Two-tier board.",
       "reference": "Upstream (discovery/options) + downstream (delivery) с разными WIP.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "6332669"
     },
     {
       "question": "Kanban board electronic tools?",
@@ -585,34 +606,40 @@
       "topic": "WIP и политики"
     },
     {
-      "question": "Personal Kanban?",
+      "question": "Поясните: Personal Kanban.",
       "reference": "Individual WIP limits для личной продуктивности.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "2356945"
     },
     {
-      "question": "Upstream Kanban?",
+      "question": "Поясните: Upstream Kanban.",
       "reference": "Discovery/options перед commitment — reduce wrong features.",
-      "topic": "Поток работы"
+      "topic": "Поток работы",
+      "id": "8008026"
     },
     {
-      "question": "Queue replenishment?",
+      "question": "Поясните: Queue replenishment.",
       "reference": "When ready queue < threshold, refill from backlog.",
-      "topic": "Поток работы"
+      "topic": "Поток работы",
+      "id": "7028884"
     },
     {
-      "question": "Triage board?",
+      "question": "Поясните: Triage board.",
       "reference": "Fast classification incoming work by CoS.",
-      "topic": "Поток работы"
+      "topic": "Поток работы",
+      "id": "9072093"
     },
     {
-      "question": "Defect triage policy?",
+      "question": "Поясните: Defect triage policy.",
       "reference": "Separate WIP or class; SLAs by severity.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "7371117"
     },
     {
-      "question": "Kanban for ops/support?",
+      "question": "Поясните: Kanban for ops/support.",
       "reference": "Classic: incoming → analyze → fix → verify → done with WIP per tier.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "725076"
     },
     {
       "question": "Metric: percent complete and accurate?",
@@ -620,14 +647,17 @@
       "topic": "Основы"
     },
     {
-      "question": "Policy: unblock first?",
+      "question": "Поясните: Policy: unblock first.",
       "reference": "Before new start, resolve blockers on board.",
-      "topic": "WIP и политики"
+      "topic": "WIP и политики",
+      "id": "9277514"
     },
     {
-      "question": "Fit for purpose?",
+      "question": "Поясните: Fit for purpose.",
       "reference": "Align service policies to customer expectations (David Anderson).",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "136927"
     }
-  ]
+  ],
+  "retired_ids": []
 }

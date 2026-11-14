@@ -32,9 +32,10 @@
       "topic": "Роли"
     },
     {
-      "question": "SM vs project manager?",
+      "question": "В чём разница между SM и project manager?",
       "reference": "SM не управляет людьми и сроками задач; служит процессу и команде, не «начальник».",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "2523474"
     },
     {
       "question": "Developers в Scrum?",
@@ -42,9 +43,10 @@
       "topic": "Роли"
     },
     {
-      "question": "Scrum Team size?",
+      "question": "Поясните: Scrum Team size.",
       "reference": "Обычно до 10 человек; при большем масштабе — несколько команд на одном продукте.",
-      "topic": "Масштабирование"
+      "topic": "Масштабирование",
+      "id": "5163703"
     },
     {
       "question": "Что такое Sprint?",
@@ -57,9 +59,10 @@
       "topic": "Основы"
     },
     {
-      "question": "Sprint Goal?",
+      "question": "Поясните: Sprint Goal.",
       "reference": "Единая цель спринта — «зачем этот спринт»; фокус команды и критерий гибкости scope.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8183736"
     },
     {
       "question": "События Scrum?",
@@ -97,19 +100,22 @@
       "topic": "Артефакты"
     },
     {
-      "question": "Product Backlog?",
+      "question": "Поясните: Product Backlog.",
       "reference": "Emergent, ordered list всего для продукта; единственный источник работы для Scrum Team.",
-      "topic": "Артефакты"
+      "topic": "Артефакты",
+      "id": "6826462"
     },
     {
-      "question": "Sprint Backlog?",
+      "question": "Поясните: Sprint Backlog.",
       "reference": "Цель спринта + выбранные PB items + план доставки (often task board).",
-      "topic": "Артефакты"
+      "topic": "Артефакты",
+      "id": "7210817"
     },
     {
-      "question": "Increment?",
+      "question": "Что такое Increment?",
       "reference": "Конкретная проверяемая работа в соответствии с DoD; сумма всех Done items в Sprint + предыдущие.",
-      "topic": "Артефакты"
+      "topic": "Артефакты",
+      "id": "5231871"
     },
     {
       "question": "DoD на уровне организации?",
@@ -117,9 +123,10 @@
       "topic": "Артефакты"
     },
     {
-      "question": "Backlog refinement?",
+      "question": "Поясните: Backlog refinement.",
       "reference": "Ongoing activity: декомпозиция, оценка, уточнение — обычно ≤10% capacity, не обязательное event.",
-      "topic": "События"
+      "topic": "События",
+      "id": "2835460"
     },
     {
       "question": "Commitment в Sprint Planning?",
@@ -132,24 +139,28 @@
       "topic": "Роли"
     },
     {
-      "question": "Scrum of Scrums?",
+      "question": "Поясните: Scrum of Scrums.",
       "reference": "Sync нескольких Scrum-команд: представители обсуждают зависимости и интеграцию.",
-      "topic": "Масштабирование"
+      "topic": "Масштабирование",
+      "id": "2662039"
     },
     {
-      "question": "Nexus framework?",
+      "question": "Поясните: Nexus framework.",
       "reference": "Scrum.org scaling: Nexus Integration Team, Nexus Sprint, dependencies между 3–9 teams.",
-      "topic": "Масштабирование"
+      "topic": "Масштабирование",
+      "id": "4022870"
     },
     {
-      "question": "LeSS?",
+      "question": "Что такое LeSS?",
       "reference": "Large-Scale Scrum: один PO, один backlog, feature teams, общие sprint.",
-      "topic": "Масштабирование"
+      "topic": "Масштабирование",
+      "id": "3543129"
     },
     {
-      "question": "Scrum@Scale?",
+      "question": "Что такое Scrum@Scale?",
       "reference": "Scaling через Scrum of Scrums и Executive Action Team.",
-      "topic": "Масштабирование"
+      "topic": "Масштабирование",
+      "id": "5514094"
     },
     {
       "question": "Чем Sprint Review отличается от Demo?",
@@ -196,14 +207,16 @@
       "topic": "Роли"
     },
     {
-      "question": "Timebox Sprint Planning?",
+      "question": "Поясните: Timebox Sprint Planning.",
       "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints.",
-      "topic": "События"
+      "topic": "События",
+      "id": "5079631"
     },
     {
-      "question": "Output Sprint Planning?",
+      "question": "Поясните: Output Sprint Planning.",
       "reference": "определить Why (Goal), What (PB items), How (plan)",
-      "topic": "События"
+      "topic": "События",
+      "id": "2700402"
     },
     {
       "question": "Кто обязан участвовать в Daily Scrum?",
@@ -211,14 +224,16 @@
       "topic": "Роли"
     },
     {
-      "question": "Timebox Daily Scrum?",
+      "question": "Поясните: Timebox Daily Scrum.",
       "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints.",
-      "topic": "События"
+      "topic": "События",
+      "id": "8906982"
     },
     {
-      "question": "Output Daily Scrum?",
+      "question": "Поясните: Output Daily Scrum.",
       "reference": "адаптировать план на 24ч к Sprint Goal",
-      "topic": "События"
+      "topic": "События",
+      "id": "9557669"
     },
     {
       "question": "Кто обязан участвовать в Sprint Review?",
@@ -226,14 +241,16 @@
       "topic": "Роли"
     },
     {
-      "question": "Timebox Sprint Review?",
+      "question": "Поясните: Timebox Sprint Review.",
       "reference": "Для 1-month sprint: Planning 8h, Review 4h, Retro 3h, Daily 15m; пропорционально для shorter sprints.",
-      "topic": "События"
+      "topic": "События",
+      "id": "2685912"
     },
     {
-      "question": "Output Sprint Review?",
+      "question": "Поясните: Output Sprint Review.",
       "reference": "получить feedback, обновить backlog",
-      "topic": "События"
+      "topic": "События",
+      "id": "4977687"
     },
     {
       "question": "Кто обязан участвовать в Sprint Retrospective?",
@@ -631,19 +648,22 @@
       "topic": "Роли"
     },
     {
-      "question": "Sprint length change?",
+      "question": "Поясните: Sprint length change.",
       "reference": "Можно между sprints; shorter = faster feedback.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "7903584"
     },
     {
-      "question": "Carry-over stories?",
+      "question": "Поясните: Carry-over stories.",
       "reference": "Незавершённые возвращаются в PB; анализ причин на retro, не blame.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "9254683"
     },
     {
-      "question": "Scrum in hardware?",
+      "question": "Поясните: Scrum in hardware.",
       "reference": "Possible with longer sprints, physical prototypes as Increment.",
-      "topic": "Артефакты"
+      "topic": "Артефакты",
+      "id": "3119516"
     },
     {
       "question": "Definition of Done examples?",
@@ -651,9 +671,10 @@
       "topic": "События"
     },
     {
-      "question": "Sprint zero?",
+      "question": "Поясните: Sprint zero.",
       "reference": "Controversial — лучше enablers в PB и normal sprints.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "6330075"
     },
     {
       "question": "Hardening sprint anti-pattern?",
@@ -661,14 +682,16 @@
       "topic": "Артефакты"
     },
     {
-      "question": "Scrum values?",
+      "question": "Поясните: Scrum values.",
       "reference": "Commitment, Focus, Openness, Respect, Courage.",
-      "topic": "Основы"
+      "topic": "Основы",
+      "id": "8993516"
     },
     {
       "question": "Who orders Product Backlog?",
       "reference": "Product Owner — один ordered list.",
       "topic": "Роли"
     }
-  ]
+  ],
+  "retired_ids": []
 }

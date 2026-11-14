@@ -4,7 +4,7 @@
   "cards": [
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Зарегистрируй GET /health, возвращающий JSON {\"status\":\"ok\"}.\n\nРезультат работы: JSON {\"status\":\"ok\"}.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Зарегистрируй GET /health, возвращающий JSON {\"status\":\"ok\"}.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::get('/health', function () {\n    return response()->json(['status' => 'ok']);\n});",
       "language": "php",
@@ -12,7 +12,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: GET /profile с именем route profile.show, closure возвращает 'Profile'.\n\nРезультат работы: 'Profile'.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: GET /profile с именем route profile.show, closure возвращает 'Profile'.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::get('/profile', fn () => 'Profile')->name('profile.show');",
       "language": "php",
@@ -20,7 +20,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Route::resource posts PostController — только объявление маршрута.\n\nтолько объявление маршрута.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Route::resource posts PostController — только объявление маршрута.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::resource('posts', PostController::class);",
       "language": "php",
@@ -28,7 +28,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Метод index(): все Post с eager load user, view posts.index.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности\n\nПример: index(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Метод index(): все Post с eager load user, view posts.index.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Инкапсуляция состояния и публичный API",
       "task": "",
       "reference": "public function index()\n{\n    $posts = Post::with('user')->get();\n    return view('posts.index', compact('posts'));\n}",
       "language": "php",
@@ -36,7 +36,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Form Request: title required max 255, body required string.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Граничные значения и краевые случаи\n- Валидация обязательных полей и сообщений об ошибках\n\nПример: rules(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Form Request: title required max 255, body required string.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Граничные значения и краевые случаи\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "public function rules(): array\n{\n    return [\n        'title' => ['required', 'string', 'max:255'],\n        'body' => ['required', 'string'],\n    ];\n}",
       "language": "php",
@@ -44,7 +44,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Model Post: fillable title, body, user_id; belongsTo User.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: user(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Model Post: fillable title, body, user_id; belongsTo User.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "class Post extends Model\n{\n    protected $fillable = ['title', 'body', 'user_id'];\n\n    public function user(): BelongsTo\n    {\n        return $this->belongsTo(User::class);\n    }\n}",
       "language": "php",
@@ -52,7 +52,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Local scope published() where published = true на Post.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: scopePublished(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Local scope published() where published = true на Post.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function scopePublished($query)\n{\n    return $query->where('published', true);\n}",
       "language": "php",
@@ -60,7 +60,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Migration create posts: id, foreignId user_id constrained, title, timestamps.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Migration create posts: id, foreignId user_id constrained, title, timestamps.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Schema::create('posts', function (Blueprint $table) {\n    $table->id();\n    $table->foreignId('user_id')->constrained()->cascadeOnDelete();\n    $table->string('title');\n    $table->timestamps();\n});",
       "language": "php",
@@ -68,7 +68,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: UserFactory: name faker, email unique, password Hash::make('password').\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: definition(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: UserFactory: name faker, email unique, password Hash::make('password').\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function definition(): array\n{\n    return [\n        'name' => fake()->name(),\n        'email' => fake()->unique()->safeEmail(),\n        'password' => Hash::make('password'),\n    ];\n}",
       "language": "php",
@@ -76,7 +76,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Layout app.blade.php: html skeleton + @yield('content').\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
+      "question": "Реализовать PHP: Layout app.blade.php: html skeleton + @yield('content').\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
       "task": "",
       "reference": "<!DOCTYPE html>\n<html>\n<head><title>App</title></head>\n<body>\n    @yield('content')\n</body>\n</html>",
       "language": "php",
@@ -84,7 +84,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Middleware: если !auth()->user()?->is_admin — abort 403, иначе $next.\n\nabort 403, иначе $next.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Middleware: если !auth()->user()?->is_admin — abort 403, иначе $next.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Безопасная обработка None / null / optional значений",
       "task": "",
       "reference": "public function handle(Request $request, Closure $next)\n{\n    if (! $request->user()?->is_admin) {\n        abort(403);\n    }\n    return $next($request);\n}",
       "language": "php",
@@ -92,7 +92,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: ValidationRule: value must be strtoupper($value) === $value.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: validate(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: ValidationRule: value must be strtoupper($value) === $value.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function validate(string $attribute, mixed $value, Closure $fail): void\n{\n    if (! is_string($value) || strtoupper($value) !== $value) {\n        $fail('The :attribute must be uppercase.');\n    }\n}",
       "language": "php",
@@ -100,7 +100,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Policy update: user id === post user_id.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: update(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Policy update: user id === post user_id.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function update(User $user, Post $post): bool\n{\n    return $user->id === $post->user_id;\n}",
       "language": "php",
@@ -108,7 +108,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Job ShouldQueue: handle() логирует 'Newsletter sent'.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Job ShouldQueue: handle() логирует 'Newsletter sent'.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "class SendNewsletter implements ShouldQueue\n{\n    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;\n\n    public function handle(): void\n    {\n        logger('Newsletter sent');\n    }\n}",
       "language": "php",
@@ -116,7 +116,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Event OrderShipped с public Order $order и Dispatchable.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование OrderShipped согласно описанию",
+      "question": "Реализовать PHP: Event OrderShipped с public Order $order и Dispatchable.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n\nПример: использование OrderShipped согласно описанию",
       "task": "",
       "reference": "class OrderShipped\n{\n    use Dispatchable, InteractsWithSockets, SerializesModels;\n\n    public function __construct(public Order $order)\n    {\n    }\n}",
       "language": "php",
@@ -124,7 +124,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Test: actingAs user POST /posts valid data assertRedirect assertDatabaseHas.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: test_user_can_create_post(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Test: actingAs user POST /posts valid data assertRedirect assertDatabaseHas.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function test_user_can_create_post(): void\n{\n    $user = User::factory()->create();\n    $response = $this->actingAs($user)->post('/posts', [\n        'title' => 'Hello',\n        'body' => 'World',\n    ]);\n    $response->assertRedirect();\n    $this->assertDatabaseHas('posts', ['title' => 'Hello']);\n}",
       "language": "php",
@@ -132,7 +132,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: API Resource: id, title, created_at ISO string.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: toArray(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: API Resource: id, title, created_at ISO string.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function toArray(Request $request): array\n{\n    return [\n        'id' => $this->id,\n        'title' => $this->title,\n        'created_at' => $this->created_at?->toIso8601String(),\n    ];\n}",
       "language": "php",
@@ -140,7 +140,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: ServiceProvider register: singleton PostRepositoryInterface -> EloquentPostRepository.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: register(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: ServiceProvider register: singleton PostRepositoryInterface -> EloquentPostRepository.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function register(): void\n{\n    $this->app->singleton(\n        PostRepositoryInterface::class,\n        EloquentPostRepository::class,\n    );\n}",
       "language": "php",
@@ -148,7 +148,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP-функцию activeEmails(array $users): array — collect filter active pluck email.\n\ncollect filter active pluck email.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности\n\nПример: activeEmails(...) — поведение согласно описанию",
+      "question": "Реализовать PHP-функцию activeEmails(array $users): array — collect filter active pluck email.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком",
       "task": "",
       "reference": "function activeEmails(array $users): array\n{\n    return collect($users)\n        ->filter(fn ($u) => $u->active)\n        ->pluck('email')\n        ->all();\n}",
       "language": "php",
@@ -156,7 +156,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Command signature inspire — handle outputs quote to console.\n\nhandle outputs quote to console.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Command signature inspire — handle outputs quote to console.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected $signature = 'inspire';\n\npublic function handle(): int\n{\n    $this->comment('Simplicity is the ultimate sophistication.');\n    return self::SUCCESS;\n}",
       "language": "php",
@@ -164,7 +164,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: config/services.php ключ stripe: key из env STRIPE_KEY, secret из STRIPE_SECRET.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: config/services.php ключ stripe: key из env STRIPE_KEY, secret из STRIPE_SECRET.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return [\n    'stripe' => [\n        'key' => env('STRIPE_KEY'),\n        'secret' => env('STRIPE_SECRET'),\n    ],\n];",
       "language": "php",
@@ -172,7 +172,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: View::share('appName', config('app.name')) в boot().\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: boot(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: View::share('appName', config('app.name')) в boot().\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function boot(): void\n{\n    View::share('appName', config('app.name'));\n}",
       "language": "php",
@@ -180,7 +180,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Kernel schedule: command inspire dailyAt 08:00.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: schedule(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Kernel schedule: command inspire dailyAt 08:00.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected function schedule(Schedule $schedule): void\n{\n    $schedule->command('inspire')->dailyAt('08:00');\n}",
       "language": "php",
@@ -188,7 +188,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP-функцию app_version(): string возвращает config('app.version', '1.0.0').\n\nРезультат работы: config('app.version', '1.0.0').\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: app_version(...) — поведение согласно описанию",
+      "question": "Реализовать PHP-функцию app_version(): string возвращает config('app.version', '1.0.0').\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "function app_version(): string\n{\n    return (string) config('app.version', '1.0.0');\n}",
       "language": "php",
@@ -196,7 +196,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Handler render: ValidationException → 422 JSON errors для expectsJson.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: Handler render: ValidationException → 422 JSON errors для expectsJson",
+      "question": "Реализовать PHP: Handler render: ValidationException → 422 JSON errors для expectsJson.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function render($request, Throwable $e)\n{\n    if ($e instanceof ValidationException && $request->expectsJson()) {\n        return response()->json(['errors' => $e->errors()], 422);\n    }\n    return parent::render($request, $e);\n}",
       "language": "php",
@@ -204,7 +204,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Upload: Storage::disk('public')->put('avatars/'.$name, $contents).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Upload: Storage::disk('public')->put('avatars/'.$name, $contents).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$path = Storage::disk('public')->put(\n    'avatars/'.$request->file('avatar')->hashName(),\n    $request->file('avatar')->getContent(),\n);",
       "language": "php",
@@ -212,7 +212,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Cache::remember('users.all', 3600, fn () => User::all()).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Cache::remember('users.all', 3600, fn () => User::all()).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$users = Cache::remember('users.all', 3600, fn () => User::all());",
       "language": "php",
@@ -220,7 +220,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Log::channel('slack')->warning('Deploy failed', ['id' => $id]).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Log::channel('slack')->warning('Deploy failed', ['id' => $id]).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Log::channel('slack')->warning('Deploy failed', ['id' => $deployId]);",
       "language": "php",
@@ -228,7 +228,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Группа prefix admin, name admin., middleware auth — GET dashboard.\n\nGET dashboard.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Группа prefix admin, name admin., middleware auth — GET dashboard.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {\n    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');\n});",
       "language": "php",
@@ -236,7 +236,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: GET posts/{id} where id [0-9]+.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: GET posts/{id} where id [0-9]+.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::get('/posts/{id}', [PostController::class, 'show'])\n    ->whereNumber('id');",
       "language": "php",
@@ -244,7 +244,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Route middleware throttle:api group GET /api/status.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Route middleware throttle:api group GET /api/status.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::middleware('throttle:api')->group(function () {\n    Route::get('/status', fn () => ['ok' => true]);\n});",
       "language": "php",
@@ -252,7 +252,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: GET unsubscribe/{user} middleware signed name unsubscribe.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: GET unsubscribe/{user} middleware signed name unsubscribe.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::get('/unsubscribe/{user}', UnsubscribeController::class)\n    ->middleware('signed')\n    ->name('unsubscribe');",
       "language": "php",
@@ -260,7 +260,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Route fallback JSON message Not found 404.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Route fallback JSON message Not found 404.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::fallback(fn () => response()->json(['message' => 'Not found'], 404));",
       "language": "php",
@@ -268,7 +268,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Redirect /old-url to /new-url permanent 301.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Redirect /old-url to /new-url permanent 301.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::redirect('/old-url', '/new-url', 301);",
       "language": "php",
@@ -276,7 +276,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: GET posts/{post:slug} — route key slug on Post model.\n\nroute key slug on Post model.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: getRouteKeyName(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: GET posts/{post:slug} — route key slug on Post model.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function getRouteKeyName(): string\n{\n    return 'slug';\n}",
       "language": "php",
@@ -284,7 +284,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: apiResource posts PostController except create edit.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: apiResource posts PostController except create edit.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::apiResource('posts', PostController::class);",
       "language": "php",
@@ -292,7 +292,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Invokable controller __invoke returns view home.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: __invoke(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Invokable controller __invoke returns view home.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "class HomeController extends Controller\n{\n    public function __invoke()\n    {\n        return view('home');\n    }\n}",
       "language": "php",
@@ -300,7 +300,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: store: authorize create Post, create validated data.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: store(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: store: authorize create Post, create validated data.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function store(StorePostRequest $request)\n{\n    $this->authorize('create', Post::class);\n    Post::create($request->validated());\n    return redirect()->route('posts.index');\n}",
       "language": "php",
@@ -308,7 +308,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: destroy post: delete, redirect back with flash status.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: destroy(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: destroy post: delete, redirect back with flash status.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function destroy(Post $post)\n{\n    $post->delete();\n    return back()->with('status', 'Post deleted');\n}",
       "language": "php",
@@ -316,7 +316,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: update Post: fill validated, save, redirect show.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: update(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: update Post: fill validated, save, redirect show.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function update(UpdatePostRequest $request, Post $post)\n{\n    $post->update($request->validated());\n    return redirect()->route('posts.show', $post);\n}",
       "language": "php",
@@ -324,7 +324,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: index returns PostResource collection paginate 15.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: index(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: index returns PostResource collection paginate 15.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function index()\n{\n    return PostResource::collection(Post::paginate(15));\n}",
       "language": "php",
@@ -332,7 +332,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: authorize returns auth()->check() for StoreCommentRequest.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: authorize(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: authorize returns auth()->check() for StoreCommentRequest.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function authorize(): bool\n{\n    return auth()->check();\n}",
       "language": "php",
@@ -340,7 +340,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: prepareForValidation merge slug from title Str::slug.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: prepareForValidation(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: prepareForValidation merge slug from title Str::slug.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected function prepareForValidation(): void\n{\n    $this->merge([\n        'slug' => Str::slug($this->input('title', '')),\n    ]);\n}",
       "language": "php",
@@ -348,7 +348,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Inject Illuminate Cache Repository в PostController constructor.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Inject Illuminate Cache Repository в PostController constructor.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function __construct(private Repository $cache)\n{\n}",
       "language": "php",
@@ -356,7 +356,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Post hasMany Comment ordered latest.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: comments(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Post hasMany Comment ordered latest.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function comments(): HasMany\n{\n    return $this->hasMany(Comment::class)->latest();\n}",
       "language": "php",
@@ -364,7 +364,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Post belongsToMany Tag withTimestamps.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: tags(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Post belongsToMany Tag withTimestamps.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function tags(): BelongsToMany\n{\n    return $this->belongsToMany(Tag::class)->withTimestamps();\n}",
       "language": "php",
@@ -372,7 +372,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: casts published_at datetime, meta array, is_featured boolean.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: casts published_at datetime, meta array, is_featured boolean.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком",
       "task": "",
       "reference": "protected $casts = [\n    'published_at' => 'datetime',\n    'meta' => 'array',\n    'is_featured' => 'boolean',\n];",
       "language": "php",
@@ -380,7 +380,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Use SoftDeletes on Post model.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: использование Post согласно описанию",
+      "question": "Реализовать PHP: Use SoftDeletes on Post model.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n\nПример: использование Post согласно описанию",
       "task": "",
       "reference": "class Post extends Model\n{\n    use SoftDeletes;\n}",
       "language": "php",
@@ -388,7 +388,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Post updateOrCreate slug + title/body.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Post updateOrCreate slug + title/body.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Post::updateOrCreate(\n    ['slug' => $slug],\n    ['title' => $title, 'body' => $body],\n);",
       "language": "php",
@@ -396,7 +396,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Post published withCount comments get.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Post published withCount comments get.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->withCount('comments')->get();",
       "language": "php",
@@ -404,7 +404,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: User accessor fullName: first + last.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: fullName(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: User accessor fullName: first + last.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected function fullName(): Attribute\n{\n    return Attribute::get(fn () => trim($this->first_name.' '.$this->last_name));\n}",
       "language": "php",
@@ -412,7 +412,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Booted addGlobalScope active status active.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: booted(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Booted addGlobalScope active status active.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected static function booted(): void\n{\n    static::addGlobalScope('active', fn ($q) => $q->where('status', 'active'));\n}",
       "language": "php",
@@ -420,7 +420,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Migration add slug unique string to posts after title.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Migration add slug unique string to posts after title.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Schema::table('posts', function (Blueprint $table) {\n    $table->string('slug')->unique()->after('title');\n});",
       "language": "php",
@@ -428,7 +428,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Create post_tag post_id tag_id foreign constrained unique pair.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Create post_tag post_id tag_id foreign constrained unique pair.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Schema::create('post_tag', function (Blueprint $table) {\n    $table->foreignId('post_id')->constrained()->cascadeOnDelete();\n    $table->foreignId('tag_id')->constrained()->cascadeOnDelete();\n    $table->primary(['post_id', 'tag_id']);\n});",
       "language": "php",
@@ -436,7 +436,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: DatabaseSeeder create 10 users each with 3 posts.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: DatabaseSeeder create 10 users each with 3 posts.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "User::factory(10)->create()->each(function (User $user) {\n    Post::factory(3)->for($user)->create();\n});",
       "language": "php",
@@ -444,7 +444,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: UserFactory state admin is_admin true.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: admin(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: UserFactory state admin is_admin true.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function admin(): static\n{\n    return $this->state(fn () => ['is_admin' => true]);\n}",
       "language": "php",
@@ -452,7 +452,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Add softDeletes to comments table.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Add softDeletes to comments table.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Schema::table('comments', function (Blueprint $table) {\n    $table->softDeletes();\n});",
       "language": "php",
@@ -460,7 +460,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Index published_at on posts table.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Index published_at on posts table.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Schema::table('posts', function (Blueprint $table) {\n    $table->index('published_at');\n});",
       "language": "php",
@@ -468,7 +468,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "@forelse posts as post .\n\n@empty No posts @endforelse.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная обработка пустого входа\n- Читаемость кода без лишней сложности",
+      "question": "@forelse posts as post .\n\n@empty No posts @endforelse.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная обработка пустого входа",
       "task": "",
       "reference": "@forelse ($posts as $post)\n    <li>{{ $post->title }}</li>\n@empty\n    <p>No posts</p>\n@endforelse",
       "language": "php",
@@ -476,7 +476,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: @auth show dashboard link @else login @endauth.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: @auth show dashboard link @else login @endauth.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "@auth\n    <a href=\"/dashboard\">Dashboard</a>\n@else\n    <a href=\"/login\">Login</a>\n@endauth",
       "language": "php",
@@ -484,7 +484,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Anonymous component @props type message; div alert.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Anonymous component @props type message; div alert.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "@props(['type' => 'info', 'message'])\n<div class=\"alert alert-{{ $type }}\">{{ $message }}</div>",
       "language": "php",
@@ -492,7 +492,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Form POST @csrf @method PUT update post.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Инкапсуляция состояния и публичный API\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Form POST @csrf @method PUT update post.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Инкапсуляция состояния и публичный API",
       "task": "",
       "reference": "<form method=\"POST\" action=\"/posts/{{ $post->id }}\">\n    @csrf\n    @method('PUT')\n    <input name=\"title\" value=\"{{ old('title', $post->title) }}\">\n</form>",
       "language": "php",
@@ -500,7 +500,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: @push scripts chart.js @endpush in view.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: @push scripts chart.js @endpush in view.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "@push('scripts')\n    <script src=\"/chart.js\"></script>\n@endpush",
       "language": "php",
@@ -508,7 +508,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: bootstrap middleware alias admin => EnsureUserIsAdmin.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: bootstrap middleware alias admin => EnsureUserIsAdmin.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "->withMiddleware(function (Middleware $middleware) {\n    $middleware->alias(['admin' => EnsureUserIsAdmin::class]);\n})",
       "language": "php",
@@ -516,7 +516,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: TrustProxies at * for AWS ELB.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: TrustProxies at * for AWS ELB.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "protected $proxies = '*';",
       "language": "php",
@@ -524,7 +524,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Append LogRequest middleware to web group.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Append LogRequest middleware to web group.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "->withMiddleware(function (Middleware $middleware) {\n    $middleware->appendToGroup('web', LogRequest::class);\n})",
       "language": "php",
@@ -532,7 +532,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: SetLocale middleware handle($request, $next, string $locale).\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: SetLocale middleware handle($request, $next, string $locale).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function handle(Request $request, Closure $next, string $locale)\n{\n    App::setLocale($locale);\n    return $next($request);\n}",
       "language": "php",
@@ -540,7 +540,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Rule unique users email ignore user id on update.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Rule unique users email ignore user id on update.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "'email' => ['required', 'email', Rule::unique('users')->ignore($this->user()->id)],",
       "language": "php",
@@ -548,7 +548,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Rules password required min 8 confirmed.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Rules password required min 8 confirmed.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "'password' => ['required', 'string', 'min:8', 'confirmed'],",
       "language": "php",
@@ -556,7 +556,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Validate items array each id integer qty min 1.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Validate items array each id integer qty min 1.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком",
       "task": "",
       "reference": "'items' => ['required', 'array'],\n'items.*.id' => ['required', 'integer'],\n'items.*.qty' => ['required', 'integer', 'min:1'],",
       "language": "php",
@@ -564,7 +564,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: published_at required date after:today.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: published_at required date after:today.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "'published_at' => ['required', 'date', 'after:today'],",
       "language": "php",
@@ -572,7 +572,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: messages email.required Email is required.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках\n- Читаемость кода без лишней сложности\n\nПример: messages(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: messages email.required Email is required.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Валидация обязательных полей и сообщений об ошибках",
       "task": "",
       "reference": "public function messages(): array\n{\n    return ['email.required' => 'Email is required'];\n}",
       "language": "php",
@@ -580,7 +580,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Gate define manage-settings user is_admin.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Gate define manage-settings user is_admin.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Gate::define('manage-settings', fn (User $user) => $user->is_admin);",
       "language": "php",
@@ -588,7 +588,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: PostPolicy viewAny: user not null.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Безопасная обработка None / null / optional значений\n- Читаемость кода без лишней сложности\n\nПример: viewAny(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: PostPolicy viewAny: user not null.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Безопасная обработка None / null / optional значений",
       "task": "",
       "reference": "public function viewAny(?User $user): bool\n{\n    return $user !== null;\n}",
       "language": "php",
@@ -596,7 +596,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: User createToken api-token abilities read.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: User createToken api-token abilities read.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$token = $user->createToken('api-token', ['read']);",
       "language": "php",
@@ -604,7 +604,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Logout guard web invalidate session regenerate token.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Logout guard web invalidate session regenerate token.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Auth::guard('web')->logout();\n$request->session()->invalidate();\n$request->session()->regenerateToken();",
       "language": "php",
@@ -612,7 +612,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Route middleware can:update,post on PATCH.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Route middleware can:update,post on PATCH.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::patch('/posts/{post}', [PostController::class, 'update'])\n    ->middleware('can:update,post');",
       "language": "php",
@@ -620,7 +620,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: ProcessOrder implements ShouldBeUnique uniqueId order id.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: uniqueId(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: ProcessOrder implements ShouldBeUnique uniqueId order id.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function uniqueId(): string\n{\n    return (string) $this->order->id;\n}",
       "language": "php",
@@ -628,7 +628,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: public $tries=3; public function backoff(){ return [10,30,60]; }.\n\nФункция должна соответствовать сигнатуре и описанному поведению.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: backoff(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: public $tries=3; public function backoff(){ return [10,30,60]; }.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public int $tries = 3;\n\npublic function backoff(): array\n{\n    return [10, 30, 60];\n}",
       "language": "php",
@@ -636,7 +636,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Bus chain ReleasePodcast then SendNotification dispatch.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Bus chain ReleasePodcast then SendNotification dispatch.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Bus::chain([\n    new ReleasePodcast($podcast),\n    new SendPodcastNotification($podcast),\n])->dispatch();",
       "language": "php",
@@ -644,7 +644,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Bus batch import jobs name Imports allowFailures.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Граничные значения и краевые случаи\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Bus batch import jobs name Imports allowFailures.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Граничные значения и краевые случаи",
       "task": "",
       "reference": "Bus::batch($jobs)\n    ->name('Imports')\n    ->allowFailures()\n    ->dispatch();",
       "language": "php",
@@ -652,7 +652,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: SendEmail dispatch afterResponse closure.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: SendEmail dispatch afterResponse closure.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "SendEmail::dispatch($user)->afterResponse();",
       "language": "php",
@@ -660,7 +660,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Listener SendShipmentNotification handle logs order id.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Listener SendShipmentNotification handle logs order id.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function handle(OrderShipped $event): void\n{\n    logger('Shipped order '.$event->order->id);\n}",
       "language": "php",
@@ -668,7 +668,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: PostObserver creating set user_id auth id.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: creating(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: PostObserver creating set user_id auth id.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function creating(Post $post): void\n{\n    $post->user_id ??= auth()->id();\n}",
       "language": "php",
@@ -676,7 +676,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Subscriber subscribe maps OrderShipped to onOrderShipped.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: subscribe(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Subscriber subscribe maps OrderShipped to onOrderShipped.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function subscribe(Dispatcher $events): array\n{\n    return [OrderShipped::class => 'onOrderShipped'];\n}",
       "language": "php",
@@ -684,7 +684,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Listener implements ShouldQueue for async handle.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректное использование async/await или Observable\n- Читаемость кода без лишней сложности\n\nПример: handle(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Listener implements ShouldQueue for async handle.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректное использование async/await или Observable",
       "task": "",
       "reference": "class SendShipmentNotification implements ShouldQueue\n{\n    public function handle(OrderShipped $event): void { /* ... */ }\n}",
       "language": "php",
@@ -692,7 +692,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Guest GET /dashboard assertForbidden.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: test_guest_cannot_view_dashboard(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Guest GET /dashboard assertForbidden.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function test_guest_cannot_view_dashboard(): void\n{\n    $this->get('/dashboard')->assertForbidden();\n}",
       "language": "php",
@@ -700,7 +700,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Mail fake; action; Mail assertSent OrderShipped Mailable.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Mail fake; action; Mail assertSent OrderShipped Mailable.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Mail::fake();\n// ... trigger mail\nMail::assertSent(OrderShipped::class);",
       "language": "php",
@@ -708,7 +708,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Queue fake; assert ProcessOrder pushed once.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Queue fake; assert ProcessOrder pushed once.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Queue::fake();\n// ...\nQueue::assertPushed(ProcessOrder::class, 1);",
       "language": "php",
@@ -716,7 +716,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Http fake github returns json; test service uses fake.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Http fake github returns json; test service uses fake.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Http::fake([\n    'api.github.com/*' => Http::response(['ok' => true], 200),\n]);",
       "language": "php",
@@ -724,7 +724,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: POST invalid assertSessionHasErrors or assertJsonValidationErrors.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: POST invalid assertSessionHasErrors or assertJsonValidationErrors.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$response = $this->postJson('/api/posts', []);\n$response->assertJsonValidationErrors(['title']);",
       "language": "php",
@@ -732,7 +732,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Route middleware auth:sanctum GET /api/user returns request user.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Route middleware auth:sanctum GET /api/user returns request user.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Route::middleware('auth:sanctum')->get('/user', fn (Request $request) => $request->user());",
       "language": "php",
@@ -740,7 +740,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: PostResource user UserResource whenLoaded user.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: PostResource user UserResource whenLoaded user.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "'user' => UserResource::make($this->whenLoaded('user')),",
       "language": "php",
@@ -748,7 +748,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: return PostResource collection Post paginate with query.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: return PostResource collection Post paginate with query.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return PostResource::collection(\n    Post::query()->latest()->paginate(20)\n);",
       "language": "php",
@@ -756,7 +756,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: CheckScopes middleware or token can ability.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: CheckScopes middleware or token can ability.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "if (! $request->user()->tokenCan('server:update')) {\n    abort(403);\n}",
       "language": "php",
@@ -764,7 +764,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: When ReportController needs ReportGenerator bind PdfReportGenerator.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
+      "question": "Реализовать PHP: When ReportController needs ReportGenerator bind PdfReportGenerator.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
       "task": "",
       "reference": "$this->app->when(ReportController::class)\n    ->needs(ReportGenerator::class)\n    ->give(PdfReportGenerator::class);",
       "language": "php",
@@ -772,7 +772,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: App instance custom.stripe with StripeClient.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: App instance custom.stripe with StripeClient.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$this->app->instance('custom.stripe', new StripeClient(config('services.stripe.secret')));",
       "language": "php",
@@ -780,7 +780,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Provider implements DeferrableProvider provides returns Repository.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности\n\nПример: provides(...) — поведение согласно описанию",
+      "question": "Реализовать PHP: Provider implements DeferrableProvider provides returns Repository.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "public function provides(): array\n{\n    return [PostRepositoryInterface::class];\n}",
       "language": "php",
@@ -788,7 +788,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: collect users groupBy role map names.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: collect users groupBy role map names.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$byRole = collect($users)->groupBy('role')->map->pluck('name');",
       "language": "php",
@@ -796,7 +796,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: LazyCollection make read file lines filter empty.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная обработка пустого входа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
+      "question": "Реализовать PHP: LazyCollection make read file lines filter empty.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная обработка пустого входа\n- Последовательную выдачу значений через yield\n- Корректную работу граничных значений и остановку итерации",
       "task": "",
       "reference": "LazyCollection::make(function () {\n    $handle = fopen($path, 'r');\n    while (($line = fgets($handle)) !== false) {\n        yield trim($line);\n    }\n    fclose($handle);\n})->filter();",
       "language": "php",
@@ -804,7 +804,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: data_get $array user.profile.name default Guest.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: data_get $array user.profile.name default Guest.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Корректная работа с пустым массивом или списком",
       "task": "",
       "reference": "$name = data_get($payload, 'user.profile.name', 'Guest');",
       "language": "php",
@@ -812,7 +812,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Str slug title language en separator dash.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Str slug title language en separator dash.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$slug = Str::slug($title, '-', 'en');",
       "language": "php",
@@ -820,7 +820,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Реализовать PHP: Collection macro toSortedByName sortBy name values.\n\nРеализуйте решение с нуля согласно описанию задания.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Реализовать PHP: Collection macro toSortedByName sortBy name values.\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "Collection::macro('toSortedByName', function () {\n    return $this->sortBy('name')->values();\n});",
       "language": "php",
@@ -828,7 +828,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 1).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 1).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -836,7 +836,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 1).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 1).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -852,7 +852,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 2).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 2).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -860,7 +860,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 2).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 2).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -876,7 +876,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 3).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 3).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -884,7 +884,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 3).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 3).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -900,7 +900,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 4).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 4).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -908,7 +908,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 4).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 4).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -924,7 +924,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 5).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 5).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -932,7 +932,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 5).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 5).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -948,7 +948,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 6).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 6).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -956,7 +956,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 6).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 6).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -972,7 +972,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 7).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 7).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -980,7 +980,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 7).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 7).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -996,7 +996,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 8).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 8).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1004,7 +1004,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 8).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 8).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1020,7 +1020,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 9).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 9).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1028,7 +1028,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 9).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 9).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1044,7 +1044,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 10).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 10).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1052,7 +1052,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 10).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 10).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1068,7 +1068,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 11).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 11).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1076,7 +1076,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 11).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 11).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1092,7 +1092,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 12).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 12).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1100,7 +1100,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 12).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 12).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1116,7 +1116,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 13).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 13).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1124,7 +1124,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 13).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 13).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1140,7 +1140,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 14).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 14).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1148,7 +1148,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 14).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 14).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1164,7 +1164,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 15).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "Post published() whereDate created_at today get — напиши chain scope + whereDate.\n\n(вариант 15).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "$posts = Post::published()->whereDate('created_at', today())->get();",
       "language": "php",
@@ -1172,7 +1172,7 @@
     },
     {
       "card_type": "live_code",
-      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 15).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров\n- Соблюдение сигнатуры и ожидаемого поведения из описания\n- Читаемость кода без лишней сложности",
+      "question": "redirect()->route('posts.index') with status flash.\n\n(вариант 15).\n\nНеобходимо предусмотреть:\n- declare(strict_types=1) и строгая типизация параметров",
       "task": "",
       "reference": "return redirect()->route('posts.index')->with('status', 'Saved');",
       "language": "php",
@@ -1186,5 +1186,6 @@
       "language": "php",
       "topic": "Валидация"
     }
-  ]
+  ],
+  "retired_ids": []
 }
