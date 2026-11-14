@@ -283,7 +283,7 @@ class VideoLibrary:
             for i, part in enumerate(parts):
                 offset = i * SEGMENT_SECONDS
                 last: Exception | None = None
-                for attempt in range(3):
+                for attempt in range(5):  # Whisper бывает недоступен минуту-другую (загрузка модели)
                     try:
                         segs, lang = transcribe_segments(
                             cfg.get("asr_url", ""), part.read_bytes(), part.name,
@@ -294,7 +294,7 @@ class VideoLibrary:
                         break
                     except Exception as exc:  # noqa: BLE001
                         last = exc
-                        time.sleep(10 * (attempt + 1))
+                        time.sleep(min(20 * 2**attempt, 180))
                 else:
                     raise RuntimeError(f"Whisper: {last}")
                 language = language or lang
