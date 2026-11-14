@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Activity, Database, DownloadCloud, KeyRound, LogOut, Monitor, Save, Server, SlidersHorizontal, UserRound } from "lucide-react";
+import { Activity, Database, DownloadCloud, KeyRound, LogOut, Monitor, Save, Server, SlidersHorizontal, Sparkles, Square, UserRound } from "lucide-react";
 import { api, getServer } from "../lib/api";
 import { isDesktop } from "../lib/desktop";
 import { Spinner, useToast } from "../components/ui";
@@ -216,7 +216,7 @@ function KnowledgePanel({ isAdmin }) {
         .then((r) => {
           if (!alive) return;
           setSt(r);
-          timer = setTimeout(load, r.job.running ? 3000 : 20000);
+          timer = setTimeout(load, r.job.running || r.articles?.running ? 3000 : 20000);
         })
         .catch(() => {});
     load();
@@ -235,6 +235,21 @@ function KnowledgePanel({ isAdmin }) {
     } catch (e) {
       toast(e.message, "error");
     }
+  }
+
+  async function generateArticles() {
+    try {
+      const r = await api("/api/textbook/generate-all", { method: "POST", body: {} });
+      toast(`В очереди тем: ${r.queued}`, "success");
+      setSt(await api("/api/knowledge/status"));
+    } catch (e) {
+      toast(e.message, "error");
+    }
+  }
+
+  async function stopArticles() {
+    await api("/api/textbook/generate-all/stop", { method: "POST" }).catch(() => {});
+    toast("Остановка после текущей темы", "success");
   }
 
   if (!st) return null;
@@ -288,6 +303,44 @@ function KnowledgePanel({ isAdmin }) {
             {job.log.map((l, i) => <div key={i}>{l}</div>)}
             {job.running && job.total > 0 && <div className="text-violet-300">{job.stage}: {job.done}/{job.total}</div>}
             {job.error && <div className="text-rose-300">{job.error}</div>}
+          </div>
+        )}
+
+        {st.articles && (
+          <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <div className="font-semibold">Статьи учебника</div>
+                <div className="mt-0.5 text-xs text-zinc-500">
+                  Готово <b className="text-zinc-200">{st.articles.topics_written}</b> из <b className="text-zinc-200">{st.articles.topics_total}</b> тем всех колод.
+                  {" "}Пишутся моделью по базе знаний и карточкам; лучше запускать после загрузки источников.
+                </div>
+              </div>
+              {isAdmin && (st.articles.running ? (
+                <button className="btn-ghost" onClick={stopArticles}><Square className="h-4 w-4" /> Остановить</button>
+              ) : (
+                <button className="btn-ghost" disabled={st.articles.topics_written >= st.articles.topics_total} onClick={generateArticles}>
+                  <Sparkles className="h-4 w-4" /> Написать недостающие
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+              <motion.div
+                className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400"
+                animate={{ width: `${st.articles.topics_total ? (st.articles.topics_written / st.articles.topics_total) * 100 : 0}%` }}
+              />
+            </div>
+            {(st.articles.running || st.articles.log.length > 0) && (
+              <div className="mt-3 font-mono text-[11px] leading-relaxed text-zinc-400">
+                {st.articles.running && (
+                  <div className="text-emerald-300">
+                    {st.articles.done}/{st.articles.total} · {st.articles.current}
+                  </div>
+                )}
+                {st.articles.log.map((l, i) => <div key={i}>{l}</div>)}
+                {st.articles.error && <div className="text-rose-300">{st.articles.error}</div>}
+              </div>
+            )}
           </div>
         )}
 

@@ -583,17 +583,19 @@ class KnowledgeIndexer:
         if msg:
             self.job.log.append(f"{datetime.now().strftime('%H:%M:%S')} {msg}")
 
-    def start(self, source_ids: list[str], ollama: OllamaRag, embed_model: str, *, download: bool = True) -> bool:
+    def start(
+        self, source_ids: list[str], ollama: OllamaRag, embed_model: str, *, download: bool = True, context: dict | None = None
+    ) -> bool:
         with self._lock:
             if self.job.running:
                 return False
             self.job = IndexJob(running=True, started_at=_now())
         threading.Thread(
-            target=self._run, args=(list(source_ids), ollama, embed_model, download), daemon=True, name="knowledge-index"
+            target=self._run, args=(list(source_ids), ollama, embed_model, download, context or {}), daemon=True, name="knowledge-index"
         ).start()
         return True
 
-    def _run(self, source_ids: list[str], ollama: OllamaRag, embed_model: str, download: bool) -> None:
+    def _run(self, source_ids: list[str], ollama: OllamaRag, embed_model: str, download: bool, context: dict) -> None:
         from server.kb_sources import SOURCES, load_pages
 
         failed: list[str] = []
@@ -609,7 +611,7 @@ class KnowledgeIndexer:
                         def tick(i: int, n: int) -> None:
                             self.job.stage, self.job.done, self.job.total = "parse", i, n
 
-                        pages = load_pages(src, lambda m, s=sid: self._say(self.job.stage, f"[{s}] {m}"), tick)
+                        pages = load_pages(src, lambda m, s=sid: self._say(self.job.stage, f"[{s}] {m}"), tick, context)
                         chunks: list[Chunk] = []
                         for page in pages:
                             chunks.extend(chunk_page(page))

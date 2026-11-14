@@ -41,6 +41,15 @@ class GitPart:
     include: str = r".*"  # regex по относительному пути
     exclude: str = r"(?!)"
     url: Callable[[str, dict], str] = field(default=lambda rel, meta: "", compare=False)
+    pick: Callable[[list[str]], list[str]] | None = field(default=None, compare=False)  # доп. отбор файлов
+
+
+@dataclass(frozen=True)
+class WebDoc:
+    url: str  # что скачивать (pdf или html)
+    title: str
+    page_url: str = ""  # куда ведёт сноска (по умолчанию url)
+    selector: str = ""  # id корневого элемента html-страницы
 
 
 @dataclass(frozen=True)
@@ -50,11 +59,12 @@ class KnowledgeSource:
     homepage: str
     description: str
     match: str  # regex по «id колоды + название + язык»: каким колодам источник подходит
-    kind: str  # php_tarball | python_tarball | github
+    kind: str  # php_tarball | python_tarball | github | web | wikipedia
     lang: str = ""  # язык блоков кода по умолчанию
     archive: str = ""
     parts: tuple[GitPart, ...] = ()
-    flavor: str = ""  # особенности разметки: mdn, angular, typescript, laravel, node, go
+    flavor: str = ""  # особенности разметки: mdn, angular, typescript, laravel, node, go, hugo, mdx
+    docs: tuple[WebDoc, ...] = ()
 
 
 def _strip_ext(rel: str) -> str:
@@ -236,6 +246,120 @@ SOURCES: dict[str, KnowledgeSource] = {
                 ),
             ),
         ),
+        KnowledgeSource(
+            id="agile_guides",
+            title="Scrum Guide, Kanban Guide, Agile-манифест",
+            homepage="https://scrumguides.org/",
+            description="Официальное руководство по Scrum 2020 (рус.), Agile-манифест и его принципы (рус.), Kanban Guide 2020.",
+            match=r"agile|scrum|kanban|канбан|safe",
+            kind="web",
+            docs=(
+                WebDoc("https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Russian.pdf",
+                       "Руководство по Скраму 2020"),
+                WebDoc("https://agilemanifesto.org/iso/ru/manifesto.html", "Манифест гибкой разработки ПО"),
+                WebDoc("https://agilemanifesto.org/iso/ru/principles.html", "Принципы Agile-манифеста"),
+                WebDoc("https://kanbanguides.org/english/", "The Kanban Guide"),
+            ),
+        ),
+        KnowledgeSource(
+            id="kubernetes_ru",
+            title="Kubernetes — документация (рус.)",
+            homepage="https://kubernetes.io/ru/docs/",
+            description="Русский перевод документации Kubernetes: концепции, объекты, сеть, хранилище, руководства.",
+            match=r"devops|kubernetes|k8s",
+            kind="github",
+            lang="yaml",
+            flavor="hugo",
+            parts=(
+                GitPart(
+                    "kubernetes/website", "main", "content/ru/docs",
+                    include=r"^(concepts|tasks|tutorials|setup|reference/glossary)/.+\.md$|^reference/[\w-]+\.md$",
+                    url=lambda rel, meta: "https://kubernetes.io/ru/docs/" + re.sub(r"(/?_index)?\.md$", "/", rel),
+                ),
+            ),
+        ),
+        KnowledgeSource(
+            id="docker_docs",
+            title="Docker — официальная документация",
+            homepage="https://docs.docker.com/",
+            description="Сборка образов и кеш, Dockerfile, Compose, сети, тома, безопасность Docker Engine.",
+            match=r"devops|docker|pro-fde|forward deployed",
+            kind="github",
+            lang="dockerfile",
+            flavor="hugo",
+            parts=(
+                GitPart(
+                    "docker/docs", "main", "content/manuals",
+                    include=r"^(build/(building|cache|concepts|bake|building)|compose/(how-tos|intro|gettingstarted)"
+                    r"|engine/(storage|network|containers|security|logging|daemon))/.*\.md$|^compose/_index\.md$",
+                    url=lambda rel, meta: "https://docs.docker.com/" + re.sub(r"(/?_index)?\.md$", "/", rel),
+                ),
+            ),
+        ),
+        KnowledgeSource(
+            id="prompting_guide",
+            title="Prompt Engineering Guide (promptingguide.ai)",
+            homepage="https://www.promptingguide.ai/ru",
+            description="Техники промптинга, RAG, агенты, риски и prompt injection; русский перевод там, где он есть.",
+            match=r"prompt|промпт|llm|ai-trainer|ai-тренер|pro-fde|forward deployed|ai-artist|нейрокреатор",
+            kind="github",
+            lang="",
+            flavor="mdx",
+            parts=(
+                GitPart(
+                    "dair-ai/Prompt-Engineering-Guide", "main", "pages",
+                    include=r"^(introduction|techniques|applications|risks|agents|guides|research)(/.+)?\.(ru|en)\.mdx$",
+                    url=lambda rel, meta: "https://www.promptingguide.ai/" + ("ru/" if ".ru." in rel else "")
+                    + re.sub(r"\.(ru|en)\.mdx$", "", rel),
+                    pick=lambda rels: [
+                        r for r in rels if ".ru." in r or r.replace(".en.mdx", ".ru.mdx") not in set(rels)
+                    ],
+                ),
+            ),
+        ),
+        KnowledgeSource(
+            id="hf_trl",
+            title="Hugging Face TRL — дообучение LLM",
+            homepage="https://huggingface.co/docs/trl",
+            description="SFT, DPO, GRPO, reward-модели, PEFT/LoRA, chat templates — документация библиотеки TRL.",
+            match=r"ai-trainer|ai-тренер|pytorch",
+            kind="github",
+            lang="python",
+            flavor="mdx",
+            parts=(
+                GitPart(
+                    "huggingface/trl", "main", "docs/source",
+                    include=r"^[\w-]+\.md$",
+                    exclude=r"^(index|installation|community_tutorials|clis|.*(amd|trainium|vllm|deepspeed|jobs).*)\.md$",
+                    url=lambda rel, meta: f"https://huggingface.co/docs/trl/{_strip_ext(rel)}",
+                ),
+            ),
+        ),
+        KnowledgeSource(
+            id="hf_diffusers",
+            title="Hugging Face Diffusers — генерация изображений",
+            homepage="https://huggingface.co/docs/diffusers",
+            description="Диффузионные пайплайны, сэмплеры, ControlNet, IP-Adapter, inpainting, LoRA-обучение, оптимизация.",
+            match=r"ai-artist|нейрокреатор",
+            kind="github",
+            lang="python",
+            flavor="mdx",
+            parts=(
+                GitPart(
+                    "huggingface/diffusers", "main", "docs/source/en",
+                    include=r"^(using-diffusers|training|conceptual|tutorials|optimization)/.+\.md$|^(quicktour|stable_diffusion)\.md$",
+                    url=lambda rel, meta: f"https://huggingface.co/docs/diffusers/{_strip_ext(rel)}",
+                ),
+            ),
+        ),
+        KnowledgeSource(
+            id="wikipedia_ru",
+            title="Википедия (рус.) — статьи по темам колод",
+            homepage="https://ru.wikipedia.org/",
+            description="Статьи русской Википедии, подобранные поиском по каждой теме каждой колоды (CC BY-SA).",
+            match=r".",
+            kind="wikipedia",
+        ),
     ]
 }
 
@@ -243,6 +367,15 @@ SOURCES: dict[str, KnowledgeSource] = {
 def sources_for_deck(deck_id: str, name: str, language: str) -> list[str]:
     hay = f"{deck_id} {name} {language}".lower()
     return [s.id for s in SOURCES.values() if re.search(s.match, hay)]
+
+
+def deck_subject(name: str) -> str:
+    """«Go-разработчик — теория» → «Go программирование»: предмет колоды для поиска."""
+    s = re.sub(r"\s+[—-]\s+(теория|практикум|основы|код)\b.*$", "", name, flags=re.I)
+    s = re.sub(r"\b(live-coding|\(полная\))", "", s, flags=re.I)
+    s = re.sub(r"-разработчик\b", " программирование", s)
+    s = re.sub(r"-инженер\b", "", s)
+    return " ".join(s.replace("/", " ").split())
 
 
 # ── загрузка ─────────────────────────────────────────────────────────
@@ -268,6 +401,8 @@ def fetch_github_part(part: GitPart, say: Progress) -> dict[str, str]:
         x["path"] for x in data.get("tree", [])
         if x.get("type") == "blob" and inc.search(x["path"]) and not exc.search(x["path"])
     ]
+    if part.pick:
+        rels = part.pick(rels)
     say(f"{part.repo}: файлов к загрузке — {len(rels)}")
     base = f"https://raw.githubusercontent.com/{part.repo}/{part.ref}/" + (part.path + "/" if part.path else "")
 
@@ -306,8 +441,21 @@ def _tar_files(url: str, mode: str, keep: Callable[[str], bool], *, flat: bool) 
     return files
 
 
-def load_pages(src: KnowledgeSource, say: Progress, tick: Callable[[int, int], None]) -> list[Page]:
+def load_pages(
+    src: KnowledgeSource, say: Progress, tick: Callable[[int, int], None], context: dict | None = None
+) -> list[Page]:
+    """context["decks"] — [{"name", "topics": [...]}, ...]: нужен источнику wikipedia для подбора статей."""
     pages: list[Page] = []
+    if src.kind == "web":
+        for i, doc in enumerate(src.docs, 1):
+            say(f"Скачиваю {doc.url}")
+            page = fetch_web_doc(doc)
+            if page:
+                pages.append(page)
+            tick(i, len(src.docs))
+        return pages
+    if src.kind == "wikipedia":
+        return load_wikipedia(((context or {}).get("decks") or []), say, tick)
     if src.kind == "php_tarball":
         say(f"Скачиваю {src.archive}")
         files = _tar_files(src.archive, "r:gz", lambda rel: True, flat=True)
@@ -409,6 +557,13 @@ def _clean_code(code: str, flavor: str) -> str:
 
 def _clean_prose(text: str, flavor: str) -> str:
     text = re.sub(r"<!--[\s\S]*?-->", "", text)
+    if flavor == "hugo":  # шорткоды Hugo: {{< glossary_tooltip text="Под" ... >}}, {{< note >}}
+        text = re.sub(r"\{\{[<%][^{}]*?\btext=\"([^\"]+)\"[^{}]*?[>%]\}\}", r"\1", text)
+        text = re.sub(r"\{\{[<%][\s\S]*?[>%]\}\}", "", text)
+    if flavor == "mdx":  # импорты и JSX-компоненты (<Callout>, <Tip>, <Screenshot .../>)
+        text = re.sub(r"^(import|export)\s.*$", "", text, flags=re.M)
+        text = re.sub(r"</?(?:[A-Z][\w.]*|hfoptions?)\b(?:[^<>{}]|\{[^{}]*\})*?/?>", "", text)
+        text = re.sub(r"\[\[open-in-colab\]\]", "", text)
     if flavor == "mdn":
         text = re.sub(r"\{\{\s*([\w-]+)\s*(?:\(([^}]*)\))?\s*\}\}", _mdn_macro, text)
     text = re.sub(r"^\s*[-*]\s+\[[^\]]+\]\(#[^)]*\)\s*$", "", text, flags=re.M)  # оглавления
@@ -489,3 +644,198 @@ def parse_doc_file(src: KnowledgeSource, part: GitPart, rel: str, text: str) -> 
         return None
     url = part.url(rel, meta) or src.homepage
     return Page(name=f"{part.repo}/{rel}", title=title, url=url, markdown=md)
+
+
+# ── разбор: отдельные веб-документы (PDF, HTML) ────────────────────
+
+
+def _paragraphize(text: str) -> str:
+    """Склеить строки PDF в абзацы: разрыв — после строки, оканчивающейся точкой/двоеточием."""
+    paras: list[str] = []
+    buf: list[str] = []
+    for raw in text.splitlines():
+        line = " ".join(raw.split())
+        if not line:
+            continue
+        if re.fullmatch(r"\d{1,3}", line):  # номер страницы
+            continue
+        if buf and buf[-1].endswith("-") and line[:1].islower():
+            buf[-1] = buf[-1][:-1] + line  # перенос слова
+        else:
+            buf.append(line)
+        if re.search(r"[.:!?»;]$", line) or (len(line) < 60 and not line.endswith(",")):
+            paras.append(" ".join(buf))
+            buf = []
+    if buf:
+        paras.append(" ".join(buf))
+    out = []
+    for p in paras:
+        if re.search(r"[\w.+-]+@[\w-]+\.\w+", p) or "......" in p:  # контакты переводчиков, оглавление
+            continue
+        # короткая строка без точки — вероятно, заголовок раздела
+        if len(p) < 70 and not re.search(r"[.,;:!?]$", p) and not p.startswith(("•", "-", "–")):
+            out.append(f"### {p}")
+        else:
+            out.append(p.lstrip("•–- ").strip() if p.startswith(("•", "–")) else p)
+    return "\n\n".join(out)
+
+
+def fetch_web_doc(doc: WebDoc) -> Page | None:
+    r = _get(doc.url, timeout=120)
+    url = doc.page_url or doc.url
+    ctype = r.headers.get("content-type", "")
+    if doc.url.lower().endswith(".pdf") or "pdf" in ctype:
+        from pypdf import PdfReader
+
+        reader = PdfReader(io.BytesIO(r.content))
+        text = "\n".join((p.extract_text() or "") for p in reader.pages)
+        md = _paragraphize(text)
+    else:
+        soup = BeautifulSoup(r.content, "html.parser")
+        for tag in soup(["header", "footer", "nav", "script", "style", "form", "aside"]):
+            tag.decompose()
+        root = (soup.find(id=doc.selector) if doc.selector else None) or soup.find("main") or soup.find("article") or soup.body
+        if root is None:
+            return None
+        out: list[str] = []
+        _render(root, out, "")
+        md = _tidy("".join(out))
+    if len(md) < 200:
+        return None
+    return Page(name=doc.url, title=doc.title, url=url, markdown=md)
+
+
+# ── Википедия: статьи по темам колод ────────────────────────────────
+
+WIKI_API = "https://ru.wikipedia.org/w/api.php"
+WIKI_GENERIC = {"основы", "разное", "инструменты", "тестирование", "производительность", "безопасность", "api", "stdlib"}
+WIKI_MIN_RATIO = 0.065  # доля слов статьи из словаря колоды (подобрано: «Python» 0.073, «Colt Python» 0.037)
+WIKI_TAIL = re.compile(r"\n== (Примечания|Литература|Ссылки|См\. также|Источники|Комментарии) ==[\s\S]*$")
+
+
+def _wiki(params: dict) -> dict:
+    params = {"format": "json", "formatversion": "2", **params}
+    for attempt in range(3):
+        try:
+            r = requests.get(WIKI_API, params=params, headers={"User-Agent": USER_AGENT}, timeout=60)
+            if r.status_code == 429:
+                import time
+
+                time.sleep(5 * (attempt + 1))
+                continue
+            r.raise_for_status()
+            return r.json()
+        except requests.RequestException:
+            if attempt == 2:
+                raise
+    return {}
+
+
+WIKI_STOP = {
+    "который", "которая", "которые", "которых", "чтобы", "когда", "если", "между", "через", "после", "можно",
+    "нужно", "только", "также", "может", "этого", "всегда", "часто", "обычно", "например", "where", "which",
+    "their", "there", "these", "about", "would", "should", "other", "value", "return", "function",
+}
+
+
+def deck_vocab(texts: list[str], limit: int = 300) -> list[str]:
+    """Частые содержательные слова карточек колоды — для отсева нерелевантных статей."""
+    counts: dict[str, int] = {}
+    for text in texts:
+        for w in re.findall(r"[a-zа-яё]{5,}", text.lower()):
+            if w not in WIKI_STOP:
+                stem = w[:6]
+                counts[stem] = counts.get(stem, 0) + 1
+    return [w for w, _ in sorted(counts.items(), key=lambda kv: -kv[1])[:limit]]
+
+
+def wiki_relevance(text: str, vocab: set[str]) -> float:
+    words = {w[:6] for w in re.findall(r"[a-zа-яё]{5,}", text[:6000].lower())}
+    overlap = len(words & vocab)
+    return overlap / len(words) if words and overlap >= 8 else 0.0
+
+
+def wiki_queries(decks: list[dict]) -> list[tuple[str, str, int, int]]:
+    """Поисковые запросы: (запрос, запасной запрос, сколько статей взять).
+
+    Для каждой колоды — её предмет, для каждой темы — «тема + предмет»; если так ничего
+    не найдено, ищется тема без предмета (многословные темы, чтобы не брать случайное).
+    """
+    queries: dict[str, tuple[str, str, int, int]] = {}
+    for di, d in enumerate(decks):
+        subject = deck_subject(d.get("name", ""))
+        if subject:
+            queries.setdefault(subject, (subject, "", 3, di))
+        for topic in d.get("topics", []):
+            t = " ".join(topic.replace("/", " ").split())
+            if not t or t.lower() in WIKI_GENERIC:
+                continue
+            q = f"{t} {subject}".strip()
+            queries.setdefault(q, (q, t if len(t.split()) >= 2 or len(t) >= 8 else "", 2, di))
+    return list(queries.values())
+
+
+def load_wikipedia(decks: list[dict], say: Progress, tick: Callable[[int, int], None]) -> list[Page]:
+    if not decks:
+        raise RuntimeError("нет колод для подбора статей")
+    queries = wiki_queries(decks)
+    say(f"Поиск статей Википедии: {len(queries)} запросов по темам колод")
+
+    def run(q: str, n: int) -> list[str]:
+        try:
+            data = _wiki({"action": "query", "list": "search", "srsearch": q, "srlimit": n, "srnamespace": 0})
+        except requests.RequestException:
+            return []
+        return [h["title"] for h in data.get("query", {}).get("search", [])]
+
+    def search(item: tuple[str, str, int, int]) -> list[str]:
+        q, fallback, n, _deck = item
+        found = run(q, n)
+        return found or (run(fallback, 1) if fallback else [])
+
+    vocabs = [set(d.get("vocab") or []) for d in decks]
+    owners: dict[str, set[int]] = {}  # статья → колоды, для которых её нашли
+    titles: list[str] = []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        for i, (item, found) in enumerate(zip(queries, pool.map(search, queries)), 1):
+            for t in found:
+                if t not in owners:
+                    owners[t] = set()
+                    titles.append(t)
+                owners[t].add(item[3])
+            tick(i, len(queries))
+    say(f"Найдено статей: {len(titles)}, загружаю тексты")
+
+    def fetch(title: str) -> Page | None:
+        try:
+            data = _wiki({"action": "query", "prop": "extracts|pageprops", "explaintext": 1,
+                          "exsectionformat": "wiki", "redirects": 1, "titles": title})
+        except requests.RequestException:
+            return None
+        pages = data.get("query", {}).get("pages", [])
+        if not pages or pages[0].get("missing"):
+            return None
+        p = pages[0]
+        if "disambiguation" in (p.get("pageprops") or {}):
+            return None
+        text = WIKI_TAIL.sub("", "\n" + (p.get("extract") or "")).strip()
+        text = re.sub(r"\{\displaystyle ([^\n]*?)\}", r"$\1$", text)  # формулы
+        text = re.sub(r"^(=+) (.+?) =+$", lambda m: "#" * min(4, len(m.group(1))) + " " + m.group(2), text, flags=re.M)
+        text = re.sub(r"\n{3,}", "\n\n", text)
+        if len(text) < 400:
+            return None
+        vocab = set().union(*(vocabs[i] for i in owners.get(title, ())))
+        if vocab and wiki_relevance(text, vocab) < WIKI_MIN_RATIO:
+            return None  # «Colt Python» для колоды по Python и т. п.
+        title_ = p.get("title", title)
+        url = "https://ru.wikipedia.org/wiki/" + requests.utils.quote(title_.replace(" ", "_"))
+        return Page(name=f"wiki:{title_}", title=title_, url=url, markdown=text)
+
+    out: list[Page] = []
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        for i, page in enumerate(pool.map(fetch, titles), 1):
+            if page:
+                out.append(page)
+            tick(i, len(titles))
+    say(f"Релевантных статей: {len(out)} из {len(titles)}")
+    return out

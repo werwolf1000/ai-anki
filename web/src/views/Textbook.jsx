@@ -49,6 +49,15 @@ export default function Textbook({ user, decks, initial, onStart }) {
   const topics = (book?.topics || []).filter((t) => t.name.toLowerCase().includes(query.toLowerCase()));
   const readCount = (book?.topics || []).filter((t) => t.read_at).length;
 
+  async function generateDeck() {
+    try {
+      const r = await api("/api/textbook/generate-all", { method: "POST", body: { deck_id: deckId } });
+      toast(`В очереди тем: ${r.queued}. Статьи пишутся в фоне, прогресс — в Настройках.`, "success");
+    } catch (e) {
+      toast(e.message, "error");
+    }
+  }
+
   const updateTopic = (name, patch) =>
     setBook((b) => b && { ...b, topics: b.topics.map((t) => (t.name === name ? { ...t, ...patch } : t)) });
 
@@ -107,13 +116,21 @@ export default function Textbook({ user, decks, initial, onStart }) {
             <div className="mt-4 border-t border-white/[0.06] pt-3 text-[11px] leading-relaxed text-zinc-500">
               {book.sources.length ? (
                 <>
-                  <Library className="mr-1 inline h-3 w-3" /> Источник:{" "}
-                  {book.sources.map((s) => (
-                    <a key={s.id} href={s.url} target="_blank" rel="noreferrer" className="text-zinc-300 hover:text-white">{s.title}</a>
+                  <Library className="mr-1 inline h-3 w-3" /> {book.sources.length > 1 ? "Источники" : "Источник"}:{" "}
+                  {book.sources.map((s, i) => (
+                    <span key={s.id}>
+                      {i > 0 && ", "}
+                      <a href={s.url} target="_blank" rel="noreferrer" className="text-zinc-300 hover:text-white">{s.title}</a>
+                    </span>
                   ))}
                 </>
               ) : (
-                <>Для этой колоды официальный источник не подключён — статьи строятся по материалам карточек.</>
+                <>База знаний для этой колоды ещё не загружена — статьи строятся по материалам карточек.</>
+              )}
+              {user.is_admin && book.topics.some((t) => !t.has_article) && (
+                <button className="btn-ghost mt-3 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
+                  <Sparkles className="h-3.5 w-3.5" /> Написать статьи для всех тем ({book.topics.filter((t) => !t.has_article).length})
+                </button>
               )}
             </div>
           )}

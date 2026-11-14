@@ -5,3 +5,4 @@ requests==2.32.3
 pydantic==2.10.4
 numpy==2.2.1
 beautifulsoup4==4.12.3
+pypdf==5.1.0
