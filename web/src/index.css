@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --accent: #8b5cf6;
+  --accent-2: #f43f5e;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: #07070d;
+  overflow: hidden;
+  font-feature-settings: "cv11", "ss01";
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.45);
+}
+
+/* тонкие скроллбары */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #34344a transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #2a2a3d;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #3c3c56;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+@layer components {
+  .glass {
+    @apply rounded-2xl border border-white/[0.06] bg-ink-800/60 shadow-card backdrop-blur-xl;
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply btn bg-gradient-to-r from-violet-600 to-rose-500 text-white shadow-glow-violet hover:from-violet-500 hover:to-rose-400;
+  }
+  .btn-ghost {
+    @apply btn border border-white/[0.08] bg-white/[0.03] text-zinc-200 hover:bg-white/[0.08];
+  }
+  .btn-icon {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white;
+  }
+  .input {
+    @apply w-full rounded-xl border border-white/[0.08] bg-ink-900/80 px-3.5 py-2.5 text-sm text-zinc-100 outline-none transition-colors placeholder:text-zinc-500 focus:border-violet-500/70 focus:ring-2 focus:ring-violet-500/20;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-400;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/[0.07] bg-white/[0.03] px-2.5 py-1 text-xs font-medium text-zinc-300;
+  }
+}
+
+/* ── текст карточек ─────────────────────────────────────────────── */
+.rich-text {
+  @apply space-y-3 leading-relaxed;
+}
+.rich-text .rt-list {
+  @apply list-none space-y-1.5 pl-0;
+}
+.rich-text .rt-list li {
+  @apply relative pl-5;
+}
+.rich-text .rt-list li::before {
+  content: "";
+  @apply absolute left-1 top-[0.65em] h-1.5 w-1.5 rounded-full bg-gradient-to-br from-violet-400 to-rose-400;
+}
+.rich-text .rt-olist {
+  @apply list-decimal space-y-1 pl-6 marker:text-zinc-500;
+}
+.inline-code {
+  @apply rounded-md border border-white/[0.06] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[0.86em] text-violet-200;
+}
+.code-block {
+  @apply relative overflow-x-auto rounded-xl border border-white/[0.06] bg-[#0a0a14] p-4 pt-7 font-mono text-[13px] leading-relaxed;
+}
+.code-lang {
+  @apply absolute right-3 top-2 text-[10px] font-semibold uppercase tracking-widest text-zinc-500;
+}
+
+/* highlight.js — палитра под тёмную тему */
+.hljs {
+  color: #d4d4e8;
+  background: transparent;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-meta .hljs-keyword {
+  color: #c4a5ff;
+}
+.hljs-string,
+.hljs-template-tag,
+.hljs-addition {
+  color: #86efac;
+}
+.hljs-number,
+.hljs-literal {
+  color: #fdba74;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #6b6b85;
+  font-style: italic;
+}
+.hljs-title,
+.hljs-title.function_,
+.hljs-section {
+  color: #7dd3fc;
+}
+.hljs-title.class_,
+.hljs-type {
+  color: #fcd34d;
+}
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attr,
+.hljs-property {
+  color: #fda4af;
+}
+.hljs-tag,
+.hljs-name,
+.hljs-meta {
+  color: #93c5fd;
+}
+.hljs-deletion {
+  color: #fca5a5;
+}
+
+/* MathLive */
+math-field {
+  @apply w-full rounded-xl border border-white/[0.08] bg-ink-900/80 px-3 py-3 text-lg text-zinc-100;
+  --caret-color: #a78bfa;
+  --selection-background-color: rgba(139, 92, 246, 0.35);
+  --contains-highlight-background-color: rgba(139, 92, 246, 0.12);
+  --primary-color: #8b5cf6;
+}
+math-field:focus-within {
+  @apply border-violet-500/70 outline-none ring-2 ring-violet-500/20;
+}
+.katex {
+  font-size: 1.08em;
+}
+
+.question-text .rich-text > p:first-child {
+  @apply text-[17px] font-semibold text-white;
+}

@@ -4,3 +4,8 @@ __pycache__/
 *.egg-info/
 data/
 server/static/vendor/
+node_modules/
+web/dist/
+desktop/renderer/
+desktop/dist/
+desktop/runtime/
