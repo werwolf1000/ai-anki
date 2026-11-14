@@ -1,6 +1,7 @@
 """База знаний (RAG) для интерактивного учебника.
 
-Источник: официальный PHP Manual на русском (php.net, архив «Many HTML files»).
+Источники — официальная документация (см. server/kb_sources.py): PHP Manual (рус.),
+MDN JavaScript (рус.), Python, Node.js, TypeScript, Angular, Laravel, Go.
 Страницы разбираются в Markdown, режутся на фрагменты, индексируются в SQLite:
   - FTS5 (BM25) — точные термины: array_map, readonly, match…
   - векторы Ollama (qwen3-embedding, 1024 измерения) — смысловой поиск по-русски.
@@ -12,11 +13,9 @@
 from __future__ import annotations
 
 import hashlib
-import io
 import json
 import re
 import sqlite3
-import tarfile
 import threading
 import time
 from collections import deque
@@ -44,16 +43,6 @@ def _now() -> str:
 # ── источники ───────────────────────────────────────────────────────
 
 
-@dataclass(frozen=True)
-class KnowledgeSource:
-    id: str
-    title: str
-    homepage: str
-    archive: str
-    languages: frozenset[str]
-    description: str = ""
-
-
 PHP_BOOKS = [
     "array", "strings", "json", "pdo", "datetime", "mbstring", "pcre", "filesystem", "spl", "var",
     "funchand", "classobj", "errorfunc", "math", "ctype", "password", "session", "url", "outcontrol",
@@ -62,37 +51,15 @@ PHP_BOOKS = [
 PHP_PREFIXES = ("language.", "control-structures.", "functions.", "features.", "langref", "oop5", "types.", "reserved.")
 PHP_MIGRATIONS = re.compile(r"^migration(7\d|8\d)(\.|$)")
 
-SOURCES: dict[str, KnowledgeSource] = {
-    "php_manual_ru": KnowledgeSource(
-        id="php_manual_ru",
-        title="PHP Manual — официальная документация (рус.)",
-        homepage="https://www.php.net/manual/ru/",
-        archive="https://www.php.net/distributions/manual/php_manual_ru.tar.gz",
-        languages=frozenset({"php"}),
-        description="Справочник языка, нововведения PHP 7–8, массивы, строки, JSON, PDO, дата/время, SPL и др.",
-    ),
-}
-
-
-def sources_for_deck(deck_name: str, language: str) -> list[str]:
-    lang = (language or "").lower()
-    name = (deck_name or "").lower()
-    out = []
-    for src in SOURCES.values():
-        if lang in src.languages or any(l in name for l in src.languages) or ("laravel" in name and "php" in src.languages):
-            out.append(src.id)
-    return out
-
-
 # ── HTML → Markdown ─────────────────────────────────────────────────
 
 _BLOCK = {
     "p", "div", "ul", "ol", "table", "tr", "dl", "dt", "dd", "blockquote", "section", "tbody", "thead",
 }
-_SKIP_CLASSES = {"navbar", "manualnavbar", "change-language", "edit-bug", "navbar__inner", "up", "contribute"}
+_SKIP_CLASSES = {"headerlink", "navbar", "manualnavbar", "change-language", "edit-bug", "navbar__inner", "up", "contribute"}
 
 
-def _render(node, out: list[str], in_code: bool = False) -> None:
+def _render(node, out: list[str], lang: str | None = None) -> None:
     if isinstance(node, NavigableString):
         out.append(str(node))
         return
@@ -104,8 +71,8 @@ def _render(node, out: list[str], in_code: bool = False) -> None:
         return
     if name == "pre":
         code = node.get_text().strip("\n")
-        lang = "php" if "<?php" in code or "$" in code else ""
-        out.append(f"\n\n```{lang}\n{code.rstrip()}\n```\n\n")
+        fence = ("php" if "<?php" in code or "$" in code else "") if lang is None else lang
+        out.append(f"\n\n```{fence}\n{code.rstrip()}\n```\n\n")
         return
     if name in ("h1", "h2", "h3", "h4", "h5"):
         level = min(4, max(2, int(name[1])))  # h1 страницы → ##, разделы → ###
@@ -119,12 +86,12 @@ def _render(node, out: list[str], in_code: bool = False) -> None:
     if name == "li":
         out.append("\n\n- ")
         for c in node.children:
-            _render(c, out)
+            _render(c, out, lang)
         out.append("\n\n")
         return
     if name in ("td", "th"):
         for c in node.children:
-            _render(c, out)
+            _render(c, out, lang)
         out.append(" | ")
         return
     if name == "code" or "function" in classes or "methodname" in classes:
@@ -136,7 +103,7 @@ def _render(node, out: list[str], in_code: bool = False) -> None:
     if block:
         out.append("\n\n")
     for c in node.children:
-        _render(c, out)
+        _render(c, out, lang)
     if block:
         out.append("\n\n")
 
@@ -594,12 +561,13 @@ class IndexJob:
     done: int = 0
     total: int = 0
     error: str = ""
+    source: str = ""
     started_at: str = ""
     finished_at: str = ""
     log: list[str] = field(default_factory=list)
 
     def public(self) -> dict:
-        return {k: getattr(self, k) for k in ("running", "stage", "done", "total", "error", "started_at", "finished_at")} | {
+        return {k: getattr(self, k) for k in ("running", "stage", "source", "done", "total", "error", "started_at", "finished_at")} | {
             "log": self.log[-8:]
         }
 
@@ -615,62 +583,65 @@ class KnowledgeIndexer:
         if msg:
             self.job.log.append(f"{datetime.now().strftime('%H:%M:%S')} {msg}")
 
-    def start(self, source_id: str, ollama: OllamaRag, embed_model: str, *, download: bool = True) -> bool:
+    def start(self, source_ids: list[str], ollama: OllamaRag, embed_model: str, *, download: bool = True) -> bool:
         with self._lock:
             if self.job.running:
                 return False
             self.job = IndexJob(running=True, started_at=_now())
         threading.Thread(
-            target=self._run, args=(source_id, ollama, embed_model, download), daemon=True, name="knowledge-index"
+            target=self._run, args=(list(source_ids), ollama, embed_model, download), daemon=True, name="knowledge-index"
         ).start()
         return True
 
-    def _run(self, source_id: str, ollama: OllamaRag, embed_model: str, download: bool) -> None:
+    def _run(self, source_ids: list[str], ollama: OllamaRag, embed_model: str, download: bool) -> None:
+        from server.kb_sources import SOURCES, load_pages
+
+        failed: list[str] = []
         try:
-            src = SOURCES[source_id]
+            # сначала скачать и разобрать всё (полнотекстовый поиск работает сразу), потом векторизовать
             if download:
-                self._say("download", f"Скачиваю {src.archive}")
-                files = self._download(src.archive)
-                self._say("parse", f"В архиве {len(files)} страниц, отбираю релевантные")
-                names = select_php_pages(files)
-                self.job.total = len(names)
-                chunks: list[Chunk] = []
-                pages = 0
-                for i, name in enumerate(names, 1):
-                    page = parse_php_page(name, files[name], src.homepage)
-                    if page:
-                        pages += 1
-                        chunks.extend(chunk_page(page))
-                    self.job.done = i
-                reused = self.store.replace_source(source_id, pages, chunks)
-                self._say("parse", f"Страниц: {pages}, фрагментов: {len(chunks)} (векторы переиспользованы: {reused})")
-            self._embed_all(source_id, ollama, embed_model)
+                for sid in source_ids:
+                    src = SOURCES[sid]
+                    self.job.source = sid
+                    self.job.done = self.job.total = 0
+                    self._say("download", f"[{sid}] загрузка: {src.title}")
+                    try:
+                        def tick(i: int, n: int) -> None:
+                            self.job.stage, self.job.done, self.job.total = "parse", i, n
+
+                        pages = load_pages(src, lambda m, s=sid: self._say(self.job.stage, f"[{s}] {m}"), tick)
+                        chunks: list[Chunk] = []
+                        for page in pages:
+                            chunks.extend(chunk_page(page))
+                        if not chunks:
+                            raise RuntimeError("не найдено ни одной страницы")
+                        reused = self.store.replace_source(sid, len(pages), chunks)
+                        self._say("parse", f"[{sid}] страниц: {len(pages)}, фрагментов: {len(chunks)} (векторы переиспользованы: {reused})")
+                    except Exception as exc:  # noqa: BLE001 — один источник не должен ронять остальные
+                        failed.append(sid)
+                        self._say("error", f"[{sid}] ошибка: {exc}")
+            for sid in source_ids:
+                if sid in failed:
+                    continue
+                self.job.source = sid
+                self._embed_all(sid, ollama, embed_model)
+            if failed:
+                self.job.error = "Не загружены: " + ", ".join(failed)
             self._say("done", "Готово")
         except Exception as exc:  # noqa: BLE001
             self.job.error = str(exc)
             self._say("error", f"Ошибка: {exc}")
         finally:
             self.job.running = False
+            self.job.source = ""
             self.job.finished_at = _now()
-
-    def _download(self, url: str) -> dict[str, str]:
-        r = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=300)
-        r.raise_for_status()
-        files: dict[str, str] = {}
-        with tarfile.open(fileobj=io.BytesIO(r.content), mode="r:gz") as tar:
-            for m in tar.getmembers():
-                if m.isfile() and m.name.endswith(".html"):
-                    f = tar.extractfile(m)
-                    if f:
-                        files[Path(m.name).name] = f.read().decode("utf-8", "replace")
-        return files
 
     def _embed_all(self, source_id: str, ollama: OllamaRag, embed_model: str) -> None:
         stats = self.store.stats().get(source_id, {})
         total = int(stats.get("chunks") or 0)
         done = int(stats.get("embedded") or 0)
         self.job.total, self.job.done = total, done
-        self._say("embed", f"Векторизация: {done}/{total} ({embed_model})")
+        self._say("embed", f"[{source_id}] векторизация: {done}/{total} ({embed_model})")
         t0 = time.time()
         while True:
             batch = self.store.missing_embeddings(source_id, EMBED_BATCH)
@@ -683,7 +654,7 @@ class KnowledgeIndexer:
             self.job.stage = "embed"
             if rate > 0:
                 left = (self.job.total - self.job.done) / rate
-                self.job.log[-1:] = [f"{datetime.now().strftime('%H:%M:%S')} Векторизация: {self.job.done}/{self.job.total}, осталось ~{int(left // 60)} мин"]
+                self.job.log[-1:] = [f"{datetime.now().strftime('%H:%M:%S')} [{source_id}] векторизация: {self.job.done}/{self.job.total}, осталось ~{int(left // 60)} мин"]
 
 
 # ── поиск и генерация ───────────────────────────────────────────────
@@ -722,6 +693,7 @@ ARTICLE_SYSTEM = """Ты — автор интерактивного учебн�
 
 Правила:
 1. Опирайся на ИСТОЧНИКИ (официальная документация) и КАРТОЧКИ темы.
+   Источники могут быть на английском — всё равно пиши по-русски; имена функций, классов и код не переводи.
 2. ОБЯЗАТЕЛЬНО ставь сноски: после каждого утверждения, взятого из источника, пиши его номер в квадратных
    скобках, например «…выбрасывает ValueError [4].» или «[1][3]». В статье должно быть не меньше 5 сносок,
    если источники переданы. Не придумывай номера, которых нет в списке ИСТОЧНИКОВ.

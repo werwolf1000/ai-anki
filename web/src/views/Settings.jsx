@@ -226,9 +226,9 @@ function KnowledgePanel({ isAdmin }) {
     };
   }, []);
 
-  async function rebuild(download) {
+  async function rebuild(download, sourceId = "all") {
     try {
-      await api("/api/knowledge/rebuild", { method: "POST", body: { source_id: "php_manual_ru", download } });
+      await api("/api/knowledge/rebuild", { method: "POST", body: { source_id: sourceId, download } });
       toast(download ? "Индексация запущена" : "Векторизация продолжена", "success");
       const r = await api("/api/knowledge/status");
       setSt(r);
@@ -251,7 +251,8 @@ function KnowledgePanel({ isAdmin }) {
                   <a href={s.url} target="_blank" rel="noreferrer" className="font-semibold hover:text-violet-200">{s.title}</a>
                   <div className="mt-0.5 text-xs text-zinc-500">{s.description}</div>
                 </div>
-                <div className="text-right text-xs text-zinc-400">
+                <div className="flex items-start gap-3 text-right text-xs text-zinc-400">
+                  <div>
                   {s.chunks ? (
                     <>
                       <div><b className="text-zinc-100">{s.pages}</b> страниц · <b className="text-zinc-100">{s.chunks}</b> фрагментов</div>
@@ -259,6 +260,17 @@ function KnowledgePanel({ isAdmin }) {
                     </>
                   ) : (
                     <span className="text-amber-300">не загружен</span>
+                  )}
+                  </div>
+                  {isAdmin && (
+                    <button
+                      className="rounded-lg p-1.5 text-zinc-400 hover:bg-white/[0.06] hover:text-violet-200 disabled:opacity-40"
+                      title={s.chunks ? "Обновить этот источник" : "Скачать этот источник"}
+                      disabled={job.running}
+                      onClick={() => rebuild(true, s.id)}
+                    >
+                      {job.running && job.source === s.id ? <Spinner /> : <DownloadCloud className="h-4 w-4" />}
+                    </button>
                   )}
                 </div>
               </div>
@@ -286,7 +298,7 @@ function KnowledgePanel({ isAdmin }) {
         {isAdmin && (
           <div className="flex flex-wrap gap-2">
             <button className="btn-ghost" disabled={job.running} onClick={() => rebuild(true)}>
-              {job.running ? <Spinner /> : <DownloadCloud className="h-4 w-4" />} Скачать и проиндексировать
+              {job.running ? <Spinner /> : <DownloadCloud className="h-4 w-4" />} Скачать и проиндексировать всё
             </button>
             <button className="btn-ghost" disabled={job.running} onClick={() => rebuild(false)}>
               <Activity className="h-4 w-4" /> Довекторизовать

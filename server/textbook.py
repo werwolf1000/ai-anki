@@ -9,15 +9,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from server.knowledge import (
-    ARTICLE_SYSTEM,
-    ASK_SYSTEM,
-    SOURCES,
-    ThinkFilter,
-    format_context,
-    hybrid_search,
-    sources_for_deck,
-)
+from server.kb_sources import SOURCES, sources_for_deck
+from server.knowledge import ARTICLE_SYSTEM, ASK_SYSTEM, ThinkFilter, format_context, hybrid_search
 from server.services import AppServices, UserContext
 
 QUERY_INSTRUCT = "Instruct: Given a study topic, retrieve relevant passages from the official documentation\nQuery: "
@@ -39,7 +32,7 @@ class ReadIn(BaseModel):
 
 
 class RebuildIn(BaseModel):
-    source_id: str = "php_manual_ru"
+    source_id: str = "all"  # id источника или "all"
     download: bool = True
 
 
@@ -85,7 +78,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
 
     def deck_sources(entry, deck) -> list[str]:
         stats = services.knowledge.stats()
-        return [s for s in sources_for_deck(entry.name, deck.language) if stats.get(s, {}).get("chunks")]
+        return [s for s in sources_for_deck(entry.deck_id, entry.name, deck.language) if stats.get(s, {}).get("chunks")]
 
     @r.get("/api/textbook/{deck_id}")
     def textbook_deck(deck_id: str, ctx: UserContext = Depends(current_ctx)) -> dict:
@@ -247,9 +240,16 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     def knowledge_rebuild(body: RebuildIn, ctx: UserContext = Depends(current_ctx)) -> dict:
         if not ctx.user.is_admin:
             raise HTTPException(403, "Только для администратора")
-        if body.source_id not in SOURCES:
+        if body.source_id == "all":
+            ids = list(SOURCES)
+            if not body.download:  # довекторизовать только уже загруженные
+                stats = services.knowledge.stats()
+                ids = [s for s in ids if stats.get(s, {}).get("chunks")]
+        elif body.source_id in SOURCES:
+            ids = [body.source_id]
+        else:
             raise HTTPException(400, "Неизвестный источник")
-        started = services.indexer.start(body.source_id, services.rag_client(), services.embed_model(), download=body.download)
+        started = services.indexer.start(ids, services.rag_client(), services.embed_model(), download=body.download)
         if not started:
             raise HTTPException(409, "Индексация уже идёт")
         return {"ok": True}
