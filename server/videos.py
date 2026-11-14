@@ -36,6 +36,7 @@ MEDIA_EXT = {".mp4", ".m4v", ".mkv", ".webm", ".mov", ".avi", ".wmv", ".flv", ".
              ".mp3", ".m4a", ".wav", ".ogg", ".opus", ".flac", ".aac"}
 SEGMENT_SECONDS = 600  # звук режется на куски по 10 минут: прогресс и устойчивость к обрывам
 CHUNK_CHARS = 1100
+CHUNK_VERSION = 2  # 2: в заголовке фрагмента — папка курса
 EMBED_BATCH = 16
 
 
@@ -98,6 +99,11 @@ def guess_book(folder: str, title: str, text: str = "") -> str:
     return best if best_score >= 3.0 else ""
 
 
+def chunk_title(folder: str, title: str) -> str:
+    folder = folder.replace("/", " / ").strip()
+    return f"{folder} / {title}" if folder else title
+
+
 def segments_to_chunks(video_id: str, title: str, segments: list[dict]) -> list[Chunk]:
     chunks: list[Chunk] = []
     buf: list[str] = []
@@ -151,6 +157,11 @@ class VideoLibrary:
                     segments TEXT DEFAULT '', chunks INTEGER DEFAULT 0, added_at TEXT, indexed_at TEXT
                 )"""
             )
+            cols = {r[1] for r in self._db.execute("PRAGMA table_info(videos)")}
+            if "chunk_version" not in cols:
+                self._db.execute("ALTER TABLE videos ADD COLUMN chunk_version INTEGER DEFAULT 1")
+            if "retries" not in cols:
+                self._db.execute("ALTER TABLE videos ADD COLUMN retries INTEGER DEFAULT 0")
             # прерванная перезапуском обработка — в очередь заново
             self._db.execute("UPDATE videos SET status='queued', progress=0 WHERE status='processing'")
         self.current = ""
@@ -233,10 +244,50 @@ class VideoLibrary:
         with self._lock, self._db:
             self._db.execute(f"UPDATE videos SET {cols} WHERE id=?", (*fields.values(), vid))
 
+    def _maintain(self) -> None:
+        """Без перерасшифровки: пересобрать фрагменты старого формата и достроить векторы,
+        которые не получились (например, Ollama была занята). Видео, упавшие из-за временной
+        недоступности Whisper/ffmpeg-сети, — снова в очередь (до 5 раз)."""
+        with self._lock, self._db:
+            n = self._db.execute(
+                "UPDATE videos SET status='queued', progress=0, retries=retries+1"
+                " WHERE status='error' AND retries < 5 AND (error LIKE 'Whisper%' OR error LIKE 'ASR%')"
+            ).rowcount
+        if n:
+            self.say(f"Повторная расшифровка после ошибок Whisper: {n}")
+            return
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT id, folder, title, segments, chunk_version FROM videos WHERE status='done' AND segments != ''"
+            ).fetchall()
+        for r in rows:
+            src = f"vid:{r['id']}"
+            if (r["chunk_version"] or 1) < CHUNK_VERSION:
+                chunks = segments_to_chunks(r["id"], chunk_title(r["folder"], r["title"]), json.loads(r["segments"]))
+                self.knowledge.replace_source(src, 1, chunks)
+                self._set(r["id"], chunks=len(chunks), chunk_version=CHUNK_VERSION)
+            if self.knowledge.missing_embeddings(src, 1):
+                try:
+                    self._embed(src)
+                    self._set(r["id"], error="")
+                    self.say(f"Векторы построены: {r['title']}")
+                except Exception as exc:  # noqa: BLE001
+                    self._set(r["id"], error=f"векторы не построены: {exc}"[:500])
+                    return  # Ollama недоступна — попробуем в следующий раз
+            if self._next() is not None:
+                return
+
     def _worker(self) -> None:
+        last_maint = 0.0
         while True:
             row = self._next()
             if row is None:
+                if time.time() - last_maint > 600:
+                    last_maint = time.time()
+                    try:
+                        self._maintain()
+                    except Exception as exc:  # noqa: BLE001
+                        self.say(f"Обслуживание видеотеки: {exc}")
                 self._wake.wait(timeout=60)
                 self._wake.clear()
                 continue
@@ -294,7 +345,9 @@ class VideoLibrary:
                         break
                     except Exception as exc:  # noqa: BLE001
                         last = exc
-                        time.sleep(min(20 * 2**attempt, 180))
+                        wait = min(20 * 2**attempt, 180)
+                        self.say(f"Whisper не ответил ({str(exc)[:80]}), кусок {i + 1}/{len(parts)}, повтор через {wait} с")
+                        time.sleep(wait)
                 else:
                     raise RuntimeError(f"Whisper: {last}")
                 language = language or lang
@@ -304,16 +357,16 @@ class VideoLibrary:
             raise RuntimeError("в записи не распознано речи")
         text = " ".join(s["text"] for s in segments)
         book = row["book"] if row["book_manual"] or row["book"] else guess_book(row["folder"], title, text)
-        chunks = segments_to_chunks(vid, title, segments)
+        chunks = segments_to_chunks(vid, chunk_title(row["folder"], title), segments)
         self.knowledge.replace_source(f"vid:{vid}", 1, chunks)
         self._set(vid, segments=json.dumps(segments, ensure_ascii=False), language=language, book=book,
-                  chunks=len(chunks), progress=0.92)
+                  chunks=len(chunks), progress=0.92, chunk_version=CHUNK_VERSION)
         err = ""
         try:
             self._embed(f"vid:{vid}")
         except Exception as exc:  # noqa: BLE001 — без векторов работает поиск по словам
             err = f"векторы не построены: {exc}"
-        self._set(vid, status="done", progress=1.0, error=err, indexed_at=_now())
+        self._set(vid, status="done", progress=1.0, error=err, indexed_at=_now(), retries=0)
         self.say(f"Готово: {title} — {fmt_time(duration)}, фрагментов {len(chunks)}"
                  + (f", учебник: {book}" if book else ", учебник не определён"))
 
@@ -332,6 +385,13 @@ class VideoLibrary:
     def get(self, vid: str) -> sqlite3.Row | None:
         with self._lock:
             return self._db.execute("SELECT * FROM videos WHERE id=?", (vid,)).fetchone()
+
+    def book_summary(self, book: str) -> list[dict]:
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT id, folder, title, status, chunks, error FROM videos WHERE book=? ORDER BY folder, title", (book,)
+            ).fetchall()
+        return [dict(r) for r in rows]
 
     def sources_for_book(self, book: str) -> list[str]:
         if not book:
@@ -358,7 +418,7 @@ class VideoLibrary:
             self._set(vid, title=title.strip())
 
     def requeue(self, vid: str) -> None:
-        self._set(vid, status="queued", progress=0, error="")
+        self._set(vid, status="queued", progress=0, error="", retries=0)
         self._wake.set()
 
     def remove(self, vid: str) -> None:

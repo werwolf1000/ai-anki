@@ -91,6 +91,10 @@ class SettingsIn(BaseModel):
     asr_url: str | None = None
     asr_user: str | None = None
     asr_password: str | None = None
+    embed_model: str | None = None
+    textbook_model: str | None = None
+    video_min_sim: str | None = None
+    video_language: str | None = None
 
 
 class SessionStartIn(BaseModel):

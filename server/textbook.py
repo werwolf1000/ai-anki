@@ -15,11 +15,11 @@ from pydantic import BaseModel
 from server.kb_sources import SOURCES, deck_vocab, sources_for_deck
 from server.knowledge import ARTICLE_SYSTEM, ASK_SYSTEM, ThinkFilter, format_context, hybrid_search
 from server.services import AppServices, UserContext
-from server.syllabus import CardIndex, main_topic, syllabus_for
+from server.syllabus import CardIndex, main_topic, stems, syllabus_for
 
 # Порог косинусного сходства «урок ↔ фрагмент видео» (qwen3-embedding): своя тема 0.63–0.80,
 # соседние темы ≤ 0.48, посторонние ≤ 0.41 — видео ниже порога в статью не попадают.
-VIDEO_MIN_SIM = 0.5
+VIDEO_MIN_SIM = 0.45
 VIDEO_K = 3
 QUERY_INSTRUCT = "Instruct: Given a study topic, retrieve relevant passages from the official documentation\nQuery: "
 
@@ -231,7 +231,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         key = (book_key(entry), topic, cached["created_at"], tuple(sorted(videos)))
         extra = _attach_cache.get(key)
         if extra is None:
-            rows = related_videos(embed_query(article_query(entry, topic)), videos, exclude=have)
+            vq = article_query(entry, topic)
+            rows = related_videos(embed_query(vq), videos, exclude=have, query=vq)
             _, extra = format_context(rows, [])
             if len(_attach_cache) > 2000:
                 _attach_cache.clear()
@@ -304,6 +305,38 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             "videos": sum(1 for s in srcs if s.startswith("vid:")),
         }
 
+    @r.get("/api/textbook/{deck_id}/videos-debug")
+    def videos_debug(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:
+        """Диагностика для администратора: какие видео рассматривались для урока и почему."""
+        if not ctx.user.is_admin:
+            raise HTTPException(403, "Только для администратора")
+        entry, deck = deck_and_entry(deck_id)
+        sy = book_of(entry)
+        videos = getattr(services, "videos", None)
+        if not sy or not videos:
+            return {"book": None, "videos": [], "candidates": [], "threshold": min_sim()}
+        stats = services.knowledge.stats()
+        summary = [
+            v | {"embedded": stats.get(f"vid:{v['id']}", {}).get("embedded", 0)} for v in videos.book_summary(sy.id)
+        ]
+        srcs = videos.sources_for_book(sy.id)
+        query = article_query(entry, topic)
+        qvec = embed_query(query)
+        cands = video_candidates(qvec, query, srcs, 10)
+        rows = {r["id"]: r for r in services.knowledge.get_chunks([cid for _, cid, _ in cands])}
+        return {
+            "book": sy.id,
+            "query": query,
+            "embedding": qvec is not None,
+            "threshold": min_sim(),
+            "videos": summary,
+            "candidates": [
+                {"score": round(s, 3), "how": how, "title": rows[cid]["title"], "section": rows[cid]["section"],
+                 "text": rows[cid]["text"][:160], "passed": how == "words" or s >= min_sim()}
+                for s, cid, how in sorted(cands, reverse=True)[:10] if cid in rows
+            ],
+        }
+
     @r.get("/api/textbook/{deck_id}/article")
     def get_article(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:
         key = entry_key(deck_id)
@@ -332,11 +365,42 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         except Exception:  # noqa: BLE001 — нет модели эмбеддингов → только BM25
             return None
 
-    def related_videos(qvec, video_sources: list[str], exclude: set[str] = frozenset(), k: int = VIDEO_K) -> list[dict]:
-        """Фрагменты видео, близкие к запросу: не больше одного на видео, только выше порога сходства."""
-        if qvec is None or not video_sources:
+    def min_sim() -> float:
+        try:
+            return float(services.config.get("video_min_sim") or VIDEO_MIN_SIM)
+        except (TypeError, ValueError):
+            return VIDEO_MIN_SIM
+
+    def lexical_video_hits(query: str, sources: list[str], limit: int) -> list[tuple[float, int]]:
+        """Для видео без векторов: фрагменты, где встречается больше половины основ слов урока."""
+        want = stems(query)
+        if not want or not sources:
             return []
-        scored = [(s, cid) for s, cid in services.knowledge.vector_scores(qvec, video_sources, limit=k * 6) if s >= VIDEO_MIN_SIM]
+        out = []
+        for row in services.knowledge.get_chunks(services.knowledge.fts_search(query, sources, limit=limit * 4)):
+            share = len(want & stems(row["title"] + " " + row["text"])) / len(want)
+            if share > 0.5:
+                out.append((share, int(row["id"])))
+        return sorted(out, reverse=True)[:limit]
+
+    def video_candidates(qvec, query: str, video_sources: list[str], k: int) -> list[tuple[float, int, str]]:
+        """(оценка, id фрагмента, способ) — по векторам, а для видео без векторов — по словам."""
+        stats = services.knowledge.stats()
+        with_vec = [s for s in video_sources if stats.get(s, {}).get("embedded")]
+        no_vec = [s for s in video_sources if s not in with_vec]
+        out = []
+        if qvec is not None and with_vec:
+            out += [(s, cid, "vector") for s, cid in services.knowledge.vector_scores(qvec, with_vec, limit=k * 6)]
+        if no_vec or qvec is None:
+            out += [(s, cid, "words") for s, cid in lexical_video_hits(query, no_vec if qvec is not None else video_sources, k * 2)]
+        return out
+
+    def related_videos(qvec, video_sources: list[str], exclude: set[str] = frozenset(), k: int = VIDEO_K, query: str = "") -> list[dict]:
+        """Фрагменты видео, близкие к запросу: не больше одного на видео, только выше порога сходства."""
+        if not video_sources:
+            return []
+        thr = min_sim()
+        scored = [(s, cid) for s, cid, how in video_candidates(qvec, query, video_sources, k) if how == "words" or s >= thr]
         picked, seen = [], set(exclude)
         for row in services.knowledge.get_chunks([cid for _, cid in scored]):
             if row["source"] in seen:
@@ -360,7 +424,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         mode = "hybrid" if qvec is not None else "bm25"
         chunks = hybrid_search(services.knowledge, query, docs, qvec=qvec, k=k) if docs else []
         vvec = embed_query(video_query) if video_query and videos else qvec
-        return chunks + related_videos(vvec, videos), mode
+        return chunks + related_videos(vvec, videos, query=video_query or query), mode
 
     def stream_answer(system: str, user_prompt: str, sources: list[dict], mode: str, on_done=None) -> Iterator[str]:
         yield _ndjson({"type": "sources", "sources": sources, "retrieval": mode, "model": services.textbook_model()})

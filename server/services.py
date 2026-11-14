@@ -48,6 +48,8 @@ GLOBAL_KEYS = (
     "asr_password",
     "embed_model",
     "textbook_model",
+    "video_min_sim",
+    "video_language",
 )
 
 

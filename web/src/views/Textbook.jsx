@@ -473,6 +473,7 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
           )}
         </motion.section>
 
+        {status === "done" && user.is_admin && <VideoDebug deckId={deckId} topic={topic} />}
         {status === "done" && <AskBox deckId={deckId} topic={topic} lang={lang} />}
       </div>
       <FloatingPlayer />
@@ -482,6 +483,68 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
         {headings.length > 0 && <Toc headings={headings} />}
       </nav>
     </div>
+  );
+}
+
+const VSTATUS = { queued: "в очереди", processing: "расшифровка", done: "готово", error: "ошибка", missing: "файл пропал", skipped: "исключено" };
+
+/** Админ: какие видео учебника рассматривались для урока и с каким сходством. */
+function VideoDebug({ deckId, topic }) {
+  const [open, setOpen] = useState(false);
+  const [d, setD] = useState(null);
+  const [err, setErr] = useState("");
+  useEffect(() => {
+    if (!open) return;
+    setD(null);
+    setErr("");
+    api(`/api/textbook/${deckId}/videos-debug?topic=${encodeURIComponent(topic)}`).then(setD).catch((e) => setErr(e.message));
+  }, [open, deckId, topic]);
+  return (
+    <section className="glass p-4 text-xs text-zinc-400">
+      <button className="flex items-center gap-2 font-semibold text-zinc-300" onClick={() => setOpen((o) => !o)}>
+        <PlayCircle className="h-3.5 w-3.5" /> Подбор видео для урока (диагностика)
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      {open && !d && !err && <div className="mt-3"><Spinner /></div>}
+      {err && <div className="mt-3 text-rose-300">{err}</div>}
+      {d && (
+        <div className="mt-3 space-y-3">
+          {!d.book ? (
+            <div>У колоды нет программы учебника — видео не подбираются.</div>
+          ) : (
+            <>
+              <div>
+                Учебник <b className="text-zinc-200">{d.book}</b> · порог сходства <b className="text-zinc-200">{d.threshold}</b> ·
+                {" "}эмбеддинги {d.embedding ? "работают" : <span className="text-rose-300">недоступны — подбор только по словам</span>}
+                <div className="mt-1 font-mono text-[11px] text-zinc-500">запрос: {d.query}</div>
+              </div>
+              <div>
+                <div className="mb-1 font-semibold text-zinc-300">Видео этого учебника: {d.videos.length}</div>
+                {d.videos.length === 0 && <div className="text-amber-300">Ни одно видео не привязано к учебнику — выберите учебник в Настройках → «Видеотека учебника».</div>}
+                {d.videos.slice(0, 30).map((v) => (
+                  <div key={v.id} className="flex gap-2">
+                    <span className="min-w-0 flex-1 truncate">{v.folder ? `${v.folder} / ` : ""}{v.title}</span>
+                    <span className={v.status === "done" ? "text-emerald-300" : "text-amber-300"}>{VSTATUS[v.status] || v.status}</span>
+                    <span className={v.chunks && v.embedded < v.chunks ? "text-amber-300" : ""}>векторов {v.embedded}/{v.chunks}</span>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <div className="mb-1 font-semibold text-zinc-300">Лучшие фрагменты</div>
+                {d.candidates.length === 0 && <div>Нет ни одного кандидата.</div>}
+                {d.candidates.map((c, i) => (
+                  <div key={i} className="mb-1.5">
+                    <span className={`mr-2 font-mono ${c.passed ? "text-emerald-300" : "text-zinc-500"}`}>{c.how === "words" ? "слова" : c.score.toFixed(3)}</span>
+                    <span className="text-zinc-200">{c.title}</span> <span className="text-zinc-500">{c.section}</span>
+                    <div className="truncate text-zinc-500">{c.text}</div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+    </section>
   );
 }
 

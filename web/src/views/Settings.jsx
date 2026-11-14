@@ -23,6 +23,8 @@ const ADMIN_FIELDS = [
   { key: "asr_password", label: "ASR пароль", type: "password" },
   { key: "embed_model", label: "Модель эмбеддингов (учебник)" },
   { key: "textbook_model", label: "Модель статей учебника (пусто — основная)" },
+  { key: "video_min_sim", label: "Порог сходства видео с уроком (пусто — 0.45)" },
+  { key: "video_language", label: "Язык видео для Whisper (пусто — авто, ru, en…)" },
 ];
 
 export default function Settings({ user, setUser, config, setConfig, onLogout }) {
