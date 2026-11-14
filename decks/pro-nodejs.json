@@ -34,6 +34,96 @@
       "card_type": "text"
     },
     {
+      "question": "Какие фазы есть у цикла событий libuv?",
+      "reference": "timers (setTimeout/setInterval) → pending callbacks → idle/prepare → poll (ожидание I/O) → check (setImmediate) → close callbacks. Между колбэками выполняются очереди nextTick и микрозадач.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое libuv?",
+      "reference": "C-библиотека, на которой построен Node.js: цикл событий, неблокирующий сетевой I/O, пул потоков для файловых операций, DNS-lookup, crypto и zlib.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие операции выполняются в пуле потоков libuv?",
+      "reference": "Файловая система (fs), dns.lookup, часть crypto (pbkdf2, scrypt, randomBytes) и zlib. Размер пула — 4 потока по умолчанию, меняется переменной UV_THREADPOOL_SIZE.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем микрозадача отличается от макрозадачи?",
+      "reference": "Микрозадачи (колбэки промисов, queueMicrotask) выполняются сразу после текущей операции, до следующей фазы цикла. Макрозадачи (таймеры, I/O, setImmediate) — в своих фазах цикла событий.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему process.nextTick может «заморозить» I/O?",
+      "reference": "Очередь nextTick опустошается полностью перед продолжением цикла. Рекурсивные вызовы nextTick не дадут циклу дойти до фазы poll — I/O «голодает».",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает async/await «под капотом»?",
+      "reference": "async-функция возвращает промис; await приостанавливает функцию и продолжает её в микрозадаче, когда промис выполнен. Поток при этом не блокируется.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем отличаются Promise.race и Promise.any?",
+      "reference": "race завершается первым завершившимся промисом, успешным или нет. any — первым успешным; если все отклонены, бросает AggregateError.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выполнить асинхронные операции последовательно и параллельно?",
+      "reference": "Последовательно — for...of с await внутри. Параллельно — запустить все и ждать Promise.all(items.map(fn)). Для ограничения параллелизма используют p-limit или пачки.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему forEach не работает с await?",
+      "reference": "forEach не ждёт возвращённых промисов: колбэки запускаются сразу, а сам цикл завершается до их выполнения. Нужны for...of или Promise.all с map.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое AbortController и как отменить операцию?",
+      "reference": "Объект с signal, который передают в fetch, fs, таймеры и стримы. controller.abort() отменяет операцию, и она отклоняется с AbortError. AbortSignal.timeout(ms) — отмена по таймауту.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое EventEmitter?",
+      "reference": "Класс из модуля events для реализации паттерна «издатель-подписчик»: on/once/emit/off. Слушатели вызываются синхронно в порядке регистрации; событие 'error' без слушателя бросает исключение.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему стоит бояться предупреждения MaxListenersExceededWarning?",
+      "reference": "Больше 10 слушателей на одно событие обычно означает утечку: подписка в цикле или на каждый запрос без отписки. Лимит меняют setMaxListeners, но сначала ищут утечку.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое events.once и асинхронные итераторы событий?",
+      "reference": "await once(emitter, 'ready') ждёт событие как промис. for await (const [msg] of on(emitter, 'data')) обрабатывает события в цикле.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что произойдёт при необработанном исключении в Node.js?",
+      "reference": "Событие uncaughtException; без обработчика процесс завершается с кодом 1. Правильно: залогировать и завершить процесс, а перезапуск доверить супервизору, потому что состояние может быть повреждено.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работают таймеры setInterval и почему они неточны?",
+      "reference": "Колбэк ставится в фазу timers не раньше заданной задержки. Если цикл занят, выполнение откладывается. Интервал не компенсирует задержки, поэтому для точности считают время по Date.now()/performance.now().",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
       "question": "Чем CommonJS отличается от ES-модулей?",
       "reference": "CJS — require/module.exports, синхронная загрузка; ESM — import/export, статический анализ, top-level await. ESM включается \"type\": \"module\" или расширением .mjs.",
       "topic": "Модули и экосистема",
@@ -60,6 +150,96 @@
     {
       "question": "Как читать переменные окружения и конфигурацию?",
       "reference": "process.env.NAME; локально — файл .env (node --env-file=.env в Node 20+ или dotenv); секреты не коммитить, валидировать конфиг при старте.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подключить ES-модули в Node.js?",
+      "reference": "Расширение .mjs или \"type\": \"module\" в package.json. Импорт: import fs from 'node:fs'; в ESM нет require, __dirname и __filename — используют import.meta.url / import.meta.dirname.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Можно ли импортировать ESM из CommonJS?",
+      "reference": "Через динамический import() — он асинхронный. В новых версиях (Node 22+) появился require(esm) для синхронных ES-модулей без top-level await.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое поле exports в package.json?",
+      "reference": "Явная карта точек входа пакета: \"exports\": { \".\": { \"import\": \"./index.mjs\", \"require\": \"./index.cjs\" } }. Закрывает доступ к внутренним файлам и позволяет поставлять сборки для ESM и CJS.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем префикс node: при импорте встроенных модулей?",
+      "reference": "import fs from 'node:fs' явно указывает на встроенный модуль, его нельзя подменить пакетом из npm с тем же именем; это рекомендуемый стиль.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем npm ci отличается от npm install?",
+      "reference": "npm ci ставит строго по package-lock.json, удаляет node_modules и падает при расхождении с package.json. Быстрее и воспроизводимо — для CI и Docker.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое npx?",
+      "reference": "Запуск бинарника пакета без глобальной установки: npx prisma migrate dev. Берёт локальный node_modules/.bin или скачивает пакет во временный кеш.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое peerDependencies?",
+      "reference": "Зависимости, которые пакет ожидает от приложения-хоста (плагин React ожидает react). Пакет не ставит свою копию — чтобы не было двух экземпляров библиотеки.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверить зависимости на уязвимости?",
+      "reference": "npm audit (и npm audit fix), Dependabot/Renovate для обновлений, Snyk. Стоит фиксировать версии в lock-файле и регулярно обновляться.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое монорепозиторий и workspaces?",
+      "reference": "Несколько пакетов в одном репозитории; npm/pnpm/yarn workspaces ставят зависимости централизованно и связывают локальные пакеты. Инструменты: Turborepo, Nx.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем pnpm отличается от npm?",
+      "reference": "pnpm хранит пакеты в общем content-addressable хранилище и связывает их жёсткими ссылками — экономит диск и время. Строгий node_modules не даёт использовать незаявленные зависимости.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как в Node.js загрузить переменные из .env без библиотек?",
+      "reference": "node --env-file=.env app.js (Node 20.6+) или process.loadEnvFile(). Раньше для этого использовали пакет dotenv.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает кеш модулей require?",
+      "reference": "Модуль выполняется один раз при первом require, результат кешируется в require.cache по полному пути. Последующие require возвращают тот же объект — модули фактически синглтоны.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое циклическая зависимость модулей и чем она опасна?",
+      "reference": "A требует B, а B требует A. Один из них получит незавершённый (частично заполненный) exports, что даёт undefined в неожиданных местах. Лечится выносом общего кода в третий модуль.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое scripts в package.json?",
+      "reference": "Именованные команды (npm run build); есть хуки pre/post. Бинарники из node_modules/.bin доступны без пути. npm test и npm start запускаются без run.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выбрать и зафиксировать версию Node.js в проекте?",
+      "reference": "Использовать LTS-версию; указать engines в package.json и файл .nvmrc/.node-version; в Docker — конкретный тег образа node:22-alpine. Управление версиями — nvm, fnm, volta.",
       "topic": "Модули и экосистема",
       "card_type": "text"
     },
@@ -94,6 +274,96 @@
       "card_type": "text"
     },
     {
+      "question": "Как создать HTTP-сервер без фреймворка?",
+      "reference": "http.createServer((req, res) => { res.writeHead(200, {'Content-Type': 'application/json'}); res.end(JSON.stringify({ok: true})); }).listen(3000). Тело запроса читают из потока req.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как прочитать JSON-тело запроса в чистом Node.js?",
+      "reference": "Собрать чанки потока: const chunks = []; for await (const c of req) chunks.push(c); const body = JSON.parse(Buffer.concat(chunks).toString()). Нужно ограничивать размер и ловить ошибки парсинга.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Router в Express?",
+      "reference": "Мини-приложение с собственными маршрутами и middleware: const r = express.Router(); r.get('/:id', ...); app.use('/users', r). Помогает разбить API на модули.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает обработчик ошибок в Express?",
+      "reference": "Middleware с четырьмя аргументами (err, req, res, next), подключённое после маршрутов. В него попадают ошибки из next(err) и, начиная с Express 5, отклонённые промисы async-обработчиков.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое NestJS?",
+      "reference": "Фреймворк на TypeScript с модулями, контроллерами, провайдерами и встроенным DI, декораторами и пайпами валидации. Архитектура вдохновлена Angular; под капотом Express или Fastify.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как валидировать входные данные API в Node.js?",
+      "reference": "Схемы Zod, Joi, Ajv (JSON Schema), class-validator в NestJS. В Fastify схемы встроены в маршруты и заодно ускоряют сериализацию.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как настроить CORS в Express?",
+      "reference": "Пакет cors: app.use(cors({ origin: ['https://app.example.com'], credentials: true })). Не использовать origin: '*' вместе с credentials.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Server-Sent Events?",
+      "reference": "Однонаправленный поток событий от сервера по HTTP (Content-Type: text/event-stream, строки data: ...). Проще WebSocket, есть автопереподключение в браузере (EventSource).",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работать с WebSocket в Node.js?",
+      "reference": "Библиотеки ws или Socket.IO (с комнатами, переподключением и fallback). При масштабировании на несколько инстансов нужен адаптер pub/sub (Redis) для рассылки сообщений.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как раздавать статические файлы в Express?",
+      "reference": "app.use(express.static('public', { maxAge: '1d' })). В продакшене статику лучше отдавать через nginx или CDN.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое fetch в Node.js?",
+      "reference": "Встроенный (с Node 18) WHATWG fetch на основе undici: await fetch(url, { signal: AbortSignal.timeout(5000) }). Ошибкой считается только сетевой сбой — HTTP 4xx/5xx проверяют по res.ok.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как загрузить файл через multipart в Express?",
+      "reference": "Middleware multer (или busboy для потоковой обработки): upload.single('avatar') — файл в req.file. Ограничивать размер и типы и не держать большие файлы в памяти.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устроены хуки жизненного цикла запроса в Fastify?",
+      "reference": "onRequest → preParsing → preValidation → preHandler → handler → preSerialization → onSend → onResponse. Плагины инкапсулированы, а декораторы добавляют свойства в request и reply.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое keep-alive и зачем агент в HTTP-клиенте?",
+      "reference": "Повторное использование TCP-соединений к одному хосту вместо нового соединения на каждый запрос. В undici/http.Agent настраивают пул соединений (keepAlive, maxSockets).",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать загрузку большого файла клиенту потоком?",
+      "reference": "fs.createReadStream(path).pipe(res) или pipeline(stream, res) с заголовками Content-Type и Content-Length/Disposition. Файл не загружается в память целиком.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
       "question": "Чем interface отличается от type?",
       "reference": "Оба описывают формы объектов; interface можно расширять и объединять (declaration merging), type поддерживает объединения, пересечения, условные и mapped-типы.",
       "topic": "TypeScript",
@@ -120,6 +390,96 @@
     {
       "question": "Зачем включать strict в tsconfig?",
       "reference": "Включает strictNullChecks, noImplicitAny и др.: ловит обращения к возможному null/undefined и неявные any на этапе компиляции.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое сужение типов (narrowing)?",
+      "reference": "TypeScript уточняет тип в ветке по проверкам: typeof x === 'string', instanceof, 'prop' in obj, сравнение с литералом, Array.isArray.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое discriminated union?",
+      "reference": "Объединение объектов с общим полем-литералом: type Shape = {kind: 'circle', r: number} | {kind: 'square', a: number}. switch (s.kind) сужает тип в каждой ветке.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Как добиться исчерпывающей проверки в switch?",
+      "reference": "В ветке default присвоить значение переменной типа never: const _x: never = s; Если добавится новый вариант union, компилятор выдаст ошибку.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое пользовательский type guard?",
+      "reference": "Функция с типом возврата-предикатом: function isUser(x: unknown): x is User { ... }. После if (isUser(v)) тип v сужается до User.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает keyof и typeof в позиции типа?",
+      "reference": "keyof T — объединение ключей типа T. typeof value получает тип значения: type Cfg = typeof config; keyof typeof config — ключи объекта.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое mapped types?",
+      "reference": "Типы, построенные перебором ключей: type ReadonlyT<T> = { readonly [K in keyof T]: T[K] }. На них основаны Partial, Required, Readonly.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое conditional types и infer?",
+      "reference": "T extends U ? X : Y — выбор типа по условию. infer извлекает часть типа: type Ret<T> = T extends (...a: any[]) => infer R ? R : never.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем as const полезен?",
+      "reference": "Делает литерал максимально узким и readonly: const roles = ['admin', 'user'] as const; type Role = typeof roles[number] — 'admin' | 'user'.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает оператор satisfies?",
+      "reference": "Проверяет, что значение соответствует типу, но сохраняет его более точный выведенный тип: const cfg = {port: 3000} satisfies Config.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем enum отличается от union строковых литералов?",
+      "reference": "enum генерирует JS-объект во время выполнения; union литералов существует только на уровне типов и не даёт кода. Сейчас чаще предпочитают union или объект as const.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое declaration-файлы .d.ts?",
+      "reference": "Описания типов без реализации для JS-кода. Типы библиотек ставятся из @types/*, если пакет не поставляет их сам; свои — через declare module.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Как запускать TypeScript в Node.js?",
+      "reference": "Компилировать tsc в JS или запускать через tsx/ts-node. В Node 22.6+ есть --experimental-strip-types, в Node 23.6+ удаление типов включено по умолчанию — без проверки типов.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое moduleResolution NodeNext?",
+      "reference": "Режим tsconfig, повторяющий правила Node.js: учёт поля exports, различие ESM/CJS по type и расширениям, обязательные расширения файлов в относительных ESM-импортах.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Record<K, V> и индексная сигнатура?",
+      "reference": "Record<string, number> и { [key: string]: number } описывают словарь. Чтобы обращение по ключу давало number | undefined, включают noUncheckedIndexedAccess.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Как типизировать функцию с перегрузками?",
+      "reference": "Несколько сигнатур перед реализацией: function parse(x: string): Date; function parse(x: number): Date; function parse(x: string | number) { ... }. Снаружи видны только сигнатуры перегрузок.",
       "topic": "TypeScript",
       "card_type": "text"
     },
@@ -154,6 +514,96 @@
       "card_type": "text"
     },
     {
+      "question": "Чем Prisma отличается от TypeORM и Drizzle?",
+      "reference": "Prisma — схема в собственном DSL, генерируемый типобезопасный клиент, миграции. TypeORM — классы-сущности с декораторами (Active Record / Data Mapper). Drizzle — лёгкий SQL-подобный query builder на TypeScript.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое миграции и как их применять при деплое?",
+      "reference": "Версионированные изменения схемы (prisma migrate deploy, knex migrate:latest). Применяются отдельным шагом до запуска нового кода и должны быть обратно совместимы со старой версией.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как избежать проблемы N+1 в ORM?",
+      "reference": "Загружать связи заранее: include/select в Prisma, relations/leftJoinAndSelect в TypeORM, DataLoader для GraphQL — батчинг запросов за один тик цикла событий.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое DataLoader?",
+      "reference": "Утилита батчинга и кеширования: вызовы load(id) в одном тике собираются в один запрос batchLoad(ids). Решает N+1 в GraphQL-резолверах.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подключиться к Redis из Node.js?",
+      "reference": "Клиенты ioredis или node-redis: const r = new Redis(url); await r.set('k', 'v', 'EX', 60). Используют для кеша, сессий, очередей (BullMQ), rate limiting и pub/sub.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое BullMQ?",
+      "reference": "Очередь задач на Redis: Queue для добавления, Worker для обработки, повторы с backoff, отложенные и повторяющиеся задачи, приоритеты и контроль параллелизма.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как моделировать данные в MongoDB: встраивание или ссылки?",
+      "reference": "Встраивают данные, которые читаются вместе и ограничены по размеру (адрес в пользователе). Ссылки — для больших или общих коллекций и связей многие-ко-многим. Лимит документа — 16 МБ.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое агрегационный конвейер MongoDB?",
+      "reference": "Последовательность стадий $match → $group → $sort → $project → $lookup, обрабатывающих документы на сервере. Аналог GROUP BY/JOIN в SQL.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обрабатывать ошибку уникальности в PostgreSQL из Node.js?",
+      "reference": "Ловить ошибку с кодом 23505 (unique_violation) и возвращать 409 Conflict. В Prisma — код P2002. Не проверять «существует ли» отдельным SELECT — это гонка.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему стоит использовать параметризованные запросы даже в query builder?",
+      "reference": "Значения передаются отдельно от SQL, исключая инъекции. Опасны «сырые» методы ($queryRawUnsafe, knex.raw со строковой конкатенацией) — их используют только с плейсхолдерами.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать пагинацию курсором в SQL?",
+      "reference": "WHERE (created_at, id) < ($1, $2) ORDER BY created_at DESC, id DESC LIMIT 20; клиент передаёт курсор — значения последней строки. Стабильно при вставках и быстро на больших таблицах.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое connection pool exhaustion?",
+      "reference": "Все соединения пула заняты (долгие запросы, незакрытые транзакции, утечки), и новые запросы ждут или падают по таймауту. Помогают таймауты запросов, мониторинг пула и освобождение клиента в finally.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работать с транзакцией в node-postgres?",
+      "reference": "Взять клиента из пула: const c = await pool.connect(); BEGIN → запросы → COMMIT, при ошибке ROLLBACK; в finally c.release(). Все запросы транзакции идут через один клиент.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое PgBouncer и когда он нужен?",
+      "reference": "Пулер соединений PostgreSQL. Нужен при многих инстансах или serverless-функциях, когда суммарные пулы превышают max_connections. В режиме transaction pooling не работают сессионные функции.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как хранить деньги в БД и JS?",
+      "reference": "В БД — NUMERIC/DECIMAL или целые копейки (BIGINT). В JS не использовать float для денег: считать в минимальных единицах, BigInt или библиотеки decimal.js/dinero.js.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
       "question": "Какие тестовые фреймворки популярны в Node.js?",
       "reference": "Jest, Vitest, встроенный node:test (с Node 18+); для HTTP — supertest; моки — vi.fn()/jest.fn().",
       "topic": "Тестирование",
@@ -180,6 +630,96 @@
     {
       "question": "Что такое покрытие кода и почему 100% не цель?",
       "reference": "Доля выполненных тестами строк/веток (c8/istanbul). Высокое покрытие не гарантирует проверку поведения; важнее тестировать ключевые сценарии и граничные случаи.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое встроенный test runner Node.js?",
+      "reference": "Модуль node:test (стабилен с Node 20): test(), describe/it, хуки before/after, моки (mock.fn, mock.timers), покрытие (--experimental-test-coverage). Запуск: node --test.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Vitest отличается от Jest?",
+      "reference": "Vitest использует Vite: нативная поддержка ESM и TypeScript без отдельной трансформации, быстрый watch-режим и Jest-совместимый API. Jest зрелее, но ESM в нём настраивать сложнее.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подменить время и таймеры в тестах?",
+      "reference": "Фейковые таймеры: vi.useFakeTimers() / jest.useFakeTimers(), затем vi.advanceTimersByTime(1000). В node:test — mock.timers.enable().",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверить, что асинхронная функция бросает ошибку?",
+      "reference": "await expect(fn()).rejects.toThrow('msg') в Jest/Vitest или await assert.rejects(fn(), /msg/) в node:test.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое spy?",
+      "reference": "Обёртка над функцией, записывающая вызовы и аргументы без изменения поведения: vi.spyOn(obj, 'method'). Позволяет проверить, что метод вызван с нужными аргументами.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как тестировать код, работающий с БД?",
+      "reference": "Интеграционные тесты на реальной БД в контейнере (Testcontainers или docker-compose), миграции перед прогоном, очистка или транзакция с откатом на каждый тест. Моки БД проверяют мало.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подменить внешние HTTP-вызовы в тестах?",
+      "reference": "nock (для http/https) или MSW (Mock Service Worker) — перехват запросов и фиктивные ответы; для undici/fetch — MockAgent. В тестах не должно быть реальных сетевых вызовов.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое snapshot-тесты и их риски?",
+      "reference": "Сравнение вывода с сохранённым снимком. Удобны для больших структур, но их легко «обновить не глядя», и тогда они ничего не проверяют. Снимки должны быть маленькими и осмысленными.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое e2e-тесты для бэкенда?",
+      "reference": "Запуск приложения целиком с реальной БД и вызовы API как у клиента (supertest, Playwright request). Проверяют интеграцию модулей; их меньше, чем модульных, и они медленнее.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как организовать тестовые данные?",
+      "reference": "Фабрики/билдеры с разумными значениями по умолчанию (fishery, @faker-js/faker); каждый тест создаёт свои данные, а не зависит от общих фикстур.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как запускать тесты параллельно без конфликтов?",
+      "reference": "Изолировать состояние: отдельная схема БД или база на воркер, уникальные ключи и порты, отсутствие глобальных синглтонов с состоянием.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое test.each?",
+      "reference": "Параметризованные тесты: test.each([[1, 2, 3], [2, 2, 4]])('sum(%i, %i) = %i', (a, b, r) => expect(sum(a, b)).toBe(r)).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как протестировать обработку событий EventEmitter?",
+      "reference": "Подписаться spy-функцией или дождаться события через await once(emitter, 'done'), затем проверить аргументы; для ошибок — событие 'error'.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему тесты с setTimeout-ожиданиями плохие?",
+      "reference": "Ожидание «на глаз» делает тесты медленными и нестабильными. Лучше ждать конкретное событие или промис, использовать фейковые таймеры или опрос с таймаутом.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как измерить покрытие кода в Node.js?",
+      "reference": "c8 (на основе встроенного V8 coverage), vitest --coverage, jest --coverage, node --test --experimental-test-coverage. Порог покрытия можно проверять в CI.",
       "topic": "Тестирование",
       "card_type": "text"
     },
@@ -214,6 +754,96 @@
       "card_type": "text"
     },
     {
+      "question": "Чем access-токен отличается от refresh-токена?",
+      "reference": "Access — короткоживущий (минуты), передаётся с каждым запросом. Refresh — долгоживущий, хранится надёжнее (httpOnly-cookie), служит только для получения нового access и может быть отозван и ротирован.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверять JWT правильно?",
+      "reference": "Проверять подпись и явно задавать разрешённый алгоритм (не принимать alg: none), проверять exp, iss и aud. Библиотеки jose или jsonwebtoken с параметром algorithms.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое OAuth 2.0 Authorization Code + PKCE?",
+      "reference": "Поток для браузерных и мобильных клиентов: пользователь входит у провайдера, клиент получает код и меняет его на токены, подтверждая владение code_verifier. PKCE защищает от перехвата кода.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как защититься от prototype pollution?",
+      "reference": "Не сливать пользовательские объекты рекурсивно без фильтра ключей __proto__, constructor, prototype; использовать Object.create(null) или Map, валидировать схемой, обновлять уязвимые библиотеки.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое ReDoS?",
+      "reference": "Отказ в обслуживании через регулярное выражение с катастрофическим перебором ((a+)+$) на специально подобранной строке — event loop блокируется. Защита: простые регулярки, ограничение длины ввода, движок RE2.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как безопасно запускать внешние команды?",
+      "reference": "execFile/spawn с массивом аргументов без shell: true. Пользовательский ввод не подставлять в строку команды exec — иначе возможна инъекция команд.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как хранить сессии в Express?",
+      "reference": "express-session с внешним хранилищем (Redis, connect-redis), cookie с флагами httpOnly, secure, sameSite, секрет из окружения; regenerate() после входа.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как защититься от CSRF в приложении на cookie?",
+      "reference": "SameSite=Lax/Strict cookie, CSRF-токен (double submit или synchronizer), проверка заголовков Origin/Referer. Для API с токеном в заголовке Authorization CSRF неактуален.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как ограничить размер тела запроса?",
+      "reference": "express.json({ limit: '100kb' }), bodyLimit в Fastify, лимиты в nginx. Иначе большие тела съедают память и CPU на парсинг.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нельзя логировать токены и пароли?",
+      "reference": "Логи читают многие люди и системы и хранят их долго. Токен из лога — готовый доступ. Используют redact в логгере (pino redact) для чувствительных полей.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое ролевая модель доступа (RBAC) и ABAC?",
+      "reference": "RBAC — права по ролям (admin, editor). ABAC — по атрибутам пользователя, ресурса и контекста (владелец документа, рабочее время). Проверки должны быть на сервере для каждого действия.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое npm supply chain атака?",
+      "reference": "Вредоносный код через зависимость: typosquatting, захват аккаунта мейнтейнера, postinstall-скрипты. Защита: lock-файл, npm ci, аудит, минимум зависимостей, --ignore-scripts там, где возможно.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как безопасно сравнить хеши или токены в Node.js?",
+      "reference": "crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b)) для буферов одинаковой длины — сравнение за постоянное время.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает Permission Model в Node.js?",
+      "reference": "Флаг --permission (стабилен в Node 23.5+, ранее --experimental-permission) ограничивает доступ процесса к файловой системе, дочерним процессам и worker'ам; разрешения задаются --allow-fs-read и др.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как генерировать безопасные случайные значения?",
+      "reference": "crypto.randomBytes(32).toString('hex'), crypto.randomUUID(), crypto.randomInt(). Math.random() не криптостойкий.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
       "question": "Чем worker_threads отличаются от cluster?",
       "reference": "worker_threads — потоки внутри процесса для CPU-задач с обменом сообщениями/SharedArrayBuffer; cluster запускает несколько процессов, разделяющих порт, для масштабирования HTTP на ядра.",
       "topic": "Производительность и масштабирование",
@@ -240,6 +870,96 @@
     {
       "question": "Как запускать Node.js в продакшене?",
       "reference": "В контейнере с NODE_ENV=production, менеджер процессов/оркестратор (PM2, systemd, Kubernetes), health-check эндпоинт, структурные логи (pino), graceful shutdown.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как профилировать CPU в Node.js?",
+      "reference": "node --cpu-prof (файл .cpuprofile для Chrome DevTools), --inspect с вкладкой Performance, clinic flame / 0x для флейм-графов.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое event loop lag и как его измерить?",
+      "reference": "Задержка между запланированным и фактическим выполнением колбэков из-за синхронной работы. perf_hooks.monitorEventLoopDelay() даёт гистограмму; рост лага — признак блокировки.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устроена сборка мусора в V8?",
+      "reference": "Поколения: молодое (Scavenge, быстро и часто) и старое (Mark-Sweep-Compact, инкрементально и параллельно). Размер старого поколения задаётся --max-old-space-size.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему JSON.parse/stringify больших объектов опасен?",
+      "reference": "Это синхронные CPU-операции: мегабайтный JSON блокирует event loop на десятки миллисекунд. Решения: потоковый парсинг, меньшие ответы, вынос в worker.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как масштабировать Node.js-сервис горизонтально?",
+      "reference": "Несколько stateless-инстансов за балансировщиком (Kubernetes, PM2 cluster), состояние в Redis/БД, sticky sessions только при необходимости (WebSocket без адаптера).",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое PM2?",
+      "reference": "Менеджер процессов: автоперезапуск, cluster mode по ядрам, zero-downtime reload, логи и метрики. В Kubernetes обычно не нужен — перезапуском занимается оркестратор.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как сжатие ответов влияет на производительность?",
+      "reference": "gzip/brotli уменьшают трафик, но тратят CPU. Лучше сжимать на reverse proxy или CDN и заранее сжимать статику.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как ограничить параллельные исходящие запросы?",
+      "reference": "Пул соединений агента (maxSockets), p-limit/семафор, очередь. Иначе можно «положить» внешний сервис или исчерпать сокеты.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое circuit breaker?",
+      "reference": "Паттерн: после серии ошибок вызовы к зависимости временно не выполняются (быстрый отказ), затем пробные запросы проверяют восстановление. Библиотека opossum.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать кеширование с инвалидацией в Redis?",
+      "reference": "cache-aside: GET, при промахе — запрос к БД и SET с TTL; при изменении данных — DEL ключа. Для защиты от stampede — блокировка или stale-while-revalidate.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему синхронные функции fs (readFileSync) плохи в сервере?",
+      "reference": "Блокируют event loop на время I/O, и все запросы ждут. Допустимы только при старте приложения (чтение конфигурации).",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как следить за памятью Node.js-процесса?",
+      "reference": "process.memoryUsage() (rss, heapUsed, external), метрики prom-client, heap snapshot (--heapsnapshot-signal, v8.writeHeapSnapshot()) для сравнения в DevTools.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Buffer и почему важно не копировать его лишний раз?",
+      "reference": "Буфер двоичных данных вне кучи V8. Конкатенация в цикле создаёт копии; правильнее собирать массив чанков и делать Buffer.concat один раз или работать потоками.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выбрать между worker_threads и вынесением в отдельный сервис?",
+      "reference": "worker_threads — для CPU-задач внутри процесса (обработка изображений, хеширование) с пулом воркеров (piscina). Отдельный сервис или очередь — для долгих задач, независимого масштабирования и отказоустойчивости.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое OpenTelemetry в Node.js?",
+      "reference": "Стандарт трассировки, метрик и логов. Автоинструментация http, express, pg и других модулей даёт распределённые трейсы с временем каждого вызова; экспорт в Jaeger/Tempo/Prometheus.",
       "topic": "Производительность и масштабирование",
       "card_type": "text"
     }

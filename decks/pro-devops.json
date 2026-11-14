@@ -34,6 +34,96 @@
       "card_type": "text"
     },
     {
+      "question": "Как найти, что занимает место на диске?",
+      "reference": "df -h — свободное место по файловым системам; du -sh /var/* | sort -h — размер каталогов; ncdu — интерактивно. Не забывать про удалённые, но открытые файлы: lsof +L1.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое inode и почему может кончиться место при свободных гигабайтах?",
+      "reference": "inode хранит метаданные файла. Их число фиксировано при создании ФС; миллионы мелких файлов исчерпывают inode (df -i), и создать файл нельзя.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем kill -15 отличается от kill -9?",
+      "reference": "SIGTERM (15) просит процесс завершиться корректно — его можно обработать. SIGKILL (9) убивает немедленно ядром, без очистки. Сначала посылают SIGTERM.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как посмотреть нагрузку на систему?",
+      "reference": "top/htop — CPU и память по процессам; uptime — load average; vmstat 1, iostat -x 1 — CPU, swap и диски; free -h — память.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что означает load average?",
+      "reference": "Среднее число процессов, выполняющихся или ждущих CPU (и непрерываемого I/O в Linux) за 1, 5 и 15 минут. Сравнивают с числом ядер: устойчиво выше — перегрузка.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работают перенаправления 2>&1 и > /dev/null?",
+      "reference": "> перенаправляет stdout в файл, 2> — stderr; 2>&1 направляет stderr туда же, куда stdout. cmd > /dev/null 2>&1 — подавить весь вывод (порядок важен).",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как найти файлы по условию и выполнить над ними действие?",
+      "reference": "find /var/log -name '*.log' -mtime +7 -delete или -exec gzip {} +; xargs для передачи списка: find ... -print0 | xargs -0 rm.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Для чего используются grep, awk и sed?",
+      "reference": "grep фильтрует строки по шаблону; awk обрабатывает поля и считает (awk '{print $1}' | sort | uniq -c); sed заменяет текст потоком (sed -i 's/a/b/g' file).",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как написать systemd unit для сервиса?",
+      "reference": "Файл /etc/systemd/system/app.service с секциями [Unit], [Service] (ExecStart, User, Restart=on-failure, Environment) и [Install] (WantedBy=multi-user.target); затем systemctl daemon-reload и enable --now.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как настроить вход по SSH-ключу и закрыть вход по паролю?",
+      "reference": "ssh-keygen -t ed25519, ssh-copy-id user@host; в /etc/ssh/sshd_config — PasswordAuthentication no, PermitRootLogin no; перезапустить sshd, предварительно проверив вход ключом.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое cron и как записать расписание?",
+      "reference": "Планировщик задач: crontab -e, формат «мин час день месяц день_недели команда», например 0 3 * * * /backup.sh. Альтернатива — systemd timers с логами в journal.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверить сетевые соединения и открытые порты?",
+      "reference": "ss -tulpn — слушающие сокеты с процессами; ss -tan state established — активные; curl -v, nc -zv host port — проверка доступности.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое переменная $? и как обрабатывать ошибки в Bash?",
+      "reference": "$? — код возврата последней команды (0 — успех). set -e прерывает скрипт при ошибке, trap 'cleanup' EXIT выполняет очистку, || и && задают реакцию.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как безопасно работать с переменными в Bash?",
+      "reference": "Всегда заключать в кавычки \"$var\" (пробелы и пустые значения), использовать ${var:?error} для обязательных, [[ ]] вместо [ ], проверять скрипты shellcheck.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое OOM killer?",
+      "reference": "Механизм ядра, который при нехватке памяти убивает процесс с наибольшим oom_score. Следы — в dmesg/journalctl -k («Out of memory: Killed process»). В контейнерах срабатывает при превышении лимита памяти cgroup.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
       "question": "Что происходит при вводе URL в браузере (кратко)?",
       "reference": "DNS-резолв имени в IP, TCP-рукопожатие (и TLS для HTTPS), HTTP-запрос, ответ сервера, рендеринг; по пути — кеши, балансировщики, CDN.",
       "topic": "Сети",
@@ -60,6 +150,96 @@
     {
       "question": "Что такое TLS-сертификат и как его выпускают автоматически?",
       "reference": "Сертификат связывает домен с открытым ключом и подписан CA. Let's Encrypt выдаёт бесплатно по протоколу ACME (certbot, cert-manager), подтверждая владение доменом (HTTP-01/DNS-01).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое модель OSI и TCP/IP коротко?",
+      "reference": "Уровни: физический, канальный (Ethernet, MAC), сетевой (IP), транспортный (TCP/UDP), прикладной (HTTP, DNS) — в TCP/IP сеансовый и представления слиты с прикладным.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устанавливается TCP-соединение?",
+      "reference": "Трёхстороннее рукопожатие: SYN → SYN-ACK → ACK. Закрытие — FIN/ACK с каждой стороны; состояние TIME_WAIT защищает от поздних пакетов.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое CIDR-нотация?",
+      "reference": "Запись сети с длиной префикса: 10.0.0.0/24 — 256 адресов (254 для хостов), /16 — 65 536. Используется в подсетях VPC, правилах firewall и маршрутах.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие диапазоны IP являются частными?",
+      "reference": "10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (RFC 1918). Не маршрутизируются в интернете; выход наружу — через NAT.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое NAT?",
+      "reference": "Трансляция адресов: множество частных адресов выходят в интернет через один публичный IP с подменой портов. Входящие подключения требуют проброса порта (DNAT).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Как диагностировать DNS?",
+      "reference": "dig example.com A +short, dig @8.8.8.8 example.com — запрос к конкретному серверу, dig +trace — путь резолва; учитывать TTL и кеширование, /etc/resolv.conf.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое TTL в DNS и зачем его снижать перед миграцией?",
+      "reference": "Время кеширования записи резолверами. Перед сменой IP TTL заранее уменьшают (до 60–300 с), чтобы переключение быстрее дошло до клиентов.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает HTTPS-рукопожатие TLS 1.3 кратко?",
+      "reference": "Клиент и сервер договариваются о шифрах и обмениваются ключами (ECDHE) за один round-trip, сервер подтверждает подлинность сертификатом, дальше трафик шифруется симметрично.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое reverse proxy?",
+      "reference": "Сервер перед приложениями (nginx, Traefik, HAProxy): терминирует TLS, маршрутизирует по хостам и путям, балансирует, кеширует, ограничивает частоту запросов.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем stateful firewall отличается от stateless?",
+      "reference": "Stateful отслеживает соединения и сам пропускает ответный трафик (iptables conntrack, security groups). Stateless проверяет каждый пакет отдельно — нужны правила в обе стороны (NACL).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверить маршрут до хоста и потери пакетов?",
+      "reference": "traceroute/tracepath показывает узлы по пути, mtr — непрерывная статистика потерь и задержек по каждому узлу; ping — базовая доступность.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое MTU и какие проблемы он вызывает?",
+      "reference": "Максимальный размер пакета (обычно 1500 байт). В туннелях (VPN, overlay-сети Kubernetes) MTU меньше; при блокировке ICMP «зависают» большие запросы, а маленькие проходят.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое VLAN?",
+      "reference": "Логическое разделение одной физической сети на изолированные сегменты по тегу 802.1Q. Трафик между VLAN идёт через маршрутизатор с правилами.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Anycast?",
+      "reference": "Один IP-адрес анонсируется из многих точек (BGP), и клиент попадает в ближайшую. Используется в CDN и публичных DNS (1.1.1.1, 8.8.8.8).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает HTTP/3?",
+      "reference": "Работает поверх QUIC (UDP): быстрое установление соединения, отсутствие блокировки очереди на уровне TCP, миграция соединения при смене сети. TLS 1.3 встроен в QUIC.",
       "topic": "Сети",
       "card_type": "text"
     },
@@ -94,6 +274,96 @@
       "card_type": "text"
     },
     {
+      "question": "Что такое слои образа и почему порядок инструкций важен?",
+      "reference": "Каждая инструкция Dockerfile создаёт слой, и слои кешируются. Редко меняющиеся шаги (установка зависимостей) ставят раньше копирования исходников, чтобы не пересобирать их при каждом изменении кода.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем нужен .dockerignore?",
+      "reference": "Исключает файлы из контекста сборки (.git, node_modules, .env, логи): сборка быстрее, кеш стабильнее, секреты не попадают в образ.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем COPY отличается от ADD?",
+      "reference": "COPY просто копирует файлы. ADD умеет распаковывать архивы и скачивать по URL — неявное поведение, поэтому рекомендуют COPY.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как передать секреты при сборке образа безопасно?",
+      "reference": "BuildKit secrets: RUN --mount=type=secret,id=npmrc ... — секрет не сохраняется в слоях. ARG и ENV с секретами остаются в истории образа.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем volume отличается от bind mount?",
+      "reference": "Volume управляется Docker (/var/lib/docker/volumes), переносим и подходит для данных БД. Bind mount монтирует конкретный путь хоста — удобно для разработки и конфигов.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие сети бывают в Docker?",
+      "reference": "bridge (по умолчанию, изоляция и NAT), host (сеть хоста без изоляции), none, overlay (между хостами в Swarm). В пользовательской bridge-сети контейнеры находят друг друга по имени.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает HEALTHCHECK?",
+      "reference": "Команда, по которой Docker определяет состояние контейнера (healthy/unhealthy). Compose может ждать здоровья зависимости: depends_on: condition: service_healthy.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как ограничить ресурсы контейнера?",
+      "reference": "--memory=512m, --cpus=1.5, --pids-limit; в compose — deploy.resources.limits. Без лимитов один контейнер может занять весь хост.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему в контейнере важен PID 1?",
+      "reference": "Процесс с PID 1 должен обрабатывать сигналы и собирать зомби-процессы. Shell-форма CMD не пробрасывает SIGTERM; используют exec-форму, tini или --init.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как уменьшить размер образа?",
+      "reference": "Multi-stage сборка, минимальные базы (alpine, distroless, slim), удаление кеша пакетного менеджера в том же RUN, только production-зависимости.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Docker Compose полезен?",
+      "reference": "Описывает многоконтейнерное приложение в YAML: сервисы, сети, тома, переменные; docker compose up -d поднимает всё окружение. Основной инструмент для локальной разработки и простых развёртываний.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как посмотреть, что происходит в контейнере?",
+      "reference": "docker logs -f, docker exec -it c sh, docker inspect (конфигурация, IP, монтирования), docker stats (ресурсы), docker events.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как сканировать образы на уязвимости?",
+      "reference": "Trivy, Grype, Docker Scout: проверка пакетов ОС и зависимостей по базам CVE. Встраивают в CI и регулярно пересобирают образы на обновлённой базе.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему тег latest опасен в продакшене?",
+      "reference": "Он изменяемый: разные узлы могут получить разные образы, а откат невозможен. В продакшене используют неизменяемые теги (версия, git sha) или digest.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Docker registry?",
+      "reference": "Хранилище образов: Docker Hub, GitHub Container Registry, GitLab Registry, Harbor, облачные ECR/GCR. Образы адресуются registry/repo:tag или по digest @sha256.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
       "question": "Что такое Pod, Deployment и Service?",
       "reference": "Pod — минимальная единица (один или несколько контейнеров с общей сетью); Deployment управляет репликами и обновлениями подов; Service даёт стабильный адрес и балансировку на поды по селектору.",
       "topic": "Kubernetes",
@@ -120,6 +390,96 @@
     {
       "question": "Что такое Ingress?",
       "reference": "Правила L7-маршрутизации HTTP(S) извне к Service по хосту и пути; реализуется ingress-контроллером (nginx, traefik), часто с TLS через cert-manager.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Namespace?",
+      "reference": "Логическое разделение ресурсов кластера: квоты, RBAC, сетевые политики на уровне namespace. Имена объектов уникальны внутри namespace.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем StatefulSet отличается от Deployment?",
+      "reference": "StatefulSet даёт подам стабильные имена (db-0, db-1), упорядоченный запуск и свой PersistentVolumeClaim на каждый под. Используется для БД и кластерных систем.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое DaemonSet и Job/CronJob?",
+      "reference": "DaemonSet запускает по поду на каждом узле (агенты логов и мониторинга). Job выполняет задачу до успешного завершения, CronJob — Job по расписанию.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие типы Service бывают?",
+      "reference": "ClusterIP — внутренний адрес; NodePort — порт на каждом узле; LoadBalancer — внешний балансировщик облака; ExternalName — DNS-алиас; headless (clusterIP: None) — прямые адреса подов.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое PersistentVolume и PersistentVolumeClaim?",
+      "reference": "PV — ресурс хранилища, PVC — запрос приложения на хранилище нужного размера и режима доступа. StorageClass автоматически создаёт PV по запросу (динамическое выделение).",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает rolling update в Deployment?",
+      "reference": "Поды заменяются постепенно по параметрам maxSurge и maxUnavailable; новые поды должны пройти readiness. Откат — kubectl rollout undo deployment/app.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое HorizontalPodAutoscaler?",
+      "reference": "Автоматически меняет число реплик по метрикам (CPU, память, пользовательские) в пределах minReplicas–maxReplicas. Требует metrics-server и заданных requests.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое startup probe?",
+      "reference": "Проба для медленно стартующих приложений: пока она не прошла, liveness и readiness не проверяются, и под не будет убит во время долгой инициализации.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Как отлаживать под в состоянии CrashLoopBackOff?",
+      "reference": "kubectl describe pod (события, причина, exit code), kubectl logs --previous (лог упавшего контейнера), проверить пробы, лимиты памяти (OOMKilled), конфигурацию и секреты.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое RBAC в Kubernetes?",
+      "reference": "Role/ClusterRole описывают разрешённые действия над ресурсами, RoleBinding/ClusterRoleBinding назначают их пользователям и ServiceAccount. Принцип наименьших привилегий.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое NetworkPolicy?",
+      "reference": "Правила сетевого доступа между подами по меткам и namespace. По умолчанию всё разрешено; применяют default deny и явные разрешения. Нужен CNI с поддержкой (Calico, Cilium).",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Helm?",
+      "reference": "Пакетный менеджер Kubernetes: чарт — шаблоны манифестов плюс values.yaml. helm upgrade --install, история релизов и helm rollback.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое taints, tolerations и affinity?",
+      "reference": "Taint на узле отталкивает поды без соответствующего toleration (выделенные узлы, GPU). Affinity/anti-affinity притягивает поды к узлам или разносит реплики по разным узлам и зонам.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое PodDisruptionBudget?",
+      "reference": "Ограничение числа одновременно недоступных подов при добровольных прерываниях (drain узла, обновление кластера): minAvailable или maxUnavailable.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Из каких компонентов состоит control plane?",
+      "reference": "kube-apiserver (API), etcd (хранилище состояния), kube-scheduler (размещение подов), kube-controller-manager (контроллеры). На узлах — kubelet, kube-proxy и container runtime.",
       "topic": "Kubernetes",
       "card_type": "text"
     },
@@ -154,6 +514,96 @@
       "card_type": "text"
     },
     {
+      "question": "Что такое артефакт сборки и почему его собирают один раз?",
+      "reference": "Результат сборки (образ, бинарник, пакет). Один и тот же артефакт продвигается по окружениям (dev → stage → prod), чтобы в продакшен попало ровно то, что протестировали.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как ускорить CI-пайплайн?",
+      "reference": "Кеш зависимостей и слоёв Docker, параллельные задачи, запуск только затронутых частей (монорепо), быстрые проверки раньше медленных, собственные раннеры.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое trunk-based development?",
+      "reference": "Все разработчики часто вливают маленькие изменения в основную ветку; незавершённое прячут за feature flags. Ветки живут недолго, конфликтов меньше.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое feature flags?",
+      "reference": "Переключатели функциональности в рантайме: выкатка кода отделена от включения функции, возможны постепенное включение, A/B-тесты и мгновенное выключение без отката.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое GitHub Actions workflow?",
+      "reference": "YAML в .github/workflows: триггеры (on: push, pull_request), jobs с runs-on, шаги (uses: actions/checkout@v4, run: ...). Секреты — через secrets.*, матрицы — strategy.matrix.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устроен GitLab CI?",
+      "reference": ".gitlab-ci.yml со stages и jobs, раннеры, артефакты и кеш, переменные и защищённые окружения, правила запуска rules, include шаблонов.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое OIDC-аутентификация CI в облаке?",
+      "reference": "CI получает краткоживущий токен идентичности, облако обменивает его на временные учётные данные по доверенной роли. Долгоживущие ключи в секретах CI больше не нужны.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как безопасно катить миграции БД в CI/CD?",
+      "reference": "Миграции обратно совместимые (expand → migrate → contract), отдельный шаг перед деплоем приложения, бэкап и план отката, без долгих блокировок таблиц.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое smoke-тесты после деплоя?",
+      "reference": "Короткая проверка ключевых сценариев на новом окружении сразу после выкладки (health check, вход, главная страница). Провал — автоматический откат.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Argo CD?",
+      "reference": "GitOps-инструмент для Kubernetes: следит за Git-репозиторием с манифестами и синхронизирует кластер с ним, показывает расхождения (drift), откат — через Git.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как версионировать релизы?",
+      "reference": "Семантическое версионирование (MAJOR.MINOR.PATCH), теги в Git, автоматическая генерация changelog (conventional commits, release-please, semantic-release).",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое защита ветки (branch protection)?",
+      "reference": "Правила для main: обязательный pull request, ревью, успешные проверки CI, запрет force push. Не даёт влить непроверенный код.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое DORA-метрики?",
+      "reference": "Частота деплоев, время от коммита до продакшена, доля неудачных изменений и время восстановления. Показывают производительность процесса поставки.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать откат релиза?",
+      "reference": "Повторный деплой предыдущего артефакта (неизменяемые теги), helm rollback / kubectl rollout undo, переключение трафика в blue-green, выключение feature flag. Миграции БД должны допускать работу старого кода.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое SBOM и подпись артефактов?",
+      "reference": "SBOM — перечень компонентов артефакта (Syft, CycloneDX). Подпись образов (cosign/Sigstore) и проверка при деплое защищают цепочку поставки от подмены.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
       "question": "Что такое Terraform state и почему его хранят удалённо?",
       "reference": "Файл соответствия ресурсов в конфигурации реальным объектам. Хранят в удалённом backend (S3 + блокировки, Terraform Cloud), чтобы команда работала с одним состоянием и не было гонок.",
       "topic": "Infrastructure as Code",
@@ -180,6 +630,96 @@
     {
       "question": "Зачем нужны модули Terraform?",
       "reference": "Переиспользуемые параметризованные блоки конфигурации (сеть, кластер) с входными переменными и outputs — единообразие и меньше копипасты.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое провайдер в Terraform?",
+      "reference": "Плагин для работы с API платформы (aws, google, yandex, kubernetes). Версия фиксируется в required_providers и lock-файле .terraform.lock.hcl.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем блокировка state?",
+      "reference": "Чтобы два запуска terraform apply не изменили инфраструктуру одновременно и не испортили state. Бэкенды поддерживают блокировки (S3 с lock-файлом или DynamoDB, Terraform Cloud, Consul).",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое drift и как его обнаружить?",
+      "reference": "Расхождение реальной инфраструктуры и кода (ручные изменения в консоли). terraform plan показывает разницу; регулярный plan в CI выявляет drift.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает terraform import?",
+      "reference": "Добавляет существующий ресурс в state, чтобы управлять им через Terraform. В Terraform 1.5+ есть декларативные блоки import и генерация конфигурации.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем variables, locals и outputs отличаются?",
+      "reference": "variables — входные параметры модуля; locals — вычисляемые внутри значения; outputs — значения, которые модуль отдаёт наружу (адреса, id).",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое count и for_each?",
+      "reference": "Создание нескольких экземпляров ресурса. count — по индексу (удаление из середины сдвигает индексы), for_each — по ключам map или set, поэтому устойчивее к изменениям.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Как разделять окружения в Terraform?",
+      "reference": "Отдельные каталоги или state на окружение с общими модулями (рекомендуется) либо workspaces. Разные учётные записи или проекты облака для prod и dev.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Как хранить секреты в Terraform?",
+      "reference": "Не коммитить в .tfvars; брать из Vault или менеджера секретов, помечать переменные sensitive. Помнить, что значения могут попасть в state — state шифруют и ограничивают доступ.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Ansible playbook и роль?",
+      "reference": "Playbook — YAML со списком задач для групп хостов из inventory. Роль — переиспользуемый набор задач, шаблонов, обработчиков и переменных со стандартной структурой каталогов.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое handlers в Ansible?",
+      "reference": "Задачи, которые выполняются только по уведомлению (notify) от изменившейся задачи, один раз в конце: например, перезапуск nginx после изменения конфигурации.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Как Ansible подключается к хостам?",
+      "reference": "Без агента — по SSH (Windows — по WinRM), выполняет модули Python на целевой машине. Хосты и группы — в inventory (статическом или динамическом из облака).",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Ansible Vault?",
+      "reference": "Шифрование секретов (паролей, ключей) в файлах переменных; расшифровка при запуске по паролю или файлу ключа. Позволяет хранить секреты в Git зашифрованными.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое immutable infrastructure?",
+      "reference": "Серверы не изменяют после создания: для обновления собирают новый образ (Packer, контейнер) и заменяют экземпляры. Нет дрейфа конфигурации, проще откат.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Как тестировать IaC?",
+      "reference": "terraform validate и fmt, линтеры (tflint), проверки безопасности (checkov, tfsec/trivy config), plan в PR с ревью, Terratest или Molecule (для Ansible) для интеграционных тестов.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Pulumi и чем он отличается от Terraform?",
+      "reference": "IaC на обычных языках программирования (TypeScript, Python, Go): циклы, функции и тесты на языке. Terraform использует декларативный HCL; оба хранят state и вычисляют план изменений.",
       "topic": "Infrastructure as Code",
       "card_type": "text"
     },
@@ -214,6 +754,96 @@
       "card_type": "text"
     },
     {
+      "question": "Что такое PromQL rate() и почему его применяют к counter?",
+      "reference": "rate(http_requests_total[5m]) — средняя скорость роста счётчика в секунду за окно; учитывает сбросы счётчика при рестарте. Сырое значение counter само по себе малополезно.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как посчитать 95-й перцентиль задержки в Prometheus?",
+      "reference": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m]))). Точность зависит от границ бакетов гистограммы.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему средняя задержка вводит в заблуждение?",
+      "reference": "Среднее скрывает «хвост»: часть пользователей может ждать секунды при хорошем среднем. Смотрят перцентили p95/p99 и распределение.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое кардинальность метрик и чем она опасна?",
+      "reference": "Число уникальных комбинаций меток. Метки с user_id или полным URL создают миллионы рядов и перегружают Prometheus. Метки должны иметь ограниченное множество значений.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Alertmanager?",
+      "reference": "Компонент Prometheus для обработки алертов: группировка, подавление (inhibition), тишина (silences), маршрутизация в Telegram, Slack, почту, PagerDuty.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как писать хорошие алерты?",
+      "reference": "Алертить по симптомам, которые видит пользователь (ошибки, задержка, SLO burn rate), а не по каждой причине. В алерте — понятное описание, срочность и ссылка на runbook.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Grafana?",
+      "reference": "Платформа визуализации: дашборды поверх Prometheus, Loki, Tempo, БД; переменные, алерты, аннотации деплоев.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое структурированные логи?",
+      "reference": "Логи в машиночитаемом формате (JSON) с полями: время, уровень, сообщение, request_id, user_id. Их легко фильтровать и агрегировать в Loki или Elasticsearch.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Loki отличается от Elasticsearch?",
+      "reference": "Loki индексирует только метки, а текст логов хранит сжатым — дешевле и проще. Elasticsearch строит полнотекстовый индекс всего содержимого — мощный поиск, но больше ресурсов.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое correlation/trace id в логах?",
+      "reference": "Идентификатор запроса, передаваемый между сервисами и записываемый в каждую строку лога. Позволяет собрать всю историю запроса и связать логи с трассировкой.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое методы USE и RED?",
+      "reference": "USE (для ресурсов): Utilization, Saturation, Errors. RED (для сервисов): Rate, Errors, Duration. Чек-листы, что мониторить.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как собирать метрики с хостов и контейнеров?",
+      "reference": "node_exporter (метрики ОС), cAdvisor/kubelet (контейнеры), kube-state-metrics (объекты Kubernetes), экспортеры для БД; сбор — Prometheus или агентами (Grafana Alloy, OpenTelemetry Collector).",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое synthetic monitoring?",
+      "reference": "Регулярные искусственные проверки извне (blackbox_exporter, uptime-сервисы): доступность сайта, срок действия сертификата, ключевой сценарий. Ловит проблемы раньше пользователей.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как долго хранить логи и метрики?",
+      "reference": "По требованиям и стоимости: детальные метрики — недели, агрегированные — дольше (downsampling в Thanos/Mimir); логи — по политике хранения с ротацией и архивом; аудит — по требованиям регуляторов.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое OpenTelemetry Collector?",
+      "reference": "Агент и шлюз для приёма, обработки (фильтрация, батчинг, обогащение) и экспорта телеметрии (трейсы, метрики, логи) в разные бэкенды без привязки к вендору.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
       "question": "Чем SLI, SLO и SLA отличаются?",
       "reference": "SLI — измеряемый показатель (доля успешных запросов), SLO — целевое значение (99.9% за 30 дней), SLA — договорное обязательство перед клиентом с последствиями.",
       "topic": "Надёжность и SRE",
@@ -240,6 +870,96 @@
     {
       "question": "Почему бэкап без проверки восстановления ненадёжен?",
       "reference": "Копии могут быть повреждены, неполны или несовместимы; нужно регулярно тестировать восстановление и измерять реальное RTO.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое toil в SRE?",
+      "reference": "Ручная, повторяющаяся, автоматизируемая работа без долгосрочной ценности (ручные рестарты, выдача доступов). SRE стремятся держать её ниже 50% времени и автоматизировать.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Как рассчитать допустимое время простоя для SLO 99,9%?",
+      "reference": "0,1% от периода: за 30 дней — около 43 минут, за год — около 8,8 часа. 99,99% — около 4,3 минуты в месяц.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое burn rate алерты?",
+      "reference": "Алерты по скорости расходования бюджета ошибок: быстрый расход (например, 14,4× за час) — срочный вызов, медленный — тикет. Меньше ложных срабатываний, чем при порогах на ошибки.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое инцидент-менеджмент и роли в инциденте?",
+      "reference": "Процесс реагирования: объявление инцидента, Incident Commander координирует, отдельные люди на коммуникацию и исследование, хронология, восстановление, затем постмортем.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое chaos engineering?",
+      "reference": "Контролируемые эксперименты с отказами (убить под, задержка сети, отказ зоны), чтобы проверить устойчивость системы. Инструменты: Chaos Mesh, Litmus, Gremlin. Начинают со staging и малого радиуса.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое graceful degradation?",
+      "reference": "При отказе зависимости система продолжает работать в урезанном режиме: показывает кеш, отключает рекомендации, ставит запросы в очередь — вместо полного отказа.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое единая точка отказа (SPOF)?",
+      "reference": "Компонент, отказ которого останавливает всю систему (одна БД, один балансировщик, один человек с доступом). Устраняют резервированием и автоматическим переключением.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем горизонтальное масштабирование отличается от вертикального?",
+      "reference": "Вертикальное — более мощная машина (есть предел, нужен простой). Горизонтальное — больше экземпляров (требует stateless-дизайна и балансировки, но почти не ограничено).",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое multi-AZ и multi-region?",
+      "reference": "Размещение в нескольких зонах доступности одного региона защищает от отказа дата-центра; мультирегион — от отказа региона, но сложнее (репликация данных, задержки, стоимость).",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое capacity planning?",
+      "reference": "Прогноз потребности в ресурсах по росту нагрузки и результатам нагрузочного тестирования, с запасом под пики и отказ части мощностей (N+1).",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие стратегии резервного копирования БД бывают?",
+      "reference": "Полные и инкрементальные бэкапы, непрерывное архивирование WAL/binlog для восстановления на момент времени (PITR), снапшоты дисков. Правило 3-2-1: 3 копии, 2 носителя, 1 вне площадки.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое нагрузочное тестирование и какие инструменты используют?",
+      "reference": "Проверка поведения под ожидаемой и пиковой нагрузкой: задержки, ошибки, точка отказа. Инструменты: k6, JMeter, Gatling, Locust, wrk.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое on-call и как сделать его здоровым?",
+      "reference": "Дежурство с реакцией на алерты. Здоровое: ротация, ограниченное число вызовов за смену, актуальные runbook'и, разбор каждого ночного вызова и борьба с шумными алертами.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое DR-учения?",
+      "reference": "Регулярная практическая проверка плана аварийного восстановления: переключение на резерв, восстановление из бэкапа, замер реальных RTO/RPO.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое thundering herd и как его избежать?",
+      "reference": "Масса клиентов одновременно повторяет запросы после сбоя или истечения кеша и снова «кладёт» сервис. Помогают экспоненциальная задержка с джиттером, rate limiting и прогрев кеша.",
       "topic": "Надёжность и SRE",
       "card_type": "text"
     }

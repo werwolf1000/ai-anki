@@ -34,6 +34,96 @@
       "card_type": "text"
     },
     {
+      "question": "Чем := отличается от var?",
+      "reference": ":= — короткое объявление с выводом типа, только внутри функций; хотя бы одна переменная слева должна быть новой. var работает и на уровне пакета, позволяет указать тип без значения (zero value).",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое затенение переменных (shadowing)?",
+      "reference": "Объявление переменной с тем же именем во вложенной области видимости: err := ... внутри if скрывает внешний err. Частый источник ошибок; ловится go vet -shadow и линтерами.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устроены строки в Go?",
+      "reference": "Неизменяемая последовательность байт (обычно UTF-8). len(s) — число байт, а не символов; range по строке выдаёт руны (кодовые точки); s[i] — байт.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем rune отличается от byte?",
+      "reference": "byte — псевдоним uint8 (один байт), rune — псевдоним int32 (кодовая точка Unicode). Для подсчёта символов: utf8.RuneCountInString(s) или len([]rune(s)).",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как эффективно собирать строку в цикле?",
+      "reference": "strings.Builder: b.WriteString(...), затем b.String(). Конкатенация через + в цикле каждый раз создаёт новую строку.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое встраивание (embedding) структур?",
+      "reference": "Анонимное поле type Admin struct { User; Level int }: поля и методы User продвигаются в Admin. Это композиция, а не наследование: Admin не является User для системы типов.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое теги структур?",
+      "reference": "Строковые метаданные полей: `json:\"name,omitempty\" db:\"name\"`. Читаются через reflect и используются encoding/json, ORM, валидаторами.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает defer и в каком порядке выполняется?",
+      "reference": "Отложенный вызов выполняется при выходе из функции, в порядке LIFO. Аргументы вычисляются в момент defer. Отложенная функция может изменить именованные возвращаемые значения.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое дженерики в Go?",
+      "reference": "Параметры типов (Go 1.18+): func Map[T, U any](s []T, f func(T) U) []U. Ограничения задаются интерфейсами: comparable, cmp.Ordered, ~int | ~float64.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что означает тильда в ограничении ~int?",
+      "reference": "Любой тип, базовый (underlying) тип которого int, включая type UserID int. Без тильды подходит только сам int.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как скопировать слайс, чтобы не делить общий массив?",
+      "reference": "dst := make([]T, len(src)); copy(dst, src) или slices.Clone(src). Обычное присваивание и срез s[a:b] разделяют базовый массив.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает range по целому числу и итераторы (Go 1.22–1.23)?",
+      "reference": "for i := range 10 перебирает 0..9 (Go 1.22). В Go 1.23 range поддерживает функции-итераторы iter.Seq[V] / iter.Seq2[K, V]: for k, v := range maps.All(m).",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что изменилось с переменными цикла в Go 1.22?",
+      "reference": "Каждая итерация for теперь создаёт новую переменную. Замыкания и горутины, захватившие i, больше не видят общее последнее значение.",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Гарантирован ли порядок обхода map?",
+      "reference": "Нет: порядок range по map намеренно случайный. Для стабильного порядка сортируют ключи: slices.Sorted(maps.Keys(m)).",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое iota?",
+      "reference": "Счётчик в блоке const, начинается с 0 и увеличивается на каждой строке: const ( Low = iota; Mid; High ). Используется для перечислений и битовых флагов (1 << iota).",
+      "topic": "Типы и основы",
+      "card_type": "text"
+    },
+    {
       "question": "Как в Go реализуется интерфейс?",
       "reference": "Неявно: тип реализует интерфейс, если имеет все его методы, без ключевого слова implements. Интерфейсы рекомендуется объявлять на стороне потребителя и делать маленькими.",
       "topic": "Интерфейсы и ошибки",
@@ -60,6 +150,96 @@
     {
       "question": "Когда использовать panic?",
       "reference": "Только для невосстановимых ошибок программиста или инициализации (must-функции). Обычные ошибки возвращают как error; recover применяют на границах (например, в HTTP-middleware).",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое пустой интерфейс и any?",
+      "reference": "interface{} (псевдоним any) — тип, которому удовлетворяет любое значение. Чтобы работать со значением, нужно утверждение типа или type switch; злоупотребление теряет типобезопасность.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое утверждение типа (type assertion)?",
+      "reference": "v, ok := x.(T) — извлечь конкретный тип из интерфейса; без ok при несовпадении будет panic. Type switch: switch v := x.(type) { case string: ... }.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему интерфейсы в Go объявляют на стороне потребителя?",
+      "reference": "Неявная реализация позволяет потребителю описать маленький интерфейс только с нужными методами. Принцип «принимай интерфейсы, возвращай структуры».",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое io.Reader и io.Writer?",
+      "reference": "Базовые интерфейсы потоков: Read(p []byte) (n int, err error) и Write(p []byte) (n int, err error). На них построены файлы, сеть, сжатие и буферы — их легко комбинировать.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое sentinel-ошибки?",
+      "reference": "Заранее объявленные значения ошибок: var ErrNotFound = errors.New(\"not found\"). Проверяются через errors.Is(err, ErrNotFound) даже после оборачивания.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как создать собственный тип ошибки?",
+      "reference": "Тип с методом Error() string: type ValidationError struct{ Field string }. Извлечение: var ve *ValidationError; errors.As(err, &ve).",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает errors.Join?",
+      "reference": "Объединяет несколько ошибок в одну (Go 1.20); errors.Is и errors.As проверяют каждую из них. Удобно при валидации и закрытии нескольких ресурсов.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как восстановиться после panic?",
+      "reference": "recover() в отложенной функции: defer func() { if r := recover(); r != nil { ... } }(). Используют на границах (HTTP middleware, воркеры), чтобы паника одной задачи не уронила процесс.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему не стоит игнорировать ошибку Close у файла на запись?",
+      "reference": "При закрытии сбрасываются буферы, и ошибка записи может проявиться только в Close. Для записываемых файлов её проверяют, а не просто пишут defer f.Close().",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое интерфейс Stringer?",
+      "reference": "fmt.Stringer с методом String() string; fmt использует его при печати значения. Аналогично error и GoStringer.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как проверить на этапе компиляции, что тип реализует интерфейс?",
+      "reference": "var _ io.Writer = (*MyWriter)(nil) — если методов не хватает, будет ошибка компиляции.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему метод с pointer receiver влияет на реализацию интерфейса?",
+      "reference": "Набор методов типа T не включает методы с receiver *T. Если Write объявлен на *Buf, интерфейс реализует только *Buf, а не значение Buf.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое оборачивание ошибок через %w?",
+      "reference": "fmt.Errorf(\"load config: %w\", err) сохраняет исходную ошибку в цепочке для errors.Is/As/Unwrap. %v только вставит текст и разорвёт цепочку.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как лучше формулировать сообщения ошибок в Go?",
+      "reference": "С маленькой буквы, без точки в конце, с контекстом операции: \"open config: permission denied\". Сообщения склеиваются в цепочку при оборачивании.",
+      "topic": "Интерфейсы и ошибки",
+      "card_type": "text"
+    },
+    {
+      "question": "Когда ошибку нужно обработать, а когда вернуть наверх?",
+      "reference": "Обрабатывают там, где можно принять решение (повтор, значение по умолчанию, ответ клиенту), иначе оборачивают контекстом и возвращают. Не логировать и одновременно возвращать — получится дублирование в логах.",
       "topic": "Интерфейсы и ошибки",
       "card_type": "text"
     },
@@ -94,6 +274,96 @@
       "card_type": "text"
     },
     {
+      "question": "Что происходит при чтении из закрытого канала?",
+      "reference": "Сразу возвращается нулевое значение; v, ok := <-ch даёт ok == false. range по каналу завершается после закрытия. Запись в закрытый канал вызывает panic.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Кто должен закрывать канал?",
+      "reference": "Отправитель, причём один, когда больше не будет отправок. Получатель канал не закрывает. Закрытие нужно только для сигнала «данных больше нет».",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает операция с nil-каналом?",
+      "reference": "Отправка и получение из nil-канала блокируются навсегда. В select это используют, чтобы «выключить» ветку, присвоив каналу nil.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое паттерн worker pool?",
+      "reference": "N горутин читают задачи из общего канала и пишут результаты в другой; WaitGroup ждёт завершения, после чего канал результатов закрывается. Ограничивает параллелизм.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое fan-out / fan-in?",
+      "reference": "Fan-out — распределение задач по нескольким горутинам. Fan-in — слияние нескольких каналов результатов в один (горутина на канал плюс WaitGroup для закрытия общего).",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое errgroup?",
+      "reference": "golang.org/x/sync/errgroup: g, ctx := errgroup.WithContext(ctx); g.Go(func() error {...}); err := g.Wait(). Возвращает первую ошибку и отменяет контекст остальным; SetLimit ограничивает параллелизм.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем sync.RWMutex отличается от sync.Mutex?",
+      "reference": "RWMutex допускает много одновременных читателей (RLock) или одного писателя (Lock). Выгоден при частом чтении и редкой записи, иначе обычный Mutex проще и быстрее.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое sync.Once?",
+      "reference": "Гарантирует однократное выполнение функции (ленивая инициализация) потокобезопасно: once.Do(init). Есть также sync.OnceFunc и sync.OnceValue (Go 1.21).",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое атомарные операции?",
+      "reference": "Пакет sync/atomic: atomic.Int64, Add, Load, CompareAndSwap — неблокирующие операции над одним значением. Подходят для счётчиков и флагов, но не для инвариантов из нескольких полей.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое sync.Pool?",
+      "reference": "Пул временных объектов для повторного использования (буферы), снижает нагрузку на GC. Объекты могут быть удалены в любой момент; не подходит для соединений и долгоживущего состояния.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое sync.Cond и когда он нужен?",
+      "reference": "Условная переменная: горутины ждут (Wait) изменения состояния под мьютексом и будятся через Signal/Broadcast. Используется редко — обычно хватает каналов.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать таймаут операции?",
+      "reference": "select { case res := <-ch: ... case <-time.After(2 * time.Second): ... } или ctx, cancel := context.WithTimeout(ctx, 2*time.Second) с проверкой ctx.Done().",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нельзя копировать sync.Mutex?",
+      "reference": "Копия содержит состояние блокировки оригинала, и синхронизация ломается. Структуры с мьютексом передают по указателю; go vet (copylocks) ловит такие копирования.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как правильно передавать context?",
+      "reference": "Первым параметром функции (ctx context.Context), не хранить в структурах, не передавать nil (использовать context.TODO()). Всегда вызывать cancel(), обычно через defer.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое deadlock в Go и как рантайм его обнаруживает?",
+      "reference": "Все горутины заблокированы — рантайм завершает программу с «fatal error: all goroutines are asleep - deadlock!». Частичные дедлоки (часть горутин висит) он не обнаруживает — это утечки.",
+      "topic": "Конкурентность",
+      "card_type": "text"
+    },
+    {
       "question": "Как написать HTTP-обработчик в Go?",
       "reference": "Функция func(w http.ResponseWriter, r *http.Request) или тип с методом ServeHTTP; регистрируется в http.ServeMux. С Go 1.22 mux поддерживает методы и шаблоны: mux.HandleFunc(\"GET /users/{id}\", h).",
       "topic": "net/http и сервисы",
@@ -120,6 +390,96 @@
     {
       "question": "Как кодировать и декодировать JSON?",
       "reference": "encoding/json: json.NewDecoder(r.Body).Decode(&v), json.NewEncoder(w).Encode(v); теги полей `json:\"name,omitempty\"` управляют именами.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает маршрутизация ServeMux в Go 1.22+?",
+      "reference": "Шаблоны с методом и параметрами: mux.HandleFunc(\"GET /users/{id}\", h); значение — r.PathValue(\"id\"). Более специфичный шаблон побеждает, {path...} захватывает остаток пути.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нельзя использовать http.DefaultClient в продакшене без настроек?",
+      "reference": "У него нет таймаута — запрос может висеть бесконечно. Создают &http.Client{Timeout: 10 * time.Second} и переиспользуют один клиент (пул соединений).",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нужно читать и закрывать resp.Body?",
+      "reference": "Незакрытое тело не возвращает соединение в пул — утечка соединений и дескрипторов. defer resp.Body.Close(); для переиспользования соединения тело дочитывают.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как передать значения через context запроса?",
+      "reference": "r.WithContext(context.WithValue(ctx, key, v)) с неэкспортируемым типом ключа. Используют только для данных уровня запроса (id запроса, пользователь), а не для необязательных параметров функций.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как валидировать и ограничивать тело запроса?",
+      "reference": "http.MaxBytesReader(w, r.Body, 1<<20), json.Decoder с DisallowUnknownFields(), явная проверка полей или библиотека validator.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как отдавать JSON-ответ с правильным статусом?",
+      "reference": "w.Header().Set(\"Content-Type\", \"application/json\"); w.WriteHeader(status); json.NewEncoder(w).Encode(v). Заголовки нельзя менять после WriteHeader.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать middleware логирования со статусом ответа?",
+      "reference": "Обернуть ResponseWriter в структуру, сохраняющую код в WriteHeader, и после next.ServeHTTP залогировать метод, путь, статус и длительность.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое httptest.Server?",
+      "reference": "Реальный HTTP-сервер на случайном порту для тестов клиентов: srv := httptest.NewServer(handler); defer srv.Close(); запросы на srv.URL.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие роутеры и фреймворки популярны в Go?",
+      "reference": "Стандартный net/http (с Go 1.22 его часто достаточно), chi (совместим с net/http), gin и echo (свой контекст и быстрый роутинг), fiber (на fasthttp).",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как структурировать Go-сервис?",
+      "reference": "cmd/<app>/main.go — точка входа; internal/ — закрытые пакеты (handlers, service, storage); пакеты по предметной области, а не по слоям; зависимости передаются явно через конструкторы.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как читать конфигурацию сервиса?",
+      "reference": "Из переменных окружения (os.Getenv, envconfig, viper) с валидацией при старте. Падать сразу, если обязательный параметр не задан.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать rate limiting в Go?",
+      "reference": "golang.org/x/time/rate: limiter := rate.NewLimiter(rate.Limit(10), 20); if !limiter.Allow() { 429 }. Для лимита по клиентам — map лимитеров с очисткой или Redis.",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое structured logging через log/slog?",
+      "reference": "Стандартный пакет (Go 1.21): slog.Info(\"user created\", \"id\", id) с JSONHandler. Уровни, атрибуты, контекстные логгеры через logger.With(...).",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обрабатывать сигналы ОС для завершения?",
+      "reference": "ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM); defer stop(); <-ctx.Done(); затем srv.Shutdown(timeoutCtx).",
+      "topic": "net/http и сервисы",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое embed и как раздать статику из бинарника?",
+      "reference": "//go:embed static/* var files embed.FS; затем http.FileServerFS(files). Файлы встраиваются в бинарник на этапе сборки.",
       "topic": "net/http и сервисы",
       "card_type": "text"
     },
@@ -154,6 +514,96 @@
       "card_type": "text"
     },
     {
+      "question": "Как настроить пул соединений database/sql?",
+      "reference": "db.SetMaxOpenConns(n), SetMaxIdleConns(n), SetConnMaxLifetime(d), SetConnMaxIdleTime(d). Значения подбирают под лимиты БД и число инстансов сервиса.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обработать «строка не найдена» в database/sql?",
+      "reference": "QueryRow(...).Scan(...) возвращает sql.ErrNoRows; проверка errors.Is(err, sql.ErrNoRows) и преобразование в доменную ErrNotFound.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работать с NULL в database/sql?",
+      "reference": "Типы sql.NullString, sql.NullInt64, обобщённый sql.Null[T] (Go 1.22) или указатели *string при сканировании.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нужно передавать context в запросы?",
+      "reference": "QueryContext/ExecContext отменяют запрос при таймауте или отключении клиента и не держат соединение зря.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое подготовленные выражения в Go и когда их использовать?",
+      "reference": "db.Prepare создаёт выражение для многократного выполнения. Обычные запросы с плейсхолдерами ($1 или ?) уже параметризованы и защищают от инъекций; Prepare нужен для частых одинаковых запросов.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выполнять миграции в Go-проекте?",
+      "reference": "Инструменты golang-migrate, goose, atlas: SQL-файлы up/down с версиями, запуск отдельной командой или при старте с блокировкой от параллельного выполнения.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое GORM и его недостатки?",
+      "reference": "Популярная ORM: модели-структуры, ассоциации, хуки. Минусы — скрытая магия, неявные запросы (N+1), ошибки времени выполнения; многие предпочитают sqlc или sqlx.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое sqlx?",
+      "reference": "Расширение database/sql: сканирование в структуры по тегам db (Get, Select), именованные параметры (NamedExec), IN-запросы. Без ORM-магии.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как сделать массовую вставку в PostgreSQL на Go?",
+      "reference": "pgx CopyFrom (протокол COPY) — самый быстрый способ; либо batch через pgx.Batch или multi-row INSERT пачками.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать репозиторий для тестируемости?",
+      "reference": "Интерфейс в слое сервиса (UserStore с методами Get/Create), реализация на pgx в пакете storage. В юнит-тестах — фейк, в интеграционных — реальная БД в контейнере.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как избежать утечки транзакции?",
+      "reference": "tx, err := db.BeginTx(ctx, nil); defer tx.Rollback() — после успешного Commit откат ничего не делает. Так транзакция закрывается на любом пути выхода.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работать с Redis из Go?",
+      "reference": "Клиент go-redis: rdb := redis.NewClient(&redis.Options{Addr: ...}); rdb.Set(ctx, k, v, ttl).Err(); rdb.Get(ctx, k).Result() — redis.Nil при отсутствии ключа.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое оптимистическая блокировка в Go-сервисе?",
+      "reference": "Поле version в таблице; UPDATE ... WHERE id=$1 AND version=$2. Если RowsAffected()==0 — конфликт: перечитать и повторить или вернуть 409.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как тестировать работу с БД в Go?",
+      "reference": "testcontainers-go поднимает PostgreSQL в Docker, миграции перед тестами, транзакция с откатом или очистка таблиц на каждый тест.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое outbox pattern?",
+      "reference": "Событие записывается в таблицу outbox в той же транзакции, что и бизнес-данные; отдельный процесс публикует его в брокер. Гарантирует, что событие не потеряется и не уйдёт без коммита данных.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
       "question": "Как устроены тесты в Go?",
       "reference": "Файлы *_test.go, функции TestXxx(t *testing.T), запуск go test ./...; ошибки — t.Errorf/t.Fatalf.",
       "topic": "Тестирование",
@@ -180,6 +630,96 @@
     {
       "question": "Что такое fuzzing в Go?",
       "reference": "func FuzzXxx(f *testing.F) с f.Add(seed) и f.Fuzz(func(t *testing.T, in string){...}); go test -fuzz генерирует входы и ищет падения.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое t.Run и подтесты?",
+      "reference": "t.Run(name, func(t *testing.T){...}) создаёт именованный подтест: отдельный отчёт, фильтр go test -run 'TestX/case', возможность t.Parallel() внутри.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем t.Error отличается от t.Fatal?",
+      "reference": "t.Error фиксирует провал и продолжает тест; t.Fatal фиксирует и немедленно завершает текущий тест (через runtime.Goexit).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делают t.Helper и t.Cleanup?",
+      "reference": "t.Helper() помечает вспомогательную функцию, чтобы ошибки указывали на строку вызывающего теста. t.Cleanup(fn) регистрирует очистку после теста, включая подтесты.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как запустить тесты с детектором гонок и покрытием?",
+      "reference": "go test -race ./... — поиск гонок данных; go test -cover -coverprofile=c.out ./..., отчёт — go tool cover -html=c.out.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое TestMain?",
+      "reference": "func TestMain(m *testing.M) — общая подготовка и очистка для всех тестов пакета (поднять БД), затем os.Exit(m.Run()).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое golden-файлы в тестах?",
+      "reference": "Ожидаемый вывод хранится в testdata/*.golden; тест сравнивает результат с файлом, флаг -update перезаписывает эталоны. Удобно для больших текстовых выводов.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подменять зависимости в Go без фреймворков?",
+      "reference": "Через интерфейсы и простые фейки-структуры; функции-поля для точечной подмены. Генераторы моков: mockery, gomock.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое testify?",
+      "reference": "Популярная библиотека: assert/require (require останавливает тест), suite, mock. require.NoError(t, err); assert.Equal(t, want, got).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как тестировать код со временем?",
+      "reference": "Внедрять часы (интерфейс Clock или func() time.Time) вместо прямого time.Now(). Для кода с таймерами в Go 1.24 появился testing/synctest (экспериментально) с виртуальным временем.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как писать параллельные тесты безопасно?",
+      "reference": "t.Parallel() в начале теста; не разделять изменяемое состояние; в табличных тестах до Go 1.22 копировать переменную цикла (tc := tc).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое пример-тест (Example)?",
+      "reference": "func ExampleSum() { fmt.Println(Sum(1, 2)) // Output: 3 } — проверяется go test и показывается в документации пакета.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как пропустить медленные тесты?",
+      "reference": "if testing.Short() { t.Skip(\"slow\") } и запуск go test -short. Интеграционные тесты также отделяют build-тегами (//go:build integration).",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое пакет _test для чёрного ящика?",
+      "reference": "Тестовый файл с package foo_test видит только экспортированный API пакета foo — тесты как у внешнего пользователя. package foo — тесты с доступом к внутренностям.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как протестировать HTTP-клиент к внешнему API?",
+      "reference": "httptest.NewServer с обработчиком, возвращающим заранее заданные ответы, и подстановка srv.URL в клиент. Можно проверять метод, путь и тело запроса.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как измерить аллокации в бенчмарке?",
+      "reference": "b.ReportAllocs() или go test -bench . -benchmem — колонки B/op и allocs/op. Сравнение результатов — утилита benchstat.",
       "topic": "Тестирование",
       "card_type": "text"
     },
@@ -214,6 +754,96 @@
       "card_type": "text"
     },
     {
+      "question": "Какие виды RPC есть в gRPC?",
+      "reference": "Unary (запрос-ответ), server streaming, client streaming и двунаправленный streaming. Описываются в .proto через ключевое слово stream.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Как сгенерировать Go-код из .proto?",
+      "reference": "protoc с плагинами protoc-gen-go и protoc-gen-go-grpc или buf generate. Получаются структуры сообщений и интерфейсы сервера и клиента.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обеспечить обратную совместимость protobuf-схемы?",
+      "reference": "Не менять номера и типы существующих полей, не переиспользовать удалённые номера (reserved), добавлять только новые поля. Неизвестные поля старые клиенты игнорируют.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое gRPC-статусы?",
+      "reference": "Коды ошибок: NotFound, InvalidArgument, Unavailable, DeadlineExceeded, PermissionDenied и др. В Go: status.Error(codes.NotFound, \"user\"), разбор — status.FromError(err).",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое интерсепторы в gRPC?",
+      "reference": "Middleware для gRPC: UnaryServerInterceptor/StreamServerInterceptor для логирования, аутентификации, метрик, восстановления после panic. Подключаются через grpc.ChainUnaryInterceptor.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое gRPC-Gateway?",
+      "reference": "Генератор обратного прокси, который превращает REST/JSON-запросы в gRPC-вызовы по аннотациям google.api.http в .proto. Позволяет иметь оба API из одной схемы.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Как сервисы общаются асинхронно?",
+      "reference": "Через брокеры сообщений: Kafka (лог событий, партиции, высокая пропускная способность), RabbitMQ (очереди, маршрутизация), NATS (лёгкий pub/sub, JetStream).",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое идемпотентный потребитель сообщений?",
+      "reference": "Обработчик, безопасный при повторной доставке: дедупликация по id сообщения (таблица обработанных), upsert вместо insert. Брокеры обычно гарантируют at-least-once.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое распределённая трассировка?",
+      "reference": "Каждый запрос получает trace id, который передаётся между сервисами (W3C traceparent); спаны показывают время каждого шага. В Go — OpenTelemetry SDK, экспорт в Jaeger/Tempo.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое паттерн Saga?",
+      "reference": "Распределённая транзакция как цепочка локальных транзакций с компенсирующими действиями при сбое. Хореография (через события) или оркестрация (центральный координатор).",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать повторы с экспоненциальной задержкой?",
+      "reference": "Повторять только временные ошибки (Unavailable, таймауты), задержка base*2^n со случайным джиттером, максимум попыток, учёт дедлайна контекста.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое service discovery?",
+      "reference": "Механизм поиска адресов сервисов: DNS Kubernetes Service, Consul, etcd. Клиент gRPC умеет резолвить адреса и балансировать нагрузку (round_robin).",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем метрики Prometheus в Go-сервисе?",
+      "reference": "client_golang: счётчики запросов, гистограммы длительности, gauge очередей; эндпоинт /metrics. Основа для алертов и SLO.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему один большой общий пакет моделей между сервисами — плохая идея?",
+      "reference": "Создаёт жёсткую связь: изменение структуры требует синхронного релиза всех сервисов. Контракты — через версионируемые .proto/OpenAPI, у каждого сервиса свои внутренние модели.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
+      "question": "Как собрать минимальный Docker-образ Go-сервиса?",
+      "reference": "Multi-stage: сборка в golang:1.x с CGO_ENABLED=0, копирование статического бинарника в distroless/static или scratch. Образ — несколько мегабайт, без shell.",
+      "topic": "Микросервисы и gRPC",
+      "card_type": "text"
+    },
+    {
       "question": "Как профилировать Go-программу?",
       "reference": "pprof: import _ \"net/http/pprof\" и go tool pprof для CPU/heap/goroutine профилей; go test -cpuprofile; trace для планировщика.",
       "topic": "Производительность",
@@ -240,6 +870,96 @@
     {
       "question": "Зачем GOMAXPROCS и как он задаётся в контейнерах?",
       "reference": "Число потоков ОС, одновременно выполняющих Go-код (по умолчанию — число CPU). В контейнерах с CPU-лимитом его подстраивают (Go 1.25 учитывает cgroup-лимиты, ранее — automaxprocs).",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое escape analysis?",
+      "reference": "Компилятор решает, где разместить переменную: на стеке (дёшево) или в куче (нагрузка на GC), если она «убегает» из функции. Анализ виден через go build -gcflags=-m.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как предварительно выделить память под слайс и map?",
+      "reference": "make([]T, 0, n) и make(map[K]V, n), если размер известен. Избавляет от повторных перераспределений при append и росте map.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает сборщик мусора Go?",
+      "reference": "Конкурентный трёхцветный mark-and-sweep с короткими паузами. GOGC (по умолчанию 100) задаёт рост кучи до следующей сборки, GOMEMLIMIT — мягкий лимит памяти (Go 1.19+).",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое GOMEMLIMIT и зачем он в контейнерах?",
+      "reference": "Мягкий лимит памяти для рантайма: при приближении к нему GC работает чаще. Задают чуть ниже лимита контейнера, чтобы избежать OOM-kill.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как подключить pprof к HTTP-сервису?",
+      "reference": "import _ \"net/http/pprof\" на отдельном (внутреннем) порту; затем go tool pprof http://host:6060/debug/pprof/profile?seconds=30. Профили: CPU, heap, goroutine, block, mutex.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое PGO в Go?",
+      "reference": "Profile-guided optimization (Go 1.21+): CPU-профиль из продакшена кладут как default.pgo в пакет main, и компилятор оптимизирует горячие пути (инлайнинг, девиртуализация). Обычно 2–7% ускорения.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему конвертация []byte ↔ string стоит дорого?",
+      "reference": "Обычно копирует данные. Избегать лишних преобразований в горячих циклах: использовать функции пакета bytes, писать сразу в []byte.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое false sharing?",
+      "reference": "Разные ядра пишут в разные переменные в одной кеш-линии (64 байта), и линия постоянно инвалидируется. Лечится выравниванием (padding) горячих счётчиков.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выравнивание полей структуры влияет на память?",
+      "reference": "Компилятор выравнивает поля, вставляя padding. Упорядочивание полей от больших к меньшим уменьшает размер; проверяется unsafe.Sizeof и линтером fieldalignment.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое трассировка execution tracer?",
+      "reference": "go test -trace или runtime/trace показывает планирование горутин, блокировки, GC и системные вызовы во времени (go tool trace). Помогает найти задержки, невидимые в CPU-профиле.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему стоит переиспользовать http.Client и соединения?",
+      "reference": "Создание клиента или транспорта на каждый запрос ломает пул keep-alive: новые TCP- и TLS-рукопожатия, исчерпание портов. Один клиент на приложение (или на внешний сервис).",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как буферизовать ввод-вывод?",
+      "reference": "bufio.Reader/Writer и bufio.Scanner уменьшают число системных вызовов при построчном чтении и частой записи; не забывать Flush() у Writer.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Когда использовать указатели, а когда значения ради производительности?",
+      "reference": "Маленькие структуры передают по значению (копирование дешевле, меньше нагрузки на GC). Большие или изменяемые — по указателю. Решение подтверждают бенчмарками.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое горячий путь и как его оптимизировать в Go?",
+      "reference": "Код, выполняемый чаще всего (по профилю). Убирают аллокации, интерфейсные вызовы и reflect в циклах, кешируют вычисления, используют strconv вместо fmt.Sprintf.",
+      "topic": "Производительность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обнаружить рост числа горутин?",
+      "reference": "Метрика runtime.NumGoroutine() и go_goroutines в Prometheus, профиль /debug/pprof/goroutine?debug=2 со стеками, в тестах — пакет goleak.",
       "topic": "Производительность",
       "card_type": "text"
     }
