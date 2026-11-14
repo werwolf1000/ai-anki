@@ -357,6 +357,10 @@ from server.textbook import build_router  # noqa: E402
 
 app.include_router(build_router(services, current_ctx))
 
+from server.tracks import build_router as build_tracks_router  # noqa: E402
+
+app.include_router(build_tracks_router(services, current_ctx))
+
 
 @app.get("/healthz")
 def healthz() -> dict:
@@ -378,6 +382,12 @@ def _spa_index() -> Response:
 
 @app.get("/")
 def index() -> Response:
+    return _spa_index()
+
+
+@app.get("/verify/{cert_id}")
+def verify_page(cert_id: str) -> Response:
+    """Публичная страница проверки сертификата (рендерит SPA)."""
     return _spa_index()
 
 

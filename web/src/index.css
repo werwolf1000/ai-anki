@@ -201,3 +201,35 @@ math-field:focus-within {
   content: "";
   @apply ml-0.5 inline-block h-4 w-2 translate-y-0.5 animate-pulse rounded-sm bg-violet-400;
 }
+
+/* ── печать сертификата ─────────────────────────────────────────── */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  html,
+  body,
+  #root {
+    height: auto !important;
+    overflow: visible !important;
+    background: #0d0c14 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-cert,
+  .print-cert * {
+    visibility: visible;
+  }
+  .print-cert {
+    position: fixed;
+    inset: 8mm;
+    margin: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

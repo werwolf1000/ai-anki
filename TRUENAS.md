@@ -88,6 +88,7 @@ Ollama обычно **не** в контейнере AI Anki. На главно�
 | `/data/progress.json` | `./data/progress.json` | Прогресс версии 1.x (копируется первому аккаунту) |
 | `/data/config.json` | `./data/config.json` | Общие настройки сервера (Ollama, ASR) |
 | `/data/knowledge.db` | `./data/knowledge.db` | База знаний учебника и сгенерированные статьи |
+| `/data/tracks.db` | `./data/tracks.db` | Попытки экзаменов/собеседований и реестр сертификатов |
 | `/data/users/<id>/textbook.json` | `./data/users/<id>/` | Прочитанные темы пользователя |
 | `/data/decks.json` | `./data/decks.json` | Реестр колод |
 | `/data/decks/` | `./data/decks/` | Свои колоды (JSON/TXT) — **без пересборки** |

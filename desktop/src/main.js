@@ -71,6 +71,7 @@ function createWindow() {
       sandbox: true,
       nodeIntegration: false,
       spellcheck: false,
+      backgroundThrottling: false, // таймер экзамена и анимации не замирают в фоне
     },
   });
   if (st.maximized) win.maximize();

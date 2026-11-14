@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { BookOpenText, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
+import { BookOpenText, Briefcase, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
 import { api, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
 import { isDesktop } from "./lib/desktop";
-import { Backdrop, Logo, Spinner, ToastProvider } from "./components/ui";
+import { Backdrop, Logo, Spinner, ToastProvider, useToast } from "./components/ui";
 import TitleBar from "./components/TitleBar";
 import AuthScreen from "./views/AuthScreen";
 import Dashboard from "./views/Dashboard";
@@ -11,18 +11,32 @@ import Decks from "./views/Decks";
 import Study from "./views/Study";
 import Settings from "./views/Settings";
 import Textbook from "./views/Textbook";
+import Tracks from "./views/Tracks";
+import Exam from "./views/Exam";
+import Interview from "./views/Interview";
+import Verify from "./views/Verify";
 
 const NAV = [
   { id: "dashboard", label: "Обзор", icon: LayoutDashboard },
+  { id: "tracks", label: "Профессии", icon: Briefcase },
   { id: "decks", label: "Колоды", icon: Layers },
   { id: "textbook", label: "Учебник", icon: BookOpenText },
   { id: "settings", label: "Настройки", icon: SettingsIcon },
 ];
 
+const VERIFY = typeof window !== "undefined" ? window.location.pathname.match(/^\/verify\/([\w-]+)/) : null;
+
 export default function App() {
   return (
     <ToastProvider>
-      <Root />
+      {VERIFY ? (
+        <>
+          <Backdrop />
+          <Verify certId={VERIFY[1]} />
+        </>
+      ) : (
+        <Root />
+      )}
     </ToastProvider>
   );
 }
@@ -34,6 +48,10 @@ function Root() {
   const [config, setConfig] = useState(null);
   const [decks, setDecks] = useState(null);
   const [bookTarget, setBookTarget] = useState(null);
+  const [openTrack, setOpenTrack] = useState(null);
+  const [exam, setExam] = useState(null); // ответ /api/tracks/{id}/exam
+  const [interview, setInterview] = useState(null);
+  const toast = useToast();
   const openTextbook = useCallback((deckId, topic = "") => {
     setBookTarget({ deckId, topic, at: Date.now() });
     setView("textbook");
@@ -83,7 +101,34 @@ function Root() {
     loadDecks().catch(() => {});
   }, [loadDecks]);
 
-  const subtitle = study ? study.deck_name : user ? NAV.find((n) => n.id === view)?.label : "";
+  const startExam = useCallback(
+    async (track) => {
+      try {
+        setExam(await api(`/api/tracks/${track.id}/exam`, { method: "POST" }));
+      } catch (e) {
+        toast(e.message, "error");
+      }
+    },
+    [toast],
+  );
+  const startInterview = useCallback(
+    async (track) => {
+      try {
+        setInterview(await api(`/api/tracks/${track.id}/interview`, { method: "POST" }));
+      } catch (e) {
+        toast(e.message, "error");
+      }
+    },
+    [toast],
+  );
+  const exitTrackMode = useCallback(() => {
+    setExam(null);
+    setInterview(null);
+    setView("tracks");
+    loadDecks().catch(() => {});
+  }, [loadDecks]);
+
+  const subtitle = study ? study.deck_name : exam ? `Экзамен · ${exam.title}` : interview ? `Собеседование · ${interview.title}` : user ? NAV.find((n) => n.id === view)?.label : "";
 
   return (
     <div className="flex h-full flex-col">
@@ -98,6 +143,14 @@ function Root() {
           ) : !user ? (
             <motion.div key="auth" className="h-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <AuthScreen onAuth={setUser} />
+            </motion.div>
+          ) : exam ? (
+            <motion.div key="exam" className="h-full" initial={{ opacity: 0, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }}>
+              <Exam exam={exam} config={config} onExit={exitTrackMode} />
+            </motion.div>
+          ) : interview ? (
+            <motion.div key="interview" className="h-full" initial={{ opacity: 0, scale: 0.985 }} animate={{ opacity: 1, scale: 1 }}>
+              <Interview interview={interview} config={config} user={user} onExit={exitTrackMode} />
             </motion.div>
           ) : study ? (
             <motion.div
@@ -124,6 +177,17 @@ function Root() {
                     className={`mx-auto w-full px-4 py-6 sm:px-8 sm:py-8 ${view === "textbook" ? "max-w-[1500px]" : "max-w-6xl"}`}
                   >
                     {view === "dashboard" && <Dashboard user={user} decks={decks} onStart={startStudy} onRead={openTextbook} goDecks={() => setView("decks")} />}
+                    {view === "tracks" && (
+                      <Tracks
+                        decks={decks}
+                        onStart={startStudy}
+                        onRead={openTextbook}
+                        onExam={startExam}
+                        onInterview={startInterview}
+                        openTrack={openTrack}
+                        setOpenTrack={setOpenTrack}
+                      />
+                    )}
                     {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} onRead={openTextbook} />}
                     {view === "textbook" && <Textbook user={user} decks={decks} initial={bookTarget} onStart={startStudy} />}
                     {view === "settings" && <Settings user={user} setUser={setUser} config={config} setConfig={setConfig} onLogout={logout} />}
@@ -187,7 +251,7 @@ function Sidebar({ user, view, setView, onLogout }) {
       </aside>
 
       {/* мобильная нижняя навигация */}
-      <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-4 gap-1 rounded-2xl border border-white/[0.07] bg-ink-900/90 p-1.5 backdrop-blur-xl md:hidden">
+      <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-5 gap-1 rounded-2xl border border-white/[0.07] bg-ink-900/90 p-1.5 backdrop-blur-xl md:hidden">
         {NAV.map((n) => (
           <button
             key={n.id}
