@@ -1,0 +1,63 @@
+title: DevOps
+match: pro-devops|devops
+# 1. Linux
+Файловая система, права и пользователи
+Процессы, сигналы и systemd
+Bash: переменные, условия, циклы, функции
+Текстовые утилиты: grep, sed, awk, jq
+Пакетные менеджеры и обновления
+Диагностика: top, ss, lsof, strace, journalctl
+# 2. Сети
+Модель TCP/IP, порты и сокеты
+DNS: записи, резолвинг, TTL
+HTTP/HTTPS, TLS и сертификаты
+Балансировщики нагрузки и reverse proxy (Nginx, HAProxy)
+Файрволы: iptables, nftables, security groups
+VPN, SSH-туннели и бастионы
+# 3. Git и процессы разработки
+Git: ветки, merge, rebase
+Стратегии ветвления: GitFlow, trunk-based
+Code review и защита веток
+# 4. Docker
+Образы, слои и Dockerfile
+Multi-stage сборка и минимальные образы
+Сети и тома Docker
+docker compose
+Безопасность контейнеров и сканирование образов
+Реестры образов
+# 5. Kubernetes
+Архитектура Kubernetes: control plane и ноды
+Pod, ReplicaSet, Deployment
+Service, Ingress и сетевая модель
+ConfigMap и Secret
+Хранилища: PV, PVC, StorageClass
+StatefulSet, DaemonSet, Job, CronJob
+Probes, ресурсы, requests и limits
+Автомасштабирование: HPA, VPA, Cluster Autoscaler
+RBAC и сетевые политики
+Helm и Kustomize
+# 6. CI/CD
+Принципы CI/CD и конвейер поставки
+GitHub Actions
+GitLab CI
+Стратегии деплоя: rolling, blue-green, canary
+GitOps: Argo CD и Flux
+Артефакты, версионирование и релизы
+# 7. Infrastructure as Code
+Terraform: провайдеры, ресурсы, state
+Terraform: модули, workspaces, удалённый state
+Ansible: inventory, playbooks, роли
+Управление секретами: Vault, SOPS
+# 8. Облака
+Основные сервисы облаков: вычисления, сети, хранилища
+IAM и принцип наименьших привилегий
+Стоимость облака и FinOps
+# 9. Наблюдаемость и SRE
+Метрики: Prometheus и PromQL
+Дашборды Grafana
+Логи: Loki, ELK
+Трассировка: OpenTelemetry, Jaeger
+Алертинг и дежурства
+SLI, SLO, SLA и error budget
+Инциденты и постмортемы
+Резервное копирование и аварийное восстановление

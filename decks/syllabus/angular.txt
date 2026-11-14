@@ -1,0 +1,61 @@
+title: Angular
+match: angular
+# 1. Введение
+Архитектура Angular-приложения и Angular CLI
+TypeScript для Angular
+Standalone-компоненты и bootstrap приложения
+# 2. Компоненты и шаблоны
+Компоненты: метаданные, шаблон, стили
+Интерполяция и привязки: property, event, two-way
+Control flow: @if, @for, @switch, @defer
+Input и Output, model()
+Жизненный цикл компонента (хуки)
+Content projection: ng-content
+ViewChild, ContentChild и шаблонные переменные
+Инкапсуляция стилей
+# 3. Директивы и пайпы
+Атрибутные директивы
+Структурные директивы и ng-template
+Встроенные пайпы
+Собственные пайпы: pure и impure
+# 4. Сигналы и реактивность
+Signals: signal, computed, effect
+linkedSignal и resource
+Взаимодействие сигналов и RxJS (toSignal, toObservable)
+# 5. Внедрение зависимостей
+Сервисы и @Injectable
+Иерархия инжекторов и providedIn
+Провайдеры: useClass, useValue, useFactory, InjectionToken
+Функция inject()
+# 6. RxJS
+Observable, Observer, подписка и отписка
+Операторы трансформации: map, switchMap, mergeMap, concatMap, exhaustMap
+Subject, BehaviorSubject, ReplaySubject
+Обработка ошибок в RxJS
+async pipe и управление подписками
+# 7. HTTP
+HttpClient: запросы и типизация
+Interceptors
+Обработка ошибок и повторы запросов
+# 8. Маршрутизация
+Router: маршруты, параметры, вложенные маршруты
+Guards и resolvers
+Lazy loading
+# 9. Формы
+Template-driven формы
+Reactive Forms: FormControl, FormGroup, FormArray
+Валидация: встроенные и собственные валидаторы
+ControlValueAccessor
+# 10. Состояние и архитектура
+Управление состоянием: сервисы с сигналами, NgRx Store
+NgRx Signal Store
+Архитектура больших приложений и модули фич
+# 11. Производительность
+Change detection: Default и OnPush
+Zoneless Angular
+trackBy, @defer и оптимизация рендера
+SSR, гидратация и Angular Universal
+# 12. Тестирование
+Unit-тесты компонентов и TestBed
+Тестирование сервисов и HTTP
+E2E-тесты

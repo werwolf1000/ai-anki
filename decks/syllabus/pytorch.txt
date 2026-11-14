@@ -1,0 +1,40 @@
+title: PyTorch
+match: pytorch
+# 1. Тензоры
+Тензоры: создание, dtype, device
+Операции, индексация и broadcasting
+view, reshape, permute и память тензора
+Связь с NumPy
+# 2. Автоматическое дифференцирование
+Autograd: граф вычислений и backward
+requires_grad, no_grad и detach
+Градиенты: накопление, zero_grad, clipping
+# 3. Построение моделей
+nn.Module: слои, параметры, forward
+Линейные слои и функции активации
+Свёрточные сети (CNN)
+Рекуррентные сети: RNN, LSTM, GRU
+Трансформеры и attention в PyTorch
+Нормализация: BatchNorm, LayerNorm; Dropout
+Инициализация весов
+# 4. Обучение
+Функции потерь
+Оптимизаторы: SGD, Adam, AdamW
+Learning rate schedulers
+Цикл обучения и валидации
+Переобучение и регуляризация
+Сохранение и загрузка моделей (state_dict, checkpoints)
+# 5. Данные
+Dataset и DataLoader
+Трансформации и аугментации
+Батчи, collate_fn, num_workers
+# 6. GPU и производительность
+CUDA: перенос на GPU и синхронизация
+Mixed precision (AMP)
+torch.compile
+Распределённое обучение: DDP, FSDP
+Профилирование и экономия памяти
+# 7. Экосистема
+Transfer learning и предобученные модели (torchvision)
+Hugging Face Transformers и PEFT
+Экспорт моделей: TorchScript, ONNX

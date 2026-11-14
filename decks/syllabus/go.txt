@@ -1,0 +1,67 @@
+title: Go
+match: go-basics|go-live|pro-go|^go\b
+# 1. Основы языка
+Установка, go mod и структура проекта
+Переменные, константы, iota
+Базовые типы и преобразования
+Управляющие конструкции: if, for, switch
+Функции, множественный возврат, именованные результаты
+defer, panic и recover
+# 2. Составные типы
+Массивы и слайсы: len, cap, append
+Внутреннее устройство слайса и подводные камни
+Map: устройство и особенности
+Строки, байты и руны
+Структуры и встраивание (embedding)
+Указатели
+# 3. Методы и интерфейсы
+Методы: value receiver vs pointer receiver
+Интерфейсы и неявная реализация
+Пустой интерфейс, any и type assertion
+Type switch
+Интерфейс error и обёртка ошибок (errors.Is, errors.As)
+Стандартные интерфейсы: io.Reader, io.Writer, Stringer
+# 4. Generics
+Обобщённые функции и типы
+Ограничения (constraints) и comparable
+Когда использовать дженерики
+# 5. Конкурентность
+Горутины и планировщик Go (GMP)
+Каналы: буферизованные и небуферизованные
+select и таймауты
+sync: Mutex, RWMutex, WaitGroup, Once
+sync/atomic
+context: отмена и дедлайны
+Паттерны: worker pool, fan-in, fan-out, pipeline
+errgroup
+Гонки данных и race detector
+Модель памяти Go
+# 6. Стандартная библиотека
+fmt, strings, strconv
+time и таймеры
+encoding/json и теги структур
+os, io, bufio — работа с файлами
+log/slog — структурное логирование
+# 7. Веб и сети
+net/http: сервер и обработчики
+Маршрутизация: ServeMux 1.22+, chi, gin
+Middleware в Go
+HTTP-клиент, таймауты и повторы
+gRPC и Protocol Buffers
+# 8. Базы данных
+database/sql и пул соединений
+pgx и работа с PostgreSQL
+Транзакции и миграции
+sqlc и ORM (GORM) — обзор
+# 9. Тестирование и качество
+testing: табличные тесты и подтесты
+Моки и интерфейсы в тестах
+Бенчмарки и фаззинг
+Линтеры: go vet, golangci-lint
+# 10. Производительность и эксплуатация
+Сборщик мусора и escape analysis
+Профилирование: pprof и trace
+Аллокации и оптимизация
+Конфигурация и graceful shutdown
+Сборка, кросс-компиляция и Docker для Go
+Структура проекта и архитектура сервиса

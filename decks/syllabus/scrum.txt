@@ -1,0 +1,36 @@
+title: Scrum
+match: scrum-framework|^scrum
+# 1. Основы Scrum
+Определение Scrum и теория Scrum
+Эмпиризм и три столпа
+Ценности Scrum
+Scrum vs другие подходы
+# 2. Scrum-команда
+Scrum-команда: размер и состав
+Product Owner: ответственность и полномочия
+Scrum Master: служение команде, PO и организации
+Разработчики (Developers)
+Самоуправление и кросс-функциональность
+# 3. События Scrum
+Спринт: длительность и правила
+Sprint Planning: зачем, что и как
+Daily Scrum
+Sprint Review
+Sprint Retrospective
+Отмена спринта
+Таймбоксы событий
+# 4. Артефакты и обязательства
+Product Backlog и Product Goal
+Sprint Backlog и Sprint Goal
+Инкремент и Definition of Done
+Уточнение бэклога (refinement)
+# 5. Практики
+User stories и критерии приёмки
+Оценка: story points, planning poker
+Burndown-диаграммы и прогнозирование
+Фасилитация событий
+Форматы ретроспектив
+# 6. Масштабирование и антипаттерны
+Несколько команд над одним продуктом: Nexus, LeSS
+Типичные антипаттерны Scrum
+Сертификация: PSM, PSPO, CSM

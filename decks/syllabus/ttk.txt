@@ -1,0 +1,33 @@
+title: tkinter и ttk
+match: ttk|tkinter
+# 1. Основы tkinter
+Главное окно, mainloop и цикл событий
+Виджеты tk и ttk: в чём разница
+Переменные Tk: StringVar, IntVar, BooleanVar
+# 2. Размещение
+pack
+grid: строки, столбцы, sticky, weight
+place
+Frame и LabelFrame для компоновки
+# 3. Базовые виджеты ttk
+Label, Button, Entry
+Checkbutton и Radiobutton
+Combobox и Spinbox
+Scale и Progressbar
+# 4. Сложные виджеты
+Treeview: таблицы и деревья
+Notebook — вкладки
+PanedWindow и Scrollbar
+Text и Canvas
+Menu и контекстное меню
+# 5. События
+bind, события клавиатуры и мыши
+command, after и таймеры
+Валидация ввода (validatecommand)
+# 6. Стили и темы
+ttk.Style: стили и темы
+Настройка элементов и состояний (map)
+# 7. Приложение
+Диалоги: messagebox, filedialog, Toplevel
+Многопоточность и обновление интерфейса
+Структура приложения на классах

@@ -14,6 +14,7 @@ from pydantic import BaseModel
 from server.kb_sources import SOURCES, deck_vocab, sources_for_deck
 from server.knowledge import ARTICLE_SYSTEM, ASK_SYSTEM, ThinkFilter, format_context, hybrid_search
 from server.services import AppServices, UserContext
+from server.syllabus import CardIndex, main_topic, syllabus_for
 
 QUERY_INSTRUCT = "Instruct: Given a study topic, retrieve relevant passages from the official documentation\nQuery: "
 
@@ -108,6 +109,40 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     def topic_cards(deck, topic: str) -> list:
         return [c for c in deck.cards if (c.topic.strip() or "Разное") == topic]
 
+    def book_of(entry):
+        return syllabus_for(entry.deck_id, entry.name, entry.paths)
+
+    def book_key(entry) -> str:
+        """Статьи и отметки программы общие для всех её колод."""
+        sy = book_of(entry)
+        return sy.key if sy else entry.deck_id
+
+    def entry_key(deck_id: str) -> str:
+        entry = services.registry.get(deck_id)
+        if not entry:
+            raise HTTPException(404, "Колода не найдена")
+        return book_key(entry)
+
+    _indexes: dict[str, tuple[int, CardIndex]] = {}
+
+    def card_index(entry, deck) -> CardIndex:
+        hit = _indexes.get(entry.deck_id)
+        if not hit or hit[0] != len(deck.cards):
+            hit = (len(deck.cards), CardIndex(deck.cards))
+            _indexes[entry.deck_id] = hit
+        return hit[1]
+
+    def lesson_cards(entry, deck, topic: str, sy=None) -> list | None:
+        """Карточки урока; None — такого урока/темы нет."""
+        sy = sy or book_of(entry)
+        if not sy:
+            cards = topic_cards(deck, topic)
+            return cards or None
+        chapter = sy.chapter_of(topic)
+        if chapter is None:
+            return None
+        return card_index(entry, deck).rank(topic, chapter, limit=8)
+
     def deck_sources(entry, deck) -> list[str]:
         stats = services.knowledge.stats()
         return [s for s in sources_for_deck(entry.deck_id, entry.name, deck.language) if stats.get(s, {}).get("chunks")]
@@ -121,21 +156,56 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
                 continue
             topics = sorted({c.topic.strip() or "Разное" for c in deck.cards})
             vocab = deck_vocab([c.question + " " + c.reference for c in deck.cards]) if with_vocab else []
+            sy = book_of(entry) if with_vocab else None
+            if sy and set(sources_for_deck(entry.deck_id, entry.name, deck.language)) <= {"wikipedia_ru"}:
+                # только Википедия — ищем статьи и по урокам программы
+                topics += [ls for _, ls in sy.lessons()]
             out.append({"id": entry.deck_id, "name": entry.name, "topics": topics, "vocab": vocab})
         return out
 
+    def all_books() -> list[dict]:
+        """Учебники без повторов: программа (общая для нескольких колод) или темы колоды."""
+        out: list[dict] = []
+        seen: set[str] = set()
+        for entry in sorted(services.registry.entries, key=lambda e: e.is_live_coding):
+            sy = book_of(entry)
+            key = sy.key if sy else entry.deck_id
+            if key in seen:
+                continue
+            if sy:
+                topics = [ls for _, ls in sy.lessons()]
+            else:
+                try:
+                    deck = services.load_deck(entry)
+                except Exception:  # noqa: BLE001
+                    continue
+                topics = sorted({c.topic.strip() or "Разное" for c in deck.cards})
+            seen.add(key)
+            out.append({"key": key, "id": entry.deck_id, "name": sy.title if sy else entry.name, "topics": topics})
+        return out
+
     def article_prompt(entry, deck, topic: str, cards: list) -> tuple[str, str, list[dict], str]:
-        samples = " ".join(c.question.split("\n")[0][:160] for c in cards[:10])
-        query = f"{topic}. {entry.name}. {samples}"
+        sy = book_of(entry)
+        chapter = sy.chapter_of(topic) if sy else None
+        samples = " ".join(c.question.split("\n")[0][:160] for c in cards[:6])
+        subject = sy.title if sy else entry.name
+        query = f"{topic}. {chapter or ''}. {subject}. {samples}"
         chunks, mode = retrieve(query, deck_sources(entry, deck), k=8)
         ctx_text, sources = format_context(
             chunks, [{"question": c.question, "reference": c.reference} for c in cards]
         )
         system = ARTICLE_SYSTEM.replace("{lang}", deck.language or "")
-        user_prompt = (
-            f"Колода: {entry.name}\nТема: {topic}\n\n{ctx_text}\n\n"
-            f"Напиши статью учебника по теме «{topic}», которая подготовит к ответам на карточки этой темы."
-        )
+        if sy:
+            user_prompt = (
+                f"Учебник: {sy.title}\nГлава: {chapter}\nУрок: {topic}\n\n{ctx_text}\n\n"
+                f"Напиши урок учебника «{topic}» (глава «{chapter}»). Раскрой именно эту тему, не пересказывай "
+                "соседние уроки главы. Карточки — ориентир, что должен уметь читатель после урока."
+            )
+        else:
+            user_prompt = (
+                f"Колода: {entry.name}\nТема: {topic}\n\n{ctx_text}\n\n"
+                f"Напиши статью учебника по теме «{topic}», которая подготовит к ответам на карточки этой темы."
+            )
         if chunks:
             user_prompt += (
                 f"\n\nВАЖНО: после каждого факта из источников ставь сноску с его номером — [1]…[{len(chunks)}]. "
@@ -148,41 +218,56 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     @r.get("/api/textbook/{deck_id}")
     def textbook_deck(deck_id: str, ctx: UserContext = Depends(current_ctx)) -> dict:
         entry, deck = deck_and_entry(deck_id)
-        marks = read_marks(ctx).get(deck_id, {})
-        written = services.knowledge.articles_for_deck(deck_id)
-        counts: dict[str, int] = {}
-        for c in deck.cards:
-            name = c.topic.strip() or "Разное"
-            counts[name] = counts.get(name, 0) + 1
-        topics = [
-            {"name": n, "cards": counts[n], "read_at": marks.get(n), "has_article": n in written}
-            for n in sorted(counts)
-        ]
+        sy = book_of(entry)
+        key = sy.key if sy else deck_id
+        marks = read_marks(ctx).get(key, {})
+        written = services.knowledge.articles_for_deck(key)
+        topics = []
+        if sy:
+            idx = card_index(entry, deck)
+            for chapter, lesson in sy.lessons():
+                cards = idx.rank(lesson, chapter, limit=8)
+                topics.append({
+                    "name": lesson, "chapter": chapter, "cards": len(cards), "card_topic": main_topic(cards),
+                    "read_at": marks.get(lesson), "has_article": lesson in written,
+                })
+        else:
+            counts: dict[str, int] = {}
+            for c in deck.cards:
+                name = c.topic.strip() or "Разное"
+                counts[name] = counts.get(name, 0) + 1
+            topics = [
+                {"name": n, "chapter": "", "cards": counts[n], "card_topic": n, "read_at": marks.get(n), "has_article": n in written}
+                for n in sorted(counts)
+            ]
         srcs = deck_sources(entry, deck)
         return {
             "deck_id": deck_id,
             "name": entry.name,
+            "book": {"id": sy.id, "title": sy.title} if sy else None,
             "topics": topics,
             "sources": [{"id": s, "title": SOURCES[s].title, "url": SOURCES[s].homepage} for s in srcs],
         }
 
     @r.get("/api/textbook/{deck_id}/article")
     def get_article(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:
-        art = services.knowledge.get_article(deck_id, topic)
-        marks = read_marks(ctx).get(deck_id, {})
+        key = entry_key(deck_id)
+        art = services.knowledge.get_article(key, topic)
+        marks = read_marks(ctx).get(key, {})
         return {"article": art, "read_at": marks.get(topic)}
 
     @r.post("/api/textbook/{deck_id}/read")
     def mark_read(deck_id: str, body: ReadIn, ctx: UserContext = Depends(current_ctx)) -> dict:
+        key = entry_key(deck_id)
         with ctx.lock:
             marks = read_marks(ctx)
-            deck_marks = marks.setdefault(deck_id, {})
+            deck_marks = marks.setdefault(key, {})
             if body.read:
                 deck_marks[body.topic] = datetime.now(timezone.utc).isoformat()
             else:
                 deck_marks.pop(body.topic, None)
             save_marks(ctx, marks)
-        return {"ok": True, "read_at": marks[deck_id].get(body.topic)}
+        return {"ok": True, "read_at": marks[key].get(body.topic)}
 
     # ── поиск по базе знаний ────────────────────────────────────────
 
@@ -227,10 +312,11 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     def stream_article(deck_id: str, body: ArticleIn, ctx: UserContext = Depends(current_ctx)) -> StreamingResponse:
         entry, deck = deck_and_entry(deck_id)
         topic = body.topic.strip()
-        cards = topic_cards(deck, topic)
-        if not cards:
-            raise HTTPException(404, "В колоде нет такой темы")
-        cached = services.knowledge.get_article(deck_id, topic)
+        cards = lesson_cards(entry, deck, topic)
+        if cards is None:
+            raise HTTPException(404, "В учебнике нет такой темы")
+        key = book_key(entry)
+        cached = services.knowledge.get_article(key, topic)
         if cached and not body.regenerate:
             def replay() -> Iterator[str]:
                 yield _ndjson({"type": "sources", "sources": cached["sources"], "cached": True, "model": cached["model"]})
@@ -242,7 +328,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
 
         def save(content: str) -> None:
             content = strip_title(content, topic)
-            services.knowledge.save_article(deck_id, topic, content, sources, services.textbook_model())
+            services.knowledge.save_article(key, topic, content, sources, services.textbook_model())
 
         return StreamingResponse(stream_answer(system, user_prompt, sources, mode, save), media_type="application/x-ndjson")
 
@@ -254,7 +340,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             raise HTTPException(400, "Пустой вопрос")
         topic = body.topic.strip()
         chunks, mode = retrieve(f"{topic}. {question}", deck_sources(entry, deck), k=6)
-        cards = topic_cards(deck, topic) if topic else []
+        cards = (lesson_cards(entry, deck, topic) or []) if topic else []
         ctx_text, sources = format_context(chunks, [{"question": c.question, "reference": c.reference} for c in cards], card_limit=8)
         user_prompt = f"Колода: {entry.name}\nТема: {topic or '—'}\n\n{ctx_text}\n\nВОПРОС: {question}"
         return StreamingResponse(stream_answer(ASK_SYSTEM, user_prompt, sources, mode), media_type="application/x-ndjson")
@@ -266,8 +352,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     batch_lock = threading.Lock()
 
     def generate_one(entry, deck, topic: str) -> bool:
-        cards = topic_cards(deck, topic)
-        if not cards:
+        cards = lesson_cards(entry, deck, topic)
+        if cards is None:
             return False
         system, user_prompt, sources, _mode = article_prompt(entry, deck, topic, cards)
         filt = ThinkFilter()
@@ -283,7 +369,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         content = strip_title("".join(parts).strip(), topic)
         if len(content) < 200:
             raise RuntimeError("модель вернула слишком короткий текст")
-        services.knowledge.save_article(entry.deck_id, topic, content, sources, services.textbook_model())
+        services.knowledge.save_article(book_key(entry), topic, content, sources, services.textbook_model())
         return True
 
     def run_batch(items: list[tuple[str, str]], regenerate: bool) -> None:
@@ -297,7 +383,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
                 if entry is None:
                     batch.done += 1
                     continue
-                if not regenerate and services.knowledge.get_article(deck_id, topic):
+                if not regenerate and services.knowledge.get_article(book_key(entry), topic):
                     batch.done += 1
                     continue
                 batch.current = f"{entry.name} › {topic}"
@@ -323,8 +409,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
 
     def articles_coverage() -> dict:
         total = written = 0
-        for d in all_deck_topics():
-            have = services.knowledge.articles_for_deck(d["id"])
+        for d in all_books():
+            have = services.knowledge.articles_for_deck(d["key"])
             total += len(d["topics"])
             written += sum(1 for t in d["topics"] if t in have)
         return {"topics_total": total, "topics_written": written}
@@ -333,14 +419,14 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     def generate_all(body: GenerateAllIn, ctx: UserContext = Depends(current_ctx)) -> dict:
         if not ctx.user.is_admin:
             raise HTTPException(403, "Только для администратора")
-        decks = all_deck_topics()
+        books = all_books()
         if body.deck_id:
-            decks = [d for d in decks if d["id"] == body.deck_id]
-            if not decks:
-                raise HTTPException(404, "Колода не найдена")
-        items = [(d["id"], t) for d in decks for t in d["topics"]]
+            key = entry_key(body.deck_id)
+            books = [d | {"id": body.deck_id} for d in books if d["key"] == key]
+        items = [(d["id"], t) for d in books for t in d["topics"]]
         if not body.regenerate:
-            items = [(i, t) for i, t in items if t not in services.knowledge.articles_for_deck(i)]
+            have = {d["id"]: services.knowledge.articles_for_deck(d["key"]) for d in books}
+            items = [(i, t) for i, t in items if t not in have[i]]
         if not items:
             return {"ok": True, "queued": 0}
         with batch_lock:

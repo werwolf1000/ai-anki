@@ -1,0 +1,71 @@
+title: Node.js, JavaScript и TypeScript
+match: nodejs|node.js
+# 1. Современный JavaScript
+Типы данных, приведение типов, == и ===
+let, const, области видимости и hoisting
+Функции, стрелочные функции и this
+Замыкания
+Прототипы и прототипное наследование
+Классы: поля, приватные члены (#), static
+Деструктуризация, spread и rest
+Модули: ES Modules и CommonJS
+Итераторы, генераторы, Symbol
+Map, Set, WeakMap, WeakRef
+Обработка ошибок и собственные классы ошибок
+# 2. Асинхронность и event loop
+Event loop: фазы libuv, микрозадачи и макрозадачи
+process.nextTick, setImmediate и таймеры
+Promise: цепочки, Promise.all, allSettled, race, any
+async/await и обработка ошибок
+AbortController и отмена операций
+Thread pool libuv и блокирующие операции
+Worker threads
+# 3. TypeScript
+Базовые типы, interface и type
+Union, intersection и сужение типов (narrowing)
+Generics
+Утилитарные типы: Partial, Pick, Omit, Record
+Условные и mapped-типы, infer
+Декораторы и метаданные
+tsconfig: strict, module, target
+Типизация Node.js-проекта и @types
+# 4. Ядро Node.js
+Модули node:fs, node:path, node:os
+Потоки (Streams): Readable, Writable, Transform, pipeline
+Buffer и работа с бинарными данными
+EventEmitter
+child_process и cluster
+Переменные окружения и конфигурация
+# 5. HTTP и фреймворки
+Модуль node:http и жизненный цикл запроса
+Express: роутинг, middleware, обработка ошибок
+Fastify: схемы, плагины, производительность
+NestJS: модули, провайдеры, DI
+Валидация входных данных (zod, class-validator)
+REST API: проектирование и версионирование
+WebSockets и Socket.IO
+GraphQL в Node.js
+# 6. Базы данных
+Драйверы и пул соединений (pg, mysql2)
+ORM: Prisma, TypeORM, Drizzle
+Транзакции и миграции
+Redis: кэш и очереди (BullMQ)
+MongoDB и Mongoose
+# 7. Безопасность
+Аутентификация: сессии, JWT, OAuth2
+Хранение паролей: bcrypt, argon2
+OWASP для Node.js: инъекции, XSS, SSRF, prototype pollution
+Безопасность зависимостей: npm audit, lockfile
+Заголовки безопасности (helmet), CORS, rate limiting
+# 8. Тестирование
+node:test и Jest/Vitest
+Моки, стабы и тестирование асинхронного кода
+Интеграционные тесты API (supertest)
+# 9. Производительность и эксплуатация
+Профилирование: --inspect, clinic, flame graphs
+Утечки памяти и сборщик мусора V8
+Логирование (pino) и мониторинг
+Graceful shutdown и обработка сигналов
+Масштабирование: cluster, PM2, горизонтальное масштабирование
+Docker для Node.js и CI/CD
+Пакеты npm: package.json, semver, монорепозитории

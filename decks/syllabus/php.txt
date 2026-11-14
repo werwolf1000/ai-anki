@@ -1,0 +1,101 @@
+title: PHP
+match: php8|pro-php|php-live|^php
+# 1. Основы языка
+Синтаксис, переменные и типы данных
+Приведение типов и строгая типизация (declare(strict_types=1))
+Строки: функции, sprintf, heredoc и nowdoc
+Массивы: индексные, ассоциативные, функции array_*
+Функции: аргументы по ссылке, значения по умолчанию, variadic
+Анонимные функции, замыкания и стрелочные функции
+Области видимости, static и global
+Обработка ошибок: исключения, Throwable, finally
+Генераторы и yield
+Пространства имён и автозагрузка
+# 2. Продвинутое ООП
+Классы, объекты, конструкторы и модификаторы доступа
+SOLID-принципы: SRP, OCP, LSP, ISP, DIP
+Порождающие паттерны: Factory, Builder, Singleton
+Структурные паттерны: Decorator, Adapter, Facade
+Поведенческие паттерны: Strategy, Observer, Command
+Traits — горизонтальное переиспользование кода
+Абстрактные классы vs интерфейсы — когда что
+Магические методы (__get, __set, __call, __invoke)
+Позднее статическое связывание (Late Static Binding)
+Ковариантность и контравариантность типов
+Композиция vs наследование
+# 3. Современный PHP 8.x
+JIT-компиляция — как работает и когда даёт прирост
+Match expressions
+Nullsafe operator (?->)
+Enums: чистые и backed
+Readonly properties и readonly classes
+Constructor promotion
+Атрибуты (Attributes) и рефлексия
+Named arguments
+Union types и Intersection types
+First-class callable syntax
+Fibers (асинхронность)
+# 4. Базы данных
+PDO: подключение, prepared statements, режимы выборки
+PDO: транзакции и уровни изоляции
+PDO: обработка ошибок через исключения
+Хранимые процедуры и подготовленные выражения
+ORM под капотом: Identity Map, Unit of Work
+Ленивая vs жадная загрузка (N+1 проблема)
+Query Builder vs ORM vs чистый SQL
+Миграции и версионирование схемы БД
+Индексы и оптимизация запросов
+NoSQL-базы (Redis, MongoDB) в связке с PHP
+# 5. Безопасность
+SQL-инъекции и prepared statements
+XSS — типы и защита
+CSRF-токены
+Безопасная работа с сессиями и cookie
+Хеширование паролей (password_hash, Argon2, Bcrypt)
+Шифрование данных (OpenSSL, Sodium)
+Загрузка файлов — валидация и риски
+Кликджекинг и security headers (CSP, HSTS)
+OAuth2 и JWT-авторизация
+# 6. Инструменты и качество
+Composer: версионирование, скрипты, создание пакетов
+PSR-стандарты (PSR-4, PSR-7, PSR-11, PSR-12)
+PHPUnit — unit-тесты
+Моки и стабы, тестирование зависимостей
+Pest как альтернатива PHPUnit
+TDD-подход
+PHPStan / Psalm — статический анализ
+PHP-CS-Fixer / PHP_CodeSniffer
+Xdebug — отладка и профилирование
+# 7. API и интеграции
+HTTP в PHP: суперглобальные массивы, заголовки, коды ответа
+RESTful API — проектирование
+HTTP-клиенты: cURL и Guzzle
+Работа с JSON: валидация и сериализация
+XML: SimpleXML, DOMDocument, XPath
+Микрофреймворки (Slim, Lumen)
+GraphQL в PHP
+WebSockets (Ratchet, Swoole)
+# 8. Производительность и кэширование
+OPcache — настройка
+Redis / Memcached для кэша
+Профилирование (Blackfire, Xdebug profiler)
+Асинхронность: Swoole, RoadRunner, ReactPHP
+Очереди (RabbitMQ, Redis queues)
+# 9. Архитектура приложений
+MVC — как устроен изнутри
+DI-контейнеры (на примере Laravel/Symfony)
+Сервис-провайдеры
+Слоистая архитектура (Controller → Service → Repository)
+DDD-основы в PHP
+CQRS и Event Sourcing (обзорно)
+Middleware и pipeline
+# 10. Инфраструктура и деплой
+Docker для PHP (Dockerfile, docker-compose)
+Nginx + PHP-FPM — настройка
+Apache mod_php vs FPM
+CI/CD (GitHub Actions, GitLab CI)
+Деплой и zero-downtime
+# 11. Фреймворки (углублённо)
+Laravel: Service Container, Eloquent, Queues
+Symfony: Components, Bundles, EventDispatcher
+Внутреннее устройство фреймворка (роутинг, kernel)

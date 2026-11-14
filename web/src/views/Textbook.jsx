@@ -46,8 +46,32 @@ export default function Textbook({ user, decks, initial, onStart }) {
   }, [initial]);
 
   const deck = usable.find((d) => d.deck_id === deckId);
-  const topics = (book?.topics || []).filter((t) => t.name.toLowerCase().includes(query.toLowerCase()));
+  const q = query.trim().toLowerCase();
+  const topics = (book?.topics || []).filter((t) => !q || t.name.toLowerCase().includes(q) || (t.chapter || "").toLowerCase().includes(q));
   const readCount = (book?.topics || []).filter((t) => t.read_at).length;
+  const chapters = useMemo(() => {
+    const out = [];
+    for (const t of topics) {
+      let ch = out[out.length - 1];
+      if (!ch || ch.title !== t.chapter) {
+        ch = { title: t.chapter, items: [] };
+        out.push(ch);
+      }
+      ch.items.push(t);
+    }
+    return out;
+  }, [topics]);
+  const [openChapters, setOpenChapters] = useState({});
+  const currentChapter = book?.topics.find((t) => t.name === topic)?.chapter;
+  const isOpen = (title) => !!q || chapters.length === 1 || (openChapters[title] ?? title === (currentChapter ?? chapters[0]?.title));
+  const toggleChapter = (title) => setOpenChapters((o) => ({ ...o, [title]: !isOpen(title) }));
+
+  // переход из карточки: тема колоды → первый урок программы с этой темой
+  useEffect(() => {
+    if (!book || !topic || book.topics.some((t) => t.name === topic)) return;
+    const hit = book.topics.find((t) => t.card_topic === topic) || book.topics.find((t) => t.name.toLowerCase().includes(topic.toLowerCase()));
+    setTopic(hit ? hit.name : "");
+  }, [book, topic]);
 
   async function generateDeck() {
     try {
@@ -77,7 +101,7 @@ export default function Textbook({ user, decks, initial, onStart }) {
         {/* темы */}
         <aside className="glass h-fit p-4 lg:sticky lg:top-6">
           <div className="mb-3 flex items-center justify-between">
-            <div className="text-sm font-semibold">Темы</div>
+            <div className="text-sm font-semibold">{book?.book ? `Программа: ${book.book.title}` : "Темы"}</div>
             {book && <div className="text-xs text-zinc-500">прочитано {readCount}/{book.topics.length}</div>}
           </div>
           {book && book.topics.length > 0 && (
@@ -92,12 +116,27 @@ export default function Textbook({ user, decks, initial, onStart }) {
           {!book ? (
             <div className="flex justify-center py-8"><Spinner /></div>
           ) : (
-            <div ref={topicsRef} className="max-h-[60vh] space-y-1 overflow-y-auto pr-1">
-              {topics.map((t) => (
+            <div ref={topicsRef} className="max-h-[65vh] space-y-1 overflow-y-auto pr-1">
+              {chapters.map((ch) => (
+                <div key={ch.title || "_"}>
+                  {ch.title && (
+                    <button
+                      onClick={() => toggleChapter(ch.title)}
+                      className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-400 hover:text-zinc-100"
+                    >
+                      <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isOpen(ch.title) ? "" : "-rotate-90"}`} />
+                      <span className="min-w-0 flex-1 truncate normal-case tracking-normal">{ch.title}</span>
+                      <span className="text-[10px] font-normal tabular-nums text-zinc-600">
+                        {ch.items.filter((t) => t.read_at).length}/{ch.items.length}
+                      </span>
+                    </button>
+                  )}
+                  {isOpen(ch.title) && ch.items.map((t) => (
                 <button
                   key={t.name}
                   onClick={() => setTopic(t.name)}
-                  className={`relative flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${topic === t.name ? "text-white" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"}`}
+                  title={t.name}
+                  className={`relative flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition-colors ${topic === t.name ? "text-white" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"}`}
                 >
                   {topic === t.name && (
                     <motion.span layoutId="tb-topic" className="absolute inset-0 rounded-xl border border-violet-500/30 bg-violet-500/15" transition={{ type: "spring", stiffness: 420, damping: 34 }} />
@@ -107,8 +146,10 @@ export default function Textbook({ user, decks, initial, onStart }) {
                   </span>
                   <span className="relative min-w-0 flex-1 truncate">{t.name}</span>
                   {t.has_article && <Sparkles className="relative h-3.5 w-3.5 shrink-0 text-violet-300/70" title="Статья готова" />}
-                  <span className="relative text-[11px] tabular-nums text-zinc-600">{t.cards}</span>
+                  <span className="relative text-[11px] tabular-nums text-zinc-600">{t.cards || ""}</span>
                 </button>
+              ))}
+                </div>
               ))}
             </div>
           )}
@@ -142,7 +183,7 @@ export default function Textbook({ user, decks, initial, onStart }) {
             <div className="glass">
               <EmptyState
                 icon={<BookOpenText className="h-6 w-6" />}
-                title="Выберите тему"
+                title={book?.book ? "Выберите урок" : "Выберите тему"}
                 text="Статья будет сгенерирована по документации и карточкам темы, сохранится и откроется мгновенно в следующий раз."
               />
             </div>
@@ -296,8 +337,9 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
   async function practice() {
     setStarting(true);
     try {
-      let s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "due", topic } });
-      if (s.empty) s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "all", topic } });
+      const cardTopic = info?.card_topic || undefined;
+      let s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "due", topic: cardTopic } });
+      if (s.empty) s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "all", topic: cardTopic } });
       if (s.empty) toast("В теме нет карточек", "info");
       else onStart(s);
     } catch (e) {
@@ -323,10 +365,12 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
           <div className={`pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b ${k.grad} opacity-40`} />
           <div className="relative mb-5 flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className={`mb-1 text-xs font-semibold uppercase tracking-widest ${k.text}`}>{deck?.name}</div>
+              <div className={`mb-1 text-xs font-semibold uppercase tracking-widest ${k.text}`}>
+                {info?.chapter ? `${deck?.name} · ${info.chapter}` : deck?.name}
+              </div>
               <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{topic}</h2>
               <div className="mt-2 flex flex-wrap gap-2">
-                {info && <span className="chip">{info.cards} карточек</span>}
+                {info?.cards > 0 && <span className="chip">{info.cards} карточек</span>}
                 {sources.length > 0 && <span className="chip"><Library className="h-3 w-3" /> {sources.length} фрагм. документации</span>}
                 {meta.retrieval === "hybrid" && <span className="chip text-violet-200">поиск: смысловой + BM25</span>}
                 {readAt && <span className="chip border-emerald-500/30 text-emerald-300"><Check className="h-3 w-3" /> прочитано</span>}

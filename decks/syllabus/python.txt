@@ -1,0 +1,72 @@
+title: Python
+match: python-basics|python-live|^python
+# 1. Основы языка
+Синтаксис, отступы и PEP 8
+Типы данных: числа, строки, bool, None
+Строки: методы, f-строки, форматирование
+Списки, кортежи и срезы
+Словари и множества
+Условия, циклы, for-else и while-else
+Comprehensions: list, dict, set
+Функции: аргументы, *args, **kwargs, keyword-only
+Области видимости: LEGB, global, nonlocal
+Исключения: try/except/else/finally, собственные исключения
+# 2. Модель данных Python
+Всё — объект: идентичность, изменяемость, ссылки
+Копирование: copy и deepcopy
+Итераторы и протокол итерации
+Генераторы и yield from
+Контекстные менеджеры и with
+Dunder-методы: __repr__, __eq__, __hash__, __len__
+Дескрипторы и property
+# 3. ООП
+Классы, экземпляры, атрибуты класса
+Наследование, super() и MRO
+classmethod и staticmethod
+Абстрактные классы (abc) и протоколы
+dataclasses
+__slots__
+Метаклассы — обзор
+Enum
+# 4. Функциональное программирование
+Функции высшего порядка: map, filter, reduce
+Замыкания
+Декораторы: с параметрами, functools.wraps
+functools: partial, lru_cache, singledispatch
+itertools
+Лямбда-функции
+# 5. Типизация
+Аннотации типов и модуль typing
+Generics и TypeVar
+Protocol и структурная типизация
+TypedDict, Literal, Final
+mypy и pyright
+# 6. Коллекции и стандартная библиотека
+collections: deque, Counter, defaultdict, namedtuple
+heapq и bisect
+Работа с файлами и pathlib
+json, csv и pickle
+datetime и zoneinfo
+re — регулярные выражения
+logging
+argparse и создание CLI
+os, sys и subprocess
+# 7. Асинхронность и параллелизм
+GIL и его последствия
+threading и concurrent.futures
+multiprocessing
+asyncio: event loop, корутины, await
+asyncio: задачи, gather, TaskGroup, таймауты
+Асинхронные итераторы и контекстные менеджеры
+# 8. Инструменты и качество
+Виртуальные окружения и pip
+Пакеты: pyproject.toml, uv, poetry
+Модули, пакеты и импорт
+pytest: фикстуры, параметризация, моки
+Линтеры и форматтеры: ruff, black
+Отладка (pdb) и профилирование (cProfile)
+# 9. Python в прикладных задачах
+Работа с HTTP: requests, httpx
+Базы данных: sqlite3, SQLAlchemy
+Веб-фреймворки: FastAPI, Django, Flask — обзор
+Управление памятью и сборка мусора

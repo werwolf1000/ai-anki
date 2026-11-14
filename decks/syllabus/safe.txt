@@ -1,0 +1,43 @@
+title: SAFe
+match: safe-scaled|\bsafe\b
+# 1. Основы SAFe
+Что такое SAFe и зачем масштабировать Agile
+Ценности SAFe
+10 принципов SAFe (Lean-Agile principles)
+Конфигурации: Essential, Large Solution, Portfolio, Full
+Lean-Agile мышление и лидерство
+# 2. Уровень команды
+Agile-команды в SAFe: ScrumXP и Kanban
+Итерации и их события
+Built-in Quality
+# 3. Agile Release Train
+Agile Release Train (ART)
+Роли ART: RTE, Product Management, System Architect
+Business Owners
+Value streams: операционные и девелоперские
+# 4. PI Planning
+Program Increment (PI)
+PI Planning: подготовка, повестка, результаты
+PI Objectives и оценка бизнес-ценности
+Program Board и зависимости
+ROAM рисков
+# 5. Бэклоги и приоритизация
+Эпики, Capabilities, Features, Stories
+Program Backlog и ART Backlog
+WSJF и Cost of Delay
+Enablers и архитектурная взлётная полоса
+# 6. Непрерывная поставка
+Continuous Delivery Pipeline
+System Demo
+Inspect & Adapt
+Innovation and Planning (IP) итерация
+DevOps в SAFe
+# 7. Портфель
+Lean Portfolio Management
+Стратегические темы и Portfolio Canvas
+Lean-бюджеты и guardrails
+Portfolio Kanban
+# 8. Внедрение
+Implementation Roadmap
+Метрики SAFe: flow, outcomes, competency
+Критика SAFe и альтернативы (LeSS, Nexus)

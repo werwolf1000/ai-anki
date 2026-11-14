@@ -1,0 +1,75 @@
+title: Laravel
+match: laravel
+# 1. Введение и устройство фреймворка
+Установка Laravel, структура проекта и Artisan
+Жизненный цикл запроса в Laravel
+Конфигурация, .env и окружения
+Service Container и внедрение зависимостей
+Service Providers и фасады
+# 2. Маршрутизация и контроллеры
+Маршруты: параметры, именование, группы
+Route Model Binding
+Контроллеры: ресурсные, single action, API-контроллеры
+Middleware: создание, группы, параметры
+Запросы (Request) и ответы (Response)
+Сессии, cookie и flash-данные
+# 3. Представления и фронтенд
+Blade: синтаксис, директивы, наследование шаблонов
+Blade-компоненты и слоты
+Vite и сборка фронтенда
+Livewire и Inertia — обзор
+Локализация и переводы
+# 4. Валидация и формы
+Валидация в контроллере и правила валидации
+Form Requests
+Собственные правила валидации
+Загрузка файлов и Storage
+# 5. Базы данных
+Query Builder
+Миграции и откат схемы
+Сидеры и фабрики
+Транзакции и блокировки
+Пагинация
+Redis в Laravel
+# 6. Eloquent ORM
+Модели, соглашения, mass assignment
+Связи: hasOne, hasMany, belongsTo, belongsToMany
+Полиморфные связи
+Eager loading и проблема N+1
+Скоупы: локальные и глобальные
+Accessors, mutators и casts
+События моделей и observers
+Soft deletes
+API Resources и сериализация
+# 7. Безопасность
+Аутентификация: Breeze, Fortify, guards
+Авторизация: Gates и Policies
+Sanctum: токены и SPA-аутентификация
+Passport и OAuth2
+Защита от CSRF, XSS и mass assignment в Laravel
+Шифрование и хеширование
+Rate limiting
+# 8. Очереди, события и фоновые задачи
+Очереди: jobs, драйверы, воркеры
+Повторы, таймауты и failed jobs
+Horizon
+События и слушатели
+Планировщик задач (Task Scheduling)
+Broadcasting и WebSockets (Reverb)
+Уведомления и Mail
+# 9. Кэш и производительность
+Кэш: драйверы, теги, remember
+Оптимизация: config/route/view cache, OPcache
+Octane
+Логирование и мониторинг (Telescope, Pulse)
+# 10. Тестирование
+Feature- и unit-тесты в Laravel
+Тестирование HTTP и JSON API
+RefreshDatabase и фабрики в тестах
+Fakes и моки: Queue, Event, Mail, Http
+Pest в Laravel
+# 11. Архитектура и деплой
+Service-слой, репозитории, actions
+Пакеты Laravel: создание и публикация
+Собственные Artisan-команды
+Деплой: Forge, Envoyer, Docker, zero-downtime
