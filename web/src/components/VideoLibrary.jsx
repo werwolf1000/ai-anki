@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "motion/react";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { AlertTriangle, CheckCircle2, Clapperboard, FolderSearch, RotateCcw, Trash2, Upload } from "lucide-react";
+import { AlertTriangle, CheckCircle2, Clapperboard, FileText, FolderSearch, RotateCcw, Search, Trash2, Upload, X } from "lucide-react";
 import { api, getToken, serverUrl } from "../lib/api";
 import { Spinner, useToast } from "./ui";
 
@@ -36,6 +37,7 @@ export default function VideoLibrary() {
   const [filter, setFilter] = useState("all");
   const fileRef = useRef(null);
   const [listRef] = useAutoAnimate({ duration: 200 });
+  const [transcript, setTranscript] = useState(null); // видео, чью расшифровку смотрим
 
   const load = () => api("/api/videos").then(setSt).catch((e) => toast(e.message, "error"));
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function VideoLibrary() {
           if (!alive) return;
           setSt(r);
           const busy = r.videos.some((v) => v.status === "processing" || v.status === "queued");
-          timer = setTimeout(tick, busy ? 4000 : 30000);
+          timer = setTimeout(tick, busy ? 2500 : 30000);
         })
         .catch(() => {});
     tick();
@@ -146,6 +148,8 @@ export default function VideoLibrary() {
         </div>
       )}
 
+      <ProgressCard progress={st.progress} />
+
       <div className="mb-4 grid gap-2 text-xs sm:grid-cols-2">
         {st.roots.map((r) => (
           <div key={r.path} className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
@@ -214,6 +218,11 @@ export default function VideoLibrary() {
                   {s.label}{v.status === "processing" ? ` ${Math.round(v.progress * 100)}%` : ""}
                 </span>
                 <div className="flex gap-1">
+                  {(v.status === "done" || v.status === "processing" || v.chunks > 0) && (
+                    <button className="rounded-lg p-1.5 text-zinc-500 hover:bg-white/[0.06] hover:text-violet-200" title="Расшифровка" onClick={() => setTranscript(v)}>
+                      <FileText className="h-3.5 w-3.5" />
+                    </button>
+                  )}
                   <button className="rounded-lg p-1.5 text-zinc-500 hover:bg-white/[0.06] hover:text-violet-200" title="Расшифровать заново" onClick={() => act(v, "reindex")}>
                     <RotateCcw className="h-3.5 w-3.5" />
                   </button>
@@ -235,11 +244,224 @@ export default function VideoLibrary() {
         })}
       </div>
 
-      {st.log.length > 0 && (
-        <div className="mt-3 rounded-xl border border-white/[0.06] bg-ink-900/70 p-3 font-mono text-[11px] leading-relaxed text-zinc-400">
-          {st.log.map((l, i) => <div key={i}>{l}</div>)}
-        </div>
+      <LivePanel log={st.log} busy={!!st.progress?.current} />
+      {createPortal(
+        <AnimatePresence>{transcript && <TranscriptModal video={transcript} onClose={() => setTranscript(null)} />}</AnimatePresence>,
+        document.body,
       )}
     </motion.section>
+  );
+}
+
+const STAGES = {
+  audio: "Извлечение звука (ffmpeg)",
+  asr: "Распознавание речи (Whisper)",
+  retry: "Whisper не отвечает — ждём повтора",
+  index: "Нарезка на фрагменты",
+  embed: "Векторизация (Ollama)",
+};
+
+function eta(sec) {
+  if (sec == null || !isFinite(sec)) return "—";
+  if (sec < 60) return "< 1 мин";
+  const h = Math.floor(sec / 3600);
+  const m = Math.round((sec % 3600) / 60);
+  return h ? `${h} ч ${m} мин` : `${m} мин`;
+}
+
+/** Что обрабатывается сейчас: этап, кусок, время, прогноз; ниже — очередь. */
+function ProgressCard({ progress }) {
+  if (!progress) return null;
+  const c = progress.current;
+  const q = progress.queue;
+  if (!c && !q.count) return null;
+  const pct = c
+    ? c.stage === "audio"
+      ? (c.audio_done || 0) / (c.duration || 1) * 0.1
+      : c.stage === "asr" || c.stage === "retry"
+        ? 0.1 + 0.82 * ((c.done_sec || 0) / (c.duration || 1))
+        : c.stage === "index" ? 0.93 : 0.96
+    : 0;
+  return (
+    <div className="mb-4 rounded-xl border border-violet-500/25 bg-violet-500/[0.06] p-4">
+      {c && (
+        <>
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <div className="min-w-0">
+              <div className="text-[11px] font-semibold uppercase tracking-widest text-violet-300">{STAGES[c.stage] || c.stage}</div>
+              <div className="truncate text-sm text-zinc-100" title={c.title}>{c.title}</div>
+            </div>
+            <div className="text-2xl font-extrabold tabular-nums text-white">{Math.round(pct * 100)}%</div>
+          </div>
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/[0.06]">
+            <motion.div className="h-full bg-gradient-to-r from-violet-500 to-cyan-400" animate={{ width: `${pct * 100}%` }} />
+          </div>
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-zinc-400">
+            {c.duration > 0 && <span>длительность {fmtTime(c.duration)}</span>}
+            {c.stage === "audio" && c.audio_done > 0 && <span>звук {fmtTime(c.audio_done)} / {fmtTime(c.duration)}</span>}
+            {c.parts > 0 && <span>кусок {Math.max(c.part, 1)}/{c.parts}</span>}
+            {c.done_sec > 0 && <span>распознано {fmtTime(c.done_sec)}</span>}
+            <span>прошло {eta(c.elapsed)}</span>
+            {c.eta != null && <span>осталось ≈ {eta(c.eta)}</span>}
+            {c.speed > 0 && <span>скорость ×{c.speed.toFixed(1)} от реального времени</span>}
+            {c.language && <span>язык {c.language}</span>}
+            {c.stage === "embed" && c.chunks > 0 && <span>фрагментов {c.chunks}</span>}
+          </div>
+          {c.stage === "retry" && (
+            <div className="mt-2 text-[11px] text-amber-300">Повтор через {c.retry_in} с: {c.retry_error}</div>
+          )}
+        </>
+      )}
+      {q.count > 0 && (
+        <div className={`text-xs text-zinc-400 ${c ? "mt-3 border-t border-white/[0.06] pt-3" : ""}`}>
+          В очереди: <b className="text-zinc-200">{q.count}</b> видео
+          {q.seconds > 0 && <> · {fmtTime(q.seconds)} записи</>}
+          {q.eta != null && <> · примерно {eta(q.eta)}</>}
+          {q.unknown > 0 && <span className="text-zinc-500"> (длительность {q.unknown} шт. неизвестна)</span>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Вкладки: живая расшифровка Whisper и журнал обработки. */
+function LivePanel({ log, busy }) {
+  const [tab, setTab] = useState("feed");
+  const [items, setItems] = useState([]);
+  const [follow, setFollow] = useState(true);
+  const seq = useRef(0);
+  const box = useRef(null);
+
+  useEffect(() => {
+    let alive = true;
+    let timer;
+    const poll = () =>
+      api(`/api/videos/feed?since=${seq.current}`)
+        .then((r) => {
+          if (!alive) return;
+          if (r.items.length) {
+            seq.current = r.items[r.items.length - 1].seq;
+            setItems((xs) => [...xs, ...r.items].slice(-400));
+          }
+          timer = setTimeout(poll, r.progress?.current ? 2000 : 15000);
+        })
+        .catch(() => (timer = setTimeout(poll, 15000)));
+    poll();
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+  }, [busy]);
+
+  useEffect(() => {
+    if (follow && box.current) box.current.scrollTop = box.current.scrollHeight;
+  }, [items, log, tab, follow]);
+
+  if (!items.length && !log.length) return null;
+  let lastVideo = null;
+  return (
+    <div className="mt-4 rounded-xl border border-white/[0.06] bg-ink-900/70">
+      <div className="flex items-center gap-1 border-b border-white/[0.06] px-2 pt-2 text-xs">
+        {[["feed", `Что распознаёт Whisper${items.length ? ` (${items.length})` : ""}`], ["log", "Журнал"]].map(([id, label]) => (
+          <button key={id} onClick={() => setTab(id)} className={`rounded-t-lg px-3 py-1.5 ${tab === id ? "bg-white/[0.06] text-white" : "text-zinc-500 hover:text-zinc-200"}`}>
+            {label}
+          </button>
+        ))}
+        <label className="ml-auto flex items-center gap-1.5 pb-1 pr-2 text-[11px] text-zinc-500">
+          <input type="checkbox" checked={follow} onChange={(e) => setFollow(e.target.checked)} /> прокручивать
+        </label>
+      </div>
+      <div ref={box} className="max-h-72 overflow-y-auto p-3 font-mono text-[11.5px] leading-relaxed">
+        {tab === "log" ? (
+          log.map((l, i) => <div key={i} className="text-zinc-400">{l}</div>)
+        ) : items.length === 0 ? (
+          <div className="text-zinc-500">Расшифровка появится здесь по мере работы Whisper (каждые 5 минут записи).</div>
+        ) : (
+          items.map((it) => {
+            const head = it.video !== lastVideo;
+            lastVideo = it.video;
+            return (
+              <div key={it.seq}>
+                {head && <div className="mb-1 mt-2 font-sans text-[11px] font-semibold text-violet-300 first:mt-0">{it.title}</div>}
+                <div className="flex gap-2">
+                  <span className="shrink-0 text-zinc-600">{fmtTime(it.t)}</span>
+                  <span className="text-zinc-300">{it.text}</span>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Полная расшифровка видео с поиском и переходом к моменту. */
+function TranscriptModal({ video, onClose }) {
+  const [data, setData] = useState(null);
+  const [q, setQ] = useState("");
+  const player = useRef(null);
+  useEffect(() => {
+    api(`/api/videos/${video.id}/transcript`).then(setData).catch(() => setData({ segments: [] }));
+  }, [video.id]);
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", esc);
+    return () => window.removeEventListener("keydown", esc);
+  }, [onClose]);
+  const segs = (data?.segments || []).filter((sg) => !q || sg.text.toLowerCase().includes(q.toLowerCase()));
+  const words = (data?.segments || []).reduce((a, sg) => a + sg.text.split(/\s+/).length, 0);
+  const seek = (t) => {
+    const v = player.current;
+    if (!v) return;
+    v.currentTime = t;
+    v.play().catch(() => {});
+  };
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
+      <motion.div
+        initial={{ scale: 0.97, y: 10 }}
+        animate={{ scale: 1, y: 0 }}
+        exit={{ scale: 0.97, y: 10 }}
+        className="glass flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden bg-ink-900/95"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center gap-3 border-b border-white/[0.06] px-5 py-3">
+          <div className="min-w-0 flex-1">
+            <div className="truncate font-semibold">{video.title}</div>
+            <div className="text-xs text-zinc-500">
+              {video.folder || "—"} · {data ? `${data.segments.length} фраз, ${words} слов` : "загрузка…"}
+              {video.status === "processing" && " · расшифровка ещё идёт"}
+            </div>
+          </div>
+          <button className="rounded-lg p-1.5 text-zinc-400 hover:bg-white/[0.08] hover:text-white" onClick={onClose} aria-label="Закрыть">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="grid min-h-0 flex-1 gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+          <div className="border-b border-white/[0.06] p-4 md:border-b-0 md:border-r">
+            <video ref={player} className="aspect-video w-full rounded-lg bg-black" controls preload="metadata" src={videoFileUrl(video.id)} />
+            <div className="relative mt-3">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
+              <input className="input py-2 pl-8 text-xs" placeholder="Найти в расшифровке" value={q} onChange={(e) => setQ(e.target.value)} />
+            </div>
+          </div>
+          <div className="min-h-0 overflow-y-auto p-4 text-sm leading-relaxed">
+            {!data ? (
+              <Spinner />
+            ) : segs.length === 0 ? (
+              <div className="text-zinc-500">{q ? "Ничего не найдено" : "Расшифровки пока нет"}</div>
+            ) : (
+              segs.map((sg, i) => (
+                <button key={i} onClick={() => seek(sg.start)} className="group flex w-full gap-3 rounded-lg px-2 py-1 text-left hover:bg-white/[0.04]">
+                  <span className="shrink-0 font-mono text-xs text-zinc-600 group-hover:text-violet-300">{fmtTime(sg.start)}</span>
+                  <span className="text-zinc-300">{sg.text}</span>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
