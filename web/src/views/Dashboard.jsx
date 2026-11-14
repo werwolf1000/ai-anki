@@ -15,7 +15,7 @@ function greeting() {
   return "Добрый вечер";
 }
 
-export default function Dashboard({ user, decks, onStart, goDecks }) {
+export default function Dashboard({ user, decks, onStart, onRead, goDecks }) {
   const [stats, setStats] = useState(null);
   const [picked, setPicked] = useState(null);
   const [listRef] = useAutoAnimate();
@@ -162,7 +162,7 @@ export default function Dashboard({ user, decks, onStart, goDecks }) {
         )}
       </section>
 
-      <StartModal deck={picked} onClose={() => setPicked(null)} onStart={(s) => { setPicked(null); setTimeout(() => onStart(s), 180); }} />
+      <StartModal deck={picked} onClose={() => setPicked(null)} onRead={(id, t) => { setPicked(null); onRead(id, t); }} onStart={(s) => { setPicked(null); setTimeout(() => onStart(s), 180); }} />
     </div>
   );
 }

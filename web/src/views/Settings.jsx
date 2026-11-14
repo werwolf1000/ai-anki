@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { Activity, KeyRound, LogOut, Monitor, Save, Server, SlidersHorizontal, UserRound } from "lucide-react";
+import { Activity, Database, DownloadCloud, KeyRound, LogOut, Monitor, Save, Server, SlidersHorizontal, UserRound } from "lucide-react";
 import { api, getServer } from "../lib/api";
 import { isDesktop } from "../lib/desktop";
 import { Spinner, useToast } from "../components/ui";
@@ -20,6 +20,8 @@ const ADMIN_FIELDS = [
   { key: "asr_url", label: "ASR URL (Whisper)" },
   { key: "asr_user", label: "ASR логин" },
   { key: "asr_password", label: "ASR пароль", type: "password" },
+  { key: "embed_model", label: "Модель эмбеддингов (учебник)" },
+  { key: "textbook_model", label: "Модель статей учебника (пусто — основная)" },
 ];
 
 export default function Settings({ user, setUser, config, setConfig, onLogout }) {
@@ -164,6 +166,8 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
         </Section>
       </div>
 
+      <KnowledgePanel isAdmin={user.is_admin} />
+
       {isDesktop && (
         <Section icon={Monitor} title="Приложение" delay={0.2}>
           <div className="text-sm text-zinc-400">
@@ -183,5 +187,99 @@ function Section({ icon: Icon, title, children, delay }) {
       </h2>
       {children}
     </motion.section>
+  );
+}
+
+function KnowledgePanel({ isAdmin }) {
+  const toast = useToast();
+  const [st, setSt] = useState(null);
+
+  useEffect(() => {
+    let timer;
+    let alive = true;
+    const load = () =>
+      api("/api/knowledge/status")
+        .then((r) => {
+          if (!alive) return;
+          setSt(r);
+          timer = setTimeout(load, r.job.running ? 3000 : 20000);
+        })
+        .catch(() => {});
+    load();
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+  }, []);
+
+  async function rebuild(download) {
+    try {
+      await api("/api/knowledge/rebuild", { method: "POST", body: { source_id: "php_manual_ru", download } });
+      toast(download ? "Индексация запущена" : "Векторизация продолжена", "success");
+      const r = await api("/api/knowledge/status");
+      setSt(r);
+    } catch (e) {
+      toast(e.message, "error");
+    }
+  }
+
+  if (!st) return null;
+  const job = st.job;
+  return (
+    <Section icon={Database} title="База знаний учебника (RAG)" delay={0.18}>
+      <div className="space-y-4">
+        {st.sources.map((s) => {
+          const pct = s.chunks ? s.embedded / s.chunks : 0;
+          return (
+            <div key={s.id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <a href={s.url} target="_blank" rel="noreferrer" className="font-semibold hover:text-violet-200">{s.title}</a>
+                  <div className="mt-0.5 text-xs text-zinc-500">{s.description}</div>
+                </div>
+                <div className="text-right text-xs text-zinc-400">
+                  {s.chunks ? (
+                    <>
+                      <div><b className="text-zinc-100">{s.pages}</b> страниц · <b className="text-zinc-100">{s.chunks}</b> фрагментов</div>
+                      <div>векторов: {s.embedded}/{s.chunks}</div>
+                    </>
+                  ) : (
+                    <span className="text-amber-300">не загружен</span>
+                  )}
+                </div>
+              </div>
+              {s.chunks > 0 && (
+                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                  <motion.div className="h-full bg-gradient-to-r from-violet-500 to-rose-500" animate={{ width: `${pct * 100}%` }} />
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {(job.running || job.error || job.log.length > 0) && (
+          <div className="rounded-xl border border-white/[0.06] bg-ink-900/70 p-3 font-mono text-[11px] leading-relaxed text-zinc-400">
+            {job.log.map((l, i) => <div key={i}>{l}</div>)}
+            {job.running && job.total > 0 && <div className="text-violet-300">{job.stage}: {job.done}/{job.total}</div>}
+            {job.error && <div className="text-rose-300">{job.error}</div>}
+          </div>
+        )}
+
+        <div className="text-xs text-zinc-500">
+          Эмбеддинги: <span className="text-zinc-300">{st.embed_model}</span> · статьи: <span className="text-zinc-300">{st.textbook_model}</span>
+        </div>
+
+        {isAdmin && (
+          <div className="flex flex-wrap gap-2">
+            <button className="btn-ghost" disabled={job.running} onClick={() => rebuild(true)}>
+              {job.running ? <Spinner /> : <DownloadCloud className="h-4 w-4" />} Скачать и проиндексировать
+            </button>
+            <button className="btn-ghost" disabled={job.running} onClick={() => rebuild(false)}>
+              <Activity className="h-4 w-4" /> Довекторизовать
+            </button>
+          </div>
+        )}
+      </div>
+    </Section>
   );
 }

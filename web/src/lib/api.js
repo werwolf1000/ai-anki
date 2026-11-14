@@ -82,3 +82,37 @@ export async function api(path, { method = "GET", body, form, signal } = {}) {
   }
   return data;
 }
+
+/** POST с потоковым ответом NDJSON: onEvent вызывается на каждую строку. */
+export async function apiStream(path, body, onEvent, { signal } = {}) {
+  const headers = { "Content-Type": "application/json" };
+  const token = getToken();
+  if (token) headers.Authorization = `Bearer ${token}`;
+  let res;
+  try {
+    res = await fetch(getServer() + path, { method: "POST", headers, body: JSON.stringify(body), signal });
+  } catch (e) {
+    if (e.name === "AbortError") throw e;
+    throw new ApiError("Сервер недоступен. Проверьте подключение.", 0);
+  }
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    if (res.status === 401 && token) onUnauthorized();
+    throw new ApiError(data.detail || res.statusText, res.status);
+  }
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = "";
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    let nl;
+    while ((nl = buf.indexOf("\n")) >= 0) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (line) onEvent(JSON.parse(line));
+    }
+  }
+  if (buf.trim()) onEvent(JSON.parse(buf));
+}

@@ -12,7 +12,7 @@ const SORTS = [
   { id: "progress", label: "По прогрессу" },
 ];
 
-export default function Decks({ decks, reload, onStart }) {
+export default function Decks({ decks, reload, onStart, onRead }) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("all");
   const [sort, setSort] = useState("due");
@@ -91,7 +91,7 @@ export default function Decks({ decks, reload, onStart }) {
         </div>
       )}
 
-      <StartModal deck={picked} onClose={() => setPicked(null)} onStart={(s) => { setPicked(null); setTimeout(() => onStart(s), 180); }} />
+      <StartModal deck={picked} onClose={() => setPicked(null)} onRead={(id, t) => { setPicked(null); onRead(id, t); }} onStart={(s) => { setPicked(null); setTimeout(() => onStart(s), 180); }} />
     </div>
   );
 }

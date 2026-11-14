@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
+import { BookOpenText, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
 import { api, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
 import { isDesktop } from "./lib/desktop";
 import { Backdrop, Logo, Spinner, ToastProvider } from "./components/ui";
@@ -10,10 +10,12 @@ import Dashboard from "./views/Dashboard";
 import Decks from "./views/Decks";
 import Study from "./views/Study";
 import Settings from "./views/Settings";
+import Textbook from "./views/Textbook";
 
 const NAV = [
   { id: "dashboard", label: "Обзор", icon: LayoutDashboard },
   { id: "decks", label: "Колоды", icon: Layers },
+  { id: "textbook", label: "Учебник", icon: BookOpenText },
   { id: "settings", label: "Настройки", icon: SettingsIcon },
 ];
 
@@ -31,6 +33,11 @@ function Root() {
   const [study, setStudy] = useState(null); // ответ /api/session
   const [config, setConfig] = useState(null);
   const [decks, setDecks] = useState(null);
+  const [bookTarget, setBookTarget] = useState(null);
+  const openTextbook = useCallback((deckId, topic = "") => {
+    setBookTarget({ deckId, topic, at: Date.now() });
+    setView("textbook");
+  }, []);
 
   const logout = useCallback(async () => {
     try {
@@ -114,10 +121,11 @@ function Root() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-8 sm:py-8"
+                    className={`mx-auto w-full px-4 py-6 sm:px-8 sm:py-8 ${view === "textbook" ? "max-w-[1500px]" : "max-w-6xl"}`}
                   >
-                    {view === "dashboard" && <Dashboard user={user} decks={decks} onStart={startStudy} goDecks={() => setView("decks")} />}
-                    {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} />}
+                    {view === "dashboard" && <Dashboard user={user} decks={decks} onStart={startStudy} onRead={openTextbook} goDecks={() => setView("decks")} />}
+                    {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} onRead={openTextbook} />}
+                    {view === "textbook" && <Textbook user={user} decks={decks} initial={bookTarget} onStart={startStudy} />}
                     {view === "settings" && <Settings user={user} setUser={setUser} config={config} setConfig={setConfig} onLogout={logout} />}
                   </motion.div>
                 </AnimatePresence>
@@ -179,7 +187,7 @@ function Sidebar({ user, view, setView, onLogout }) {
       </aside>
 
       {/* мобильная нижняя навигация */}
-      <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-3 gap-1 rounded-2xl border border-white/[0.07] bg-ink-900/90 p-1.5 backdrop-blur-xl md:hidden">
+      <nav className="fixed inset-x-3 bottom-3 z-40 grid grid-cols-4 gap-1 rounded-2xl border border-white/[0.07] bg-ink-900/90 p-1.5 backdrop-blur-xl md:hidden">
         {NAV.map((n) => (
           <button
             key={n.id}

@@ -52,6 +52,9 @@ docker compose -f docker-compose.truenas.yml up -d --build
 2. Остальные пользователи регистрируются сами; у каждого свой прогресс и настройки.
 3. Чтобы закрыть регистрацию для посторонних — `AI_ANKI_REGISTRATION: closed` в compose-файле и **Redeploy**.
 
+4. **Учебник:** Настройки → «База знаний учебника» → **Скачать и проиндексировать**. Векторизация идёт в фоне ~40 минут
+   (контейнеру нужен доступ в интернет к php.net и к Ollama с моделью `qwen3-embedding:8b`).
+
 Сборка образа скачивает `node:22-alpine` и npm-пакеты фронтенда — первый билд дольше (несколько минут).
 
 ## 3. Открыть в браузере
@@ -84,6 +87,8 @@ Ollama обычно **не** в контейнере AI Anki. На главно�
 | `/data/users/<id>/settings.json` | `./data/users/<id>/` | Личные настройки обучения |
 | `/data/progress.json` | `./data/progress.json` | Прогресс версии 1.x (копируется первому аккаунту) |
 | `/data/config.json` | `./data/config.json` | Общие настройки сервера (Ollama, ASR) |
+| `/data/knowledge.db` | `./data/knowledge.db` | База знаний учебника и сгенерированные статьи |
+| `/data/users/<id>/textbook.json` | `./data/users/<id>/` | Прочитанные темы пользователя |
 | `/data/decks.json` | `./data/decks.json` | Реестр колод |
 | `/data/decks/` | `./data/decks/` | Свои колоды (JSON/TXT) — **без пересборки** |
 | `/app/decks/` | `./decks/` (volume) | Встроенные колоды из репозитория |

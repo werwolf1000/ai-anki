@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Play, Search } from "lucide-react";
+import { BookOpenText, Play, Search } from "lucide-react";
 import { api } from "../lib/api";
 import { kindOf, MODES } from "../lib/decks";
 import { Modal, Ring, Spinner, useToast } from "./ui";
 
-export default function StartModal({ deck, onClose, onStart }) {
+export default function StartModal({ deck, onClose, onStart, onRead }) {
   const toast = useToast();
   const [mode, setMode] = useState("due");
   const [topics, setTopics] = useState(null);
@@ -117,6 +117,11 @@ export default function StartModal({ deck, onClose, onStart }) {
         )}
 
         <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+          {onRead && (
+            <button className="btn-ghost sm:mr-auto" onClick={() => onRead(deck.deck_id, topic)} title="Прочитать теорию перед карточками">
+              <BookOpenText className="h-4 w-4" /> {topic ? "Прочитать тему" : "Учебник"}
+            </button>
+          )}
           <button className="btn-ghost" onClick={onClose}>Отмена</button>
           <motion.button whileTap={{ scale: 0.97 }} className="btn-primary px-6" onClick={start} disabled={busy}>
             {busy ? <Spinner /> : <Play className="h-4 w-4" />} Начать

@@ -353,6 +353,11 @@ async def transcribe_audio(audio: UploadFile = File(...), ctx: UserContext = Dep
     return {"text": text}
 
 
+from server.textbook import build_router  # noqa: E402
+
+app.include_router(build_router(services, current_ctx))
+
+
 @app.get("/healthz")
 def healthz() -> dict:
     return {"ok": True}

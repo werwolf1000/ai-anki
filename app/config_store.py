@@ -21,6 +21,9 @@ DEFAULTS: dict = {
     "asr_password": "",
     "asr_language": "ru",
     "code_editor_theme": "light",
+    # учебник (RAG): модель эмбеддингов и модель для статей (пусто — основная модель)
+    "embed_model": "qwen3-embedding:8b",
+    "textbook_model": "",
 }
 
 

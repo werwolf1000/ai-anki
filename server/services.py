@@ -25,6 +25,7 @@ from app.ollama_client import AnswerEvaluator, OllamaClient
 from app.progress import ProgressStore, StudyMode
 from app.registry import DeckEntry, DeckRegistry
 from server.auth import User
+from server.knowledge import KnowledgeIndexer, KnowledgeStore, OllamaRag
 
 # Настройки, которые каждый пользователь задаёт сам
 USER_KEYS = (
@@ -44,6 +45,8 @@ GLOBAL_KEYS = (
     "asr_url",
     "asr_user",
     "asr_password",
+    "embed_model",
+    "textbook_model",
 )
 
 
@@ -116,6 +119,17 @@ class AppServices:
         self._contexts: dict[int, UserContext] = {}
         self._ctx_lock = threading.Lock()
         self._deck_cache: dict[str, tuple[tuple, Deck]] = {}
+        self.knowledge = KnowledgeStore(dd / "knowledge.db")
+        self.indexer = KnowledgeIndexer(self.knowledge)
+
+    def rag_client(self) -> OllamaRag:
+        return OllamaRag(self.config["ollama_url"], self.config.get("api_key", ""), timeout=max(120, int(self.config.get("timeout", 120)) * 3))
+
+    def textbook_model(self) -> str:
+        return (self.config.get("textbook_model") or "").strip() or self.config["model"]
+
+    def embed_model(self) -> str:
+        return (self.config.get("embed_model") or "").strip() or "qwen3-embedding:8b"
 
     # ── конфигурация ────────────────────────────────────────────────
 
