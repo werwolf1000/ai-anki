@@ -183,6 +183,7 @@ class VideoLibrary:
             # прерванная перезапуском обработка — в очередь заново
             self._db.execute("UPDATE videos SET status='queued', progress=0 WHERE status='processing'")
         self.current = ""
+        self.roots_info: list[dict] = []
         self.state: dict = {}  # что делает обработчик прямо сейчас (для прогресса в интерфейсе)
         self.feed: deque = deque(maxlen=400)  # последние распознанные Whisper фразы
         self._feed_seq = 0
@@ -240,16 +241,50 @@ class VideoLibrary:
 
     # — сканирование —
 
+    def walk_root(self, root: Path) -> tuple[list[Path], dict]:
+        """Медиафайлы папки и статистика обхода (для диагностики «видео не находятся»)."""
+        info = {"path": str(root), "exists": root.exists(), "is_dir": root.is_dir(), "readable": False,
+                "files": 0, "media": 0, "dirs": 0, "errors": [], "other_ext": {}, "uploads": root == self.upload_dir}
+        found: list[Path] = []
+        if not info["is_dir"]:
+            return found, info
+        info["readable"] = os.access(root, os.R_OK | os.X_OK)
+
+        def onerror(err: OSError) -> None:
+            if len(info["errors"]) < 5:
+                info["errors"].append(f"{err.filename}: {err.strerror}")
+
+        for dirpath, dirnames, filenames in os.walk(root, onerror=onerror, followlinks=True):
+            dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+            info["dirs"] += 1
+            for name in sorted(filenames):
+                if name.startswith("."):
+                    continue
+                info["files"] += 1
+                ext = Path(name).suffix.lower()
+                if ext in MEDIA_EXT:
+                    found.append(Path(dirpath) / name)
+                else:
+                    info["other_ext"][ext or "(без)"] = info["other_ext"].get(ext or "(без)", 0) + 1
+        info["media"] = len(found)
+        info["other_ext"] = dict(sorted(info["other_ext"].items(), key=lambda kv: -kv[1])[:6])
+        return found, info
+
     def scan(self) -> dict:
         added = changed = missing = 0
         seen: set[str] = set()
         with self._lock:
             known = {r["path"]: r for r in self._db.execute("SELECT id, path, size, mtime, status FROM videos")}
+        self.roots_info = []
         for root in self.roots:
-            if not root.is_dir():
-                continue
-            for path in sorted(root.rglob("*")):
-                if path.suffix.lower() not in MEDIA_EXT or not path.is_file() or any(p.startswith(".") for p in path.parts):
+            files, info = self.walk_root(root)
+            self.roots_info.append(info)
+            if not info["uploads"] or info["media"]:
+                state = ("нет такой папки" if not info["exists"] else "не папка" if not info["is_dir"]
+                         else f"файлов {info['files']}, видео/аудио {info['media']}")
+                self.say(f"Сканирование {root}: {state}" + (f", ошибки доступа: {info['errors'][0]}" if info["errors"] else ""))
+            for path in files:
+                if not path.is_file():
                     continue
                 key = str(path.resolve())
                 seen.add(key)
@@ -284,10 +319,11 @@ class VideoLibrary:
         if added or changed:
             self.say(f"Найдено новых видео: {added}, изменённых: {changed}")
             self._wake.set()
-        return {"added": added, "changed": changed, "missing": missing}
+        total = sum(i["media"] for i in self.roots_info)
+        return {"added": added, "changed": changed, "missing": missing, "media": total, "roots": self.roots_info}
 
     def _autoscan(self, minutes: float) -> None:
-        time.sleep(20)
+        time.sleep(5)
         while True:
             try:
                 self.scan()
@@ -571,7 +607,11 @@ def build_router(services, current_ctx: Callable, user_for_token: Callable[[str]
     @r.get("/api/videos")
     def list_videos(ctx=Depends(admin)) -> dict:
         return {
-            "roots": [{"path": str(p), "exists": p.is_dir(), "uploads": p == lib.upload_dir} for p in lib.roots],
+            "roots": lib.roots_info or [
+                {"path": str(p), "exists": p.exists(), "is_dir": p.is_dir(), "uploads": p == lib.upload_dir, "media": None}
+                for p in lib.roots
+            ],
+            "env_dirs": os.environ.get("AI_ANKI_VIDEO_DIRS", ""),
             "ffmpeg": bool(ffmpeg_exe()),
             "asr": bool(str(services.config.get("asr_url", "")).strip()),
             "current": lib.current,

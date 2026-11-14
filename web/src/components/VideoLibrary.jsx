@@ -63,7 +63,12 @@ export default function VideoLibrary() {
     setScanning(true);
     try {
       const r = await api("/api/videos/scan", { method: "POST" });
-      toast(`Новых: ${r.added}, изменённых: ${r.changed}${r.missing ? `, пропало: ${r.missing}` : ""}`, "success");
+      toast(
+        r.media === 0
+          ? "В папках не найдено ни одного видео — смотрите подсказку у папки"
+          : `Видео в папках: ${r.media}. Новых: ${r.added}, изменённых: ${r.changed}${r.missing ? `, пропало: ${r.missing}` : ""}`,
+        r.media === 0 ? "error" : "success",
+      );
       await load();
     } catch (e) {
       toast(e.message, "error");
@@ -151,12 +156,7 @@ export default function VideoLibrary() {
       <ProgressCard progress={st.progress} />
 
       <div className="mb-4 grid gap-2 text-xs sm:grid-cols-2">
-        {st.roots.map((r) => (
-          <div key={r.path} className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
-            <div className="text-zinc-500">{r.uploads ? "Загруженные через сайт" : "Папка с видео"}</div>
-            <div className={`truncate font-mono ${r.exists ? "text-zinc-200" : "text-zinc-600 line-through"}`} title={r.path}>{r.path}</div>
-          </div>
-        ))}
+        {st.roots.map((r) => <RootCard key={r.path} r={r} />)}
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -250,6 +250,35 @@ export default function VideoLibrary() {
         document.body,
       )}
     </motion.section>
+  );
+}
+
+/** Папка с видео: что сервер в ней видит — и подсказка, если видео не находятся. */
+function RootCard({ r }) {
+  let problem = "";
+  if (!r.uploads) {
+    if (r.exists === false || r.is_dir === false)
+      problem = `Папки ${r.path} нет внутри контейнера — подключите её в compose: volumes → «- /путь/на/NAS:${r.path}:ro» и перезапустите приложение.`;
+    else if (r.readable === false) problem = "Нет прав на чтение папки — проверьте права/ACL датасета на NAS.";
+    else if (r.errors?.length) problem = `Ошибки доступа: ${r.errors.join("; ")}`;
+    else if (r.media === 0 && r.files === 0) problem = "Папка пустая — возможно, подключена не та папка NAS.";
+    else if (r.media === 0)
+      problem = `Файлов ${r.files}, но ни одного видео/аудио. Расширения: ${Object.entries(r.other_ext || {}).map(([e, n]) => `${e} ×${n}`).join(", ")}`;
+  }
+  return (
+    <div className={`rounded-lg border px-3 py-2 ${problem ? "border-amber-500/30 bg-amber-500/[0.06]" : "border-white/[0.06] bg-white/[0.02]"}`}>
+      <div className="flex justify-between gap-2 text-zinc-500">
+        <span>{r.uploads ? "Загруженные через сайт" : "Папка с видео"}</span>
+        {r.media != null && r.is_dir && (
+          <span>
+            видео/аудио <b className="text-zinc-200">{r.media}</b>{r.files > r.media ? ` из ${r.files} файлов` : ""}{r.dirs > 1 ? ` · папок ${r.dirs - 1}` : ""}
+          </span>
+        )}
+      </div>
+      <div className={`truncate font-mono ${r.is_dir === false ? "text-zinc-600 line-through" : "text-zinc-200"}`} title={r.path}>{r.path}</div>
+      {problem && <div className="mt-1 text-[11px] leading-snug text-amber-200">{problem}</div>}
+      {r.media == null && !r.uploads && <div className="mt-1 text-[11px] text-zinc-500">Нажмите «Найти новые видео», чтобы проверить папку.</div>}
+    </div>
   );
 }
 
