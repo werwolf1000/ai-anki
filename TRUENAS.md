@@ -45,6 +45,15 @@ cd /mnt/storage/web/ai-anki
 docker compose -f docker-compose.truenas.yml up -d --build
 ```
 
+## 2.1. Первый вход (версия 2.0 с аккаунтами)
+
+1. Откройте сайт и **сразу зарегистрируйтесь** — первый аккаунт становится администратором
+   и получает весь прежний прогресс из `data/progress.json`.
+2. Остальные пользователи регистрируются сами; у каждого свой прогресс и настройки.
+3. Чтобы закрыть регистрацию для посторонних — `AI_ANKI_REGISTRATION: closed` в compose-файле и **Redeploy**.
+
+Сборка образа скачивает `node:22-alpine` и npm-пакеты фронтенда — первый билд дольше (несколько минут).
+
 ## 3. Открыть в браузере
 
 ```
@@ -70,8 +79,11 @@ Ollama обычно **не** в контейнере AI Anki. На главно�
 
 | Путь в контейнере | На NAS | Содержимое |
 |-------------------|--------|------------|
-| `/data/progress.json` | `./data/progress.json` | Прогресс SRS |
-| `/data/config.json` | `./data/config.json` | Настройки |
+| `/data/users.db` | `./data/users.db` | Пользователи и токены входа |
+| `/data/users/<id>/progress.json` | `./data/users/<id>/` | Прогресс SRS пользователя |
+| `/data/users/<id>/settings.json` | `./data/users/<id>/` | Личные настройки обучения |
+| `/data/progress.json` | `./data/progress.json` | Прогресс версии 1.x (копируется первому аккаунту) |
+| `/data/config.json` | `./data/config.json` | Общие настройки сервера (Ollama, ASR) |
 | `/data/decks.json` | `./data/decks.json` | Реестр колод |
 | `/data/decks/` | `./data/decks/` | Свои колоды (JSON/TXT) — **без пересборки** |
 | `/app/decks/` | `./decks/` (volume) | Встроенные колоды из репозитория |
@@ -109,14 +121,17 @@ docker compose -f docker-compose.truenas.yml up -d --build
 |----------|---------|
 | 502 / Ollama error | Проверьте URL из контейнера: `docker exec ai-anki curl -s http://.../api/tags` |
 | Пустой список колод | Проверьте наличие `decks/*.json` в образе |
+| «Фронтенд не собран» (503) | Пересоберите образ: в Dockerfile этап `web` собирает `web/dist` |
+| Забыли пароль | `docker exec -it ai-anki python scripts/reset_password.py <логин> <новый_пароль>` |
 | Нет прав на data | `chown -R 1000:1000 data` или `chmod 775 data` |
 
 ## Desktop vs Web
 
 | | Desktop (`run.sh`) | Web (Docker) |
 |--|-------------------|--------------|
-| UI | PyQt6 | Браузер |
+| UI | PyQt6 / Electron (`desktop/`) | Браузер (React) |
 | Данные | `~/.ai-anki/` | `./data/` на NAS |
 | Код-карточки | Редактор с номерами строк | Textarea monospace |
 
-Прогресс **не синхронизируется** автоматически между desktop и web — разные каталоги данных.
+Electron-приложение (`desktop/`) работает через API сервера: войдите тем же аккаунтом — прогресс общий с веб-версией.
+Старое PyQt6-приложение хранит данные локально и **не синхронизируется** с сервером.

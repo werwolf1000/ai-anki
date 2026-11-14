@@ -11,6 +11,8 @@ services:
       - "8080:8080"
     environment:
       AI_ANKI_DATA_DIR: /data
+      # open — регистрация открыта; closed — после первого (админского) аккаунта новых не создать
+      AI_ANKI_REGISTRATION: open
     volumes:
       - ./data:/data
       - ./decks:/app/decks:ro

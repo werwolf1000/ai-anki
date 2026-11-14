@@ -1,3 +1,12 @@
+# ── 1. Сборка React-фронтенда ──────────────────────────────────────
+FROM node:22-alpine AS web
+WORKDIR /web
+COPY web/package.json web/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY web/ ./
+RUN npm run build
+
+# ── 2. API на FastAPI ──────────────────────────────────────────────
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -5,6 +14,7 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     AI_ANKI_DATA_DIR=/data \
+    AI_ANKI_WEB_DIST=/app/web/dist \
     PYTHONPATH=/app
 
 COPY requirements-server.txt .
@@ -14,23 +24,14 @@ COPY app/ app/
 COPY server/ server/
 COPY decks/ decks/
 COPY config.json config.json
-
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl ca-certificates \
-    && mkdir -p server/static/vendor \
-    && curl -fsSL https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.52.2.tgz \
-       | tar -xz -C /tmp \
-    && mv /tmp/package/min/vs server/static/vendor/vs \
-    && rm -rf /tmp/package \
-    && apt-get purge -y curl \
-    && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/*
+COPY scripts/reset_password.py scripts/reset_password.py
+COPY --from=web /web/dist web/dist
 
 RUN mkdir -p /data
 
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
-  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/config')"
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz')"
 
-CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "8080", "--proxy-headers", "--forwarded-allow-ips=*"]

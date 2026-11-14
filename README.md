@@ -38,7 +38,8 @@ run.bat
 
 ### Веб-версия (Docker / TrueNAS)
 
-Серверная версия для браузера — тот же движок карточек и Ollama, без PyQt6.
+Сервер: FastAPI (тот же движок карточек и Ollama) + интерфейс на **React + Motion + AutoAnimate + Tailwind CSS** (`web/`).
+Рабочий адрес: **https://anki.webmastermsk.ru**.
 
 ```bash
 cd ai-anki
@@ -46,17 +47,52 @@ docker compose up -d --build
 # http://localhost:8080
 ```
 
-Развёртывание на **TrueNAS Scale** (`/mnt/storage/web/ai-anki`, SMB `smb://truenas.local/web/ai-anki`): см. **[TRUENAS.md](TRUENAS.md)** — используйте `docker-compose.truenas.yml`.
+Образ собирается в два этапа: Node собирает `web/` → `web/dist`, затем Python-образ отдаёт API и статику.
+Развёртывание на **TrueNAS Scale** — см. **[TRUENAS.md](TRUENAS.md)** (`docker-compose.truenas.yml`).
 
-Данные веб-версии: каталог `./data/`. В контейнере: `AI_ANKI_DATA_DIR=/data`.
+#### Аккаунты
 
-Локально без Docker:
+- Вход и регистрация — на стартовом экране. У каждого пользователя **свой прогресс SRS, статистика и настройки обучения**.
+- **Первый зарегистрированный аккаунт становится администратором** и получает прогресс однопользовательской версии (`data/progress.json`).
+- Настройки Ollama и Whisper (ASR) общие для сервера, менять их может только администратор.
+- `AI_ANKI_REGISTRATION=closed` закрывает регистрацию после создания первого аккаунта.
+- Авторизация — токен в заголовке `Authorization: Bearer …` (пароли — scrypt, база `data/users.db`).
+
+Данные веб-версии: каталог `./data/` (в контейнере `AI_ANKI_DATA_DIR=/data`):
+
+| Файл | Содержимое |
+|------|------------|
+| `users.db` | пользователи и токены |
+| `users/<id>/progress.json` | прогресс пользователя |
+| `users/<id>/settings.json` | личные настройки обучения |
+| `config.json` | общие настройки сервера (Ollama, ASR) |
+
+Разработка без Docker:
 
 ```bash
 pip install -r requirements-server.txt
 export AI_ANKI_DATA_DIR=./data
-uvicorn server.main:app --host 0.0.0.0 --port 8080
+uvicorn server.main:app --host 127.0.0.1 --port 8080
+# во втором терминале — фронтенд с hot reload (проксирует /api на :8080)
+cd web && npm install && npm run dev      # http://localhost:5173
+# или собрать: npm run build → web/dist (сервер раздаёт его сам)
 ```
+
+### Десктоп-приложение (Electron)
+
+`desktop/` — frameless-окно Electron с тем же React-интерфейсом (свой заголовок окна, анимации).
+Приложение **не хранит данные локально**: вход в тот же аккаунт, прогресс и настройки синхронизируются через API сервера
+(по умолчанию `https://anki.webmastermsk.ru`, адрес меняется на экране входа).
+
+```bash
+cd web && npm install
+cd ../desktop && npm install
+npm start          # собрать web и запустить приложение
+npm run dist       # установщик Windows: desktop/dist/AI-Anki-Setup-<version>.exe
+```
+
+Если после `npm install` нет `node_modules/electron/dist/electron.exe`: `node node_modules/electron/install.js`.
+Старое PyQt6-приложение (`run.sh` / `run.bat`) по-прежнему работает автономно, но не синхронизируется с сервером.
 
 ---
 
@@ -241,6 +277,11 @@ uvicorn server.main:app --host 0.0.0.0 --port 8080
 
 Перегенерация: скрипты `decks/generate_*.py` (из каталога `decks/`). Laravel: `generate_laravel_deck.py`, `generate_laravel_live_coding.py`. Go: `generate_go_deck.py`, `generate_go_live_coding.py`. Темы — `go_topics.py`, `live_coding_topics.py` (`assign_go_topic`, `assign_laravel_topic`).
 
+**После перегенерации обязательно запустите очистку:** `python decks/clean_decks.py` (из корня проекта).
+Скрипт удаляет карточки-заглушки (эталон вида «Повторите ключевые идеи темы…», «см. docs»), дубликаты `#0-0/#0-1`,
+раскрывает слишком короткие вопросы («withCount?» → «Что такое withCount?») и чистит формулировки live-coding.
+id изменённых карточек сохраняются, id удалённых пишутся в `retired_ids` — прогресс не теряется и не переносится на чужие карточки.
+
 ---
 
 ## Структура проекта
@@ -258,10 +299,14 @@ ai-anki/
 ├── docs/                   # API-справочник (классы, методы, функции)
 ├── scripts/
 │   └── generate_api_docs.py
-├── server/                 # FastAPI + статический UI
-│   ├── main.py             # REST API
-│   ├── services.py         # веб-сессии
-│   └── static/             # index.html, app.js, Monaco, MathLive
+├── server/                 # FastAPI
+│   ├── main.py             # REST API, авторизация, раздача web/dist
+│   ├── auth.py             # пользователи и токены (SQLite)
+│   └── services.py         # данные пользователей, сессии, статистика
+├── web/                    # React + Motion + AutoAnimate + Tailwind (Vite)
+│   └── src/                # views/ (экраны), components/, lib/
+├── desktop/                # Electron: frameless-окно, протокол app://
+├── decks/clean_decks.py    # очистка сгенерированных колод
 └── app/                    # общее ядро (desktop + web)
     ├── gui.py              # PyQt6: сессия, MainWindow
     ├── welcome.py          # главный экран
@@ -304,14 +349,22 @@ python3 scripts/generate_api_docs.py
 
 ## Web API (кратко)
 
+Все `/api/*`, кроме `/api/auth/*` и картинок, требуют `Authorization: Bearer <token>`.
+
 | Метод | Путь | Назначение |
 |-------|------|------------|
-| GET | `/api/decks` | Список колод и статистика |
+| GET | `/api/auth/status` | Есть ли пользователи, открыта ли регистрация |
+| POST | `/api/auth/register` | Регистрация `{username, password, display_name?}` → `{token, user}` |
+| POST | `/api/auth/login` | Вход → `{token, user}` |
+| POST | `/api/auth/logout` | Отозвать токен |
+| GET | `/api/auth/me` | Текущий пользователь |
+| POST | `/api/account/password`, `/api/account/profile` | Смена пароля, имени |
+| GET / POST | `/api/config` | Настройки (личные; серверные — только админ) |
+| GET | `/api/decks` | Колоды и статистика пользователя |
+| GET | `/api/dashboard` | Активность за 28 дней, серия дней |
 | GET | `/api/deck/{id}/topics` | Темы колоды |
 | POST | `/api/session` | Старт сессии `{deck_id, mode, topic?}` |
-| POST | `/api/session/{id}/answer` | Проверка ответа |
+| POST | `/api/session/{id}/answer` | Проверка ответа (`review`: оценка, отзыв, уточнение) |
 | POST | `/api/session/{id}/next` | Следующая карточка |
 | POST | `/api/session/{id}/hint` | Подсказка |
 | POST | `/api/asr/transcribe` | Голос → текст |
-
-Подробнее: [docs/modules/server.main.md](docs/modules/server.main.md), [docs/classes/AppServices.md](docs/classes/AppServices.md).

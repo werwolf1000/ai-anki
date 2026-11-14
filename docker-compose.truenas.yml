@@ -17,6 +17,8 @@ services:
       - "8080:8080"
     environment:
       AI_ANKI_DATA_DIR: /data
+      # open — регистрация открыта; closed — после первого (админского) аккаунта новых не создать
+      AI_ANKI_REGISTRATION: open
       # Ollama на другом хосте — переопределите в UI или здесь:
       # OLLAMA_URL: http://host.docker.internal:11434
     volumes:
