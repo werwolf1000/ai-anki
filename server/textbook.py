@@ -17,6 +17,10 @@ from server.knowledge import ARTICLE_SYSTEM, ASK_SYSTEM, ThinkFilter, format_con
 from server.services import AppServices, UserContext
 from server.syllabus import CardIndex, main_topic, syllabus_for
 
+# Порог косинусного сходства «урок ↔ фрагмент видео» (qwen3-embedding): своя тема 0.63–0.80,
+# соседние темы ≤ 0.48, посторонние ≤ 0.41 — видео ниже порога в статью не попадают.
+VIDEO_MIN_SIM = 0.5
+VIDEO_K = 3
 QUERY_INSTRUCT = "Instruct: Given a study topic, retrieve relevant passages from the official documentation\nQuery: "
 
 
@@ -206,13 +210,41 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             out.append({"key": key, "id": entry.deck_id, "name": sy.title if sy else entry.name, "topics": topics})
         return out
 
+    def article_query(entry, topic: str, cards: list | None = None) -> str:
+        """Запрос к базе знаний; без cards — короткий запрос для поиска видео."""
+        sy = book_of(entry)
+        chapter = sy.chapter_of(topic) if sy else None
+        subject = sy.title if sy else entry.name
+        q = f"{topic}. {chapter + '. ' if chapter else ''}{subject}."
+        if cards:
+            q += " " + " ".join(c.question.split("\n")[0][:160] for c in cards[:6])
+        return q
+
+    _attach_cache: dict[tuple, list[dict]] = {}
+
+    def attach_videos(entry, deck, topic: str, cards: list, cached: dict) -> list[dict]:
+        """Видео, проиндексированные после написания статьи, — добавить к её источникам без перегенерации."""
+        videos = [s for s in deck_sources(entry, deck) if s.startswith("vid:")]
+        if not videos:
+            return cached["sources"]
+        have = {s.get("source") for s in cached["sources"]}
+        key = (book_key(entry), topic, cached["created_at"], tuple(sorted(videos)))
+        extra = _attach_cache.get(key)
+        if extra is None:
+            rows = related_videos(embed_query(article_query(entry, topic)), videos, exclude=have)
+            _, extra = format_context(rows, [])
+            if len(_attach_cache) > 2000:
+                _attach_cache.clear()
+            _attach_cache[key] = extra
+        base = max((int(s.get("n", 0)) for s in cached["sources"]), default=0)
+        return cached["sources"] + [s | {"n": base + i + 1, "attached": True} for i, s in enumerate(extra)]
+
     def article_prompt(entry, deck, topic: str, cards: list) -> tuple[str, str, list[dict], str]:
         sy = book_of(entry)
         chapter = sy.chapter_of(topic) if sy else None
-        samples = " ".join(c.question.split("\n")[0][:160] for c in cards[:6])
-        subject = sy.title if sy else entry.name
-        query = f"{topic}. {chapter or ''}. {subject}. {samples}"
-        chunks, mode = retrieve(query, deck_sources(entry, deck), k=8)
+        chunks, mode = retrieve(
+            article_query(entry, topic, cards), deck_sources(entry, deck), k=8, video_query=article_query(entry, topic)
+        )
         ctx_text, sources = format_context(
             chunks, [{"question": c.question, "reference": c.reference} for c in cards]
         )
@@ -294,17 +326,41 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
 
     # ── поиск по базе знаний ────────────────────────────────────────
 
-    def retrieve(query: str, sources: list[str], k: int) -> tuple[list[dict], str]:
+    def embed_query(query: str):
+        try:
+            return services.rag_client().embed(services.embed_model(), [QUERY_INSTRUCT + query[:2000]])[0]
+        except Exception:  # noqa: BLE001 — нет модели эмбеддингов → только BM25
+            return None
+
+    def related_videos(qvec, video_sources: list[str], exclude: set[str] = frozenset(), k: int = VIDEO_K) -> list[dict]:
+        """Фрагменты видео, близкие к запросу: не больше одного на видео, только выше порога сходства."""
+        if qvec is None or not video_sources:
+            return []
+        scored = [(s, cid) for s, cid in services.knowledge.vector_scores(qvec, video_sources, limit=k * 6) if s >= VIDEO_MIN_SIM]
+        picked, seen = [], set(exclude)
+        for row in services.knowledge.get_chunks([cid for _, cid in scored]):
+            if row["source"] in seen:
+                continue
+            seen.add(row["source"])
+            picked.append(row)
+            if len(picked) >= k:
+                break
+        return picked
+
+    def retrieve(query: str, sources: list[str], k: int, video_query: str = "") -> tuple[list[dict], str]:
+        """Документация — гибридным поиском (k фрагментов), видео — отдельной квотой по порогу сходства.
+
+        video_query — короткий запрос без образцов карточек: порог VIDEO_MIN_SIM откалиброван на нём.
+        """
         if not sources:
             return [], "none"
-        qvec = None
-        mode = "bm25"
-        try:
-            qvec = services.rag_client().embed(services.embed_model(), [QUERY_INSTRUCT + query[:2000]])[0]
-            mode = "hybrid"
-        except Exception:  # noqa: BLE001 — нет модели эмбеддингов → только BM25
-            qvec = None
-        return hybrid_search(services.knowledge, query, sources, qvec=qvec, k=k), mode
+        docs = [s for s in sources if not s.startswith("vid:")]
+        videos = [s for s in sources if s.startswith("vid:")]
+        qvec = embed_query(query)
+        mode = "hybrid" if qvec is not None else "bm25"
+        chunks = hybrid_search(services.knowledge, query, docs, qvec=qvec, k=k) if docs else []
+        vvec = embed_query(video_query) if video_query and videos else qvec
+        return chunks + related_videos(vvec, videos), mode
 
     def stream_answer(system: str, user_prompt: str, sources: list[dict], mode: str, on_done=None) -> Iterator[str]:
         yield _ndjson({"type": "sources", "sources": sources, "retrieval": mode, "model": services.textbook_model()})
@@ -341,8 +397,10 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         key = book_key(entry)
         cached = services.knowledge.get_article(key, topic)
         if cached and not body.regenerate:
+            srcs = attach_videos(entry, deck, topic, cards, cached)
+
             def replay() -> Iterator[str]:
-                yield _ndjson({"type": "sources", "sources": cached["sources"], "cached": True, "model": cached["model"]})
+                yield _ndjson({"type": "sources", "sources": srcs, "cached": True, "model": cached["model"]})
                 yield _ndjson({"type": "delta", "text": cached["content"]})
                 yield _ndjson({"type": "done", "cached": True})
             return StreamingResponse(replay(), media_type="application/x-ndjson")
@@ -362,7 +420,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         if not question:
             raise HTTPException(400, "Пустой вопрос")
         topic = body.topic.strip()
-        chunks, mode = retrieve(f"{topic}. {question}", deck_sources(entry, deck), k=6)
+        chunks, mode = retrieve(f"{topic}. {question}", deck_sources(entry, deck), k=6, video_query=question)
         cards = (lesson_cards(entry, deck, topic) or []) if topic else []
         ctx_text, sources = format_context(chunks, [{"question": c.question, "reference": c.reference} for c in cards], card_limit=8)
         user_prompt = f"Колода: {entry.name}\nТема: {topic or '—'}\n\n{ctx_text}\n\nВОПРОС: {question}"

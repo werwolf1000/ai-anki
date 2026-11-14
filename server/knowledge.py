@@ -421,6 +421,10 @@ class KnowledgeStore:
         return [int(r[0]) for r in rows]
 
     def vector_search(self, qvec: np.ndarray, sources: list[str], limit: int = 40) -> list[int]:
+        return [cid for _, cid in self.vector_scores(qvec, sources, limit)]
+
+    def vector_scores(self, qvec: np.ndarray, sources: list[str], limit: int = 40) -> list[tuple[float, int]]:
+        """Косинусная близость (векторы нормированы) — (сходство, id) по убыванию."""
         scored: list[tuple[float, int]] = []
         for sid in sources:
             loaded = self._vectors(sid)
@@ -433,7 +437,7 @@ class KnowledgeStore:
             top = np.argsort(-sims)[:limit]
             scored.extend((float(sims[i]), int(ids[i])) for i in top)
         scored.sort(reverse=True)
-        return [cid for _, cid in scored[:limit]]
+        return scored[:limit]
 
     def get_chunks(self, ids: list[int]) -> list[dict]:
         if not ids:
