@@ -1,0 +1,247 @@
+{
+  "name": "DevOps-инженер — теория",
+  "language": "bash",
+  "track": "devops",
+  "cards": [
+    {
+      "question": "Как посмотреть, какой процесс слушает порт?",
+      "reference": "ss -ltnp (или lsof -i :PORT / netstat -tlnp) — показывает слушающие TCP-сокеты и PID/имя процесса.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что означают права 750 на файле?",
+      "reference": "Владелец rwx (7), группа r-x (5), остальные — нет прав (0).",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем жёсткая ссылка отличается от символической?",
+      "reference": "Жёсткая — ещё одно имя того же inode (в пределах ФС, не для каталогов); символическая — отдельный файл с путём к цели, может указывать на другую ФС и «повиснуть».",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем в начале Bash-скрипта писать set -euo pipefail?",
+      "reference": "-e — выход при ошибке команды, -u — ошибка при неопределённой переменной, -o pipefail — конвейер падает, если упала любая команда в нём.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Как посмотреть логи сервиса systemd?",
+      "reference": "journalctl -u nginx.service -f (следить), --since \"1 hour ago\"; статус — systemctl status nginx.",
+      "topic": "Linux и Bash",
+      "card_type": "text"
+    },
+    {
+      "question": "Что происходит при вводе URL в браузере (кратко)?",
+      "reference": "DNS-резолв имени в IP, TCP-рукопожатие (и TLS для HTTPS), HTTP-запрос, ответ сервера, рендеринг; по пути — кеши, балансировщики, CDN.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем TCP отличается от UDP?",
+      "reference": "TCP — с установлением соединения, гарантией доставки и порядка, контролем перегрузки; UDP — без соединения и гарантий, с меньшими задержками (DNS, видео, QUIC).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие типы DNS-записей вы знаете?",
+      "reference": "A/AAAA — IPv4/IPv6, CNAME — псевдоним, MX — почта, TXT — произвольный текст (SPF, верификация), NS — серверы зоны, SRV — сервисы.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем L4-балансировщик отличается от L7?",
+      "reference": "L4 распределяет TCP/UDP-соединения по IP/порту; L7 понимает HTTP — маршрутизация по пути/заголовкам, TLS-терминация, sticky sessions.",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое TLS-сертификат и как его выпускают автоматически?",
+      "reference": "Сертификат связывает домен с открытым ключом и подписан CA. Let's Encrypt выдаёт бесплатно по протоколу ACME (certbot, cert-manager), подтверждая владение доменом (HTTP-01/DNS-01).",
+      "topic": "Сети",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем образ отличается от контейнера?",
+      "reference": "Образ — неизменяемый набор слоёв ФС и метаданных; контейнер — запущенный экземпляр образа с собственным записываемым слоем и процессом.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем нужны multi-stage сборки?",
+      "reference": "Собрать приложение в «тяжёлом» образе с компиляторами, а в финальный образ скопировать только артефакты — меньше размер и поверхность атаки.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Как ускорить сборку за счёт кеша слоёв?",
+      "reference": "Сначала копировать файлы зависимостей (package.json, go.mod) и ставить зависимости, потом копировать исходники — слой зависимостей переиспользуется; .dockerignore исключает лишнее.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему контейнер не должен работать от root?",
+      "reference": "При побеге из контейнера или уязвимости у процесса меньше привилегий; в Dockerfile задают USER с непривилегированным UID.",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем отличаются CMD и ENTRYPOINT?",
+      "reference": "ENTRYPOINT задаёт исполняемый файл, CMD — аргументы по умолчанию (переопределяются при docker run); обычно используют exec-форму [\"app\", \"--flag\"].",
+      "topic": "Docker",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Pod, Deployment и Service?",
+      "reference": "Pod — минимальная единица (один или несколько контейнеров с общей сетью); Deployment управляет репликами и обновлениями подов; Service даёт стабильный адрес и балансировку на поды по селектору.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем liveness probe отличается от readiness probe?",
+      "reference": "Liveness проверяет, жив ли контейнер (при провале — перезапуск); readiness — готов ли принимать трафик (при провале под исключается из Service).",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем задавать requests и limits?",
+      "reference": "requests — гарантированные ресурсы для планирования, limits — потолок: превышение памяти ведёт к OOMKill, CPU — к троттлингу.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем ConfigMap отличается от Secret?",
+      "reference": "Оба передают конфигурацию в поды (env или файлы); Secret предназначен для чувствительных данных (base64, можно шифровать at rest, отдельные RBAC-права).",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Ingress?",
+      "reference": "Правила L7-маршрутизации HTTP(S) извне к Service по хосту и пути; реализуется ingress-контроллером (nginx, traefik), часто с TLS через cert-manager.",
+      "topic": "Kubernetes",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Continuous Delivery отличается от Continuous Deployment?",
+      "reference": "Delivery — каждый коммит готов к выкладке, релиз запускается вручную; Deployment — прошедшие проверки изменения выкатываются в продакшен автоматически.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие стадии обычно есть в пайплайне?",
+      "reference": "Линтинг и тесты, сборка артефакта/образа, сканирование безопасности, публикация в registry, деплой в staging, приёмочные проверки, деплой в production.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Как хранить секреты в CI?",
+      "reference": "В защищённых переменных/секретах CI (GitHub Secrets, GitLab CI variables masked/protected) или во внешнем хранилище (Vault); не коммитить и не выводить в логи; лучше OIDC вместо долгоживущих ключей.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое blue-green и canary-деплой?",
+      "reference": "Blue-green — две среды, трафик переключается целиком на новую; canary — новая версия получает малую долю трафика, которую увеличивают при хороших метриках.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое GitOps?",
+      "reference": "Желаемое состояние инфраструктуры и приложений хранится в Git, а агент (Argo CD, Flux) синхронизирует кластер с репозиторием; изменения — через pull request.",
+      "topic": "CI/CD",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое Terraform state и почему его хранят удалённо?",
+      "reference": "Файл соответствия ресурсов в конфигурации реальным объектам. Хранят в удалённом backend (S3 + блокировки, Terraform Cloud), чтобы команда работала с одним состоянием и не было гонок.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делают terraform plan и apply?",
+      "reference": "plan показывает, какие ресурсы будут созданы/изменены/удалены; apply применяет изменения (можно применить сохранённый план).",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Terraform отличается от Ansible?",
+      "reference": "Terraform декларативно создаёт инфраструктуру (облачные ресурсы) и хранит state; Ansible — в основном конфигурирование серверов по SSH плейбуками, без state.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое идемпотентность в Ansible?",
+      "reference": "Повторный запуск плейбука не меняет систему, если она уже в нужном состоянии; модули сообщают changed только при реальных изменениях.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем нужны модули Terraform?",
+      "reference": "Переиспользуемые параметризованные блоки конфигурации (сеть, кластер) с входными переменными и outputs — единообразие и меньше копипасты.",
+      "topic": "Infrastructure as Code",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие «золотые сигналы» мониторинга?",
+      "reference": "Latency (задержка), Traffic (нагрузка), Errors (ошибки), Saturation (насыщение ресурсов).",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как работает Prometheus?",
+      "reference": "Pull-модель: периодически опрашивает /metrics целей, хранит временные ряды с метками, запросы на PromQL, алерты через Alertmanager.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем counter отличается от gauge и histogram?",
+      "reference": "Counter только растёт (запросы), gauge может расти и падать (память), histogram считает распределение по корзинам (длительности) для перцентилей.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое три столпа observability?",
+      "reference": "Метрики, логи и трейсы (распределённая трассировка, OpenTelemetry) — вместе позволяют понять, что и где происходит в системе.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Как избежать «усталости от алертов»?",
+      "reference": "Алертить по симптомам, влияющим на пользователей (SLO), а не по каждой причине; убирать шумные алерты, у каждого алерта — runbook и владелец.",
+      "topic": "Мониторинг и логи",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем SLI, SLO и SLA отличаются?",
+      "reference": "SLI — измеряемый показатель (доля успешных запросов), SLO — целевое значение (99.9% за 30 дней), SLA — договорное обязательство перед клиентом с последствиями.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое error budget?",
+      "reference": "Допустимая доля ошибок по SLO (для 99.9% — 0.1%). Пока бюджет есть — можно выпускать изменения; когда исчерпан — фокус на стабильности.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое blameless postmortem?",
+      "reference": "Разбор инцидента без поиска виноватых: хронология, причины, влияние, что сработало, action items для предотвращения повторения.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем RTO отличается от RPO?",
+      "reference": "RTO — допустимое время восстановления сервиса; RPO — допустимая потеря данных по времени (как давно была последняя резервная копия).",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему бэкап без проверки восстановления ненадёжен?",
+      "reference": "Копии могут быть повреждены, неполны или несовместимы; нужно регулярно тестировать восстановление и измерять реальное RTO.",
+      "topic": "Надёжность и SRE",
+      "card_type": "text"
+    }
+  ]
+}

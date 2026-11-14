@@ -1,0 +1,77 @@
+{
+  "name": "PHP-разработчик — практикум",
+  "language": "php",
+  "track": "php",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите backed enum OrderStatus: string с кейсами New = 'new', Paid = 'paid', Shipped = 'shipped' и методом label(): string, возвращающим русские названия через match.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nenum OrderStatus: string\n{\n    case New = 'new';\n    case Paid = 'paid';\n    case Shipped = 'shipped';\n\n    public function label(): string\n    {\n        return match ($this) {\n            self::New => 'Новый',\n            self::Paid => 'Оплачен',\n            self::Shipped => 'Отправлен',\n        };\n    }\n}",
+      "language": "php",
+      "topic": "Современный PHP 8"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте интерфейс PaymentGateway с методом charge(int $amountCents): string и класс OrderService, который получает шлюз через конструктор (DI) и в методе pay(int $amountCents) бросает InvalidArgumentException при сумме <= 0, иначе возвращает id платежа от шлюза.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\ninterface PaymentGateway\n{\n    public function charge(int $amountCents): string;\n}\n\nfinal class OrderService\n{\n    public function __construct(private readonly PaymentGateway $gateway) {}\n\n    public function pay(int $amountCents): string\n    {\n        if ($amountCents <= 0) {\n            throw new InvalidArgumentException('Сумма должна быть больше нуля');\n        }\n        return $this->gateway->charge($amountCents);\n    }\n}",
+      "language": "php",
+      "topic": "ООП и архитектура"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите SQL-запрос: топ-5 клиентов по сумме оплаченных заказов за 2025 год. Таблицы: customers(id, name), orders(id, customer_id, total, status, created_at). Вывести name и сумму total_spent.",
+      "reference": "SELECT c.name, SUM(o.total) AS total_spent\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nWHERE o.status = 'paid'\n  AND o.created_at >= '2025-01-01'\n  AND o.created_at < '2026-01-01'\nGROUP BY c.id, c.name\nORDER BY total_spent DESC\nLIMIT 5;",
+      "language": "sql",
+      "topic": "Базы данных и SQL"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию findUserByEmail(PDO $pdo, string $email): ?array, которая безопасно (prepared statement) ищет пользователя в таблице users и возвращает ассоциативный массив или null.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction findUserByEmail(PDO $pdo, string $email): ?array\n{\n    $stmt = $pdo->prepare('SELECT id, name, email FROM users WHERE email = :email LIMIT 1');\n    $stmt->execute(['email' => $email]);\n    $row = $stmt->fetch(PDO::FETCH_ASSOC);\n    return $row === false ? null : $row;\n}",
+      "language": "php",
+      "topic": "Базы данных и SQL"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Laravel-контроллер PostController с методом store(Request $request): JsonResponse: валидация title (required, string, max:200) и body (required, string), создание Post и ответ 201 с JSON созданной записи.",
+      "reference": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Post;\nuse Illuminate\\Http\\JsonResponse;\nuse Illuminate\\Http\\Request;\n\nclass PostController extends Controller\n{\n    public function store(Request $request): JsonResponse\n    {\n        $data = $request->validate([\n            'title' => ['required', 'string', 'max:200'],\n            'body' => ['required', 'string'],\n        ]);\n\n        $post = Post::create($data);\n\n        return response()->json($post, 201);\n    }\n}",
+      "language": "php",
+      "topic": "HTTP и REST API"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функции registerPassword(string $plain): string и checkPassword(string $plain, string $hash): bool, используя встроенные функции PHP для хеширования паролей. Пароль короче 8 символов — InvalidArgumentException.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nfunction registerPassword(string $plain): string\n{\n    if (mb_strlen($plain) < 8) {\n        throw new InvalidArgumentException('Пароль слишком короткий');\n    }\n    return password_hash($plain, PASSWORD_DEFAULT);\n}\n\nfunction checkPassword(string $plain, string $hash): bool\n{\n    return password_verify($plain, $hash);\n}",
+      "language": "php",
+      "topic": "Безопасность"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите PHPUnit-тест для функции slugify(string $s): string (уже существует), используя data provider с тремя кейсами: 'Hello World' → 'hello-world', '  PHP 8  ' → 'php-8', 'a--b' → 'a-b'.",
+      "reference": "<?php\ndeclare(strict_types=1);\n\nuse PHPUnit\\Framework\\Attributes\\DataProvider;\nuse PHPUnit\\Framework\\TestCase;\n\nfinal class SlugifyTest extends TestCase\n{\n    public static function cases(): array\n    {\n        return [\n            ['Hello World', 'hello-world'],\n            ['  PHP 8  ', 'php-8'],\n            ['a--b', 'a-b'],\n        ];\n    }\n\n    #[DataProvider('cases')]\n    public function testSlugify(string $input, string $expected): void\n    {\n        $this->assertSame($expected, slugify($input));\n    }\n}",
+      "language": "php",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Laravel job SendWelcomeEmail (implements ShouldQueue), который получает User в конструкторе, имеет 3 попытки ($tries) и в handle() отправляет письмо Mail::to($user)->send(new WelcomeMail($user)).",
+      "reference": "<?php\n\nnamespace App\\Jobs;\n\nuse App\\Mail\\WelcomeMail;\nuse App\\Models\\User;\nuse Illuminate\\Bus\\Queueable;\nuse Illuminate\\Contracts\\Queue\\ShouldQueue;\nuse Illuminate\\Foundation\\Bus\\Dispatchable;\nuse Illuminate\\Queue\\InteractsWithQueue;\nuse Illuminate\\Queue\\SerializesModels;\nuse Illuminate\\Support\\Facades\\Mail;\n\nclass SendWelcomeEmail implements ShouldQueue\n{\n    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;\n\n    public int $tries = 3;\n\n    public function __construct(public User $user) {}\n\n    public function handle(): void\n    {\n        Mail::to($this->user)->send(new WelcomeMail($this->user));\n    }\n}",
+      "language": "php",
+      "topic": "Производительность и очереди"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию getPopularPosts(): array, которая через Laravel Cache::remember кеширует на 10 минут результат запроса: 10 постов с наибольшим views (Post::orderByDesc('views')->limit(10)->get()->toArray()).",
+      "reference": "<?php\n\nuse App\\Models\\Post;\nuse Illuminate\\Support\\Facades\\Cache;\n\nfunction getPopularPosts(): array\n{\n    return Cache::remember('posts:popular', now()->addMinutes(10), function () {\n        return Post::orderByDesc('views')->limit(10)->get()->toArray();\n    });\n}",
+      "language": "php",
+      "topic": "Производительность и очереди"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите docker-compose.yml для PHP-приложения: сервис app (образ php:8.3-fpm, код монтируется в /var/www), web (nginx:alpine, порт 8080:80, конфиг ./nginx.conf), db (postgres:16 с переменными POSTGRES_DB/USER/PASSWORD и именованным томом).",
+      "reference": "services:\n  app:\n    image: php:8.3-fpm\n    volumes:\n      - ./:/var/www\n    depends_on:\n      - db\n  web:\n    image: nginx:alpine\n    ports:\n      - \"8080:80\"\n    volumes:\n      - ./:/var/www\n      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro\n    depends_on:\n      - app\n  db:\n    image: postgres:16\n    environment:\n      POSTGRES_DB: app\n      POSTGRES_USER: app\n      POSTGRES_PASSWORD: secret\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n\nvolumes:\n  pgdata:",
+      "language": "yaml",
+      "topic": "Инструменты и DevOps"
+    }
+  ]
+}

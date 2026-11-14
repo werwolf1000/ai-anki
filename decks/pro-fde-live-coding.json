@@ -1,0 +1,77 @@
+{
+  "name": "Forward Deployed Engineer — практикум",
+  "language": "python",
+  "track": "fde",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию get_with_retry(url, retries=3) на requests: таймаут 10 с, повтор при статусе 429/5xx или исключении сети с экспоненциальной задержкой 1, 2, 4 с; при исчерпании попыток — пробросить ошибку. Возвращает resp.json().",
+      "reference": "import time\n\nimport requests\n\nRETRY_STATUSES = {429, 500, 502, 503, 504}\n\n\ndef get_with_retry(url: str, retries: int = 3) -> dict:\n    for attempt in range(retries + 1):\n        try:\n            resp = requests.get(url, timeout=10)\n            if resp.status_code in RETRY_STATUSES and attempt < retries:\n                time.sleep(2 ** attempt)\n                continue\n            resp.raise_for_status()\n            return resp.json()\n        except (requests.ConnectionError, requests.Timeout):\n            if attempt == retries:\n                raise\n            time.sleep(2 ** attempt)\n    raise RuntimeError('unreachable')",
+      "language": "python",
+      "topic": "Интеграции и API"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию verify_webhook(body: bytes, signature: str, secret: str) -> bool, проверяющую HMAC-SHA256 подпись (hex) с безопасным сравнением.",
+      "reference": "import hashlib\nimport hmac\n\n\ndef verify_webhook(body: bytes, signature: str, secret: str) -> bool:\n    expected = hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()\n    return hmac.compare_digest(expected, signature)",
+      "language": "python",
+      "topic": "Интеграции и API"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите SQL: для каждого клиента последний заказ (id, created_at, total) с помощью оконной функции. Таблица orders(id, customer_id, created_at, total).",
+      "reference": "SELECT customer_id, id, created_at, total\nFROM (\n  SELECT o.*,\n         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY created_at DESC) AS rn\n  FROM orders o\n) t\nWHERE rn = 1;",
+      "language": "sql",
+      "topic": "Данные и SQL"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Используя pandas, напишите функцию data_quality_report(df) -> pd.DataFrame, возвращающую по каждому столбцу: тип, долю пропусков и число уникальных значений.",
+      "reference": "import pandas as pd\n\n\ndef data_quality_report(df: pd.DataFrame) -> pd.DataFrame:\n    return pd.DataFrame({\n        'dtype': df.dtypes.astype(str),\n        'null_share': df.isna().mean().round(3),\n        'unique': df.nunique(),\n    })",
+      "language": "python",
+      "topic": "Данные и SQL"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Опишите pydantic-модель Lead (name: str не пустое, email: EmailStr, phone: str | None, budget: int >= 0) и функцию parse_leads(rows: list[dict]) -> tuple[list[Lead], list[str]], возвращающую валидные лиды и тексты ошибок.",
+      "reference": "from pydantic import BaseModel, EmailStr, Field, ValidationError\n\n\nclass Lead(BaseModel):\n    name: str = Field(min_length=1)\n    email: EmailStr\n    phone: str | None = None\n    budget: int = Field(ge=0)\n\n\ndef parse_leads(rows: list[dict]) -> tuple[list[Lead], list[str]]:\n    leads, errors = [], []\n    for i, row in enumerate(rows):\n        try:\n            leads.append(Lead(**row))\n        except ValidationError as exc:\n            errors.append(f'row {i}: {exc}')\n    return leads, errors",
+      "language": "python",
+      "topic": "Python для автоматизации"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию chunk_text(text: str, size: int = 800, overlap: int = 100) -> list[str] для RAG: делит текст на куски длиной до size символов с перекрытием overlap.",
+      "reference": "def chunk_text(text: str, size: int = 800, overlap: int = 100) -> list[str]:\n    if overlap >= size:\n        raise ValueError('overlap must be smaller than size')\n    chunks = []\n    start = 0\n    while start < len(text):\n        chunks.append(text[start:start + size])\n        start += size - overlap\n    return chunks",
+      "language": "python",
+      "topic": "Внедрение LLM-решений"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию build_rag_prompt(question: str, chunks: list[str]) -> str: системная инструкция отвечать только по контексту и ссылаться на номера фрагментов [n], нумерованные фрагменты и вопрос.",
+      "reference": "def build_rag_prompt(question: str, chunks: list[str]) -> str:\n    context = '\\n\\n'.join(f'[{i}] {c}' for i, c in enumerate(chunks, 1))\n    return (\n        'Отвечай только на основе контекста ниже. Если ответа нет в контексте, скажи об этом. '\n        'После каждого факта указывай номер фрагмента в квадратных скобках.\\n\\n'\n        f'Контекст:\\n{context}\\n\\nВопрос: {question}\\nОтвет:'\n    )",
+      "language": "python",
+      "topic": "Внедрение LLM-решений"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите docker-compose.yml для пилота у клиента: сервис api (build: ., порт 8000, переменные из .env, healthcheck curl /health) и postgres:16 с томом; api стартует после готовности БД (depends_on condition: service_healthy, у postgres healthcheck pg_isready).",
+      "reference": "services:\n  api:\n    build: .\n    ports:\n      - \"8000:8000\"\n    env_file: .env\n    depends_on:\n      db:\n        condition: service_healthy\n    healthcheck:\n      test: [\"CMD\", \"curl\", \"-f\", \"http://localhost:8000/health\"]\n      interval: 30s\n      timeout: 5s\n      retries: 3\n  db:\n    image: postgres:16\n    environment:\n      POSTGRES_DB: app\n      POSTGRES_USER: app\n      POSTGRES_PASSWORD: ${DB_PASSWORD}\n    volumes:\n      - pgdata:/var/lib/postgresql/data\n    healthcheck:\n      test: [\"CMD-SHELL\", \"pg_isready -U app\"]\n      interval: 10s\n      retries: 5\n\nvolumes:\n  pgdata:",
+      "language": "yaml",
+      "topic": "Облака и развёртывание"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию mask_pii(text: str) -> str, которая маскирует email (оставляя первую букву и домен: i***@mail.ru) и российские телефоны вида +7XXXXXXXXXX (→ +7*******XX).",
+      "reference": "import re\n\nEMAIL = re.compile(r'([A-Za-z0-9])[A-Za-z0-9._%+-]*@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})')\nPHONE = re.compile(r'\\+7\\d{8}(\\d{2})')\n\n\ndef mask_pii(text: str) -> str:\n    text = EMAIL.sub(r'\\1***@\\2', text)\n    return PHONE.sub(r'+7*******\\1', text)",
+      "language": "python",
+      "topic": "Безопасность и compliance"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Составьте структуру краткого design doc для пилота «ассистент для операторов поддержки на базе RAG по базе знаний клиента»: разделы с 1–2 пунктами содержания в каждом.",
+      "reference": "# Design doc: RAG-ассистент для операторов поддержки\n\n## Контекст и цель\n- операторы тратят много времени на поиск ответов в базе знаний\n- цель: сократить время ответа на 30% за 6 недель пилота\n\n## Требования и не-цели\n- ответы со ссылками на статьи, только для внутренних операторов\n- не-цель: автоматические ответы клиентам без проверки человеком\n\n## Решение\n- индексация базы знаний (чанки + гибридный поиск), LLM формирует черновик ответа\n- интеграция в интерфейс CRM через виджет\n\n## Альтернативы\n- улучшенный полнотекстовый поиск без LLM\n\n## Данные и безопасность\n- PII маскируется до отправки в модель, развёртывание в VPC клиента\n\n## Метрики и оценка\n- время ответа, доля принятых черновиков, оценки операторов\n\n## Риски\n- устаревшие статьи, галлюцинации — показывать источники\n\n## План\n- неделя 1–2: данные и индекс; 3–4: интеграция; 5–6: пилот и отчёт",
+      "language": "markdown",
+      "topic": "Коммуникация и документация"
+    }
+  ]
+}

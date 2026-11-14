@@ -1,0 +1,77 @@
+{
+  "name": "DevOps-инженер — практикум",
+  "language": "bash",
+  "track": "devops",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите Bash-скрипт, который принимает путь к лог-файлу nginx (access.log) первым аргументом и выводит топ-10 IP-адресов по числу запросов. Проверьте, что аргумент передан и файл существует.",
+      "reference": "#!/usr/bin/env bash\nset -euo pipefail\n\nlog=\"${1:-}\"\nif [[ -z \"$log\" || ! -f \"$log\" ]]; then\n  echo \"Usage: $0 /path/to/access.log\" >&2\n  exit 1\nfi\n\nawk '{print $1}' \"$log\" | sort | uniq -c | sort -rn | head -n 10",
+      "language": "bash",
+      "topic": "Linux и Bash"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Bash-скрипт резервного копирования: архивирует каталог /var/www в /backup/www-YYYY-MM-DD.tar.gz и удаляет архивы старше 7 дней.",
+      "reference": "#!/usr/bin/env bash\nset -euo pipefail\n\nsrc=/var/www\ndest=/backup\nstamp=$(date +%F)\n\nmkdir -p \"$dest\"\ntar -czf \"$dest/www-$stamp.tar.gz\" -C \"$(dirname \"$src\")\" \"$(basename \"$src\")\"\nfind \"$dest\" -name 'www-*.tar.gz' -mtime +7 -delete",
+      "language": "bash",
+      "topic": "Linux и Bash"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите multi-stage Dockerfile для Go-приложения: сборка в golang:1.23 (CGO_ENABLED=0, бинарник /app/server), финальный образ gcr.io/distroless/static, запуск от nonroot, порт 8080.",
+      "reference": "FROM golang:1.23 AS build\nWORKDIR /src\nCOPY go.mod go.sum ./\nRUN go mod download\nCOPY . .\nRUN CGO_ENABLED=0 go build -o /app/server ./cmd/server\n\nFROM gcr.io/distroless/static\nCOPY --from=build /app/server /server\nUSER nonroot:nonroot\nEXPOSE 8080\nENTRYPOINT [\"/server\"]",
+      "language": "dockerfile",
+      "topic": "Docker"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Dockerfile для Node.js-приложения: node:22-alpine, кешируемая установка зависимостей (npm ci --omit=dev), копирование исходников, USER node, CMD node server.js.",
+      "reference": "FROM node:22-alpine\nWORKDIR /app\nENV NODE_ENV=production\nCOPY package.json package-lock.json ./\nRUN npm ci --omit=dev\nCOPY . .\nUSER node\nEXPOSE 3000\nCMD [\"node\", \"server.js\"]",
+      "language": "dockerfile",
+      "topic": "Docker"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите манифест Kubernetes Deployment web (3 реплики, образ registry.example.com/web:1.0, порт 8080, requests cpu 100m/memory 128Mi, limits memory 256Mi, readinessProbe HTTP GET /health) и Service типа ClusterIP на порт 80.",
+      "reference": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\nspec:\n  replicas: 3\n  selector:\n    matchLabels:\n      app: web\n  template:\n    metadata:\n      labels:\n        app: web\n    spec:\n      containers:\n        - name: web\n          image: registry.example.com/web:1.0\n          ports:\n            - containerPort: 8080\n          resources:\n            requests:\n              cpu: 100m\n              memory: 128Mi\n            limits:\n              memory: 256Mi\n          readinessProbe:\n            httpGet:\n              path: /health\n              port: 8080\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: web\nspec:\n  type: ClusterIP\n  selector:\n    app: web\n  ports:\n    - port: 80\n      targetPort: 8080",
+      "language": "yaml",
+      "topic": "Kubernetes"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите workflow GitHub Actions: на push в main и pull_request — checkout, setup-node 22 с кешем npm, npm ci, npm test; на push в main дополнительно сборка и push Docker-образа в ghcr.io (job зависит от тестов).",
+      "reference": "name: ci\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v4\n        with:\n          node-version: 22\n          cache: npm\n      - run: npm ci\n      - run: npm test\n\n  image:\n    needs: test\n    if: github.event_name == 'push'\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      packages: write\n    steps:\n      - uses: actions/checkout@v4\n      - uses: docker/login-action@v3\n        with:\n          registry: ghcr.io\n          username: ${{ github.actor }}\n          password: ${{ secrets.GITHUB_TOKEN }}\n      - uses: docker/build-push-action@v6\n        with:\n          push: true\n          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}",
+      "language": "yaml",
+      "topic": "CI/CD"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Terraform-конфигурацию: провайдер aws (регион из переменной region), S3-бакет с именем из переменной bucket_name, включённое версионирование и output с ARN бакета.",
+      "reference": "variable \"region\" {\n  type = string\n}\n\nvariable \"bucket_name\" {\n  type = string\n}\n\nprovider \"aws\" {\n  region = var.region\n}\n\nresource \"aws_s3_bucket\" \"this\" {\n  bucket = var.bucket_name\n}\n\nresource \"aws_s3_bucket_versioning\" \"this\" {\n  bucket = aws_s3_bucket.this.id\n  versioning_configuration {\n    status = \"Enabled\"\n  }\n}\n\noutput \"bucket_arn\" {\n  value = aws_s3_bucket.this.arn\n}",
+      "language": "hcl",
+      "topic": "Infrastructure as Code"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Ansible-плейбук для группы web: установить nginx (apt, update_cache), скопировать шаблон templates/site.conf.j2 в /etc/nginx/conf.d/site.conf и перезапустить nginx через handler при изменении.",
+      "reference": "- name: Configure web servers\n  hosts: web\n  become: true\n  tasks:\n    - name: Install nginx\n      ansible.builtin.apt:\n        name: nginx\n        state: present\n        update_cache: true\n\n    - name: Deploy site config\n      ansible.builtin.template:\n        src: templates/site.conf.j2\n        dest: /etc/nginx/conf.d/site.conf\n      notify: Restart nginx\n\n  handlers:\n    - name: Restart nginx\n      ansible.builtin.service:\n        name: nginx\n        state: restarted",
+      "language": "yaml",
+      "topic": "Infrastructure as Code"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите правило алерта Prometheus HighErrorRate: доля ответов 5xx (метрика http_requests_total с меткой status) больше 5% за 5 минут, держится 10 минут, severity: page, с аннотацией summary.",
+      "reference": "groups:\n  - name: web\n    rules:\n      - alert: HighErrorRate\n        expr: |\n          sum(rate(http_requests_total{status=~\"5..\"}[5m]))\n            /\n          sum(rate(http_requests_total[5m])) > 0.05\n        for: 10m\n        labels:\n          severity: page\n        annotations:\n          summary: \"Доля 5xx превышает 5% последние 10 минут\"",
+      "language": "yaml",
+      "topic": "Мониторинг и логи"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Составьте шаблон blameless postmortem для инцидента «недоступность API 40 минут из-за истёкшего TLS-сертификата»: разделы, ключевые факты, причины и action items.",
+      "reference": "# Postmortem: недоступность API (истёкший TLS-сертификат)\n\n## Кратко\nAPI был недоступен 40 минут: клиенты получали ошибку TLS, потому что сертификат истёк.\n\n## Влияние\n- 100% запросов к API завершались ошибкой 40 минут\n- затронуты мобильное приложение и интеграции партнёров\n\n## Хронология\n- 09:00 — сертификат истёк\n- 09:05 — алерт по росту ошибок\n- 09:25 — найдена причина\n- 09:40 — сертификат перевыпущен, сервис восстановлен\n\n## Причины\n- сертификат выпускался вручную, автопродление не настроено\n- не было мониторинга срока действия сертификатов\n\n## Что сработало / что нет\n- алерт по ошибкам сработал быстро\n- runbook по TLS отсутствовал\n\n## Action items\n- [ ] перейти на автоматический выпуск (cert-manager / certbot) — владелец, срок\n- [ ] алерт за 14 дней до истечения сертификата\n- [ ] написать runbook по перевыпуску",
+      "language": "markdown",
+      "topic": "Надёжность и SRE"
+    }
+  ]
+}

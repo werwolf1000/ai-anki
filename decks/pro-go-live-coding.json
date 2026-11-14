@@ -1,0 +1,77 @@
+{
+  "name": "Go-разработчик — практикум",
+  "language": "go",
+  "track": "go",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию Unique(nums []int) []int, которая возвращает элементы без повторов в порядке первого появления.",
+      "reference": "package main\n\nfunc Unique(nums []int) []int {\n    seen := make(map[int]struct{}, len(nums))\n    out := make([]int, 0, len(nums))\n    for _, n := range nums {\n        if _, ok := seen[n]; ok {\n            continue\n        }\n        seen[n] = struct{}{}\n        out = append(out, n)\n    }\n    return out\n}",
+      "language": "go",
+      "topic": "Типы и основы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Объявите sentinel-ошибку ErrNotFound и функцию FindUser(users map[int]string, id int) (string, error), возвращающую обёрнутую ошибку fmt.Errorf(\"user %d: %w\", id, ErrNotFound), если пользователя нет.",
+      "reference": "package main\n\nimport (\n    \"errors\"\n    \"fmt\"\n)\n\nvar ErrNotFound = errors.New(\"not found\")\n\nfunc FindUser(users map[int]string, id int) (string, error) {\n    name, ok := users[id]\n    if !ok {\n        return \"\", fmt.Errorf(\"user %d: %w\", id, ErrNotFound)\n    }\n    return name, nil\n}",
+      "language": "go",
+      "topic": "Интерфейсы и ошибки"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию ParallelSum(parts [][]int) int, которая считает сумму каждого подслайса в отдельной горутине и складывает результаты (sync.WaitGroup + mutex или канал).",
+      "reference": "package main\n\nimport \"sync\"\n\nfunc ParallelSum(parts [][]int) int {\n    var (\n        wg    sync.WaitGroup\n        mu    sync.Mutex\n        total int\n    )\n    for _, p := range parts {\n        wg.Add(1)\n        go func(nums []int) {\n            defer wg.Done()\n            s := 0\n            for _, n := range nums {\n                s += n\n            }\n            mu.Lock()\n            total += s\n            mu.Unlock()\n        }(p)\n    }\n    wg.Wait()\n    return total\n}",
+      "language": "go",
+      "topic": "Конкурентность"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию Fetch(ctx context.Context, url string) ([]byte, error), которая выполняет GET с учётом контекста (http.NewRequestWithContext) и возвращает тело; статус не 200 — ошибка.",
+      "reference": "package main\n\nimport (\n    \"context\"\n    \"fmt\"\n    \"io\"\n    \"net/http\"\n)\n\nfunc Fetch(ctx context.Context, url string) ([]byte, error) {\n    req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)\n    if err != nil {\n        return nil, err\n    }\n    resp, err := http.DefaultClient.Do(req)\n    if err != nil {\n        return nil, err\n    }\n    defer resp.Body.Close()\n    if resp.StatusCode != http.StatusOK {\n        return nil, fmt.Errorf(\"unexpected status %d\", resp.StatusCode)\n    }\n    return io.ReadAll(resp.Body)\n}",
+      "language": "go",
+      "topic": "Конкурентность"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите HTTP-сервер на net/http (Go 1.22+): GET /health отвечает JSON {\"status\":\"ok\"}, GET /users/{id} отвечает JSON {\"id\": \"<id>\"}; сервер слушает :8080 с ReadTimeout 5s.",
+      "reference": "package main\n\nimport (\n    \"encoding/json\"\n    \"log\"\n    \"net/http\"\n    \"time\"\n)\n\nfunc writeJSON(w http.ResponseWriter, v any) {\n    w.Header().Set(\"Content-Type\", \"application/json\")\n    json.NewEncoder(w).Encode(v)\n}\n\nfunc main() {\n    mux := http.NewServeMux()\n    mux.HandleFunc(\"GET /health\", func(w http.ResponseWriter, r *http.Request) {\n        writeJSON(w, map[string]string{\"status\": \"ok\"})\n    })\n    mux.HandleFunc(\"GET /users/{id}\", func(w http.ResponseWriter, r *http.Request) {\n        writeJSON(w, map[string]string{\"id\": r.PathValue(\"id\")})\n    })\n    srv := &http.Server{Addr: \":8080\", Handler: mux, ReadTimeout: 5 * time.Second}\n    log.Fatal(srv.ListenAndServe())\n}",
+      "language": "go",
+      "topic": "net/http и сервисы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите middleware Logging(next http.Handler) http.Handler, которое логирует метод, путь и длительность обработки через log/slog.",
+      "reference": "package main\n\nimport (\n    \"log/slog\"\n    \"net/http\"\n    \"time\"\n)\n\nfunc Logging(next http.Handler) http.Handler {\n    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {\n        start := time.Now()\n        next.ServeHTTP(w, r)\n        slog.Info(\"request\", \"method\", r.Method, \"path\", r.URL.Path, \"duration\", time.Since(start))\n    })\n}",
+      "language": "go",
+      "topic": "net/http и сервисы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию GetUserName(ctx context.Context, db *sql.DB, id int64) (string, error) с QueryRowContext и плейсхолдером $1; если строки нет — вернуть ErrNotFound (объявите его).",
+      "reference": "package main\n\nimport (\n    \"context\"\n    \"database/sql\"\n    \"errors\"\n)\n\nvar ErrNotFound = errors.New(\"not found\")\n\nfunc GetUserName(ctx context.Context, db *sql.DB, id int64) (string, error) {\n    var name string\n    err := db.QueryRowContext(ctx, \"SELECT name FROM users WHERE id = $1\", id).Scan(&name)\n    if errors.Is(err, sql.ErrNoRows) {\n        return \"\", ErrNotFound\n    }\n    return name, err\n}",
+      "language": "go",
+      "topic": "Базы данных"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите табличный тест TestAbs для функции Abs(x int) int с кейсами: 5→5, -3→3, 0→0, используя t.Run.",
+      "reference": "package main\n\nimport \"testing\"\n\nfunc TestAbs(t *testing.T) {\n    tests := []struct {\n        name string\n        in   int\n        want int\n    }{\n        {\"positive\", 5, 5},\n        {\"negative\", -3, 3},\n        {\"zero\", 0, 0},\n    }\n    for _, tc := range tests {\n        t.Run(tc.name, func(t *testing.T) {\n            if got := Abs(tc.in); got != tc.want {\n                t.Errorf(\"Abs(%d) = %d, want %d\", tc.in, got, tc.want)\n            }\n        })\n    }\n}",
+      "language": "go",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Опишите protobuf-контракт (proto3) сервиса UserService с методом GetUser(GetUserRequest{int64 id}) returns (User{int64 id, string name, string email}) в пакете users.v1.",
+      "reference": "syntax = \"proto3\";\n\npackage users.v1;\n\noption go_package = \"example.com/gen/users/v1;usersv1\";\n\nservice UserService {\n  rpc GetUser(GetUserRequest) returns (User);\n}\n\nmessage GetUserRequest {\n  int64 id = 1;\n}\n\nmessage User {\n  int64 id = 1;\n  string name = 2;\n  string email = 3;\n}",
+      "language": "go",
+      "topic": "Микросервисы и gRPC"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию ProcessAll(ctx context.Context, items []string, limit int, fn func(context.Context, string) error) error, которая обрабатывает элементы параллельно не более limit одновременно с помощью errgroup и возвращает первую ошибку.",
+      "reference": "package main\n\nimport (\n    \"context\"\n\n    \"golang.org/x/sync/errgroup\"\n)\n\nfunc ProcessAll(ctx context.Context, items []string, limit int, fn func(context.Context, string) error) error {\n    g, ctx := errgroup.WithContext(ctx)\n    g.SetLimit(limit)\n    for _, it := range items {\n        g.Go(func() error {\n            return fn(ctx, it)\n        })\n    }\n    return g.Wait()\n}",
+      "language": "go",
+      "topic": "Производительность"
+    }
+  ]
+}

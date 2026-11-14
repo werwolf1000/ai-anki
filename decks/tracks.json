@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "exam": {
+    "theory": 9,
+    "practice": 3,
+    "minutes": 60,
+    "pass_score": 70
+  },
+  "interview": {
+    "theory": 5,
+    "practice": 1,
+    "pass_score": 65
+  },
+  "coverage": 0.6,
+  "tracks": [
+    {
+      "id": "php",
+      "title": "PHP-разработчик",
+      "description": "Backend на PHP 8: SQL, HTTP/REST, Laravel, безопасность, тестирование, очереди, Docker.",
+      "icon": "php",
+      "language": "php",
+      "decks": [
+        "pro-php.json",
+        "pro-php-live-coding.json"
+      ],
+      "related": [
+        "php8-plus.json",
+        "php-live-coding.json",
+        "laravel-basics.json",
+        "laravel-live-coding.json"
+      ],
+      "subjects": [
+        "Современный PHP 8",
+        "ООП и архитектура",
+        "Базы данных и SQL",
+        "HTTP и REST API",
+        "Безопасность",
+        "Тестирование",
+        "Производительность и очереди",
+        "Инструменты и DevOps"
+      ]
+    },
+    {
+      "id": "nodejs",
+      "title": "Node.js-разработчик",
+      "description": "Серверный JavaScript/TypeScript: event loop, HTTP-фреймворки, базы данных, тесты, безопасность, производительность.",
+      "icon": "nodejs",
+      "language": "javascript",
+      "decks": [
+        "pro-nodejs.json",
+        "pro-nodejs-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Event loop и асинхронность",
+        "Модули и экосистема",
+        "HTTP и фреймворки",
+        "TypeScript",
+        "Базы данных",
+        "Тестирование",
+        "Безопасность и аутентификация",
+        "Производительность и масштабирование"
+      ]
+    },
+    {
+      "id": "go",
+      "title": "Go-разработчик",
+      "description": "Сервисы на Go: типы и интерфейсы, конкурентность, net/http, базы данных, тесты, gRPC, профилирование.",
+      "icon": "go",
+      "language": "go",
+      "decks": [
+        "pro-go.json",
+        "pro-go-live-coding.json"
+      ],
+      "related": [
+        "go-basics.json",
+        "go-live-coding.json"
+      ],
+      "subjects": [
+        "Типы и основы",
+        "Интерфейсы и ошибки",
+        "Конкурентность",
+        "net/http и сервисы",
+        "Базы данных",
+        "Тестирование",
+        "Микросервисы и gRPC",
+        "Производительность"
+      ]
+    },
+    {
+      "id": "devops",
+      "title": "DevOps-инженер",
+      "description": "Linux и Bash, сети, Docker, Kubernetes, CI/CD, Terraform/Ansible, мониторинг и надёжность.",
+      "icon": "devops",
+      "language": "bash",
+      "decks": [
+        "pro-devops.json",
+        "pro-devops-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Linux и Bash",
+        "Сети",
+        "Docker",
+        "Kubernetes",
+        "CI/CD",
+        "Infrastructure as Code",
+        "Мониторинг и логи",
+        "Надёжность и SRE"
+      ]
+    },
+    {
+      "id": "fde",
+      "title": "Forward Deployed Engineer",
+      "description": "Инженер у клиента: discovery, интеграции и API, данные и SQL, Python-автоматизация, внедрение LLM-решений, облака, безопасность, коммуникация.",
+      "icon": "fde",
+      "language": "python",
+      "decks": [
+        "pro-fde.json",
+        "pro-fde-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Работа с клиентом",
+        "Интеграции и API",
+        "Данные и SQL",
+        "Python для автоматизации",
+        "Внедрение LLM-решений",
+        "Облака и развёртывание",
+        "Безопасность и compliance",
+        "Коммуникация и документация"
+      ]
+    },
+    {
+      "id": "ai-trainer",
+      "title": "AI-тренер",
+      "description": "Обучение и дообучение моделей на данных: разметка, инструкции для аннотаторов, SFT, RLHF/DPO, качество и этика данных.",
+      "icon": "ai-trainer",
+      "language": "python",
+      "decks": [
+        "pro-ai-trainer.json",
+        "pro-ai-trainer-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Основы ML и LLM",
+        "Разметка и датасеты",
+        "Инструкции для аннотаторов",
+        "SFT и дообучение",
+        "RLHF и предпочтения",
+        "Качество разметки",
+        "Этика и безопасность данных",
+        "Инструменты"
+      ]
+    },
+    {
+      "id": "prompt-engineer",
+      "title": "Специалист по промпт-инжинирингу",
+      "description": "Проектирование промптов: структура, few-shot, рассуждения, структурированный вывод, RAG, агенты, безопасность и итеративная оценка.",
+      "icon": "prompt",
+      "language": "markdown",
+      "decks": [
+        "pro-prompt-engineer.json",
+        "pro-prompt-engineer-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Основы LLM",
+        "Структура промпта",
+        "Few-shot и рассуждения",
+        "Структурированный вывод",
+        "RAG и контекст",
+        "Агенты и инструменты",
+        "Безопасность промптов",
+        "Оценка и итерации"
+      ]
+    },
+    {
+      "id": "llm-evaluator",
+      "title": "LLM-оценщик / AI QA",
+      "description": "Тестирование и оценка LLM-систем: метрики, LLM-as-a-judge, golden datasets, галлюцинации, red teaming, регрессии, статистика, инструменты.",
+      "icon": "evaluator",
+      "language": "python",
+      "decks": [
+        "pro-llm-evaluator.json",
+        "pro-llm-evaluator-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Метрики качества",
+        "LLM-as-a-judge",
+        "Тестовые наборы",
+        "Галлюцинации и фактология",
+        "Red teaming и безопасность",
+        "Регрессионное тестирование",
+        "Статистика экспериментов",
+        "Инструменты"
+      ]
+    },
+    {
+      "id": "ai-artist",
+      "title": "Нейрокреатор / AI-художник",
+      "description": "Генеративная графика и видео: диффузионные модели, промпты, параметры, ControlNet и LoRA, композиция, пайплайны, право и этика.",
+      "icon": "artist",
+      "language": "markdown",
+      "decks": [
+        "pro-ai-artist.json",
+        "pro-ai-artist-live-coding.json"
+      ],
+      "related": [],
+      "subjects": [
+        "Диффузионные модели",
+        "Промпты для изображений",
+        "Параметры генерации",
+        "Контроль композиции",
+        "LoRA и стилизация",
+        "Видео и анимация",
+        "Композиция и визуальный язык",
+        "Право и этика"
+      ]
+    }
+  ]
+}

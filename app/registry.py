@@ -45,8 +45,9 @@ BUILTIN_DISPLAY_NAMES: dict[str, str] = {
     "go-live-coding.json": "Go Live-coding",
     "anatomy.json": "Анатомия",
 }
+# колоды профессий (decks/pro-*.json) берут имя из поля "name" файла
 
-SKIP_STANDALONE: set[str] = {"angular-code.json"}
+SKIP_STANDALONE: set[str] = {"angular-code.json", "tracks.json"}
 
 
 @dataclass

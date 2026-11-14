@@ -1,0 +1,77 @@
+{
+  "name": "Node.js-разработчик — практикум",
+  "language": "javascript",
+  "track": "nodejs",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите async-функцию fetchAll(urls), которая параллельно загружает JSON по массиву URL через fetch и возвращает массив результатов; при HTTP-статусе не 2xx бросает Error с кодом статуса.",
+      "reference": "async function fetchAll(urls) {\n  return Promise.all(\n    urls.map(async (url) => {\n      const res = await fetch(url);\n      if (!res.ok) {\n        throw new Error(`HTTP ${res.status} for ${url}`);\n      }\n      return res.json();\n    }),\n  );\n}",
+      "language": "javascript",
+      "topic": "Event loop и асинхронность"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите функцию withTimeout(promise, ms), которая возвращает результат промиса или отклоняется с Error('Timeout') через ms миллисекунд (используйте Promise.race и очистку таймера).",
+      "reference": "function withTimeout(promise, ms) {\n  let timer;\n  const timeout = new Promise((_, reject) => {\n    timer = setTimeout(() => reject(new Error('Timeout')), ms);\n  });\n  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));\n}",
+      "language": "javascript",
+      "topic": "Event loop и асинхронность"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Express-приложение с маршрутами GET /health → {status: 'ok'} и POST /users (JSON-тело с name и email): при отсутствии полей — 422 с ошибкой, иначе 201 и созданный объект с id. Экспортируйте app.",
+      "reference": "import express from 'express';\n\nconst app = express();\napp.use(express.json());\n\nlet nextId = 1;\n\napp.get('/health', (req, res) => {\n  res.json({ status: 'ok' });\n});\n\napp.post('/users', (req, res) => {\n  const { name, email } = req.body ?? {};\n  if (!name || !email) {\n    return res.status(422).json({ error: 'name и email обязательны' });\n  }\n  const user = { id: nextId++, name, email };\n  res.status(201).json(user);\n});\n\nexport default app;",
+      "language": "javascript",
+      "topic": "HTTP и фреймворки"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Express middleware requireApiKey, которое проверяет заголовок x-api-key против process.env.API_KEY и при несовпадении отвечает 401 {error: 'Unauthorized'}, иначе вызывает next().",
+      "reference": "export function requireApiKey(req, res, next) {\n  const key = req.get('x-api-key');\n  if (!key || key !== process.env.API_KEY) {\n    return res.status(401).json({ error: 'Unauthorized' });\n  }\n  next();\n}",
+      "language": "javascript",
+      "topic": "HTTP и фреймворки"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите на TypeScript дженерик-функцию groupBy<T, K extends string | number>(items: T[], key: (item: T) => K): Record<K, T[]>.",
+      "reference": "export function groupBy<T, K extends string | number>(items: T[], key: (item: T) => K): Record<K, T[]> {\n  const result = {} as Record<K, T[]>;\n  for (const item of items) {\n    const k = key(item);\n    (result[k] ??= []).push(item);\n  }\n  return result;\n}",
+      "language": "typescript",
+      "topic": "TypeScript"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Используя pg (Pool), напишите функцию getUserById(pool, id), которая выполняет параметризованный запрос к users и возвращает пользователя или null.",
+      "reference": "export async function getUserById(pool, id) {\n  const { rows } = await pool.query(\n    'SELECT id, name, email FROM users WHERE id = $1',\n    [id],\n  );\n  return rows[0] ?? null;\n}",
+      "language": "javascript",
+      "topic": "Базы данных"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите тест на Vitest + supertest для приложения app (импорт из './app.js'): GET /health возвращает 200 и {status: 'ok'}.",
+      "reference": "import { describe, it, expect } from 'vitest';\nimport request from 'supertest';\nimport app from './app.js';\n\ndescribe('GET /health', () => {\n  it('returns ok', async () => {\n    const res = await request(app).get('/health');\n    expect(res.status).toBe(200);\n    expect(res.body).toEqual({ status: 'ok' });\n  });\n});",
+      "language": "javascript",
+      "topic": "Тестирование"
+    },
+    {
+      "card_type": "live_code",
+      "question": "С помощью node:crypto напишите функции hashPassword(password) → строка 'salt:hash' (scrypt, соль 16 байт, длина ключа 64) и verifyPassword(password, stored) → boolean с timingSafeEqual.",
+      "reference": "import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';\n\nexport function hashPassword(password) {\n  const salt = randomBytes(16).toString('hex');\n  const hash = scryptSync(password, salt, 64).toString('hex');\n  return `${salt}:${hash}`;\n}\n\nexport function verifyPassword(password, stored) {\n  const [salt, hash] = stored.split(':');\n  const expected = Buffer.from(hash, 'hex');\n  const actual = scryptSync(password, salt, 64);\n  return expected.length === actual.length && timingSafeEqual(expected, actual);\n}",
+      "language": "javascript",
+      "topic": "Безопасность и аутентификация"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Используя stream.pipeline (промис-версию) и zlib, напишите функцию gzipFile(src, dest), которая сжимает файл потоково.",
+      "reference": "import { createReadStream, createWriteStream } from 'node:fs';\nimport { pipeline } from 'node:stream/promises';\nimport { createGzip } from 'node:zlib';\n\nexport async function gzipFile(src, dest) {\n  await pipeline(createReadStream(src), createGzip(), createWriteStream(dest));\n}",
+      "language": "javascript",
+      "topic": "Производительность и масштабирование"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите простой in-memory кеш с TTL: функцию memoizeAsync(fn, ttlMs), возвращающую обёртку, которая кеширует результат по первому аргументу на ttlMs.",
+      "reference": "export function memoizeAsync(fn, ttlMs) {\n  const cache = new Map();\n  return async (arg) => {\n    const hit = cache.get(arg);\n    if (hit && hit.expires > Date.now()) {\n      return hit.value;\n    }\n    const value = await fn(arg);\n    cache.set(arg, { value, expires: Date.now() + ttlMs });\n    return value;\n  };\n}",
+      "language": "javascript",
+      "topic": "Производительность и масштабирование"
+    }
+  ]
+}

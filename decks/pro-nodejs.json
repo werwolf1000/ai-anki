@@ -1,0 +1,247 @@
+{
+  "name": "Node.js-разработчик — теория",
+  "language": "javascript",
+  "track": "nodejs",
+  "cards": [
+    {
+      "question": "Что такое event loop в Node.js?",
+      "reference": "Цикл libuv, который по фазам (timers, poll, check и др.) выполняет колбэки готовых операций ввода-вывода и таймеров в одном потоке JavaScript; блокирующий код останавливает обработку всех запросов.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "В каком порядке выполнятся process.nextTick, Promise.then, setTimeout(0) и setImmediate?",
+      "reference": "Сначала синхронный код, затем очередь nextTick, затем микрозадачи промисов, затем таймеры (setTimeout) и в фазе check — setImmediate (порядок setTimeout/setImmediate вне I/O не гарантирован).",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Promise.all отличается от Promise.allSettled?",
+      "reference": "all отклоняется при первой ошибке и возвращает массив значений; allSettled ждёт все промисы и возвращает статусы {status, value|reason} каждого.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему нельзя делать тяжёлые вычисления в обработчике запроса?",
+      "reference": "JS выполняется в одном потоке: CPU-тяжёлый код блокирует event loop и задерживает все остальные запросы. Выносить в worker_threads, отдельный сервис или очередь.",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Как обработать необработанное отклонение промиса?",
+      "reference": "Всегда ловить ошибки (try/catch вокруг await, .catch()); глобально — process.on('unhandledRejection'), где логировать и корректно завершать процесс (с Node 15 по умолчанию процесс падает).",
+      "topic": "Event loop и асинхронность",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем CommonJS отличается от ES-модулей?",
+      "reference": "CJS — require/module.exports, синхронная загрузка; ESM — import/export, статический анализ, top-level await. ESM включается \"type\": \"module\" или расширением .mjs.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем нужен package-lock.json?",
+      "reference": "Фиксирует точные версии всего дерева зависимостей для воспроизводимой установки; npm ci ставит строго по нему.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем dependencies отличаются от devDependencies?",
+      "reference": "dependencies нужны в рантайме, devDependencies — только для разработки и сборки (тесты, линтеры, TypeScript); в продакшене ставят npm ci --omit=dev.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что означает версия ^1.4.2 в package.json?",
+      "reference": "Совместимые обновления по semver: >=1.4.2 <2.0.0 (минорные и патчи).",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Как читать переменные окружения и конфигурацию?",
+      "reference": "process.env.NAME; локально — файл .env (node --env-file=.env в Node 20+ или dotenv); секреты не коммитить, валидировать конфиг при старте.",
+      "topic": "Модули и экосистема",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое middleware в Express?",
+      "reference": "Функция (req, res, next), выполняемая по цепочке до обработчика маршрута: логирование, парсинг тела, аутентификация. Обработчик ошибок имеет 4 аргумента (err, req, res, next).",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем Fastify отличается от Express?",
+      "reference": "Fastify быстрее за счёт схем JSON для валидации и сериализации, имеет систему плагинов и встроенную поддержку async/await и логгер pino.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как правильно обрабатывать ошибки в async-обработчиках Express 4?",
+      "reference": "Оборачивать в try/catch и вызывать next(err) или использовать обёртку asyncHandler; в Express 5 отклонённые промисы передаются в обработчик ошибок автоматически.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Как реализовать graceful shutdown HTTP-сервера?",
+      "reference": "По SIGTERM перестать принимать соединения (server.close()), дождаться завершения текущих запросов, закрыть пулы БД и выйти; поставить таймаут на принудительное завершение.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое потоки (streams) и зачем они в HTTP?",
+      "reference": "Обработка данных частями: req/res — потоки, можно передавать большие файлы pipe/pipeline без загрузки в память, с учётом backpressure.",
+      "topic": "HTTP и фреймворки",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем interface отличается от type?",
+      "reference": "Оба описывают формы объектов; interface можно расширять и объединять (declaration merging), type поддерживает объединения, пересечения, условные и mapped-типы.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое дженерики? Пример.",
+      "reference": "Параметризованные типы: function first<T>(arr: T[]): T | undefined { return arr[0]; } — тип результата выводится из аргумента.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем unknown отличается от any?",
+      "reference": "any отключает проверки; unknown требует сужения типа (typeof, instanceof, type guard) перед использованием — безопаснее.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое utility types Partial, Pick, Omit, Record?",
+      "reference": "Partial<T> делает поля необязательными, Pick<T,K> выбирает поля, Omit<T,K> исключает, Record<K,V> — объект с ключами K и значениями V.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем включать strict в tsconfig?",
+      "reference": "Включает strictNullChecks, noImplicitAny и др.: ловит обращения к возможному null/undefined и неявные any на этапе компиляции.",
+      "topic": "TypeScript",
+      "card_type": "text"
+    },
+    {
+      "question": "Зачем нужен пул соединений?",
+      "reference": "Переиспользует открытые соединения с БД вместо создания на каждый запрос — меньше задержка и нагрузка; размер пула ограничивает параллелизм.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как избежать SQL-инъекций в node-postgres?",
+      "reference": "Использовать параметризованные запросы: pool.query('SELECT * FROM users WHERE id = $1', [id]), никогда не конкатенировать ввод в SQL.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое ORM и примеры для Node.js?",
+      "reference": "Отображение таблиц на объекты/типы: Prisma (схема + типизированный клиент), TypeORM, Sequelize, Drizzle. Упрощает CRUD и миграции, но сложные запросы иногда проще писать на SQL.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Когда выбрать MongoDB, а когда PostgreSQL?",
+      "reference": "PostgreSQL — связные данные, транзакции, сложные запросы, строгая схема. MongoDB — гибкая схема документов, вложенные данные, горизонтальное масштабирование; транзакции есть, но сложнее.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Как выполнить транзакцию в Prisma?",
+      "reference": "prisma.$transaction([...]) для набора операций или интерактивно: prisma.$transaction(async (tx) => { ... }) — при исключении всё откатывается.",
+      "topic": "Базы данных",
+      "card_type": "text"
+    },
+    {
+      "question": "Какие тестовые фреймворки популярны в Node.js?",
+      "reference": "Jest, Vitest, встроенный node:test (с Node 18+); для HTTP — supertest; моки — vi.fn()/jest.fn().",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как протестировать HTTP-эндпоинт без запуска сервера на порту?",
+      "reference": "supertest(app).get('/health').expect(200) — передаётся экземпляр приложения, порт выделяется автоматически.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое моки модулей и зачем они?",
+      "reference": "Подмена зависимостей (vi.mock('./db')) для изоляции теста от сети/БД и контроля ответов; проверка вызовов через toHaveBeenCalledWith.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как тестировать асинхронный код?",
+      "reference": "Объявить тест async и await результат; для ошибок — await expect(fn()).rejects.toThrow(); фейковые таймеры — vi.useFakeTimers().",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое покрытие кода и почему 100% не цель?",
+      "reference": "Доля выполненных тестами строк/веток (c8/istanbul). Высокое покрытие не гарантирует проверку поведения; важнее тестировать ключевые сценарии и граничные случаи.",
+      "topic": "Тестирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как устроен JWT?",
+      "reference": "Три части base64url: header.payload.signature. Подпись (HS256/RS256) гарантирует целостность, но payload не шифруется — не класть секреты; проверять подпись, exp, alg.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Где хранить токен в веб-клиенте?",
+      "reference": "Безопаснее в httpOnly Secure SameSite cookie (недоступна JS — защита от XSS); localStorage удобен, но уязвим к XSS. Для cookie нужна защита от CSRF.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Как хешировать пароли в Node.js?",
+      "reference": "bcrypt/argon2 (пакеты bcrypt, argon2) или встроенный crypto.scrypt с солью; сравнение через встроенную verify/timingSafeEqual.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Что делает helmet и rate limiting?",
+      "reference": "helmet выставляет безопасные HTTP-заголовки (CSP, HSTS и др.); rate limiting (express-rate-limit) ограничивает число запросов с клиента — защита от перебора и DoS.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Почему опасен eval и child_process.exec с пользовательским вводом?",
+      "reference": "Выполнение произвольного кода/команд (RCE, command injection). Использовать execFile/spawn с массивом аргументов и валидировать ввод.",
+      "topic": "Безопасность и аутентификация",
+      "card_type": "text"
+    },
+    {
+      "question": "Чем worker_threads отличаются от cluster?",
+      "reference": "worker_threads — потоки внутри процесса для CPU-задач с обменом сообщениями/SharedArrayBuffer; cluster запускает несколько процессов, разделяющих порт, для масштабирования HTTP на ядра.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Что такое backpressure в потоках?",
+      "reference": "Когда потребитель не успевает, write() возвращает false и надо ждать 'drain'; stream.pipeline делает это автоматически и корректно обрабатывает ошибки.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как найти утечку памяти в Node.js?",
+      "reference": "Снимать heap snapshot (--inspect, Chrome DevTools, heapdump), сравнивать снимки, смотреть растущие объекты; частые причины — глобальные кеши, незакрытые слушатели и таймеры.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как кешировать ответы в Node.js-сервисе?",
+      "reference": "In-memory LRU (lru-cache) для одного инстанса, Redis для общего кеша нескольких инстансов; HTTP-кеширование заголовками Cache-Control/ETag.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    },
+    {
+      "question": "Как запускать Node.js в продакшене?",
+      "reference": "В контейнере с NODE_ENV=production, менеджер процессов/оркестратор (PM2, systemd, Kubernetes), health-check эндпоинт, структурные логи (pino), graceful shutdown.",
+      "topic": "Производительность и масштабирование",
+      "card_type": "text"
+    }
+  ]
+}

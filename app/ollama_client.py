@@ -209,6 +209,15 @@ def _language_label(card: Card, deck_name: str = "") -> str:
         "python": "Python",
         "py": "Python",
         "php": "PHP",
+        "go": "Go",
+        "sql": "SQL",
+        "bash": "Bash",
+        "shell": "Bash",
+        "yaml": "YAML",
+        "dockerfile": "Dockerfile",
+        "hcl": "Terraform (HCL)",
+        "json": "JSON",
+        "markdown": "текст (промпт/документ)",
     }
     lang = _normalize_language(card, deck_name)
     return labels.get(lang, lang.capitalize())
@@ -240,6 +249,9 @@ def _system_prompt_live_code(card: Card, deck_name: str = "") -> str:
     if _is_angular_context(card, deck_name):
         topic = f"Angular/{label}"
         criteria = f"API, idioms Angular/{label} и корректность решения"
+    elif _normalize_language(card, deck_name) in ("markdown", "text"):
+        topic = f"по теме «{card.topic}»" if card.topic else "практических заданий"
+        criteria = "структуру, полноту, точность и применимость результата (промпта, плана, инструкции или документа), соответствие заданию; формулировки могут сильно отличаться от эталона"
     else:
         topic = label
         criteria = f"синтаксис, idioms языка {label}, типы (если есть), логику и соответствие заданию"
