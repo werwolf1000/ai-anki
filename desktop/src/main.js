@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain, net, protocol, session, shell } = require("
 const fs = require("fs");
 const path = require("path");
 const { pathToFileURL } = require("url");
+const { LocalModelBridge } = require("./localModel");
 
 const RENDERER_DIR = path.join(__dirname, "..", "renderer");
 const devUrl = process.argv.find((a) => a.startsWith("--dev-url="))?.slice("--dev-url=".length);
@@ -102,8 +103,16 @@ app.on("second-instance", () => {
   win.focus();
 });
 
+/** @type {LocalModelBridge | null} */
+let bridge = null;
+
 app.whenReady().then(() => {
   registerAppProtocol();
+  bridge = new LocalModelBridge({
+    userDataDir: app.getPath("userData"),
+    version: app.getVersion(),
+    emit: (st) => win && !win.isDestroyed() && win.webContents.send("bridge:state", st),
+  });
   // микрофон для голосовых ответов
   session.defaultSession.setPermissionRequestHandler((_wc, permission, cb) => {
     cb(["media", "clipboard-read", "clipboard-sanitized-write"].includes(permission));
@@ -129,3 +138,15 @@ ipcMain.on("win:toggle-maximize", () => {
 ipcMain.on("win:close", () => win?.close());
 ipcMain.handle("win:is-maximized", () => !!win?.isMaximized());
 ipcMain.handle("app:version", () => app.getVersion());
+
+// ── локальная модель (мост сервер ⇄ модель на этом компьютере) ──────
+ipcMain.handle("bridge:get", () => bridge?.publicState());
+ipcMain.handle("bridge:set", (_e, patch) => bridge?.set(patch || {}));
+ipcMain.handle("bridge:auth", (_e, auth) => bridge?.setAuth(auth || {}));
+ipcMain.handle("bridge:test", async () => {
+  try {
+    return await bridge.test();
+  } catch (e) {
+    return { ok: false, error: String(e.message || e) };
+  }
+});

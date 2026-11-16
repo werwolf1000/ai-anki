@@ -36,6 +36,7 @@ USER_KEYS = (
     "code_editor_theme",
     "asr_language",
     "asr_correct",
+    "llm_provider",  # своя модель для проверки ответов в занятиях ("" — как на сервере)
 )
 # Общие настройки сервера — меняет только администратор
 GLOBAL_KEYS = (
@@ -50,6 +51,8 @@ GLOBAL_KEYS = (
     "textbook_model",
     "video_min_sim",
     "video_language",
+    "llm_check",  # провайдер проверки ответов, подсказок, собеседований и экзаменов
+    "llm_textbook",  # провайдер статей учебника, вопросов к учебнику и генерации карточек
 )
 
 
@@ -122,14 +125,50 @@ class AppServices:
         self._contexts: dict[int, UserContext] = {}
         self._ctx_lock = threading.Lock()
         self._deck_cache: dict[str, tuple[tuple, Deck]] = {}
+        from server.llm import BridgeHub
+
+        self.bridge = BridgeHub()  # локальные модели пользователей через десктоп-приложение
         self.knowledge = KnowledgeStore(dd / "knowledge.db")
         self.indexer = KnowledgeIndexer(self.knowledge)
 
     def rag_client(self) -> OllamaRag:
         return OllamaRag(self.config["ollama_url"], self.config.get("api_key", ""), timeout=max(120, int(self.config.get("timeout", 120)) * 3))
 
+    # ── модели ИИ (server/llm.py) ──
+
+    def _user_names(self) -> dict[int, str]:
+        fn = getattr(self, "user_name", None)
+        return {uid: fn(uid) for uid in self.bridge.clients} if fn else {}
+
+    def check_provider_id(self, ctx: UserContext | None = None) -> str:
+        pid = ""
+        if ctx is not None:
+            pid = str(ctx.settings.get("llm_provider", "") or "")
+            if pid == "bridge:me":
+                pid = f"bridge:{ctx.user.id}"
+            elif pid.startswith("bridge:") and pid != f"bridge:{ctx.user.id}":
+                pid = ""  # чужая локальная модель недоступна
+        return pid or str(self.config.get("llm_check", "") or "ollama")
+
+    def check_client(self, ctx: UserContext | None = None, timeout: int | None = None):
+        from server.llm import make_client
+
+        return make_client(self.config, self.check_provider_id(ctx), hub=self.bridge,
+                           timeout=timeout or int(self.config.get("timeout", 120)), user_names=self._user_names())
+
+    def textbook_llm(self):
+        from server.llm import make_client
+
+        pid = str(self.config.get("llm_textbook", "") or "ollama")
+        override = (self.config.get("textbook_model") or "").strip() if pid == "ollama" else ""
+        return make_client(self.config, pid, hub=self.bridge, model_override=override, user_names=self._user_names())
+
     def textbook_model(self) -> str:
-        return (self.config.get("textbook_model") or "").strip() or self.config["model"]
+        """Подпись модели статей (для «Сгенерировано: …»)."""
+        try:
+            return self.textbook_llm().label or self.config["model"]
+        except Exception:  # noqa: BLE001
+            return (self.config.get("textbook_model") or "").strip() or self.config["model"]
 
     def embed_model(self) -> str:
         return (self.config.get("embed_model") or "").strip() or "qwen3-embedding:8b"
@@ -157,15 +196,9 @@ class AppServices:
     def max_follow_ups(self, ctx: UserContext) -> int:
         return int(self.effective_config(ctx).get("max_follow_ups", 2))
 
-    def evaluator(self) -> AnswerEvaluator:
-        c = self.config
-        client = OllamaClient(
-            c["ollama_url"],
-            c["model"],
-            timeout=int(c.get("timeout", 120)),
-            api_key=c.get("api_key", ""),
-        )
-        return AnswerEvaluator(client)
+    def evaluator(self, ctx: UserContext | None = None) -> AnswerEvaluator:
+        """Проверка ответов: модель пользователя (если выбрана) или общая; без ctx — всегда общая (экзамены)."""
+        return AnswerEvaluator(self.check_client(ctx))  # type: ignore[arg-type]
 
     def config_payload(self, ctx: UserContext) -> dict:
         c = self.effective_config(ctx)
@@ -188,6 +221,12 @@ class AppServices:
                 payload[key] = c.get(key, "")
             payload["timeout"] = int(c.get("timeout", 120))
         return payload
+
+    def update_global(self, patch: dict) -> None:
+        """Записать общие настройки сервера (провайдеры моделей и т. п.)."""
+        self.config.update(patch)
+        save_config(self.config_path, self.config)
+        self.reload_config()
 
     def save_settings(self, ctx: UserContext, payload: dict) -> None:
         with ctx.lock:
@@ -524,7 +563,7 @@ class AppServices:
         max_fu = self.max_follow_ups(ctx)
         ps = self.pass_score(ctx)
         remaining = 0 if editor_card else max(0, max_fu - session.follow_up_count)
-        result = self.evaluator().evaluate(
+        result = self.evaluator(ctx).evaluate(
             card,
             answer.strip(),
             session.chat_history.copy(),
@@ -673,7 +712,7 @@ class AppServices:
                 return hint
         if session.cached_hint and not draft.strip():
             return session.cached_hint
-        hint = self.evaluator().request_hint(card, deck_name=session.deck.name, user_draft=draft.strip())
+        hint = self.evaluator(ctx).request_hint(card, deck_name=session.deck.name, user_draft=draft.strip())
         session.cached_hint = hint
         return hint
 

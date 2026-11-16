@@ -95,6 +95,9 @@ class SettingsIn(BaseModel):
     textbook_model: str | None = None
     video_min_sim: str | None = None
     video_language: str | None = None
+    llm_provider: str | None = None
+    llm_check: str | None = None
+    llm_textbook: str | None = None
 
 
 class SessionStartIn(BaseModel):
@@ -368,6 +371,7 @@ from server.textbook import build_router  # noqa: E402
 app.include_router(build_router(services, current_ctx))
 
 from server.book_decks import BookDecks  # noqa: E402
+from server.llm import build_router as build_llm_router  # noqa: E402
 from server.book_decks import build_router as build_books_router  # noqa: E402
 from server.videos import VideoLibrary  # noqa: E402
 from server.videos import build_router as build_videos_router  # noqa: E402
@@ -376,6 +380,8 @@ services.videos = VideoLibrary(services.data_dir, services.knowledge, services) 
 services.books = BookDecks(services)  # type: ignore[attr-defined]
 services.books.ensure_all()
 services.books.start_refine()
+services.user_name = lambda uid: (lambda u: (u.display_name or u.username) if u else str(uid))(users.get(uid))  # type: ignore[attr-defined]
+app.include_router(build_llm_router(services, current_ctx))
 app.include_router(build_books_router(services, current_ctx))
 app.include_router(build_videos_router(services, current_ctx, users.user_for_token))
 

@@ -565,8 +565,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         text = []
         filt = ThinkFilter()
         try:
-            for piece in services.rag_client().stream_chat(
-                services.textbook_model(),
+            for piece in services.textbook_llm().stream(
                 [{"role": "system", "content": system}, {"role": "user", "content": user_prompt}],
             ):
                 out = filt.feed(piece)
@@ -578,7 +577,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
                 text.append(tail)
                 yield _ndjson({"type": "delta", "text": tail})
         except Exception as exc:  # noqa: BLE001
-            yield _ndjson({"type": "error", "message": f"Ollama: {exc}"})
+            yield _ndjson({"type": "error", "message": f"Модель ({services.textbook_model()}): {exc}"})
             return
         content = "".join(text).strip()
         if on_done and content:
@@ -638,8 +637,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         system, user_prompt, sources, _mode = article_prompt(entry, deck, topic, cards)
         filt = ThinkFilter()
         parts: list[str] = []
-        for piece in services.rag_client().stream_chat(
-            services.textbook_model(),
+        for piece in services.textbook_llm().stream(
             [{"role": "system", "content": system}, {"role": "user", "content": user_prompt}],
         ):
             parts.append(filt.feed(piece))

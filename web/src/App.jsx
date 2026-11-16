@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BookOpenText, Briefcase, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
-import { api, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
-import { isDesktop } from "./lib/desktop";
+import { api, getServer, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
+import { desktop, isDesktop } from "./lib/desktop";
 import { readRoute, writeRoute } from "./lib/route";
 import { Backdrop, Logo, Spinner, ToastProvider, useToast } from "./components/ui";
 import TitleBar from "./components/TitleBar";
@@ -115,6 +115,12 @@ function Root() {
 
   const loadDecks = useCallback(() => api("/api/decks").then((r) => setDecks(r.decks)), []);
   const loadConfig = useCallback(() => api("/api/config").then(setConfig), []);
+
+  // десктоп: мост к локальной модели работает от имени вошедшего пользователя
+  useEffect(() => {
+    if (!isDesktop || !desktop?.bridge) return;
+    desktop.bridge.auth(user ? { server: getServer(), token: getToken() } : { server: "", token: "" });
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;

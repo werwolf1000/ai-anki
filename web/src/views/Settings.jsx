@@ -6,6 +6,7 @@ import { isDesktop } from "../lib/desktop";
 import { Spinner, useToast } from "../components/ui";
 import VideoLibrary from "../components/VideoLibrary";
 import BookDecksPanel from "../components/BookDecksPanel";
+import LlmPanel from "../components/LlmPanel";
 
 const STUDY_FIELDS = [
   { key: "session_limit", label: "Карточек за сессию", min: 1, max: 50 },
@@ -184,6 +185,7 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
         </Section>
       </div>
 
+      <LlmPanel user={user} />
       <KnowledgePanel isAdmin={user.is_admin} />
       {user.is_admin && <BookDecksPanel />}
       {user.is_admin && <VideoLibrary />}

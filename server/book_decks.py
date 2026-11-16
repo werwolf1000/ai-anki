@@ -648,8 +648,8 @@ class BookDecks:
 
         filt = ThinkFilter()
         parts = []
-        for piece in services.rag_client().stream_chat(
-            services.textbook_model(), [{"role": "system", "content": system}, {"role": "user", "content": user}], temperature=0.5
+        for piece in services.textbook_llm().stream(
+            [{"role": "system", "content": system}, {"role": "user", "content": user}], temperature=0.5
         ):
             parts.append(filt.feed(piece))
             if self.job.stop:
