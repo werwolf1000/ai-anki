@@ -1,5 +1,6 @@
 title: Kanban
 match: kanban
+kind: theory
 # 1. Основы Kanban
 Происхождение: Toyota и Lean
 Kanban Guide: определение и теория

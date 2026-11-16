@@ -1,5 +1,7 @@
 title: PHP
 match: php8|pro-php|php-live|^php
+kind: code
+lang: php
 # 1. Основы языка
 Синтаксис, переменные и типы данных
 Приведение типов и строгая типизация (declare(strict_types=1))

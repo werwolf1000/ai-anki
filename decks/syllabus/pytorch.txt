@@ -1,5 +1,7 @@
 title: PyTorch
 match: pytorch
+kind: code
+lang: python
 # 1. Тензоры
 Тензоры: создание, dtype, device
 Операции, индексация и broadcasting

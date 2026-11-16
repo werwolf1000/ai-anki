@@ -25,9 +25,14 @@ def has_topic_picker_deck(deck: Deck) -> bool:
     return len(deck_topics(deck)) >= 2
 
 
+def _ordered(deck: Deck, names) -> list[str]:
+    """Темы колоды учебника — в порядке уроков программы, остальные — по алфавиту."""
+    order = {t: i for i, t in enumerate(getattr(deck, "topic_order", []) or [])}
+    return sorted(names, key=lambda n: (order.get(n, len(order)), n))
+
+
 def deck_topics(deck: Deck) -> list[str]:
-    names = sorted({c.topic.strip() for c in deck.cards if c.topic.strip()})
-    return names
+    return _ordered(deck, {c.topic.strip() for c in deck.cards if c.topic.strip()})
 
 
 def topic_summaries(
@@ -56,7 +61,10 @@ def topic_summaries(
         if prog.attempts > 0 and prog.best_score < pass_score:
             bucket["weak"] += 1
 
-    return [buckets[name] for name in sorted(buckets)]
+    chapters = getattr(deck, "topic_chapters", {}) or {}
+    for name, bucket in buckets.items():
+        bucket["chapter"] = chapters.get(name, "")
+    return [buckets[name] for name in _ordered(deck, buckets)]
 
 
 def filter_cards_by_topic(cards: list[Card], topic: str | None) -> list[Card]:

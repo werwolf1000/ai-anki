@@ -242,6 +242,9 @@ class AppServices:
             progress = ProgressStore(udir / "progress.json")
             progress.load()
             self.registry.migrate_progress(progress)
+            books = getattr(self, "books", None)
+            if books is not None:  # прогресс прежних колод → колоды учебников
+                books.migrate_progress(progress)
             ctx = UserContext(user=user, dir=udir, progress=progress, settings=settings)
             self._contexts[user.id] = ctx
             return ctx
@@ -281,9 +284,16 @@ class AppServices:
             ctx.progress.reconcile_deck(deck, ps)
             s = ctx.progress.summary(deck, ps)
         topics = sorted({c.topic for c in deck.cards if c.topic})
+        from server.syllabus import syllabus_for
+
+        sy = syllabus_for(entry.deck_id, entry.name, entry.paths)
         return {
             "deck_id": entry.deck_id,
             "name": entry.name,
+            "book": sy.id if sy else "",
+            "book_title": sy.title if sy else "",
+            "book_deck": bool(deck.book),
+            "chapters": len({deck.topic_chapters.get(t, "") for t in topics} - {""}) if deck.book else 0,
             "kind": self._deck_kind(entry, deck),
             "language": deck.language,
             "is_live_coding": entry.is_live_coding,
@@ -303,6 +313,8 @@ class AppServices:
 
     @staticmethod
     def _deck_kind(entry: DeckEntry, deck: Deck) -> str:
+        if deck.kind_hint in ("live", "math", "anatomy", "code", "theory"):
+            return deck.kind_hint
         if entry.is_live_coding:
             return "live"
         if entry.is_math:
@@ -315,7 +327,11 @@ class AppServices:
 
     def list_decks(self, ctx: UserContext) -> list[dict]:
         rows = []
+        books = getattr(self, "books", None)
+        hidden = books.hidden() if books is not None else set()
         for entry in self.registry.entries:
+            if entry.deck_id in hidden:  # прежние колоды, перенесённые в колоды учебников
+                continue
             try:
                 rows.append(self.deck_summary_row(ctx, entry))
             except Exception as exc:  # noqa: BLE001

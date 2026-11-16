@@ -1,5 +1,6 @@
 title: Scrum
 match: scrum-framework|^scrum
+kind: theory
 # 1. Основы Scrum
 Определение Scrum и теория Scrum
 Эмпиризм и три столпа

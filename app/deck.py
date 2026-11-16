@@ -124,6 +124,11 @@ class Deck:
     language: str = ""
     # id удалённых из колоды карточек: их прогресс не переносится на другие карточки
     retired_ids: set[str] = field(default_factory=set)
+    # колоды учебников: порядок тем = порядок уроков, тема → глава, id программы, вид колоды
+    topic_order: list[str] = field(default_factory=list)
+    topic_chapters: dict[str, str] = field(default_factory=dict)
+    book: str = ""
+    kind_hint: str = ""
 
     def merge(self, other: Deck, *, suffix_name: bool = True) -> None:
         self.cards.extend(other.cards)
@@ -146,7 +151,12 @@ class Deck:
             return cls(name=Path(path).stem, cards=cards, language=default_language)
         cards = [_card_from_dict(c, default_language=default_language) for c in data.get("cards", [])]
         retired = {str(x) for x in data.get("retired_ids", [])}
-        return cls(name=name, cards=cards, language=default_language, retired_ids=retired)
+        return cls(
+            name=name, cards=cards, language=default_language, retired_ids=retired,
+            topic_order=[str(x) for x in data.get("topic_order", [])],
+            topic_chapters={str(k): str(v) for k, v in (data.get("topic_chapters") or {}).items()},
+            book=str(data.get("book", "") or ""), kind_hint=str(data.get("kind", "") or ""),
+        )
 
     @classmethod
     def load_anki_txt(cls, path: str | Path) -> Deck:

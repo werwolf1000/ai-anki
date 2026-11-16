@@ -1,5 +1,7 @@
 title: tkinter и ttk
 match: ttk|tkinter
+kind: code
+lang: python
 # 1. Основы tkinter
 Главное окно, mainloop и цикл событий
 Виджеты tk и ttk: в чём разница

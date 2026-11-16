@@ -1,5 +1,7 @@
 title: Angular
 match: angular
+kind: code
+lang: typescript
 # 1. Введение
 Архитектура Angular-приложения и Angular CLI
 TypeScript для Angular

@@ -1,5 +1,7 @@
 title: Go
 match: go-basics|go-live|pro-go|^go\b
+kind: code
+lang: go
 # 1. Основы языка
 Установка, go mod и структура проекта
 Переменные, константы, iota

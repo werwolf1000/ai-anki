@@ -1,26 +1,35 @@
-"""Учебные программы учебника: главы и уроки, не зависящие от тем карточек.
+"""Учебные программы учебника: главы (основные темы) и уроки (подтемы).
 
-Программа — текстовый файл decks/syllabus/<id>.txt:
+Программа — текстовый файл <id>.txt:
 
     title: PHP
     match: php8-plus|pro-php|php-live
+    kind: code            # code — две колоды (вопросы + live-coding), theory / math / anatomy — одна
+    lang: php             # язык кода для live-coding и подсветки
     # 1. Продвинутое ООП
     SOLID-принципы: SRP, OCP, LSP, ISP, DIP
     Traits — горизонтальное переиспользование кода
 
-`match` — регулярное выражение по «<deck_id> <имя файла> <название колоды>».
-Строка `# …` начинает главу, остальные непустые строки — уроки главы.
-Уроки одной программы общие для всех её колод: статья пишется один раз.
+Встроенные программы лежат в decks/syllabus/ (в Docker — только чтение), правки из интерфейса
+сохраняются в <data>/syllabus/<id>.txt и перекрывают встроенный файл с тем же id.
+`match` — регулярное выражение по «<deck_id> <имя файла> <название колоды>» (видео, старые колоды).
 """
 from __future__ import annotations
 
 import math
+import os
 import re
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
 SYLLABUS_DIR = Path(__file__).resolve().parent.parent / "decks" / "syllabus"
+
+
+def override_dir() -> Path:
+    from app.config_store import data_dir
+
+    return Path(os.environ.get("AI_ANKI_SYLLABUS_DIR") or data_dir() / "syllabus")
 
 
 @dataclass
@@ -35,14 +44,24 @@ class Syllabus:
     title: str
     match: str
     chapters: list[Chapter]
+    kind: str = "theory"  # code | theory | math | anatomy
+    lang: str = ""
+    edited: bool = False  # есть правки из интерфейса (файл в <data>/syllabus)
 
     @property
     def key(self) -> str:
         """Ключ статей и отметок «прочитано» — общий для всех колод программы."""
         return f"book:{self.id}"
 
+    @property
+    def is_code(self) -> bool:
+        return self.kind == "code"
+
     def lessons(self) -> list[tuple[str, str]]:
         return [(ch.title, ls) for ch in self.chapters for ls in ch.lessons]
+
+    def lesson_titles(self) -> list[str]:
+        return [ls for ch in self.chapters for ls in ch.lessons]
 
     def chapter_of(self, lesson: str) -> str | None:
         for ch in self.chapters:
@@ -50,18 +69,35 @@ class Syllabus:
                 return ch.title
         return None
 
+    def to_text(self) -> str:
+        head = [f"title: {self.title}", f"match: {self.match}", f"kind: {self.kind}"]
+        if self.lang:
+            head.append(f"lang: {self.lang}")
+        body = []
+        for ch in self.chapters:
+            body.append(f"# {ch.title}")
+            body.extend(ch.lessons)
+        return "\n".join(head + body) + "\n"
+
 
 def parse_syllabus(sid: str, text: str) -> Syllabus:
-    title, match, chapters = sid, "", []
+    title, match, kind, lang, chapters = sid, "", "theory", "", []
     seen: set[str] = set()
     for raw in text.splitlines():
         line = raw.strip()
         if not line or line.startswith("//"):
             continue
-        if line.startswith("title:") and not chapters:
-            title = line[6:].strip()
-        elif line.startswith("match:") and not chapters:
-            match = line[6:].strip()
+        if not chapters and re.match(r"^(title|match|kind|lang):", line):
+            key, value = line.split(":", 1)
+            value = value.split("  #")[0].strip()
+            if key == "title":
+                title = value
+            elif key == "match":
+                match = value
+            elif key == "kind":
+                kind = value or "theory"
+            else:
+                lang = value
         elif line.startswith("#"):
             chapters.append(Chapter(line.lstrip("#").strip()))
         else:
@@ -73,27 +109,66 @@ def parse_syllabus(sid: str, text: str) -> Syllabus:
             chapters[-1].lessons.append(line)
     if not match:
         raise ValueError(f"{sid}: нет строки match:")
-    return Syllabus(sid, title, match, [c for c in chapters if c.lessons])
+    return Syllabus(sid, title, match, chapters, kind=kind, lang=lang)
 
 
 _cache: dict[str, tuple[float, Syllabus]] = {}
 
 
+def _read(path: Path) -> Syllabus:
+    mtime = path.stat().st_mtime
+    hit = _cache.get(str(path))
+    if not hit or hit[0] != mtime:
+        hit = (mtime, parse_syllabus(path.stem, path.read_text(encoding="utf-8")))
+        _cache[str(path)] = hit
+    return hit[1]
+
+
 def all_syllabi(directory: Path = SYLLABUS_DIR) -> list[Syllabus]:
-    out = []
+    """Программы: встроенные, перекрытые правками из <data>/syllabus (по id)."""
+    books: dict[str, Syllabus] = {}
     for path in sorted(directory.glob("*.txt")):
-        mtime = path.stat().st_mtime
-        hit = _cache.get(str(path))
-        if not hit or hit[0] != mtime:
-            hit = (mtime, parse_syllabus(path.stem, path.read_text(encoding="utf-8")))
-            _cache[str(path)] = hit
-        out.append(hit[1])
-    return out
+        books[path.stem] = _read(path)
+    over = override_dir()
+    if directory == SYLLABUS_DIR and over.is_dir():
+        for path in sorted(over.glob("*.txt")):
+            try:
+                sy = _read(path)
+            except (OSError, ValueError):
+                continue
+            sy.edited = True
+            books[path.stem] = sy
+    return [books[k] for k in sorted(books)]
+
+
+def get_syllabus(sid: str) -> Syllabus | None:
+    return next((s for s in all_syllabi() if s.id == sid), None)
+
+
+def save_syllabus(sy: Syllabus) -> None:
+    """Сохранить правку программы в <data>/syllabus (встроенный файл не трогается)."""
+    over = override_dir()
+    over.mkdir(parents=True, exist_ok=True)
+    path = over / f"{sy.id}.txt"
+    tmp = path.with_suffix(".tmp")
+    tmp.write_text(sy.to_text(), encoding="utf-8")
+    tmp.replace(path)
+    _cache.pop(str(path), None)
+
+
+BOOK_FILE = re.compile(r"^book-(.+?)(?:-live-coding)?$")
 
 
 def syllabus_for(deck_id: str, name: str, paths: list[str] | None = None) -> Syllabus | None:
+    books = all_syllabi()
+    for p in paths or []:  # колоды учебников: book-<id>.json / book-<id>-live-coding.json
+        m = BOOK_FILE.match(Path(p).stem)
+        if m:
+            hit = next((s for s in books if s.id == m[1]), None)
+            if hit:
+                return hit
     hay = " ".join([deck_id, name, *(Path(p).stem for p in (paths or []))]).lower()
-    for sy in all_syllabi():
+    for sy in books:
         if re.search(sy.match, hay, re.I):
             return sy
     return None

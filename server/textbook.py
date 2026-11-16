@@ -171,6 +171,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         chapter = sy.chapter_of(topic)
         if chapter is None:
             return None
+        if deck.book:  # колода учебника: тема карточки = урок
+            return [c for c in deck.cards if c.topic == topic]
         return card_index(entry, deck).rank(topic, chapter, limit=8)
 
     def deck_sources(entry, deck) -> list[str]:
@@ -297,12 +299,20 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         marks = read_marks(ctx).get(key, {})
         written = services.knowledge.articles_for_deck(key)
         topics = []
+        books = getattr(services, "books", None)
+        decks = books.deck_ids(sy) if (sy and books) else {}
         if sy:
-            idx = card_index(entry, deck)
+            counts = books.lesson_counts(sy) if books else {}
+            idx = None if deck.book or counts else card_index(entry, deck)
             for chapter, lesson in sy.lessons():
-                cards = idx.rank(lesson, chapter, limit=8)
+                if idx is None:
+                    c = counts.get(lesson, {"qa": 0, "live": 0})
+                    n, live, card_topic = c["qa"], c["live"], lesson
+                else:
+                    cards = idx.rank(lesson, chapter, limit=8)
+                    n, live, card_topic = len(cards), 0, main_topic(cards)
                 topics.append({
-                    "name": lesson, "chapter": chapter, "cards": len(cards), "card_topic": main_topic(cards),
+                    "name": lesson, "chapter": chapter, "cards": n, "live": live, "card_topic": card_topic,
                     "read_at": marks.get(lesson), "has_article": lesson in written,
                 })
         else:
@@ -318,7 +328,9 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         return {
             "deck_id": deck_id,
             "name": entry.name,
-            "book": {"id": sy.id, "title": sy.title} if sy else None,
+            "book": {"id": sy.id, "title": sy.title, "is_code": sy.is_code, "kind": sy.kind, "edited": sy.edited,
+                     "chapters": [c.title for c in sy.chapters]} if sy else None,
+            "decks": decks,
             "topics": topics,
             "sources": [{"id": s, "title": SOURCES[s].title, "url": SOURCES[s].homepage} for s in srcs if s in SOURCES],
             "videos": sum(1 for s in srcs if s.startswith("vid:")),
@@ -355,6 +367,26 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
                 for s, cid, how in sorted(cands, reverse=True)[:10] if cid in rows
             ],
         }
+
+    def lesson_context(sy, lesson: str) -> str:
+        """Материалы урока для генерации карточек: статья (если написана) и фрагменты документации."""
+        books = getattr(services, "books", None)
+        qa_id = books.deck_ids(sy).get("qa") if books else None
+        entry = services.registry.get(qa_id) if qa_id else None
+        parts = []
+        art = services.knowledge.get_article(sy.key, lesson)
+        if art:
+            parts.append("СТАТЬЯ УРОКА:\n" + art["content"][:6000])
+        if entry:
+            deck = services.load_deck(entry)
+            docs = [s for s in deck_sources(entry, deck) if not s.startswith("vid:")]
+            if docs:
+                chunks, _ = retrieve(article_query(entry, lesson), docs, k=5)
+                ctx_text, _ = format_context(chunks, [])
+                parts.append(ctx_text)
+        return "\n\n".join(parts)
+
+    services.lesson_context = lesson_context  # type: ignore[attr-defined]
 
     @r.get("/api/textbook/{deck_id}/lesson-videos")
     def lesson_videos_get(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:

@@ -1,5 +1,7 @@
 title: Python
 match: python-basics|python-live|^python
+kind: code
+lang: python
 # 1. Основы языка
 Синтаксис, отступы и PEP 8
 Типы данных: числа, строки, bool, None

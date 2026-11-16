@@ -569,6 +569,17 @@ class VideoLibrary:
                 )
         self.links_version += 1
 
+    def rename_lesson(self, book_key: str, old: str, new: str) -> None:
+        with self._lock, self._db:
+            self._db.execute("DELETE FROM lesson_videos WHERE book_key=? AND topic=?", (book_key, new))
+            self._db.execute("UPDATE lesson_videos SET topic=? WHERE book_key=? AND topic=?", (new, book_key, old))
+        self.links_version += 1
+
+    def delete_lesson(self, book_key: str, topic: str) -> None:
+        with self._lock, self._db:
+            self._db.execute("DELETE FROM lesson_videos WHERE book_key=? AND topic=?", (book_key, topic))
+        self.links_version += 1
+
     def chunk_at(self, vid: str, start: float) -> dict | None:
         """Фрагмент видео, в который попадает момент start; ссылка — ровно на этот момент."""
         rows = self.knowledge.source_chunks(f"vid:{vid}")

@@ -1,5 +1,7 @@
 title: Laravel
 match: laravel
+kind: code
+lang: php
 # 1. Введение и устройство фреймворка
 Установка Laravel, структура проекта и Artisan
 Жизненный цикл запроса в Laravel

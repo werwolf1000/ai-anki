@@ -1,5 +1,7 @@
 title: DevOps
 match: pro-devops|devops
+kind: code
+lang: bash
 # 1. Linux
 Файловая система, права и пользователи
 Процессы, сигналы и systemd

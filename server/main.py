@@ -367,10 +367,16 @@ from server.textbook import build_router  # noqa: E402
 
 app.include_router(build_router(services, current_ctx))
 
+from server.book_decks import BookDecks  # noqa: E402
+from server.book_decks import build_router as build_books_router  # noqa: E402
 from server.videos import VideoLibrary  # noqa: E402
 from server.videos import build_router as build_videos_router  # noqa: E402
 
 services.videos = VideoLibrary(services.data_dir, services.knowledge, services)  # type: ignore[attr-defined]
+services.books = BookDecks(services)  # type: ignore[attr-defined]
+services.books.ensure_all()
+services.books.start_refine()
+app.include_router(build_books_router(services, current_ctx))
 app.include_router(build_videos_router(services, current_ctx, users.user_for_token))
 
 from server.tracks import build_router as build_tracks_router  # noqa: E402

@@ -1,5 +1,7 @@
 title: Forward Deployed Engineer
 match: pro-fde|forward deployed
+kind: code
+lang: python
 # 1. Роль FDE
 Кто такой Forward Deployed Engineer и чем отличается от консультанта
 Работа с заказчиком: discovery и сбор требований

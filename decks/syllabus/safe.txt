@@ -1,5 +1,6 @@
 title: SAFe
 match: safe-scaled|\bsafe\b
+kind: theory
 # 1. Основы SAFe
 Что такое SAFe и зачем масштабировать Agile
 Ценности SAFe

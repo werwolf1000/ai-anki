@@ -1,5 +1,7 @@
 title: Оценка LLM и AI QA
 match: pro-llm-evaluator|llm-evaluator
+kind: code
+lang: python
 # 1. Основы оценки
 Зачем оценивать LLM: качество, безопасность, регрессии
 Виды оценки: автоматическая, человеческая, LLM-as-a-judge

@@ -1,5 +1,6 @@
 title: Agile
 match: agile-fundamentals
+kind: theory
 # 1. Философия Agile
 Agile-манифест: 4 ценности
 12 принципов Agile
