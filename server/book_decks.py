@@ -6,7 +6,7 @@
 
 При первом запуске в них раскладываются карточки прежних колод этого учебника (по близости к урокам),
 прогресс повторений переносится по id карточек, прежние колоды скрываются. Колоды профессий (pro-*)
-остаются — на них держатся экзамены и сертификаты, — их карточки только копируются.
+также переходят на колоды учебников: они используются в экзаменах и сертификатах.
 
 Правка программы (добавить / переименовать / удалить главу или урок) переносит за уроком его карточки,
 статью, отметки «прочитано» и привязки видео. Недостающие карточки уроков догенерирует Ollama (фоновая задача).
@@ -243,7 +243,7 @@ class BookDecks:
     # — файлы колод —
 
     def paths(self, sy: Syllabus) -> tuple[Path, Path | None]:
-        return self.dir / f"book-{sy.id}.json", (self.dir / f"book-{sy.id}-live-coding.json" if sy.is_code else None)
+        return self.dir / f"book-{sy.id}.json", (self.dir / f"book-{sy.id}-live-coding.json" if sy.has_practice else None)
 
     @staticmethod
     def _read(path: Path) -> dict:
@@ -261,14 +261,16 @@ class BookDecks:
 
     def _meta(self, sy: Syllabus, live: bool) -> dict:
         kind = "code" if sy.is_code else sy.kind
-        if sy.is_code:
-            name = f"{sy.title} — live-coding" if live else f"{sy.title} — вопросы"
+        if sy.has_practice:
+            practice = "live-coding" if sy.is_code else "практикум"
+            name = f"{sy.title} — {practice}" if live else f"{sy.title} — вопросы"
         else:
             name = sy.title
         return {
             "name": name,
-            "language": sy.lang if (live or sy.is_code) else ("latex" if sy.kind == "math" else ""),
+            "language": (sy.lang or "markdown") if live else (sy.lang if sy.is_code else ("latex" if sy.kind == "math" else "")),
             "book": sy.id,
+            "track": sy.track,
             "kind": "live" if live else kind,
             "topic_order": sy.lesson_titles(),
             "topic_chapters": {ls: ch for ch, ls in sy.lessons()},
@@ -331,10 +333,26 @@ class BookDecks:
         with self.lock:
             qa_path, live_path = self.paths(sy)
             qa, live = self._read(qa_path), (self._read(live_path) if live_path else None)
+            split_practice = live is not None and any(c.get("card_type") == "live_code" for c in qa.get("cards", []))
+            # Ранее практикум теоретических профессий попадал в общую колоду.
+            if live is not None:
+                live_ids = {c["id"] for c in live.get("cards", [])}
+                for c in qa.get("cards", []):
+                    if c.get("card_type") == "live_code" and c["id"] not in live_ids:
+                        live.setdefault("cards", []).append(c)
+                        live_ids.add(c["id"])
+                qa["cards"] = [c for c in qa.get("cards", []) if c.get("card_type") != "live_code"]
             have = {c["id"] for c in qa.get("cards", [])} | ({c["id"] for c in live.get("cards", [])} if live else set())
+            have.update(qa.get("retired_ids", []))
+            if live is not None:
+                have.update(live.get("retired_ids", []))
             pending: list[tuple[dict, bool]] = []  # (raw, в live-колоду)
             sources = self.source_entries(sy)
             migrations: dict[str, set[str]] = {}
+            if split_practice:
+                old_qa = self.services.registry.find_by_path(qa_path)
+                if old_qa:
+                    migrations.setdefault(str(live_path), set()).add(old_qa.deck_id)
             for entry in sources:
                 try:
                     deck = self.services.load_deck(entry)
@@ -380,12 +398,22 @@ class BookDecks:
                 self._write(path, data)
                 entry = self._entry_for(path, data["name"])
                 old = migrations.get(str(path), set())
+                if sy.track:
+                    ids = {c["id"] for c in data.get("cards", [])}
+                    # Прогресс мог быть получен в прежнем учебнике языка или в общей колоде профессии.
+                    for previous in self.services.registry.entries:
+                        if previous.deck_id == entry.deck_id or not Path(previous.primary_path).name.startswith("book-"):
+                            continue
+                        if any(c.get("id") in ids for c in self._read(Path(previous.primary_path)).get("cards", [])):
+                            old.add(previous.deck_id)
                 if entry and old:
                     cur = set(self.state["migrations"].get(entry.deck_id, []))
                     self.state["migrations"][entry.deck_id] = sorted(cur | old)
-            hidden = set(self.state["hidden"]) | {e.deck_id for e in sources if not self._is_pro(e)}
+            hidden = set(self.state["hidden"]) | {e.deck_id for e in sources if sy.track or not self._is_pro(e)}
             self.state["hidden"] = sorted(hidden)
             self.state["built"][sy.id] = _now()
+            if sy.track:
+                self.state.setdefault("track_books", {})[sy.id] = 1
             if pending:  # «words» — фоновая задача потом переразложит по смыслу
                 if not used_vectors:
                     self.state["assigned"][sy.id] = "words"
@@ -404,7 +432,8 @@ class BookDecks:
         """Создать колоды для программ, у которых их ещё нет; обновить порядок тем и названия у остальных."""
         for sy in all_syllabi():
             try:
-                if sy.id not in self.state["built"] or not self.paths(sy)[0].exists():
+                if (sy.id not in self.state["built"] or not self.paths(sy)[0].exists()
+                        or (sy.track and self.state.get("track_books", {}).get(sy.id) != 1)):
                     self.build(sy)
                 else:
                     self.sync_meta(sy)
@@ -439,7 +468,7 @@ class BookDecks:
     def sync_meta(self, sy: Syllabus) -> None:
         with self.lock:
             qa_path, live_path = self.paths(sy)
-            if sy.is_code and live_path and not live_path.exists():
+            if sy.has_practice and live_path and not live_path.exists():
                 self._write(live_path, {"cards": [], "retired_ids": []} | self._meta(sy, True))
             for path, is_live in ((qa_path, False), (live_path, True)):
                 if not path or not path.exists():
@@ -482,6 +511,14 @@ class BookDecks:
                 self.migrate_progress(ctx.progress)
 
     # — состав уроков —
+
+    def lesson_for_card(self, sy: Syllabus, card_id: str) -> str:
+        for path in self.paths(sy):
+            if path:
+                for card in self._read(path).get("cards", []):
+                    if card.get("id") == card_id:
+                        return card.get("topic", "")
+        return ""
 
     def lesson_counts(self, sy: Syllabus) -> dict[str, dict]:
         qa_path, live_path = self.paths(sy)
@@ -634,6 +671,13 @@ class BookDecks:
         ctx_text = services.lesson_context(sy, lesson) if hasattr(services, "lesson_context") else ""
         if live:
             system = LIVE_SYSTEM.replace("{lang}", sy.lang or "python")
+            if not sy.is_code:
+                system = (
+                    f"Составь практические задания для профессии «{sy.title}» по указанному уроку. "
+                    "Попроси подготовить промпт, план, разбор кейса или рабочий документ. "
+                    "Не требуй программирования. Укажи конкретную ситуацию и критерии результата. "
+                    'Верни только JSON-массив: [{"task": "задание", "solution": "эталон в Markdown"}]. Пиши по-русски.'
+                )
         elif sy.kind == "math":
             system = MATH_SYSTEM
         else:
@@ -668,7 +712,7 @@ class BookDecks:
                 continue
             seen.append(q)
             if live:
-                card = {"card_type": "live_code", "question": q, "reference": ref, "language": sy.lang or "python"}
+                card = {"card_type": "live_code", "question": q, "reference": ref, "language": sy.lang or ("python" if sy.is_code else "markdown")}
             elif sy.kind == "math":
                 card = {"card_type": "math", "answer_mode": "math", "question": q, "reference": ref}
             else:
@@ -706,7 +750,7 @@ class BookDecks:
                 if body.lesson and ls != body.lesson:
                     continue
                 c = counts.get(ls, {"qa": 0, "live": 0})
-                if c["qa"] < body.qa_target or (sy.is_code and c["live"] < body.live_target):
+                if c["qa"] < body.qa_target or (sy.has_practice and c["live"] < body.live_target):
                     items.append((sy.id, ls))
         if not items:
             return 0
@@ -732,7 +776,7 @@ class BookDecks:
                     continue
                 job.current = f"{sy.title} › {lesson}"
                 try:
-                    for live in ((False, True) if sy.is_code else (False,)):
+                    for live in ((False, True) if sy.has_practice else (False,)):
                         qa_path, live_path = self.paths(sy)
                         path = live_path if live else qa_path
                         cards = [c for c in self._read(path).get("cards", []) if c.get("topic") == lesson]
@@ -789,6 +833,7 @@ def build_router(services, current_ctx) -> APIRouter:
         counts = books.lesson_counts(sy)
         return {
             "id": sy.id, "title": sy.title, "kind": sy.kind, "lang": sy.lang, "is_code": sy.is_code, "edited": sy.edited,
+            "track": sy.track, "has_practice": sy.has_practice,
             "decks": books.deck_ids(sy),
             "chapters": [
                 {"title": ch.title, "lessons": [{"title": ls, **counts.get(ls, {"qa": 0, "live": 0})} for ls in ch.lessons]}
@@ -803,9 +848,10 @@ def build_router(services, current_ctx) -> APIRouter:
             counts = books.lesson_counts(sy)
             out.append({
                 "id": sy.id, "title": sy.title, "kind": sy.kind, "is_code": sy.is_code, "decks": books.deck_ids(sy),
+                "track": sy.track, "has_practice": sy.has_practice,
                 "chapters": len(sy.chapters), "lessons": len(counts),
                 "qa": sum(c["qa"] for c in counts.values()), "live": sum(c["live"] for c in counts.values()),
-                "thin": sum(1 for c in counts.values() if c["qa"] < QA_TARGET or (sy.is_code and c["live"] < LIVE_TARGET)),
+                "thin": sum(1 for c in counts.values() if c["qa"] < QA_TARGET or (sy.has_practice and c["live"] < LIVE_TARGET)),
                 "assigned": books.state["assigned"].get(sy.id, ""),
             })
         return {

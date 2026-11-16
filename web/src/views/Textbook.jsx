@@ -10,6 +10,7 @@ import { kindOf } from "../lib/decks";
 import { extractHeadings, RichText } from "../lib/richtext";
 import { EmptyState, Spinner, useToast } from "../components/ui";
 import { fmtTime, videoFileUrl } from "../components/VideoLibrary";
+import LessonQuiz from "../components/LessonQuiz";
 
 export default function Textbook({ user, decks, reloadDecks, onStart, route = {}, navigate }) {
   const toast = useToast();
@@ -122,10 +123,11 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
 
   return (
     <div className="space-y-6">
+      {book?.book?.track && <button className="text-sm text-violet-300 hover:text-white" onClick={() => navigate({ view: "tracks", track: book.book.track })}>Вернуться к профессии</button>}
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <h1 className="flex items-center gap-3 text-3xl font-extrabold tracking-tight">Учебник</h1>
-          <p className="text-sm text-zinc-400">Прочитайте урок перед карточками — у каждого урока свои вопросы{book?.book?.is_code ? " и задания live-coding" : ""}.</p>
+          <p className="text-sm text-zinc-400">Прочитайте урок перед карточками — у каждого урока свои вопросы{book?.book?.has_practice ? " и практические задания" : ""}.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {book?.decks?.qa && (
@@ -134,8 +136,8 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
             </button>
           )}
           {book?.decks?.live && (
-            <button className="btn-ghost" onClick={() => openDeck("live", "")} title="Колода live-coding этого учебника">
-              <Code2 className="h-4 w-4" /> Live-coding <span className="text-zinc-500">{totals.live}</span>
+            <button className="btn-ghost" onClick={() => openDeck("live", "")} title="Колода практических заданий этого учебника">
+              <Code2 className="h-4 w-4" /> {book?.book?.is_code ? "Live-coding" : "Практика"} <span className="text-zinc-500">{totals.live}</span>
             </button>
           )}
           <BookPicker options={options} value={current?.key} onChange={(o) => navigate(place(o))} />
@@ -204,7 +206,7 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
                           <button
                             key={t.name}
                             onClick={() => setTopic(t.name)}
-                            title={`${t.name}\n${t.cards || 0} вопросов${book.book?.is_code ? `, ${t.live || 0} live-coding` : ""}`}
+                            title={`${t.name}\n${t.cards || 0} вопросов${book.book?.has_practice ? `, ${t.live || 0} практических заданий` : ""}`}
                             className={`relative flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition-colors ${topic === t.name ? "text-white" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"}`}
                           >
                             {topic === t.name && (
@@ -217,7 +219,7 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
                             {t.has_article && <Sparkles className="relative h-3.5 w-3.5 shrink-0 text-violet-300/70" />}
                             <span className={`relative text-[11px] tabular-nums ${t.cards ? "text-zinc-600" : "text-amber-400/70"}`}>
                               {t.cards || 0}
-                              {book.book?.is_code ? `·${t.live || 0}` : ""}
+                              {book.book?.has_practice ? `·${t.live || 0}` : ""}
                             </span>
                           </button>
                         ))}
@@ -245,7 +247,7 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
               {book.videos > 0 && (
                 <div className="mt-1.5"><PlayCircle className="mr-1 inline h-3 w-3" /> Видеоуроков в базе: {book.videos}</div>
               )}
-              {user.is_admin && book.book && <CardsPanel bookId={book.book.id} isCode={book.book.is_code} topics={book.topics} onDone={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }} />}
+              {user.is_admin && book.book && <CardsPanel bookId={book.book.id} isCode={book.book.has_practice} topics={book.topics} onDone={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }} />}
               {user.is_admin && book.topics.some((t) => !t.has_article) && (
                 <button className="btn-ghost mt-2 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
                   <Sparkles className="h-3.5 w-3.5" /> Написать статьи для всех уроков ({book.topics.filter((t) => !t.has_article).length})
@@ -440,7 +442,7 @@ function SyllabusEditor({ bookId, current, onChanged }) {
                       {l.title}
                     </span>
                   )}
-                  <span className={`shrink-0 tabular-nums text-[10px] ${l.qa ? "text-zinc-600" : "text-amber-400/80"}`}>{l.qa}{b.is_code ? `·${l.live}` : ""}</span>
+                  <span className={`shrink-0 tabular-nums text-[10px] ${l.qa ? "text-zinc-600" : "text-amber-400/80"}`}>{l.qa}{b.has_practice ? `·${l.live}` : ""}</span>
                   <span className="flex shrink-0 opacity-0 transition-opacity group-hover:opacity-100">
                     <button className={iconBtn} disabled={busy || (ci === 0 && li === 0)} title="Выше" onClick={() => run({ op: "lesson.move", lesson: l.title, delta: -1 })}><ArrowUp className="h-3 w-3" /></button>
                     <button className={iconBtn} disabled={busy || (ci === b.chapters.length - 1 && li === ch.lessons.length - 1)} title="Ниже" onClick={() => run({ op: "lesson.move", lesson: l.title, delta: 1 })}><ArrowDown className="h-3 w-3" /></button>
@@ -532,11 +534,11 @@ function CardsPanel({ bookId, isCode, topics, onDone }) {
           </button>
         )}
       </div>
-      <div className="mt-1 text-[10px] text-zinc-600">норма на урок: 8 вопросов{isCode ? " и 3 live-coding" : ""}</div>
+      <div className="mt-1 text-[10px] text-zinc-600">норма на урок: 8 вопросов{isCode ? " и 3 практических задания" : ""}</div>
       {job?.running && (
         <div className="mt-1.5 text-violet-200">
           {job.done}/{job.total} · {job.current}
-          <div className="text-zinc-500">+{job.added_qa} вопросов{isCode ? `, +${job.added_live} live-coding` : ""}</div>
+          <div className="text-zinc-500">+{job.added_qa} вопросов{isCode ? `, +${job.added_live} практических заданий` : ""}</div>
         </div>
       )}
       {!job?.running && job?.log?.length > 0 && <div className="mt-1.5 text-zinc-500">{job.log[job.log.length - 1]}</div>}
@@ -633,7 +635,7 @@ function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, on
     try {
       let s = await api("/api/session", { method: "POST", body: { deck_id: target, mode: "due", topic: cardTopic } });
       if (s.empty) s = await api("/api/session", { method: "POST", body: { deck_id: target, mode: "all", topic: cardTopic } });
-      if (s.empty) toast(kind === "live" ? "В уроке пока нет заданий live-coding" : "В уроке пока нет карточек", "info");
+      if (s.empty) toast(kind === "live" ? "В уроке пока нет практических заданий" : "В уроке пока нет карточек", "info");
       else onStart(s);
     } catch (e) {
       toast(e.message, "error");
@@ -704,9 +706,9 @@ function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, on
                     <Layers className="h-3 w-3" /> {info.cards || 0} вопросов
                   </button>
                 )}
-                {bookInfo?.is_code && info && (
-                  <button className="chip hover:text-white" onClick={() => onOpenDeck?.("live", topic)} disabled={!bookDecks.live} title="Открыть live-coding на этом уроке">
-                    <Code2 className="h-3 w-3" /> {info.live || 0} live-coding
+                {bookInfo?.has_practice && info && (
+                  <button className="chip hover:text-white" onClick={() => onOpenDeck?.("live", topic)} disabled={!bookDecks.live} title="Открыть практические задания этого урока">
+                    <Code2 className="h-3 w-3" /> {info.live || 0} заданий
                   </button>
                 )}
                 {sources.length > 0 && <span className="chip"><Library className="h-3 w-3" /> {sources.length} фрагм. документации</span>}
@@ -718,15 +720,15 @@ function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, on
               <button className={`btn-ghost ${readAt ? "border-emerald-500/30 text-emerald-200" : ""}`} onClick={() => toggleRead()}>
                 <BookMarked className="h-4 w-4" /> {readAt ? "Прочитано" : "Отметить прочитанным"}
               </button>
-              {bookInfo?.is_code && bookDecks.live && (
+              {bookInfo?.has_practice && bookDecks.live && (
                 <button className="btn-ghost" onClick={() => practice("live")} disabled={!!starting || !info?.live}>
-                  {starting === "live" ? <Spinner /> : <Code2 className="h-4 w-4" />} Live-coding
+                  {starting === "live" ? <Spinner /> : <Code2 className="h-4 w-4" />} {bookInfo.is_code ? "Live-coding" : "Практика"}
                 </button>
               )}
               <motion.button whileTap={{ scale: 0.97 }} className="btn-primary" onClick={() => practice("qa")} disabled={!!starting || (bookDecks.qa && !info?.cards)}>
                 {starting === "qa" ? <Spinner /> : <GraduationCap className="h-4 w-4" />} Проверить себя
               </motion.button>
-              {user.is_admin && bookInfo && info && (info.cards < 8 || (bookInfo.is_code && info.live < 3)) && (
+              {user.is_admin && bookInfo && info && (info.cards < 8 || (bookInfo.has_practice && info.live < 3)) && (
                 <button className="btn-ghost" onClick={generateCards} title="Догенерировать карточки этого урока через Ollama">
                   <Sparkles className="h-4 w-4" /> Карточки
                 </button>
@@ -799,6 +801,7 @@ function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, on
         </motion.section>
 
         {status === "done" && user.is_admin && <LessonVideos deckId={deckId} topic={topic} sources={sources} onChanged={() => generate(false)} />}
+        {bookInfo && <LessonQuiz book={bookInfo.id} lesson={topic} />}
         {status === "done" && <AskBox deckId={deckId} topic={topic} lang={lang} />}
       </div>
       <FloatingPlayer />

@@ -132,9 +132,10 @@ function Root() {
     (session) => {
       setStudy(session);
       studyPushed.current = true;
-      navigate({ view: "study", deck: session.deck_id, mode: session.mode, topic: session.topic || "", from: view });
+      navigate({ view: "study", deck: session.deck_id, mode: session.mode, topic: session.topic || "", from: view,
+        book: route.book || "", lesson: route.lesson || "", track: route.track || "" });
     },
-    [navigate, view],
+    [navigate, view, route.book, route.lesson, route.track],
   );
   const exitStudy = useCallback(() => {
     setStudy(null);
@@ -144,7 +145,11 @@ function Root() {
       exiting.current = true;
       window.history.back(); // вернуться туда, откуда начали (учебник, колоды, обзор…)
     } else {
-      navigate({ view: route.from && route.from !== "study" ? route.from : "decks", deck: route.deck, topic: route.topic }, { replace: true });
+      const from = route.from && route.from !== "study" ? route.from : "decks";
+      const target = from === "textbook" ? { view: from, book: route.book, deck: route.deck, lesson: route.lesson || route.topic }
+        : from === "tracks" ? { view: from, track: route.track }
+        : { view: from, deck: route.deck, topic: route.topic };
+      navigate(target, { replace: true });
     }
   }, [loadDecks, navigate, route]);
   // из карточки — в урок учебника
@@ -270,6 +275,8 @@ function Root() {
                     {view === "dashboard" && <Dashboard user={user} decks={decks} onStart={startStudy} onRead={openTextbook} goDecks={() => setView("decks")} />}
                     {view === "tracks" && (
                       <Tracks
+                        onBook={(book, lesson = "") => navigate({ view: "textbook", book, lesson })}
+                        onDeck={(deck, topic = "") => navigate({ view: "decks", deck, topic })}
                         decks={decks}
                         onStart={startStudy}
                         onRead={openTextbook}

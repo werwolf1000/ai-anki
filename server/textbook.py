@@ -329,6 +329,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             "deck_id": deck_id,
             "name": entry.name,
             "book": {"id": sy.id, "title": sy.title, "is_code": sy.is_code, "kind": sy.kind, "edited": sy.edited,
+                     "track": sy.track, "has_practice": sy.has_practice,
                      "chapters": [c.title for c in sy.chapters]} if sy else None,
             "decks": decks,
             "topics": topics,

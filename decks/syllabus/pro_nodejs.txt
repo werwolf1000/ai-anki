@@ -1,0 +1,78 @@
+title: Node.js-разработчик
+match: pro-nodejs
+track: nodejs
+kind: code
+lang: javascript
+# 1. Event loop и асинхронность
+Фазы event loop и libuv
+Микрозадачи и макрозадачи: nextTick, Promise, setImmediate
+Promise и async/await
+Обработка ошибок в асинхронном коде
+Thread pool и блокирующие операции
+Worker threads и child_process
+# 2. JavaScript для backend
+Замыкания, this и прототипы
+Классы и приватные поля
+Итераторы, генераторы и async-итераторы
+Работа с Buffer и бинарными данными
+Streams: Readable, Writable, Transform, pipeline
+EventEmitter и событийная модель
+# 3. Модули и экосистема
+ES Modules и CommonJS
+npm: package.json, semver, lockfile
+Монорепозитории: workspaces, pnpm, Turborepo
+Сборка и транспиляция: tsc, esbuild, SWC
+# 4. TypeScript
+Типы, интерфейсы и сужение типов
+Generics и утилитарные типы
+Условные и mapped-типы
+Декораторы и метаданные
+Настройка tsconfig для backend
+Типизация Express/NestJS-приложений
+# 5. HTTP и фреймворки
+Модуль http и жизненный цикл запроса
+Express: маршрутизация, middleware, ошибки
+Fastify: схемы, плагины, производительность
+NestJS: модули, провайдеры, DI, guards, pipes
+Валидация и сериализация: zod, class-validator
+REST API: проектирование и версионирование
+GraphQL на Node.js
+WebSockets и Socket.IO
+# 6. Базы данных
+PostgreSQL: драйвер pg и пул соединений
+ORM и query builders: Prisma, TypeORM, Drizzle, Knex
+Транзакции и миграции
+MongoDB и Mongoose
+Redis: кэш, блокировки, pub/sub
+# 7. Безопасность и аутентификация
+Сессии, JWT и refresh-токены
+OAuth2 и OpenID Connect
+Хранение паролей: bcrypt, argon2
+OWASP для Node.js: инъекции, XSS, SSRF, prototype pollution
+Заголовки безопасности, CORS и rate limiting
+Безопасность зависимостей
+# 8. Тестирование
+Unit-тесты: Jest, Vitest, node:test
+Моки, стабы и фейковые таймеры
+Интеграционные тесты API: supertest
+E2E и контрактные тесты
+# 9. Производительность и масштабирование
+Профилирование: --inspect, clinic, flame graphs
+Утечки памяти и сборщик мусора V8
+Кэширование и оптимизация запросов
+Cluster, PM2 и горизонтальное масштабирование
+Очереди задач: BullMQ, RabbitMQ
+# 10. Эксплуатация
+Логирование: pino, корреляция запросов
+Метрики и трассировка: Prometheus, OpenTelemetry
+Graceful shutdown и обработка сигналов
+Docker для Node.js и CI/CD
+# 11. Архитектура
+Слоистая архитектура и DI в Node.js
+Микросервисы на Node.js
+Событийная архитектура и брокеры сообщений
+Serverless: AWS Lambda и аналоги
+# 12. Собеседование и работа в команде
+Типичные вопросы собеседования Node.js-разработчика
+Разбор задач live-coding на JavaScript/TypeScript
+Code review и качество кода: ESLint, Prettier

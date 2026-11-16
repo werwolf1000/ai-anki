@@ -52,8 +52,8 @@ export default function BookDecksPanel() {
         <BookOpenText className="h-4 w-4 text-violet-300" /> Колоды учебников
       </h2>
       <p className="mb-4 text-xs leading-relaxed text-zinc-500">
-        У каждого урока программы — свои карточки: вопросы, а для учебников по коду ещё и live-coding. Норма на урок —{" "}
-        {st.targets.qa} вопросов и {st.targets.live} задания; недостающее догенерирует Ollama по статье урока и документации.
+        У каждого урока программы — свои карточки: вопросы, а для программирования и профессий ещё и практика. Норма на урок —{" "}
+        {st.targets.qa} вопросов и {st.targets.live} задания; недостающее догенерирует выбранная модель по статье урока и документации.
         Программы правятся в разделе «Учебник» → «Править».
       </p>
       <div className="mb-4 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
@@ -103,7 +103,7 @@ export default function BookDecksPanel() {
             <span className="min-w-0 flex-1 truncate text-zinc-200">{b.title}</span>
             <span className="text-zinc-500">{b.chapters} гл. · {b.lessons} ур.</span>
             <span className="w-20 text-right tabular-nums text-zinc-300">{b.qa} вопр.</span>
-            <span className="w-16 text-right tabular-nums text-zinc-400">{b.is_code ? `${b.live} live` : "—"}</span>
+            <span className="w-16 text-right tabular-nums text-zinc-400">{b.has_practice ? `${b.live} live` : "—"}</span>
             <span className={`w-24 text-right ${b.thin ? "text-amber-300" : "text-emerald-300"}`}>{b.thin ? `нехватка: ${b.thin}` : "норма"}</span>
             <span className="w-16 text-right text-[10px] text-zinc-600" title="Как разложены перенесённые карточки">{b.assigned === "words" ? "по словам" : "по смыслу"}</span>
             <button

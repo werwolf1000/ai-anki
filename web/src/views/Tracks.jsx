@@ -10,7 +10,7 @@ import { Ring, Spinner, useToast } from "../components/ui";
 import StartModal from "../components/StartModal";
 import Certificate from "../components/Certificate";
 
-export default function Tracks({ decks, onStart, onRead, onExam, onInterview, openTrack, setOpenTrack }) {
+export default function Tracks({ decks, onStart, onRead, onBook, onDeck, onExam, onInterview, openTrack, setOpenTrack }) {
   const [data, setData] = useState(null);
   const [gridRef] = useAutoAnimate({ duration: 250 });
 
@@ -30,6 +30,8 @@ export default function Tracks({ decks, onStart, onRead, onExam, onInterview, op
         }}
         onStart={onStart}
         onRead={onRead}
+        onBook={onBook}
+        onDeck={onDeck}
         onExam={onExam}
         onInterview={onInterview}
       />
@@ -125,7 +127,7 @@ function TrackCard({ track: t, index, onOpen }) {
         </div>
         <div className={`min-w-0 ${t.certificate ? "pr-24" : ""}`}>
           <h3 className="text-lg font-bold leading-tight">{t.title}</h3>
-          <div className="text-xs text-zinc-500">{t.subjects.length} предметов · {req.coverage.total} карточек</div>
+          <div className="text-xs text-zinc-500">{t.book ? `${t.book.lessons} уроков` : `${t.subjects.length} предметов`} · {req.coverage.total} карточек</div>
         </div>
       </div>
       <p className="relative mt-3 line-clamp-2 text-sm text-zinc-400">{t.description}</p>
@@ -156,7 +158,7 @@ function TrackCard({ track: t, index, onOpen }) {
   );
 }
 
-function TrackDetail({ trackId, decks, onBack, onStart, onRead, onExam, onInterview }) {
+function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, onExam, onInterview }) {
   const toast = useToast();
   const [t, setT] = useState(null);
   const [picked, setPicked] = useState(null);
@@ -261,6 +263,34 @@ function TrackDetail({ trackId, decks, onBack, onStart, onRead, onExam, onInterv
         </div>
       </motion.section>
 
+      {t.book && (
+        <section className="glass p-5 sm:p-6">
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="flex items-center gap-2 font-semibold"><BookOpenText className="h-5 w-5 text-violet-300" /> Учебник профессии</h2>
+              <p className="mt-1 text-sm text-zinc-400">{t.book.chapter_count} глав, {t.book.lessons} уроков. В каждом — статья, вопросы, практика и тест.</p>
+            </div>
+            <button className="btn-primary" onClick={() => onBook(t.book.id)}>Открыть учебник</button>
+          </div>
+          <div className="divide-y divide-white/[0.06]">
+            {t.book.chapters.map((ch) => (
+              <details key={ch.title} className="py-2">
+                <summary className="cursor-pointer py-2 text-sm font-semibold text-zinc-200">{ch.title} <span className="ml-2 font-normal text-zinc-500">{ch.lessons.length} уроков</span></summary>
+                <div className="space-y-1 pb-2">
+                  {ch.lessons.map((ls) => (
+                    <div key={ls.title} className="flex flex-wrap items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/[0.03]">
+                      <button className="min-w-0 flex-1 text-left text-sm text-zinc-300 hover:text-white" onClick={() => onBook(t.book.id, ls.title)}>{ls.title}</button>
+                      <button className="chip text-xs disabled:opacity-40" disabled={!t.book.decks.qa} onClick={() => onDeck(t.book.decks.qa, ls.title)} aria-label={`Вопросы: ${ls.title}`}>{ls.qa} вопросов</button>
+                      <button className="chip text-xs disabled:opacity-40" disabled={!t.book.decks.live} onClick={() => onDeck(t.book.decks.live, ls.title)} aria-label={`Практика: ${ls.title}`}>{ls.live} {t.book.is_code ? "live-coding" : "заданий"}</button>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* путь к сертификату */}
       <div className="grid gap-3 lg:grid-cols-3">
         {steps.map((s, i) => (
@@ -336,7 +366,7 @@ function TrackDetail({ trackId, decks, onBack, onStart, onRead, onExam, onInterv
                 {d.kind === "live" ? <Terminal className={`h-5 w-5 ${st.text}`} /> : <GraduationCap className={`h-5 w-5 ${st.text}`} />}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="truncate font-semibold">{d.kind === "live" ? "Практикум (live-coding)" : "Теория"}</div>
+                <div className="truncate font-semibold">{d.kind === "live" ? (t.book?.is_code ? "Практикум (live-coding)" : "Практические задания") : "Вопросы и ответы"}</div>
                 <div className="text-xs text-zinc-500">
                   сдано {d.passed}/{d.total} · новые {d.new}{d.weak ? ` · слабые ${d.weak}` : ""}
                 </div>

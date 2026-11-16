@@ -383,6 +383,9 @@ services.books.start_refine()
 services.user_name = lambda uid: (lambda u: (u.display_name or u.username) if u else str(uid))(users.get(uid))  # type: ignore[attr-defined]
 app.include_router(build_llm_router(services, current_ctx))
 app.include_router(build_books_router(services, current_ctx))
+from server.lesson_quiz import build_router as build_quiz_router  # noqa: E402
+
+app.include_router(build_quiz_router(services, current_ctx))
 app.include_router(build_videos_router(services, current_ctx, users.user_for_token))
 
 from server.tracks import build_router as build_tracks_router  # noqa: E402

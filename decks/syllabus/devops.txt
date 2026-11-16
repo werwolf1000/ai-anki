@@ -1,5 +1,6 @@
 title: DevOps
 match: pro-devops|devops
+track: devops
 kind: code
 lang: bash
 # 1. Linux
@@ -63,3 +64,27 @@ IAM и принцип наименьших привилегий
 SLI, SLO, SLA и error budget
 Инциденты и постмортемы
 Резервное копирование и аварийное восстановление
+# 10. Безопасность инфраструктуры
+Секреты: Vault, SOPS, sealed secrets
+Сканирование образов и зависимостей
+Политики Kubernetes: Pod Security, OPA Gatekeeper, Kyverno
+TLS, сертификаты и cert-manager
+Аудит, журналирование доступа и hardening Linux
+# 11. Базы данных в эксплуатации
+PostgreSQL: репликация, бэкапы, PITR
+Операторы БД в Kubernetes
+Миграции схемы в CI/CD
+Кэши и брокеры: Redis, RabbitMQ, Kafka в продакшене
+# 12. Сервисные сети и трафик
+Ingress-контроллеры: Nginx, Traefik
+Service mesh: Istio и Linkerd
+Gateway API и управление трафиком
+Rate limiting и защита от DDoS
+# 13. Платформенная инженерия
+Внутренняя платформа разработчика (IDP)
+Шаблоны сервисов и golden path
+Self-service окружения и preview-стенды
+# 14. Собеседование DevOps-инженера
+Разбор типовых инцидентов на собеседовании
+Задачи на Bash и Linux
+Проектирование инфраструктуры на интервью

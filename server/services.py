@@ -331,6 +331,7 @@ class AppServices:
             "name": entry.name,
             "book": sy.id if sy else "",
             "book_title": sy.title if sy else "",
+            "track": sy.track if sy else "",
             "book_deck": bool(deck.book),
             "chapters": len({deck.topic_chapters.get(t, "") for t in topics} - {""}) if deck.book else 0,
             "kind": self._deck_kind(entry, deck),
@@ -523,6 +524,15 @@ class AppServices:
             return None
         with ctx.lock:
             prog = ctx.progress.get(session.deck, card.id)
+        lesson = card.topic
+        books = getattr(self, "books", None)
+        if books and not session.deck.book:
+            from server.syllabus import syllabus_for
+
+            entry = self.registry.get(session.deck.deck_id)
+            sy = syllabus_for(entry.deck_id, entry.name, entry.paths) if entry else None
+            if sy:
+                lesson = books.lesson_for_card(sy, card.id) or lesson
         image = ""
         if card.image.strip():
             image = anatomy_image_url(card.image)
@@ -543,6 +553,7 @@ class AppServices:
             "language": card.language,
             "is_live_code": card.is_live_code,
             "topic": card.topic,
+            "lesson": lesson,
             "math_starter": card.task if card.needs_math_editor else "",
             "attempts": prog.attempts,
             "best_score": prog.best_score,

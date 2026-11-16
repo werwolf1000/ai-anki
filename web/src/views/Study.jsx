@@ -173,7 +173,7 @@ export default function Study({ session, config, onExit, onRead }) {
           {onRead && card?.topic && (
             <button
               className="btn-ghost px-3 text-xs"
-              onClick={() => onRead(session.deck_id, card.topic)}
+              onClick={() => onRead(session.deck_id, card.lesson || card.topic)}
               title={`Открыть урок «${card.topic}» в учебнике`}
             >
               <BookOpenText className="h-4 w-4" /> <span className="hidden lg:inline">Урок</span>

@@ -20,6 +20,7 @@ from app.deck import Card, ChatMessage
 from app.ollama_client import _loads_llm_json
 from app.registry import deck_id_for_path
 from server.services import AppServices, UserContext
+from server.syllabus import track_syllabus, syllabus_for
 
 
 def _now() -> datetime:
@@ -263,6 +264,13 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         return services.registry.get(did)
 
     def track_decks(track: dict) -> list[tuple]:
+        sy = track_syllabus(track["id"])
+        books = getattr(services, "books", None)
+        if sy and books:
+            ids = books.deck_ids(sy)
+            entries = [services.registry.get(ids.get(k, "")) for k in ("qa", "live")]
+            if all(entries):
+                return [(Path(e.primary_path).name, e, services.load_deck(e)) for e in entries]
         out = []
         for fn in track["decks"]:
             entry = deck_entry(fn)
@@ -310,13 +318,26 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             "interview": {"best": interview["score"] if interview else None, "required": m["interview"].get("pass_score", 65), "done": bool(interview and interview["passed"])},
         }
         cert = store.certificate(ctx.user.id, track["id"])
+        sy = track_syllabus(track["id"])
+        books = getattr(services, "books", None)
+        book = None
+        if sy and books:
+            counts = books.lesson_counts(sy)
+            book = {"id": sy.id, "title": sy.title, "is_code": sy.is_code,
+                    "decks": books.deck_ids(sy), "lessons": len(counts), "chapter_count": len(sy.chapters)}
+            if with_decks:
+                book["chapters"] = [
+                    {"title": ch.title, "lessons": [{"title": ls, **counts[ls]} for ls in ch.lessons]}
+                    for ch in sy.chapters
+                ]
         out = {
             "id": track["id"],
             "title": track["title"],
             "description": track["description"],
             "icon": track["icon"],
             "language": track["language"],
-            "subjects": track["subjects"],
+            "subjects": [ch.title for ch in sy.chapters] if sy else track["subjects"],
+            "book": book,
             "requirements": req,
             "eligible": all(v["done"] for v in req.values()),
             "certificate": public_certificate(cert) if cert else None,
@@ -327,6 +348,10 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             for fn in track.get("related", []):
                 e = deck_entry(fn)
                 if e:
+                    related_sy = syllabus_for(e.deck_id, e.name, e.paths)
+                    if related_sy and books:
+                        key = "live" if "live-coding" in fn else "qa"
+                        e = services.registry.get(books.deck_ids(related_sy).get(key, "")) or e
                     related.append({"deck_id": e.deck_id, "name": e.name})
             out["related"] = related
             out["exam_config"] = m["exam"]
