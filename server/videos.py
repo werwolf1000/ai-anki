@@ -180,9 +180,18 @@ class VideoLibrary:
                 self._db.execute("ALTER TABLE videos ADD COLUMN parts_done INTEGER DEFAULT 0")
             if "asr_seconds" not in cols:
                 self._db.execute("ALTER TABLE videos ADD COLUMN asr_seconds REAL DEFAULT 0")
+            # ручная правка видео урока: pin — закрепить (с момента start), block — не показывать
+            self._db.execute(
+                """CREATE TABLE IF NOT EXISTS lesson_videos (
+                    book_key TEXT NOT NULL, topic TEXT NOT NULL, video_id TEXT NOT NULL,
+                    mode TEXT NOT NULL, start REAL DEFAULT 0, updated_at TEXT,
+                    PRIMARY KEY (book_key, topic, video_id)
+                )"""
+            )
             # прерванная перезапуском обработка — в очередь заново
             self._db.execute("UPDATE videos SET status='queued', progress=0 WHERE status='processing'")
         self.current = ""
+        self.links_version = 0
         self.roots_info: list[dict] = []
         self.state: dict = {}  # что делает обработчик прямо сейчас (для прогресса в интерфейсе)
         self.feed: deque = deque(maxlen=400)  # последние распознанные Whisper фразы
@@ -534,6 +543,51 @@ class VideoLibrary:
         with self._lock:
             return self._db.execute("SELECT * FROM videos WHERE id=?", (vid,)).fetchone()
 
+    # — ручная привязка видео к урокам —
+
+    def links(self, book_key: str, topic: str) -> dict:
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT video_id, mode, start FROM lesson_videos WHERE book_key=? AND topic=? ORDER BY updated_at",
+                (book_key, topic),
+            ).fetchall()
+        return {
+            "pin": [{"video": r["video_id"], "start": float(r["start"] or 0)} for r in rows if r["mode"] == "pin"],
+            "block": {r["video_id"] for r in rows if r["mode"] == "block"},
+        }
+
+    def set_link(self, book_key: str, topic: str, vid: str, mode: str, start: float = 0.0) -> None:
+        with self._lock, self._db:
+            if mode == "reset":
+                self._db.execute("DELETE FROM lesson_videos WHERE book_key=? AND topic=? AND video_id=?", (book_key, topic, vid))
+            else:
+                self._db.execute(
+                    "INSERT INTO lesson_videos (book_key, topic, video_id, mode, start, updated_at) VALUES (?, ?, ?, ?, ?, ?)"
+                    " ON CONFLICT(book_key, topic, video_id) DO UPDATE SET mode=excluded.mode, start=excluded.start,"
+                    " updated_at=excluded.updated_at",
+                    (book_key, topic, vid, mode, float(start or 0), _now()),
+                )
+        self.links_version += 1
+
+    def chunk_at(self, vid: str, start: float) -> dict | None:
+        """Фрагмент видео, в который попадает момент start; ссылка — ровно на этот момент."""
+        rows = self.knowledge.source_chunks(f"vid:{vid}")
+        if not rows:
+            return None
+        best = rows[0]
+        for r in rows:
+            m = re.search(r"#t=(\d+)", r["url"])
+            if m and int(m[1]) <= start + 0.5:
+                best = r
+        return best | {"url": re.sub(r"#t=\d+", f"#t={int(start)}", best["url"]), "pinned": True}
+
+    def library(self) -> list[dict]:
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT id, folder, title, book, duration FROM videos WHERE status='done' AND chunks > 0 ORDER BY folder, title"
+            ).fetchall()
+        return [dict(r) for r in rows]
+
     def book_summary(self, book: str) -> list[dict]:
         with self._lock:
             rows = self._db.execute(
@@ -618,6 +672,7 @@ def build_router(services, current_ctx: Callable, user_for_token: Callable[[str]
             "progress": lib.progress(),
             "log": lib.log[-30:],
             "books": [{"id": s.id, "title": s.title} for s in all_syllabi()],
+            "min_sim": services.config.get("video_min_sim") or "",
             "videos": lib.public(),
         }
 

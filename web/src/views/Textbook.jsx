@@ -473,7 +473,7 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
           )}
         </motion.section>
 
-        {status === "done" && user.is_admin && <VideoDebug deckId={deckId} topic={topic} />}
+        {status === "done" && user.is_admin && <LessonVideos deckId={deckId} topic={topic} sources={sources} onChanged={() => generate(false)} />}
         {status === "done" && <AskBox deckId={deckId} topic={topic} lang={lang} />}
       </div>
       <FloatingPlayer />
@@ -486,65 +486,204 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
   );
 }
 
-const VSTATUS = { queued: "в очереди", processing: "расшифровка", done: "готово", error: "ошибка", missing: "файл пропал", skipped: "исключено" };
+function parseTime(text) {
+  const parts = String(text || "").trim().split(":").map((x) => Number(x));
+  if (!parts.length || parts.some((x) => !isFinite(x))) return null;
+  return parts.reduce((acc, x) => acc * 60 + x, 0);
+}
 
-/** Админ: какие видео учебника рассматривались для урока и с каким сходством. */
-function VideoDebug({ deckId, topic }) {
+/** Админ: какие видео показываются в уроке — убрать лишние, закрепить нужные с нужного момента. */
+function LessonVideos({ deckId, topic, sources, onChanged }) {
+  const toast = useToast();
   const [open, setOpen] = useState(false);
   const [d, setD] = useState(null);
-  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState("");
+  const [q, setQ] = useState("");
+  const [pick, setPick] = useState(null); // видео, для которого выбираем момент
+  const [listRef] = useAutoAnimate({ duration: 180 });
+
+  const load = useCallback(() => {
+    api(`/api/textbook/${deckId}/lesson-videos?topic=${encodeURIComponent(topic)}`).then(setD).catch((e) => toast(e.message, "error"));
+  }, [deckId, topic, toast]);
   useEffect(() => {
-    if (!open) return;
-    setD(null);
-    setErr("");
-    api(`/api/textbook/${deckId}/videos-debug?topic=${encodeURIComponent(topic)}`).then(setD).catch((e) => setErr(e.message));
-  }, [open, deckId, topic]);
+    if (open) load();
+  }, [open, load]);
+
+  async function act(video, action, start = 0) {
+    setBusy(`${video}:${action}`);
+    try {
+      await api(`/api/textbook/${deckId}/lesson-videos`, { method: "POST", body: { topic, video, action, start } });
+      setPick(null);
+      load();
+      onChanged();
+    } catch (e) {
+      toast(e.message, "error");
+    } finally {
+      setBusy("");
+    }
+  }
+
+  const shown = sources.filter((s) => s.video);
+  const lib = (d?.library || []).filter((v) => {
+    const t = `${v.folder} ${v.title}`.toLowerCase();
+    return !q || q.toLowerCase().split(/\s+/).every((w) => t.includes(w));
+  });
+
   return (
-    <section className="glass p-4 text-xs text-zinc-400">
-      <button className="flex items-center gap-2 font-semibold text-zinc-300" onClick={() => setOpen((o) => !o)}>
-        <PlayCircle className="h-3.5 w-3.5" /> Подбор видео для урока (диагностика)
-        <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`} />
+    <section className="glass p-4 text-sm">
+      <button className="flex w-full items-center gap-2 font-semibold text-zinc-200" onClick={() => setOpen((o) => !o)}>
+        <PlayCircle className="h-4 w-4 text-rose-300" /> Видео урока
+        <span className="text-xs font-normal text-zinc-500">· {shown.length ? `показано ${shown.length}` : "нет"} · правка для администратора</span>
+        <ChevronDown className={`ml-auto h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
-      {open && !d && !err && <div className="mt-3"><Spinner /></div>}
-      {err && <div className="mt-3 text-rose-300">{err}</div>}
-      {d && (
-        <div className="mt-3 space-y-3">
-          {!d.book ? (
-            <div>У колоды нет программы учебника — видео не подбираются.</div>
+
+      {open && (
+        <div className="mt-4 space-y-5">
+          {/* что показано сейчас */}
+          <div>
+            <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-zinc-500">Сейчас в уроке</div>
+            {shown.length === 0 && <div className="text-xs text-zinc-500">Видео нет — прикрепите из подсказок или видеотеки ниже.</div>}
+            <div ref={listRef} className="space-y-1.5">
+              {shown.map((s) => (
+                <div key={`${s.n}-${s.video}`} className="flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                  <span className="cite cite-video">{s.n}</span>
+                  <span className="min-w-0 flex-1 truncate text-zinc-200" title={s.title}>{s.title.replace(/^Видео:\s*/, "")}</span>
+                  <span className={`chip ${s.pinned ? "border-emerald-500/40 text-emerald-200" : s.attached ? "" : "border-violet-500/30 text-violet-200"}`}>
+                    {s.pinned ? "закреплено" : s.attached ? "подобрано" : "в тексте"}
+                  </span>
+                  {s.pinned && (
+                    <button className="btn-ghost px-2 py-1 text-xs" disabled={!!busy} onClick={() => act(s.video, "reset")}>Открепить</button>
+                  )}
+                  <button className="btn-ghost px-2 py-1 text-xs text-rose-200" disabled={!!busy} onClick={() => act(s.video, "block")}>
+                    {busy === `${s.video}:block` ? <Spinner className="h-3 w-3" /> : <X className="h-3 w-3" />} Убрать
+                  </button>
+                </div>
+              ))}
+            </div>
+            {d?.blocks?.length > 0 && (
+              <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-zinc-500">
+                Скрыто:
+                {d.blocks.map((b) => (
+                  <button key={b.video} className="chip hover:text-white" title="Вернуть" onClick={() => act(b.video, "reset")}>
+                    {b.folder ? `${b.folder} / ` : ""}{b.title} ↺
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {!d ? (
+            <Spinner />
           ) : (
             <>
+              {/* подсказки по сходству */}
               <div>
-                Учебник <b className="text-zinc-200">{d.book}</b> · порог сходства <b className="text-zinc-200">{d.threshold}</b> ·
-                {" "}эмбеддинги {d.embedding ? "работают" : <span className="text-rose-300">недоступны — подбор только по словам</span>}
-                <div className="mt-1 font-mono text-[11px] text-zinc-500">запрос: {d.query}</div>
-              </div>
-              <div>
-                <div className="mb-1 font-semibold text-zinc-300">Видео этого учебника: {d.videos.length}</div>
-                {d.videos.length === 0 && <div className="text-amber-300">Ни одно видео не привязано к учебнику — выберите учебник в Настройках → «Видеотека учебника».</div>}
-                {d.videos.slice(0, 30).map((v) => (
-                  <div key={v.id} className="flex gap-2">
-                    <span className="min-w-0 flex-1 truncate">{v.folder ? `${v.folder} / ` : ""}{v.title}</span>
-                    <span className={v.status === "done" ? "text-emerald-300" : "text-amber-300"}>{VSTATUS[v.status] || v.status}</span>
-                    <span className={v.chunks && v.embedded < v.chunks ? "text-amber-300" : ""}>векторов {v.embedded}/{v.chunks}</span>
+                <div className="mb-2 flex items-baseline justify-between gap-2">
+                  <div className="text-xs font-semibold uppercase tracking-widest text-zinc-500">Похожие видео учебника</div>
+                  <div className="text-[11px] text-zinc-500">
+                    порог {d.threshold}
+                    {!d.embedding && <span className="text-amber-300"> · эмбеддинги недоступны, подбор по словам</span>}
                   </div>
-                ))}
+                </div>
+                {d.suggestions.length === 0 && <div className="text-xs text-zinc-500">Нет расшифрованных видео этого учебника.</div>}
+                <div className="space-y-1.5">
+                  {d.suggestions.map((c) => (
+                    <div key={c.video} className={`rounded-lg border px-3 py-2 ${c.passed ? "border-white/[0.08]" : "border-white/[0.04] opacity-75"}`}>
+                      <div className="flex items-center gap-2">
+                        <span className={`w-12 shrink-0 font-mono text-xs ${c.passed ? "text-emerald-300" : "text-zinc-500"}`} title={c.passed ? "проходит порог" : "ниже порога"}>
+                          {c.how === "words" ? "слова" : c.score.toFixed(2)}
+                        </span>
+                        <span className="min-w-0 flex-1 truncate text-zinc-200">{c.folder ? `${c.folder} / ` : ""}{c.title}</span>
+                        <span className="text-xs text-zinc-500">{c.section}</span>
+                        {c.pinned ? (
+                          <span className="chip border-emerald-500/40 text-emerald-200">закреплено</span>
+                        ) : (
+                          <button className="btn-ghost px-2 py-1 text-xs" disabled={!!busy} onClick={() => act(c.video, "pin", c.start)}>Прикрепить</button>
+                        )}
+                        <button className="btn-ghost px-2 py-1 text-xs" onClick={() => setPick(pick?.id === c.video ? null : { id: c.video, title: c.title })}>Момент…</button>
+                      </div>
+                      <div className="mt-1 line-clamp-2 pl-14 text-xs text-zinc-500">{c.text}</div>
+                      {pick?.id === c.video && <MomentPicker video={pick} onPick={(t) => act(c.video, "pin", t)} />}
+                    </div>
+                  ))}
+                </div>
               </div>
+
+              {/* вся видеотека */}
               <div>
-                <div className="mb-1 font-semibold text-zinc-300">Лучшие фрагменты</div>
-                {d.candidates.length === 0 && <div>Нет ни одного кандидата.</div>}
-                {d.candidates.map((c, i) => (
-                  <div key={i} className="mb-1.5">
-                    <span className={`mr-2 font-mono ${c.passed ? "text-emerald-300" : "text-zinc-500"}`}>{c.how === "words" ? "слова" : c.score.toFixed(3)}</span>
-                    <span className="text-zinc-200">{c.title}</span> <span className="text-zinc-500">{c.section}</span>
-                    <div className="truncate text-zinc-500">{c.text}</div>
-                  </div>
-                ))}
+                <div className="mb-2 text-xs font-semibold uppercase tracking-widest text-zinc-500">Добавить из видеотеки</div>
+                <div className="relative mb-2">
+                  <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
+                  <input className="input py-2 pl-8 text-xs" placeholder={`Поиск по ${d.library.length} видео: папка или название`} value={q} onChange={(e) => setQ(e.target.value)} />
+                </div>
+                <div className="max-h-64 space-y-1 overflow-y-auto pr-1">
+                  {lib.slice(0, 80).map((v) => (
+                    <div key={v.id}>
+                      <button
+                        className={`flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-xs hover:bg-white/[0.04] ${pick?.id === v.id ? "bg-white/[0.05]" : ""}`}
+                        onClick={() => setPick(pick?.id === v.id ? null : { id: v.id, title: v.title })}
+                      >
+                        <span className="min-w-0 flex-1 truncate text-zinc-300">{v.folder ? `${v.folder} / ` : ""}{v.title}</span>
+                        <span className="text-zinc-600">{v.book || "без учебника"}</span>
+                        <span className="w-12 text-right font-mono text-zinc-600">{fmtTime(v.duration)}</span>
+                      </button>
+                      {pick?.id === v.id && <MomentPicker video={pick} onPick={(t) => act(v.id, "pin", t)} />}
+                    </div>
+                  ))}
+                  {lib.length === 0 && <div className="text-xs text-zinc-500">Ничего не найдено</div>}
+                </div>
               </div>
             </>
           )}
+          <p className="text-[11px] leading-relaxed text-zinc-500">
+            Изменения видны сразу: закреплённые видео показываются в блоке «Видео по теме», убранные исчезают (их сноски в
+            тексте станут серыми). Чтобы модель процитировала закреплённое видео в тексте — «Сгенерировать заново».
+          </p>
         </div>
       )}
     </section>
+  );
+}
+
+/** Выбор момента видео: по расшифровке (поиск, клик по фразе) или вручную мм:сс. */
+function MomentPicker({ video, onPick }) {
+  const [segs, setSegs] = useState(null);
+  const [q, setQ] = useState("");
+  const [manual, setManual] = useState("0:00");
+  useEffect(() => {
+    api(`/api/videos/${video.id}/transcript`).then((r) => setSegs(r.segments || [])).catch(() => setSegs([]));
+  }, [video.id]);
+  const list = (segs || []).filter((s) => !q || s.text.toLowerCase().includes(q.toLowerCase()));
+  return (
+    <div className="my-2 ml-3 rounded-lg border border-white/[0.06] bg-ink-900/60 p-3 text-xs">
+      <div className="mb-2 flex flex-wrap items-center gap-2">
+        <input className="input w-56 py-1.5 text-xs" placeholder="Найти фразу в расшифровке" value={q} onChange={(e) => setQ(e.target.value)} />
+        <span className="text-zinc-500">или с момента</span>
+        <input className="input w-20 py-1.5 text-center font-mono text-xs" value={manual} onChange={(e) => setManual(e.target.value)} />
+        <button
+          className="btn-primary px-3 py-1.5 text-xs"
+          onClick={() => {
+            const t = parseTime(manual);
+            if (t != null) onPick(t);
+          }}
+        >
+          Закрепить
+        </button>
+      </div>
+      {!segs ? (
+        <Spinner className="h-4 w-4" />
+      ) : (
+        <div className="max-h-48 overflow-y-auto">
+          {list.slice(0, 200).map((s, i) => (
+            <button key={i} className="group flex w-full gap-2 rounded px-2 py-1 text-left hover:bg-white/[0.05]" onClick={() => onPick(s.start)} title="Закрепить с этого момента">
+              <span className="shrink-0 font-mono text-zinc-600 group-hover:text-emerald-300">{fmtTime(s.start)}</span>
+              <span className="text-zinc-300">{s.text}</span>
+            </button>
+          ))}
+          {list.length === 0 && <div className="text-zinc-500">Ничего не найдено</div>}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -571,6 +710,7 @@ function VideoEmbed({ src, compact = false }) {
       <figcaption className="flex items-center justify-between gap-3 px-4 py-2.5 text-xs text-zinc-400">
         <span className="min-w-0 truncate" title={label}>
           <span className="cite mr-1.5">{src.n}</span>
+          {src.pinned && <span className="mr-1.5 text-emerald-300" title="Закреплено администратором">📌</span>}
           {label}
         </span>
         <button

@@ -64,6 +64,13 @@ class AskIn(BaseModel):
     question: str
 
 
+class LessonVideoIn(BaseModel):
+    topic: str
+    video: str
+    action: str  # pin | block | reset
+    start: float = 0.0
+
+
 class ReadIn(BaseModel):
     topic: str
     read: bool = True
@@ -223,28 +230,40 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
     _attach_cache: dict[tuple, list[dict]] = {}
 
     def attach_videos(entry, deck, topic: str, cards: list, cached: dict) -> list[dict]:
-        """Видео, проиндексированные после написания статьи, — добавить к её источникам без перегенерации."""
+        """Источники сохранённой статьи с учётом видео: скрытые админом убираются, закреплённые
+        и найденные после написания статьи — добавляются (текст статьи не перегенерируется)."""
+        videos_lib = getattr(services, "videos", None)
         videos = [s for s in deck_sources(entry, deck) if s.startswith("vid:")]
-        if not videos:
+        links = videos_lib.links(book_key(entry), topic) if videos_lib else {"pin": [], "block": set()}
+        if not videos and not links["pin"]:
             return cached["sources"]
-        have = {s.get("source") for s in cached["sources"]}
-        key = (book_key(entry), topic, cached["created_at"], tuple(sorted(videos)))
+        pinned = {p["video"]: p["start"] for p in links["pin"]}
+        base = max((int(s.get("n", 0)) for s in cached["sources"]), default=0)
+        kept = []
+        for s in cached["sources"]:
+            vid = s.get("video")
+            if vid and (vid in links["block"] or (vid in pinned and int(s.get("start", 0)) != int(pinned[vid]))):
+                continue  # скрыто или закреплено с другого момента — ссылка [n] в тексте станет серой
+            kept.append(s | ({"pinned": True} if vid in pinned else {}))
+        have = {s.get("source") for s in kept}
+        key = (book_key(entry), topic, cached["created_at"], tuple(sorted(videos)), videos_lib.links_version if videos_lib else 0, min_sim())
         extra = _attach_cache.get(key)
         if extra is None:
             vq = article_query(entry, topic)
-            rows = related_videos(embed_query(vq), videos, exclude=have, query=vq)
+            rows = lesson_videos(entry, topic, embed_query(vq), videos, query=vq, exclude=have)
             _, extra = format_context(rows, [])
+            extra = [s | ({"pinned": True} if r.get("pinned") else {}) for s, r in zip(extra, rows)]
             if len(_attach_cache) > 2000:
                 _attach_cache.clear()
             _attach_cache[key] = extra
-        base = max((int(s.get("n", 0)) for s in cached["sources"]), default=0)
-        return cached["sources"] + [s | {"n": base + i + 1, "attached": True} for i, s in enumerate(extra)]
+        return kept + [s | {"n": base + i + 1, "attached": True} for i, s in enumerate(extra)]
 
     def article_prompt(entry, deck, topic: str, cards: list) -> tuple[str, str, list[dict], str]:
         sy = book_of(entry)
         chapter = sy.chapter_of(topic) if sy else None
         chunks, mode = retrieve(
-            article_query(entry, topic, cards), deck_sources(entry, deck), k=8, video_query=article_query(entry, topic)
+            article_query(entry, topic, cards), deck_sources(entry, deck), k=8, video_query=article_query(entry, topic),
+            lesson=(entry, topic),
         )
         ctx_text, sources = format_context(
             chunks, [{"question": c.question, "reference": c.reference} for c in cards]
@@ -337,6 +356,68 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             ],
         }
 
+    @r.get("/api/textbook/{deck_id}/lesson-videos")
+    def lesson_videos_get(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:
+        """Админ: закреплённые/скрытые видео урока, подсказки со сходством и вся видеотека для ручного выбора."""
+        if not ctx.user.is_admin:
+            raise HTTPException(403, "Только для администратора")
+        entry, deck = deck_and_entry(deck_id)
+        lib = getattr(services, "videos", None)
+        if lib is None:
+            return {"enabled": False}
+        sy = book_of(entry)
+        key = book_key(entry)
+        links = lib.links(key, topic)
+        library = lib.library()
+        by_id = {v["id"]: v for v in library}
+        srcs = lib.sources_for_book(sy.id) if sy else []
+        query = article_query(entry, topic)
+        qvec = embed_query(query)
+        cands = video_candidates(qvec, query, srcs, 12)
+        rows = {r["id"]: r for r in services.knowledge.get_chunks([cid for _, cid, _ in cands])}
+        thr = min_sim()
+        suggestions, seen = [], set()
+        for s, cid, how in sorted(cands, reverse=True):
+            row = rows.get(cid)
+            if not row or row["source"] in seen:
+                continue
+            seen.add(row["source"])
+            vid = row["source"][4:]
+            m = re.search(r"#t=(\d+)", row["url"])
+            suggestions.append({
+                "video": vid, "title": by_id.get(vid, {}).get("title", row["title"]), "folder": by_id.get(vid, {}).get("folder", ""),
+                "start": int(m[1]) if m else 0, "section": row["section"], "text": row["text"][:220],
+                "score": round(s, 3), "how": how, "passed": how == "words" or s >= thr,
+                "pinned": vid in {p["video"] for p in links["pin"]}, "blocked": vid in links["block"],
+            })
+            if len(suggestions) >= 12:
+                break
+        return {
+            "enabled": True,
+            "book": sy.id if sy else None,
+            "threshold": thr,
+            "embedding": qvec is not None,
+            "pins": [p | {"title": by_id.get(p["video"], {}).get("title", p["video"]), "folder": by_id.get(p["video"], {}).get("folder", "")} for p in links["pin"]],
+            "blocks": [{"video": v, "title": by_id.get(v, {}).get("title", v), "folder": by_id.get(v, {}).get("folder", "")} for v in links["block"]],
+            "suggestions": suggestions,
+            "library": library,
+        }
+
+    @r.post("/api/textbook/{deck_id}/lesson-videos")
+    def lesson_videos_set(deck_id: str, body: LessonVideoIn, ctx: UserContext = Depends(current_ctx)) -> dict:
+        if not ctx.user.is_admin:
+            raise HTTPException(403, "Только для администратора")
+        if body.action not in ("pin", "block", "reset"):
+            raise HTTPException(400, "Неизвестное действие")
+        lib = getattr(services, "videos", None)
+        if lib is None or lib.get(body.video) is None:
+            raise HTTPException(404, "Видео не найдено")
+        entry = services.registry.get(deck_id)
+        if not entry:
+            raise HTTPException(404, "Колода не найдена")
+        lib.set_link(book_key(entry), body.topic.strip(), body.video, body.action, body.start)
+        return {"ok": True}
+
     @r.get("/api/textbook/{deck_id}/article")
     def get_article(deck_id: str, topic: str, ctx: UserContext = Depends(current_ctx)) -> dict:
         key = entry_key(deck_id)
@@ -411,20 +492,41 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
                 break
         return picked
 
-    def retrieve(query: str, sources: list[str], k: int, video_query: str = "") -> tuple[list[dict], str]:
+    def lesson_videos(entry, topic: str, qvec, video_sources: list[str], query: str = "", exclude: set[str] = frozenset()) -> list[dict]:
+        """Видео урока: сначала закреплённые админом (с выбранного момента), затем автоподбор без скрытых."""
+        lib = getattr(services, "videos", None)
+        links = lib.links(book_key(entry), topic) if lib else {"pin": [], "block": set()}
+        pinned_rows = []
+        for p in links["pin"]:
+            if f"vid:{p['video']}" in exclude:
+                continue
+            row = lib.chunk_at(p["video"], p["start"])
+            if row:
+                pinned_rows.append(row)
+        taken = set(exclude) | {r["source"] for r in pinned_rows} | {f"vid:{v}" for v in links["block"]}
+        auto_sources = [s for s in video_sources if s not in taken]
+        auto = related_videos(qvec, auto_sources, exclude=taken, k=max(0, VIDEO_K - len(pinned_rows)), query=query) if auto_sources else []
+        return pinned_rows + auto
+
+    def retrieve(query: str, sources: list[str], k: int, video_query: str = "", lesson: tuple | None = None) -> tuple[list[dict], str]:
         """Документация — гибридным поиском (k фрагментов), видео — отдельной квотой по порогу сходства.
 
         video_query — короткий запрос без образцов карточек: порог VIDEO_MIN_SIM откалиброван на нём.
         """
-        if not sources:
+        lib = getattr(services, "videos", None)
+        if not sources and not (lesson and lib and lib.links(book_key(lesson[0]), lesson[1])["pin"]):
             return [], "none"
         docs = [s for s in sources if not s.startswith("vid:")]
         videos = [s for s in sources if s.startswith("vid:")]
         qvec = embed_query(query)
         mode = "hybrid" if qvec is not None else "bm25"
         chunks = hybrid_search(services.knowledge, query, docs, qvec=qvec, k=k) if docs else []
+        lib = getattr(services, "videos", None)
+        has_pins = bool(lesson and lib and lib.links(book_key(lesson[0]), lesson[1])["pin"])
         vvec = embed_query(video_query) if video_query and videos else qvec
-        return chunks + related_videos(vvec, videos, query=video_query or query), mode
+        if lesson:
+            return chunks + lesson_videos(lesson[0], lesson[1], vvec, videos, query=video_query or query), mode
+        return chunks + (related_videos(vvec, videos, query=video_query or query) if videos or has_pins else []), mode
 
     def stream_answer(system: str, user_prompt: str, sources: list[dict], mode: str, on_done=None) -> Iterator[str]:
         yield _ndjson({"type": "sources", "sources": sources, "retrieval": mode, "model": services.textbook_model()})
@@ -484,7 +586,8 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
         if not question:
             raise HTTPException(400, "Пустой вопрос")
         topic = body.topic.strip()
-        chunks, mode = retrieve(f"{topic}. {question}", deck_sources(entry, deck), k=6, video_query=question)
+        chunks, mode = retrieve(f"{topic}. {question}", deck_sources(entry, deck), k=6, video_query=question,
+                                lesson=(entry, topic) if topic else None)
         cards = (lesson_cards(entry, deck, topic) or []) if topic else []
         ctx_text, sources = format_context(chunks, [{"question": c.question, "reference": c.reference} for c in cards], card_limit=8)
         user_prompt = f"Колода: {entry.name}\nТема: {topic or '—'}\n\n{ctx_text}\n\nВОПРОС: {question}"

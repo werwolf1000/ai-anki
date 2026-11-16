@@ -439,6 +439,13 @@ class KnowledgeStore:
         scored.sort(reverse=True)
         return scored[:limit]
 
+    def source_chunks(self, source_id: str) -> list[dict]:
+        with self._lock:
+            rows = self._db.execute(
+                "SELECT id, source, page, url, title, section, text FROM chunks WHERE source = ? ORDER BY ord", (source_id,)
+            ).fetchall()
+        return [dict(r) for r in rows]
+
     def get_chunks(self, ids: list[int]) -> list[dict]:
         if not ids:
             return []

@@ -154,6 +154,7 @@ export default function VideoLibrary() {
       )}
 
       <ProgressCard progress={st.progress} />
+      <ThresholdCard value={st.min_sim} onSaved={load} />
 
       <div className="mb-4 grid gap-2 text-xs sm:grid-cols-2">
         {st.roots.map((r) => <RootCard key={r.path} r={r} />)}
@@ -250,6 +251,72 @@ export default function VideoLibrary() {
         document.body,
       )}
     </motion.section>
+  );
+}
+
+const DEFAULT_SIM = 0.45;
+
+/** Порог сходства «урок ↔ видео»: ниже — больше видео в статьях, выше — только точные совпадения. */
+function ThresholdCard({ value, onSaved }) {
+  const toast = useToast();
+  const saved = Number(value) || DEFAULT_SIM;
+  const [v, setV] = useState(saved);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => setV(saved), [saved]);
+  const label = v >= 0.6 ? "только очень точные совпадения" : v >= 0.5 ? "строго" : v >= 0.42 ? "сбалансированно" : v >= 0.35 ? "мягко — возможны лишние видео" : "очень мягко — много лишних";
+
+  async function save(next) {
+    setBusy(true);
+    try {
+      await api("/api/config", { method: "POST", body: { video_min_sim: next == null ? "" : String(next) } });
+      toast(next == null ? "Порог сброшен на 0.45" : `Порог сходства: ${next}`, "success");
+      onSaved();
+    } catch (e) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="mb-4 rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div>
+          <div className="text-sm font-semibold">Насколько видео должно совпадать с уроком</div>
+          <div className="text-xs text-zinc-500">
+            Косинусное сходство расшифровки с темой урока. Своя тема обычно даёт 0.6–0.8, соседние — до 0.48.
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="font-mono text-xl font-bold tabular-nums text-white">{v.toFixed(2)}</div>
+          <div className="text-[11px] text-zinc-400">{label}</div>
+        </div>
+      </div>
+      <div className="mt-3 flex items-center gap-3">
+        <span className="text-[11px] text-zinc-500">больше видео</span>
+        <input
+          type="range"
+          min="0.25"
+          max="0.8"
+          step="0.01"
+          value={v}
+          onChange={(e) => setV(Number(e.target.value))}
+          className="h-1.5 flex-1 cursor-pointer accent-violet-400"
+        />
+        <span className="text-[11px] text-zinc-500">точнее</span>
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <button className="btn-primary px-3 py-1.5 text-xs" disabled={busy || Math.abs(v - saved) < 0.001} onClick={() => save(Number(v.toFixed(2)))}>
+          {busy ? <Spinner className="h-3.5 w-3.5" /> : null} Применить
+        </button>
+        {Math.abs(saved - DEFAULT_SIM) > 0.001 && (
+          <button className="btn-ghost px-3 py-1.5 text-xs" disabled={busy} onClick={() => save(null)}>Сбросить (0.45)</button>
+        )}
+        <span className="text-[11px] text-zinc-500">
+          Действует сразу при открытии статей; ручной выбор видео в уроке («Видео урока» под статьёй) важнее порога.
+        </span>
+      </div>
+    </div>
   );
 }
 
