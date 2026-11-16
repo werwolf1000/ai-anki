@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { BookOpenText, Play, Search } from "lucide-react";
@@ -6,7 +6,7 @@ import { api } from "../lib/api";
 import { kindOf, MODES } from "../lib/decks";
 import { Modal, Ring, Spinner, useToast } from "./ui";
 
-export default function StartModal({ deck, onClose, onStart, onRead }) {
+export default function StartModal({ deck, onClose, onStart, onRead, initialTopic = "", onTopic }) {
   const toast = useToast();
   const [mode, setMode] = useState("due");
   const [topics, setTopics] = useState(null);
@@ -17,7 +17,7 @@ export default function StartModal({ deck, onClose, onStart, onRead }) {
 
   useEffect(() => {
     setMode("due");
-    setTopic("");
+    setTopic(initialTopic);
     setQuery("");
     setTopics(null);
     if (deck?.has_topics) {
@@ -25,7 +25,13 @@ export default function StartModal({ deck, onClose, onStart, onRead }) {
         .then((r) => setTopics(r.topics))
         .catch(() => setTopics([]));
     }
-  }, [deck]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deck?.deck_id]);
+
+  const pickTopic = (t) => {
+    setTopic(t);
+    onTopic?.(t);
+  };
 
   async function start() {
     setBusy(true);
@@ -48,7 +54,15 @@ export default function StartModal({ deck, onClose, onStart, onRead }) {
   if (!deck) return <Modal open={false} />;
   const k = kindOf(deck);
   const counts = { due: deck.due, new: deck.new, weak: deck.weak, all: deck.total };
-  const shownTopics = (topics || []).filter((t) => t.name.toLowerCase().includes(query.toLowerCase()));
+  const q = query.toLowerCase();
+  const shownTopics = (topics || []).filter((t) => t.name.toLowerCase().includes(q) || (t.chapter || "").toLowerCase().includes(q));
+  // темы колоды учебника — по главам, в порядке программы
+  const groups = [];
+  for (const t of shownTopics) {
+    const last = groups[groups.length - 1];
+    if (!last || last.chapter !== (t.chapter || "")) groups.push({ chapter: t.chapter || "", items: [t] });
+    else last.items.push(t);
+  }
 
   return (
     <Modal open={!!deck} onClose={onClose} width="max-w-2xl">
@@ -100,17 +114,25 @@ export default function StartModal({ deck, onClose, onStart, onRead }) {
             {topics === null ? (
               <div className="flex justify-center py-6"><Spinner /></div>
             ) : (
-              <div ref={listRef} className="grid max-h-64 grid-cols-1 gap-2 overflow-y-auto pr-1 sm:grid-cols-2">
-                <TopicButton active={!topic} onClick={() => setTopic("")} name="Все темы" sub={`${topics.length} тем`} />
-                {shownTopics.map((t) => (
-                  <TopicButton
-                    key={t.name}
-                    active={topic === t.name}
-                    onClick={() => setTopic(t.name)}
-                    name={t.name}
-                    sub={`${t.total} · повтор ${t.due} · новые ${t.new}${t.weak ? ` · слабые ${t.weak}` : ""}`}
-                  />
-                ))}
+              <div ref={listRef} className="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-1 sm:grid-cols-2">
+                <TopicButton active={!topic} onClick={() => pickTopic("")} name="Все темы" sub={`${topics.length} тем`} />
+                {groups.map((g) => [
+                  g.chapter && (
+                    <div key={`ch-${g.chapter}`} className="pt-2 text-[11px] font-semibold uppercase tracking-wider text-zinc-500 sm:col-span-2">
+                      {g.chapter}
+                    </div>
+                  ),
+                  ...g.items.map((t) => (
+                    <TopicButton
+                      key={t.name}
+                      active={topic === t.name}
+                      onClick={() => pickTopic(t.name)}
+                      onRead={onRead ? () => onRead(deck.deck_id, t.name) : null}
+                      name={t.name}
+                      sub={`${t.total} · повтор ${t.due} · новые ${t.new}${t.weak ? ` · слабые ${t.weak}` : ""}`}
+                    />
+                  )),
+                ])}
               </div>
             )}
           </div>
@@ -132,14 +154,29 @@ export default function StartModal({ deck, onClose, onStart, onRead }) {
   );
 }
 
-function TopicButton({ active, onClick, name, sub }) {
+function TopicButton({ active, onClick, onRead, name, sub }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (active) ref.current?.scrollIntoView({ block: "nearest" }); // тема из ссылки — сразу на виду
+  }, [active]);
   return (
-    <button
-      onClick={onClick}
-      className={`rounded-xl border px-3 py-2.5 text-left transition-colors ${active ? "border-violet-500/50 bg-violet-500/15" : "border-white/[0.06] bg-white/[0.02] hover:border-white/15"}`}
+    <div
+      ref={ref}
+      className={`group relative rounded-xl border transition-colors ${active ? "border-violet-500/50 bg-violet-500/15" : "border-white/[0.06] bg-white/[0.02] hover:border-white/15"}`}
     >
-      <div className="truncate text-sm font-medium">{name}</div>
-      <div className="truncate text-[11px] text-zinc-500">{sub}</div>
-    </button>
+      <button onClick={onClick} className="w-full px-3 py-2.5 pr-9 text-left" title={name}>
+        <div className="truncate text-sm font-medium">{name}</div>
+        <div className="truncate text-[11px] text-zinc-500">{sub}</div>
+      </button>
+      {onRead && (
+        <button
+          onClick={onRead}
+          title="Открыть урок в учебнике"
+          className="absolute right-2 top-2 rounded-md p-1 text-zinc-500 opacity-60 hover:bg-white/[0.08] hover:text-violet-200 group-hover:opacity-100"
+        >
+          <BookOpenText className="h-3.5 w-3.5" />
+        </button>
+      )}
+    </div>
   );
 }

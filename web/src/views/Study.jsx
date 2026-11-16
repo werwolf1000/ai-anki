@@ -2,7 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
-  ArrowLeft, ArrowRight, CheckCircle2, CornerDownLeft, HelpCircle, ImageOff, Lightbulb, Pencil, RotateCcw, Send, Trophy, XCircle,
+  ArrowLeft, ArrowRight, BookOpenText, CheckCircle2, CornerDownLeft, HelpCircle, ImageOff, Lightbulb, Pencil, RotateCcw, Send, Trophy, XCircle,
 } from "lucide-react";
 import { api, serverUrl } from "../lib/api";
 import { kindOf, modeLabel, plural } from "../lib/decks";
@@ -27,7 +27,7 @@ function initialAnswer(card) {
   return "";
 }
 
-export default function Study({ session, config, onExit }) {
+export default function Study({ session, config, onExit, onRead }) {
   const toast = useToast();
   const [sid, setSid] = useState(session.session_id);
   const [deckName, setDeckName] = useState(session.deck_name);
@@ -170,6 +170,15 @@ export default function Study({ session, config, onExit }) {
               {modeLabel(session.mode)} · карточка {done ? stats.initial : position} из {stats.initial || stats.queue}
             </div>
           </div>
+          {onRead && card?.topic && (
+            <button
+              className="btn-ghost px-3 text-xs"
+              onClick={() => onRead(session.deck_id, card.topic)}
+              title={`Открыть урок «${card.topic}» в учебнике`}
+            >
+              <BookOpenText className="h-4 w-4" /> <span className="hidden lg:inline">Урок</span>
+            </button>
+          )}
           <div className="hidden items-center gap-4 text-xs text-zinc-400 md:flex">
             <span>Ответов <b className="text-zinc-100">{stats.answered}</b></span>
             <span>Зачтено <b className="text-emerald-300">{stats.passed}</b></span>

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import {
   BookMarked, BookOpenText, Check, ChevronDown, ExternalLink, GraduationCap, Library, MessageCircleQuestion,
-  PlayCircle, RefreshCw, Search, Send, Sparkles, X,
+  ArrowDown, ArrowUp, Code2, Layers, Pencil, PlayCircle, Plus, RefreshCw, Search, Send, Sparkles, Trash2, X,
 } from "lucide-react";
 import { api, apiStream } from "../lib/api";
 import { kindOf } from "../lib/decks";
@@ -11,40 +11,68 @@ import { extractHeadings, RichText } from "../lib/richtext";
 import { EmptyState, Spinner, useToast } from "../components/ui";
 import { fmtTime, videoFileUrl } from "../components/VideoLibrary";
 
-export default function Textbook({ user, decks, initial, onStart }) {
+export default function Textbook({ user, decks, reloadDecks, onStart, route = {}, navigate }) {
   const toast = useToast();
   const usable = useMemo(() => (decks || []).filter((d) => !d.error), [decks]);
-  const [deckId, setDeckId] = useState(initial?.deckId || null);
   const [book, setBook] = useState(null); // /api/textbook/{deck}
-  const [topic, setTopic] = useState(initial?.topic || "");
   const [query, setQuery] = useState("");
+  const [editing, setEditing] = useState(false);
   const [topicsRef] = useAutoAnimate({ duration: 200 });
 
-  useEffect(() => {
-    if (!deckId && usable.length) {
-      const php = usable.find((d) => /^php/i.test(d.name) && d.kind !== "live") || usable.find((d) => d.language === "php" && d.kind !== "live");
-      setDeckId((php || usable[0]).deck_id);
+  // учебники: по одному на программу (колода «вопросы» учебника) + колоды без программы
+  const options = useMemo(() => {
+    const out = [];
+    const seen = new Set();
+    for (const d of usable) {
+      if (d.book) {
+        if (seen.has(d.book)) continue;
+        seen.add(d.book);
+        const pick =
+          usable.find((x) => x.book === d.book && x.book_deck && x.kind !== "live") || usable.find((x) => x.book === d.book && x.kind !== "live") || d;
+        out.push({ key: `b:${d.book}`, book: d.book, title: d.book_title || pick.name, deck: pick });
+      } else if (d.kind !== "live") {
+        out.push({ key: `d:${d.deck_id}`, book: "", title: d.name, deck: d });
+      }
     }
-  }, [deckId, usable]);
+    return out.sort((a, b) => a.title.localeCompare(b.title, "ru"));
+  }, [usable]);
+
+  const current = route.book
+    ? options.find((o) => o.book === route.book)
+    : route.deck
+      ? options.find((o) => o.deck.deck_id === route.deck) ||
+        (() => {
+          const d = usable.find((x) => x.deck_id === route.deck);
+          return d ? { key: `d:${d.deck_id}`, book: d.book || "", title: d.name, deck: d } : null;
+        })()
+      : null;
+  const deckId = current?.deck.deck_id || null;
+  const topic = route.lesson || "";
+  const place = useCallback(
+    (o) => (o?.book ? { view: "textbook", book: o.book } : { view: "textbook", deck: o?.deck.deck_id }),
+    [],
+  );
+  const setTopic = useCallback((t, opts) => navigate({ ...place(current), ...(t ? { lesson: t } : {}) }, opts), [navigate, place, current]);
+
+  // учебник по умолчанию — PHP (или первый)
+  useEffect(() => {
+    if (current || !options.length) return;
+    const def = options.find((o) => o.book === "php") || options[0];
+    navigate({ ...place(def), ...(route.lesson ? { lesson: route.lesson } : {}) }, { replace: true });
+  }, [current, options, navigate, place, route.lesson]);
 
   const loadBook = useCallback(() => {
-    if (!deckId) return;
-    api(`/api/textbook/${deckId}`)
+    if (!deckId) return Promise.resolve();
+    return api(`/api/textbook/${deckId}`)
       .then(setBook)
       .catch((e) => toast(e.message, "error"));
   }, [deckId, toast]);
 
   useEffect(() => {
     setBook(null);
+    setEditing(false);
     loadBook();
   }, [loadBook]);
-
-  useEffect(() => {
-    if (initial?.deckId) {
-      setDeckId(initial.deckId);
-      setTopic(initial.topic || "");
-    }
-  }, [initial]);
 
   const deck = usable.find((d) => d.deck_id === deckId);
   const q = query.trim().toLowerCase();
@@ -67,12 +95,12 @@ export default function Textbook({ user, decks, initial, onStart }) {
   const isOpen = (title) => !!q || chapters.length === 1 || (openChapters[title] ?? title === (currentChapter ?? chapters[0]?.title));
   const toggleChapter = (title) => setOpenChapters((o) => ({ ...o, [title]: !isOpen(title) }));
 
-  // переход из карточки: тема колоды → первый урок программы с этой темой
+  // переход из карточки/старой колоды: тема колоды → урок программы
   useEffect(() => {
     if (!book || !topic || book.topics.some((t) => t.name === topic)) return;
     const hit = book.topics.find((t) => t.card_topic === topic) || book.topics.find((t) => t.name.toLowerCase().includes(topic.toLowerCase()));
-    setTopic(hit ? hit.name : "");
-  }, [book, topic]);
+    setTopic(hit ? hit.name : "", { replace: true });
+  }, [book, topic, setTopic]);
 
   async function generateDeck() {
     try {
@@ -86,73 +114,118 @@ export default function Textbook({ user, decks, initial, onStart }) {
   const updateTopic = (name, patch) =>
     setBook((b) => b && { ...b, topics: b.topics.map((t) => (t.name === name ? { ...t, ...patch } : t)) });
 
+  const openDeck = (kind, lesson = topic) => {
+    const id = book?.decks?.[kind];
+    if (id) navigate({ view: "decks", deck: id, ...(lesson ? { topic: lesson } : {}) });
+  };
+  const totals = (book?.topics || []).reduce((a, t) => ({ qa: a.qa + (t.cards || 0), live: a.live + (t.live || 0) }), { qa: 0, live: 0 });
+
   return (
     <div className="space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="flex items-center gap-3 text-3xl font-extrabold tracking-tight">
-            Учебник
-          </h1>
-          <p className="text-sm text-zinc-400">Прочитайте тему перед карточками — статьи собраны из официальной документации и материалов колоды.</p>
+          <h1 className="flex items-center gap-3 text-3xl font-extrabold tracking-tight">Учебник</h1>
+          <p className="text-sm text-zinc-400">Прочитайте урок перед карточками — у каждого урока свои вопросы{book?.book?.is_code ? " и задания live-coding" : ""}.</p>
         </div>
-        <DeckPicker decks={usable} value={deckId} onChange={(id) => { setDeckId(id); setTopic(""); }} />
+        <div className="flex flex-wrap items-center gap-2">
+          {book?.decks?.qa && (
+            <button className="btn-ghost" onClick={() => openDeck("qa", "")} title="Колода вопросов этого учебника">
+              <Layers className="h-4 w-4" /> Вопросы <span className="text-zinc-500">{totals.qa}</span>
+            </button>
+          )}
+          {book?.decks?.live && (
+            <button className="btn-ghost" onClick={() => openDeck("live", "")} title="Колода live-coding этого учебника">
+              <Code2 className="h-4 w-4" /> Live-coding <span className="text-zinc-500">{totals.live}</span>
+            </button>
+          )}
+          <BookPicker options={options} value={current?.key} onChange={(o) => navigate(place(o))} />
+        </div>
       </header>
 
-      <div className="grid gap-5 lg:grid-cols-[290px_minmax(0,1fr)]">
-        {/* темы */}
+      <div className="grid gap-5 lg:grid-cols-[310px_minmax(0,1fr)]">
+        {/* программа */}
         <aside className="glass h-fit p-4 lg:sticky lg:top-6">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="text-sm font-semibold">{book?.book ? `Программа: ${book.book.title}` : "Темы"}</div>
-            {book && <div className="text-xs text-zinc-500">прочитано {readCount}/{book.topics.length}</div>}
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <div className="min-w-0 truncate text-sm font-semibold">{book?.book ? `Программа: ${book.book.title}` : "Темы"}</div>
+            {user.is_admin && book?.book ? (
+              <button
+                className={`shrink-0 rounded-lg px-2 py-1 text-[11px] ${editing ? "bg-violet-500/20 text-violet-100" : "text-zinc-400 hover:bg-white/[0.06] hover:text-white"}`}
+                onClick={() => setEditing((e) => !e)}
+                title="Добавить, переименовать, удалить главы и уроки"
+              >
+                <Pencil className="mr-1 inline h-3 w-3" />
+                {editing ? "Готово" : "Править"}
+              </button>
+            ) : (
+              book && <div className="text-xs text-zinc-500">прочитано {readCount}/{book.topics.length}</div>
+            )}
           </div>
-          {book && book.topics.length > 0 && (
-            <div className="mb-3 h-1 overflow-hidden rounded-full bg-white/[0.06]">
-              <motion.div className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400" animate={{ width: `${(readCount / book.topics.length) * 100}%` }} />
-            </div>
-          )}
-          <div className="relative mb-3">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
-            <input className="input py-2 pl-8 text-xs" placeholder="Найти тему" value={query} onChange={(e) => setQuery(e.target.value)} />
-          </div>
-          {!book ? (
-            <div className="flex justify-center py-8"><Spinner /></div>
+          {editing && book?.book ? (
+            <SyllabusEditor
+              bookId={book.book.id}
+              current={topic}
+              onChanged={(renamed) => {
+                loadBook();
+                reloadDecks?.().catch?.(() => {});
+                if (renamed && renamed.from === topic) setTopic(renamed.to || "", { replace: true });
+              }}
+            />
           ) : (
-            <div ref={topicsRef} className="max-h-[65vh] space-y-1 overflow-y-auto pr-1">
-              {chapters.map((ch) => (
-                <div key={ch.title || "_"}>
-                  {ch.title && (
-                    <button
-                      onClick={() => toggleChapter(ch.title)}
-                      className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-400 hover:text-zinc-100"
-                    >
-                      <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isOpen(ch.title) ? "" : "-rotate-90"}`} />
-                      <span className="min-w-0 flex-1 truncate normal-case tracking-normal">{ch.title}</span>
-                      <span className="text-[10px] font-normal tabular-nums text-zinc-600">
-                        {ch.items.filter((t) => t.read_at).length}/{ch.items.length}
-                      </span>
-                    </button>
-                  )}
-                  {isOpen(ch.title) && ch.items.map((t) => (
-                <button
-                  key={t.name}
-                  onClick={() => setTopic(t.name)}
-                  title={t.name}
-                  className={`relative flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition-colors ${topic === t.name ? "text-white" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"}`}
-                >
-                  {topic === t.name && (
-                    <motion.span layoutId="tb-topic" className="absolute inset-0 rounded-xl border border-violet-500/30 bg-violet-500/15" transition={{ type: "spring", stiffness: 420, damping: 34 }} />
-                  )}
-                  <span className={`relative flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${t.read_at ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-white/15"}`}>
-                    {t.read_at && <Check className="h-3 w-3" />}
-                  </span>
-                  <span className="relative min-w-0 flex-1 truncate">{t.name}</span>
-                  {t.has_article && <Sparkles className="relative h-3.5 w-3.5 shrink-0 text-violet-300/70" title="Статья готова" />}
-                  <span className="relative text-[11px] tabular-nums text-zinc-600">{t.cards || ""}</span>
-                </button>
-              ))}
+            <>
+              {book && book.topics.length > 0 && (
+                <div className="mb-3 h-1 overflow-hidden rounded-full bg-white/[0.06]">
+                  <motion.div className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400" animate={{ width: `${(readCount / book.topics.length) * 100}%` }} />
                 </div>
-              ))}
-            </div>
+              )}
+              <div className="relative mb-3">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
+                <input className="input py-2 pl-8 text-xs" placeholder="Найти урок" value={query} onChange={(e) => setQuery(e.target.value)} />
+              </div>
+              {!book ? (
+                <div className="flex justify-center py-8"><Spinner /></div>
+              ) : (
+                <div ref={topicsRef} className="max-h-[62vh] space-y-1 overflow-y-auto pr-1">
+                  {chapters.map((ch) => (
+                    <div key={ch.title || "_"}>
+                      {ch.title && (
+                        <button
+                          onClick={() => toggleChapter(ch.title)}
+                          className="flex w-full items-center gap-2 rounded-lg px-2 py-2 text-left text-xs font-semibold uppercase tracking-wide text-zinc-400 hover:text-zinc-100"
+                        >
+                          <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform ${isOpen(ch.title) ? "" : "-rotate-90"}`} />
+                          <span className="min-w-0 flex-1 truncate normal-case tracking-normal">{ch.title}</span>
+                          <span className="text-[10px] font-normal tabular-nums text-zinc-600">
+                            {ch.items.filter((t) => t.read_at).length}/{ch.items.length}
+                          </span>
+                        </button>
+                      )}
+                      {isOpen(ch.title) &&
+                        ch.items.map((t) => (
+                          <button
+                            key={t.name}
+                            onClick={() => setTopic(t.name)}
+                            title={`${t.name}\n${t.cards || 0} вопросов${book.book?.is_code ? `, ${t.live || 0} live-coding` : ""}`}
+                            className={`relative flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm transition-colors ${topic === t.name ? "text-white" : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-100"}`}
+                          >
+                            {topic === t.name && (
+                              <span className="absolute inset-0 rounded-xl border border-violet-500/30 bg-violet-500/15" />
+                            )}
+                            <span className={`relative flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${t.read_at ? "border-emerald-400/60 bg-emerald-400/20 text-emerald-300" : "border-white/15"}`}>
+                              {t.read_at && <Check className="h-3 w-3" />}
+                            </span>
+                            <span className="relative min-w-0 flex-1 truncate">{t.name}</span>
+                            {t.has_article && <Sparkles className="relative h-3.5 w-3.5 shrink-0 text-violet-300/70" />}
+                            <span className={`relative text-[11px] tabular-nums ${t.cards ? "text-zinc-600" : "text-amber-400/70"}`}>
+                              {t.cards || 0}
+                              {book.book?.is_code ? `·${t.live || 0}` : ""}
+                            </span>
+                          </button>
+                        ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
           )}
           {book && (
             <div className="mt-4 border-t border-white/[0.06] pt-3 text-[11px] leading-relaxed text-zinc-500">
@@ -172,9 +245,10 @@ export default function Textbook({ user, decks, initial, onStart }) {
               {book.videos > 0 && (
                 <div className="mt-1.5"><PlayCircle className="mr-1 inline h-3 w-3" /> Видеоуроков в базе: {book.videos}</div>
               )}
+              {user.is_admin && book.book && <CardsPanel bookId={book.book.id} isCode={book.book.is_code} topics={book.topics} onDone={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }} />}
               {user.is_admin && book.topics.some((t) => !t.has_article) && (
-                <button className="btn-ghost mt-3 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
-                  <Sparkles className="h-3.5 w-3.5" /> Написать статьи для всех тем ({book.topics.filter((t) => !t.has_article).length})
+                <button className="btn-ghost mt-2 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
+                  <Sparkles className="h-3.5 w-3.5" /> Написать статьи для всех уроков ({book.topics.filter((t) => !t.has_article).length})
                 </button>
               )}
             </div>
@@ -183,12 +257,14 @@ export default function Textbook({ user, decks, initial, onStart }) {
 
         {/* статья */}
         <div className="min-w-0">
-          {!topic ? (
+          {topic && (!deckId || !book) ? (
+            <div className="glass flex justify-center py-16"><Spinner /></div>
+          ) : !topic ? (
             <div className="glass">
               <EmptyState
                 icon={<BookOpenText className="h-6 w-6" />}
                 title={book?.book ? "Выберите урок" : "Выберите тему"}
-                text="Статья будет сгенерирована по документации и карточкам темы, сохранится и откроется мгновенно в следующий раз."
+                text="Статья будет сгенерирована по документации и материалам урока, сохранится и откроется мгновенно в следующий раз."
               />
             </div>
           ) : (
@@ -198,10 +274,14 @@ export default function Textbook({ user, decks, initial, onStart }) {
               deck={deck}
               deckId={deckId}
               topic={topic}
+              bookInfo={book?.book}
+              bookDecks={book?.decks || {}}
               info={book?.topics.find((t) => t.name === topic)}
               onRead={(read_at) => updateTopic(topic, { read_at })}
               onWritten={() => updateTopic(topic, { has_article: true })}
               onStart={onStart}
+              onOpenDeck={openDeck}
+              onCardsChanged={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }}
             />
           )}
         </div>
@@ -210,21 +290,23 @@ export default function Textbook({ user, decks, initial, onStart }) {
   );
 }
 
-function DeckPicker({ decks, value, onChange }) {
+function BookPicker({ options, value, onChange }) {
   const [open, setOpen] = useState(false);
-  const current = decks.find((d) => d.deck_id === value);
-  const k = kindOf(current);
+  const [q, setQ] = useState("");
+  const current = options.find((o) => o.key === value);
+  const k = kindOf(current?.deck);
   useEffect(() => {
     if (!open) return;
     const close = () => setOpen(false);
     window.addEventListener("click", close);
     return () => window.removeEventListener("click", close);
   }, [open]);
+  const shown = options.filter((o) => o.title.toLowerCase().includes(q.toLowerCase()));
   return (
     <div className="relative" onClick={(e) => e.stopPropagation()}>
       <button className="btn-ghost min-w-[240px] justify-between" onClick={() => setOpen((o) => !o)}>
         <span className="flex items-center gap-2 truncate">
-          <k.icon className={`h-4 w-4 ${k.text}`} /> {current?.name || "Колода"}
+          <k.icon className={`h-4 w-4 ${k.text}`} /> {current?.title || "Учебник"}
         </span>
         <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
@@ -235,19 +317,20 @@ function DeckPicker({ decks, value, onChange }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="glass absolute right-0 z-30 mt-2 max-h-[60vh] w-72 overflow-y-auto bg-ink-850/95 p-1.5"
+            className="glass absolute right-0 z-30 mt-2 max-h-[60vh] w-80 overflow-y-auto bg-ink-850/95 p-1.5"
           >
-            {decks.map((d) => {
-              const dk = kindOf(d);
+            <input className="input mb-1.5 py-1.5 text-xs" placeholder="Найти учебник" value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
+            {shown.map((o) => {
+              const dk = kindOf(o.deck);
               return (
                 <button
-                  key={d.deck_id}
-                  onClick={() => { onChange(d.deck_id); setOpen(false); }}
-                  className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm ${d.deck_id === value ? "bg-white/[0.08] text-white" : "text-zinc-300 hover:bg-white/[0.05]"}`}
+                  key={o.key}
+                  onClick={() => { onChange(o); setOpen(false); }}
+                  className={`flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm ${o.key === value ? "bg-white/[0.08] text-white" : "text-zinc-300 hover:bg-white/[0.05]"}`}
                 >
                   <dk.icon className={`h-4 w-4 ${dk.text}`} />
-                  <span className="flex-1 truncate">{d.name}</span>
-                  {d.language === "php" && <span className="rounded bg-violet-500/20 px-1.5 text-[10px] font-semibold text-violet-200">docs</span>}
+                  <span className="flex-1 truncate">{o.title}</span>
+                  {!o.book && <span className="text-[10px] text-zinc-500">колода</span>}
                 </button>
               );
             })}
@@ -258,7 +341,210 @@ function DeckPicker({ decks, value, onChange }) {
   );
 }
 
-function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }) {
+/** Админ: правка программы — главы и уроки (добавить, переименовать, переставить, удалить). */
+function SyllabusEditor({ bookId, current, onChanged }) {
+  const toast = useToast();
+  const [b, setB] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [edit, setEdit] = useState(null); // {type, chapter, lesson, value}
+  const [listRef] = useAutoAnimate({ duration: 160 });
+
+  useEffect(() => {
+    api(`/api/books/${bookId}`).then(setB).catch((e) => toast(e.message, "error"));
+  }, [bookId, toast]);
+
+  async function run(body, renamed) {
+    setBusy(true);
+    try {
+      const r = await api(`/api/books/${bookId}/edit`, { method: "POST", body });
+      setB(r);
+      setEdit(null);
+      onChanged(renamed);
+    } catch (e) {
+      toast(e.message, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function submit() {
+    const v = (edit?.value || "").trim();
+    if (!v) return setEdit(null);
+    if (edit.type === "chapter.rename") run({ op: "chapter.rename", chapter: edit.chapter, title: v });
+    else if (edit.type === "chapter.add") run({ op: "chapter.add", title: v });
+    else if (edit.type === "lesson.rename") run({ op: "lesson.rename", lesson: edit.lesson, title: v }, { from: edit.lesson, to: v });
+    else if (edit.type === "lesson.add") run({ op: "lesson.add", chapter: edit.chapter, title: v });
+  }
+
+  const input = (
+    <input
+      autoFocus
+      className="input py-1 text-xs"
+      value={edit?.value || ""}
+      onChange={(e) => setEdit((x) => ({ ...x, value: e.target.value }))}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") submit();
+        if (e.key === "Escape") setEdit(null);
+      }}
+      onBlur={submit}
+      placeholder="Название"
+    />
+  );
+
+  if (!b) return <div className="flex justify-center py-8"><Spinner /></div>;
+  const iconBtn = "rounded p-1 text-zinc-500 hover:bg-white/[0.08] hover:text-white disabled:opacity-30";
+  return (
+    <div className="space-y-2 text-xs">
+      <div className="rounded-lg border border-violet-500/20 bg-violet-500/[0.06] p-2 text-[11px] leading-snug text-zinc-400">
+        Двойной клик или ✎ — переименовать. Переименование урока переносит его карточки, статью, видео и отметки;
+        удаление урока удаляет его карточки и статью.
+      </div>
+      <div ref={listRef} className="max-h-[60vh] space-y-2 overflow-y-auto pr-1">
+        {b.chapters.map((ch, ci) => (
+          <div key={ch.title} className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-1.5">
+            <div className="group flex items-center gap-1">
+              {edit?.type === "chapter.rename" && edit.chapter === ch.title ? (
+                input
+              ) : (
+                <span
+                  className="min-w-0 flex-1 truncate px-1 font-semibold text-zinc-200"
+                  onDoubleClick={() => setEdit({ type: "chapter.rename", chapter: ch.title, value: ch.title })}
+                  title={ch.title}
+                >
+                  {ch.title}
+                </span>
+              )}
+              <button className={iconBtn} disabled={busy || ci === 0} title="Выше" onClick={() => run({ op: "chapter.move", chapter: ch.title, delta: -1 })}><ArrowUp className="h-3 w-3" /></button>
+              <button className={iconBtn} disabled={busy || ci === b.chapters.length - 1} title="Ниже" onClick={() => run({ op: "chapter.move", chapter: ch.title, delta: 1 })}><ArrowDown className="h-3 w-3" /></button>
+              <button className={iconBtn} disabled={busy} title="Переименовать главу" onClick={() => setEdit({ type: "chapter.rename", chapter: ch.title, value: ch.title })}><Pencil className="h-3 w-3" /></button>
+              <button
+                className={`${iconBtn} hover:text-rose-300`}
+                disabled={busy}
+                title="Удалить главу"
+                onClick={() => {
+                  const n = ch.lessons.reduce((a, l) => a + l.qa + l.live, 0);
+                  if (confirm(`Удалить главу «${ch.title}» и все её уроки (${ch.lessons.length}) вместе с ${n} карточками и статьями?`))
+                    run({ op: "chapter.delete", chapter: ch.title }, ch.lessons.some((l) => l.title === current) ? { from: current, to: "" } : null);
+                }}
+              >
+                <Trash2 className="h-3 w-3" />
+              </button>
+            </div>
+            <div className="mt-1 space-y-0.5">
+              {ch.lessons.map((l, li) => (
+                <div key={l.title} className={`group flex items-center gap-1 rounded px-1 py-0.5 ${l.title === current ? "bg-violet-500/10" : "hover:bg-white/[0.03]"}`}>
+                  {edit?.type === "lesson.rename" && edit.lesson === l.title ? (
+                    input
+                  ) : (
+                    <span className="min-w-0 flex-1 truncate text-zinc-300" onDoubleClick={() => setEdit({ type: "lesson.rename", lesson: l.title, value: l.title })} title={l.title}>
+                      {l.title}
+                    </span>
+                  )}
+                  <span className={`shrink-0 tabular-nums text-[10px] ${l.qa ? "text-zinc-600" : "text-amber-400/80"}`}>{l.qa}{b.is_code ? `·${l.live}` : ""}</span>
+                  <span className="flex shrink-0 opacity-0 transition-opacity group-hover:opacity-100">
+                    <button className={iconBtn} disabled={busy || (ci === 0 && li === 0)} title="Выше" onClick={() => run({ op: "lesson.move", lesson: l.title, delta: -1 })}><ArrowUp className="h-3 w-3" /></button>
+                    <button className={iconBtn} disabled={busy || (ci === b.chapters.length - 1 && li === ch.lessons.length - 1)} title="Ниже" onClick={() => run({ op: "lesson.move", lesson: l.title, delta: 1 })}><ArrowDown className="h-3 w-3" /></button>
+                    <button className={iconBtn} disabled={busy} title="Переименовать" onClick={() => setEdit({ type: "lesson.rename", lesson: l.title, value: l.title })}><Pencil className="h-3 w-3" /></button>
+                    <button
+                      className={`${iconBtn} hover:text-rose-300`}
+                      disabled={busy}
+                      title="Удалить урок"
+                      onClick={() => {
+                        if (confirm(`Удалить урок «${l.title}»? Будут удалены ${l.qa + l.live} карточек урока и его статья.`))
+                          run({ op: "lesson.delete", lesson: l.title }, l.title === current ? { from: current, to: "" } : null);
+                      }}
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </button>
+                  </span>
+                </div>
+              ))}
+              {edit?.type === "lesson.add" && edit.chapter === ch.title ? (
+                <div className="px-1">{input}</div>
+              ) : (
+                <button className="w-full rounded px-1 py-1 text-left text-[11px] text-zinc-500 hover:bg-white/[0.04] hover:text-violet-200" disabled={busy} onClick={() => setEdit({ type: "lesson.add", chapter: ch.title, value: "" })}>
+                  <Plus className="mr-1 inline h-3 w-3" /> Урок
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+      {edit?.type === "chapter.add" ? (
+        input
+      ) : (
+        <button className="btn-ghost w-full justify-center py-1.5 text-xs" disabled={busy} onClick={() => setEdit({ type: "chapter.add", value: "" })}>
+          <Plus className="h-3.5 w-3.5" /> Глава
+        </button>
+      )}
+    </div>
+  );
+}
+
+/** Админ: карточки учебника — сколько есть, где не хватает, догенерация через Ollama. */
+function CardsPanel({ bookId, isCode, topics, onDone }) {
+  const toast = useToast();
+  const [job, setJob] = useState(null);
+  const thin = topics.filter((t) => (t.cards || 0) < 8 || (isCode && (t.live || 0) < 3)).length;
+  const wasRunning = useRef(false);
+
+  useEffect(() => {
+    let timer;
+    let alive = true;
+    const tick = () =>
+      api("/api/books-job")
+        .then((j) => {
+          if (!alive) return;
+          setJob(j);
+          if (wasRunning.current && !j.running) onDone();
+          wasRunning.current = j.running;
+          timer = setTimeout(tick, j.running ? 3000 : 20000);
+        })
+        .catch(() => {});
+    tick();
+    return () => {
+      alive = false;
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookId]);
+
+  async function start() {
+    try {
+      const r = await api("/api/books/generate", { method: "POST", body: { book: bookId } });
+      toast(r.queued ? `Уроков в очереди: ${r.queued}` : "Во всех уроках карточек достаточно", r.queued ? "success" : "info");
+      setJob(await api("/api/books-job"));
+      wasRunning.current = true;
+    } catch (e) {
+      toast(e.message, "error");
+    }
+  }
+
+  return (
+    <div className="mt-3 rounded-lg border border-white/[0.06] bg-white/[0.02] p-2.5">
+      <div className="flex items-center justify-between gap-2">
+        <span>Уроков с нехваткой карточек: <b className={thin ? "text-amber-300" : "text-emerald-300"}>{thin}</b></span>
+        {job?.running ? (
+          <button className="rounded px-2 py-1 text-[11px] text-rose-200 hover:bg-white/[0.06]" onClick={() => api("/api/books/generate/stop", { method: "POST" })}>Стоп</button>
+        ) : (
+          <button className="rounded px-2 py-1 text-[11px] text-violet-200 hover:bg-white/[0.06] disabled:opacity-40" disabled={!thin} onClick={start}>
+            <Sparkles className="mr-1 inline h-3 w-3" /> Догенерировать
+          </button>
+        )}
+      </div>
+      <div className="mt-1 text-[10px] text-zinc-600">норма на урок: 8 вопросов{isCode ? " и 3 live-coding" : ""}</div>
+      {job?.running && (
+        <div className="mt-1.5 text-violet-200">
+          {job.done}/{job.total} · {job.current}
+          <div className="text-zinc-500">+{job.added_qa} вопросов{isCode ? `, +${job.added_live} live-coding` : ""}</div>
+        </div>
+      )}
+      {!job?.running && job?.log?.length > 0 && <div className="mt-1.5 text-zinc-500">{job.log[job.log.length - 1]}</div>}
+    </div>
+  );
+}
+
+function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, onRead, onWritten, onStart, onOpenDeck, onCardsChanged }) {
   const toast = useToast();
   const [content, setContent] = useState("");
   const [sources, setSources] = useState([]);
@@ -338,18 +624,38 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status, readAt]);
 
-  async function practice() {
-    setStarting(true);
+  // колоды учебника: тема = урок; иначе — тема колоды, ближайшая к уроку
+  async function practice(kind = "qa") {
+    const target = bookDecks[kind] || (kind === "qa" ? deckId : null);
+    if (!target) return;
+    const cardTopic = bookDecks[kind] ? topic : info?.card_topic || undefined;
+    setStarting(kind);
     try {
-      const cardTopic = info?.card_topic || undefined;
-      let s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "due", topic: cardTopic } });
-      if (s.empty) s = await api("/api/session", { method: "POST", body: { deck_id: deckId, mode: "all", topic: cardTopic } });
-      if (s.empty) toast("В теме нет карточек", "info");
+      let s = await api("/api/session", { method: "POST", body: { deck_id: target, mode: "due", topic: cardTopic } });
+      if (s.empty) s = await api("/api/session", { method: "POST", body: { deck_id: target, mode: "all", topic: cardTopic } });
+      if (s.empty) toast(kind === "live" ? "В уроке пока нет заданий live-coding" : "В уроке пока нет карточек", "info");
       else onStart(s);
     } catch (e) {
       toast(e.message, "error");
     } finally {
       setStarting(false);
+    }
+  }
+
+  async function generateCards() {
+    try {
+      const r = await api("/api/books/generate", { method: "POST", body: { book: bookInfo.id, lesson: topic } });
+      toast(r.queued ? "Карточки урока генерируются в фоне — появятся через минуту-другую" : "Карточек урока уже достаточно", r.queued ? "success" : "info");
+      if (r.queued) {
+        const wait = async () => {
+          const j = await api("/api/books-job").catch(() => null);
+          if (j?.running) setTimeout(wait, 3000);
+          else onCardsChanged?.();
+        };
+        setTimeout(wait, 3000);
+      }
+    } catch (e) {
+      toast(e.message, "error");
     }
   }
 
@@ -393,7 +699,16 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
               </div>
               <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">{topic}</h2>
               <div className="mt-2 flex flex-wrap gap-2">
-                {info?.cards > 0 && <span className="chip">{info.cards} карточек</span>}
+                {info && (
+                  <button className="chip hover:text-white" onClick={() => onOpenDeck?.("qa", topic)} disabled={!bookDecks.qa} title="Открыть колоду на этом уроке">
+                    <Layers className="h-3 w-3" /> {info.cards || 0} вопросов
+                  </button>
+                )}
+                {bookInfo?.is_code && info && (
+                  <button className="chip hover:text-white" onClick={() => onOpenDeck?.("live", topic)} disabled={!bookDecks.live} title="Открыть live-coding на этом уроке">
+                    <Code2 className="h-3 w-3" /> {info.live || 0} live-coding
+                  </button>
+                )}
                 {sources.length > 0 && <span className="chip"><Library className="h-3 w-3" /> {sources.length} фрагм. документации</span>}
                 {meta.retrieval === "hybrid" && <span className="chip text-violet-200">поиск: смысловой + BM25</span>}
                 {readAt && <span className="chip border-emerald-500/30 text-emerald-300"><Check className="h-3 w-3" /> прочитано</span>}
@@ -403,9 +718,19 @@ function Article({ user, deck, deckId, topic, info, onRead, onWritten, onStart }
               <button className={`btn-ghost ${readAt ? "border-emerald-500/30 text-emerald-200" : ""}`} onClick={() => toggleRead()}>
                 <BookMarked className="h-4 w-4" /> {readAt ? "Прочитано" : "Отметить прочитанным"}
               </button>
-              <motion.button whileTap={{ scale: 0.97 }} className="btn-primary" onClick={practice} disabled={starting}>
-                {starting ? <Spinner /> : <GraduationCap className="h-4 w-4" />} Проверить себя
+              {bookInfo?.is_code && bookDecks.live && (
+                <button className="btn-ghost" onClick={() => practice("live")} disabled={!!starting || !info?.live}>
+                  {starting === "live" ? <Spinner /> : <Code2 className="h-4 w-4" />} Live-coding
+                </button>
+              )}
+              <motion.button whileTap={{ scale: 0.97 }} className="btn-primary" onClick={() => practice("qa")} disabled={!!starting || (bookDecks.qa && !info?.cards)}>
+                {starting === "qa" ? <Spinner /> : <GraduationCap className="h-4 w-4" />} Проверить себя
               </motion.button>
+              {user.is_admin && bookInfo && info && (info.cards < 8 || (bookInfo.is_code && info.live < 3)) && (
+                <button className="btn-ghost" onClick={generateCards} title="Догенерировать карточки этого урока через Ollama">
+                  <Sparkles className="h-4 w-4" /> Карточки
+                </button>
+              )}
             </div>
           </div>
 

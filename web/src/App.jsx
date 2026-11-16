@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BookOpenText, Briefcase, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
 import { api, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
 import { isDesktop } from "./lib/desktop";
+import { readRoute, writeRoute } from "./lib/route";
 import { Backdrop, Logo, Spinner, ToastProvider, useToast } from "./components/ui";
 import TitleBar from "./components/TitleBar";
 import AuthScreen from "./views/AuthScreen";
@@ -43,19 +44,47 @@ export default function App() {
 
 function Root() {
   const [user, setUser] = useState(undefined); // undefined — проверяем токен
-  const [view, setView] = useState("dashboard");
+  const [route, setRoute] = useState(readRoute); // параметры переходов — в адресной строке
   const [study, setStudy] = useState(null); // ответ /api/session
   const [config, setConfig] = useState(null);
   const [decks, setDecks] = useState(null);
-  const [bookTarget, setBookTarget] = useState(null);
-  const [openTrack, setOpenTrack] = useState(null);
   const [exam, setExam] = useState(null); // ответ /api/tracks/{id}/exam
   const [interview, setInterview] = useState(null);
   const toast = useToast();
-  const openTextbook = useCallback((deckId, topic = "") => {
-    setBookTarget({ deckId, topic, at: Date.now() });
-    setView("textbook");
+  const studyPushed = useRef(false);
+  const restoring = useRef(false);
+  const exiting = useRef(false); // вышли из занятия — ждём history.back(), сессию не восстанавливать
+
+  const VIEWS = ["dashboard", "tracks", "decks", "textbook", "settings", "study"];
+  const view = VIEWS.includes(route.view) ? (route.view === "study" ? "decks" : route.view) : "dashboard";
+
+  /** Перейти: next — полный набор параметров нового экрана. */
+  const navigate = useCallback((next, opts = {}) => {
+    writeRoute(next, opts);
+    setRoute(next);
   }, []);
+  const setView = useCallback((id) => navigate({ view: id }), [navigate]);
+  const openTrack = route.view === "tracks" ? route.track || null : null;
+  const setOpenTrack = useCallback((id) => navigate({ view: "tracks", track: id || "" }), [navigate]);
+
+  // «Назад»/«Вперёд» браузера
+  useEffect(() => {
+    const onPop = () => {
+      exiting.current = false;
+      setRoute(readRoute());
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  /** Учебник по колоде: колоды учебников открывают свой учебник (book), остальные — по deck. */
+  const openTextbook = useCallback(
+    (deckId, topic = "") => {
+      const d = (decks || []).find((x) => x.deck_id === deckId);
+      navigate(d?.book ? { view: "textbook", book: d.book, lesson: topic } : { view: "textbook", deck: deckId, lesson: topic });
+    },
+    [decks, navigate],
+  );
 
   const logout = useCallback(async () => {
     try {
@@ -93,13 +122,65 @@ function Root() {
     loadConfig().catch(() => {});
   }, [user, loadDecks, loadConfig]);
 
-  const startStudy = useCallback((session) => {
-    setStudy(session);
-  }, []);
+  const startStudy = useCallback(
+    (session) => {
+      setStudy(session);
+      studyPushed.current = true;
+      navigate({ view: "study", deck: session.deck_id, mode: session.mode, topic: session.topic || "", from: view });
+    },
+    [navigate, view],
+  );
   const exitStudy = useCallback(() => {
     setStudy(null);
     loadDecks().catch(() => {});
-  }, [loadDecks]);
+    if (studyPushed.current) {
+      studyPushed.current = false;
+      exiting.current = true;
+      window.history.back(); // вернуться туда, откуда начали (учебник, колоды, обзор…)
+    } else {
+      navigate({ view: route.from && route.from !== "study" ? route.from : "decks", deck: route.deck, topic: route.topic }, { replace: true });
+    }
+  }, [loadDecks, navigate, route]);
+  // из карточки — в урок учебника
+  const readFromStudy = useCallback(
+    (deckId, topic) => {
+      setStudy(null);
+      studyPushed.current = false;
+      loadDecks().catch(() => {});
+      const d = (decks || []).find((x) => x.deck_id === deckId);
+      navigate(d?.book ? { view: "textbook", book: d.book, lesson: topic } : { view: "textbook", deck: deckId, lesson: topic });
+    },
+    [decks, loadDecks, navigate],
+  );
+
+  // обновили страницу посреди занятия — начать сессию заново с теми же параметрами
+  useEffect(() => {
+    if (!user || route.view !== "study" || study || restoring.current || exiting.current || !route.deck) return;
+    restoring.current = true;
+    api("/api/session", { method: "POST", body: { deck_id: route.deck, mode: route.mode || "due", ...(route.topic ? { topic: route.topic } : {}) } })
+      .then((s) => {
+        if (s.empty) {
+          toast("В этой теме сейчас нет карточек для повторения", "info");
+          navigate({ view: "decks", deck: route.deck, topic: route.topic }, { replace: true });
+        } else setStudy(s);
+      })
+      .catch((e) => {
+        toast(e.message, "error");
+        navigate({ view: "decks" }, { replace: true });
+      })
+      .finally(() => {
+        restoring.current = false;
+      });
+  }, [user, route, study, navigate, toast]);
+
+  // «Назад» из занятия кнопкой браузера
+  useEffect(() => {
+    if (study && route.view !== "study") {
+      setStudy(null);
+      studyPushed.current = false;
+      loadDecks().catch(() => {});
+    }
+  }, [route.view, study, loadDecks]);
 
   const startExam = useCallback(
     async (track) => {
@@ -124,9 +205,9 @@ function Root() {
   const exitTrackMode = useCallback(() => {
     setExam(null);
     setInterview(null);
-    setView("tracks");
+    navigate({ view: "tracks", track: route.track || "" });
     loadDecks().catch(() => {});
-  }, [loadDecks]);
+  }, [loadDecks, navigate, route.track]);
 
   const subtitle = study ? study.deck_name : exam ? `Экзамен · ${exam.title}` : interview ? `Собеседование · ${interview.title}` : user ? NAV.find((n) => n.id === view)?.label : "";
 
@@ -161,7 +242,11 @@ function Root() {
               exit={{ opacity: 0, scale: 0.985 }}
               transition={{ duration: 0.3 }}
             >
-              <Study session={study} config={config} onExit={exitStudy} />
+              <Study session={study} config={config} onExit={exitStudy} onRead={readFromStudy} />
+            </motion.div>
+          ) : route.view === "study" && !exiting.current ? (
+            <motion.div key="restore" className="flex h-full items-center justify-center">
+              <Spinner className="h-6 w-6 text-violet-300" />
             </motion.div>
           ) : (
             <motion.div key="shell" className="flex h-full" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -188,8 +273,10 @@ function Root() {
                         setOpenTrack={setOpenTrack}
                       />
                     )}
-                    {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} onRead={openTextbook} />}
-                    {view === "textbook" && <Textbook user={user} decks={decks} initial={bookTarget} onStart={startStudy} />}
+                    {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} onRead={openTextbook} route={route} navigate={navigate} />}
+                    {view === "textbook" && (
+                      <Textbook user={user} decks={decks} reloadDecks={loadDecks} onStart={startStudy} route={route} navigate={navigate} />
+                    )}
                     {view === "settings" && <Settings user={user} setUser={setUser} config={config} setConfig={setConfig} onLogout={logout} />}
                   </motion.div>
                 </AnimatePresence>

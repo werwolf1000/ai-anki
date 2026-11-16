@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { AlertTriangle, Layers, RefreshCw, Search } from "lucide-react";
+import { AlertTriangle, BookOpenText, Layers, RefreshCw, Search } from "lucide-react";
 import { KINDS, kindOf } from "../lib/decks";
 import { EmptyState, Ring, Spinner } from "../components/ui";
 import StartModal from "../components/StartModal";
@@ -12,11 +12,13 @@ const SORTS = [
   { id: "progress", label: "По прогрессу" },
 ];
 
-export default function Decks({ decks, reload, onStart, onRead }) {
+export default function Decks({ decks, reload, onStart, onRead, route = {}, navigate }) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("all");
   const [sort, setSort] = useState("due");
-  const [picked, setPicked] = useState(null);
+  // открытая колода и тема — в адресной строке (?view=decks&deck=…&topic=…)
+  const picked = useMemo(() => (decks || []).find((d) => d.deck_id === route.deck && !d.error) || null, [decks, route.deck]);
+  const setPicked = (d) => navigate({ view: "decks", ...(d ? { deck: d.deck_id } : {}) });
   const [refreshing, setRefreshing] = useState(false);
   const [gridRef] = useAutoAnimate({ duration: 260 });
 
@@ -91,7 +93,14 @@ export default function Decks({ decks, reload, onStart, onRead }) {
         </div>
       )}
 
-      <StartModal deck={picked} onClose={() => setPicked(null)} onRead={(id, t) => { setPicked(null); onRead(id, t); }} onStart={(s) => { setPicked(null); setTimeout(() => onStart(s), 180); }} />
+      <StartModal
+        deck={picked}
+        initialTopic={route.topic || ""}
+        onTopic={(t) => navigate({ view: "decks", deck: picked?.deck_id, topic: t }, { replace: true })}
+        onClose={() => setPicked(null)}
+        onRead={(id, t) => onRead(id, t)}
+        onStart={(s) => setTimeout(() => onStart(s), 120)}
+      />
     </div>
   );
 }
@@ -129,6 +138,11 @@ function DeckCard({ deck: d, onOpen }) {
           <div className="text-xs text-zinc-400">
             {d.total} карточек{d.topics_count ? ` · ${d.topics_count} тем` : ""}
           </div>
+          {d.book_deck && (
+            <div className="mt-1.5 inline-flex items-center gap-1 rounded-md bg-white/[0.05] px-1.5 py-0.5 text-[10px] text-zinc-400">
+              <BookOpenText className="h-3 w-3" /> по учебнику{d.chapters ? ` · ${d.chapters} глав` : ""}
+            </div>
+          )}
         </div>
         <Ring value={pct} size={52} stroke={5} gradientId={`d-${d.deck_id}`}>
           <span className="text-xs font-semibold">{Math.round(pct * 100)}%</span>
