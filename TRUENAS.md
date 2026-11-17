@@ -45,7 +45,18 @@ cd /mnt/storage/web/ai-anki
 docker compose -f docker-compose.truenas.yml up -d --build
 ```
 
-## 2.1. Первый вход (версия 2.0 с аккаунтами)
+## 2.1. Подключить проектную практику Python/PHP
+
+Для существующей Custom App используйте полный
+[`docker-compose.truenas.practice.yml`](docker-compose.truenas.practice.yml):
+приложение, видеотека `/mnt/storage/media/curs` и отдельный worker для практикума.
+Сначала выполните на NAS `bash practice/prepare-truenas.sh` из каталога проекта,
+затем замените YAML **существующего** приложения в **Apps → anki → Edit**.
+Не запускайте второй Compose-стек поверх приложения, которым управляет TrueNAS.
+Секрет хранится в `.secrets/practice-worker.env`, в YAML его вставлять не требуется.
+Подробности и проверка запуска — в [руководстве по практике](docs/project-practice.md#truenas-apps-готовый-yaml-с-видеотекой).
+
+## 2.2. Первый вход (версия 2.0 с аккаунтами)
 
 1. Откройте сайт и **сразу зарегистрируйтесь** — первый аккаунт становится администратором
    и получает весь прежний прогресс из `data/progress.json`.

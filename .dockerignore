@@ -3,6 +3,7 @@
 web/dist
 desktop
 data
+.secrets
 docs
 **/__pycache__
 *.pyc

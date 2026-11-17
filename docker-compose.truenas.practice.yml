@@ -1,0 +1,38 @@
+# Paste this complete file into Apps -> anki -> Edit (Custom App YAML).
+# First run: bash /mnt/storage/web/ai-anki/practice/prepare-truenas.sh
+# Do not start a second Compose stack alongside the TrueNAS-managed app.
+services:
+  ai-anki:
+    build: /mnt/storage/web/ai-anki
+    image: ai-anki-web:latest
+    container_name: ai-anki
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - /mnt/storage/web/ai-anki/.secrets/practice-worker.env
+    environment:
+      AI_ANKI_DATA_DIR: /data
+      AI_ANKI_VIDEO_DIRS: /videos
+      AI_ANKI_VIDEO_SCAN_MINUTES: "30"
+      AI_ANKI_PRACTICE_WORKER: http://practice-worker:8091
+    volumes:
+      - /mnt/storage/web/ai-anki/data:/data
+      - /mnt/storage/web/ai-anki/decks:/app/decks:ro
+      - /mnt/storage/media/curs:/videos:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  practice-worker:
+    build:
+      context: /mnt/storage/web/ai-anki
+      dockerfile: practice/worker.Dockerfile
+    image: ai-anki-practice-worker:1
+    restart: unless-stopped
+    env_file:
+      - /mnt/storage/web/ai-anki/.secrets/practice-worker.env
+    environment:
+      AI_ANKI_PRACTICE_PARALLEL: "2"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # No host port. Only ai-anki accesses this service over the Compose network.

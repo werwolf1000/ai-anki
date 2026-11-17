@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 *.egg-info/
 data/
+.secrets/
 server/static/vendor/
 node_modules/
 web/dist/

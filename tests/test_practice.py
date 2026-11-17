@@ -239,8 +239,13 @@ class PracticeWorkerTest(unittest.TestCase):
     def test_success_requires_exit_code_and_expected_stage_marker(self):
         job, executor = self.execute_with_output(b'AI_ANKI_CHECK_OK:0\n')
         self.assertTrue(job.result['passed'])
-        copies = [c.args for c in executor.command.call_args_list if c.args[0] == 'cp']
-        self.assertEqual([c[-1] for c in copies], [job.container + ':/workspace', job.container + ':/checks'])
+        uploads = [c.args for c in executor.command.call_args_list if c.args[0] == 'exec' and '-i' in c.args]
+        self.assertEqual([c[3] for c in uploads], ['10001:10001', '0:0'])
+        for args, destination in zip(uploads, ('/workspace', '/checks')):
+            self.assertIn('-I', args)
+            self.assertIn("filter='data'", args[-1])
+            self.assertIn(repr(destination), args[-1])
+        self.assertFalse(any(c.args[0] == 'cp' for c in executor.command.call_args_list))
         for output, code in ((b'No checks executed', 0), (b'AI_ANKI_CHECK_OK:1\n', 0), (b'AI_ANKI_CHECK_OK:0\n', 1)):
             job, _ = self.execute_with_output(output, code)
             self.assertFalse(job.result['passed'])

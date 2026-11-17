@@ -118,8 +118,14 @@ class DockerExecutor:
             if job.cancelled.is_set():
                 return
             self.command(*self.run_command(job))
-            self.command('cp', '-a', '-', job.container + ':/workspace', input=archive_for(job.spec))
-            self.command('cp', '-a', '-', job.container + ':/checks', input=archive_for(job.spec, checks=True))
+            # Docker cp rejects a read-only rootfs even for writable tmpfs mounts.
+            # Unpack our validated, regular-file-only archives inside those mounts.
+            # Isolated Python ignores student modules; learner code has not started.
+            for checks, uid, destination in ((False, '10001:10001', '/workspace'), (True, '0:0', '/checks')):
+                unpack = ("import sys,tarfile; tarfile.open(fileobj=sys.stdin.buffer,mode='r|')"
+                          f".extractall({destination!r},filter='data')")
+                self.command('exec', '-i', '--user', uid, job.container, 'python', '-I', '-c', unpack,
+                             input=archive_for(job.spec, checks=checks))
             if job.cancelled.is_set():
                 return
             php = job.spec.runtime == 'php'

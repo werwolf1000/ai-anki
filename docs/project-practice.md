@@ -77,9 +77,52 @@ docker compose -f docker-compose.yml -f docker-compose.practice.yml exec ai-anki
 стартовый проект должен показать обычную ошибку `TODO`/`NotImplementedError`,
 а не ошибку отсутствующего Docker-образа.
 
-На TrueNAS замените первый compose-файл на `docker-compose.truenas.yml` и
-выполняйте команды из каталога клона репозитория. Overlay использует этот
-каталог как build context для worker и runtime-образов.
+### TrueNAS Apps: готовый YAML с видеотекой
+
+Для приложения, которым управляет **TrueNAS Apps**, используйте отдельный полный
+файл [`docker-compose.truenas.practice.yml`](../docker-compose.truenas.practice.yml).
+Он сохраняет `/mnt/storage/media/curs:/videos:ro`, сканирование раз в 30 минут,
+порт 8080 и существующие каталоги данных/колод. Все build context и env_file
+заданы абсолютными путями: TrueNAS хранит свой Compose вне каталога репозитория.
+
+1. После обновления файлов проекта подключитесь к серверу и подготовьте окружения:
+
+   ```bash
+   ssh truenas_admin@192.168.1.135
+   cd /mnt/storage/web/ai-anki
+   bash practice/prepare-truenas.sh
+   ```
+
+   Скрипт создаёт `.secrets/practice-worker.env` с правами 600, сохраняя существующий
+   ключ при повторном запуске. Он собирает worker и три runtime-образа, проверяет
+   Compose и не перезапускает приложение. Секрет не выводится в терминал.
+   Каталог `.secrets/` исключён из Git и Docker build context; сохраните его
+   отдельно вместе с резервной копией конфигурации развёртывания.
+
+2. В **Apps → anki → Edit** замените YAML следующим и сохраните настройки:
+
+   ```yaml
+   include:
+     - /mnt/storage/web/ai-anki/docker-compose.truenas.practice.yml
+   ```
+
+   TrueNAS поддерживает [подключение внешнего Compose через include](https://apps.truenas.com/managing-apps/installing-custom-apps/).
+   Можно также вставить полное содержимое `docker-compose.truenas.practice.yml`.
+   Это обновляет существующее приложение; не создавайте вторую Custom App и
+   не выполняйте обычный `docker compose up` параллельно с управлением через Apps.
+
+3. Проверьте связь из работающего приложения:
+
+   ```bash
+   docker exec ai-anki python -c 'import os, requests; r=requests.get(os.environ["AI_ANKI_PRACTICE_WORKER"]+"/health", headers={"Authorization":"Bearer "+os.environ["AI_ANKI_PRACTICE_TOKEN"]}, timeout=10); print(r.status_code, r.text)'
+   ```
+
+   Ожидается `200` и `"ok": true`. Затем запустите проект на странице практики.
+   Worker не публикует порт на NAS; приложение обращается к нему по внутренней сети.
+
+Если установка управляется исключительно через SSH, можно по-прежнему совмещать
+`docker-compose.truenas.yml` с `docker-compose.practice.yml` из каталога клона.
+Этот способ не нужно смешивать с управлением тем же приложением через TrueNAS Apps.
 
 Для публичной установки используйте выделенную VM/хост для student-контейнеров.
 На нём соберите runtime-образы и запустите worker; основному приложению задайте
@@ -142,6 +185,8 @@ preview, терминала, установки произвольных pip/Com
 ```bash
 python -m unittest discover -s tests -p 'test_practice.py' -v
 python -m unittest discover -s tests -p 'test_practice_solutions.py' -v
+# На Linux-хосте с Docker, после сборки runtime-образов и worker:
+python3 practice/smoke.py
 cd web && npm run build
 ```
 
@@ -153,5 +198,7 @@ cd web && npm run build
 
 Unit-тесты проверяют изоляцию пользователей, конкурирующие сохранения, этапы,
 снимки, ZIP, контекст наставника, аргументы Docker, тайм-аут, лимит вывода и
-остановку. Реальный Docker smoke-тест обязателен при развёртывании: Windows-среда,
-в которой добавлен модуль, не имела установленного Docker.
+остановку. `practice/smoke.py` проверяет реальные контейнеры: финальные проверки
+и запуск восьми эталонных проектов, выгрузку HTML/весов нейросети, авторизацию и
+отмену. Он создаёт временный worker со случайным ключом и портом только на
+loopback, удаляет его после проверки и не обращается к данным приложения.
