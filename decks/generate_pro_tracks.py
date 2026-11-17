@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-ORDER = ["php", "nodejs", "go", "devops", "fde", "ai_trainer", "prompt_engineer", "llm_evaluator", "ai_artist"]
+ORDER = ["php", "python", "nodejs", "go", "devops", "fde", "ai_trainer", "prompt_engineer", "llm_evaluator", "ai_artist"]
 
 EXAM = {"theory": 9, "practice": 3, "minutes": 60, "pass_score": 70}
 INTERVIEW = {"theory": 5, "practice": 1, "pass_score": 65}
@@ -84,6 +84,12 @@ def main() -> None:
         practice_file = f"pro-{tid}-live-coding.json"
         for name, data in ((theory_file, theory), (practice_file, practice)):
             (ROOT / name).write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if syllabus := track.get("syllabus"):
+            lines = [f"title: {track['title']}", f"match: pro-{tid}", f"track: {tid}",
+                     "kind: code", f"lang: {track['language']}"]
+            for chapter, lessons in syllabus["chapters"].items():
+                lines.extend([f"# {chapter}", *lessons])
+            (ROOT / "syllabus" / f"{syllabus['id']}.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
         manifest["tracks"].append(
             {
                 "id": tid,
@@ -93,7 +99,7 @@ def main() -> None:
                 "language": track.get("language", ""),
                 "decks": [theory_file, practice_file],
                 "related": track.get("related", []),
-                "subjects": list(track["theory"].keys()),
+                "subjects": track.get("subjects", list(track["theory"].keys())),
             }
         )
         print(f"{tid}: теория {len(theory['cards'])}, практикум {len(practice['cards'])}")

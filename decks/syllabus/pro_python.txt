@@ -1,0 +1,78 @@
+title: Python-разработчик
+match: pro-python
+track: python
+kind: code
+lang: python
+# 1. Основы Python
+Коллекции, изменяемость и преобразование данных
+Условия, циклы и comprehensions
+Функции, аргументы и аннотации типов
+Исключения и проверка входных данных
+# 2. Структура приложения и ООП
+Классы, dataclasses и композиция
+Модули, пакеты и точка входа
+Генераторы и потоковая обработка
+# 3. Инструменты, файлы и автоматизация
+venv, pip и воспроизводимое окружение
+pathlib, JSON и CSV
+argparse и командная строка
+# 4. HTTP и асинхронность
+requests и обработка HTTP-ошибок
+asyncio и конкурентный ввод-вывод
+# 5. Базы данных
+SQLite, параметры запросов и транзакции
+SQLAlchemy: модели и Session
+# 6. Django
+Django: проект, приложение, URL и view
+Django ORM: модели, миграции и QuerySet
+Django: формы, валидация и CSRF
+Django: аутентификация, права и тесты
+# 7. Flask
+Flask: фабрика приложения и маршруты
+Flask: JSON, ошибки и проверка ввода
+Flask: Jinja, blueprints и test_client
+# 8. FastAPI и API для модели
+FastAPI: Pydantic и схемы запросов
+FastAPI: зависимости и жизненный цикл ресурсов
+FastAPI: тестирование контрактов
+# 9. tkinter и настольные приложения
+tkinter: окно, ttk, grid и события
+tkinter: формы и валидация значений
+tkinter: Treeview и выбор файлов
+tkinter: обучение в фоне и очередь сообщений
+# 10. NumPy
+NumPy: массивы, shape и dtype
+NumPy: broadcasting и векторизация
+NumPy: индексация и статистики
+# 11. pandas
+pandas: DataFrame, CSV и выбор столбцов
+pandas: пропуски, дубликаты и типы
+pandas: groupby, фильтрация и агрегирование
+pandas: merge и контроль объединений
+# 12. Анализ и визуализация
+matplotlib: графики данных и ошибок обучения
+Jupyter и воспроизводимый эксперимент
+# 13. Машинное обучение со scikit-learn
+Признаки, целевая переменная и разбиение данных
+StandardScaler, Pipeline и защита от утечки
+Метрики: accuracy, precision, recall и F1
+Baseline, переобучение и выбор модели
+# 14. PyTorch с нуля
+PyTorch: тензоры, dtype, shape и CPU
+PyTorch: autograd и backward
+PyTorch: nn.Module, Linear и ReLU
+PyTorch: TensorDataset и DataLoader
+# 15. Обучение и сохранение нейросети
+PyTorch: функция потерь и шаг оптимизации
+PyTorch: эпохи и средняя ошибка
+PyTorch: eval, inference_mode и валидация
+PyTorch: learning rate, seed и лучшие веса
+PyTorch: state_dict и загрузка для предсказания
+# 16. Качество и выпуск приложения
+pytest: параметризация и граничные случаи
+Логирование, конфигурация и секреты
+Упаковка, Docker и запуск сервиса
+# 17. Итоговый проект: первая нейросеть
+Проект Iris: полный цикл обучения на CPU
+Проект Iris: предсказание из сохранённой модели
+Проект Iris: интерфейс предсказаний

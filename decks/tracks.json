@@ -41,6 +41,36 @@
       ]
     },
     {
+      "id": "python",
+      "title": "Python-разработчик",
+      "description": "От основ Python до приложений на Django, Flask, FastAPI и tkinter; NumPy, pandas, scikit-learn и первая нейросеть на PyTorch.",
+      "icon": "python",
+      "language": "python",
+      "decks": [
+        "pro-python.json",
+        "pro-python-live-coding.json"
+      ],
+      "related": [
+        "python-basics.json",
+        "python-live-coding.json",
+        "ttk-widgets.json",
+        "pytorch-basics.json"
+      ],
+      "subjects": [
+        "Python и ООП",
+        "Django",
+        "Flask",
+        "FastAPI",
+        "tkinter",
+        "SQLAlchemy",
+        "NumPy и pandas",
+        "matplotlib и Jupyter",
+        "scikit-learn",
+        "PyTorch: первая нейросеть",
+        "Тестирование и выпуск"
+      ]
+    },
+    {
       "id": "nodejs",
       "title": "Node.js-разработчик",
       "description": "Серверный JavaScript/TypeScript: event loop, HTTP-фреймворки, базы данных, тесты, безопасность, производительность.",

@@ -83,6 +83,7 @@ class LessonMatcher:
         self.idf = {s: math.log(1 + n / k) for s, k in df.items()}
         self._vecs = None
         self.used_vectors = False  # все карточки разложены по эмбеддингам
+        self.used_topics = False  # автор уже указал точные названия уроков
 
     def _lexical(self, text: str, topic: str) -> tuple[float, int]:
         cs = stems(text)
@@ -97,8 +98,13 @@ class LessonMatcher:
 
     def assign(self, cards: list[dict]) -> list[str]:
         """Урок для каждой карточки (raw dict с полями question/reference/topic)."""
+        self.used_topics = self.used_vectors = False
         if not self.lessons:
             return [""] * len(cards)
+        exact = {lesson for _, lesson in self.lessons}
+        if cards and all(c.get("topic") in exact for c in cards):
+            self.used_topics = True
+            return [c["topic"] for c in cards]
         out: list[int] = [-1] * len(cards)
         if self.embed is not None:
             try:
@@ -128,7 +134,7 @@ class LessonMatcher:
                 if out[k] < 0:
                     votes = topic_votes.get(c.get("topic", ""))
                     out[k] = votes.most_common(1)[0][0] if votes else 0
-        return [self.lessons[i][1] for i in out]
+        return [c["topic"] if c.get("topic") in exact else self.lessons[i][1] for c, i in zip(cards, out)]
 
 
 # ── задача генерации карточек ───────────────────────────────────────
@@ -415,7 +421,9 @@ class BookDecks:
             if sy.track:
                 self.state.setdefault("track_books", {})[sy.id] = 1
             if pending:  # «words» — фоновая задача потом переразложит по смыслу
-                if not used_vectors:
+                if matcher.used_topics:
+                    self.state["assigned"][sy.id] = "topics"
+                elif not used_vectors:
                     self.state["assigned"][sy.id] = "words"
                 elif reassign or sy.id not in self.state["assigned"]:
                     self.state["assigned"][sy.id] = "embeddings"
@@ -455,7 +463,7 @@ class BookDecks:
                 self.assign_status = f"Раскладка карточек по смыслу: {sy.title} ({i}/{len(todo)})"
                 try:
                     self.build(sy, use_embeddings=True, reassign=True)
-                    if self.state["assigned"].get(sy.id) != "embeddings":
+                    if self.state["assigned"].get(sy.id) not in ("embeddings", "topics"):
                         raise RuntimeError("эмбеддинги недоступны")
                     print(f"book decks [{sy.id}]: карточки разложены по смыслу", flush=True)
                 except Exception as exc:  # noqa: BLE001 — Ollama недоступна: повторим позже

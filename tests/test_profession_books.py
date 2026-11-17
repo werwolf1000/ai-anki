@@ -1,3 +1,4 @@
+import ast
 import json
 import os
 from pathlib import Path
@@ -5,14 +6,15 @@ from tempfile import TemporaryDirectory
 import threading
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from app.progress import CardProgress, ProgressStore
 from app.registry import DeckRegistry
-from server.book_decks import BookDecks
+from server.book_decks import BookDecks, LessonMatcher
+from server.kb_sources import sources_for_deck
 from server.lesson_quiz import build_router as quiz_router, validate_questions
 from server.syllabus import all_syllabi, get_syllabus, syllabus_for, track_syllabus
 from server.tracks import TrackStore, build_router as tracks_router
@@ -64,6 +66,34 @@ class ProfessionBooksTest(unittest.TestCase):
         directory.mkdir()
         (directory / "ai_artist.txt").write_text(text, encoding="utf-8")
         self.assertEqual(track_syllabus("ai-artist").id, "ai_artist")
+
+    def test_python_curriculum_has_cards_for_every_lesson(self):
+        sy = track_syllabus("python")
+        self.assertEqual(sy.id, "pro_python")
+        self.books.build(sy)
+        self.assertTrue(all(c["qa"] >= 1 and c["live"] >= 1 for c in self.books.lesson_counts(sy).values()))
+        self.assertEqual(self.books.state["assigned"][sy.id], "topics")
+        self.assertEqual(syllabus_for("", "Python — основы", ["python-basics.json"]).id, "python")
+        self.assertEqual(syllabus_for("", "PyTorch", ["pytorch-basics.json"]).id, "pytorch")
+        expected = {"python_docs", "django_docs", "flask_docs", "fastapi_docs", "python_data_docs", "sklearn_basics", "pytorch_basics"}
+        self.assertTrue(expected <= set(sources_for_deck("", sy.title, sy.lang)))
+        from decks.pro_tracks.python import TRACK
+        from decks.generate_pro_tracks import build
+
+        qa, live = build(TRACK)
+        for payload, filename in ((qa, "pro-python.json"), (live, "pro-python-live-coding.json")):
+            self.assertEqual(payload, json.loads((ROOT / "decks" / filename).read_text(encoding="utf-8")))
+        for card in live["cards"]:
+            ast.parse(card["reference"], filename=card["topic"])
+
+    def test_explicit_lesson_assignments_do_not_call_embeddings(self):
+        sy = track_syllabus("python")
+        embed = Mock(side_effect=RuntimeError("Не нужен для точных тем"))
+        cards = [{"topic": ls, "question": "Одинаковый текст", "reference": ""} for ls in sy.lesson_titles()]
+        matcher = LessonMatcher(sy, embed)
+        self.assertEqual(matcher.assign(cards), sy.lesson_titles())
+        embed.assert_not_called()
+        self.assertTrue(matcher.used_topics)
 
     def test_upgrade_splits_practice_and_preserves_progress_and_retirement(self):
         sy = track_syllabus("ai-artist")

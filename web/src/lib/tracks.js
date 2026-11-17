@@ -5,6 +5,7 @@ import {
 // Визуальная айдентика профессий
 export const TRACK_STYLE = {
   php: { icon: Code2, grad: "from-indigo-500 to-violet-500", soft: "from-indigo-500/25 to-violet-500/5", text: "text-indigo-300" },
+  python: { icon: Code2, grad: "from-blue-500 to-amber-400", soft: "from-blue-500/25 to-amber-400/5", text: "text-blue-300" },
   nodejs: { icon: Hexagon, grad: "from-emerald-500 to-lime-500", soft: "from-emerald-500/25 to-lime-500/5", text: "text-emerald-300" },
   go: { icon: Rabbit, grad: "from-cyan-500 to-sky-500", soft: "from-cyan-500/25 to-sky-500/5", text: "text-cyan-300" },
   devops: { icon: Container, grad: "from-orange-500 to-amber-500", soft: "from-orange-500/25 to-amber-500/5", text: "text-orange-300" },

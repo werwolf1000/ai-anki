@@ -105,7 +105,7 @@ export default function BookDecksPanel() {
             <span className="w-20 text-right tabular-nums text-zinc-300">{b.qa} вопр.</span>
             <span className="w-16 text-right tabular-nums text-zinc-400">{b.has_practice ? `${b.live} live` : "—"}</span>
             <span className={`w-24 text-right ${b.thin ? "text-amber-300" : "text-emerald-300"}`}>{b.thin ? `нехватка: ${b.thin}` : "норма"}</span>
-            <span className="w-16 text-right text-[10px] text-zinc-600" title="Как разложены перенесённые карточки">{b.assigned === "words" ? "по словам" : "по смыслу"}</span>
+            <span className="w-16 text-right text-[10px] text-zinc-600" title="Как разложены перенесённые карточки">{b.assigned === "topics" ? "по темам" : b.assigned === "words" ? "по словам" : "по смыслу"}</span>
             <button
               className="rounded px-2 py-1 text-violet-200 hover:bg-white/[0.06] disabled:opacity-30"
               disabled={job.running || !b.thin || !!busy}

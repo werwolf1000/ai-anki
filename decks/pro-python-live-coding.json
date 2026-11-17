@@ -1,0 +1,399 @@
+{
+  "name": "Python-разработчик — практикум",
+  "language": "python",
+  "track": "python",
+  "cards": [
+    {
+      "card_type": "live_code",
+      "question": "Напишите unique_names(names): уберите пробелы по краям, пустые имена и повторы, сохранив порядок первого появления.",
+      "reference": "def unique_names(names):\n    return list(dict.fromkeys(name.strip() for name in names if name.strip()))",
+      "language": "python",
+      "topic": "Коллекции, изменяемость и преобразование данных"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите positive_squares(values): верните квадраты только положительных чисел; для пустого списка верните [].",
+      "reference": "def positive_squares(values):\n    return [value ** 2 for value in values if value > 0]",
+      "language": "python",
+      "topic": "Условия, циклы и comprehensions"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите add_tag(tag: str, tags=None), возвращающую новый список с добавленным тегом. Исходный список не изменять.",
+      "reference": "def add_tag(tag: str, tags: list[str] | None = None) -> list[str]:\n    return [*(tags if tags is not None else []), tag]",
+      "language": "python",
+      "topic": "Функции, аргументы и аннотации типов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите parse_port(text): преобразуйте строку в int от 1 до 65535; при неверном вводе поднимите ValueError с понятным сообщением.",
+      "reference": "def parse_port(text):\n    try:\n        port = int(text)\n    except (TypeError, ValueError) as exc:\n        raise ValueError('Порт должен быть целым числом') from exc\n    if not 1 <= port <= 65535:\n        raise ValueError('Порт должен быть от 1 до 65535')\n    return port",
+      "language": "python",
+      "topic": "Исключения и проверка входных данных"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте dataclass Product(name, price), отклоняющий отрицательную цену в __post_init__.",
+      "reference": "from dataclasses import dataclass\n\n@dataclass\nclass Product:\n    name: str\n    price: float\n\n    def __post_init__(self):\n        if self.price < 0:\n            raise ValueError('Цена не может быть отрицательной')",
+      "language": "python",
+      "topic": "Классы, dataclasses и композиция"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте модуль с greeting(name), main() и защитой точки входа. При импорте ничего не печатать.",
+      "reference": "def greeting(name):\n    return f'Привет, {name}!'\n\ndef main():\n    print(greeting('Python'))\n\nif __name__ == '__main__':\n    main()",
+      "language": "python",
+      "topic": "Модули, пакеты и точка входа"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите генератор nonempty_lines(path), открывающий UTF-8 файл и выдающий непустые строки без пробелов по краям.",
+      "reference": "def nonempty_lines(path):\n    with open(path, encoding='utf-8') as stream:\n        for line in stream:\n            if value := line.strip():\n                yield value",
+      "language": "python",
+      "topic": "Генераторы и потоковая обработка"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите скрипт, печатающий путь интерпретатора и признак запуска в venv через sys.prefix и sys.base_prefix.",
+      "reference": "import sys\nprint(sys.executable)\nprint('venv:', sys.prefix != sys.base_prefix)",
+      "language": "python",
+      "topic": "venv, pip и воспроизводимое окружение"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите csv_to_json(source, target): прочитайте CSV с заголовком и сохраните список словарей в UTF-8 JSON с русскими буквами.",
+      "reference": "import csv\nimport json\nfrom pathlib import Path\n\ndef csv_to_json(source, target):\n    with open(source, encoding='utf-8', newline='') as stream:\n        rows = list(csv.DictReader(stream))\n    Path(target).write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding='utf-8')",
+      "language": "python",
+      "topic": "pathlib, JSON и CSV"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте argparse-параметр --epochs с целым значением по умолчанию 100. При значении меньше 1 завершите разбор с ошибкой.",
+      "reference": "import argparse\nparser = argparse.ArgumentParser()\nparser.add_argument('--epochs', type=int, default=100)\nargs = parser.parse_args()\nif args.epochs < 1:\n    parser.error('--epochs должен быть положительным')\nprint(args.epochs)",
+      "language": "python",
+      "topic": "argparse и командная строка"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите fetch_json(url), задающую timeout=10, проверяющую статус и возвращающую разобранный JSON.",
+      "reference": "import requests\n\ndef fetch_json(url):\n    response = requests.get(url, timeout=10)\n    response.raise_for_status()\n    return response.json()",
+      "language": "python",
+      "topic": "requests и обработка HTTP-ошибок"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите async-функцию fetch_many(urls) с httpx.AsyncClient: параллельно получите JSON, проверяя статус каждого ответа.",
+      "reference": "import asyncio\nimport httpx\n\nasync def fetch_many(urls):\n    async with httpx.AsyncClient(timeout=10) as client:\n        async def fetch(url):\n            response = await client.get(url)\n            response.raise_for_status()\n            return response.json()\n        return await asyncio.gather(*(fetch(url) for url in urls))",
+      "language": "python",
+      "topic": "asyncio и конкурентный ввод-вывод"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите save_note(conn, title): создайте таблицу notes при необходимости и вставьте title параметризованным запросом внутри транзакции.",
+      "reference": "def save_note(conn, title):\n    with conn:\n        conn.execute('CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, title TEXT NOT NULL)')\n        conn.execute('INSERT INTO notes (title) VALUES (?)', (title,))",
+      "language": "python",
+      "topic": "SQLite, параметры запросов и транзакции"
+    },
+    {
+      "card_type": "live_code",
+      "question": "На SQLAlchemy 2 опишите Base и модель Note с целочисленным первичным ключом id и строковым title длиной до 200.",
+      "reference": "from sqlalchemy import String\nfrom sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column\n\nclass Base(DeclarativeBase):\n    pass\n\nclass Note(Base):\n    __tablename__ = 'notes'\n    id: Mapped[int] = mapped_column(primary_key=True)\n    title: Mapped[str] = mapped_column(String(200))",
+      "language": "python",
+      "topic": "SQLAlchemy: модели и Session"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Django JsonResponse-view health и urlpatterns с маршрутом health/, возвращающим {'status': 'ok'}.",
+      "reference": "from django.http import JsonResponse\nfrom django.urls import path\n\ndef health(request):\n    return JsonResponse({'status': 'ok'})\n\nurlpatterns = [path('health/', health, name='health')]",
+      "language": "python",
+      "topic": "Django: проект, приложение, URL и view"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Для models.py Django-приложения напишите модель Experiment с name, created_at и необязательным accuracy; затем функцию best_experiments, возвращающую пять лучших завершённых экспериментов.",
+      "reference": "from django.db import models\n\nclass Experiment(models.Model):\n    name = models.CharField(max_length=200)\n    created_at = models.DateTimeField(auto_now_add=True)\n    accuracy = models.FloatField(null=True, blank=True)\n\ndef best_experiments():\n    return Experiment.objects.filter(accuracy__isnull=False).order_by('-accuracy')[:5]",
+      "language": "python",
+      "topic": "Django ORM: модели, миграции и QuerySet"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Опишите TrainingForm: name до 80 символов, epochs от 1 до 500, learning_rate строго больше нуля и не больше 1.",
+      "reference": "from django import forms\n\nclass TrainingForm(forms.Form):\n    name = forms.CharField(max_length=80)\n    epochs = forms.IntegerField(min_value=1, max_value=500)\n    learning_rate = forms.FloatField(max_value=1)\n\n    def clean_learning_rate(self):\n        value = self.cleaned_data['learning_rate']\n        if value <= 0:\n            raise forms.ValidationError('Learning rate должен быть больше нуля')\n        return value",
+      "language": "python",
+      "topic": "Django: формы, валидация и CSRF"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Django view my_profile с login_required, которая возвращает id и username текущего пользователя в JSON, без пароля.",
+      "reference": "from django.contrib.auth.decorators import login_required\nfrom django.http import JsonResponse\n\n@login_required\ndef my_profile(request):\n    return JsonResponse({'id': request.user.pk, 'username': request.user.get_username()})",
+      "language": "python",
+      "topic": "Django: аутентификация, права и тесты"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите create_app(testing=False) для Flask с GET /health и JSON {'status': 'ok'}.",
+      "reference": "from flask import Flask\n\ndef create_app(testing=False):\n    app = Flask(__name__)\n    app.config['TESTING'] = testing\n\n    @app.get('/health')\n    def health():\n        return {'status': 'ok'}\n\n    return app",
+      "language": "python",
+      "topic": "Flask: фабрика приложения и маршруты"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите Flask POST /square: примите JSON-объект с конечным числом x, исключая bool; иначе верните 422. Верните {'result': x*x}, проверив также конечность результата.",
+      "reference": "import math\nfrom flask import Flask, request\napp = Flask(__name__)\n\n@app.post('/square')\ndef square():\n    data = request.get_json(silent=True)\n    x = data.get('x') if isinstance(data, dict) else None\n    if type(x) not in (int, float):\n        return {'error': 'Нужно число x'}, 422\n    try:\n        result = x * x\n        if not math.isfinite(x) or not math.isfinite(result):\n            raise ValueError()\n    except (OverflowError, ValueError):\n        return {'error': 'Число вне допустимого диапазона'}, 422\n    return {'result': result}",
+      "language": "python",
+      "topic": "Flask: JSON, ошибки и проверка ввода"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите pytest-тест test_health для create_app из модуля app: проверьте HTTP 200 и точный JSON {'status': 'ok'} через test_client.",
+      "reference": "from app import create_app\n\ndef test_health():\n    app = create_app(testing=True)\n    with app.test_client() as client:\n        response = client.get('/health')\n        assert response.status_code == 200\n        assert response.get_json() == {'status': 'ok'}",
+      "language": "python",
+      "topic": "Flask: Jinja, blueprints и test_client"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте FastAPI POST /validate с телом Features: values — ровно четыре конечных float; верните проверенные значения.",
+      "reference": "from fastapi import FastAPI\nfrom pydantic import BaseModel, Field, FiniteFloat\n\nclass Features(BaseModel):\n    values: list[FiniteFloat] = Field(min_length=4, max_length=4)\n\napp = FastAPI()\n\n@app.post('/validate')\ndef validate(body: Features):\n    return {'values': body.values}",
+      "language": "python",
+      "topic": "FastAPI: Pydantic и схемы запросов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите lifespan для FastAPI, который сохраняет результат load_model() из model_service в app.state.model при старте и удаляет ссылку при остановке.",
+      "reference": "from contextlib import asynccontextmanager\nfrom fastapi import FastAPI\nfrom model_service import load_model\n\n@asynccontextmanager\nasync def lifespan(app):\n    app.state.model = load_model()\n    try:\n        yield\n    finally:\n        del app.state.model\n\napp = FastAPI(lifespan=lifespan)",
+      "language": "python",
+      "topic": "FastAPI: зависимости и жизненный цикл ресурсов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Для приложения app с маршрутом /validate напишите TestClient-тест: четыре числа принимаются, три числа дают 422.",
+      "reference": "from fastapi.testclient import TestClient\nfrom app import app\n\ndef test_features_contract():\n    with TestClient(app) as client:\n        assert client.post('/validate', json={'values': [1, 2, 3, 4]}).status_code == 200\n        assert client.post('/validate', json={'values': [1, 2, 3]}).status_code == 422",
+      "language": "python",
+      "topic": "FastAPI: тестирование контрактов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте окно tkinter с ttk.Label и ttk.Button в grid. Кнопка меняет подпись метки на 'Готово'. Запуск — под защитой __main__.",
+      "reference": "import tkinter as tk\nfrom tkinter import ttk\n\ndef main():\n    root = tk.Tk()\n    root.title('Первое приложение')\n    label = ttk.Label(root, text='Ожидание')\n    label.grid(row=0, column=0, padx=12, pady=12)\n    ttk.Button(root, text='Начать', command=lambda: label.config(text='Готово')).grid(row=1, column=0)\n    root.mainloop()\n\nif __name__ == '__main__':\n    main()",
+      "language": "python",
+      "topic": "tkinter: окно, ttk, grid и события"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите read_features(entries) для списка из четырёх Entry: верните четыре конечных float; при ошибке покажите messagebox.showerror и верните None.",
+      "reference": "import math\nfrom tkinter import messagebox\n\ndef read_features(entries):\n    try:\n        values = [float(entry.get()) for entry in entries]\n        if len(values) != 4 or not all(math.isfinite(x) for x in values):\n            raise ValueError()\n        return values\n    except ValueError:\n        messagebox.showerror('Ошибка ввода', 'Введите четыре конечных числа')\n        return None",
+      "language": "python",
+      "topic": "tkinter: формы и валидация значений"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите fill_table(tree, rows): очистите Treeview и добавьте максимум 100 строк словарей с полями epoch и loss.",
+      "reference": "def fill_table(tree, rows):\n    for item in tree.get_children():\n        tree.delete(item)\n    for row in rows[:100]:\n        tree.insert('', 'end', values=(row['epoch'], f\"{row['loss']:.4f}\"))",
+      "language": "python",
+      "topic": "tkinter: Treeview и выбор файлов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите poll_progress(root, label, messages), читающую Queue через get_nowait, обновляющую label и планирующую себя снова через after(100).",
+      "reference": "from queue import Empty\n\ndef poll_progress(root, label, messages):\n    try:\n        while True:\n            label.config(text=str(messages.get_nowait()))\n    except Empty:\n        pass\n    root.after(100, poll_progress, root, label, messages)",
+      "language": "python",
+      "topic": "tkinter: обучение в фоне и очередь сообщений"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите as_features(rows): преобразуйте данные в np.float32, проверьте двумерность и четыре столбца, а также отсутствие NaN/Inf.",
+      "reference": "import numpy as np\n\ndef as_features(rows):\n    x = np.asarray(rows, dtype=np.float32)\n    if x.ndim != 2 or x.shape[1] != 4 or not np.isfinite(x).all():\n        raise ValueError('Нужна конечная матрица N x 4')\n    return x",
+      "language": "python",
+      "topic": "NumPy: массивы, shape и dtype"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите center_columns(x), вычитающую из каждого столбца его среднее без циклов. x — непустая двумерная матрица чисел.",
+      "reference": "import numpy as np\n\ndef center_columns(x):\n    x = np.asarray(x, dtype=float)\n    return x - x.mean(axis=0, keepdims=True)",
+      "language": "python",
+      "topic": "NumPy: broadcasting и векторизация"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите finite_rows(x, y): удалите строки x с NaN/Inf и те же элементы y; верните пару массивов.",
+      "reference": "import numpy as np\n\ndef finite_rows(x, y):\n    x, y = np.asarray(x), np.asarray(y)\n    mask = np.isfinite(x).all(axis=1)\n    return x[mask], y[mask]",
+      "language": "python",
+      "topic": "NumPy: индексация и статистики"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите load_table(path): прочитайте CSV, потребуйте столбцы age и income и верните только эти столбцы в данном порядке.",
+      "reference": "import pandas as pd\n\ndef load_table(path):\n    frame = pd.read_csv(path)\n    required = ['age', 'income']\n    if not set(required) <= set(frame.columns):\n        raise ValueError('Нужны столбцы age и income')\n    return frame.loc[:, required].copy()",
+      "language": "python",
+      "topic": "pandas: DataFrame, CSV и выбор столбцов"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите clean_amount(frame): верните копию с amount, преобразованным через to_numeric(errors='coerce'), и без строк с пропущенным amount. Остальные столбцы сохраните.",
+      "reference": "import pandas as pd\n\ndef clean_amount(frame):\n    result = frame.copy()\n    result['amount'] = pd.to_numeric(result['amount'], errors='coerce')\n    return result.dropna(subset=['amount'])",
+      "language": "python",
+      "topic": "pandas: пропуски, дубликаты и типы"
+    },
+    {
+      "card_type": "live_code",
+      "question": "По DataFrame продаж с region и amount напишите revenue_by_region(frame), возвращающую суммы по регионам по убыванию.",
+      "reference": "def revenue_by_region(frame):\n    return frame.groupby('region', as_index=False)['amount'].sum().sort_values('amount', ascending=False)",
+      "language": "python",
+      "topic": "pandas: groupby, фильтрация и агрегирование"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите attach_customers(orders, customers): левое объединение по customer_id с проверкой many-to-one и колонкой-индикатором.",
+      "reference": "def attach_customers(orders, customers):\n    return orders.merge(customers, on='customer_id', how='left', validate='many_to_one', indicator=True)",
+      "language": "python",
+      "topic": "pandas: merge и контроль объединений"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите plot_history(history, path): постройте train_loss и val_loss по epoch через matplotlib, подпишите оси, добавьте легенду, сохраните рисунок и закройте figure.",
+      "reference": "import matplotlib.pyplot as plt\n\ndef plot_history(history, path):\n    fig, ax = plt.subplots()\n    epochs = [row['epoch'] for row in history]\n    for name in ('train_loss', 'val_loss'):\n        ax.plot(epochs, [row[name] for row in history], label=name)\n    ax.set(xlabel='Epoch', ylabel='Loss')\n    ax.legend()\n    fig.savefig(path)\n    plt.close(fig)",
+      "language": "python",
+      "topic": "matplotlib: графики данных и ошибок обучения"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите save_config(path, seed, epochs), сохраняющую параметры и версию Python в UTF-8 JSON.",
+      "reference": "import json\nimport platform\nfrom pathlib import Path\n\ndef save_config(path, seed, epochs):\n    data = {'seed': seed, 'epochs': epochs, 'python': platform.python_version()}\n    Path(path).write_text(json.dumps(data, indent=2), encoding='utf-8')",
+      "language": "python",
+      "topic": "Jupyter и воспроизводимый эксперимент"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите split_data(x, y): стратифицированно разделите классификационные данные на 60% train, 20% validation, 20% test с random_state=42. Верните три пары (X, y).",
+      "reference": "from sklearn.model_selection import train_test_split\n\ndef split_data(x, y):\n    xp, xt, yp, yt = train_test_split(x, y, test_size=0.2, stratify=y, random_state=42)\n    xr, xv, yr, yv = train_test_split(xp, yp, test_size=0.25, stratify=yp, random_state=42)\n    return (xr, yr), (xv, yv), (xt, yt)",
+      "language": "python",
+      "topic": "Признаки, целевая переменная и разбиение данных"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте и обучите на x_train, y_train Pipeline из StandardScaler и LogisticRegression(max_iter=1000). Верните pipeline.",
+      "reference": "from sklearn.pipeline import make_pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.linear_model import LogisticRegression\n\ndef fit_baseline(x_train, y_train):\n    pipeline = make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))\n    return pipeline.fit(x_train, y_train)",
+      "language": "python",
+      "topic": "StandardScaler, Pipeline и защита от утечки"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите classification_metrics(y_true, y_pred): верните accuracy, macro F1 с zero_division=0 и confusion_matrix как список списков.",
+      "reference": "from sklearn.metrics import accuracy_score, f1_score, confusion_matrix\n\ndef classification_metrics(y_true, y_pred):\n    return {'accuracy': accuracy_score(y_true, y_pred),\n            'f1_macro': f1_score(y_true, y_pred, average='macro', zero_division=0),\n            'confusion_matrix': confusion_matrix(y_true, y_pred).tolist()}",
+      "language": "python",
+      "topic": "Метрики: accuracy, precision, recall и F1"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите dummy_accuracy(x_train, y_train, x_val, y_val): обучите DummyClassifier(strategy='most_frequent') и верните accuracy на validation.",
+      "reference": "from sklearn.dummy import DummyClassifier\n\ndef dummy_accuracy(x_train, y_train, x_val, y_val):\n    model = DummyClassifier(strategy='most_frequent').fit(x_train, y_train)\n    return model.score(x_val, y_val)",
+      "language": "python",
+      "topic": "Baseline, переобучение и выбор модели"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите to_tensors(x, y), создающую на CPU признаки float32 и метки long.",
+      "reference": "import torch\n\ndef to_tensors(x, y):\n    return torch.tensor(x, dtype=torch.float32), torch.tensor(y, dtype=torch.long)",
+      "language": "python",
+      "topic": "PyTorch: тензоры, dtype, shape и CPU"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Создайте скаляр x=3.0 с requires_grad=True, вычислите y=x*x, вызовите backward и верните значение градиента в функции square_gradient().",
+      "reference": "import torch\n\ndef square_gradient():\n    x = torch.tensor(3.0, requires_grad=True)\n    (x * x).backward()\n    return x.grad.item()",
+      "language": "python",
+      "topic": "PyTorch: autograd и backward"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите make_model(): сеть для четырёх признаков и трёх классов с одним скрытым слоем из 16 нейронов и ReLU, без Softmax на выходе.",
+      "reference": "from torch import nn\n\ndef make_model():\n    return nn.Sequential(nn.Linear(4, 16), nn.ReLU(), nn.Linear(16, 3))",
+      "language": "python",
+      "topic": "PyTorch: nn.Module, Linear и ReLU"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите make_loader(x_tensor, y_tensor): TensorDataset и DataLoader с batch_size=16, shuffle=True, num_workers=0 и генератором с seed=42.",
+      "reference": "import torch\nfrom torch.utils.data import TensorDataset, DataLoader\n\ndef make_loader(x_tensor, y_tensor):\n    return DataLoader(TensorDataset(x_tensor, y_tensor), batch_size=16, shuffle=True,\n                      num_workers=0, generator=torch.Generator().manual_seed(42))",
+      "language": "python",
+      "topic": "PyTorch: TensorDataset и DataLoader"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите train_step(model, optimizer, x, y): train, zero_grad, logits, CrossEntropyLoss, backward, step; верните loss как число.",
+      "reference": "from torch import nn\n\ndef train_step(model, optimizer, x, y):\n    model.train()\n    optimizer.zero_grad()\n    loss = nn.CrossEntropyLoss()(model(x), y)\n    loss.backward()\n    optimizer.step()\n    return loss.item()",
+      "language": "python",
+      "topic": "PyTorch: функция потерь и шаг оптимизации"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите train_epoch(model, loader, optimizer), обучающую одну эпоху с CrossEntropyLoss и возвращающую среднюю ошибку на объект. При пустом loader поднимите ValueError.",
+      "reference": "from torch import nn\n\ndef train_epoch(model, loader, optimizer):\n    model.train()\n    loss_fn = nn.CrossEntropyLoss()\n    total, count = 0.0, 0\n    for x, y in loader:\n        optimizer.zero_grad()\n        loss = loss_fn(model(x), y)\n        loss.backward()\n        optimizer.step()\n        total += loss.item() * len(y)\n        count += len(y)\n    if count == 0:\n        raise ValueError('Пустая обучающая выборка')\n    return total / count",
+      "language": "python",
+      "topic": "PyTorch: эпохи и средняя ошибка"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите accuracy(model, x, y), использующую eval и inference_mode, argmax по классам и возвращающую долю верных ответов.",
+      "reference": "import torch\n\ndef accuracy(model, x, y):\n    model.eval()\n    with torch.inference_mode():\n        predicted = model(x).argmax(dim=1)\n        return (predicted == y).float().mean().item()",
+      "language": "python",
+      "topic": "PyTorch: eval, inference_mode и валидация"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите snapshot(model), возвращающую независимую копию state_dict на CPU с detach().clone().",
+      "reference": "def snapshot(model):\n    return {name: value.detach().cpu().clone() for name, value in model.state_dict().items()}",
+      "language": "python",
+      "topic": "PyTorch: learning rate, seed и лучшие веса"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите load_weights(path, make_model): загрузите state_dict на CPU через weights_only=True, примените его к созданной модели, включите eval и верните модель.",
+      "reference": "import torch\n\ndef load_weights(path, make_model):\n    model = make_model()\n    model.load_state_dict(torch.load(path, map_location='cpu', weights_only=True))\n    model.eval()\n    return model",
+      "language": "python",
+      "topic": "PyTorch: state_dict и загрузка для предсказания"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите параметризованный pytest-тест для parse_port из utils: строки '0', '65536', 'abc' должны вызывать ValueError.",
+      "reference": "import pytest\nfrom utils import parse_port\n\n@pytest.mark.parametrize('text', ['0', '65536', 'abc'])\ndef test_invalid_port(text):\n    with pytest.raises(ValueError):\n        parse_port(text)",
+      "language": "python",
+      "topic": "pytest: параметризация и граничные случаи"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Настройте logging на INFO и напишите log_epoch(epoch, train_loss, val_loss) с форматированием чисел до четырёх знаков через параметры logger.info.",
+      "reference": "import logging\nlogging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')\nlogger = logging.getLogger(__name__)\n\ndef log_epoch(epoch, train_loss, val_loss):\n    logger.info('epoch=%d train_loss=%.4f val_loss=%.4f', epoch, train_loss, val_loss)",
+      "language": "python",
+      "topic": "Логирование, конфигурация и секреты"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите model_path(), читающую MODEL_PATH из окружения (по умолчанию data/model.pt), проверяющую существование файла и возвращающую Path.",
+      "reference": "import os\nfrom pathlib import Path\n\ndef model_path():\n    path = Path(os.environ.get('MODEL_PATH', 'data/model.pt'))\n    if not path.is_file():\n        raise FileNotFoundError(f'Модель не найдена: {path}')\n    return path",
+      "language": "python",
+      "topic": "Упаковка, Docker и запуск сервиса"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Соберите программу обучения классификатора Iris на CPU: 4→16→3, train/validation/test 60/20/20, StandardScaler только на train, Adam, CrossEntropyLoss, выбор лучших весов по validation loss, итоговые test accuracy и confusion matrix. Сохраните checkpoint и историю; добавьте CLI для обучения и предсказания. Датасет возьмите из sklearn.datasets.load_iris. Эталон также находится в examples/python_neural_network/train.py.",
+      "reference": "\"\"\"Первая нейросеть: классификация Iris на CPU, без скачивания датасета.\"\"\"\nfrom __future__ import annotations\n\nimport argparse\nimport json\nfrom pathlib import Path\n\nimport numpy as np\nimport torch\nfrom sklearn.datasets import load_iris\nfrom sklearn.dummy import DummyClassifier\nfrom sklearn.metrics import accuracy_score, confusion_matrix\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import StandardScaler\nfrom torch import nn\nfrom torch.utils.data import DataLoader, TensorDataset\n\n\ndef make_model() -> nn.Module:\n    # Четыре измерения цветка → 16 скрытых нейронов → три класса.\n    # CrossEntropyLoss ожидает logits, поэтому Softmax здесь не нужен.\n    return nn.Sequential(nn.Linear(4, 16), nn.ReLU(), nn.Linear(16, 3))\n\n\ndef train(output: Path, epochs: int = 100, seed: int = 42) -> dict:\n    if epochs < 1:\n        raise ValueError(\"Число эпох должно быть положительным\")\n    torch.manual_seed(seed)\n    torch.set_num_threads(1)\n    iris = load_iris(as_frame=True)\n    features = iris.data.to_numpy(dtype=np.float32)\n    labels = iris.target.to_numpy(dtype=np.int64)\n\n    # Test откладываем до конца. Validation используется только для выбора эпохи.\n    x_pool, x_test, y_pool, y_test = train_test_split(\n        features, labels, test_size=0.2, stratify=labels, random_state=seed,\n    )\n    x_train, x_val, y_train, y_val = train_test_split(\n        x_pool, y_pool, test_size=0.25, stratify=y_pool, random_state=seed,\n    )\n    scaler = StandardScaler().fit(x_train)\n\n    def tensor(x):\n        return torch.tensor(scaler.transform(x), dtype=torch.float32)\n\n    dataset = TensorDataset(tensor(x_train), torch.tensor(y_train, dtype=torch.long))\n    batches = DataLoader(dataset, batch_size=16, shuffle=True, num_workers=0,\n                         generator=torch.Generator().manual_seed(seed))\n    val_x, val_y = tensor(x_val), torch.tensor(y_val, dtype=torch.long)\n    model = make_model()\n    loss_fn = nn.CrossEntropyLoss()\n    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)\n    best_loss, best_state, best_epoch = float(\"inf\"), None, 0\n    history = []\n    for epoch in range(1, epochs + 1):\n        model.train()\n        total_loss = 0.0\n        for x_batch, y_batch in batches:\n            optimizer.zero_grad()\n            loss = loss_fn(model(x_batch), y_batch)\n            loss.backward()\n            optimizer.step()\n            total_loss += loss.item() * len(y_batch)\n        model.eval()\n        with torch.inference_mode():\n            logits = model(val_x)\n            val_loss = loss_fn(logits, val_y).item()\n            val_accuracy = (logits.argmax(dim=1) == val_y).float().mean().item()\n        history.append({\"epoch\": epoch, \"train_loss\": total_loss / len(dataset),\n                        \"val_loss\": val_loss, \"val_accuracy\": val_accuracy})\n        if val_loss < best_loss:\n            best_loss, best_epoch = val_loss, epoch\n            best_state = {name: value.detach().clone() for name, value in model.state_dict().items()}\n\n    model.load_state_dict(best_state)\n    model.eval()\n    with torch.inference_mode():\n        predicted = model(tensor(x_test)).argmax(dim=1).numpy()\n    baseline = DummyClassifier(strategy=\"most_frequent\").fit(x_train, y_train)\n    metrics = {\n        \"seed\": seed, \"epochs\": epochs, \"best_epoch\": best_epoch,\n        \"train_size\": len(y_train), \"validation_size\": len(y_val), \"test_size\": len(y_test),\n        \"test_accuracy\": float(accuracy_score(y_test, predicted)),\n        \"baseline_accuracy\": float(accuracy_score(y_test, baseline.predict(x_test))),\n        \"confusion_matrix\": confusion_matrix(y_test, predicted, labels=[0, 1, 2]).tolist(),\n    }\n    output.mkdir(parents=True, exist_ok=True)\n    # Сохраняем также порядок признаков и параметры нормализации для инференса.\n    torch.save({\"state_dict\": best_state, \"mean\": scaler.mean_.tolist(), \"scale\": scaler.scale_.tolist(),\n                \"features\": list(iris.feature_names), \"classes\": iris.target_names.tolist()}, output / \"model.pt\")\n    (output / \"metrics.json\").write_text(json.dumps(metrics, indent=2), encoding=\"utf-8\")\n    (output / \"history.json\").write_text(json.dumps(history, indent=2), encoding=\"utf-8\")\n    iris.frame.to_csv(output / \"iris.csv\", index=False)\n    return metrics\n\n\ndef predict(checkpoint: Path, values: list[float]) -> dict:\n    if len(values) != 4 or not np.isfinite(values).all():\n        raise ValueError(\"Нужны четыре конечных числа: размеры чашелистика и лепестка в сантиметрах\")\n    data = torch.load(checkpoint, map_location=\"cpu\", weights_only=True)\n    model = make_model()\n    model.load_state_dict(data[\"state_dict\"])\n    model.eval()\n    features = (np.asarray(values, dtype=np.float32) - np.asarray(data[\"mean\"])) / np.asarray(data[\"scale\"])\n    with torch.inference_mode():\n        probabilities = model(torch.tensor(features, dtype=torch.float32).unsqueeze(0)).softmax(dim=1)[0]\n    index = int(probabilities.argmax())\n    return {\"class\": data[\"classes\"][index], \"probabilities\": dict(zip(data[\"classes\"], probabilities.tolist()))}\n\n\ndef main() -> None:\n    parser = argparse.ArgumentParser(description=__doc__)\n    parser.add_argument(\"--output\", type=Path, default=Path(\"data/python-neural-network\"))\n    parser.add_argument(\"--epochs\", type=int, default=100)\n    parser.add_argument(\"--seed\", type=int, default=42)\n    parser.add_argument(\"--predict\", type=float, nargs=4, metavar=(\"SEPAL_L\", \"SEPAL_W\", \"PETAL_L\", \"PETAL_W\"))\n    args = parser.parse_args()\n    if args.epochs < 1:\n        parser.error(\"--epochs должен быть положительным\")\n    result = predict(args.output / \"model.pt\", args.predict) if args.predict else train(args.output, args.epochs, args.seed)\n    print(json.dumps(result, ensure_ascii=False, indent=2))\n\n\nif __name__ == \"__main__\":\n    main()",
+      "language": "python",
+      "topic": "Проект Iris: полный цикл обучения на CPU"
+    },
+    {
+      "card_type": "live_code",
+      "question": "Напишите normalize_one(values, mean, scale): проверьте, что каждый вектор содержит четыре конечных числа, scale положителен, затем верните нормализованный np.float32 массив формы (1,4).",
+      "reference": "import numpy as np\n\ndef normalize_one(values, mean, scale):\n    values, mean, scale = (np.asarray(v, dtype=np.float32) for v in (values, mean, scale))\n    if any(v.shape != (4,) or not np.isfinite(v).all() for v in (values, mean, scale)) or (scale <= 0).any():\n        raise ValueError('Неверные признаки или параметры нормализации')\n    return ((values - mean) / scale).reshape(1, 4)",
+      "language": "python",
+      "topic": "Проект Iris: предсказание из сохранённой модели"
+    },
+    {
+      "card_type": "live_code",
+      "question": "В модуле iris_api.py создайте FastAPI POST /predict. Предположите, что model_service.predict_values(values) уже загружает и использует модель; валидируйте четыре конечных числа через Pydantic и верните результат сервиса.",
+      "reference": "from fastapi import FastAPI\nfrom pydantic import BaseModel, Field, FiniteFloat\nfrom model_service import predict_values\n\nclass Input(BaseModel):\n    values: list[FiniteFloat] = Field(min_length=4, max_length=4)\n\napp = FastAPI()\n\n@app.post('/predict')\ndef predict(body: Input):\n    return predict_values(body.values)",
+      "language": "python",
+      "topic": "Проект Iris: интерфейс предсказаний"
+    }
+  ]
+}
