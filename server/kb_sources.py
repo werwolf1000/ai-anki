@@ -1,13 +1,16 @@
 """Официальные источники базы знаний учебника и их загрузка.
 
 Каждый источник превращается в список страниц `Page` (Markdown), дальше их
-режет и индексирует `server.knowledge`. Поддерживаются три способа загрузки:
+режет и индексирует `server.knowledge`. Поддерживаются способы загрузки:
 
   * ``php_tarball``    — архив PHP Manual (php.net), «Many HTML files»;
   * ``python_tarball`` — архив HTML-документации docs.python.org;
   * ``github``         — каталоги официальных репозиториев документации
     (MDN на русском, Node.js, TypeScript, Angular, Laravel, Go): одно обращение
     к GitHub API на каталог + скачивание файлов с raw.githubusercontent.com.
+  * ``web``           — HTML/PDF; для Python-экосистемы используются отдельные
+    парсеры Django, Flask, FastAPI, NumPy, pandas, matplotlib, sklearn, PyTorch, SQLAlchemy.
+  * ``wikipedia``     — статьи, подобранные по темам колод.
 """
 from __future__ import annotations
 
@@ -50,6 +53,7 @@ class WebDoc:
     title: str
     page_url: str = ""  # куда ведёт сноска (по умолчанию url)
     selector: str = ""  # id корневого элемента html-страницы
+    parser: str = ""  # ключ отдельного парсера из server.kb_parsers
 
 
 @dataclass(frozen=True)
@@ -160,7 +164,7 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Проект и приложения, URL, views, модели, формы и тестирование.",
             match=r"django|python-разработчик|pro-python",
             kind="web", lang="python",
-            docs=tuple(WebDoc(f"https://docs.djangoproject.com/en/5.2/intro/tutorial0{i}/", f"Django tutorial: часть {i}") for i in range(1, 6)),
+            docs=tuple(WebDoc(f"https://docs.djangoproject.com/en/5.2/intro/tutorial0{i}/", f"Django tutorial: часть {i}", parser="django") for i in range(1, 6)),
         ),
         KnowledgeSource(
             id="flask_docs",
@@ -169,7 +173,7 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Маршруты, шаблоны, фабрика приложения, blueprints и тесты.",
             match=r"flask|python-разработчик|pro-python",
             kind="web", lang="python",
-            docs=tuple(WebDoc(f"https://flask.palletsprojects.com/en/stable/{path}/", f"Flask: {title}")
+            docs=tuple(WebDoc(f"https://flask.palletsprojects.com/en/stable/{path}/", f"Flask: {title}", parser="flask")
                        for path, title in (("quickstart", "начало работы"), ("patterns/appfactories", "фабрики приложений"),
                                            ("blueprints", "blueprints"), ("testing", "тестирование"))),
         ),
@@ -180,7 +184,7 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Pydantic, параметры запросов, зависимости, lifespan и TestClient.",
             match=r"fastapi|python-разработчик|pro-python",
             kind="web", lang="python",
-            docs=tuple(WebDoc(f"https://fastapi.tiangolo.com/{path}/", f"FastAPI: {title}")
+            docs=tuple(WebDoc(f"https://fastapi.tiangolo.com/{path}/", f"FastAPI: {title}", parser="fastapi")
                        for path, title in (("tutorial/body", "тело запроса"), ("tutorial/dependencies", "зависимости"),
                                            ("tutorial/testing", "тестирование"), ("advanced/events", "lifespan"))),
         ),
@@ -191,9 +195,9 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Массивы, DataFrame, чтение таблиц, выборки, статистики, объединения и графики.",
             match=r"pandas|numpy|matplotlib|python-разработчик|pro-python",
             kind="web", lang="python",
-            docs=(WebDoc("https://numpy.org/doc/stable/user/absolute_beginners.html", "NumPy для начинающих"),
-                  WebDoc("https://matplotlib.org/stable/users/explain/quick_start.html", "matplotlib: первые графики"),
-                  *(WebDoc(f"https://pandas.pydata.org/docs/getting_started/intro_tutorials/{page}.html", f"pandas: {title}")
+            docs=(WebDoc("https://numpy.org/doc/stable/user/absolute_beginners.html", "NumPy для начинающих", parser="numpy"),
+                  WebDoc("https://matplotlib.org/stable/users/explain/quick_start.html", "matplotlib: первые графики", parser="matplotlib"),
+                  *(WebDoc(f"https://pandas.pydata.org/docs/getting_started/intro_tutorials/{page}.html", f"pandas: {title}", parser="pandas")
                     for page, title in (("02_read_write", "чтение и запись"), ("03_subset_data", "выбор данных"),
                                         ("05_add_columns", "новые столбцы"), ("06_calculate_statistics", "статистики"),
                                         ("08_combine_dataframes", "объединение таблиц")))),
@@ -205,8 +209,8 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Обучение, preprocessing, Pipeline, кросс-валидация и предотвращение утечек данных.",
             match=r"scikit|sklearn|python-разработчик|pro-python|pytorch",
             kind="web", lang="python",
-            docs=(WebDoc("https://scikit-learn.org/stable/getting_started.html", "scikit-learn: начало работы"),
-                  WebDoc("https://scikit-learn.org/stable/common_pitfalls.html", "scikit-learn: утечки данных и типичные ошибки")),
+            docs=(WebDoc("https://scikit-learn.org/stable/getting_started.html", "scikit-learn: начало работы", parser="sklearn"),
+                  WebDoc("https://scikit-learn.org/stable/common_pitfalls.html", "scikit-learn: утечки данных и типичные ошибки", parser="sklearn")),
         ),
         KnowledgeSource(
             id="pytorch_basics",
@@ -215,10 +219,21 @@ SOURCES: dict[str, KnowledgeSource] = {
             description="Тензоры, Dataset/DataLoader, построение модели, autograd, обучение и сохранение весов.",
             match=r"pytorch|python-разработчик|pro-python|ai-тренер|ai-trainer",
             kind="web", lang="python",
-            docs=tuple(WebDoc(f"https://docs.pytorch.org/tutorials/beginner/basics/{page}_tutorial.html", f"PyTorch: {title}")
+            docs=tuple(WebDoc(f"https://docs.pytorch.org/tutorials/beginner/basics/{page}_tutorial.html", f"PyTorch: {title}", parser="pytorch")
                        for page, title in (("quickstart", "полный цикл"), ("tensorqs", "тензоры"),
                                            ("data", "данные"), ("buildmodel", "модель"), ("autogradqs", "градиенты"),
                                            ("optimization", "обучение"), ("saveloadrun", "сохранение и загрузка"))),
+        ),
+        KnowledgeSource(
+            id="sqlalchemy_docs",
+            title="SQLAlchemy 2 — SQL и ORM",
+            homepage="https://docs.sqlalchemy.org/en/20/tutorial/",
+            description="Подключение, модели и метаданные, SELECT, Session и работа с ORM-объектами.",
+            match=r"sqlalchemy|python-разработчик|pro-python",
+            kind="web", lang="python",
+            docs=tuple(WebDoc(f"https://docs.sqlalchemy.org/en/20/tutorial/{page}.html", f"SQLAlchemy: {title}", parser="sqlalchemy")
+                       for page, title in (("dbapi_transactions", "подключение и транзакции"), ("metadata", "модели и метаданные"),
+                                           ("data_select", "выборка данных"), ("orm_data_manipulation", "Session и ORM"))),
         ),
         KnowledgeSource(
             id="mdn_js_ru",
@@ -751,6 +766,10 @@ def fetch_web_doc(doc: WebDoc) -> Page | None:
     r = _get(doc.url, timeout=120)
     url = doc.page_url or doc.url
     ctype = r.headers.get("content-type", "")
+    if doc.parser:
+        from server.kb_parsers import parse_document
+
+        return parse_document(doc.parser, r.content, url, doc.title)
     if doc.url.lower().endswith(".pdf") or "pdf" in ctype:
         from pypdf import PdfReader
 
