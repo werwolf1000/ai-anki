@@ -1,5 +1,5 @@
 #!/bin/sh
-# Build practice images and create the shared key without restarting TrueNAS Apps.
+# Build the web app and practice images without restarting TrueNAS Apps.
 set -eu
 practice_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 cd "$practice_root"
@@ -26,6 +26,9 @@ path.chmod(0o600)
 print(f'Shared key ready: {path.resolve()} (value hidden, existing key preserved)', flush=True)
 PY
 
+# TrueNAS can reuse an existing :latest image when YAML changes. Build the app
+# explicitly so its frontend and API include the practice workspace as well.
+docker build -t ai-anki-web:latest .
 docker build -f practice/worker.Dockerfile -t ai-anki-practice-worker:1 .
 docker build -f practice/Dockerfile --target base -t ai-anki-practice-base:1 .
 docker build -f practice/Dockerfile --target data -t ai-anki-practice-data:1 .
