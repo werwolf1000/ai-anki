@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { BookOpenText, Briefcase, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
+import { BookOpenText, Briefcase, FolderCode, LayoutDashboard, Layers, LogOut, Settings as SettingsIcon } from "lucide-react";
 import { api, getServer, getToken, setToken, setUnauthorizedHandler } from "./lib/api";
 import { desktop, isDesktop } from "./lib/desktop";
 import { readRoute, writeRoute } from "./lib/route";
@@ -16,10 +16,12 @@ import Tracks from "./views/Tracks";
 import Exam from "./views/Exam";
 import Interview from "./views/Interview";
 import Verify from "./views/Verify";
+import Practice from "./views/Practice";
 
 const NAV = [
   { id: "dashboard", label: "Обзор", icon: LayoutDashboard },
   { id: "tracks", label: "Профессии", icon: Briefcase },
+  { id: "practice", label: "Проекты", icon: FolderCode },
   { id: "decks", label: "Колоды", icon: Layers },
   { id: "textbook", label: "Учебник", icon: BookOpenText },
   { id: "settings", label: "Настройки", icon: SettingsIcon },
@@ -55,7 +57,7 @@ function Root() {
   const restoring = useRef(false);
   const exiting = useRef(false); // вышли из занятия — ждём history.back(), сессию не восстанавливать
 
-  const VIEWS = ["dashboard", "tracks", "decks", "textbook", "settings", "study"];
+  const VIEWS = ["dashboard", "tracks", "practice", "decks", "textbook", "settings", "study"];
   const view = VIEWS.includes(route.view) ? (route.view === "study" ? "decks" : route.view) : "dashboard";
 
   /** Перейти: next — полный набор параметров нового экрана. */
@@ -270,12 +272,13 @@ function Root() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                    className={`mx-auto w-full px-4 py-6 sm:px-8 sm:py-8 ${view === "textbook" ? "max-w-[1500px]" : "max-w-6xl"}`}
+                    className={`mx-auto w-full px-4 py-6 sm:px-8 sm:py-8 ${view === "practice" ? "max-w-[1900px]" : view === "textbook" ? "max-w-[1500px]" : "max-w-6xl"}`}
                   >
                     {view === "dashboard" && <Dashboard user={user} decks={decks} onStart={startStudy} onRead={openTextbook} goDecks={() => setView("decks")} />}
                     {view === "tracks" && (
                       <Tracks
                         onBook={(book, lesson = "") => navigate({ view: "textbook", book, lesson })}
+                        onPractice={(track, project) => navigate({ view: "practice", track, project })}
                         onDeck={(deck, topic = "") => navigate({ view: "decks", deck, topic })}
                         decks={decks}
                         onStart={startStudy}
@@ -287,6 +290,7 @@ function Root() {
                       />
                     )}
                     {view === "decks" && <Decks decks={decks} reload={loadDecks} onStart={startStudy} onRead={openTextbook} route={route} navigate={navigate} />}
+                    {view === "practice" && <Practice route={route} navigate={navigate} userId={user.id} config={config} />}
                     {view === "textbook" && (
                       <Textbook user={user} decks={decks} reloadDecks={loadDecks} onStart={startStudy} route={route} navigate={navigate} />
                     )}

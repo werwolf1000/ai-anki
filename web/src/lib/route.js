@@ -1,7 +1,7 @@
 // Состояние навигации в адресной строке: ?view=textbook&book=php&lesson=…, ?view=decks&deck=…&topic=…,
 // ?view=study&deck=…&mode=…&topic=… — ссылку можно сохранить, обновить страницу или вернуться «Назад».
 
-const KEYS = ["view", "book", "lesson", "deck", "topic", "mode", "track", "from"];
+const KEYS = ["view", "book", "lesson", "deck", "topic", "mode", "track", "from", "project"];
 
 export function readRoute() {
   try {

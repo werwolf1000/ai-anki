@@ -10,7 +10,7 @@ import { Ring, Spinner, useToast } from "../components/ui";
 import StartModal from "../components/StartModal";
 import Certificate from "../components/Certificate";
 
-export default function Tracks({ decks, onStart, onRead, onBook, onDeck, onExam, onInterview, openTrack, setOpenTrack }) {
+export default function Tracks({ decks, onStart, onRead, onBook, onDeck, onPractice, onExam, onInterview, openTrack, setOpenTrack }) {
   const [data, setData] = useState(null);
   const [gridRef] = useAutoAnimate({ duration: 250 });
 
@@ -31,6 +31,7 @@ export default function Tracks({ decks, onStart, onRead, onBook, onDeck, onExam,
         onStart={onStart}
         onRead={onRead}
         onBook={onBook}
+        onPractice={onPractice}
         onDeck={onDeck}
         onExam={onExam}
         onInterview={onInterview}
@@ -158,17 +159,26 @@ function TrackCard({ track: t, index, onOpen }) {
   );
 }
 
-function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, onExam, onInterview }) {
+function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, onPractice, onExam, onInterview }) {
   const toast = useToast();
   const [t, setT] = useState(null);
   const [picked, setPicked] = useState(null);
   const [issuing, setIssuing] = useState(false);
+  const [projects, setProjects] = useState([]);
   const [histRef] = useAutoAnimate();
 
   const load = useCallback(() => api(`/api/tracks/${trackId}`).then(setT).catch((e) => toast(e.message, "error")), [trackId, toast]);
   useEffect(() => {
     load();
   }, [load]);
+  useEffect(() => {
+    let cancelled = false;
+    setProjects([]);
+    if (["python", "php"].includes(trackId)) api("/api/practice").then((data) => {
+      if (!cancelled) setProjects(data.projects.filter((p) => p.track === trackId));
+    }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [trackId]);
 
   if (!t) return <div className="flex justify-center py-20"><Spinner className="h-6 w-6" /></div>;
 
@@ -263,6 +273,8 @@ function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, 
         </div>
       </motion.section>
 
+      {["python", "php"].includes(t.id) && <section className="glass flex flex-wrap items-center justify-between gap-4 p-5"><div><h2 className="flex items-center gap-2 font-semibold"><Terminal className="h-5 w-5 text-violet-300" /> Проектная практика</h2><p className="mt-1 text-sm text-zinc-400">Четыре проекта: файлы, запуск, проверки по этапам и AI-наставник.</p></div><button className="btn-primary" onClick={() => onPractice(t.id)}>Открыть проекты</button></section>}
+
       {t.book && (
         <section className="glass p-5 sm:p-6">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -273,7 +285,7 @@ function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, 
             <button className="btn-primary" onClick={() => onBook(t.book.id)}>Открыть учебник</button>
           </div>
           <div className="divide-y divide-white/[0.06]">
-            {t.book.chapters.map((ch) => (
+            {t.book.chapters.map((ch, chapterIndex) => (
               <details key={ch.title} className="py-2">
                 <summary className="cursor-pointer py-2 text-sm font-semibold text-zinc-200">{ch.title} <span className="ml-2 font-normal text-zinc-500">{ch.lessons.length} уроков</span></summary>
                 <div className="space-y-1 pb-2">
@@ -284,6 +296,7 @@ function TrackDetail({ trackId, decks, onBack, onStart, onRead, onBook, onDeck, 
                       <button className="chip text-xs disabled:opacity-40" disabled={!t.book.decks.live} onClick={() => onDeck(t.book.decks.live, ls.title)} aria-label={`Практика: ${ls.title}`}>{ls.live} {t.book.is_code ? "live-coding" : "заданий"}</button>
                     </div>
                   ))}
+                  {projects.filter((p) => p.chapters.includes(chapterIndex + 1)).map((p) => <button key={p.id} className="flex w-full items-center gap-2 rounded-lg bg-violet-400/5 px-3 py-3 text-left text-sm text-violet-300 hover:bg-violet-400/10" onClick={() => onPractice(t.id, p.id)}><Terminal className="h-4 w-4 shrink-0" />Проект: {p.title}</button>)}
                 </div>
               </details>
             ))}

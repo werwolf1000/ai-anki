@@ -1,0 +1,47 @@
+# Optional worker overlay. Prefer a dedicated VM/host for untrusted student code.
+# Build all runtimes first: docker compose -f docker-compose.yml -f docker-compose.practice.yml --profile practice-images build
+services:
+  ai-anki:
+    environment:
+      AI_ANKI_PRACTICE_WORKER: http://practice-worker:8091
+      AI_ANKI_PRACTICE_TOKEN: ${AI_ANKI_PRACTICE_TOKEN:?Set a random token of at least 32 characters}
+
+  practice-worker:
+    build:
+      context: .
+      dockerfile: practice/worker.Dockerfile
+    restart: unless-stopped
+    environment:
+      AI_ANKI_PRACTICE_TOKEN: ${AI_ANKI_PRACTICE_TOKEN:?Set the shared worker token}
+      AI_ANKI_PRACTICE_PARALLEL: "2"
+    # Only this trusted service accesses Docker. Never mount the socket in ai-anki or student runtimes.
+    volumes:
+      - ${AI_ANKI_DOCKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    # No public ports; only ai-anki talks to this API.
+
+  practice-base:
+    profiles: [practice-images]
+    image: ai-anki-practice-base:1
+    build:
+      context: .
+      dockerfile: practice/Dockerfile
+      target: base
+    command: ["true"]
+
+  practice-data:
+    profiles: [practice-images]
+    image: ai-anki-practice-data:1
+    build:
+      context: .
+      dockerfile: practice/Dockerfile
+      target: data
+    command: ["true"]
+
+  practice-ml:
+    profiles: [practice-images]
+    image: ai-anki-practice-ml:1
+    build:
+      context: .
+      dockerfile: practice/Dockerfile
+      target: ml
+    command: ["true"]

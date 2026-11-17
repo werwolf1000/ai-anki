@@ -392,6 +392,10 @@ from server.tracks import build_router as build_tracks_router  # noqa: E402
 
 app.include_router(build_tracks_router(services, current_ctx))
 
+from server.practice import build_router as build_practice_router  # noqa: E402
+
+app.include_router(build_practice_router(services, current_ctx))
+
 
 @app.get("/healthz")
 def healthz() -> dict:
