@@ -247,7 +247,7 @@ export default function Textbook({ user, decks, reloadDecks, onStart, route = {}
               {book.videos > 0 && (
                 <div className="mt-1.5"><PlayCircle className="mr-1 inline h-3 w-3" /> Видеоуроков в базе: {book.videos}</div>
               )}
-              {user.is_admin && book.book && <CardsPanel bookId={book.book.id} isCode={book.book.has_practice} topics={book.topics} onDone={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }} />}
+              {user.is_admin && book.book && <CardsPanel bookId={book.book.id} isCode={book.book.has_practice} targets={book.book.targets} topics={book.topics} onDone={() => { loadBook(); reloadDecks?.().catch?.(() => {}); }} />}
               {user.is_admin && book.topics.some((t) => !t.has_article) && (
                 <button className="btn-ghost mt-2 w-full justify-center py-1.5 text-xs" onClick={generateDeck}>
                   <Sparkles className="h-3.5 w-3.5" /> Написать статьи для всех уроков ({book.topics.filter((t) => !t.has_article).length})
@@ -483,11 +483,11 @@ function SyllabusEditor({ bookId, current, onChanged }) {
   );
 }
 
-/** Админ: карточки учебника — сколько есть, где не хватает, догенерация через Ollama. */
-function CardsPanel({ bookId, isCode, topics, onDone }) {
+/** Админ: карточки учебника — сколько есть, где не хватает, догенерация выбранной моделью. */
+function CardsPanel({ bookId, isCode, targets = { qa: 8, live: 3 }, topics, onDone }) {
   const toast = useToast();
   const [job, setJob] = useState(null);
-  const thin = topics.filter((t) => (t.cards || 0) < 8 || (isCode && (t.live || 0) < 3)).length;
+  const thin = topics.filter((t) => (t.cards || 0) < targets.qa || (isCode && (t.live || 0) < targets.live)).length;
   const wasRunning = useRef(false);
 
   useEffect(() => {
@@ -534,11 +534,12 @@ function CardsPanel({ bookId, isCode, topics, onDone }) {
           </button>
         )}
       </div>
-      <div className="mt-1 text-[10px] text-zinc-600">норма на урок: 8 вопросов{isCode ? " и 3 практических задания" : ""}</div>
+      <div className="mt-1 text-[10px] text-zinc-600">минимум на урок: {targets.qa} вопросов{isCode ? ` и ${targets.live} практических заданий` : ""}</div>
       {job?.running && (
         <div className="mt-1.5 text-violet-200">
           {job.done}/{job.total} · {job.current}
           <div className="text-zinc-500">+{job.added_qa} вопросов{isCode ? `, +${job.added_live} практических заданий` : ""}</div>
+          <div className="text-zinc-500">Осталось добавить: {job.remaining_qa} вопросов, {job.remaining_live} заданий</div>
         </div>
       )}
       {!job?.running && job?.log?.length > 0 && <div className="mt-1.5 text-zinc-500">{job.log[job.log.length - 1]}</div>}
@@ -728,8 +729,8 @@ function Article({ user, deck, deckId, topic, info, bookInfo, bookDecks = {}, on
               <motion.button whileTap={{ scale: 0.97 }} className="btn-primary" onClick={() => practice("qa")} disabled={!!starting || (bookDecks.qa && !info?.cards)}>
                 {starting === "qa" ? <Spinner /> : <GraduationCap className="h-4 w-4" />} Проверить себя
               </motion.button>
-              {user.is_admin && bookInfo && info && (info.cards < 8 || (bookInfo.has_practice && info.live < 3)) && (
-                <button className="btn-ghost" onClick={generateCards} title="Догенерировать карточки этого урока через Ollama">
+              {user.is_admin && bookInfo && info && (info.cards < (bookInfo.targets?.qa ?? 8) || (bookInfo.has_practice && info.live < (bookInfo.targets?.live ?? 3))) && (
+                <button className="btn-ghost" onClick={generateCards} title="Догенерировать карточки этого урока выбранной моделью учебника">
                   <Sparkles className="h-4 w-4" /> Карточки
                 </button>
               )}

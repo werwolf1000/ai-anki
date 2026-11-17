@@ -45,6 +45,8 @@ export default function BookDecksPanel() {
 
   if (!st) return null;
   const job = st.job;
+  const professionTargets = st.profession_targets || { qa: 20, live: 10 };
+  const professionThin = st.books.filter((b) => b.track).reduce((n, b) => n + b.thin, 0);
   const totals = st.books.reduce((a, b) => ({ qa: a.qa + b.qa, live: a.live + b.live, thin: a.thin + b.thin, lessons: a.lessons + b.lessons }), { qa: 0, live: 0, thin: 0, lessons: 0 });
   return (
     <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.19 }} className="glass p-5 sm:p-6">
@@ -52,8 +54,9 @@ export default function BookDecksPanel() {
         <BookOpenText className="h-4 w-4 text-violet-300" /> Колоды учебников
       </h2>
       <p className="mb-4 text-xs leading-relaxed text-zinc-500">
-        У каждого урока программы — свои карточки: вопросы, а для программирования и профессий ещё и практика. Норма на урок —{" "}
-        {st.targets.qa} вопросов и {st.targets.live} задания; недостающее догенерирует выбранная модель по статье урока и документации.
+        Минимум на каждый урок профессии — {professionTargets.qa} вопросов и {professionTargets.live} практических заданий.
+        Для остальных учебников — {st.targets.qa} вопросов{` и ${st.targets.live} задания, если предусмотрена практика`}.{" "}
+        Недостающее догенерирует выбранная модель по статье урока и документации.
         Программы правятся в разделе «Учебник» → «Править».
       </p>
       <div className="mb-4 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
@@ -77,6 +80,14 @@ export default function BookDecksPanel() {
             {busy === "gen" ? <Spinner /> : <Sparkles className="h-4 w-4" />} Догенерировать во всех учебниках
           </button>
         )}
+        {!job.running && (
+          <button className="btn-ghost" disabled={!!busy || !professionThin} onClick={() => call("professions", async () => {
+            const r = await api("/api/books/generate", { method: "POST", body: { professions_only: true, workers: 4 } });
+            toast(`Уроков профессий в очереди: ${r.queued}`, "success");
+          })}>
+            {busy === "professions" ? <Spinner /> : <Sparkles className="h-4 w-4" />} Дополнить профессии до нормы
+          </button>
+        )}
         <button
           className="btn-ghost"
           disabled={!!busy}
@@ -93,6 +104,7 @@ export default function BookDecksPanel() {
         <div className="mb-3 rounded-xl border border-white/[0.06] bg-ink-900/70 p-3 font-mono text-[11px] leading-relaxed text-zinc-400">
           {st.assign_status && <div className="text-cyan-300">{st.assign_status}</div>}
           {job.running && <div className="text-violet-300">{job.done}/{job.total} · {job.current} · +{job.added_qa} вопросов, +{job.added_live} live-coding</div>}
+          {(job.running || job.status === "incomplete") && <div>Осталось: {job.remaining_lessons} уроков · {job.remaining_qa} вопросов · {job.remaining_live} заданий</div>}
           {job.log.slice(-8).map((l, i) => <div key={i}>{l}</div>)}
           {job.error && <div className="text-rose-300">{job.error}</div>}
         </div>
@@ -104,7 +116,7 @@ export default function BookDecksPanel() {
             <span className="text-zinc-500">{b.chapters} гл. · {b.lessons} ур.</span>
             <span className="w-20 text-right tabular-nums text-zinc-300">{b.qa} вопр.</span>
             <span className="w-16 text-right tabular-nums text-zinc-400">{b.has_practice ? `${b.live} live` : "—"}</span>
-            <span className={`w-24 text-right ${b.thin ? "text-amber-300" : "text-emerald-300"}`}>{b.thin ? `нехватка: ${b.thin}` : "норма"}</span>
+            <span className={`w-24 text-right ${b.thin ? "text-amber-300" : "text-emerald-300"}`} title={`На урок: ${b.targets?.qa ?? st.targets.qa} вопросов, ${b.targets?.live ?? st.targets.live} заданий`}>{b.thin ? `нехватка: ${b.thin}` : "норма"}</span>
             <span className="w-16 text-right text-[10px] text-zinc-600" title="Как разложены перенесённые карточки">{b.assigned === "topics" ? "по темам" : b.assigned === "words" ? "по словам" : "по смыслу"}</span>
             <button
               className="rounded px-2 py-1 text-violet-200 hover:bg-white/[0.06] disabled:opacity-30"

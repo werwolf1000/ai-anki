@@ -380,6 +380,7 @@ services.videos = VideoLibrary(services.data_dir, services.knowledge, services) 
 services.books = BookDecks(services)  # type: ignore[attr-defined]
 services.books.ensure_all()
 services.books.start_refine()
+services.books.resume_generation()
 services.user_name = lambda uid: (lambda u: (u.display_name or u.username) if u else str(uid))(users.get(uid))  # type: ignore[attr-defined]
 app.include_router(build_llm_router(services, current_ctx))
 app.include_router(build_books_router(services, current_ctx))

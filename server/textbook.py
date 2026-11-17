@@ -12,6 +12,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+from server.card_targets import card_targets
 from server.kb_sources import SOURCES, deck_vocab, sources_for_deck
 from server.knowledge import ARTICLE_SYSTEM, ASK_SYSTEM, ThinkFilter, format_context, hybrid_search
 from server.services import AppServices, UserContext
@@ -329,7 +330,7 @@ def build_router(services: AppServices, current_ctx: Callable[..., UserContext])
             "deck_id": deck_id,
             "name": entry.name,
             "book": {"id": sy.id, "title": sy.title, "is_code": sy.is_code, "kind": sy.kind, "edited": sy.edited,
-                     "track": sy.track, "has_practice": sy.has_practice,
+                     "track": sy.track, "has_practice": sy.has_practice, "targets": card_targets(sy),
                      "chapters": [c.title for c in sy.chapters]} if sy else None,
             "decks": decks,
             "topics": topics,

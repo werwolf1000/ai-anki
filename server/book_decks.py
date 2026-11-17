@@ -2,23 +2,25 @@
 
 Для каждой программы (server/syllabus.py) в <data>/decks лежат:
     book-<id>.json               — вопросы (вопрос → эталон)
-    book-<id>-live-coding.json   — live-coding, только для учебников по коду (kind: code)
+    book-<id>-live-coding.json   — live-coding и практические задания профессий
 
 При первом запуске в них раскладываются карточки прежних колод этого учебника (по близости к урокам),
 прогресс повторений переносится по id карточек, прежние колоды скрываются. Колоды профессий (pro-*)
 также переходят на колоды учебников: они используются в экзаменах и сертификатах.
 
 Правка программы (добавить / переименовать / удалить главу или урок) переносит за уроком его карточки,
-статью, отметки «прочитано» и привязки видео. Недостающие карточки уроков догенерирует Ollama (фоновая задача).
+статью, отметки «прочитано» и привязки видео. Недостающие карточки догенерирует выбранная модель учебника.
 """
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import math
 import re
 import threading
 import time
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -27,12 +29,11 @@ from typing import Callable
 
 import numpy as np
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
+from server.card_targets import QA_TARGET, LIVE_TARGET, PROFESSION_QA_TARGET, PROFESSION_LIVE_TARGET, card_targets
 from server.syllabus import Chapter, Syllabus, all_syllabi, get_syllabus, save_syllabus, stems, syllabus_for
 
-QA_TARGET = 8
-LIVE_TARGET = 3
 STATE_VERSION = 1
 CARD_FIELDS = ("question", "reference", "card_type", "code", "task", "language", "answer_mode", "image", "image_alt")
 
@@ -153,6 +154,11 @@ class CardJob:
     error: str = ""
     started_at: str = ""
     finished_at: str = ""
+    status: str = "idle"
+    remaining_lessons: int = 0
+    remaining_qa: int = 0
+    remaining_live: int = 0
+    active: list[str] = field(default_factory=list)
     log: list[str] = field(default_factory=list)
 
     def say(self, msg: str) -> None:
@@ -160,7 +166,8 @@ class CardJob:
         del self.log[:-60]
 
     def public(self) -> dict:
-        keys = ("running", "done", "total", "added_qa", "added_live", "failed", "current", "error", "started_at", "finished_at")
+        keys = ("running", "done", "total", "added_qa", "added_live", "failed", "current", "error", "started_at", "finished_at",
+                "status", "remaining_lessons", "remaining_qa", "remaining_live", "active")
         return {k: getattr(self, k) for k in keys} | {"log": self.log[-12:]}
 
 
@@ -178,12 +185,15 @@ MATH_SYSTEM = """Ты составляешь задачи по высшей ма
 одна строка пояснения после «; ». Не повторяй уже существующие задачи.
 Верни ТОЛЬКО JSON-массив: [{"question": "...", "reference": "..."}]"""
 
-LIVE_SYSTEM = """Ты составляешь задания live-coding для собеседований. Язык решения: {lang}.
+LIVE_SYSTEM = """Ты составляешь задания live-coding для собеседований. Основной язык профессии: {lang}.
 Каждое задание — небольшая самостоятельная задача по теме урока: что реализовать (функция/класс/скрипт),
-входные данные и результат, ограничения и пример вызова. Решение — эталонный рабочий код на {lang},
-5–40 строк, идиоматичный и с обработкой краевых случаев. Пиши формулировки по-русски.
+входные данные и результат, ограничения и пример вызова. Решение — эталонный рабочий код,
+5–40 строк, идиоматичный и с обработкой краевых случаев. Для темы SQL используй SQL,
+для Dockerfile — Dockerfile, для Terraform — HCL, для конфигураций — YAML/JSON,
+когда это соответствует изучаемому навыку. Укажи фактический язык в language.
+Пиши формулировки по-русски. Приведи конкретные входы, ожидаемые результаты и критерии приёмки.
 Не повторяй уже существующие задания.
-Верни ТОЛЬКО JSON-массив: [{"task": "...", "solution": "..."}]"""
+Верни ТОЛЬКО JSON-массив: [{"task": "...", "solution": "...", "language": "..."}]"""
 
 
 def parse_json_array(text: str) -> list[dict]:
@@ -217,8 +227,10 @@ class EditIn(BaseModel):
 class GenerateIn(BaseModel):
     book: str = ""  # пусто — все учебники
     lesson: str = ""  # только этот урок
-    qa_target: int = QA_TARGET
-    live_target: int = LIVE_TARGET
+    qa_target: int | None = Field(default=None, ge=0, le=100)
+    live_target: int | None = Field(default=None, ge=0, le=100)
+    professions_only: bool = False
+    workers: int = Field(default=1, ge=1, le=4)
 
 
 class BookDecks:
@@ -228,6 +240,8 @@ class BookDecks:
         self.state_path: Path = services.data_dir / "books.json"
         self.lock = threading.RLock()
         self.job = CardJob()
+        self.generation_path = services.data_dir / "card-generation.json"
+        self._generation_request = None
         try:
             self.state = json.loads(self.state_path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
@@ -694,7 +708,9 @@ class BookDecks:
         user = (
             f"Учебник: {sy.title}\nГлава: {sy.chapter_of(lesson)}\nУрок: {lesson}\n\n{ctx_text}\n\n"
             f"УЖЕ ЕСТЬ ({'задания' if live else 'вопросы'}):\n{listed}\n\n"
-            f"Составь {need + 2} новых {'заданий live-coding' if live else 'карточек'} строго по уроку «{lesson}»."
+            f"Составь {need + 2} новых {'практических заданий' if live else 'карточек'} строго по уроку «{lesson}». "
+            "Проверяй разные аспекты: основной приём, применение, ограничения, ошибки и граничные случаи. "
+            "Не создавай перефразированные копии одного вопроса или задачи."
         )
         from server.knowledge import ThinkFilter
 
@@ -711,24 +727,37 @@ class BookDecks:
         out: list[dict] = []
         seen = list(existing)
         for it in items:
+            fields = ('task', 'solution') if live else ('question', 'reference')
+            if any(not isinstance(it.get(key), str) for key in fields):
+                continue
             if live:
                 q, ref = str(it.get("task", "")).strip(), str(it.get("solution", "")).strip()
                 ref = re.sub(r"^```\w*\n|\n?```$", "", ref).strip()
             else:
                 q, ref = str(it.get("question", "")).strip(), str(it.get("reference", "")).strip()
-            if len(q) < 12 or len(ref) < 2 or is_duplicate(q, seen):
+            if len(q) < 12 or len(ref) < (12 if sy.track else 2) or is_duplicate(q, seen):
                 continue
-            seen.append(q)
             if live:
-                card = {"card_type": "live_code", "question": q, "reference": ref, "language": sy.lang or ("python" if sy.is_code else "markdown")}
+                lang = sy.lang or ("python" if sy.is_code else "markdown")
+                suggested = str(it.get('language', '')).strip().lower()
+                if sy.is_code and suggested in {'python', 'php', 'javascript', 'typescript', 'go', 'bash', 'shell',
+                                                'yaml', 'json', 'dockerfile', 'sql', 'hcl', 'terraform', 'toml'}:
+                    lang = suggested
+                if lang == 'python':
+                    import ast
+                    try:
+                        ast.parse(ref)
+                    except SyntaxError:
+                        continue
+                card = {"card_type": "live_code", "question": q, "reference": ref, "language": lang}
             elif sy.kind == "math":
                 card = {"card_type": "math", "answer_mode": "math", "question": q, "reference": ref}
             else:
                 card = {"card_type": "text", "question": q, "reference": ref}
-            from app.deck import Card
-
-            c = Card(question=card["question"], reference=card["reference"], card_type=card["card_type"])
-            out.append({"id": c.id, **card, "topic": lesson, "origin": "gen", "created_at": _now()})
+            seen.append(q)
+            identity = json.dumps([sy.id, lesson, card['card_type'], q, ref], ensure_ascii=False)
+            card_id = 'gen-' + hashlib.sha256(identity.encode()).hexdigest()[:24]
+            out.append({"id": card_id, **card, "topic": lesson, "origin": "gen", "created_at": _now()})
             if len(out) >= need:
                 break
         return out
@@ -741,7 +770,18 @@ class BookDecks:
             path = live_path if live else qa_path
             data = self._read(path)
             ids = {c["id"] for c in data.get("cards", [])}
-            new = [c for c in cards if c["id"] not in ids]
+            ids.update(data.get("retired_ids", []))
+            questions = {}
+            for card in data.get("cards", []):
+                questions.setdefault(card.get("topic"), []).append(card.get("question", ""))
+            new = []
+            for card in cards:
+                seen = questions.setdefault(card.get("topic"), [])
+                if card["id"] in ids or is_duplicate(card["question"], seen):
+                    continue
+                new.append(card)
+                ids.add(card["id"])
+                seen.append(card["question"])
             data.setdefault("cards", []).extend(new)
             data.update(self._meta(sy, live))
             self._write(path, data)
@@ -749,73 +789,155 @@ class BookDecks:
         self.services._deck_cache.clear()
         return len(new)
 
-    def start_generation(self, body: GenerateIn) -> int:
-        books = [s for s in all_syllabi() if not body.book or s.id == body.book]
+    def coverage(self, body: GenerateIn) -> dict:
+        books = [s for s in all_syllabi() if (not body.book or s.id == body.book)
+                 and (not body.professions_only or s.track)]
         items: list[tuple[str, str]] = []
+        missing_qa = missing_live = 0
         for sy in books:
             counts = self.lesson_counts(sy)
+            targets = card_targets(sy, body.qa_target, body.live_target)
             for ls in sy.lesson_titles():
                 if body.lesson and ls != body.lesson:
                     continue
                 c = counts.get(ls, {"qa": 0, "live": 0})
-                if c["qa"] < body.qa_target or (sy.has_practice and c["live"] < body.live_target):
+                qa = max(0, targets['qa'] - c['qa'])
+                live = max(0, targets['live'] - c['live'])
+                missing_qa += qa
+                missing_live += live
+                if qa or live:
                     items.append((sy.id, ls))
-        if not items:
-            return 0
+        return {'items': items, 'remaining_lessons': len(items), 'remaining_qa': missing_qa, 'remaining_live': missing_live}
+
+    def _checkpoint(self):
+        with self.lock:
+            if self._generation_request is None:
+                return
+            self._write(self.generation_path, {'request': self._generation_request.model_dump(), 'job': self.job.public()})
+
+    def resume_generation(self):
+        """Resume only a previously requested job interrupted by a server restart."""
+        saved = self._read(self.generation_path)
+        if saved.get('job', {}).get('status') == 'running' and saved.get('request'):
+            self.start_generation(GenerateIn(**saved['request']))
+
+    def stop_generation(self):
+        with self.lock:
+            self.job.stop = True
+            self.job.status = 'stopped'
+            self._checkpoint()
+
+    def start_generation(self, body: GenerateIn) -> int:
+        if body.book and get_syllabus(body.book) is None:
+            raise HTTPException(404, 'Учебник не найден')
         with self.lock:
             if self.job.running:
                 raise HTTPException(409, "Генерация карточек уже идёт")
-            self.job = CardJob(running=True, total=len(items), started_at=_now())
+            coverage = self.coverage(body)
+            items = coverage.pop('items')
+            self._generation_request = body
+            if not items:
+                self.job = CardJob(status='completed', finished_at=_now(), **coverage)
+                self._checkpoint()
+                return 0
+            self.job = CardJob(running=True, status='running', total=len(items), started_at=_now(), **coverage)
             self.job.say(f"Уроков с нехваткой карточек: {len(items)}")
+            self._checkpoint()
         threading.Thread(target=self._run, args=(items, body), daemon=True, name="book-cards").start()
         return len(items)
+
+    def _fill_lesson(self, sid: str, lesson: str, body: GenerateIn):
+        sy = get_syllabus(sid)
+        if sy is None or lesson not in sy.lesson_titles():
+            return
+        label = f'{sy.title} › {lesson}'
+        with self.lock:
+            self.job.active.append(label)
+            self.job.current = ' · '.join(self.job.active)
+        try:
+            targets = card_targets(sy, body.qa_target, body.live_target)
+            for live in ((False, True) if sy.has_practice else (False,)):
+                empty_attempts = 0
+                while not self.job.stop:
+                    path = self.paths(sy)[1 if live else 0]
+                    with self.lock:
+                        cards = [c for c in self._read(path).get('cards', []) if c.get('topic') == lesson]
+                    need = targets['live' if live else 'qa'] - len(cards)
+                    if need <= 0:
+                        break
+                    # Small responses avoid truncated JSON and allow checkpointing.
+                    batch = min(need, 4 if live else 8)
+                    t0 = time.time()
+                    new = self._generate(sy, lesson, batch, live, [c.get('question', '') for c in cards])
+                    if self.job.stop:
+                        return
+                    added = self._append(sy, live, new)
+                    with self.lock:
+                        if live:
+                            self.job.added_live += added
+                        else:
+                            self.job.added_qa += added
+                        self.job.say(f'{label}: +{added} {"заданий" if live else "вопросов"} за {time.time() - t0:.0f} с')
+                        self._checkpoint()
+                    empty_attempts = empty_attempts + 1 if added == 0 else 0
+                    if empty_attempts >= 3:
+                        raise RuntimeError(f'Модель не добавила новых карточек за три попытки; осталось {need}')
+        finally:
+            with self.lock:
+                self.job.active.remove(label)
+                self.job.current = ' · '.join(self.job.active)
 
     def _run(self, items: list[tuple[str, str]], body: GenerateIn) -> None:
         job = self.job
         streak = 0
         try:
-            for sid, lesson in items:
-                if job.stop:
-                    job.say("Остановлено")
-                    break
-                sy = get_syllabus(sid)
-                if sy is None or lesson not in sy.lesson_titles():
-                    job.done += 1
-                    continue
-                job.current = f"{sy.title} › {lesson}"
-                try:
-                    for live in ((False, True) if sy.has_practice else (False,)):
-                        qa_path, live_path = self.paths(sy)
-                        path = live_path if live else qa_path
-                        cards = [c for c in self._read(path).get("cards", []) if c.get("topic") == lesson]
-                        target = body.live_target if live else body.qa_target
-                        need = target - len(cards)
-                        if need <= 0:
-                            continue
-                        t0 = time.time()
-                        new = self._generate(sy, lesson, need, live, [c.get("question", "") for c in cards])
-                        added = self._append(sy, live, new)
-                        if live:
-                            job.added_live += added
-                        else:
-                            job.added_qa += added
-                        job.say(f"{sy.title} › {lesson}: +{added} {'live-coding' if live else 'вопросов'} за {time.time() - t0:.0f} с")
-                    streak = 0
-                except Exception as exc:  # noqa: BLE001
-                    job.failed += 1
-                    streak += 1
-                    job.say(f"Ошибка «{lesson}»: {exc}")
-                    if streak >= 3:
-                        job.error = f"Три ошибки подряд, генерация остановлена: {exc}"
-                        job.say(job.error)
-                        break
-                job.done += 1
-            else:
-                job.say(f"Готово: +{job.added_qa} вопросов, +{job.added_live} live-coding, ошибок {job.failed}")
+            remaining = iter(items)
+            # The desktop bridge processes one local-model request at a time.
+            # Avoid a bulk queue expiring while Strata is still finishing a lesson.
+            provider = str(getattr(self.services, 'config', {}).get('llm_textbook', '') or '')
+            workers = 1 if provider.startswith('bridge:') else body.workers
+            if workers < body.workers:
+                job.say('Локальная модель через приложение: генерируем по одному уроку.')
+            with ThreadPoolExecutor(max_workers=workers, thread_name_prefix='book-lesson') as pool:
+                pending = {}
+                def submit():
+                    if job.stop or job.error:
+                        return
+                    item = next(remaining, None)
+                    if item:
+                        pending[pool.submit(self._fill_lesson, *item, body)] = item
+                for _ in range(workers):
+                    submit()
+                while pending:
+                    finished, _ = wait(pending, return_when=FIRST_COMPLETED)
+                    for future in finished:
+                        _, lesson = pending.pop(future)
+                        try:
+                            future.result()
+                            streak = 0
+                        except Exception as exc:  # noqa: BLE001
+                            job.failed += 1
+                            streak += 1
+                            job.say(f'Ошибка «{lesson}»: {exc}')
+                            if streak >= 3:
+                                job.error = f'Три ошибки подряд, генерация остановлена: {exc}'
+                        job.done += 1
+                        submit()
+                    coverage = self.coverage(body)
+                    for key in ('remaining_lessons', 'remaining_qa', 'remaining_live'):
+                        setattr(job, key, coverage[key])
+                    self._checkpoint()
         finally:
+            coverage = self.coverage(body)
+            for key in ('remaining_lessons', 'remaining_qa', 'remaining_live'):
+                setattr(job, key, coverage[key])
+            job.status = 'stopped' if job.stop else 'incomplete' if job.remaining_lessons else 'completed'
+            job.say(f'{"Готово" if job.status == "completed" else "Не завершено"}: +{job.added_qa} вопросов, '
+                    f'+{job.added_live} заданий. Ещё не хватает: {job.remaining_qa} вопросов, {job.remaining_live} заданий.')
             job.running = False
             job.current = ""
             job.finished_at = _now()
+            self._checkpoint()
             self.migrate_loaded_progress()
 
 
@@ -842,6 +964,7 @@ def build_router(services, current_ctx) -> APIRouter:
         return {
             "id": sy.id, "title": sy.title, "kind": sy.kind, "lang": sy.lang, "is_code": sy.is_code, "edited": sy.edited,
             "track": sy.track, "has_practice": sy.has_practice,
+            "targets": card_targets(sy),
             "decks": books.deck_ids(sy),
             "chapters": [
                 {"title": ch.title, "lessons": [{"title": ls, **counts.get(ls, {"qa": 0, "live": 0})} for ls in ch.lessons]}
@@ -854,16 +977,19 @@ def build_router(services, current_ctx) -> APIRouter:
         out = []
         for sy in all_syllabi():
             counts = books.lesson_counts(sy)
+            targets = card_targets(sy)
             out.append({
                 "id": sy.id, "title": sy.title, "kind": sy.kind, "is_code": sy.is_code, "decks": books.deck_ids(sy),
                 "track": sy.track, "has_practice": sy.has_practice,
                 "chapters": len(sy.chapters), "lessons": len(counts),
                 "qa": sum(c["qa"] for c in counts.values()), "live": sum(c["live"] for c in counts.values()),
-                "thin": sum(1 for c in counts.values() if c["qa"] < QA_TARGET or (sy.has_practice and c["live"] < LIVE_TARGET)),
+                "thin": sum(1 for c in counts.values() if c["qa"] < targets['qa'] or c["live"] < targets['live']),
+                "targets": targets,
                 "assigned": books.state["assigned"].get(sy.id, ""),
             })
         return {
             "books": out, "job": books.job.public(), "targets": {"qa": QA_TARGET, "live": LIVE_TARGET},
+            "profession_targets": {"qa": PROFESSION_QA_TARGET, "live": PROFESSION_LIVE_TARGET},
             "assign_status": books.assign_status,
         }
 
@@ -906,7 +1032,7 @@ def build_router(services, current_ctx) -> APIRouter:
 
     @r.post("/api/books/generate/stop")
     def stop(ctx=Depends(admin)) -> dict:
-        books.job.stop = True
+        books.stop_generation()
         return {"ok": True}
 
     @r.get("/api/books-job")
