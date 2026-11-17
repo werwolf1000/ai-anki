@@ -10,3 +10,12 @@ web/dist/
 desktop/renderer/
 desktop/dist/
 desktop/runtime/
+
+# Locally installed assistant skills; version project-specific workflows explicitly.
+.agents/skills/*
+!.agents/skills/project-auto-commit/
+.claude/skills/
+skills-lock.json
+
+# Personal permission settings for this checkout.
+.codex/config.toml
