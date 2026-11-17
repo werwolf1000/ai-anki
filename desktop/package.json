@@ -24,7 +24,10 @@
     "directories": { "output": "dist" },
     "files": ["src/**/*", "renderer/**/*", "assets/**/*", "package.json"],
     "win": {
-      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ],
       "icon": "assets/icon.ico"
     },
     "nsis": {
@@ -35,6 +38,9 @@
       "createStartMenuShortcut": true,
       "shortcutName": "AI Anki",
       "artifactName": "AI-Anki-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "AI-Anki-Launcher-${version}.${ext}"
     }
   }
 }

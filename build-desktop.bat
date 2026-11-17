@@ -28,7 +28,7 @@ if errorlevel 1 (
   exit /b 1
 )
 set "BUILD_ROOT=%CD%"
-echo AI Anki - Windows desktop installer
+echo AI Anki - Windows desktop installer and launcher
 echo Project: "%BUILD_ROOT%"
 echo.
 
@@ -64,10 +64,10 @@ if not exist "desktop\node_modules\electron\dist\electron.exe" goto missing_depe
 
 :build
 echo.
-echo [3/3] Building the interface and Windows installer...
+echo [3/3] Building the interface, Windows installer and portable launcher...
 call npm.cmd --prefix "%BUILD_ROOT%\desktop" run dist -- --publish never --config.electronDist=node_modules/electron/dist
 if errorlevel 1 goto failed
-node -e "const fs=require('fs'),p=require('path'),j=require('./desktop/package.json'),f=p.resolve('desktop/dist','AI-Anki-Setup-'+j.version+'.exe'); if(!fs.existsSync(f)){console.error('ERROR: Installer was not created.');process.exit(1)} console.log('\nInstaller: '+f)"
+node -e "const fs=require('fs'),p=require('path'),v=require('./desktop/package.json').version; for(const [label,prefix] of [['Installer','AI-Anki-Setup-'],['Launcher','AI-Anki-Launcher-']]){const f=p.resolve('desktop/dist',prefix+v+'.exe'); if(!fs.existsSync(f)){console.error('ERROR: Missing '+f);process.exit(1)} console.log(label+': '+f)}"
 if errorlevel 1 goto failed
 echo.
 echo Build completed successfully.
@@ -100,8 +100,9 @@ exit /b %BUILD_EXIT%
 :help
 echo Usage: build-desktop.bat [--skip-install] [--no-pause]
 echo.
-echo By default, install dependencies from lockfiles and build the Windows installer.
+echo By default, install dependencies from lockfiles and build both Windows executables.
 echo --skip-install  Reuse installed dependencies when lockfiles have not changed.
 echo --no-pause      Exit without waiting for a key, for terminal or CI use.
 echo Output: desktop\dist\AI-Anki-Setup-VERSION.exe
+echo         desktop\dist\AI-Anki-Launcher-VERSION.exe - runs without installation
 exit /b 0

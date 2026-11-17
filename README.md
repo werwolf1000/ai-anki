@@ -298,7 +298,12 @@ PHP — корзина, расходы с PDO, REST API и мини-MVC. Вну�
 
 **Сборка в Windows двойным щелчком:** установите Node.js **22.12 или новее** с npm и запустите
 [`build-desktop.bat`](build-desktop.bat) из корня проекта. Скрипт установит зависимости из lock-файлов,
-соберёт интерфейс и создаст установщик `desktop/dist/AI-Anki-Setup-<version>.exe`.
+соберёт интерфейс и создаст два файла:
+
+- `desktop/dist/AI-Anki-Setup-<version>.exe` — установщик Windows с ярлыками.
+- `desktop/dist/AI-Anki-Launcher-<version>.exe` — переносимый launcher: запускает приложение без установки,
+  достаточно одного `.exe`. При запуске распаковывает приложение во временный каталог.
+
 При ошибке сборка остановится, окно останется открытым с сообщением. Для загрузки зависимостей и
 инструментов упаковки нужен интернет. Перед пересборкой закройте приложение, запущенное из `desktop/dist`.
 
@@ -316,7 +321,7 @@ PHP — корзина, расходы с PDO, REST API и мини-MVC. Вну�
 cd web && npm install
 cd ../desktop && npm install
 npm start          # собрать web и запустить приложение
-npm run dist       # установщик Windows: desktop/dist/AI-Anki-Setup-<version>.exe
+npm run dist       # установщик и переносимый launcher для Windows в desktop/dist/
 ```
 
 Если после `npm install` нет `node_modules/electron/dist/electron.exe`: `node node_modules/electron/install.js`.
