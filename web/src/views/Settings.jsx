@@ -7,6 +7,7 @@ import { Spinner, useToast } from "../components/ui";
 import VideoLibrary from "../components/VideoLibrary";
 import BookDecksPanel from "../components/BookDecksPanel";
 import LlmPanel from "../components/LlmPanel";
+import { nextDelay, setIfChanged } from "../lib/poll";
 
 const STUDY_FIELDS = [
   { key: "session_limit", label: "Карточек за сессию", min: 1, max: 50 },
@@ -203,7 +204,7 @@ export default function Settings({ user, setUser, config, setConfig, onLogout })
 
 function Section({ icon: Icon, title, children, delay }) {
   return (
-    <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} className="glass p-5 sm:p-6">
+    <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay }} className="glass cv-auto p-5 sm:p-6">
       <h2 className="mb-4 flex items-center gap-2 font-semibold">
         <Icon className="h-4 w-4 text-violet-300" /> {title}
       </h2>
@@ -219,14 +220,19 @@ function KnowledgePanel({ isAdmin }) {
   useEffect(() => {
     let timer;
     let alive = true;
-    const load = () =>
+    const load = () => {
+      if (document.hidden) {
+        timer = setTimeout(load, 10000);
+        return;
+      }
       api("/api/knowledge/status")
         .then((r) => {
           if (!alive) return;
-          setSt(r);
-          timer = setTimeout(load, r.job.running || r.articles?.running ? 3000 : 20000);
+          setIfChanged(setSt, r);
+          timer = setTimeout(load, nextDelay(r.job.running || r.articles?.running ? 3000 : 20000));
         })
         .catch(() => {});
+    };
     load();
     return () => {
       alive = false;

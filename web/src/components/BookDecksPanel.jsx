@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { BookOpenText, Shuffle, Sparkles, Square } from "lucide-react";
 import { api } from "../lib/api";
 import { Spinner, useToast } from "./ui";
+import { nextDelay, setIfChanged } from "../lib/poll";
 
 /** Админ: колоды учебников — карточки по урокам, нехватка, догенерация и раскладка по смыслу. */
 export default function BookDecksPanel() {
@@ -12,17 +13,22 @@ export default function BookDecksPanel() {
   const running = useRef(false);
 
   const load = () => api("/api/books").then((r) => {
-    setSt(r);
+    setIfChanged(setSt, r);
     running.current = r.job.running;
     return r;
   });
   useEffect(() => {
     let timer;
     let alive = true;
-    const tick = () =>
+    const tick = () => {
+      if (document.hidden) {
+        timer = setTimeout(tick, 10000);
+        return;
+      }
       load()
-        .then((r) => alive && (timer = setTimeout(tick, r.job.running || r.assign_status ? 3000 : 30000)))
+        .then((r) => alive && (timer = setTimeout(tick, nextDelay(r.job.running || r.assign_status ? 3000 : 30000))))
         .catch(() => {});
+    };
     tick();
     return () => {
       alive = false;

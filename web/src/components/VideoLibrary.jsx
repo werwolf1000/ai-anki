@@ -5,6 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { AlertTriangle, CheckCircle2, Clapperboard, FileText, FolderSearch, RotateCcw, Search, Trash2, Upload, X } from "lucide-react";
 import { api, getToken, serverUrl } from "../lib/api";
 import { Spinner, useToast } from "./ui";
+import { nextDelay, setIfChanged } from "../lib/poll";
 
 export function fmtTime(sec) {
   const s = Math.max(0, Math.floor(sec || 0));
@@ -17,6 +18,10 @@ export function fmtTime(sec) {
 export function videoFileUrl(id) {
   return serverUrl(`/api/videos/${id}/file?token=${encodeURIComponent(getToken() || "")}`);
 }
+
+const PAGE = 60; // строк видеотеки на экран: дальше — поиск и «Показать ещё»
+// Каждая строка — <select> со всеми учебниками, поэтому полный список из сотен видео
+// стоит десятки тысяч узлов и подвешивает окно при открытии вкладки.
 
 const STATUS = {
   queued: { label: "в очереди", cls: "text-zinc-400" },
@@ -35,23 +40,30 @@ export default function VideoLibrary() {
   const [upload, setUpload] = useState(null); // {name, pct}
   const [folder, setFolder] = useState("");
   const [filter, setFilter] = useState("all");
+  const [query, setQuery] = useState("");
+  const [shown, setShown] = useState(PAGE);
   const fileRef = useRef(null);
   const [listRef] = useAutoAnimate({ duration: 200 });
   const [transcript, setTranscript] = useState(null); // видео, чью расшифровку смотрим
 
-  const load = () => api("/api/videos").then(setSt).catch((e) => toast(e.message, "error"));
+  const load = () => api("/api/videos").then((r) => (setIfChanged(setSt, r), r)).catch((e) => toast(e.message, "error"));
   useEffect(() => {
     let timer;
     let alive = true;
-    const tick = () =>
+    const tick = () => {
+      if (document.hidden) {
+        timer = setTimeout(tick, 10000); // окно скрыто — не грузим процессор
+        return;
+      }
       api("/api/videos")
         .then((r) => {
           if (!alive) return;
-          setSt(r);
+          setIfChanged(setSt, r); // ответ не изменился → список не перерисовывается
           const busy = r.videos.some((v) => v.status === "processing" || v.status === "queued");
-          timer = setTimeout(tick, busy ? 2500 : 30000);
+          timer = setTimeout(tick, nextDelay(busy ? 2500 : 30000));
         })
         .catch(() => {});
+    };
     tick();
     return () => {
       alive = false;
@@ -123,13 +135,18 @@ export default function VideoLibrary() {
 
   const videos = useMemo(() => {
     const all = st?.videos || [];
-    if (filter === "all") return all;
-    if (filter === "nobook") return all.filter((v) => !v.book && v.status !== "skipped");
-    return all.filter((v) => v.status === filter);
-  }, [st, filter]);
+    const q = query.trim().toLowerCase();
+    const byStatus =
+      filter === "all" ? all : filter === "nobook" ? all.filter((v) => !v.book && v.status !== "skipped") : all.filter((v) => v.status === filter);
+    if (!q) return byStatus;
+    return byStatus.filter((v) => (v.title + " " + v.folder).toLowerCase().includes(q));
+  }, [st, filter, query]);
+  const visible = useMemo(() => videos.slice(0, shown), [videos, shown]);
+  useEffect(() => setShown(PAGE), [filter, query]);
 
   if (!st) return null;
-  const counts = st.videos.reduce((a, v) => ({ ...a, [v.status]: (a[v.status] || 0) + 1 }), {});
+  const counts = {};
+  for (const v of st.videos) counts[v.status] = (counts[v.status] || 0) + 1;
   const hours = st.videos.filter((v) => v.status === "done").reduce((a, v) => a + v.duration, 0) / 3600;
   const bookTitle = Object.fromEntries(st.books.map((b) => [b.id, b.title]));
 
@@ -189,12 +206,21 @@ export default function VideoLibrary() {
         ].map(([id, label]) => (
           <button key={id} onClick={() => setFilter(id)} className={`chip ${filter === id ? "border-violet-400/50 text-white" : ""}`}>{label}</button>
         ))}
-        <span className="ml-auto self-center text-zinc-500">расшифровано {hours.toFixed(1)} ч</span>
+        <label className="relative ml-auto flex items-center">
+          <Search className="pointer-events-none absolute left-2.5 h-3.5 w-3.5 text-zinc-500" />
+          <input
+            className="input w-48 py-1.5 pl-8 text-xs"
+            placeholder="Поиск по названию или папке"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
+        <span className="self-center text-zinc-500">расшифровано {hours.toFixed(1)} ч</span>
       </div>
 
       <div ref={listRef} className="max-h-[480px] space-y-1.5 overflow-y-auto pr-1">
         {videos.length === 0 && <div className="py-6 text-center text-sm text-zinc-500">Видео пока нет</div>}
-        {videos.map((v) => {
+        {visible.map((v) => {
           const s = STATUS[v.status] || STATUS.queued;
           return (
             <div key={v.id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-2.5">
@@ -244,6 +270,12 @@ export default function VideoLibrary() {
           );
         })}
       </div>
+
+      {videos.length > visible.length && (
+        <button className="btn-ghost mt-3 w-full text-xs" onClick={() => setShown((s) => s + PAGE)}>
+          Показать ещё {Math.min(PAGE, videos.length - visible.length)} — найдено {videos.length}, показано {visible.length}
+        </button>
+      )}
 
       <LivePanel log={st.log} busy={!!st.progress?.current} />
       {createPortal(

@@ -236,3 +236,9 @@ math-field:focus-within {
     display: none !important;
   }
 }
+
+/* Длинные панели (вкладка настроек): не считаем раскладку и покраску того, что вне экрана. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}

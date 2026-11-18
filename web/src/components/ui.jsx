@@ -141,6 +141,15 @@ export function Modal({ open, onClose, children, width = "max-w-xl" }) {
 
 // ── Анимированный фон ──────────────────────────────────────────────
 export function Backdrop() {
+  // Два бесконечных размытых пятна дороже всего при blur-панелях поверх них:
+  // в скрытом (свёрнутом) окне не рисуем их вовсе — в приложении backgroundThrottling выключен.
+  const [shown, setShown] = useState(typeof document === "undefined" ? true : !document.hidden);
+  useEffect(() => {
+    const on = () => setShown(!document.hidden);
+    document.addEventListener("visibilitychange", on);
+    return () => document.removeEventListener("visibilitychange", on);
+  }, []);
+  if (!shown) return null;
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <motion.div

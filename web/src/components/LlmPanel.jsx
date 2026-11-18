@@ -4,6 +4,7 @@ import { Bot, CheckCircle2, Cpu, Laptop, Pencil, Plug, Plus, Trash2, XCircle } f
 import { api } from "../lib/api";
 import { desktop, isDesktop } from "../lib/desktop";
 import { Spinner, useToast } from "./ui";
+import { setIfChanged } from "../lib/poll";
 
 /** Модели ИИ: свой выбор для проверки ответов, локальная модель через приложение, провайдеры (админ). */
 export default function LlmPanel({ user }) {
@@ -12,10 +13,10 @@ export default function LlmPanel({ user }) {
   const [form, setForm] = useState(null); // правка/добавление провайдера
   const [tests, setTests] = useState({}); // id → результат проверки
 
-  const load = useCallback(() => api("/api/llm").then(setSt).catch((e) => toast(e.message, "error")), [toast]);
+  const load = useCallback(() => api("/api/llm").then((r) => setIfChanged(setSt, r)).catch((e) => toast(e.message, "error")), [toast]);
   useEffect(() => {
     load();
-    const t = setInterval(load, 15000); // статус локальных моделей
+    const t = setInterval(() => !document.hidden && load(), 15000); // статус локальных моделей (в скрытом окне — пауза)
     return () => clearInterval(t);
   }, [load]);
 

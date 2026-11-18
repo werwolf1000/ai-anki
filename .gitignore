@@ -19,3 +19,6 @@ skills-lock.json
 
 # Personal permission settings for this checkout.
 .codex/config.toml
+
+# Артефакты локальных MCP-инструментов (скриншоты/снимки доступности).
+.playwright-mcp/
